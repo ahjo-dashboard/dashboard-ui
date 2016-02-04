@@ -1,0 +1,71 @@
+<div class="no-inherit-animation ad-size-full">
+
+    <!-- NO CONTENT -->
+    <div ng-if="!mc.content.length" class="container-fluid">
+        <div class="row">
+            <div class="alert alert-warning">
+                <span class="glyphicon glyphicon-hand-left btn-sm"></span>
+                <strong>{{mc.contentPlaceholder}}</strong>
+            </div>
+        </div>
+    </div>
+
+    <!-- CONTENT -->
+    <div ng-if="mc.content.length" class="ng-class: [{'ad-column-container':!mc.parallelMode, 'ad-row-container':mc.parallelMode}]">
+
+        <div class="ad-block">
+            <div class="ad-block-header">
+                <div class="col-xs-12 col-sm-9 ad-block-no-horizontal-padding ad-block-no-vertical-padding">
+                    <label role="button" class="btn btn-warning btn-sm ad-btn-margin" ng-click="mc.openProposals()">
+                        <span class="glyphicon glyphicon-flag"></span>
+                        <span class="badge">1/5</span>
+                    </label>
+                    <label role="button" class="btn btn-warning btn-sm ad-btn-margin">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                    </label>
+                    <!-- xs screen: Attachmens btn shown on heading and 2nd view block hidden -->
+                    <div ng-if="mc.modeXsMtg" class="btn-group">
+                        <ad-attachment class="ad-btn-margin" header="" list="mc.attachments" on-selected="mc.attachmentSelected(attachment)"></ad-attachment>
+                    </div>
+                </div>
+                <div ng-if="!mc.modeXsMtg" class="col-xs-0 col-sm-3 ad-block-no-vertical-padding ad-block-no-horizontal-padding text-right">
+                    <label role="button" class="ng-class: ['btn', 'btn-primary', 'btn-sm', 'ad-btn-margin', {active : mc.parallelMode}]" ng-click="mc.toggleMode()">
+                        <span class="glyphicon glyphicon-resize-horizontal"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="ad-block-content">
+                <ad-content ng-if="mc.content.length" class="" content="mc.content"></ad-content>
+            </div>
+        </div>
+
+        <div class="ad-block">
+            <div class="ad-block-header">
+                <div class="col-xs-9 ad-block-no-horizontal-padding">
+                    <div class="btn-group">
+                        <ad-attachment class="ad-btn-margin" header="" list="mc.attachments" on-selected="mc.attachmentSelected(attachment)"></ad-attachment>
+                    </div>
+                </div>
+                <div class="col-xs-3 ad-block-no-horizontal-padding text-right">
+                    <label role="button" class="btn btn-primary btn-sm ad-btn-margin" ng-disabled="!mc.fileUrl">
+                        <span class="glyphicon glyphicon-floppy-disk"></span>
+                    </label>
+                    <label role="button" class="btn btn-primary btn-sm ad-btn-margin" ng-disabled="!mc.fileUrl" ng-click="mc.openFileModal(mc.fileUrl, mc.blob, mc.fileName)">
+                        <span class="glyphicon glyphicon-new-window"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="ad-block-attachment">
+                <ad-embedded-file ng-if="mc.fileUrl" ng-hide="mc.hideEmbObj" class="parallel-{{mc.parallelMode}}" fileurl="mc.fileUrl" filename="mc.fileName" parallel="mc.parallelMode"></ad-embedded-file>
+                <!-- No embedded content -->
+                <div ng-if="!mc.fileUrl">
+                    <div class="alert alert-info">
+                        <span>{{mc.embeddedContentPlaceholder}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>

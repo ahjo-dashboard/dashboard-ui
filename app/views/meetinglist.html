@@ -1,0 +1,70 @@
+<div class="scrolling-content no-inherit-animation">
+    <div class="container-fluid ad-container-fluid">
+        <div class="row">
+
+            <div class="col-xs-12">
+                <span>{{mlc.meetingsHeader}}</span>
+                <div class="btn-group">
+                    <div class="btn-group" uib-dropdown is-open="status1.isopen"
+                        uib-tooltip="Valitse toimielin"
+                        tooltip-placement="bottom"
+                        tooltip-trigger="mouseenter"
+                        tooltip-popup-delay="500"
+                        tooltip-enable="!status1.isopen">
+                        <label role="button" class="btn btn-primary btn-sm text-align-left"
+                            uib-dropdown-toggle ng-disabled="!mlc.list_pmakers || mlc.list_pmakers.length < 1">
+                            <span class="glyphicon glyphicon-th-large"></span>
+                            <span class="caret"></span>
+                        </label>
+                        <ul uib-dropdown-menu class="ad-dropdown-menu scrollable-menu" role="menu" aria-labelledby="single-button">
+                            <li role="menuitem" ng-repeat="i in mlc.list_pmakers track by $index"
+                                ng-click="mlc.list_mtgs=mlc.list_mtgs_init;status1.isopen=false">
+                                <a href="" class="list-group-item text-nowrap">{{i}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                   <div class="btn-group" uib-dropdown is-open="status2.isopen"
+                        uib-tooltip="Valitse kokous"
+                        tooltip-placement="bottom"
+                        tooltip-trigger="mouseenter"
+                        tooltip-popup-delay="500"
+                        tooltip-enable="!status2.isopen">
+                        <label role="button" class="btn btn-primary btn-sm text-align-left"
+                            uib-dropdown-toggle ng-disabled="!mlc.list_mtgs || mlc.list_mtgs.length < 1">
+                            <span class="glyphicon glyphicon-th"></span>
+                            <span class="caret"></span>
+                        </label>
+                        <ul uib-dropdown-menu class="ad-dropdown-menu scrollable-menu" role="menu" aria-labelledby="single-button">
+                            <li role="menuitem" ng-repeat="i in mlc.list_mtgs track by $index"
+                                ng-click="mlc.list_roles=mlc.list_roles_init;status2.isopen=false">
+                                <a href="" class="list-group-item text-nowrap">{{i}}</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                   <div class="btn-group" uib-dropdown is-open="status3.isopen"
+                        uib-tooltip="Valitse rooli"
+                        tooltip-placement="bottom"
+                        tooltip-trigger="mouseenter"
+                        tooltip-popup-delay="500"
+                        tooltip-enable="!status3.isopen">
+                        <label role="button" class="btn btn-primary btn-sm text-align-left"
+                            uib-dropdown-toggle ng-disabled="!mlc.list_roles || mlc.list_roles.length < 1">
+                            <span class="glyphicon glyphicon-user"></span>
+                            <span class="caret"></span>
+                        </label>
+                        <ul uib-dropdown-menu class="ad-dropdown-menu scrollable-menu" role="menu" aria-labelledby="single-button">
+                            <li role="menuitem" ng-repeat="i in mlc.list_roles track by $index"
+                                ng-click="status3.isopen=false">
+                                <a href="" class="list-group-item text-nowrap">{{i}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+	<ad-meetings meetings="mlc.meetings" on-selected="mlc.meetingSelected(meeting)">
+	</ad-meetings>
+</div>

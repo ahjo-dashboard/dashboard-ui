@@ -1,0 +1,39 @@
+/**
+ * (c) 2016 Tieto Finland Oy
+ * Licensed under the MIT license.
+ */
+
+/* Medium devices (desktops, 992px and up) */
+@media screen and (min-width: 992px) {
+    body {
+        $right-width: 30%;
+        $right-slide: 100% - $right-width;
+
+        .main-content {
+
+            .ad-block-content {
+                padding-bottom: 50px;
+            }
+        }
+
+        .left-sidebar {
+
+        }
+
+       .right-sidebar {
+            width: $right-width;
+        }
+
+        .left-menu-open {
+
+        }
+
+        .right-menu-open {
+            left: $right-slide;
+        }
+
+        .medium-modal {
+            width:80%;
+        }
+    }
+}

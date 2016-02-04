@@ -1,0 +1,10 @@
+<div class="panel panel-default">
+    <div class="panel-heading">{{header}}</div>
+    <div class="panel-body">
+        <ul class="list-group" ng-show="agenda.length">
+            <li class="list-group-item" ng-repeat="item in agenda" ng-click="selected({agendaItem:item})">
+                {{item.issue.subject}}
+            </li>
+        </ul>
+    </div>
+</div>

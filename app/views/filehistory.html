@@ -1,0 +1,27 @@
+<div class="scrolling-content">
+    <div class="container-fluid ad-container-fluid">
+        <div class="row">
+            <div class="col-xs-9">
+                <span class="ad-menu-item"><h4>{{hc.view_header}}</h4></span>
+            </div>
+            <div class="col-xs-3 text-right">
+                <label role="button" class="btn btn-primary btn-lg" ng-click="hc.clearList()">
+                    <span class="glyphicon glyphicon-trash"></span>
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="btn-group-vertical full-width" role="group">
+                <label
+                    role="button"
+                    class="btn btn-default text-align-left wrap-button-text ad-submenu-item"
+                    ng-repeat="i in hc.list track by $index"
+                    ng-click="hc.openFileModal(i.url, i.blob, i.desc)">
+                    {{i.desc}}
+                </label>
+            </div>
+        </div>
+    </div>
+</div>
