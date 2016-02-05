@@ -1,0 +1,17 @@
+<div>
+    <div ng-if="header.length > 0" class="container-fluid ad-container-fluid">
+        <div class="row">
+            <div class="col-xs-12"><h5>{{header}}</h5></div>
+        </div>
+    </div>
+
+    <div class="btn-group-vertical full-width" role="group">
+        <button type="button" class="btn btn-default text-align-left wrap-button-text" ng-repeat="mtg in meetings track by $index" ng-click="selected({meeting:mtg})">
+            <div class="row">
+                <div class="col-xs-12">
+                    <b>{{mtg.date}}</b> / {{mtg.policymaker_name}}
+                </div>
+            </div>
+        </button>
+    </div>
+</div>

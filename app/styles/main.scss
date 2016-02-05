@@ -1,0 +1,625 @@
+/**
+ * (c) 2016 Tieto Finland Oy
+ * Licensed under the MIT license.
+ */
+
+$icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/bootstrap/";
+$fa-font-path: "../bower_components/font-awesome/fonts";
+// bower:scss
+@import "bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
+@import "font-awesome/scss/font-awesome.scss";
+// endbower
+
+/* Extra small devices (phones, less than 768px) */
+/* No media query since this is the default in Bootstrap */
+
+.browsehappy {
+    margin: 0.2em 0;
+    background: #ccc;
+    color: #000;
+    padding: 0.2em 0;
+}
+
+$default-delay: 400ms;
+$short-delay: 200ms;
+
+html { height: 100%; }
+
+body {
+    height: 100%;
+    $left-slide: 90%;
+    $right-width: 90%;
+    $right-slide: 100% - $right-width;
+    $navbar-height: 60px; // this is for moving main content
+    $appbgcolor: rgb(51, 122, 183);
+    $block1height: 50%;
+
+    $headingTxtColor: white;
+    $focusedColor: rgb(40, 96, 144);
+    $headingBgColor: $focusedColor;
+    $headingL2BgColor: $appbgcolor;
+    $borderColor: $focusedColor;
+
+    background-color: $appbgcolor;
+    padding: 0;
+    padding-top: $navbar-height;
+
+    .modal-dialog {
+        width: 98%;
+        height: 98%;
+    }
+
+    .navbar {
+        border-bottom-width: 0px;
+        border-image-width: 0px;
+
+        .logo-placeholder {
+            height: 100%;
+            margin-left: auto;
+            margin-top: auto;
+        }
+
+        .logo {
+            padding-top: 6px;
+            padding-bottom: 2px;
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+
+        .ad-navbar-header {
+            display: none;
+        }
+    }
+
+    .navbar-collapse.collapse {
+        display: block!important;
+    }
+
+    .navbar-nav>li, .navbar-nav {
+        float: left !important;
+    }
+
+    .navbar-right {
+        float: right!important;
+    }
+
+    .nav-tabs > li.active > a,
+    .nav-tabs > li.active > a:focus,
+    .nav-tabs > li.active > a:hover {
+        background-color: $focusedColor !important;
+        color: white;
+    }
+
+    .left-sidebar {
+        position: fixed;
+        width: $left-slide;
+        top: $navbar-height;
+        bottom: 0;
+        left: 0;
+        z-index: 0;
+        background-color: inherit;
+
+        .ad-menu-item {
+            text-align: left;
+        }
+
+        .ad-submenu-item {
+            white-space: normal;
+            overflow: hidden;
+            text-align: left;
+        }
+        .ad-submenu-item.ng-enter,
+        .ad-submenu-item.ng-move {
+            -webkit-transition: $short-delay linear all;
+            transition: $short-delay linear all;
+            left: 100%;
+        }
+        .ad-submenu-item.ng-leave {
+            -webkit-transition: $short-delay linear all;
+            transition: $short-delay linear all;
+            opacity: 1;
+            left: 0;
+        }
+
+        .ad-submenu-item.ng-enter.ng-enter-active,
+        .ad-submenu-item.ng-move.ng-move-active {
+            left: 0;
+        }
+        .ad-submenu-item.ng-leave.ng-leave-active {
+            opacity: 0;
+            left: -100%;
+        }
+
+        .btn {
+            border-top-left-radius: 0px;
+            border-top-right-radius: 0px;
+            border-width: 0px;
+        }
+
+    }
+
+    .main-content {
+        position: fixed;
+        top: $navbar-height;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 1;
+        float: left;
+        -webkit-transition:all 0.2s ease-in-out; // transition for Safari and Chrome
+        transition:all 0.2s ease-in-out; // transition for Firefox
+        background-color: white;
+        box-shadow: 0 0 5px 5px rgba(0,0,0,0.5);
+
+        .main-view.ng-enter:not(.no-inherit-animation), .main-view.ng-leave:not(.no-inherit-animation) {
+            position: absolute;
+            left: 0;
+            right: 0;
+            -webkit-transition: all $default-delay ease-in-out;
+            transition: all $default-delay ease-in-out;
+        }
+
+        .main-view.ng-enter:not(.no-inherit-animation) {
+            opacity: 0;
+        }
+
+        .main-view.ng-enter-active:not(.no-inherit-animation) {
+            opacity: 1;
+        }
+
+        .main-view.ng-leave:not(.no-inherit-animation) {
+            opacity: 1;
+            -webkit-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+        }
+
+        .main-view.ng-leave-active:not(.no-inherit-animation) {
+            opacity: 0;
+            -webkit-transform: translate3d(100%, 0, 0);
+            transform: translate3d(100%, 0, 0);
+        }
+
+        .block1  {
+            width: 100%;
+            max-height: $block1height;
+            float: left;
+        }
+
+        .blockcontent {
+            padding-left: 0;
+            padding-right: 0;
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+
+        .block2 {
+            position: absolute;
+            top: $block1height;
+            left: 0;
+            right: 0;
+            width: 100%;
+            -webkit-transition: all ease 0.5s;
+            transition: all ease 0.5s;
+            float: left;
+        }
+
+        .block-narrow {
+            max-width: 50%; //TODO: find out how to read this somewhere
+            max-height: 100%; //TODO: fixme, resolve header height. Why only max-height works here and not 'height'?
+        }
+
+        .block-right {
+            top: 0;
+            left: 50%;
+            height: 85%; //TODO: find out how to read this somewhere
+        }
+
+        .ad-container-fluid {
+            background-color: $headingBgColor;
+            border-style: solid;
+            border-width: 0px;
+            color: $headingTxtColor;
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+
+        .ad-sub-container-fluid {
+            background-color: $headingL2BgColor;
+            border-style: solid;
+            border-width: 0px;
+            color: $headingTxtColor;
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+
+        .panel-heading {
+            background-color: $headingBgColor;
+            border-style: solid;
+            border-width: 0px;
+            color: $headingTxtColor;
+        }
+
+        .panel-body {
+            .panel-heading {
+                background-color: $headingL2BgColor;
+            }
+        }
+
+        .ad-dropdown-menu {
+            border-width: 0px;
+            .list-group-item {
+                border-width: 0px;
+                white-space: normal;
+            }
+        }
+
+        .btn {
+            border-top-left-radius: 0px;
+            border-top-right-radius: 0px;
+            border-width: 0px;
+            overflow: hidden;
+            height: 28px;
+        }
+
+        .ad-vertical-block {
+            overflow: hidden;
+            height: 50%;
+        }
+
+        .ad-full-block {
+            overflow: hidden;
+            height: 100%;
+        }
+
+        .ad-block-header {
+            background-color: $headingBgColor;
+            border-style: solid;
+            border-width: 0px;
+            color: $headingTxtColor;
+            padding-top: 5px;
+            padding-bottom: 5px;
+        }
+
+        .ad-block-content {
+            padding-top: 5px;
+            padding-bottom: 80px;
+        }
+
+        .ad-block-no-horizontal-padding {
+            padding-left: 0;
+            padding-right: 0;
+        }
+
+        .ad-block-no-vertical-padding {
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+
+        .animate-if.ng-enter, .animate-if.ng-leave {
+            -webkit-transition: $default-delay linear all;
+            transition: $default-delay linear all;
+        }
+
+        .animate-if.ng-enter,
+        .animate-if.ng-leave.ng-leave-active {
+            opacity:0;
+        }
+
+        .animate-if.ng-leave,
+        .animate-if.ng-enter.ng-enter-active {
+            opacity:1;
+        }
+
+        .ad-column-container {
+            display: flex;
+            display: -ms-flexbox;
+            display: -webkit-flex;
+            flex-direction: column;
+            -ms-flex-direction: column;
+            -webkit-flex-direction: column;
+            height: 100%;
+            width: 100%;
+
+            .ad-block {
+                display: flex;
+                display: -ms-flexbox;
+                display: -webkit-flex;
+                flex-direction: column;
+                -ms-flex-direction: column;
+                -webkit-flex-direction: column;
+                height: 50%;
+                width: 100%;
+
+                .ad-block-header {
+                    background-color: $headingBgColor;
+                    border-style: solid;
+                    border-width: 0px;
+                    color: $headingTxtColor;
+                    padding: 5px;
+                }
+
+                .ad-block-content {
+                    flex: 1;
+                    -webkit-flex: 1;
+                    -ms-flex: 1;
+                    overflow-y: scroll;
+                    padding: 10px;
+                }
+
+                .ad-block-attachment {
+                    flex: 1;
+                    -webkit-flex: 1;
+                    -ms-flex: 1;
+                    overflow-y: scroll;
+                    overflow-x: scroll;
+                }
+            }
+        }
+
+        .ad-row-container {
+            display: flex;
+            display: -ms-flexbox;
+            display: -webkit-flex;
+            flex-direction: row;
+            -ms-flex-direction: row;
+            -webkit-flex-direction: row;
+            height: 100%;
+            width: 100%;
+
+            .ad-block {
+                display: flex;
+                display: -ms-flexbox;
+                display: -webkit-flex;
+                flex-direction: column;
+                -ms-flex-direction: column;
+                -webkit-flex-direction: column;
+                width: 50%;
+                height: 100%;
+
+                .ad-block-header {
+                    background-color: $headingBgColor;
+                    border-style: solid;
+                    border-width: 0px;
+                    color: $headingTxtColor;
+                    padding: 5px;
+                }
+
+                .ad-block-content {
+                    flex: 1;
+                    -webkit-flex: 1;
+                    -ms-flex: 1;
+                    overflow-y: scroll;
+                    padding: 10px;
+                }
+
+                .ad-block-attachment {
+                    flex: 1;
+                    -webkit-flex: 1;
+                    -ms-flex: 1;
+                    overflow-y: scroll;
+                    overflow-x: scroll;
+                }
+            }
+        }
+    }
+
+    .right-sidebar {
+        position: fixed;
+        width: $right-width;
+        top: $navbar-height;
+        bottom: 0;
+        left: 101%; // extra percent hides border
+        z-index: 2;
+        -webkit-transition:all 0.2s ease-in-out;  // transition for Safari and Chrome
+        transition:all 0.2s ease-in-out; // transition for Firefox
+        background-color: white;
+        box-shadow: 0 0 5px 5px rgba(0,0,0,0.5);
+
+        .ad-container-fluid {
+            background-color: $appbgcolor;
+        }
+
+        .ad-submenu-item.ng-enter,
+        .ad-submenu-item.ng-move
+        {
+            -webkit-transition: $short-delay linear all;
+            transition: $short-delay linear all;
+            left: -100%;
+        }
+
+        .ad-submenu-item.ng-leave {
+            -webkit-transition: $short-delay linear all;
+            transition: $short-delay linear all;
+            opacity: 1;
+        }
+
+        .ad-submenu-item.ng-enter.ng-enter-active,
+        .ad-submenu-item.ng-move.ng-move-active
+        {
+            left: 0;
+        }
+
+        .ad-submenu-item.ng-leave.ng-leave-active {
+            opacity: 0;
+        }
+
+    }
+
+    .left-menu-open {
+        left: $left-slide;
+        right: -$left-slide;
+    }
+
+    .right-menu-open {
+        left: $right-slide;
+    }
+
+    .full-width {
+        width: 100%;
+    }
+
+    .ad-heigh-full {
+        height: 100%;
+    }
+
+    .text-align-left {
+        text-align: left;
+    }
+
+    .wrap-button-text {
+        white-space: normal;
+    }
+
+    .menu-header {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    .medium-modal {
+        width:100%;
+        height: auto;
+        position: absolute;
+        top:0; bottom: 0; left: 0; right: 0;
+        margin: auto;
+    }
+
+    .ad-container-fluid {
+        background-color: $headingBgColor;
+        border-style: solid;
+        border-width: 0px;
+        color: $headingTxtColor;
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+
+    .ad-sub-container-fluid {
+        background-color: $headingL2BgColor;
+        border-style: solid;
+        border-width: 0px;
+        color: $headingTxtColor;
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+
+    .btn {
+        border-top-left-radius: 0px;
+        border-top-right-radius: 0px;
+        border-width: 0px;
+        overflow: hidden;
+    }
+
+    .panel-heading {
+        background-color: $headingBgColor;
+        border-style: solid;
+        border-width: 0px;
+        color: $headingTxtColor;
+    }
+
+    .ad-animate-prop.ng-enter {
+        left: 100%;
+        -webkit-transition: $short-delay linear all;
+        transition: $short-delay linear all;
+    }
+    .ad-animate-prop.ng-leave {
+
+    }
+
+    .ad-animate-prop.ng-enter.ng-enter-active {
+        left: 0;
+    }
+    .ad-animate-prop.ng-leave.ng-leave-active {
+
+    }
+
+    .ad-animate-prop-public.ng-enter {
+
+    }
+    .ad-animate-prop-public.ng-leave {
+
+    }
+    .ad-animate-prop-public.ng-enter.ng-enter-active {
+    }
+    .ad-animate-prop-public.ng-leave.ng-leave-active {
+
+    }
+}
+
+.ad-no-scrollbars { -ms-overflow-style: none; }
+.ad-no-scrollbars::-webkit-scrollbar { width:0px; }
+
+.scrolling-content {
+    @extend .ad-no-scrollbars;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    width: 100%;
+    height: 100%;
+}
+
+.scrolling-content-xy {
+    @extend .scrolling-content;
+    overflow-x: scroll;
+    max-height: 100%;
+}
+
+.scrollable-menu {
+    @extend .ad-no-scrollbars;
+    height: auto;
+    max-height: 400px;
+    overflow-x: hidden;
+}
+
+.row-fluid {
+    white-space: normal;
+    overflow: hidden;
+    text-align: left;
+}
+
+.ad-size-full { height: 100%; width: 100%; }
+
+.ad-large-modal {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top:0; bottom: 0; left: 0; right: 0;
+    margin: 0;
+    display: block;
+    overflow: hidden;
+
+    .modal-dialog {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+    }
+
+    .modal-content {
+      height: 100%;
+      width: 100%;
+      border: 0;
+    }
+}
+
+.ad-embedded-pdf {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+.ad-content-placeholder { text-align: center; }
+
+.ad-btn-margin { margin: 2px; }
+
+.ad-pdfLink {
+    background: transparent url(../images/pdf.png) no-repeat 0px 0px;
+    display: block;
+    padding: 7px 20px 7px 40px;
+    margin: 10px 10px;
+}
+
+@import "navbar.scss";
+@import "main.small.scss";
+@import "main.medium.scss";
+@import "main.large.scss";

@@ -1,0 +1,15 @@
+<div class="no-inherit-animation ad-size-full">
+	<div class="progress" ng-if="oc.loading < oc.loadingmax">
+		<uib-progressbar class="progress-striped active" value="oc.loading" max="oc.loadingmax" type="info">
+		</uib-progressbar>
+	</div>
+	<div class="scrolling-content">
+		<ad-meetings meetings="oc.meetings" header="oc.meetingsHeader" on-selected="oc.meetingSelected(meeting)">
+		</ad-meetings>
+		<div ng-if="oc.mtgErr" class="alert alert-danger" role="alert">Kokoustietojen haku ei onnistunut</div>
+
+		<ad-open-signreqs ad-signitems="oc.signItems" header="oc.signReqsHeader" on-select="oc.signItemSelected(signingItem)">
+		</ad-open-signreqs>
+		<div ng-if="oc.signErr" class="alert alert-danger" role="alert">Allekirjoitustietojen haku ei onnistunut</div>
+	</div>
+</div>

@@ -1,0 +1,50 @@
+<div class="scrolling-content-xy no-inherit-animation">
+    <div class="container-fluid ad-container-fluid">
+        <div class="row">
+            <div class="col-xs-9">
+                <span>{{sic.fileName}}</span>
+            </div>
+            <div class="col-xs-3 text-right">
+                <label role="button" class="btn btn-primary btn-sm" ng-disabled="!sic.fileUrl">
+                    <span class="glyphicon glyphicon-new-window"
+                            uib-tooltip="Avaa isompana"
+                            tooltip-placement="left"
+                            tooltip-trigger="mouseenter"
+                            tooltip-enable="true"
+                            ng-click="sic.openFileModal(sic.fileUrl, sic.blob, sic.fileName)">
+                    </span>
+                </label>
+            </div>
+        </div>
+         <div class="row">
+            <div class="col-xs-12">
+                <div class="btn-group">
+                    <div class="btn-group">
+                        <div class="dropdown">
+                            <label role="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">
+                                <span class="glyphicon glyphicon-ok"></span>&nbsp;
+                                <span class="caret"></span>&nbsp;
+                            </label>
+                            <ul class="dropdown-menu">
+                                <li><a href="">Allekirjoita</a></li>
+                                <li><a href="">Hylkää</a></li>
+                                <li class="divider"></li>
+                                <li><a href="">Kommentoi</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="btn-group">
+                        <div class="btn-group">
+                            <ad-attachment list="sic.attachments" on-selected="sic.attachmentSelected(attachment)">
+                            </ad-attachment>
+                        </div>
+                        <label role="button" class="btn btn-primary btn-sm">
+                            <span class="glyphicon glyphicon-list-alt"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <ad-embedded-file ng-if="sic.fileUrl" class="ad-size-full" ng-attr-fileurl="sic.fileUrl" filename="sic.fileName"></ad-embedded-file>
+</div>

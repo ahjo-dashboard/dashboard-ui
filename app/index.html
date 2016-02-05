@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+    <title>Ahjo Dashboard</title>
+    <!--link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.css"/-->
+    <!-- build:css(.) styles/vendor.css -->
+    <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/angular-bootstrap-colorpicker/css/colorpicker.css" />
+    <link rel="stylesheet" href="bower_components/ng-dialog/css/ngDialog.css" />
+    <link rel="stylesheet" href="bower_components/ng-dialog/css/ngDialog-theme-default.css" />
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:css(.tmp) styles/main.css -->
+    <link rel="stylesheet" href="styles/main.css">
+    <!-- endbuild -->
+  </head>
+  <body id="ng-app" data-ng-app="dashboard">
+    <!-- IE > 9 because of e.g. pdf.js -->
+    <!--[if lte IE 9]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+      <br>
+      <p class="browsehappy">Käytät <strong>vanhentunutta</strong> selainta. Ole hyvä ja <a href="http://browsehappy.com/">päivitä</a> selaimesi, kiitos.</p>
+    <![endif]-->
+
+    <!-- build:js(.) scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap.js"></script>
+    <script src="bower_components/angular-touch/angular-touch.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="bower_components/angular-bootstrap-colorpicker/js/bootstrap-colorpicker-module.js"></script>
+    <script src="bower_components/angular-wysiwyg/dist/angular-wysiwyg.min.js"></script>
+    <script src="bower_components/ng-dialog/js/ngDialog.js"></script>
+    <!-- endbower -->
+    <!-- endbuild -->
+
+    <!-- build:js({.tmp,app}) scripts/scripts.js -->
+    <script src="scripts/app.js"></script>
+    <script src="scripts/app.env.js"></script>
+    <script src="scripts/app.routes.js"></script>
+
+    <script src="scripts/controllers/overview.ctrl.js"></script>
+    <script src="scripts/controllers/meeting.ctrl.js"></script>
+    <script src="scripts/controllers/app.ctrl.js"></script>
+    <script src="scripts/controllers/menu.ctrl.js"></script>
+    <script src="scripts/controllers/login.ctrl.js"></script>
+    <script src="scripts/controllers/signing.ctrl.js"></script>
+    <script src="scripts/controllers/signitem.ctrl.js"></script>
+    <script src="scripts/controllers/meetinglist.ctrl.js"></script>
+    <script src="scripts/controllers/modalfile.ctrl.js"></script>
+    <script src="scripts/controllers/proposals.ctrl.js"></script>
+    <script src="scripts/controllers/filehistory.ctrl.js"></script>
+
+    <script src="scripts/services/ahjosign.srv.js"></script>
+    <script src="scripts/services/ahjomeeting.srv.js"></script>
+    <script src="scripts/services/mtgmeeting.api.srv.js"></script>
+    <script src="scripts/services/mtgissue.api.srv.js"></script>
+    <script src="scripts/services/mtgattachment.api.srv.js"></script>
+    <script src="scripts/services/mtgagendaitem.api.srv.js"></script>
+    <script src="scripts/services/mtgmeetingdocument.api.srv.js"></script>
+    <script src="scripts/services/pdfreader.srv.js"></script>
+    <script src="scripts/services/message.srv.js"></script>
+    <script src="scripts/services/device.srv.js"></script>
+    <script src="scripts/services/filehistory.srv.js"></script>
+
+
+    <script src="directives/meetings/admeetings.directive.js"></script>
+    <script src="directives/agendaItem/adagendaitem.directive.js"></script>
+    <script src="directives/attachment/adattachment.directive.js"></script>
+    <script src="directives/opensignreqs/opensignreqs.directive.js"></script>
+    <script src="directives/content/adcontent.directive.js"></script>
+    <script src="directives/menu/admenu.directive.js"></script>
+    <script src="directives/embeddedfile/adembeddedfile.directive.js"></script>
+    <!-- endbuild -->
+
+    <!-- APP CONTENT -->
+    <ui-view name="appView"></ui-view>
+</body>
+</html>

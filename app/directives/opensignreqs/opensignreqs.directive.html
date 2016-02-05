@@ -1,0 +1,43 @@
+<div>
+	<div class="container-fluid ad-container-fluid">
+		<div class="row">
+			<div class="col-xs-12"><h5>Allekirjoituspyynnöt</h5></div>
+		</div>
+	</div>
+
+	<div class="container-fluid ad-sub-container-fluid">
+		<div class="row">
+			<div class="col-xs-12">Toimielimien pöytäkirjat</div>
+		</div>
+	</div>
+	<div class="btn-group-vertical full-width" role="group">
+		<button ng-if="i.DocumentType == DocTypePMaker" type="button" class="btn btn-default text-align-left wrap-button-text" ng-repeat="i in openItems" ng-click="onSelect({signingItem : i})">
+			<div class="row">
+				<div class="col-xs-7 col-md-8">
+					<b>{{i.RequestDate | date:'yyyy-MM-dd'}}</b> / {{i.Name}}
+				</div>
+				<div class="col-xs-5 col-md-4 text-right">
+					<span class="ng-class: ['label', badgeClass(i.Status)]">{{signReqStatusTxt(i.Status)}}</span>
+				</div>
+			</div>
+		</button>
+	</div>
+
+	<div class="container-fluid ad-sub-container-fluid">
+		<div class="row">
+			<div class="col-xs-12">Viranhaltijapäätökset</div>
+		</div>
+	</div>
+	<div class="btn-group-vertical full-width" role="group">
+		<button ng-if="i.DocumentType == DocTypeOfficial" type="button" class="btn btn-default text-align-left wrap-button-text" ng-repeat="i in openItems" ng-click="onSelect({signingItem : i})">
+			<div class="row">
+				<div class="col-xs-7 col-md-8">
+					<b>{{i.RequestDate | date:'yyyy-MM-dd'}}</b> / {{i.Name}}
+				</div>
+				<div class="col-xs-5 col-md-4 text-right">
+					<span class="ng-class: ['label', badgeClass(i.Status)]">{{signReqStatusTxt(i.Status)}}</span>
+				</div>
+			</div>
+		</button>
+	</div>
+</div>

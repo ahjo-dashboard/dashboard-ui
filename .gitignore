@@ -1,0 +1,14 @@
+# General
+.DS_Store
+*.log
+
+# Build time files and build results
+node_modules/
+bower_components/
+dist/
+.tmp/
+.sass-cache/
+app.env.js
+
+# Ignore folder for private conf files
+custom

@@ -1,0 +1,52 @@
+/**
+ * (c) 2016 Tieto Finland Oy
+ * Licensed under the MIT license.
+ */
+
+/* Small devices (tablets, 768px and up) */
+@media screen and (min-width: 768px) {
+    body {
+        $left-slide: 350px;
+        $right-width: 40%;
+        $right-slide: 100% - $right-width;
+        $navbar-height: 54px;
+
+        .navbar {
+            .logo {
+                padding-top: 4px;
+                padding-bottom: 4px;
+            }
+            .ad-navbar-header {
+                display: inherit;
+            }
+        }
+
+        .main-content {
+            top: $navbar-height;
+
+            .ad-block-content {
+                padding-top: 5px;
+                padding-bottom: 60px;
+            }
+        }
+
+        .left-sidebar {
+            width: $left-slide;
+            top: $navbar-height;
+        }
+
+        .right-sidebar {
+            width: $right-width;
+            top: $navbar-height;
+        }
+
+        .left-menu-open {
+            left: $left-slide;
+            right: 0;
+        }
+
+        .right-menu-open {
+            left: $right-slide;
+        }
+    }
+}

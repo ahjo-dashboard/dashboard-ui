@@ -1,0 +1,16 @@
+<div class="no-inherit-animation">
+	<uib-tabset>
+	    <uib-tab class="mytab"
+	        ng-repeat="t in sc.tabs"
+	        heading="{{t.header}}"
+	        active="t.active">
+            <div class="no-inherit-animation">
+                <ad-open-signreqs ad-signitems="t.items" header="t.header" on-select="sc.itemSelected(signingItem)">
+                </ad-open-signreqs>
+                <div ng-if="t.error" class="alert alert-danger" role="alert">
+                    Allekirjoitustietojen haku ei onnistunut
+                </div>
+            </div>
+	    </uib-tab>
+	</uib-tabset>
+</div>
