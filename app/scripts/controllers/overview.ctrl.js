@@ -12,7 +12,14 @@
  * Controller of the dashboard
  */
 angular.module('dashboard')
-.controller('overviewCtrl', function ($scope, $log, AhjoMeetingService, ENV, SigningOpenApi, $state) {
+.constant(
+    'OPENMODE', {
+        BOTH : 0,
+        MTG : 1,
+		SGN : 2
+    }
+)
+.controller('overviewCtrl', function ($scope, $log, AhjoMeetingService, ENV, SigningOpenApi, $state, $rootScope, OPENMODE) {
 	$log.log("overviewCtrl.controller");
 	var self = this;
 	self.loading = 0;
@@ -23,20 +30,27 @@ angular.module('dashboard')
 	self.signErr = null;
 	self.mtgErr = null;
 
-	AhjoMeetingService.getMeetings(ENV.MeetingsApi_OverviewLimit, ENV.MeetingsApi_DefaultOffset)
-	.then(function(response) {
-		$log.debug(response);
-		self.meetings = response.objects;
-		self.mtgErr = null;
-	},
-	function(error) {
-		$log.error("overviewCtrl: getMeetings error: " +error);
-		self.mtgErr = error.status;
-	})
-	.finally(function() {
-		$log.debug("overviewCtrl: getMeetings finally"); //TODO: remove
-		self.loading += 1;
-	});
+	self.mtgOpen = 1;
+	self.sgnOpen = 1;
+
+	self.state = OPENMODE.BOTH;
+
+	self.tst = "http://www.orimi.com/pdf-test.pdf";
+
+	// AhjoMeetingService.getMeetings(ENV.MeetingsApi_OverviewLimit, ENV.MeetingsApi_DefaultOffset)
+	// .then(function(response) {
+	// 	$log.debug(response);
+	// 	self.meetings = response.objects;
+	// 	self.mtgErr = null;
+	// },
+	// function(error) {
+	// 	$log.error("overviewCtrl: getMeetings error: " +error);
+	// 	self.mtgErr = error.status;
+	// })
+	// .finally(function() {
+	// 	$log.debug("overviewCtrl: getMeetings finally"); //TODO: remove
+	// 	self.loading += 1;
+	// });
 
 	// Open signing requests
 	self.signItems = SigningOpenApi.query(function() {
@@ -60,5 +74,34 @@ angular.module('dashboard')
 	self.signItemSelected = function(signingItem) {
 		$log.debug("overviewCtrl.signItemSelected");
 		$state.go('app.signitem', {signItem : signingItem});
+	};
+
+	self.showInfo = function() {
+		$log.debug("overviewCtrl: showInfo");
+	};
+
+	self.toggleMenu = function() {
+        $log.debug("overviewCtrl: toggleMenu");
+		$rootScope.menu = !$rootScope.menu;
+    };
+
+	self.meetingsClicked = function() {
+		$log.debug("overviewCtrl: meetingsClicked");
+		if (self.state === OPENMODE.BOTH || self.state === OPENMODE.SGN) {
+			self.state = OPENMODE.MTG;
+		}
+		else {
+			self.state = OPENMODE.BOTH;
+		}
+	};
+
+	self.signingsClicked = function() {
+		$log.debug("overviewCtrl: signingsClicked");
+		if (self.state === OPENMODE.BOTH || self.state === OPENMODE.MTG) {
+			self.state = OPENMODE.SGN;
+		}
+		else {
+			self.state = OPENMODE.BOTH;
+		}
 	};
 });

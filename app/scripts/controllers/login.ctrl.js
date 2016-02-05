@@ -37,7 +37,7 @@ angular.module('dashboard')
             url: ENV.AhjoApi_UserLoginRest
         }).then(function successCallback(/*response*/) {
             self.data.selection = null;
-            $state.go('app.overview');
+            $state.go('app.home');
 
         }, function errorCallback(error) {
             $log.error(error);

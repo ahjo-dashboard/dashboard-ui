@@ -5,6 +5,12 @@
 
 /* Small devices (tablets, 768px and up) */
 @media screen and (min-width: 768px) {
+
+    #device {
+        min-width: 768px;
+        display: none;
+    }
+
     body {
         $left-slide: 350px;
         $right-width: 40%;
@@ -47,6 +53,12 @@
 
         .right-menu-open {
             left: $right-slide;
+        }
+
+        .ad-page-header {
+            .glyphicon {
+                font-size: 2em;
+            }
         }
     }
 }

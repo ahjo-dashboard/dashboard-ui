@@ -1,15 +1,51 @@
-<div class="no-inherit-animation ad-size-full">
-	<div class="progress" ng-if="oc.loading < oc.loadingmax">
-		<uib-progressbar class="progress-striped active" value="oc.loading" max="oc.loadingmax" type="info">
-		</uib-progressbar>
-	</div>
-	<div class="scrolling-content">
-		<ad-meetings meetings="oc.meetings" header="oc.meetingsHeader" on-selected="oc.meetingSelected(meeting)">
-		</ad-meetings>
-		<div ng-if="oc.mtgErr" class="alert alert-danger" role="alert">Kokoustietojen haku ei onnistunut</div>
+<div class="ad-page">
 
-		<ad-open-signreqs ad-signitems="oc.signItems" header="oc.signReqsHeader" on-select="oc.signItemSelected(signingItem)">
-		</ad-open-signreqs>
-		<div ng-if="oc.signErr" class="alert alert-danger" role="alert">Allekirjoitustietojen haku ei onnistunut</div>
-	</div>
+    <div class="ad-full-page-content">
+
+        <div class="ad-page-container-flex ad-full-page-container">
+
+            <!-- MEETINGS START -->
+            <div class="ad-flex-header">
+                <button type="button" class="btn btn-warning ad-lg">Tulevat kokoukset</button>
+                <button type="button" class="btn btn-warning ad-lg">Kaikki kokoukset</button>
+                <button type="button" class="btn btn-info ad-xs">
+                    <i class="glyphicon glyphicon-info-sign"></i>
+                </button>
+                <button type="button" class="btn btn-info ad-xs" ng-click="oc.meetingsClicked()">
+                    <i class="ng-class: ['glyphicon', {'glyphicon-plus':oc.state !== 1, 'glyphicon-minus':oc.state === 1}]"></i>
+                </button>
+            </div>
+
+            <div class="ng-class: ['ad-flex-item', {'ad-flex-show-full':oc.state === 1, 'ad-flex-show':oc.state === 0, 'ad-flex-hide':oc.state === 2}]">
+                <ad-meetings header="oc.meetingsHeader">
+                </ad-meetings>
+                <div ng-if="oc.mtgErr" class="alert alert-danger" role="alert">Kokoustietojen haku ei onnistunut</div>
+            </div>
+            <!-- MEETINGS END -->
+
+            <!-- SIGNINGS START -->
+            <div class="ad-flex-header">
+                <button type="button" class="btn btn-warning ad-lg">Avoimet allekirjoitukset</button>
+                <button type="button" class="btn btn-warning ad-lg">Suljetut allekirjoitukset</button>
+                <button type="button" class="btn btn-info ad-xs">
+                    <i class="glyphicon glyphicon-info-sign"></i>
+                </button>
+                <button type="button" class="btn btn-info ad-xs" ng-click="oc.signingsClicked()">
+                    <i class="ng-class: ['glyphicon', {'glyphicon-plus':oc.state !== 2, 'glyphicon-minus':oc.state === 2}]"></i>
+                </button>
+            </div>
+
+            <div class="ng-class: ['ad-flex-item', {'ad-flex-show-full':oc.state === 2, 'ad-flex-show':oc.state === 0, 'ad-flex-hide':oc.state === 1}]">
+                <ad-open-signreqs ad-signitems="oc.signItems" header="oc.signReqsHeader" on-select="oc.signItemSelected(signingItem)">
+                </ad-open-signreqs>
+                <div ng-if="oc.signErr" class="alert alert-danger" role="alert">Allekirjoitustietojen haku ei onnistunut</div>
+            </div>
+            <!-- SIGNINGS END -->
+
+        </div>
+
+    </div>
+
+    <i class="info glyphicon glyphicon-info-sign" aria-hidden="true" ng-click="oc.showInfo()"></i>
+
 </div>

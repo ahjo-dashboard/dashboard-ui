@@ -1,17 +1,47 @@
 <div>
-    <div ng-if="header.length > 0" class="container-fluid ad-container-fluid">
-        <div class="row">
-            <div class="col-xs-12"><h5>{{header}}</h5></div>
+
+    <div class="btn-group btn-group-justified">
+
+        <div class="btn-group" uib-dropdown is-open="organIsOpen">
+            <button id="organButton" type="button" class="btn btn-success ad-button" uib-dropdown-toggle>Toimielin<span class="caret"></span>
+            </button>
+            <ul uib-dropdown-menu role="menu" aria-labelledby="organButton">
+                <li role="menuitem" ng-repeat="organ in ctrl.organs track by $index"><a ng-click="ctrl.setOrganFilter(organ)">{{organ}}</a></li>
+                <li class="divider"></li>
+                <li role="menuitem"><a ng-click="ctrl.setOrganFilter(null)">Tyhjennä</a></li>
+            </ul>
         </div>
+
+        <div class="btn-group" uib-dropdown is-open="meetingIsOpen">
+            <button id="meetingButton" type="button" class="btn btn-success ad-button" uib-dropdown-toggle>Kokous<span class="caret"></span>
+            </button>
+            <ul uib-dropdown-menu role="menu" aria-labelledby="meetingButton">
+                <li role="menuitem" ng-repeat="meeting in ctrl.meetings track by $index"><a ng-click="ctrl.setMeetingFilter(meeting.id)">{{meeting.id}}</a></li>
+                <li class="divider"></li>
+                <li role="menuitem"><a ng-click="ctrl.setMeetingFilter(null)">Tyhjennä</a></li>
+            </ul>
+        </div>
+
+        <div class="btn-group" uib-dropdown is-open="roleIsOpen">
+            <button id="roleButton" type="button" class="btn btn-success ad-button" uib-dropdown-toggle>Rooli<span class="caret"></span>
+            </button>
+            <ul uib-dropdown-menu role="menu" aria-labelledby="roleButton">
+                <li role="menuitem" ng-repeat="role in ctrl.roles track by $index"><a ng-click="ctrl.setRoleFilter(role)">{{role}}</a></li>
+                <li class="divider"></li>
+                <li role="menuitem"><a ng-click="ctrl.setRoleFilter(null)">Tyhjennä</a></li>
+            </ul>
+        </div>
+
     </div>
 
-    <div class="btn-group-vertical full-width" role="group">
-        <button type="button" class="btn btn-default text-align-left wrap-button-text" ng-repeat="mtg in meetings track by $index" ng-click="selected({meeting:mtg})">
+    <ul class="list-group">
+        <button ng-if="item.visible" type="button" class="list-group-item col-xs-12" ng-repeat="item in ctrl.data track by $index" ng-click="ctrl.meetingSelected(item)">
             <div class="row">
-                <div class="col-xs-12">
-                    <b>{{mtg.date}}</b> / {{mtg.policymaker_name}}
-                </div>
+                <div class="col-xs-4">{{item.organ}}</div>
+                <div class="col-xs-4">{{item.meeting}}</div>
+                <div class="col-xs-4">{{item.role}}</div>
             </div>
         </button>
-    </div>
+    </ul>
+
 </div>

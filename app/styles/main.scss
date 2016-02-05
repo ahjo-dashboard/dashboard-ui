@@ -1,7 +1,7 @@
 /**
- * (c) 2016 Tieto Finland Oy
- * Licensed under the MIT license.
- */
+* (c) 2016 Tieto Finland Oy
+* Licensed under the MIT license.
+*/
 
 $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/bootstrap/";
 $fa-font-path: "../bower_components/font-awesome/fonts";
@@ -21,7 +21,12 @@ $fa-font-path: "../bower_components/font-awesome/fonts";
 }
 
 $default-delay: 400ms;
-$short-delay: 200ms;
+$short-delay: 50ms;
+
+#device {
+    min-width: 320px;
+    display: none;
+}
 
 html { height: 100%; }
 
@@ -442,7 +447,6 @@ body {
         .ad-submenu-item.ng-leave.ng-leave-active {
             opacity: 0;
         }
-
     }
 
     .left-menu-open {
@@ -531,20 +535,236 @@ body {
     .ad-animate-prop.ng-enter.ng-enter-active {
         left: 0;
     }
-    .ad-animate-prop.ng-leave.ng-leave-active {
 
+    // AD-PAGE
+    .ad-page {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        overflow: hidden;
+        background-color: $appbgcolor;
+
+        .info {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: $headingTxtColor;
+            font-size: 2em;
+        }
     }
 
-    .ad-animate-prop-public.ng-enter {
+    .ad-page-left {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        overflow: auto;
 
+        -webkit-transition: all $short-delay linear;
+        -moz-transition: all $short-delay linear;
+        -o-transition: all $short-delay linear;
+        transition: all $short-delay linear;
     }
-    .ad-animate-prop-public.ng-leave {
 
-    }
-    .ad-animate-prop-public.ng-enter.ng-enter-active {
-    }
-    .ad-animate-prop-public.ng-leave.ng-leave-active {
+    .ad-page-right {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        overflow: auto;
 
+        -webkit-transition: all $short-delay linear;
+        -moz-transition: all $short-delay linear;
+        -o-transition: all $short-delay linear;
+        transition: all $short-delay linear;
+    }
+
+    .ad-page-content {
+        position: absolute;
+        top: $navbar-height;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        overflow: auto;
+        background-color: $appbgcolor;
+
+        .btn {
+            width: 100%;
+            text-align: left;
+        }
+    }
+
+    .ad-full-page-content {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        overflow: auto;
+        background-color: $appbgcolor;
+    }
+
+    .ad-page-header {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+
+        border: 0;
+        background-color: $headingBgColor;
+        height: $navbar-height;
+        padding-right: 15px;
+
+        h3 {
+            color: $headingTxtColor;
+            letter-spacing: -2px;
+        }
+
+        .glyphicon {
+            color: $headingTxtColor;
+            line-height: $navbar-height;
+            font-size: 1.5em;
+        }
+
+        .glyphicon.left {
+            float: left;
+            text-align: left;;
+        }
+        .glyphicon.right {
+            float: right;
+            text-align: right;;
+        }
+
+        .left {
+            float: left;
+        }
+
+        .right {
+            float: right;
+        }
+
+        .btn {
+            height: 40px;
+            margin: 10px;
+        }
+    }
+
+    .ad-page-container {
+        padding: 10px;
+    }
+
+    .ad-full-page-container {
+        padding: 40px;
+    }
+
+    .ad-page-container-flex {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        overflow: hidden;
+
+        display: -ms-flexbox;      /* TWEENER - IE 10 */
+        display: -webkit-flex;     /* NEW - Chrome */
+        display: flex;
+
+        -ms-flex-direction: column;
+        -webkit-flex-direction: column;
+        flex-direction: column;
+    }
+
+    .ad-flex-item {
+        -webkit-flex: 14;          /* Chrome */
+        -ms-flex: 14;              /* IE 10 */
+        flex: 14;
+
+        overflow-x: hidden;
+        overflow-y: auto;
+        // border-style: outset;
+        // border-radius: 10px;
+        // border-color: $borderColor;
+        // border-width: thin;
+
+        transition: all $short-delay linear;
+        -webkit-transition: all $short-delay linear;
+    }
+
+    .ad-flex-header {
+        -webkit-flex: 2;          /* Chrome */
+        -ms-flex: 2;              /* IE 10 */
+        flex: 2;
+
+        display: -ms-flexbox;      /* TWEENER - IE 10 */
+        display: -webkit-flex;     /* NEW - Chrome */
+        display: flex;
+
+        -ms-flex-direction: row;
+        -webkit-flex-direction: row;
+        flex-direction: row;
+
+        overflow: hidden;
+        // margin: 10px;
+
+        .btn {
+            font-size: 1.5em;
+            .glyphicon {
+                color: $headingTxtColor;
+                font-size: 1.2em;
+            }
+        }
+
+        .ad-lg {
+            -webkit-flex: 12;          /* Chrome */
+            -ms-flex: 12;              /* IE 10 */
+            flex: 12;
+        }
+
+        .ad-xs {
+            -webkit-flex: 2;          /* Chrome */
+            -ms-flex: 2;              /* IE 10 */
+            flex: 2;
+        }
+    }
+
+    .ad-flex-show {
+        -webkit-flex-grow: 14;
+        -ms-flex-grow: 14;
+        flex-grow: 14;
+    }
+
+    .ad-flex-show-full {
+        -webkit-flex-grow: 30;
+        -ms-flex-grow: 30;
+        flex-grow: 30;
+    }
+
+    .ad-flex-show-header {
+        -webkit-flex-grow: 2;
+        -ms-flex-grow: 2;
+        flex-grow: 2;
+    }
+
+    .ad-flex-hide {
+        -webkit-flex-grow: 0;
+        -ms-flex-grow: 0;
+        flex-grow: 0;
+    }
+
+    .ad-button {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .ad-center {
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
     }
 }
 
@@ -590,15 +810,15 @@ body {
     overflow: hidden;
 
     .modal-dialog {
-      width: 100%;
-      height: 100%;
-      margin: 0;
+        width: 100%;
+        height: 100%;
+        margin: 0;
     }
 
     .modal-content {
-      height: 100%;
-      width: 100%;
-      border: 0;
+        height: 100%;
+        width: 100%;
+        border: 0;
     }
 }
 

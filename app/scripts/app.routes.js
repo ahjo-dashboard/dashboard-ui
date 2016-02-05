@@ -1,110 +1,168 @@
 /**
- * (c) 2016 Tieto Finland Oy
- * Licensed under the MIT license.
- */
+* (c) 2016 Tieto Finland Oy
+* Licensed under the MIT license.
+*/
 'use strict';
 angular.module('dashboard')
-.config(function($urlRouterProvider, $stateProvider, ENV) {
+.config(['$urlRouterProvider', '$stateProvider', 'ENV', function($urlRouterProvider, $stateProvider, ENV) {
+    var device = angular.element('#device');
 
-    /* States and routings */
-    $stateProvider
-    .state('app', {
-        url: '',
-        abstract: true,
-        views: {
-            'leftSidebar@app': {
-                templateUrl: 'views/menu.html',
-                controller: 'menuCtrl',
-                controllerAs: 'mc'
-            },
-            'appView' :{
-                templateUrl: 'views/app.html',
-                controller: 'appCtrl',
-                controllerAs: 'ac'
-            },
-            'rightSidebar@app': {
-                templateUrl: 'views/filehistory.html',
-                controller: 'filehistoryCtrl',
-                controllerAs: 'hc'
-            }
-        }
-    })
-    .state('app.signing', {
-        url: '/signing',
-        views: {
-            'mainContent': {
-                templateUrl: 'views/signing.html',
-                controller: 'SigningCtrl',
-                controllerAs: 'sc'
-            }
-        }
-    })
-    .state('app.signitem', {
-        url: '/signitem',
-        views: {
-            'mainContent': {
-                templateUrl: 'views/signitem.html',
-                controller: 'SignitemCtrl',
-                controllerAs: 'sic'
-            }
-        },
-        params: {
-            signItem: null
-        }
-    })
-    .state('app.overview', {
-        url: '/overview',
-        views: {
-            'mainContent': {
-                templateUrl: 'views/overview.html',
-                controller: 'overviewCtrl',
-                controllerAs: 'oc'
-            }
-        }
-    })
-    .state('app.meetingList', {
-        url: '/meetinglist',
-        views: {
-            'mainContent': {
-                templateUrl: 'views/meetinglist.html',
-                controller: 'meetingListCtrl',
-                controllerAs: 'mlc'
-            }
-        }
-    })
-    .state('app.meeting', {
-        url: '/meeting',
-        params: { meetingItem: null, agendaItem: null },
-        views: {
-            'mainContent': {
-                templateUrl: 'views/meeting.html',
-                controller: 'meetingCtrl',
-                controllerAs: 'mc'
-            }
-        }
-    });
-
-    if (ENV.app_env === 'prod') {
-        // In some cases this causes unwanted switch to overview
-        // $urlRouterProvider.otherwise( function($injector) {
-        //     var $state = $injector.get('$state');
-        //       $state.go('app.overview');
-        // });
-        $urlRouterProvider.otherwise('/overview');
-    }
-    else {
+    if (device && device.css('min-width') === '320px') {
+        /* MOBILE States and routings */
         $stateProvider
-        .state('app.login', {
-            url: '/login',
+        .state('app', {
+            url: '',
+            abstract: true,
             views: {
-                'mainContent' :{
-                    templateUrl: 'views/login.html',
-                    controller: 'loginCtrl',
-                    controllerAs: 'lc'
+                'appView' :{
+                    templateUrl: 'views/home.html',
+                    controller: 'homeCtrl',
+                    controllerAs: 'ctrl'
+                }
+            },
+            params: {
+                menu: true
+            }
+        })
+        .state('app.home', {
+            url: '/home',
+            views: {
+                'homeContent': {
+                    templateUrl: 'views/menu.html',
+                    controller: 'menuCtrl',
+                    controllerAs: 'mc'
+                }
+            }
+        })
+        .state('app.meetings', {
+            url: '/meetings',
+            views: {
+                'homeContent': {
+                    templateUrl: 'views/meetinglist.html',
+                    controller: 'meetingListCtrl',
+                    controllerAs: 'mlc'
+                }
+            }
+        })
+        .state('app.signing', {
+            url: '/signing',
+            views: {
+                'homeContent': {
+                    templateUrl: 'views/signing.html',
+                    controller: 'signingCtrl',
+                    controllerAs: 'sc'
+                }
+            }
+        })
+        .state('app.info', {
+            url: '/info',
+            views: {
+                'homeContent': {
+                    templateUrl: 'views/info.html'
                 }
             }
         });
 
-        $urlRouterProvider.otherwise('/login');
+        if (ENV.app_env === 'prod') {
+            $urlRouterProvider.otherwise('/home');
+        }
+        else {
+            $stateProvider
+            .state('app.login', {
+                url: '/login',
+                views: {
+                    'homeContent' :{
+                        templateUrl: 'views/login.html',
+                        controller: 'loginCtrl',
+                        controllerAs: 'lc'
+                    }
+                }
+            });
+
+            $urlRouterProvider.otherwise('/login');
+        }
     }
-});
+    else {
+        /* DESKTOP States and routings */
+        $stateProvider
+        .state('app', {
+            url: '',
+            abstract: true,
+            views: {
+                'appView' :{
+                    templateUrl: 'views/home.html',
+                    controller: 'homeCtrl',
+                    controllerAs: 'ctrl'
+                }
+            },
+            params: {
+                menu: false
+            }
+        })
+        .state('app.home', {
+            url: '/home',
+            views: {
+                'homeLeftContent': {
+                    templateUrl: 'views/menu.html',
+                    controller: 'menuCtrl',
+                    controllerAs: 'mc'
+                },
+                'homeRightContent': {
+                    templateUrl: 'views/overview.html',
+                    controller: 'overviewCtrl',
+                    controllerAs: 'oc'
+                }
+            }
+        })
+        .state('app.meetings', {
+            url: '/meetings',
+            views: {
+                'homeLeftContent': {
+                    templateUrl: 'views/menu.html',
+                    controller: 'menuCtrl',
+                    controllerAs: 'mc'
+                },
+                'homeRightContent': {
+                    templateUrl: 'views/meetinglist.html',
+                    controller: 'meetingListCtrl',
+                    controllerAs: 'mlc'
+                }
+            }
+        })
+        .state('app.signing', {
+            url: '/signing',
+            views: {
+                'homeLeftContent': {
+                    templateUrl: 'views/menu.html',
+                    controller: 'menuCtrl',
+                    controllerAs: 'mc'
+                },
+                'homeRightContent': {
+                    templateUrl: 'views/signing.html',
+                    controller: 'signingCtrl',
+                    controllerAs: 'sc'
+                }
+            }
+        });
+
+        if (ENV.app_env === 'prod') {
+            $urlRouterProvider.otherwise('/home');
+        }
+        else {
+            $stateProvider
+            .state('app.login', {
+                url: '/login',
+                views: {
+                    'homeRightContent' :{
+                        templateUrl: 'views/login.html',
+                        controller: 'loginCtrl',
+                        controllerAs: 'lc'
+                    }
+                }
+            });
+
+            $urlRouterProvider.otherwise('/login');
+        }
+    }
+
+}]);

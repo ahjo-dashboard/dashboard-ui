@@ -12,69 +12,37 @@
  * Controller of the dashboard
  */
 angular.module('dashboard')
-.controller('menuCtrl', function ($state, $log, $stateParams, AhjoMeetingService, MessageService, ENV, $rootScope, $scope, $timeout, Device) {
-  	$log.debug("menuCtrl: CONFIG");
+.controller('menuCtrl', ['$log', '$state', '$rootScope', 'DEVICE', function ($log, $state, $rootScope, DEVICE) {
+  	$log.log("menuCtrl: CONTROLLER");
     var self = this;
-    self.state = $state.current.name;
-    self.item = {};
-    self.items = {
-        // overview is the first key and signing is the last key
-        overview : { name: 'Uusimmat', state : 'app.overview', pseudoState : '', meeting: {}, submenu : [] },
-        signing : { name: 'Allekirjoitukset', state : 'app.signing', pseudoState : 'app.signitem', meeting: {}, submenu : [] },
-        meetings : { name: 'Kokoukset', state : 'app.meetingList', pseudoState : 'app.meeting', meeting: {}, submenu : [] }
-    };
-
-    // PRIVATE FUNCTIONS
-    function setMenuData(menu, items, meeting) {
-        $log.log("menuCtrl: setMenuData");
-        var item = self.items[menu];
-        item.submenu = [];
-        item.meeting = meeting ? meeting : {};
-        // delays are for smooth and non-parallel animations
-        $timeout(function() {
-            item.submenu = items ? items : [];
-            $timeout(function() {
-                MessageService.send(ENV.Msg_Open_Menu, {});
-            }, 200);
-        }, 200);
-    }
-
-    function checkMenuState() {
-        if (Device.current() === ENV.Device_Extra_Small) {
-            $timeout(function() {
-                MessageService.send(ENV.Msg_Close_Menu, {});
-            }, 400);
-        }
-    }
+    self.mobile = $rootScope.device === DEVICE.MOBILE;
+    self.title = 'Ahjo Dashboard';
 
     // PUBLIC FUNCTIONS
-    self.menuItemSelected = function(item) {
-        $log.log("menuCtrl: menuItemSelected");
-        self.item = {};
-        $state.go(item.state);
-        checkMenuState();
+    self.showMeetings = function() {
+        $log.debug("menuCtrl: showMeetings");
+        // if (self.mobile) {
+            $state.go('app.meetings');
+        // }
     };
 
-    self.submenuItemSelected = function(item) {
-        $log.log("menuCtrl: submenuItemSelected");
-        self.item = item;
-        $state.go('app.meeting', {'agendaItem': item});
-        checkMenuState();
+    self.showSignings = function() {
+        $log.debug("menuCtrl: showSignings");
+        // if (self.mobile) {
+            $state.go('app.signing');
+        // }
     };
 
-    // ADD LISTENER
-    var msgListener = $rootScope.$on(ENV.Msg_Meeting_Selection, function(event, data) {
-        $log.debug("menuCtrl: " +event.name);
-        setMenuData('meetings', data.agendaItems, data.meetingItem);
-    });
+    self.showInfo = function() {
+        $log.debug("menuCtrl: showInfo");
+        if (self.mobile) {
+            $state.go('app.info');
+        }
+    };
 
-    var stateListener = $rootScope.$on('$stateChangeSuccess', function (event, next/*, toParams, fromParams*/) {
-		$log.debug('menuCtrl: stateChangeSuccess: ' +next.name);
-        self.state = next.name;
-	});
+    self.toggleMenu = function() {
+        $log.debug("menuCtrl: toggleMenu");
+		$rootScope.menu = !$rootScope.menu;
+    };
 
-    // REMOVE LISTENER
-    $scope.$on('$destroy', msgListener);
-    $scope.$on('$destroy', stateListener);
-
-});
+}]);
