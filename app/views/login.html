@@ -1,8 +1,8 @@
-<div class="no-inherit-animation scrolling-content">
-    <form>
-        <select id="ADID" name="ADID" ng-model="lc.data.selection">
+<div class="ad-page">
+    <form class="ad-center">
+        <select style="margin: 10px;" id="ADID" name="ADID" ng-model="lc.data.selection">
             <option ng-repeat="item in lc.data.options track by $index" value="{{item.value}}">{{item.text}}</option>
         </select>
-        <input class="login" type="submit" value="Kirjaudu" ng-click="lc.select()" />
+        <input style="margin: 10px;" class="login" type="submit" value="Kirjaudu" ng-click="lc.select()" />
     </form>
 </div>

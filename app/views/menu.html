@@ -1,4 +1,33 @@
-<div class="scrolling-content">
-    <ad-menu items="mc.items" state="mc.state" item="mc.item" on-selected="mc.menuItemSelected(item)" on-subselected="mc.submenuItemSelected(item)">
-    </ad-menu>
+
+<div class="ad-page">
+
+    <div class="ad-page-header">
+        <div class="container col-xs-12">
+            <div class="row">
+                <h3 ng-if="mc.mobile" class="col-xs-10">{{mc.title}}</h3>
+                <i ng-if="!mc.mobile" class="col-sm-3 glyphicon glyphicon-menu-right right" aria-hidden="true"></i>
+                <i ng-if="!mc.mobile" class="col-sm-3 glyphicon glyphicon-menu-left right" aria-hidden="true" ng-click="mc.toggleMenu()"></i>
+                <i ng-if="!mc.mobile" class="col-sm-3 glyphicon glyphicon-home right" aria-hidden="true" ng-click=""></i>
+                <i class="col-xs-1 col-sm-3 glyphicon glyphicon-info-sign right" aria-hidden="true" ng-click="mc.showInfo()"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="ad-page-content">
+
+        <button type="button" class="btn btn-primary btn-lg" ng-click="mc.showMeetings()">
+            <h4>Kokoukset (5)</h4>
+        </button>
+        <button type="button" class="btn btn-primary btn-lg" ng-click="mc.showSignings()">
+            <h4>Allekirjoitukset (3)</h4>
+        </button>
+        <button type="button" class="btn btn-primary btn-lg" ng-click="">
+            <h4>Aloitesovellus</h4>
+        </button>
+        <button type="button" class="btn btn-primary btn-lg" ng-click="">
+            <h4>Luottamushenkilöportaali</h4>
+        </button>
+
+    </div>
+
 </div>

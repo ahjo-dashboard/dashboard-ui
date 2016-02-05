@@ -1,0 +1,13 @@
+<div class="ad-page">
+
+    <div class="container">
+        <div class="row">
+            <ui-view name="homeLeftContent" class="ng-class: ['ad-page-left', 'col-sm-3', 'col-md-2', {'col-xs-12':menu, 'col-xs-6':!menu}]"></ui-view>
+
+            <ui-view name="homeRightContent" class="ng-class: ['ad-page-right', {'col-xs-6':menu, 'col-sm-9':menu, 'col-md-10':menu, 'col-xs-12':!menu}]"></ui-view>
+        </div>
+    </div>
+
+    <ui-view name="homeContent"></ui-view>
+
+</div>
