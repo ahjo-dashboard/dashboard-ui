@@ -19,8 +19,7 @@ angular.module('dashboard', [
     'ui.bootstrap',
     'ngSanitize',
     'wysiwyg.module',
-    'ngDialog',
-    'FileHistory'
+    'ngDialog'
 ])
 .constant(
     'DEVICE', {

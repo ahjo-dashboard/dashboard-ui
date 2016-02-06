@@ -12,7 +12,7 @@
  * Controller of the dashboard
  */
 angular.module('dashboard')
-.controller('SignitemCtrl', function ($log, $scope, $stateParams, SigningAttApi, $sce, $timeout, $uibModal, MessageService, ENV, FileHistory) {
+.controller('SignitemCtrl', function ($log, $scope, $stateParams, SigningAttApi, $sce, $timeout, $uibModal, MessageService, ENV) {
     $log.debug("SignitemCtrl.config");
 
     var item = $stateParams.signItem;
@@ -49,7 +49,6 @@ angular.module('dashboard')
         .then(
             function(response) {
                 var blob = new Blob([(response.pdfBlob)], {type: 'application/pdf'});
-                FileHistory.add(new FileHistory.FileItem(null, self.fileName, null, blob));
                 drawBlob(blob, false);
             },
             function(err) {
@@ -69,7 +68,6 @@ angular.module('dashboard')
     function fetchUrl(item) {
         self.tmpUrl = ENV.SignApiUrl_GetAttachment.replace(":reqId", item.ProcessGuid);
         $log.debug("SignitemCtrl.fetchUrl: " +self.tmpUrl);
-        FileHistory.add(new FileHistory.FileItem(self.tmpUrl, self.fileName, null, null));
     }
 
     // PUBLIC FUNCTIONS

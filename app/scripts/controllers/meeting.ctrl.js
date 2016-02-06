@@ -13,7 +13,7 @@
  */
 angular.module('dashboard')
 .controller('meetingCtrl', function (
-    $log, AhjoMeetingService, $stateParams, PdfReader, $sce, $scope, $rootScope, ENV, Device, MessageService, $uibModal, FileHistory, $timeout) {
+    $log, AhjoMeetingService, $stateParams, PdfReader, $sce, $scope, $rootScope, ENV, Device, MessageService, $uibModal, $timeout) {
     $log.log("meetingCtrl.config");
     var self = this;
     self.content = [];
@@ -86,7 +86,6 @@ angular.module('dashboard')
         if (!ENV.app_useBlob) {
             self.fileName = attachment.name;
             self.tmpUrl = attachment.file_uri;
-            FileHistory.add(new FileHistory.FileItem(attachment.file_uri, self.fileName, null, null));
             // TODO: remove timeout if not needed, was there to tackle embeddd pdf not being displayed
             self.timer = $timeout(function(){
                 self.fileUrl = self.tmpUrl;
@@ -105,7 +104,6 @@ angular.module('dashboard')
                     self.blob = new Blob([(response.pdfBlob)], {type: 'application/pdf'});
                     self.fileUrl = URL.createObjectURL(self.blob);
                     self.fileName = attachment.name;
-                    FileHistory.add(new FileHistory.FileItem(attachment.file_uri, self.fileName, null, self.blob));
                 },
                 function(err) {
                     $log.error("meetingCtrl.attachmentSelected/blob: PdfReader.query error " +JSON.stringify(err));
@@ -160,7 +158,6 @@ angular.module('dashboard')
             .then(
                 function(response) {
                     var blob = new Blob([(response.pdfBlob)], {type: 'application/pdf'});
-                    FileHistory.add(new FileHistory.FileItem(fileUrl, attachment.name, null, blob));
                     self.openFileModal(null, blob, attachment.name);
                 },
                 function(err) {
