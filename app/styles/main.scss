@@ -272,9 +272,12 @@ body {
         flex-direction: row;
 
         overflow: hidden;
+        min-height: 42px;
 
         .btn {
             font-size: 1.5em;
+            border: 0;
+            border-radius: 0;
             .glyphicon {
                 color: $headingTxtColor;
                 font-size: 1.2em;
@@ -322,6 +325,8 @@ body {
         display: flex;
         justify-content: space-between;
         align-items: center;
+        border: 0;
+        border-radius: 0;
     }
 
     .ad-center {
