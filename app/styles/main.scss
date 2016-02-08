@@ -132,9 +132,6 @@ body {
         bottom: 0;
         overflow: auto;
 
-        -webkit-transition: all $short-delay linear;
-        -moz-transition: all $short-delay linear;
-        -o-transition: all $short-delay linear;
         transition: all $short-delay linear;
     }
 
@@ -145,9 +142,6 @@ body {
         bottom: 0;
         overflow: auto;
 
-        -webkit-transition: all $short-delay linear;
-        -moz-transition: all $short-delay linear;
-        -o-transition: all $short-delay linear;
         transition: all $short-delay linear;
     }
 
@@ -237,42 +231,26 @@ body {
         bottom: 0;
         overflow: hidden;
 
-        display: -ms-flexbox;      /* TWEENER - IE 10 */
-        display: -webkit-flex;     /* NEW - Chrome */
         display: flex;
-
-        -ms-flex-direction: column;
-        -webkit-flex-direction: column;
         flex-direction: column;
     }
 
     .ad-flex-item {
-        -webkit-flex: 14;          /* Chrome */
-        -ms-flex: 14;              /* IE 10 */
         flex: 14;
 
         overflow-x: hidden;
         overflow-y: auto;
 
         transition: all $short-delay linear;
-        -webkit-transition: all $short-delay linear;
     }
 
     .ad-flex-header {
-        -webkit-flex: 2;          /* Chrome */
-        -ms-flex: 2;              /* IE 10 */
         flex: 2;
-
-        display: -ms-flexbox;      /* TWEENER - IE 10 */
-        display: -webkit-flex;     /* NEW - Chrome */
         display: flex;
-
-        -ms-flex-direction: row;
-        -webkit-flex-direction: row;
         flex-direction: row;
 
         overflow: hidden;
-        min-height: 42px;
+        min-height: 3.2em;
 
         .btn {
             font-size: 1.5em;
@@ -285,39 +263,27 @@ body {
         }
 
         .ad-lg {
-            -webkit-flex: 12;          /* Chrome */
-            -ms-flex: 12;              /* IE 10 */
             flex: 12;
         }
 
         .ad-xs {
-            -webkit-flex: 2;          /* Chrome */
-            -ms-flex: 2;              /* IE 10 */
             flex: 2;
         }
     }
 
     .ad-flex-show {
-        -webkit-flex-grow: 14;
-        -ms-flex-grow: 14;
         flex-grow: 14;
     }
 
     .ad-flex-show-full {
-        -webkit-flex-grow: 30;
-        -ms-flex-grow: 30;
         flex-grow: 30;
     }
 
     .ad-flex-show-header {
-        -webkit-flex-grow: 2;
-        -ms-flex-grow: 2;
         flex-grow: 2;
     }
 
     .ad-flex-hide {
-        -webkit-flex-grow: 0;
-        -ms-flex-grow: 0;
         flex-grow: 0;
     }
 
