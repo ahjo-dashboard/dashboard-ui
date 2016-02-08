@@ -19,24 +19,24 @@ angular.module('dashboard')
         self.mtgErr = null;
         self.data = [];
 
-        self.organs = [];
-        self.roles = [];
+        self.agencyData = [];
+        self.roleData = [];
 
         self.meetingFilter = null;
-        self.organFilter = null;
+        self.agencyFilter = null;
         self.roleFilter = null;
 
         function parseDropdowns() {
-            self.organs = [];
-            self.roles = [];
+            self.agencyData = [];
+            self.roleData = [];
             for (var i = 0; i < self.meetings.length; i++) {
-                var organ = self.meetings[i].policymaker_name;
-                if (organ && self.organs.indexOf(organ) === -1) {
-                    self.organs.push(organ);
+                var agency = self.meetings[i].policymaker_name;
+                if (agency && self.agencyData.indexOf(agency) === -1) {
+                    self.agencyData.push(agency);
                 }
                 var role = self.meetings[i].policymaker;
-                if (role && self.roles.indexOf(role) === -1) {
-                    self.roles.push(role);
+                if (role && self.roleData.indexOf(role) === -1) {
+                    self.roleData.push(role);
                 }
             }
         }
@@ -47,7 +47,7 @@ angular.module('dashboard')
                 self.data.push({
                     'meeting': self.meetings[i].id,
                     'role': self.meetings[i].policymaker,
-                    'organ': self.meetings[i].policymaker_name,
+                    'agency': self.meetings[i].policymaker_name,
                     'visible': true
                 });
             }
@@ -58,8 +58,8 @@ angular.module('dashboard')
             for (var i = 0; i < self.data.length; i++) {
                 var showMeeting = self.meetingFilter ? self.data[i].meeting === self.meetingFilter : true;
                 var showRole = self.roleFilter ? self.data[i].role === self.roleFilter : true;
-                var showOrgan = self.organFilter ? self.data[i].organ === self.organFilter : true;
-                self.data[i].visible = showMeeting && showRole && showOrgan;
+                var showAgency = self.agencyFilter ? self.data[i].agency === self.agencyFilter : true;
+                self.data[i].visible = showMeeting && showRole && showAgency;
             }
         }
 
@@ -81,11 +81,11 @@ angular.module('dashboard')
             // $state.go('app.meeting', {meetingItem : meeting});
         };
 
-        self.setOrganFilter = function(organ) {
-            $log.debug("adMeetings: setOrganFilter: "+ organ);
-            self.organFilter = organ;
+        self.setAgencyFilter = function(agency) {
+            $log.debug("adMeetings: setAgencyFilter: "+ agency);
+            self.agencyFilter = agency;
             filterData();
-            $scope.organIsOpen = false;
+            $scope.agencyIsOpen = false;
         };
 
         self.setMeetingFilter = function(meeting) {
