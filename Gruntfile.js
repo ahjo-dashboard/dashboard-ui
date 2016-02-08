@@ -568,16 +568,22 @@ module.exports = function (grunt) {
 
     grunt.registerTask('build:dev', [
         'ngconstant:dev',
+        'newer:jshint',
+        'test',
         'build'
     ]);
 
     grunt.registerTask('build:test', [
         'ngconstant:test',
+        'newer:jshint',
+        'test',
         'build'
     ]);
 
     grunt.registerTask('build:prod', [
         'ngconstant:prod',
+        'newer:jshint',
+        'test',
         'build'
     ]);
 
