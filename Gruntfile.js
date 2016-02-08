@@ -28,6 +28,8 @@ module.exports = function (grunt) {
     var serveStatic = require('serve-static');
 
     grunt.loadNpmTasks('grunt-postcss');
+    grunt.loadNpmTasks('grunt-exec');
+    grunt.loadNpmTasks('grunt-contrib-compress');
 
     // Define the configuration for all the tasks
     grunt.initConfig({
@@ -513,10 +515,30 @@ module.exports = function (grunt) {
             dist: {
                 src: '.tmp/styles/*.css'
             }
+        },
+
+        exec: {
+          postbuild_custom: {
+            cmd: 'custom/tools/postbuild.sh ' +appConfig.dist +' ./custom/',
+            callback: function (error /*, stdout, stderr*/) {
+                if (error !== null) {
+                    grunt.log.error('exec error: ' + error);
+                }
+            }
+          }
+        },
+        compress: {
+          project: {
+            options: {
+              archive: 'dist.zip'
+            },
+            files: [
+              {cwd: 'dist/', src: ['**/*'], expand: true, dest: ''}
+            ]
+          }
         }
 
     });
-
 
     grunt.registerTask('serve', 'Compile then start a connect web server', function (target) {
         if (target === 'dist') {
@@ -563,7 +585,14 @@ module.exports = function (grunt) {
         'uglify',
         'filerev',
         'usemin',
-        'htmlmin'
+        'htmlmin',
+        'exec:postbuild_custom',
+        'compress'
+    ]);
+
+    grunt.registerTask('deploy', [
+        'exec:postbuild_custom',
+        'compress'
     ]);
 
     grunt.registerTask('build:dev', [
