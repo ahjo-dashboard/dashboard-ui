@@ -15,17 +15,17 @@
 
     <div class="ad-page-content">
 
-        <button type="button" class="btn btn-primary btn-lg" ng-click="mc.showMeetings()">
-            <h4>Kokoukset (5)</h4>
+        <button type="button" class="ng-class: ['btn', 'btn-primary', 'btn-lg', {'loading':mc.loading}]" ng-click="mc.showMeetings()">
+            Kokoukset <span class="badge">{{mc.mtgCount}}</span>
         </button>
         <button type="button" class="btn btn-primary btn-lg" ng-click="mc.showSignings()">
-            <h4>Allekirjoitukset (3)</h4>
+            Allekirjoitukset <span class="badge">{{mc.sgnCount}}</span>
         </button>
         <button type="button" class="btn btn-primary btn-lg" ng-click="">
-            <h4>Aloitesovellus</h4>
+            Aloitesovellus
         </button>
         <button type="button" class="btn btn-primary btn-lg" ng-click="">
-            <h4>Luottamushenkilöportaali</h4>
+            Luottamushenkilöportaali
         </button>
 
     </div>

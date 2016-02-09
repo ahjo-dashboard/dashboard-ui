@@ -19,8 +19,8 @@ angular.module('dashboard')
 		SGN : 2
     }
 )
-.controller('overviewCtrl', function ($scope, $log, AhjoMeetingService, ENV, SigningOpenApi, $state, $rootScope, OPENMODE) {
-	$log.log("overviewCtrl.controller");
+.controller('overviewCtrl', function ($scope, $log, ENV, SigningOpenApi, $state, $rootScope, OPENMODE) {
+	$log.log("overviewCtrl: CONTROLLER");
 	var self = this;
 	self.loading = 0;
 	self.meetingsHeader = 'Tulevat kokoukset';
@@ -36,21 +36,6 @@ angular.module('dashboard')
 	self.state = OPENMODE.BOTH;
 
 	self.tst = "http://www.orimi.com/pdf-test.pdf";
-
-	// AhjoMeetingService.getMeetings(ENV.MeetingsApi_OverviewLimit, ENV.MeetingsApi_DefaultOffset)
-	// .then(function(response) {
-	// 	$log.debug(response);
-	// 	self.meetings = response.objects;
-	// 	self.mtgErr = null;
-	// },
-	// function(error) {
-	// 	$log.error("overviewCtrl: getMeetings error: " +error);
-	// 	self.mtgErr = error.status;
-	// })
-	// .finally(function() {
-	// 	$log.debug("overviewCtrl: getMeetings finally"); //TODO: remove
-	// 	self.loading += 1;
-	// });
 
 	// Open signing requests
 	self.signItems = SigningOpenApi.query(function() {
