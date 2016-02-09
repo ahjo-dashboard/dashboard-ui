@@ -585,12 +585,10 @@ module.exports = function (grunt) {
         'uglify',
         'filerev',
         'usemin',
-        'htmlmin',
-        'exec:postbuild_custom',
-        'compress'
+        'htmlmin'
     ]);
 
-    grunt.registerTask('deploy', [
+    grunt.registerTask('preparedeploy', [
         'exec:postbuild_custom',
         'compress'
     ]);
