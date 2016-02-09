@@ -22,7 +22,10 @@ module.exports = function (grunt) {
     // Configurable paths for the application
     var appConfig = {
         app: require('./bower.json').appPath || 'app',
-        dist: 'dist'
+        dist: 'dist',
+        customPath: 'custom/', // Path to custom configs project
+        customtoolsPath: 'custom/tools/', // Path to custom configs tools
+        postbuild: 'postbuild.sh' // Filename of custom cofigs postbuild script
     };
 
     var serveStatic = require('serve-static');
@@ -519,7 +522,17 @@ module.exports = function (grunt) {
 
         exec: {
           postbuild_custom: {
-            cmd: 'custom/tools/postbuild.sh ' +appConfig.dist +' ./custom/',
+            cmd: function() {
+              var res = '';
+              if (grunt.file.exists(appConfig.customtoolsPath+appConfig.postbuild)) {
+                // Shell script and arguments to execute
+                res = appConfig.customtoolsPath+appConfig.postbuild +' ' +appConfig.dist +' ' +appConfig.customPath;
+                grunt.log.writeln(' * Executing: ' +res);
+              } else {
+                grunt.log.subhead(' * No postbuild script to execute');
+              }
+              return res;
+            },
             callback: function (error /*, stdout, stderr*/) {
                 if (error !== null) {
                     grunt.log.error('exec error: ' + error);
@@ -530,10 +543,10 @@ module.exports = function (grunt) {
         compress: {
           project: {
             options: {
-              archive: 'dist.zip'
+              archive:  appConfig.dist+'.zip'
             },
             files: [
-              {cwd: 'dist/', src: ['**/*'], expand: true, dest: '', dot: 'true'}
+              {cwd: appConfig.dist, src: ['**/*'], expand: true, dest: '', dot: 'true'}
             ]
           }
         }
