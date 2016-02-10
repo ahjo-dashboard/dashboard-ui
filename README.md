@@ -20,6 +20,7 @@ Building
 
 * `grunt` for building for default configuration
 * `grunt build:dev|test|prod` for building for a specific configuration
+* `grunt preparedeploy` after building for preparing build output for deployment, if necessary.
 
 Running on localhost
 
