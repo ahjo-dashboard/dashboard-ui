@@ -21,11 +21,12 @@
                 </ad-meetings>
             </div>
             <!-- MEETINGS END -->
+            <br>
 
             <!-- SIGNINGS START -->
             <div class="ad-flex-header">
-                <button type="button" class="btn btn-warning ad-lg">Avoimet allekirjoitukset</button>
-                <button type="button" class="btn btn-warning ad-lg">Suljetut allekirjoitukset</button>
+                <button type="button" class="ng-class: ['btn', 'btn-warning', 'ad-lg', {'active':!oc.closedSignReqs}]" ng-click="oc.closedSignReqs=false">Avoimet allekirjoitukset</button>
+                <button type="button" class="ng-class: ['btn', 'btn-warning', 'ad-lg', {'active':oc.closedSignReqs}]" ng-click="oc.closedSignReqs=true">Suljetut allekirjoitukset</button>
                 <button type="button" class="btn btn-info ad-xs">
                     <i class="glyphicon glyphicon-info-sign"></i>
                 </button>
@@ -35,10 +36,7 @@
             </div>
 
             <div class="ng-class: ['ad-flex-item', {'ad-flex-show-full':oc.state === 2, 'ad-flex-show':oc.state === 0, 'ad-flex-hide':oc.state === 1}]">
-                <ad-open-signreqs ad-signitems="oc.signItems" header="oc.signReqsHeader" on-select="oc.signItemSelected(signingItem)">
-                </ad-open-signreqs>
-                <div ng-if="oc.signErr" class="alert alert-danger" role="alert">Allekirjoitustietojen haku ei onnistunut</div>
-            </div>
+                <ad-open-signreqs closeditems="oc.closedSignReqs"></ad-open-signreqs>
             <!-- SIGNINGS END -->
 
         </div>

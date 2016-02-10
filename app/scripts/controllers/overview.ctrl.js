@@ -22,32 +22,10 @@ angular.module('dashboard')
 .controller('overviewCtrl', function ($scope, $log, ENV, SigningOpenApi, $state, $rootScope, OPENMODE) {
 	$log.log("overviewCtrl: CONTROLLER");
 	var self = this;
-	self.loading = 0;
-	self.signReqsHeader = 'Avoimet allekirjoituspyynnöt';
-	self.signErr = null;
 
 	self.state = OPENMODE.BOTH;
     self.future = true;
-
-	// Open signing requests
-	self.signItems = SigningOpenApi.query(function() {
-		self.signErr = null;
-	},
-	function(error) {
-		$log.error("overviewCtrl: SigningOpenApi.query error " +JSON.stringify(error));
-		self.signErr = error.status;
-		//self.errMsg = error.data.Message;
-	});
-	self.signItems.$promise.finally(function() {
-		$log.debug("overviewCtrl: SigningOpenApi.query finally"); //TODO: remove
-		self.loading += 1;
-	});
-
-
-	self.signItemSelected = function(signingItem) {
-		$log.debug("overviewCtrl.signItemSelected");
-		$state.go('app.signitem', {signItem : signingItem});
-	};
+    self.closedSignReqs = true;
 
 	self.showInfo = function() {
 		$log.debug("overviewCtrl: showInfo");
