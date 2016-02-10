@@ -34,6 +34,7 @@ angular.module('dashboard')
 	self.sgnOpen = 1;
 
 	self.state = OPENMODE.BOTH;
+    self.future = true;
 
 	// Open signing requests
 	self.signItems = SigningOpenApi.query(function() {
