@@ -1,7 +1,7 @@
 /**
-* (c) 2016 Tieto Finland Oy
-* Licensed under the MIT license.
-*/
+ * (c) 2016 Tieto Finland Oy
+ * Licensed under the MIT license.
+ */
 'use strict';
 
 /**

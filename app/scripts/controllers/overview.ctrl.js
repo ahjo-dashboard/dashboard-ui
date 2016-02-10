@@ -35,8 +35,6 @@ angular.module('dashboard')
 
 	self.state = OPENMODE.BOTH;
 
-	self.tst = "http://www.orimi.com/pdf-test.pdf";
-
 	// Open signing requests
 	self.signItems = SigningOpenApi.query(function() {
 		self.signErr = null;
