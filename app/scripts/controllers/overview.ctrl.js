@@ -23,15 +23,8 @@ angular.module('dashboard')
 	$log.log("overviewCtrl: CONTROLLER");
 	var self = this;
 	self.loading = 0;
-	self.meetingsHeader = 'Tulevat kokoukset';
 	self.signReqsHeader = 'Avoimet allekirjoituspyynnöt';
-	self.meetings = [];
-	self.loadingmax = 2;
 	self.signErr = null;
-	self.mtgErr = null;
-
-	self.mtgOpen = 1;
-	self.sgnOpen = 1;
 
 	self.state = OPENMODE.BOTH;
     self.future = true;
@@ -50,10 +43,6 @@ angular.module('dashboard')
 		self.loading += 1;
 	});
 
-	self.meetingSelected = function(meeting) {
-		$log.debug("overviewCtrl.meetingSelected: "+ meeting);
-		$state.go('app.meeting', {meetingItem : meeting});
-	};
 
 	self.signItemSelected = function(signingItem) {
 		$log.debug("overviewCtrl.signItemSelected");
@@ -62,21 +51,6 @@ angular.module('dashboard')
 
 	self.showInfo = function() {
 		$log.debug("overviewCtrl: showInfo");
-	};
-
-	self.toggleMenu = function() {
-        $log.debug("overviewCtrl: toggleMenu");
-		$rootScope.menu = !$rootScope.menu;
-    };
-
-	self.meetingsClicked = function() {
-		$log.debug("overviewCtrl: meetingsClicked");
-		if (self.state === OPENMODE.BOTH || self.state === OPENMODE.SGN) {
-			self.state = OPENMODE.MTG;
-		}
-		else {
-			self.state = OPENMODE.BOTH;
-		}
 	};
 
 	self.signingsClicked = function() {
