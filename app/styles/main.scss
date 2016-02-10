@@ -42,6 +42,8 @@ body {
     $headingL2BgColor: $appbgcolor;
     $borderColor: $focusedColor;
 
+    $successColor: #5cb85c;
+
     background-color: $appbgcolor;
     padding: 0;
     padding-top: $header-height;
@@ -293,6 +295,12 @@ body {
         align-items: center;
         border: 0;
         border-radius: 0;
+    }
+
+    .ad-dummy-button {
+        @extend .ad-button;
+        opacity: 1.0 !important;
+        outline: none !important;
     }
 
     .ad-center {
