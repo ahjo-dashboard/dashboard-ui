@@ -53,6 +53,16 @@ angular.module('dashboard')
 		$log.debug("overviewCtrl: showInfo");
 	};
 
+    self.meetingsClicked = function() {
+		$log.debug("overviewCtrl: meetingsClicked");
+		if (self.state === OPENMODE.BOTH || self.state === OPENMODE.SGN) {
+			self.state = OPENMODE.MTG;
+		}
+		else {
+			self.state = OPENMODE.BOTH;
+		}
+	};
+
 	self.signingsClicked = function() {
 		$log.debug("overviewCtrl: signingsClicked");
 		if (self.state === OPENMODE.BOTH || self.state === OPENMODE.MTG) {
