@@ -20,6 +20,8 @@ angular.module('dashboard')
         self.loading = false;
         self.responseData = {};
         self.data = [];
+        self.date = new Date();
+        // self.date.setFullYear(self.date .getFullYear() - 4);  // this if for testing. to be removed
 
         self.agencyData = [];
         self.roleData = [];
@@ -29,10 +31,13 @@ angular.module('dashboard')
 
         function setData() {
             self.data = [];
+            var date = self.date.toJSON();
             if (self.responseData instanceof Object && self.responseData.objects instanceof Array) {
                 for (var i = 0; i < self.responseData.objects.length; i++) {
                     var item = self.responseData.objects[i];
+                    var time = item.meetingTime;
                     var aVisible = self.aF ? (self.aF === item.agencyName) : true;
+                    var fVisible = ($scope.future && time) ? date < time : true;
 
                     for (var j = 0; j < item.roleIDs.length; j++) {
                         var role = item.roleIDs[j].RoleName;
@@ -40,7 +45,7 @@ angular.module('dashboard')
                         self.data.push({
                             'meeting': item,
                             'role': role,
-                            'visible': aVisible && rVisible
+                            'visible': aVisible && rVisible && fVisible
                         });
                     }
                 }
@@ -80,11 +85,18 @@ angular.module('dashboard')
         function(error) {
             $log.error("adMeetings: getMeetings error: " +JSON.stringify(error));
             self.loading = false;
+            self.mtgErr = error;
         },
         function(/*notify*/) {
             self.loading = true;
         })
         .finally(function() {
+            setData();
+            parseAgencyDropdown();
+            parseRoleDropdown();
+        });
+
+        $scope.$watch('future', function() {
             setData();
             parseAgencyDropdown();
             parseRoleDropdown();
@@ -120,7 +132,7 @@ angular.module('dashboard')
 
     return {
         scope: {
-
+            future: '='
         },
         templateUrl: 'directives/meetings/adMeetings.Directive.html',
         restrict: 'AE',

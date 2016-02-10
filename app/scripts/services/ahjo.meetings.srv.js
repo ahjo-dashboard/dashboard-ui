@@ -20,7 +20,7 @@ angular.module('dashboard')
         $log.log("AhjoMeetingsSrv: getMeetings");
         var deferred = $q.defer();
         $timeout(function () {
-            deferred.notify('start');
+            deferred.notify();
             $http({
                 method: 'GET',
                 cache: true,

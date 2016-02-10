@@ -6,8 +6,8 @@
 
             <!-- MEETINGS START -->
             <div class="ad-flex-header">
-                <button type="button" class="btn btn-warning ad-lg">Tulevat kokoukset</button>
-                <button type="button" class="btn btn-warning ad-lg">Kaikki kokoukset</button>
+                <button type="button" class="ng-class: ['btn', 'btn-warning', 'ad-lg', {'active':oc.future}]" ng-click="oc.future=true">Tulevat kokoukset</button>
+                <button type="button" class="ng-class: ['btn', 'btn-warning', 'ad-lg', {'active':!oc.future}]" ng-click="oc.future=false">Kaikki kokoukset</button>
                 <button type="button" class="btn btn-info ad-xs">
                     <i class="glyphicon glyphicon-info-sign"></i>
                 </button>
@@ -17,9 +17,8 @@
             </div>
 
             <div class="ng-class: ['ad-flex-item', {'ad-flex-show-full':oc.state === 1, 'ad-flex-show':oc.state === 0, 'ad-flex-hide':oc.state === 2}]">
-                <ad-meetings>
+                <ad-meetings future="oc.future">
                 </ad-meetings>
-                <div ng-if="oc.mtgErr" class="alert alert-danger" role="alert">Kokoustietojen haku ei onnistunut</div>
             </div>
             <!-- MEETINGS END -->
 
