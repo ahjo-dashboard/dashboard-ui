@@ -103,9 +103,9 @@ angular.module('dashboard')
             url: '/home',
             views: {
                 'homeLeftContent': {
-                    templateUrl: 'views/menu.html',
-                    controller: 'menuCtrl',
-                    controllerAs: 'mc'
+                    templateUrl: '',
+                    controller: '',
+                    controllerAs: ''
                 },
                 'homeRightContent': {
                     templateUrl: 'views/overview.html',
