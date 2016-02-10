@@ -1,6 +1,6 @@
 <div>
 
-    <div class="btn-group btn-group-justified">
+    <div ng-if="!ctrl.mobile" class="btn-group btn-group-justified">
 
         <div class="btn-group">
             <button type="button" class="ng-class: ['btn', 'btn-success', 'ad-dummy-button', 'disabled', {'loading':ctrl.loading}]" uib-dropdown-toggle>
@@ -38,11 +38,11 @@
     </div>
 
     <ul ng-if="!ctrl.mtgErr" class="list-group">
-        <button ng-if="item.visible" type="button" class="list-group-item col-xs-12" ng-repeat="item in ctrl.data track by $index" ng-click="ctrl.meetingSelected(item)">
+        <button ng-if="item.visible" type="button" class="list-group-item" ng-repeat="item in ctrl.data track by $index" ng-click="ctrl.meetingSelected(item)">
             <div class="row">
-                <div class="col-xs-4">{{item.meeting.name}}</div>
-                <div class="col-xs-4">{{item.meeting.agencyName}}</div>
-                <div class="col-xs-4">{{item.role}}</div>
+                <div class="col-xs-12 col-sm-4">{{item.meeting.name}}</div>
+                <div class="col-xs-12 col-sm-4">{{item.meeting.agencyName}}</div>
+                <div class="col-xs-12 col-sm-4">{{item.role}}</div>
             </div>
         </button>
     </ul>

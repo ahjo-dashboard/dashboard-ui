@@ -12,7 +12,11 @@
 * Controller of the dashboard
 */
 angular.module('dashboard')
-.controller('meetingListCtrl', function ($log) {
-    $log.debug("meetingListCtrl: CONTROLLER");
+.controller('meetingListCtrl',['$log', '$rootScope', 'DEVICE', function ($log, $rootScope, DEVICE) {
+    $log.log("meetingListCtrl: CONTROLLER");
+    var self = this;
 
-});
+    self.future = true;
+    self.mobile = $rootScope.device === DEVICE.MOBILE;
+
+}]);
