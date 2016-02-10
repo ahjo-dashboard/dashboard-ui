@@ -22,21 +22,16 @@ angular.module('dashboard')
         self.data = [];
 
         self.agencyData = [];
-        self.meetingData = [];
         self.roleData = [];
 
-        self.mF = null;
         self.aF = null;
         self.rF = null;
 
         function setData() {
-            $log.log("adMeetings: setData");
             self.data = [];
-
             if (self.responseData instanceof Object && self.responseData.objects instanceof Array) {
                 for (var i = 0; i < self.responseData.objects.length; i++) {
                     var item = self.responseData.objects[i];
-                    var mVisible = self.mF ? (self.mF === item.name) : true;
                     var aVisible = self.aF ? (self.aF === item.agencyName) : true;
 
                     for (var j = 0; j < item.roleIDs.length; j++) {
@@ -45,28 +40,19 @@ angular.module('dashboard')
                         self.data.push({
                             'meeting': item,
                             'role': role,
-                            'visible': mVisible && aVisible && rVisible
+                            'visible': aVisible && rVisible
                         });
                     }
                 }
             }
         }
 
-        function parseDropdowns() {
-            $log.log("adMeetings: parseDropdowns");
-            self.agencyData = [];
+        function parseRoleDropdown() {
             self.roleData = [];
             for (var i = 0; i < self.data.length; i++) {
-                var agency = self.data[i].meeting.agencyName;
-                if (agency && self.agencyData.indexOf(agency) === -1) {
-                    self.agencyData.push(agency);
-                }
-                var name = self.data[i].meeting.name;
-                if (name && self.meetingData.indexOf(name) === -1) {
-                    self.meetingData.push(name);
-                }
                 var item = self.data[i].meeting;
-                for (var j = 0; j < item.roleIDs.length; j++) {
+                var visible = self.data[i].visible;
+                for (var j = 0; j < item.roleIDs.length && visible; j++) {
                     var role = item.roleIDs[j].RoleName;
                     if (role && self.roleData.indexOf(role) === -1) {
                         self.roleData.push(role);
@@ -75,9 +61,19 @@ angular.module('dashboard')
             }
         }
 
+        function parseAgencyDropdown() {
+            self.agencyData = [];
+            for (var i = 0; i < self.data.length; i++) {
+                var agency = self.data[i].meeting.agencyName;
+                var visible = self.data[i].visible;
+                if (agency && self.agencyData.indexOf(agency) === -1 && visible) {
+                    self.agencyData.push(agency);
+                }
+            }
+        }
+
         AhjoMeetingsSrv.getMeetings()
         .then(function(response) {
-            $log.debug("adMeetings: getMeetings then:");
             self.loading = false;
             self.responseData = response;
         },
@@ -85,14 +81,13 @@ angular.module('dashboard')
             $log.error("adMeetings: getMeetings error: " +JSON.stringify(error));
             self.loading = false;
         },
-        function(notify) {
-            $log.debug("adMeetings: getMeetings notify: " +JSON.stringify(notify));
+        function(/*notify*/) {
             self.loading = true;
         })
         .finally(function() {
-            $log.debug("adMeetings: getMeetings finally:");
             setData();
-            parseDropdowns();
+            parseAgencyDropdown();
+            parseRoleDropdown();
         });
 
         self.meetingSelected = function(meeting) {
@@ -104,20 +99,21 @@ angular.module('dashboard')
             $log.debug("adMeetings: setAgencyFilter: "+ agency);
             self.aF = agency;
             setData();
+            parseRoleDropdown();
+            if (!agency) {
+                parseAgencyDropdown();
+            }
             $scope.agencyIsOpen = false;
-        };
-
-        self.setMeetingFilter = function(meeting) {
-            $log.debug("adMeetings: setMeetingFilter: "+ meeting);
-            self.mF = meeting;
-            setData();
-            $scope.meetingIsOpen = false;
         };
 
         self.setRoleFilter = function(role) {
             $log.debug("adMeetings: setRoleFilter: "+ role);
             self.rF = role;
             setData();
+            parseAgencyDropdown();
+            if (!role) {
+                parseRoleDropdown();
+            }
             $scope.roleIsOpen = false;
         };
     }];
