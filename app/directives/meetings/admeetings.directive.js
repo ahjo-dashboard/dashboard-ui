@@ -13,7 +13,7 @@
 angular.module('dashboard')
 .directive('adMeetings', function () {
 
-    var controller = ['$log', '$scope', 'ENV', 'AhjoMeetingsSrv', function ($log, $scope, ENV, AhjoMeetingsSrv) {
+    var controller = ['$log', '$scope', 'ENV', 'AhjoMeetingsSrv', '$rootScope', 'DEVICE', function ($log, $scope, ENV, AhjoMeetingsSrv, $rootScope, DEVICE) {
         $log.log("adMeetings: CONTROLLER");
         var self = this;
         self.mtgErr = null;
@@ -21,7 +21,8 @@ angular.module('dashboard')
         self.responseData = {};
         self.data = [];
         self.date = new Date();
-        // self.date.setFullYear(self.date .getFullYear() - 4);  // this if for testing. to be removed
+        self.date.setFullYear(self.date .getFullYear() - 4);  // this if for testing. to be removed
+        self.mobile = $rootScope.device === DEVICE.MOBILE;
 
         self.agencyData = [];
         self.roleData = [];

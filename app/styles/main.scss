@@ -34,7 +34,6 @@ body {
     height: 100%;
     $header-height: 60px; // this is for moving main content
     $appbgcolor: rgb(51, 122, 183);
-    $block1height: 50%;
 
     $headingTxtColor: white;
     $focusedColor: rgb(40, 96, 144);
@@ -44,7 +43,6 @@ body {
 
     background-color: $appbgcolor;
     padding: 0;
-    padding-top: $header-height;
 
     .full-width {
         width: 100%;
@@ -293,6 +291,7 @@ body {
         align-items: center;
         border: 0;
         border-radius: 0;
+        width: 100%;
     }
 
     .ad-dummy-button {
