@@ -95,6 +95,10 @@ body {
         border-top-right-radius: 0px;
         border-width: 0px;
         overflow: hidden;
+
+        div {
+            padding: 0;
+        }
     }
 
     .panel-heading {
@@ -307,6 +311,19 @@ body {
         align-items: center;
         flex-direction: column;
     }
+
+    .ad-progress-bar {
+        height: 0.5em;
+        margin: 0;
+        padding: 0;
+    }
+
+    .ad-progress-bar-parent {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        min-height: 1.2em;
+    }
 }
 
 .ad-no-scrollbars { -ms-overflow-style: none; }
@@ -363,4 +380,3 @@ body {
 @import "main.small.scss";
 @import "main.medium.scss";
 @import "main.large.scss";
-@import "loading.scss";
