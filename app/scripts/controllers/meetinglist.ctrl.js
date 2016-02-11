@@ -13,7 +13,7 @@
 */
 angular.module('dashboard')
 .controller('meetingListCtrl',['$log', '$rootScope', 'DEVICE', function ($log, $rootScope, DEVICE) {
-    $log.log("meetingListCtrl: CONTROLLER");
+    $log.debug("meetingListCtrl: CONTROLLER");
     var self = this;
 
     self.future = true;
