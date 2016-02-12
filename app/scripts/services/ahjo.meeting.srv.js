@@ -24,7 +24,7 @@ angular.module('dashboard')
             $http({
                 method: 'GET',
                 cache: true,
-                url: ENV.AhjoApi_Meeting.replace('GUID', guid)
+                url: ENV.AhjoApi_Meeting.replace('{GUID}', guid)
             }).then(function(response) {
                 $log.debug("AhjoMeetingSrv: getMeeting then " +JSON.stringify(response));
                 deferred.resolve({});
