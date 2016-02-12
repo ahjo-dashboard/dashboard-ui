@@ -20,14 +20,27 @@ angular.module('dashboard')
     self.VIEW_CLOSED = 2;
     self.viewState = null;
 
-    self.data = [];
+    self.model = [];
     self.errClosed = null;
     self.errOpen = null;
     self.error = null;
     self.docStatuses = [];
+    self.docTypes = [];
+    self.FStatus = null;
+    self.FType = null;
 
 
     /* PRIVATE FUNCTIONS */
+
+    function DocStatus(status, txt) {
+      this.val = status;
+      this.txt = txt;
+    }
+
+    function DocType(type, txt) {
+      this.val = type;
+      this.txt = txt;
+    }
 
     // returns true if 'arr' contains an object with property 'prop' with value 'val'
     function hasObjWithPropVal(arr, prop, val) {
@@ -35,14 +48,15 @@ angular.module('dashboard')
       var res;
 
       if (!arr || !prop || undefined === val) {
-        $log.error("adOpenSignreqs.hasObjWithPropVal: bad arguments");
+        $log.error("adOpenSignreqs.hasObjWithPropVal: bad arguments: arr:" +arr +" prop:" +prop +" val:" +val);
         res = false;
       }
 
       for (var ind = 0; ind < arr.length && res === undefined; ind++) {
-        //$log.debug("adOpenSignreqs.hasObjWithPropVal: arr[" +ind +"]=" +arr[ind][prop] +" match to prop: " +prop +" val: " +val);
+        //$log.debug("adOpenSignreqs.hasObjWithPropVal: arr[" +ind +"][" +prop +"]=" +arr[ind][prop] +" match to prop: " +prop +" val: " +val);
         if (arr[ind] && prop in arr[ind] && arr[ind][prop] === val) {
           res = true;
+          //$log.debug("adOpenSignreqs.hasObjWithPropVal: found");
         }
       }
       return res;
@@ -60,22 +74,12 @@ angular.module('dashboard')
       return 0;
     }
 
-    function DocStatus(status, txt) {
-      this.status = status;
-      this.txt = txt;
-    }
-
-    function DocType(type, txt) {
-      this.type = type;
-      this.txt = txt;
-    }
-
     function parseDocTypes() {
-      $log.debug("adOpenSignreqs.parseDocTypes");
+      //$log.debug("adOpenSignreqs.parseDocTypes");
       self.docTypes = [];
-      for (var i = 0; i < self.data.length; i++) {
-        var item = self.data[i];
-        if (item && "DocumentType" in item && !hasObjWithPropVal(self.docTypes, 'type', item.DocumentType)) {
+      for (var i = 0; i < self.model.length; i++) {
+        var item = self.model[i];
+        if (item && "DocumentType" in item && !hasObjWithPropVal(self.docTypes, 'val', item.DocumentType)) {
           self.docTypes.push(new DocType(item.DocumentType, self.signReqDocTypeTxt(item.DocumentType)));
         }
       }
@@ -83,29 +87,29 @@ angular.module('dashboard')
     }
 
     function parseDocStatuses() {
-      $log.debug("adOpenSignreqs.parseDocStatuses");
+      //$log.debug("adOpenSignreqs.parseDocStatuses");
       self.docStatuses = [];
-      for (var i = 0; i < self.data.length; i++) {
-        var item = self.data[i];
-        if (item && "Status" in item && !hasObjWithPropVal(self.docStatuses, 'status', item.Status)) {
+      for (var i = 0; i < self.model.length; i++) {
+        var item = self.model[i];
+        if (item && "Status" in item && !hasObjWithPropVal(self.docStatuses, 'val', item.Status)) {
           self.docStatuses.push(new DocStatus(item.Status, self.signDocStatusTxt(item.Status)));
         }
       }
       self.docStatuses.sort(cmpStr);
     }
 
-    function refresh() {
+    function refreshModel() {
       switch(self.viewState) {
         case self.VIEW_OPEN:
           self.error = self.errOpen;
-          self.data = self.responseOpen;
+          self.model = self.responseOpen;
           break;
         case self.VIEW_CLOSED:
           self.error = self.errClosed;
-          self.data = self.responseClosed;
+          self.model = self.responseClosed;
           break;
         default:
-          $log.error("adOpenSignreqs.refresh: Should not reach default here!");
+          $log.error("adOpenSignreqs.refreshModel: Should not reach default here!");
           break;
       }
 
@@ -128,7 +132,7 @@ angular.module('dashboard')
       });
       self.responseOpen.$promise.finally(function() {
         $log.debug("adOpenSignreqs: SigningOpenApi.query open finally");
-        refresh();
+        refreshModel();
       });
     }
 
@@ -147,29 +151,34 @@ angular.module('dashboard')
       });
       self.responseClosed.$promise.finally(function() {
         $log.debug("adOpenSignreqs: SigningOpenApi.query closed finally");
-        refresh();
+        refreshModel();
       });
     }
 
-    function displayOpen() {
-      $log.debug("adOpenSignreqs.displayOpen");
-      self.viewState = self.VIEW_OPEN;
-
-      if (!self.responseOpen) {
-        getOpen();
-      } else {
-        refresh();
-      }
-    }
-
-    function displayClosed() {
-      $log.debug("adOpenSignreqs.displayClosed");
-      self.viewState = self.VIEW_CLOSED;
-
-      if (!self.responseClosed) {
-        getClosed();
-      } else {
-        refresh();
+    function setVwState(state) {
+      $log.debug("adOpenSignreqs.setVwState: " +state);
+      self.model = [];
+      self.viewState = state;
+      self.setModelFilter(null);
+      self.model = [];
+      switch(state) {
+        case self.VIEW_OPEN:
+          if (!self.responseOpen) {
+            getOpen();
+          } else {
+            refreshModel();
+          }
+          break;
+        case self.VIEW_CLOSED:
+          if (!self.responseClosed) {
+            getClosed();
+          } else {
+            refreshModel();
+          }
+          break;
+        default:
+          $log.error("adOpenSignreqs.setVwState: Should not reach default here! " +state);
+          break;
       }
     }
 
@@ -221,7 +230,7 @@ angular.module('dashboard')
     /* Is current state loading data */
     self.loading = function() {
       var res = false;
-      if ((self.viewState === self.VIEW_OPEN && self.loadingOpen) || (self.viewState === self.VIEW_CLOSED && self.loadingOpen)) {
+      if ((self.viewState === self.VIEW_OPEN && self.loadingOpen) || (self.viewState === self.VIEW_CLOSED && self.loadingClosed)) {
         res = true;
       }
       return res;
@@ -252,16 +261,40 @@ angular.module('dashboard')
       return res;
     };
 
-    self.setFilterDocType = function(type) {
-      $log.log("adOpenSignreqs.setFilterDocType: " +type);
+    self.setModelFilter = function(filter) {
+      if (filter instanceof DocType) {
+        $log.log("adOpenSignreqs.setModelFilter: DocType " +filter.val +"/" +filter.txt);
+        self.FType = filter;
+      } else if (filter instanceof DocStatus) {
+        $log.log("adOpenSignreqs.setModelFilter: DocStatus " +filter.val +"/" +filter.txt);
+        self.FStatus = filter;
+      } else {
+        $log.debug("adOpenSignreqs.setModelFilter: clear");
+        self.FType = null;
+        self.FStatus = null;
+      }
+    };
+
+    self.docFilter = function(item) {
+      var res = true;
+      if (self.FType) {
+        res = item.DocumentType === self.FType.val;
+        //$log.log("adOpenSignreqs.docFilter: FType=" +self.FType.val +" item: " +item.DocumentType);
+      }
+      if (res && self.FStatus) {
+        res = item.Status === self.FStatus.val;
+        //$log.log("adOpenSignreqs.docFilter: FStatus=" +self.FStatus.val +" item: " +item.Status);
+      }
+      //$log.log("adOpenSignreqs.docFilter: " +res);
+      return res;
     };
 
     $scope.$watch('closeditems', function(newValue/*, oldValue*/) {
       //$log.debug("adOpenSignreqs.watch closeditems: " +newValue +" old:" +oldValue);
       if (newValue) {
-        displayClosed();
+        setVwState(self.VIEW_CLOSED);
       } else {
-        displayOpen();
+        setVwState(self.VIEW_OPEN);
       }
     });
 
