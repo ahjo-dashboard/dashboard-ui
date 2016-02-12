@@ -12,21 +12,14 @@
  * Controller of the dashboard
  */
 angular.module('dashboard')
-.constant(
-    'OPENMODE', {
-        BOTH : 0,
-        MTG : 1,
-        SGN : 2
-    }
-)
-.controller('overviewCtrl',['$scope','$log','ENV','SigningOpenApi','$state','$rootScope','OPENMODE','MENU', function ($scope, $log, ENV, SigningOpenApi, $state, $rootScope, OPENMODE, MENU) {
+.controller('overviewCtrl',['$scope','$log','ENV','SigningOpenApi','$state','$rootScope','BLOCKMODE','MENU', function ($scope, $log, ENV, SigningOpenApi, $state, $rootScope, BLOCKMODE, MENU) {
     $log.debug("overviewCtrl: CONTROLLER");
     var self = this;
     self.loading = 0;
     self.signReqsHeader = 'Avoimet allekirjoituspyynnöt';
     self.signErr = null;
 
-    self.state = OPENMODE.BOTH;
+    self.state = BLOCKMODE.BOTH;
     self.future = true;
 
     // Open signing requests
@@ -57,23 +50,13 @@ angular.module('dashboard')
         $log.debug("overviewCtrl: showInfo");
     };
 
-    self.meetingsClicked = function() {
-        $log.debug("overviewCtrl: meetingsClicked");
-        if (self.state === OPENMODE.BOTH || self.state === OPENMODE.SGN) {
-            self.state = OPENMODE.MTG;
-        }
-        else {
-            self.state = OPENMODE.BOTH;
-        }
+    self.upperClicked = function() {
+        $log.debug("overviewCtrl: upperClicked");
+        self.state = (self.state === BLOCKMODE.BOTH || self.state === BLOCKMODE.LOWER) ? BLOCKMODE.UPPER : BLOCKMODE.BOTH;
     };
 
-    self.signingsClicked = function() {
-        $log.debug("overviewCtrl: signingsClicked");
-        if (self.state === OPENMODE.BOTH || self.state === OPENMODE.MTG) {
-            self.state = OPENMODE.SGN;
-        }
-        else {
-            self.state = OPENMODE.BOTH;
-        }
+    self.lowerClicked = function() {
+        $log.debug("overviewCtrl: lowerClicked");
+        self.state = (self.state === BLOCKMODE.BOTH || self.state === BLOCKMODE.UPPER) ? BLOCKMODE.LOWER : BLOCKMODE.BOTH;
     };
 }]);

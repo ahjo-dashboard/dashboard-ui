@@ -12,11 +12,17 @@
     }
 
     body {
-        $header-height: 54px;
-
         .ad-page-header {
             .glyphicon {
                 font-size: 2em;
+            }
+            .btn {
+                height: 50px;
+                margin: 0;
+                border-radius: 6px;
+            }
+            .btn-group {
+                padding: 5px;
             }
         }
     }

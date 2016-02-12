@@ -12,10 +12,11 @@
  * Controller of the dashboard
  */
 angular.module('dashboard')
-.controller('meetingCtrl',['$log','AhjoMeetingSrv','$stateParams','$rootScope','$scope','$state','MENU', function ($log, AhjoMeetingSrv, $stateParams, $rootScope, $scope, $state, MENU) {
+.controller('meetingCtrl',['$log','AhjoMeetingSrv','$stateParams','$rootScope','$scope','$state','MENU','BLOCKMODE', function ($log, AhjoMeetingSrv, $stateParams, $rootScope, $scope, $state, MENU, BLOCKMODE) {
     $log.debug("meetingCtrl: CONTROLLER");
     var self = this;
     self.error = null;
+    self.state = BLOCKMODE.BOTH;
     $rootScope.menu = $stateParams.menu;
     var meetingItem = $stateParams.meetingItem;
 
@@ -38,6 +39,18 @@ angular.module('dashboard')
     else {
         $state.go('app.home', {menu: MENU.CLOSED});
     }
+
+    self.upperClicked = function() {
+        $log.debug("meetingCtrl: upperClicked");
+        self.state = (self.state === BLOCKMODE.BOTH || self.state === BLOCKMODE.LOWER) ? BLOCKMODE.UPPER : BLOCKMODE.BOTH;
+        $log.debug(self.state);
+    };
+
+    self.lowerClicked = function() {
+        $log.debug("meetingCtrl: lowerClicked");
+        self.state = (self.state === BLOCKMODE.BOTH || self.state === BLOCKMODE.UPPER) ? BLOCKMODE.LOWER : BLOCKMODE.BOTH;
+        $log.debug(self.state);
+    };
 
     $scope.$on('$destroy', function() {
         $log.debug("meetingCtrl: DESTROY");
