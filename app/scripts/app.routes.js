@@ -44,12 +44,12 @@ angular.module('dashboard')
                 }
             }
         })
-        .state('app.signing', {
-            url: '/signing',
+        .state('app.signitem', {
+            url: '/signitem',
             views: {
                 'homeContent': {
-                    templateUrl: 'views/signing.html',
-                    controller: 'signingCtrl',
+                    templateUrl: 'views/signitem.html',
+                    controller: 'signitemCtrl',
                     controllerAs: 'sc'
                 }
             }
