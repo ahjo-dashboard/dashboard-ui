@@ -133,7 +133,8 @@ angular.module('dashboard')
 
     return {
         scope: {
-            future: '='
+            future: '=',
+            selected: '&onSelected'
         },
         templateUrl: 'directives/meetings/adMeetings.Directive.html',
         restrict: 'AE',

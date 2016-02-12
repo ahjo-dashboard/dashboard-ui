@@ -114,19 +114,23 @@ angular.module('dashboard')
                 }
             }
         })
-        .state('app.meetings', {
-            url: '/meetings',
+        .state('app.meeting', {
+            url: '/meeting',
             views: {
                 'homeLeftContent': {
-                    templateUrl: 'views/menu.html',
-                    controller: 'menuCtrl',
-                    controllerAs: 'mc'
+                    templateUrl: 'views/meeting.status.html',
+                    controller: 'meetingStatusCtrl',
+                    controllerAs: 'msc'
                 },
                 'homeRightContent': {
-                    templateUrl: 'views/meetinglist.html',
-                    controller: 'meetingListCtrl',
-                    controllerAs: 'mlc'
+                    templateUrl: 'views/meeting.html',
+                    controller: 'meetingCtrl',
+                    controllerAs: 'mc'
                 }
+            },
+            params: {
+                menu: true,
+                meetingItem: null
             }
         })
         .state('app.signing', {

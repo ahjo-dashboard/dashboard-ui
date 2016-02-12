@@ -17,7 +17,7 @@
             </div>
 
             <div class="ng-class: ['ad-flex-item', {'ad-flex-show-full':oc.state === 1, 'ad-flex-show':oc.state === 0, 'ad-flex-hide':oc.state === 2}]">
-                <ad-meetings future="oc.future">
+                <ad-meetings future="oc.future" on-selected="oc.meetingItemSelected(meetingItem)">
                 </ad-meetings>
             </div>
             <!-- MEETINGS END -->

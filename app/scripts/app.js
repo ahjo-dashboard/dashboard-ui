@@ -69,6 +69,18 @@ angular.module('dashboard', [
         $window.history.back();
     };
 
+    $rootScope.toggleMenu = function() {
+        $rootScope.menu = !$rootScope.menu;
+    };
+
+    $rootScope.openMenu = function() {
+        $rootScope.menu = true;
+    };
+
+    $rootScope.closeMenu = function() {
+        $rootScope.menu = false;
+    };
+
     // GLOBAL VARIABLES
     // $rootScope.device    MOBILE = 1, DESKTOP = 2
     // $rootScope.menu      open = true, close = false

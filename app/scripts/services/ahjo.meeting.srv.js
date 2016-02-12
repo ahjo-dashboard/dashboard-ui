@@ -6,30 +6,30 @@
 
 /**
 * @ngdoc service
-* @name dashboard.AhjoMeetingsSrv
+* @name dashboard.AhjoMeetingSrv
 * @description
-* # AhjoMeetingsSrv
+* # AhjoMeetingSrv
 * Service in the dashboard.
 */
 angular.module('dashboard')
-.service('AhjoMeetingsSrv', ['$log', '$http', 'ENV', '$q', '$timeout', function ($log, $http, ENV, $q, $timeout) {
-    $log.debug("AhjoMeetingsSrv: SERVICE");
+.service('AhjoMeetingSrv', ['$log', '$http', 'ENV', '$q', '$timeout', function ($log, $http, ENV, $q, $timeout) {
+    $log.log("AhjoMeetingSrv: SERVICE");
     var self = this;
 
-    self.getMeetings = function() {
-        $log.debug("AhjoMeetingsSrv: getMeetings");
+    self.getMeeting = function(guid) {
+        $log.debug("AhjoMeetingSrv: getMeeting " + guid);
         var deferred = $q.defer();
         $timeout(function () {
             deferred.notify({});
             $http({
                 method: 'GET',
                 cache: true,
-                url: ENV.AhjoApi_Meetings
+                url: ENV.AhjoApi_Meeting.replace('GUID', guid)
             }).then(function(response) {
-                $log.debug("AhjoMeetingsSrv: getMeetings then");
-                deferred.resolve(response.data);
+                $log.debug("AhjoMeetingSrv: getMeeting then " +JSON.stringify(response));
+                deferred.resolve({});
             }, function(error) {
-                $log.error("AhjoMeetingsSrv: getMeetings error");
+                $log.error("AhjoMeetingSrv: getMeeting error");
                 deferred.reject(error);
             });
         }, 0);

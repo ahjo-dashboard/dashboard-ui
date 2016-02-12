@@ -40,7 +40,7 @@
     <uib-progressbar ng-if="ctrl.loading" class="progress-striped active" type="info"><i>Lataa kokouksia ...</i></uib-progressbar>
 
     <ul ng-if="!ctrl.mtgErr" class="list-group">
-        <button ng-if="item.visible" type="button" class="list-group-item" ng-repeat="item in ctrl.data track by $index" ng-click="ctrl.meetingSelected(item)">
+        <button ng-if="item.visible" type="button" class="list-group-item" ng-repeat="item in ctrl.data track by $index" ng-click="selected({meetingItem:item.meeting})">
             <div class="row">
                 <div class="col-xs-12 col-sm-4">{{item.meeting.name}}</div>
                 <div class="col-xs-12 col-sm-4">{{item.meeting.agencyName}}</div>

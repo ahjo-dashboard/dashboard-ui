@@ -9,10 +9,10 @@
  */
 angular.module('dashboard')
 .controller('homeCtrl', ['$log', '$scope', '$state', '$rootScope', '$stateParams', function ($log, $scope, $state, $rootScope, $stateParams) {
-    $log.log("homeCtrl: CONTROLLER");
+    $log.debug("homeCtrl: CONTROLLER");
     $rootScope.menu = $stateParams.menu;
 
     $scope.$on('$destroy', function() {
-        $log.log("homeCtrl: DESTROY");
+        $log.debug("homeCtrl: DESTROY");
     });
 }]);
