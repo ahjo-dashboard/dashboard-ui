@@ -11,13 +11,13 @@
                 <button type="button" class="btn btn-info ad-xs">
                     <i class="glyphicon glyphicon-info-sign"></i>
                 </button>
-                <button type="button" class="btn btn-info ad-xs" ng-click="oc.meetingsClicked()">
+                <button type="button" class="btn btn-info ad-xs" ng-click="oc.upperClicked()">
                     <i class="ng-class: ['glyphicon', {'glyphicon-plus':oc.state !== 1, 'glyphicon-minus':oc.state === 1}]"></i>
                 </button>
             </div>
 
             <div class="ng-class: ['ad-flex-item', {'ad-flex-show-full':oc.state === 1, 'ad-flex-show':oc.state === 0, 'ad-flex-hide':oc.state === 2}]">
-                <ad-meetings future="oc.future">
+                <ad-meetings future="oc.future" on-selected="oc.meetingItemSelected(meetingItem)">
                 </ad-meetings>
             </div>
             <!-- MEETINGS END -->
@@ -29,7 +29,7 @@
                 <button type="button" class="btn btn-info ad-xs">
                     <i class="glyphicon glyphicon-info-sign"></i>
                 </button>
-                <button type="button" class="btn btn-info ad-xs" ng-click="oc.signingsClicked()">
+                <button type="button" class="btn btn-info ad-xs" ng-click="oc.lowerClicked()">
                     <i class="ng-class: ['glyphicon', {'glyphicon-plus':oc.state !== 2, 'glyphicon-minus':oc.state === 2}]"></i>
                 </button>
             </div>

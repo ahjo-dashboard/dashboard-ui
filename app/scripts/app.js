@@ -23,8 +23,22 @@ angular.module('dashboard', [
 ])
 .constant(
     'DEVICE', {
-        MOBILE : 1,
-        DESKTOP : 2
+        MOBILE: 1,
+        DESKTOP: 2
+    }
+)
+.constant(
+    'MENU', {
+        CLOSED: 0,
+        HALF: 1,
+        FULL: 2
+    }
+)
+.constant(
+    'BLOCKMODE', {
+        BOTH : 0,
+        UPPER : 1,
+        LOWER : 2
     }
 )
 .config(function($urlRouterProvider, $stateProvider, ENV, G_APP,$logProvider, $provide, $compileProvider) {
@@ -59,7 +73,7 @@ angular.module('dashboard', [
 
     $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|blob):/);
 })
-.run(function($rootScope, $log, DEVICE, $window) {
+.run(function($rootScope, $log, DEVICE, $window, MENU) {
     $rootScope.$on('$stateChangeStart', function (event, next/*, toParams, fromParams*/) {
         $log.debug('app.stateChangeStart: ' +next.name);// +' toParams: ' +JSON.stringify(toParams) +' fromParams: ' +JSON.stringify(fromParams));
     });
@@ -69,9 +83,33 @@ angular.module('dashboard', [
         $window.history.back();
     };
 
+    $rootScope.openMenu = function() {
+        if ($rootScope.menu < MENU.FULL) {
+            $rootScope.menu = $rootScope.menu + 1;
+        }
+    };
+
+    $rootScope.closeMenu = function() {
+        if ($rootScope.menu > MENU.CLOSED) {
+            $rootScope.menu = $rootScope.menu - 1;
+        }
+    };
+
+    $rootScope.menuClosed = function() {
+        return $rootScope.menu === MENU.CLOSED;
+    };
+
+    $rootScope.menuHalf = function() {
+        return $rootScope.menu === MENU.HALF;
+    };
+
+    $rootScope.menuFull = function() {
+        return $rootScope.menu === MENU.FULL;
+    };
+
     // GLOBAL VARIABLES
     // $rootScope.device    MOBILE = 1, DESKTOP = 2
-    // $rootScope.menu      open = true, close = false
+    // $rootScope.menu      FULL = 2, HALF = 1,  CLOSED = 0
 
     var device = document.getElementById("device");
 

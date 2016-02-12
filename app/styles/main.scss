@@ -23,10 +23,16 @@ $fa-font-path: "../bower_components/font-awesome/fonts";
 $default-delay: 400ms;
 $short-delay: 50ms;
 
+$upper-color: #204d74;
+$lower-color: #f0ad4e;
+
 #device {
     min-width: 320px;
     display: none;
 }
+
+.ad-upper-bg { background-color: $upper-color; }
+.ad-lower-bg { background-color: $lower-color; }
 
 html { height: 100%; }
 

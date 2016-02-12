@@ -3,7 +3,7 @@
         <div class="row">
             <i class="col-xs-1 glyphicon glyphicon-menu-left" aria-hidden="true" ng-click="goBack()"></i>
 
-            <div class="col-xs-10 btn-group right" uib-dropdown is-open="agencyIsOpen">
+            <div class="col-xs-10 btn-group right" uib-dropdown is-open="">
                 <button id="meetingButton" type="button" class="ng-class: ['btn', 'btn-primary', 'ad-button', {'loading':ctrl.loading}]" uib-dropdown-toggle>
                     <div ng-if="mlc.future">Tulevat kokoukset</div>
                     <div ng-if="!mlc.future">Kaikki kokoukset</div>

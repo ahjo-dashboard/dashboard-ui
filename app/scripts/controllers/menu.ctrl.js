@@ -62,9 +62,4 @@ angular.module('dashboard')
         }
     };
 
-    self.toggleMenu = function() {
-        $log.debug("menuCtrl: toggleMenu");
-        $rootScope.menu = !$rootScope.menu;
-    };
-
 }]);
