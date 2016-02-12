@@ -19,8 +19,8 @@ angular.module('dashboard')
         SGN : 2
     }
 )
-.controller('overviewCtrl', function ($scope, $log, ENV, SigningOpenApi, $state, $rootScope, OPENMODE) {
-    $log.log("overviewCtrl: CONTROLLER");
+.controller('overviewCtrl',['$scope','$log','ENV','SigningOpenApi','$state','$rootScope','OPENMODE','MENU', function ($scope, $log, ENV, SigningOpenApi, $state, $rootScope, OPENMODE, MENU) {
+    $log.debug("overviewCtrl: CONTROLLER");
     var self = this;
     self.loading = 0;
     self.signReqsHeader = 'Avoimet allekirjoituspyynnöt';
@@ -45,7 +45,7 @@ angular.module('dashboard')
 
     self.meetingItemSelected = function(meetingItem) {
         $log.debug("overviewCtrl.meetingItemSelected");
-        $state.go('app.meeting', {'meetingItem': meetingItem, 'menu': true});
+        $state.go('app.meeting', {'meetingItem': meetingItem, 'menu': MENU.FULL});
     };
 
     self.signItemSelected = function(signingItem) {
@@ -76,4 +76,4 @@ angular.module('dashboard')
             self.state = OPENMODE.BOTH;
         }
     };
-});
+}]);

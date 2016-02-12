@@ -12,7 +12,7 @@
  * Controller of the dashboard
  */
 angular.module('dashboard')
-.controller('meetingCtrl',['$log','AhjoMeetingSrv','$stateParams','$rootScope','$scope','$state', function ($log, AhjoMeetingSrv, $stateParams, $rootScope, $scope, $state) {
+.controller('meetingCtrl',['$log','AhjoMeetingSrv','$stateParams','$rootScope','$scope','$state','MENU', function ($log, AhjoMeetingSrv, $stateParams, $rootScope, $scope, $state, MENU) {
     $log.debug("meetingCtrl: CONTROLLER");
     var self = this;
     self.error = null;
@@ -36,7 +36,7 @@ angular.module('dashboard')
         });
     }
     else {
-        $state.go('app.home', {menu: false});
+        $state.go('app.home', {menu: MENU.CLOSED});
     }
 
     $scope.$on('$destroy', function() {

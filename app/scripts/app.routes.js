@@ -4,7 +4,7 @@
 */
 'use strict';
 angular.module('dashboard')
-.config(['$urlRouterProvider', '$stateProvider', 'ENV', function($urlRouterProvider, $stateProvider, ENV) {
+.config(['$urlRouterProvider','$stateProvider','ENV','MENU', function($urlRouterProvider, $stateProvider, ENV, MENU) {
     var device = angular.element('#device');
 
     if (device && device.css('min-width') === '320px') {
@@ -21,7 +21,7 @@ angular.module('dashboard')
                 }
             },
             params: {
-                menu: true
+                menu: MENU.FULL
             }
         })
         .state('app.home', {
@@ -96,7 +96,7 @@ angular.module('dashboard')
                 }
             },
             params: {
-                menu: false
+                menu: MENU.CLOSED
             }
         })
         .state('app.home', {
@@ -129,7 +129,7 @@ angular.module('dashboard')
                 }
             },
             params: {
-                menu: true,
+                menu: MENU.FULL,
                 meetingItem: null
             }
         })
