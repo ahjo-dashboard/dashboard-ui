@@ -82,6 +82,9 @@ angular.module('dashboard')
         .then(function(response) {
             self.loading = false;
             self.responseData = response;
+            if ("objects" in self.responseData) {
+                $log.debug("adMeetings: getMeetings done: " +self.responseData.objects.length);
+            }
         },
         function(error) {
             $log.error("adMeetings: getMeetings error: " +JSON.stringify(error));
