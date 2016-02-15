@@ -18,7 +18,7 @@ angular.module('dashboard')
     self.loading = 0;
     self.signReqsHeader = 'Avoimet allekirjoituspyynnöt';
     self.signErr = null;
-    self.state = BLOCKMODE.BOTH;
+    self.blockMode = BLOCKMODE.BOTH;
     self.future = true;
     self.closedSignReqs = false;
 
@@ -50,13 +50,11 @@ angular.module('dashboard')
     };
 
     self.upperClicked = function() {
-        $log.debug("overviewCtrl: upperClicked");
-        self.state = (self.state === BLOCKMODE.BOTH || self.state === BLOCKMODE.LOWER) ? BLOCKMODE.UPPER : BLOCKMODE.BOTH;
+        self.blockMode = (self.blockMode === BLOCKMODE.BOTH || self.blockMode === BLOCKMODE.LOWER) ? BLOCKMODE.UPPER : BLOCKMODE.BOTH;
     };
 
     self.lowerClicked = function() {
-        $log.debug("overviewCtrl: lowerClicked");
-        self.state = (self.state === BLOCKMODE.BOTH || self.state === BLOCKMODE.UPPER) ? BLOCKMODE.LOWER : BLOCKMODE.BOTH;
+        self.blockMode = (self.blockMode === BLOCKMODE.BOTH || self.blockMode === BLOCKMODE.UPPER) ? BLOCKMODE.LOWER : BLOCKMODE.BOTH;
     };
 
     $scope.$on('$destroy', function() {
