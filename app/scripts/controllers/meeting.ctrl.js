@@ -16,7 +16,7 @@ angular.module('dashboard')
     $log.debug("meetingCtrl: CONTROLLER");
     var self = this;
     self.error = null;
-    self.state = BLOCKMODE.BOTH;
+    self.blockMode = BLOCKMODE.BOTH;
     $rootScope.menu = $stateParams.menu;
     var meetingItem = $stateParams.meetingItem;
 
@@ -41,15 +41,11 @@ angular.module('dashboard')
     }
 
     self.upperClicked = function() {
-        $log.debug("meetingCtrl: upperClicked");
-        self.state = (self.state === BLOCKMODE.BOTH || self.state === BLOCKMODE.LOWER) ? BLOCKMODE.UPPER : BLOCKMODE.BOTH;
-        $log.debug(self.state);
+        self.blockMode = (self.blockMode === BLOCKMODE.BOTH || self.blockMode === BLOCKMODE.LOWER) ? BLOCKMODE.UPPER : BLOCKMODE.BOTH;
     };
 
     self.lowerClicked = function() {
-        $log.debug("meetingCtrl: lowerClicked");
-        self.state = (self.state === BLOCKMODE.BOTH || self.state === BLOCKMODE.UPPER) ? BLOCKMODE.LOWER : BLOCKMODE.BOTH;
-        $log.debug(self.state);
+        self.blockMode = (self.blockMode === BLOCKMODE.BOTH || self.blockMode === BLOCKMODE.UPPER) ? BLOCKMODE.LOWER : BLOCKMODE.BOTH;
     };
 
     $scope.$on('$destroy', function() {

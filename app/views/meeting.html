@@ -11,8 +11,8 @@
                     </button>
                     <ul uib-dropdown-menu role="menu" aria-labelledby="modeButton">
                         <li role="menuitem" ng-click="mc.upperClicked()">
-                            <a ng-if="mc.state !== 1">Laajenna</a>
-                            <a ng-if="mc.state === 1">Pienennä</a>
+                            <a ng-if="mc.blockMode !== 1">Laajenna</a>
+                            <a ng-if="mc.blockMode === 1">Pienennä</a>
                         </li>
                     </ul>
                 </div>
@@ -23,8 +23,8 @@
                     </button>
                     <ul uib-dropdown-menu role="menu" aria-labelledby="attachmentButton">
                         <li role="menuitem" ng-click="mc.lowerClicked()">
-                            <a ng-if="mc.state !== 2">Laajenna</a>
-                            <a ng-if="mc.state === 2">Pienennä</a>
+                            <a ng-if="mc.blockMode !== 2">Laajenna</a>
+                            <a ng-if="mc.blockMode === 2">Pienennä</a>
                         </li>
                     </ul>
                 </div>
@@ -52,13 +52,13 @@
         <div class="ad-page-container-flex">
 
             <!-- UPPER START -->
-            <div class="ng-class: ['ad-flex-item','ad-upper-bg', {'ad-flex-show-full':mc.state === 1, 'ad-flex-show':mc.state === 0, 'ad-flex-hide':mc.state === 2}]">
+            <div class="ng-class: ['ad-flex-item','ad-upper-bg', {'ad-flex-show-full':mc.blockMode === 1, 'ad-flex-show':mc.blockMode === 0, 'ad-flex-hide':mc.blockMode === 2}]">
                 <div ng-if="mc.error" class="alert alert-danger" role="alert">{{mc.error}}</div>
             </div>
             <!-- UPPER END -->
 
             <!-- LOWER START -->
-            <div class="ng-class: ['ad-flex-item','ad-lower-bg', {'ad-flex-show-full':mc.state === 2, 'ad-flex-show':mc.state === 0, 'ad-flex-hide':mc.state === 1}]">
+            <div class="ng-class: ['ad-flex-item','ad-lower-bg', {'ad-flex-show-full':mc.blockMode === 2, 'ad-flex-show':mc.blockMode === 0, 'ad-flex-hide':mc.blockMode === 1}]">
 
             </div>
             <!-- LOWER END -->

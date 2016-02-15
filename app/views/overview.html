@@ -19,11 +19,11 @@
                     <i class="glyphicon glyphicon-info-sign"></i>
                 </button>
                 <button type="button" class="hidden-xs btn btn-info ad-xs" ng-click="oc.upperClicked()">
-                    <i class="ng-class: ['glyphicon', {'glyphicon-plus':oc.state !== 1, 'glyphicon-minus':oc.state === 1}]"></i>
+                    <i class="ng-class: ['glyphicon', {'glyphicon-plus':oc.blockMode !== 1, 'glyphicon-minus':oc.blockMode === 1}]"></i>
                 </button>
             </div>
 
-            <div ng-if="oc.hasMeetings"  class="ng-class: ['ad-flex-item', {'ad-flex-show-full':oc.state === 1, 'ad-flex-show':oc.state === 0, 'ad-flex-hide':oc.state === 2}]">
+            <div ng-if="oc.hasMeetings"  class="ng-class: ['ad-flex-item', {'ad-flex-show-full':oc.blockMode === 1, 'ad-flex-show':oc.blockMode === 0, 'ad-flex-hide':oc.blockMode === 2}]">
                 <ad-meetings future="oc.future" on-selected="oc.meetingItemSelected(meetingItem)">
                 </ad-meetings>
             </div>
@@ -37,11 +37,11 @@
                     <i class="glyphicon glyphicon-info-sign"></i>
                 </button>
                 <button type="button" class="hidden-xs btn btn-info ad-xs" ng-click="oc.lowerClicked()">
-                    <i class="ng-class: ['glyphicon', {'glyphicon-plus':oc.state !== 2, 'glyphicon-minus':oc.state === 2}]"></i>
+                    <i class="ng-class: ['glyphicon', {'glyphicon-plus':oc.blockMode !== 2, 'glyphicon-minus':oc.blockMode === 2}]"></i>
                 </button>
             </div>
 
-            <div ng-if="oc.hasEsign" class="ng-class: ['ad-flex-item', {'ad-flex-show-full':oc.state === 2, 'ad-flex-show':oc.state === 0, 'ad-flex-hide':oc.state === 1}]">
+            <div ng-if="oc.hasEsign" class="ng-class: ['ad-flex-item', {'ad-flex-show-full':oc.blockMode === 2, 'ad-flex-show':oc.blockMode === 0, 'ad-flex-hide':oc.blockMode === 1}]">
                 <ad-open-signreqs closeditems="oc.closedSignReqs"></ad-open-signreqs>
             <!-- SIGNINGS END -->
             </div>
