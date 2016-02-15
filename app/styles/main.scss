@@ -163,8 +163,9 @@ body {
         background-color: $appbgcolor;
 
         .btn {
-            width: 100%;
             text-align: left;
+            white-space: normal;
+            max-lines: 2;
         }
     }
 
@@ -220,6 +221,8 @@ body {
         .btn {
             height: 40px;
             margin: 10px;
+            white-space: normal;
+            max-lines: 2;
         }
     }
 
@@ -329,6 +332,23 @@ body {
         flex-direction: column;
         justify-content: center;
         min-height: 1.2em;
+    }
+
+    .ad-topic {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .ad-topic-status {
+        flex: 1;
+        display: flex;
+        .btn {
+            flex: 1;
+        }
+    }
+
+    .ad-topic-button {
+        flex: auto;
     }
 }
 
