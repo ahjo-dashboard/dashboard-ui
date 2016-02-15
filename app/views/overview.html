@@ -1,48 +1,54 @@
 <div class="ad-page">
+    <div class="ad-page-header">
+        <div class="container col-xs-12">
+            <div class="row">
+                <i class="visible-xs-inline col-xs-1 glyphicon glyphicon-menu-left" aria-hidden="true" ng-click="goBack()"></i>
+            </div>
+        </div>
+    </div>
 
-    <div class="ad-full-page-content">
+    <div class="ad-page-content">
 
-        <div class="ad-page-container-flex ad-full-page-container">
+        <div class="ad-page-container-flex ad-page-container">
 
             <!-- MEETINGS START -->
-            <div class="ad-flex-header">
+            <div ng-if="oc.hasMeetings" class="ad-flex-header">
                 <button type="button" class="ng-class: ['btn', 'btn-warning', 'ad-lg', {'active':oc.future}]" ng-click="oc.future=true">Tulevat kokoukset</button>
                 <button type="button" class="ng-class: ['btn', 'btn-warning', 'ad-lg', {'active':!oc.future}]" ng-click="oc.future=false">Kaikki kokoukset</button>
-                <button type="button" class="btn btn-info ad-xs">
+                <button type="button" class="hidden-xs btn btn-info ad-xs">
                     <i class="glyphicon glyphicon-info-sign"></i>
                 </button>
-                <button type="button" class="btn btn-info ad-xs" ng-click="oc.upperClicked()">
+                <button type="button" class="hidden-xs btn btn-info ad-xs" ng-click="oc.upperClicked()">
                     <i class="ng-class: ['glyphicon', {'glyphicon-plus':oc.state !== 1, 'glyphicon-minus':oc.state === 1}]"></i>
                 </button>
             </div>
 
-            <div class="ng-class: ['ad-flex-item', {'ad-flex-show-full':oc.state === 1, 'ad-flex-show':oc.state === 0, 'ad-flex-hide':oc.state === 2}]">
+            <div ng-if="oc.hasMeetings"  class="ng-class: ['ad-flex-item', {'ad-flex-show-full':oc.state === 1, 'ad-flex-show':oc.state === 0, 'ad-flex-hide':oc.state === 2}]">
                 <ad-meetings future="oc.future" on-selected="oc.meetingItemSelected(meetingItem)">
                 </ad-meetings>
             </div>
             <!-- MEETINGS END -->
             <br>
-
             <!-- SIGNINGS START -->
-            <div class="ad-flex-header">
+            <div ng-if="oc.hasEsign" class="ad-flex-header">
                 <button type="button" class="ng-class: ['btn', 'btn-warning', 'ad-lg', {'active':!oc.closedSignReqs}]" ng-click="oc.closedSignReqs=false">Avoimet allekirjoitukset</button>
                 <button type="button" class="ng-class: ['btn', 'btn-warning', 'ad-lg', {'active':oc.closedSignReqs}]" ng-click="oc.closedSignReqs=true">Suljetut allekirjoitukset</button>
-                <button type="button" class="btn btn-info ad-xs">
+                <button type="button" class="hidden-xs btn btn-info ad-xs">
                     <i class="glyphicon glyphicon-info-sign"></i>
                 </button>
-                <button type="button" class="btn btn-info ad-xs" ng-click="oc.lowerClicked()">
+                <button type="button" class="hidden-xs btn btn-info ad-xs" ng-click="oc.lowerClicked()">
                     <i class="ng-class: ['glyphicon', {'glyphicon-plus':oc.state !== 2, 'glyphicon-minus':oc.state === 2}]"></i>
                 </button>
             </div>
 
-            <div class="ng-class: ['ad-flex-item', {'ad-flex-show-full':oc.state === 2, 'ad-flex-show':oc.state === 0, 'ad-flex-hide':oc.state === 1}]">
+            <div ng-if="oc.hasEsign" class="ng-class: ['ad-flex-item', {'ad-flex-show-full':oc.state === 2, 'ad-flex-show':oc.state === 0, 'ad-flex-hide':oc.state === 1}]">
                 <ad-open-signreqs closeditems="oc.closedSignReqs"></ad-open-signreqs>
             <!-- SIGNINGS END -->
+            </div>
 
         </div>
 
     </div>
 
-    <i class="info glyphicon glyphicon-info-sign" aria-hidden="true" ng-click="oc.showInfo()"></i>
-
+    <i class="hidden-xs info glyphicon glyphicon-info-sign" aria-hidden="true" ng-click="oc.showInfo()"></i>
 </div>

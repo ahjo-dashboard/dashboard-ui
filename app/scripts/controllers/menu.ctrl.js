@@ -12,7 +12,7 @@
 * Controller of the dashboard
 */
 angular.module('dashboard')
-.controller('menuCtrl', ['$log', '$state', '$rootScope', 'DEVICE', 'AhjoMeetingsSrv', function ($log, $state, $rootScope, DEVICE, AhjoMeetingsSrv) {
+.controller('menuCtrl', ['$log', '$state', '$rootScope', 'DEVICE', 'AhjoMeetingsSrv', 'HOMEMODE', function ($log, $state, $rootScope, DEVICE, AhjoMeetingsSrv, HOMEMODE) {
     $log.log("menuCtrl: CONTROLLER");
     var self = this;
     self.mobile = $rootScope.device === DEVICE.MOBILE;
@@ -46,13 +46,13 @@ angular.module('dashboard')
 
     // PUBLIC FUNCTIONS
     self.showMeetings = function() {
-        $log.debug("menuCtrl: showMeetings");
-        $state.go('app.meetings');
+        $log.debug("menuCtrl: showMeetings" +HOMEMODE.MEETINGS);
+        $state.go('app.overview', {state: HOMEMODE.MEETINGS});
     };
 
     self.showSignings = function() {
         $log.debug("menuCtrl: showSignings");
-        $state.go('app.signing');
+        $state.go('app.overview', {state: HOMEMODE.ESIGN});
     };
 
     self.showInfo = function() {

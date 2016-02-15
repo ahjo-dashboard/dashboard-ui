@@ -1,9 +1,9 @@
 <div>
 
-    <div ng-if="!ctrl.mobile" class="btn-group btn-group-justified">
+    <div class="btn-group btn-group-justified">
 
-        <div class="btn-group">
-            <button type="button" class="btn btn-success ad-dummy-button disabled" uib-dropdown-toggle>
+        <div class="hidden-xs btn-group">
+            <button type="button" class="hidden-xs btn btn-success ad-dummy-button disabled" uib-dropdown-toggle>
                 <div ng-if="!ctrl.mF">Kokous</div>
                 <div ng-if="ctrl.mF">{{ctrl.mF}}</div>
             </button>
@@ -37,7 +37,7 @@
 
     </div>
 
-    <uib-progressbar ng-if="ctrl.loading" class="progress-striped active" type="info"><i>Lataa kokouksia ...</i></uib-progressbar>
+    <uib-progressbar ng-if="ctrl.loading" class="progress-striped active" type="info"><i>Haetaan...</i></uib-progressbar>
 
     <ul ng-if="!ctrl.mtgErr" class="list-group">
         <button ng-if="item.visible" type="button" class="list-group-item" ng-repeat="item in ctrl.data track by $index" ng-click="selected({meetingItem:item.meeting})">
@@ -49,6 +49,6 @@
         </button>
     </ul>
 
-    <div ng-if="ctrl.mtgErr" class="alert alert-danger" role="alert">Kokoustietojen haku ei onnistunut</div>
+    <div ng-if="ctrl.mtgErr" class="alert alert-danger" role="alert">Haku ei onnistunut. Ole hyvä ja yritä myöhemmin uudestaan.<br>({{ctrl.mtgErr.status}} {{ctrl.mtgErr.statusText}})</div>
 
 </div>
