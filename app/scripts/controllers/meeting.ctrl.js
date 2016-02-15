@@ -12,7 +12,13 @@
  * Controller of the dashboard
  */
 angular.module('dashboard')
-.controller('meetingCtrl',['$log','AhjoMeetingSrv','$stateParams','$rootScope','$scope','$state','MENU','BLOCKMODE', function ($log, AhjoMeetingSrv, $stateParams, $rootScope, $scope, $state, MENU, BLOCKMODE) {
+.factory('MEETING', function() {
+    var Data = {};
+    Data.set = function(key, val) { Data[key] = val; };
+    Data.get = function(key) { return Data[key]; };
+    return Data;
+})
+.controller('meetingCtrl',['$log','AhjoMeetingSrv','$stateParams','$rootScope','$scope','$state','MENU','BLOCKMODE','MEETING', function ($log, AhjoMeetingSrv, $stateParams, $rootScope, $scope, $state, MENU, BLOCKMODE, MEETING) {
     $log.debug("meetingCtrl: CONTROLLER");
     var self = this;
     self.error = null;
@@ -23,7 +29,13 @@ angular.module('dashboard')
     if (meetingItem) {
         AhjoMeetingSrv.getMeeting(meetingItem.meetingGuid)
         .then(function(response) {
-            $log.debug("meetingCtrl: getMeeting then: " +JSON.stringify(response));
+            $log.debug("meetingCtrl: getMeeting then:");
+            if (response && response.objects instanceof Array) {
+                MEETING.set('OBJECT', response.objects[0]);
+            }
+            else {
+                MEETING.set('OBJECT', {});
+            }
         },
         function(error) {
             $log.error("meetingCtrl: getMeeting error: " +JSON.stringify(error));
