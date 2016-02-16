@@ -22,7 +22,19 @@ angular.module('dashboard')
     self.future = true;
     self.closedSignReqs = false;
 
-    switch ($stateParams.state) {
+    var mode = $stateParams.state;
+    var storedMode = localStorage.overviewState;
+
+    if (mode === HOMEMODE.ALL) {
+        if (storedMode === '1') {
+            mode = HOMEMODE.MEETINGS;
+        }
+        else if (storedMode === '2') {
+            mode = HOMEMODE.ESIGN;
+        }
+    }
+
+    switch (mode) {
         case HOMEMODE.MEETINGS:
             self.hasMeetings = true;
             break;
@@ -34,6 +46,8 @@ angular.module('dashboard')
             self.hasEsign = true;
             break;
     }
+
+    localStorage.overviewState = mode;
 
     self.meetingItemSelected = function(meetingItem) {
         $log.debug("overviewCtrl.meetingItemSelected");
