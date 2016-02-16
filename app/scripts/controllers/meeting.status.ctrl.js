@@ -35,7 +35,7 @@ angular.module('dashboard')
         function(newObject, oldObject) {
             if (newObject !== oldObject) {
                 self.object = newObject;
-                $log.debug("meetingStatusCtrl: new object: " + JSON.stringify(self.object));
+                // $log.debug("meetingStatusCtrl: new object: " + JSON.stringify(self.object));
             }
         }
     );
