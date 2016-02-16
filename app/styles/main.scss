@@ -192,6 +192,7 @@ body {
         h3 {
             color: $headingTxtColor;
             letter-spacing: -2px;
+            text-align: center;
         }
 
         .glyphicon {
@@ -259,6 +260,7 @@ body {
 
         overflow: hidden;
         min-height: 3.2em;
+        max-height: 3.4em;
 
         .btn {
             font-size: 1.5em;
@@ -267,6 +269,8 @@ body {
             .glyphicon {
                 color: $headingTxtColor;
                 font-size: 1.2em;
+                display:block;
+                text-align:center
             }
         }
 

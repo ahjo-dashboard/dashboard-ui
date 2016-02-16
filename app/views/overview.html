@@ -3,6 +3,8 @@
         <div class="container col-xs-12">
             <div class="row">
                 <i class="visible-xs-inline col-xs-1 glyphicon glyphicon-menu-left" aria-hidden="true" ng-click="goBack()"></i>
+                <h3 ng-if="oc.hasMeetings" class="visible-xs-inline col-xs-10">Kokoukset</h3>
+                <h3 ng-if="oc.hasEsign" class="visible-xs-inline col-xs-10">Allekirjoitukset</h3>
             </div>
         </div>
     </div>
@@ -13,8 +15,14 @@
 
             <!-- MEETINGS START -->
             <div ng-if="oc.hasMeetings" class="ad-flex-header">
-                <button type="button" class="ng-class: ['btn', 'btn-warning', 'ad-lg', {'active':oc.future}]" ng-click="oc.future=true">Tulevat kokoukset</button>
-                <button type="button" class="ng-class: ['btn', 'btn-warning', 'ad-lg', {'active':!oc.future}]" ng-click="oc.future=false">Kaikki kokoukset</button>
+                <button type="button" class="btn btn-warning ad-lg ng-class:[{'active':oc.future}]" ng-click="oc.future=true">
+                    <div class="visible-xs-block">Tulevat</div>
+                    <div class="hidden-xs">Tulevat kokoukset</div>
+                </button>
+                <button type="button" class="btn btn-warning ad-lg ng-class:[{'active':!oc.future}]" ng-click="oc.future=false">
+                    <div class="visible-xs-block">Kaikki</div>
+                    <div class="hidden-xs">Kaikki kokoukset</div>
+                </button>
                 <button type="button" class="hidden-xs btn btn-info ad-xs">
                     <i class="glyphicon glyphicon-info-sign"></i>
                 </button>
@@ -23,25 +31,31 @@
                 </button>
             </div>
 
-            <div ng-if="oc.hasMeetings"  class="ng-class: ['ad-flex-item', {'ad-flex-show-full':oc.blockMode === 1, 'ad-flex-show':oc.blockMode === 0, 'ad-flex-hide':oc.blockMode === 2}]">
+            <div ng-if="oc.hasMeetings"  class="ad-flex-item ng-class:[{'ad-flex-show-full':oc.blockMode === 1, 'ad-flex-show':oc.blockMode === 0, 'ad-flex-hide':oc.blockMode === 2}]">
                 <ad-meetings future="oc.future" on-selected="oc.meetingItemSelected(meetingItem)">
                 </ad-meetings>
             </div>
             <!-- MEETINGS END -->
-            <br>
+
             <!-- SIGNINGS START -->
             <div ng-if="oc.hasEsign" class="ad-flex-header">
-                <button type="button" class="ng-class: ['btn', 'btn-warning', 'ad-lg', {'active':!oc.closedSignReqs}]" ng-click="oc.closedSignReqs=false">Avoimet allekirjoitukset</button>
-                <button type="button" class="ng-class: ['btn', 'btn-warning', 'ad-lg', {'active':oc.closedSignReqs}]" ng-click="oc.closedSignReqs=true">Suljetut allekirjoitukset</button>
+                <button type="button" class="btn btn-warning ad-lg ng-class:[{'active':!oc.closedSignReqs}]" ng-click="oc.closedSignReqs=false">
+                    <div class="visible-xs-block">Avoimet</div>
+                    <div class="hidden-xs">Avoimet allekirjoitukset</div>
+                </button>
+                <button type="button" class="btn btn-warning ad-lg ng-class:[{'active':oc.closedSignReqs}]" ng-click="oc.closedSignReqs=true">
+                    <div class="visible-xs-block">Suljetut</div>
+                    <div class="hidden-xs">Suljetut allekirjoitukset</div>
+                </button>
                 <button type="button" class="hidden-xs btn btn-info ad-xs">
                     <i class="glyphicon glyphicon-info-sign"></i>
                 </button>
                 <button type="button" class="hidden-xs btn btn-info ad-xs" ng-click="oc.lowerClicked()">
-                    <i class="ng-class: ['glyphicon', {'glyphicon-plus':oc.blockMode !== 2, 'glyphicon-minus':oc.blockMode === 2}]"></i>
+                    <i class="glyphicon ng-class:[{'glyphicon-plus':oc.blockMode !== 2, 'glyphicon-minus':oc.blockMode === 2}]"></i>
                 </button>
             </div>
 
-            <div ng-if="oc.hasEsign" class="ng-class: ['ad-flex-item', {'ad-flex-show-full':oc.blockMode === 2, 'ad-flex-show':oc.blockMode === 0, 'ad-flex-hide':oc.blockMode === 1}]">
+            <div ng-if="oc.hasEsign" class="ad-flex-item ng-class:[{'ad-flex-show-full':oc.blockMode === 2, 'ad-flex-show':oc.blockMode === 0, 'ad-flex-hide':oc.blockMode === 1}]">
                 <ad-open-signreqs closeditems="oc.closedSignReqs"></ad-open-signreqs>
             <!-- SIGNINGS END -->
             </div>

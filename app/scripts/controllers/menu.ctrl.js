@@ -15,7 +15,6 @@ angular.module('dashboard')
 .controller('menuCtrl', ['$log', '$state', '$rootScope', 'DEVICE', 'AhjoMeetingsSrv', 'HOMEMODE', function ($log, $state, $rootScope, DEVICE, AhjoMeetingsSrv, HOMEMODE) {
     $log.log("menuCtrl: CONTROLLER");
     var self = this;
-    self.mobile = $rootScope.device === DEVICE.MOBILE;
     self.title = 'Ahjo Dashboard';
     self.mtgCount = 0;
     self.sgnCount = 0;
@@ -25,11 +24,19 @@ angular.module('dashboard')
     .then(function(response) {
         $log.debug("menuCtrl: getMeetings then:");
         self.loading = false;
+        self.mtgCount = 0;
         if (response && response.objects instanceof Array ) {
-            self.mtgCount = response.objects.length;
-        }
-        else {
+            var date = new Date();
+            date.setFullYear(date .getFullYear() - 4);  // this if for testing. to be removed
+            date = date.toJSON();
             self.mtgCount = 0;
+
+            for (var i = 0; i < response.objects.length; i++) {
+                var item = response.objects[i];
+                if (date && item && (date < item.meetingTime)) {
+                    self.mtgCount++;
+                }
+            }
         }
     },
     function(error) {
@@ -57,9 +64,7 @@ angular.module('dashboard')
 
     self.showInfo = function() {
         $log.debug("menuCtrl: showInfo");
-        if (self.mobile) {
-            $state.go('app.info');
-        }
+        $state.go('app.info');
     };
 
 }]);
