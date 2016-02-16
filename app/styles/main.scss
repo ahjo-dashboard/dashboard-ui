@@ -340,15 +340,16 @@ body {
     }
 
     .ad-topic-status {
-        flex: 1;
+        flex: 1 1 auto;
         display: flex;
         .btn {
-            flex: 1;
+            flex: 1 1 auto;
+            padding: 5px;
         }
     }
 
     .ad-topic-button {
-        flex: auto;
+        flex: 4 4 auto;
     }
 }
 
