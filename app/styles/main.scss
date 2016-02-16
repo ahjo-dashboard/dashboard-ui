@@ -269,6 +269,8 @@ body {
             .glyphicon {
                 color: $headingTxtColor;
                 font-size: 1.2em;
+                display:block;
+                text-align:center
             }
         }
 
