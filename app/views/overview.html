@@ -3,8 +3,8 @@
         <div class="container col-xs-12">
             <div class="row">
                 <i class="visible-xs-inline col-xs-1 glyphicon glyphicon-menu-left" aria-hidden="true" ng-click="goBack()"></i>
-                <h3 ng-if="oc.hasMeetings" class="visible-xs-inline col-xs-10">Kokoukset</h3>
-                <h3 ng-if="oc.hasEsign" class="visible-xs-inline col-xs-10">Allekirjoitukset</h3>
+                <h3 ng-if="oc.hasMeetings" class="visible-xs-inline col-xs-10"><ANY translate>STR_MEETINGS</ANY></h3>
+                <h3 ng-if="oc.hasEsign" class="visible-xs-inline col-xs-10"><ANY translate>STR_SIGNINGS</ANY></h3>
             </div>
         </div>
     </div>
@@ -16,12 +16,12 @@
             <!-- MEETINGS START -->
             <div ng-if="oc.hasMeetings" class="ad-flex-header">
                 <button type="button" class="btn btn-warning ad-lg ng-class:[{'active':oc.future}]" ng-click="oc.future=true">
-                    <div class="visible-xs-block">Tulevat</div>
-                    <div class="hidden-xs">Tulevat kokoukset</div>
+                    <div class="visible-xs-block"><ANY translate>STR_FUTURE</ANY></div>
+                    <div class="hidden-xs"><ANY translate>STR_FUTURE_MEETINGS</ANY></div>
                 </button>
                 <button type="button" class="btn btn-warning ad-lg ng-class:[{'active':!oc.future}]" ng-click="oc.future=false">
-                    <div class="visible-xs-block">Kaikki</div>
-                    <div class="hidden-xs">Kaikki kokoukset</div>
+                    <div class="visible-xs-block"><ANY translate>STR_ALL</ANY></div>
+                    <div class="hidden-xs"><ANY translate>STR_ALL_MEETINGS</ANY></div>
                 </button>
                 <button type="button" class="hidden-xs btn btn-info ad-xs">
                     <i class="glyphicon glyphicon-info-sign"></i>
@@ -40,12 +40,12 @@
             <!-- SIGNINGS START -->
             <div ng-if="oc.hasEsign" class="ad-flex-header">
                 <button type="button" class="btn btn-warning ad-lg ng-class:[{'active':!oc.closedSignReqs}]" ng-click="oc.closedSignReqs=false">
-                    <div class="visible-xs-block">Avoimet</div>
-                    <div class="hidden-xs">Avoimet allekirjoitukset</div>
+                    <div class="visible-xs-block"><ANY translate>STR_OPEN_PLR</ANY></div>
+                    <div class="hidden-xs"><ANY translate>STR_OPEN_SIGNINGS</ANY></div>
                 </button>
                 <button type="button" class="btn btn-warning ad-lg ng-class:[{'active':oc.closedSignReqs}]" ng-click="oc.closedSignReqs=true">
-                    <div class="visible-xs-block">Suljetut</div>
-                    <div class="hidden-xs">Suljetut allekirjoitukset</div>
+                    <div class="visible-xs-block"><ANY translate>STR_CLOSED_PLR</ANY></div>
+                    <div class="hidden-xs"><ANY translate>STR_CLOSED_SIGNINGS</ANY></div>
                 </button>
                 <button type="button" class="hidden-xs btn btn-info ad-xs">
                     <i class="glyphicon glyphicon-info-sign"></i>

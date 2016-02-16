@@ -1,3 +1,13 @@
 {
-    "STR_LOGIN" : "Kirjaudu"
+    "STR_LOGIN" : "Kirjaudu",
+    "STR_MEETINGS": "Kokoukset",
+    "STR_SIGNINGS": "Allekirjoitukset",
+    "STR_FUTURE": "Tulevat",
+    "STR_FUTURE_MEETINGS": "Tulevat kokoukset",
+    "STR_ALL": "Kaikki",
+    "STR_ALL_MEETINGS": "Kaikki kokoukset",
+    "STR_OPEN_PLR": "Avoimet",
+    "STR_CLOSED_PLR": "Suljetut",
+    "STR_OPEN_SIGNINGS": "Avoimet allekirjoitukset",
+    "STR_CLOSED_SIGNINGS": "Suljetut allekirjoitukset"
 }
