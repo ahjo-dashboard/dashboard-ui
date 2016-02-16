@@ -16,9 +16,9 @@
         <button type="button" class="btn btn-primary btn-lg disabled ad-dummy-button" ng-click="">{{msc.object.meetingTitle}}</button>
 
         <div class="btn-group btn-block" uib-dropdown is-open="">
-            <button id="statusButton" type="button" class="btn btn-primary btn-lg ad-button" uib-dropdown-toggle>
+            <button id="statusButton" type="button" class="btn btn-primary btn-lg ad-button ng-class:[{'disabled': !msc.chairman},{'ad-dummy-button': !msc.chairman}]" uib-dropdown-toggle>
                 <div>{{msc.object.meetingStatus}} Status</div>
-                <span class="caret"></span>
+                <span ng-if="msc.chairman" class="caret"></span>
             </button>
             <ul uib-dropdown-menu role="menu" aria-labelledby="statusButton">
                 <li role="menuitem" ng-click=""><a>First</a></li>
@@ -31,12 +31,12 @@
         <div class="ad-topic" ng-repeat="item in msc.object.topicList track by $index">
 
             <div class="btn-group ad-topic-status" uib-dropdown is-open="" ng-init="status = item.Status">
-                <button id="topicButton" type="button" class="btn btn-default btn-lg ad-button" uib-dropdown-toggle>
+                <button id="topicButton" type="button" class="btn btn-default btn-lg ad-button ng-class:[{'disabled': !msc.chairman},{'ad-dummy-button': !msc.chairman}]" uib-dropdown-toggle>
                     <img ng-if="status===1" src="images/state_4.png"></img>
                     <img ng-if="status===2" src="images/state_4_lock.png"></img>
                     <img ng-if="status===3" src="images/state_4_lock_remark.png"></img>
                     <img ng-if="status===4" src="images/state_4_remark.png"></img>
-                    <span class="caret"></span>
+                    <span ng-if="msc.chairman" class="caret"></span>
                 </button>
                 <ul uib-dropdown-menu role="menu" aria-labelledby="topicButton">
                     <li role="menuitem" ng-click="status=1"><a>1</a></li>
@@ -48,8 +48,6 @@
 
             <button type="button" class="btn btn-default ad-button ad-topic-button" ng-click="">{{item.Title}}</button>
         </div>
-
-
 
     </div>
 
