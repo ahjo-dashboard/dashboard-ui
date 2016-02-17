@@ -8,7 +8,7 @@
 * Controller of the dashboard
 */
 angular.module('dashboard')
-.controller('loginCtrl', ['$log', '$http', '$state', 'ENV', function ($log, $http, $state, ENV) {
+.controller('loginCtrl', ['$log', '$http', '$state', 'ENV', 'APPSTATE', function ($log, $http, $state, ENV, APPSTATE) {
     $log.log("loginCtrl.CONSTRUCT");
     $log.log(ENV.AhjoApi_UserLogin);
 
@@ -37,7 +37,7 @@ angular.module('dashboard')
             url: ENV.AhjoApi_UserLoginRest
         }).then(function successCallback(/*response*/) {
             self.data.selection = null;
-            $state.go('app.home');
+            $state.go(APPSTATE.HOME);
 
         }, function errorCallback(error) {
             $log.error(error);

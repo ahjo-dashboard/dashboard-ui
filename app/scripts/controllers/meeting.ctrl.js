@@ -18,7 +18,7 @@ angular.module('dashboard')
     Data.get = function(key) { return Data[key]; };
     return Data;
 })
-.controller('meetingCtrl',['$log','AhjoMeetingSrv','$stateParams','$rootScope','$scope','$state','MENU','BLOCKMODE','MEETING', function ($log, AhjoMeetingSrv, $stateParams, $rootScope, $scope, $state, MENU, BLOCKMODE, MEETING) {
+.controller('meetingCtrl',['$log','AhjoMeetingSrv','$stateParams','$rootScope','$scope','$state','MENU','BLOCKMODE','MEETING', 'APPSTATE', function ($log, AhjoMeetingSrv, $stateParams, $rootScope, $scope, $state, MENU, BLOCKMODE, MEETING, APPSTATE) {
     $log.debug("meetingCtrl: CONTROLLER");
     var self = this;
     self.error = null;
@@ -49,7 +49,7 @@ angular.module('dashboard')
         });
     }
     else {
-        $state.go('app.home', {menu: MENU.CLOSED});
+        $state.go(APPSTATE.HOME, {menu: MENU.CLOSED});
     }
 
     self.upperClicked = function() {
