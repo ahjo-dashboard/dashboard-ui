@@ -49,6 +49,17 @@ angular.module('dashboard', [
         ESIGN : 2
     }
 )
+.constant(
+    'APPSTATE', {
+        APP: "app",
+        LOGIN: "app.login",
+        INFO: "app.info",
+        HOME: "app.home",
+        OVERVIEW: "app.overview",
+        MEETING: "app.meeting",
+        SIGNITEM: "app.signitem"
+    }
+)
 .config(function($urlRouterProvider, $stateProvider, ENV, G_APP, $logProvider, $provide, $compileProvider, $translateProvider) {
     // Startup logged always regardless of ENV config, so using console instead of $log
     console.log('dashboard.config: ver: ' +G_APP.app_version  +' env: ' +ENV.app_env +' logging: ' +ENV.app_debuglogs);
