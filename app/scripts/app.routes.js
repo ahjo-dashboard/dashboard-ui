@@ -128,17 +128,12 @@ angular.module('dashboard')
                 meetingItem: null
             }
         })
-        .state('app.signing', {
-            url: '/signing',
+        .state('app.signitem', {
+            url: '/signitem',
             views: {
-                'homeLeftContent': {
-                    templateUrl: 'views/menu.html',
-                    controller: 'menuCtrl',
-                    controllerAs: 'mc'
-                },
-                'homeRightContent': {
-                    templateUrl: 'views/signing.html',
-                    controller: 'signingCtrl',
+                'homeContent': {
+                    templateUrl: 'views/signitem.html',
+                    controller: 'signitemCtrl',
                     controllerAs: 'sc'
                 }
             }

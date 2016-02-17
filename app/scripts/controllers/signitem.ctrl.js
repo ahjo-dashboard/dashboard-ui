@@ -12,7 +12,7 @@
  * Controller of the dashboard
  */
 angular.module('dashboard')
-.controller('SignitemCtrl', function ($log, $scope, $stateParams, SigningAttApi, $sce, $timeout, $uibModal, MessageService, ENV) {
+.controller('signitemCtrl', function ($log, $scope, $stateParams, SigningAttApi, $sce, $timeout, $uibModal, MessageService, ENV) {
     $log.debug("SignitemCtrl.config");
 
     var item = $stateParams.signItem;
