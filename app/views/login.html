@@ -3,6 +3,7 @@
         <select style="margin: 10px;" id="ADID" name="ADID" ng-model="lc.data.selection">
             <option ng-repeat="item in lc.data.options track by $index" value="{{item.value}}">{{item.text}}</option>
         </select>
-        <input style="margin: 10px;" class="login" type="submit" value="Kirjaudu" ng-click="lc.select()" />
+        <input style="margin: 10px;" class="login" type="submit" value="{{ 'STR_LOGIN' | translate}}" ng-click="lc.select()" />
     </form>
+
 </div>

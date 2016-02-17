@@ -19,7 +19,8 @@ angular.module('dashboard', [
     'ui.bootstrap',
     'ngSanitize',
     'wysiwyg.module',
-    'ngDialog'
+    'ngDialog',
+    'pascalprecht.translate'
 ])
 .constant(
     'DEVICE', {
@@ -48,7 +49,7 @@ angular.module('dashboard', [
         ESIGN : 2
     }
 )
-.config(function($urlRouterProvider, $stateProvider, ENV, G_APP,$logProvider, $provide, $compileProvider) {
+.config(function($urlRouterProvider, $stateProvider, ENV, G_APP, $logProvider, $provide, $compileProvider, $translateProvider) {
     // Startup logged always regardless of ENV config, so using console instead of $log
     console.log('dashboard.config: ver: ' +G_APP.app_version  +' env: ' +ENV.app_env +' logging: ' +ENV.app_debuglogs);
 
@@ -56,6 +57,7 @@ angular.module('dashboard', [
     var doDbg = false;
     if (ENV && ENV.app_debuglogs) {
         doDbg = ENV.app_debuglogs;
+        $translateProvider.useMissingTranslationHandlerLog();
     }
     $logProvider.debugEnabled(doDbg);
 
@@ -77,6 +79,16 @@ angular.module('dashboard', [
         };
         return $delegate;
     });
+
+    $translateProvider
+    .useStaticFilesLoader({
+        prefix: 'loc/lang-',
+        suffix: '.json'
+    })
+    .preferredLanguage('fi')
+    .fallbackLanguage('fi')
+    .useSanitizeValueStrategy('escapeParameters')
+    .use('fi');
 
     $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|blob):/);
 })

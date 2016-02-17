@@ -1,0 +1,20 @@
+{
+    "STR_LOGIN" : "Kirjaudu",
+    "STR_MEETINGS": "Kokoukset",
+    "STR_SIGNINGS": "Allekirjoitukset",
+    "STR_FUTURE": "Tulevat",
+    "STR_FUTURE_MEETINGS": "Tulevat kokoukset",
+    "STR_ALL": "Kaikki",
+    "STR_ALL_MEETINGS": "Kaikki kokoukset",
+    "STR_OPEN_PLR": "Avoimet",
+    "STR_CLOSED_PLR": "Suljetut",
+    "STR_OPEN_SIGNINGS": "Avoimet allekirjoitukset",
+    "STR_CLOSED_SIGNINGS": "Suljetut allekirjoitukset",
+    "STR_SIGNING_REQ": "Allekirjoituspyyntö",
+    "STR_SIGNING_TYPE": "Tyyppi",
+    "STR_CLEAR_SELECTION": "Tyhjennä valinta",
+    "STR_STATUS": "Status",
+    "STR_LOADING": "Ladataan...",
+    "STR_FAIL_LOADING": "Haku ei onnistunut.",
+    "STR_TRY_LATER": "Ole hyvä ja yritä myöhemmin uudestaan."
+}

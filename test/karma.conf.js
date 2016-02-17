@@ -32,6 +32,9 @@ module.exports = function(config) {
       'bower_components/angular-bootstrap-colorpicker/js/bootstrap-colorpicker-module.js',
       'bower_components/angular-wysiwyg/dist/angular-wysiwyg.min.js',
       'bower_components/ng-dialog/js/ngDialog.js',
+      'bower_components/angular-translate/angular-translate.js',
+      'bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js',
+      'bower_components/angular-translate-handler-log/angular-translate-handler-log.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       "app/scripts/app.js",
