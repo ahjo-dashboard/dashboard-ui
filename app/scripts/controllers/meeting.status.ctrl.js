@@ -12,13 +12,20 @@
 * Controller of the dashboard
 */
 angular.module('dashboard')
-.controller('meetingStatusCtrl',['$log','$scope','$rootScope','$stateParams','DEVICE','$state','MENU','MEETING', function ($log, $scope, $rootScope, $stateParams, DEVICE, $state, MENU, MEETING) {
+.controller('meetingStatusCtrl',['$log','$scope','$rootScope','$stateParams','DEVICE','$state','MENU','MEETING','ENV', function ($log, $scope, $rootScope, $stateParams, DEVICE, $state, MENU, MEETING, ENV) {
     $log.debug("meetingStatusCtrl: CONTROLLER");
     var self = this;
     $rootScope.menu = $stateParams.menu;
     self.mobile = $rootScope.device === DEVICE.MOBILE;
     self.title = 'MOBILE TITLE';
     self.object = {};
+    self.chairman = false;
+
+    for (var i = 0; i < ENV.SupportedRoles.length; i++) {
+        if (ENV.SupportedRoles[i].RoleID === 1) {
+            self.chairman = true;
+        }
+    }
 
     $scope.$watch(
         // This function returns the value being watched. It is called for each turn of the $digest loop
@@ -28,7 +35,7 @@ angular.module('dashboard')
         function(newObject, oldObject) {
             if (newObject !== oldObject) {
                 self.object = newObject;
-                $log.debug("meetingStatusCtrl: new object: " + JSON.stringify(self.object));
+                // $log.debug("meetingStatusCtrl: new object: " + JSON.stringify(self.object));
             }
         }
     );
