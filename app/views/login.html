@@ -1,4 +1,5 @@
 <div class="ad-page">
+    <uib-progressbar ng-if="lc.login || lc.loadingUsers" class="progress-striped active" type="info"><i>Haetaan...</i></uib-progressbar>
     <form class="ad-center">
         <select style="margin: 10px;" id="ADID" name="ADID" ng-model="lc.data.selection">
             <option ng-repeat="item in lc.data.options track by $index" value="{{item.value}}">{{item.text}}</option>

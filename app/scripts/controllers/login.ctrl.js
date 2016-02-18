@@ -15,17 +15,22 @@ angular.module('dashboard')
     var self = this;
     self.data = { selection : null, options : [] };
     self.meetings = [];
+    self.loadingUsers = true;
+    self.login = false;
 
     $http({
         method: 'GET',
         url: ENV.AhjoApi_UserLogin
     }).then(function successCallback(response) {
+        self.loadingUsers = false;
         self.data.options = angular.element(response.data).find('option');
     }, function errorCallback(error) {
         $log.error(error);
+        self.loadingUsers = false;
     });
 
     function loginRest() {
+        self.login = true;
         $http({
             method: 'POST',
             data: 'ADID=' + self.data.selection,
@@ -36,11 +41,13 @@ angular.module('dashboard')
             withCredentials: true,
             url: ENV.AhjoApi_UserLoginRest
         }).then(function successCallback(/*response*/) {
+            self.login = false;
             self.data.selection = null;
             $state.go(APPSTATE.HOME);
 
         }, function errorCallback(error) {
             $log.error(error);
+            self.login = false;
             self.data.selection = null;
         });
     }
