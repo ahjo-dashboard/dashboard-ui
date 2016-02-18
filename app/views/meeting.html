@@ -1,9 +1,12 @@
 <div class="ad-page">
 
-    <div class="ad-page-header">
-        <div class="container col-xs-12">
+    <div class="ad-page-header ad-lower-bg">
+        <div class="container col-xs-12 ad-lower-bg">
             <div class="row">
-                <i ng-if="menuClosed()" class="col-xs-1 glyphicon glyphicon-menu-right left" aria-hidden="true" ng-click="openMenu()"></i>
+                <div ng-if="menuClosed()" class="col-xs-1 ad-upper-bg">
+                    <i class="glyphicon glyphicon-menu-right left" aria-hidden="true" ng-click="openMenu()"></i>
+                </div>
+
                 <div class="col-xs-3 col-md-2 btn-group ad-upper-bg" uib-dropdown is-open="">
                     <button id="modeButton" type="button" class="ng-class: ['btn', 'btn-primary', 'ad-button']" uib-dropdown-toggle>
                         <div>Esitys</div>
@@ -52,13 +55,18 @@
         <div class="ad-page-container-flex">
 
             <!-- UPPER START -->
-            <div class="ng-class: ['ad-flex-item','ad-upper-bg', {'ad-flex-show-full':mc.blockMode === 1, 'ad-flex-show':mc.blockMode === 0, 'ad-flex-hide':mc.blockMode === 2}]">
+            <div class="ad-flex-item-upper ng-class:[{'ad-flex-show-full':mc.blockMode === 1, 'ad-flex-show':mc.blockMode === 0, 'ad-flex-hide':mc.blockMode === 2}]">
+
+                <ad-embedded-file id="embeddedFirst" refresh="mc.blockMode" ng-attr-fileurl="'http://www.orimi.com/pdf-test.pdf'" filename="'http://www.orimi.com/pdf-test.pdf'"></ad-embedded-file>
+
                 <div ng-if="mc.error" class="alert alert-danger" role="alert">{{mc.error}}</div>
             </div>
             <!-- UPPER END -->
 
             <!-- LOWER START -->
-            <div class="ng-class: ['ad-flex-item','ad-lower-bg', {'ad-flex-show-full':mc.blockMode === 2, 'ad-flex-show':mc.blockMode === 0, 'ad-flex-hide':mc.blockMode === 1}]">
+            <div class="ad-flex-item-lower ng-class:[{'ad-flex-show-full':mc.blockMode === 2, 'ad-flex-show':mc.blockMode === 0, 'ad-flex-hide':mc.blockMode === 1}]">
+
+                <ad-embedded-file id="embeddedSecond" refresh="mc.blockMode"  ng-attr-fileurl="'http://www.pdf995.com/samples/pdf.pdf'" filename="'http://www.orimi.com/pdf-test.pdf'"></ad-embedded-file>
 
             </div>
             <!-- LOWER END -->

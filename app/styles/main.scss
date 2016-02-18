@@ -10,6 +10,13 @@ $fa-font-path: "../bower_components/font-awesome/fonts";
 @import "font-awesome/scss/font-awesome.scss";
 // endbower
 
+@keyframes EMBEDDED-SHOW {
+    0%   { opacity: 0; visibility: hidden; }
+    1%   { opacity: 0; visibility: visible; }
+    80%  { opacity: 0; visibility: visible; }
+    100% { opacity: 1; visibility: visible; }
+}
+
 /* Extra small devices (phones, less than 768px) */
 /* No media query since this is the default in Bootstrap */
 
@@ -20,6 +27,7 @@ $fa-font-path: "../bower_components/font-awesome/fonts";
     padding: 0.2em 0;
 }
 
+$long-delay: 800ms;
 $default-delay: 400ms;
 $short-delay: 50ms;
 
@@ -30,9 +38,6 @@ $lower-color: #f0ad4e;
     min-width: 320px;
     display: none;
 }
-
-.ad-upper-bg { background-color: $upper-color; }
-.ad-lower-bg { background-color: $lower-color; }
 
 html { height: 100%; }
 
@@ -49,6 +54,9 @@ body {
 
     background-color: $appbgcolor;
     padding: 0;
+
+    .ad-upper-bg { background-color: $upper-color !important; }
+    .ad-lower-bg { background-color: $lower-color !important; }
 
     .full-width {
         width: 100%;
@@ -256,6 +264,36 @@ body {
         transition: all $short-delay linear;
     }
 
+    .ad-flex-item-upper {
+        @extend .ad-flex-item;
+        border-style: solid;
+        border-top-width: 0;
+        border-left-width: 0;
+        border-right-width: thick;
+        border-bottom-width: 0;
+        border-right-color: $lower-color;
+        padding: 5px;
+        background-color: $upper-color;
+    }
+
+    .ad-flex-item-upper.ad-flex-show-full {
+        border-right-width: 0;
+    }
+
+    .ad-flex-item-upper.ad-flex-hide {
+        padding: 0;
+    }
+
+    .ad-flex-item-lower {
+        @extend .ad-flex-item;
+        padding: 5px;
+        background-color: $lower-color;
+    }
+
+    .ad-flex-item-lower.ad-flex-hide {
+        padding: 0;
+    }
+
     .ad-flex-header {
         flex: 2;
         display: flex;
@@ -397,6 +435,7 @@ body {
     width: 100%;
     height: 100%;
     border: none;
+    animation: EMBEDDED-SHOW $long-delay linear;
 }
 
 .ad-btn-margin { margin: 2px; }
