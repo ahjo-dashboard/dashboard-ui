@@ -15,6 +15,8 @@ angular.module('dashboard')
     var self = this;
     self.data = { selection : null, options : [] };
     self.meetings = [];
+    self.loadingUsers = true;
+    self.login = false;
 
     $http({
         method: 'GET',
@@ -23,9 +25,12 @@ angular.module('dashboard')
         self.data.options = angular.element(response.data).find('option');
     }, function errorCallback(error) {
         $log.error(error);
+    }).finally(function() {
+        self.loadingUsers = false;
     });
 
     function loginRest() {
+        self.login = true;
         $http({
             method: 'POST',
             data: 'ADID=' + self.data.selection,
@@ -42,6 +47,8 @@ angular.module('dashboard')
         }, function errorCallback(error) {
             $log.error(error);
             self.data.selection = null;
+        }).finally(function() {
+            self.login = false;
         });
     }
 
