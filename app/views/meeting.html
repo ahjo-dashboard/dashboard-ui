@@ -14,8 +14,8 @@
                     </button>
                     <ul uib-dropdown-menu role="menu" aria-labelledby="modeButton">
                         <li role="menuitem" ng-click="mc.upperClicked()">
-                            <a ng-if="mc.blockMode !== 1">Laajenna</a>
-                            <a ng-if="mc.blockMode === 1">Pienennä</a>
+                            <a ng-if="!mc.isUpperMode()">Laajenna</a>
+                            <a ng-if="mc.isUpperMode()">Pienennä</a>
                         </li>
                     </ul>
                 </div>
@@ -26,8 +26,8 @@
                     </button>
                     <ul uib-dropdown-menu role="menu" aria-labelledby="attachmentButton">
                         <li role="menuitem" ng-click="mc.lowerClicked()">
-                            <a ng-if="mc.blockMode !== 2">Laajenna</a>
-                            <a ng-if="mc.blockMode === 2">Pienennä</a>
+                            <a ng-if="!mc.isLowerMode()">Laajenna</a>
+                            <a ng-if="mc.isLowerMode()">Pienennä</a>
                         </li>
                     </ul>
                 </div>
