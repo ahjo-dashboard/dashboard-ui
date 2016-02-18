@@ -12,7 +12,7 @@
 * Controller of the dashboard
 */
 angular.module('dashboard')
-.controller('meetingStatusCtrl',['$log','$scope','$rootScope','$stateParams','DEVICE','$state','MENU','MEETING','ENV', function ($log, $scope, $rootScope, $stateParams, DEVICE, $state, MENU, MEETING, ENV) {
+.controller('meetingStatusCtrl',['$log','$scope','$rootScope','$stateParams','DEVICE','$state','MENU','MEETING','ENV', 'APPSTATE', function ($log, $scope, $rootScope, $stateParams, DEVICE, $state, MENU, MEETING, ENV, APPSTATE) {
     $log.debug("meetingStatusCtrl: CONTROLLER");
     var self = this;
     $rootScope.menu = $stateParams.menu;
@@ -41,7 +41,7 @@ angular.module('dashboard')
     );
 
     self.goHome = function() {
-        $state.go('app.home', {menu: MENU.CLOSED});
+        $state.go(APPSTATE.HOME, {menu: MENU.CLOSED});
     };
 
     $scope.$on('$destroy', function() {

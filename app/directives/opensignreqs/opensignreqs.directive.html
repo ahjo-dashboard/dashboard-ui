@@ -35,7 +35,7 @@
     <uib-progressbar ng-if="ctrl.loading()" class="progress-striped active" type="info"><i><ANY translate>STR_LOADING</ANY></i></uib-progressbar>
 
     <ul ng-if="!ctrl.reqErr" class="list-group">
-        <button type="button" class="list-group-item col-xs-12" ng-repeat="i in ctrl.model | filter: ctrl.docFilter track by $index ">
+        <button type="button" class="list-group-item col-xs-12" ng-repeat="i in ctrl.model | filter: ctrl.docFilter track by $index " ng-click="ctrl.selected(i)">
             <div class="row" ng-click="ctrl.itemSelected(i)">
                 <div class="col-xs-12 col-sm-4">{{i.RequestDate | date:'yyyy-MM-dd'}} {{i.Name}}</div>
                 <div class="col-xs-6 col-sm-4">{{ctrl.signReqDocTypeTxt(i.DocumentType)}}</div>

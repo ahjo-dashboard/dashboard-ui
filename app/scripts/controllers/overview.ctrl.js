@@ -12,7 +12,7 @@
  * Controller of the dashboard
  */
 angular.module('dashboard')
-.controller('overviewCtrl',['$scope','$log','ENV','SigningOpenApi','$state','$rootScope','BLOCKMODE','MENU', 'HOMEMODE','$stateParams', function ($scope, $log, ENV, SigningOpenApi, $state, $rootScope, BLOCKMODE, MENU, HOMEMODE, $stateParams) {
+.controller('overviewCtrl',['$scope','$log','ENV','SigningOpenApi','$state','$rootScope','BLOCKMODE','MENU', 'HOMEMODE','$stateParams', 'APPSTATE', function ($scope, $log, ENV, SigningOpenApi, $state, $rootScope, BLOCKMODE, MENU, HOMEMODE, $stateParams, APPSTATE) {
     $log.debug("overviewCtrl: CONTROLLER, mode: ", $stateParams.state);
     var self = this;
     self.loading = 0;
@@ -51,12 +51,12 @@ angular.module('dashboard')
 
     self.meetingItemSelected = function(meetingItem) {
         $log.debug("overviewCtrl.meetingItemSelected");
-        $state.go('app.meeting', {'meetingItem': meetingItem, 'menu': MENU.FULL});
+        $state.go(APPSTATE.MEETING, {'meetingItem': meetingItem, 'menu': MENU.FULL});
     };
 
     self.signItemSelected = function(signingItem) {
         $log.debug("overviewCtrl.signItemSelected");
-        $state.go('app.signitem', {signItem: signingItem});
+        $state.go(APPSTATE.SIGNITEM, {signItem: signingItem});
     };
 
     self.showInfo = function() {

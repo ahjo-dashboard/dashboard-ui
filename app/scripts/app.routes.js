@@ -4,13 +4,13 @@
 */
 'use strict';
 angular.module('dashboard')
-.config(['$urlRouterProvider','$stateProvider','ENV','MENU', 'HOMEMODE', function($urlRouterProvider, $stateProvider, ENV, MENU, HOMEMODE) {
+.config(['$urlRouterProvider','$stateProvider','ENV','MENU', 'HOMEMODE', 'APPSTATE', function($urlRouterProvider, $stateProvider, ENV, MENU, HOMEMODE, APPSTATE) {
     var device = angular.element('#device');
 
     if (device && device.css('min-width') === '320px') {
         /* MOBILE States and routings */
         $stateProvider
-        .state('app', {
+        .state(APPSTATE.APP, {
             url: '',
             abstract: true,
             views: {
@@ -24,7 +24,7 @@ angular.module('dashboard')
                 menu: MENU.FULL
             }
         })
-        .state('app.home', {
+        .state(APPSTATE.HOME, {
             url: '/home',
             views: {
                 'homeContent': {
@@ -34,7 +34,7 @@ angular.module('dashboard')
                 }
             }
         })
-        .state('app.overview', {
+        .state(APPSTATE.OVERVIEW, {
             url: '/overview',
             views: {
                 'homeContent': {
@@ -47,7 +47,7 @@ angular.module('dashboard')
                 state: HOMEMODE.ALL
             }
         })
-        .state('app.meeting', {
+        .state(APPSTATE.MEETING, {
             url: '/meeting',
             views: {
                 'homeLeftContent': {
@@ -66,7 +66,7 @@ angular.module('dashboard')
                 meetingItem: null
             }
         })
-        .state('app.signitem', {
+        .state(APPSTATE.SIGNITEM, {
             url: '/signitem',
             views: {
                 'homeContent': {
@@ -80,7 +80,7 @@ angular.module('dashboard')
     else {
         /* DESKTOP States and routings */
         $stateProvider
-        .state('app', {
+        .state(APPSTATE.APP, {
             url: '',
             abstract: true,
             views: {
@@ -94,7 +94,7 @@ angular.module('dashboard')
                 menu: MENU.CLOSED
             }
         })
-        .state('app.home', {
+        .state(APPSTATE.HOME, {
             url: '/home',
             views: {
                 'homeLeftContent': {
@@ -109,7 +109,7 @@ angular.module('dashboard')
                 }
             }
         })
-        .state('app.meeting', {
+        .state(APPSTATE.MEETING, {
             url: '/meeting',
             views: {
                 'homeLeftContent': {
@@ -128,17 +128,12 @@ angular.module('dashboard')
                 meetingItem: null
             }
         })
-        .state('app.signing', {
-            url: '/signing',
+        .state(APPSTATE.SIGNITEM, {
+            url: '/signitem',
             views: {
-                'homeLeftContent': {
-                    templateUrl: 'views/menu.html',
-                    controller: 'menuCtrl',
-                    controllerAs: 'mc'
-                },
-                'homeRightContent': {
-                    templateUrl: 'views/signing.html',
-                    controller: 'signingCtrl',
+                'homeContent': {
+                    templateUrl: 'views/signitem.html',
+                    controller: 'signitemCtrl',
                     controllerAs: 'sc'
                 }
             }
@@ -149,7 +144,7 @@ angular.module('dashboard')
 
     if (ENV.app_env !== 'prod') {
        $stateProvider
-        .state('app.login', {
+        .state(APPSTATE.LOGIN, {
             url: '/login',
             views: {
                 'homeContent' :{
@@ -162,7 +157,7 @@ angular.module('dashboard')
     }
 
     $stateProvider
-    .state('app.info', {
+    .state(APPSTATE.INFO, {
         url: '/info',
         views: {
             'homeContent': {

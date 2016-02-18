@@ -12,7 +12,7 @@
  */
 angular.module('dashboard')
 .directive('adOpenSignreqs', function () {
-  var controller = ['$log', 'SigningOpenApi', 'SigningClosedApi', 'ENV', '$scope', function ($log, SigningOpenApi, SigningClosedApi, ENV, $scope) {
+  var controller = ['$log', 'SigningOpenApi', 'SigningClosedApi', 'ENV', '$scope', '$state', 'APPSTATE', function ($log, SigningOpenApi, SigningClosedApi, ENV, $scope, $state, APPSTATE) {
     $log.log("adOpenSignreqs.CONTROLLER");
     var self = this;
 
@@ -287,6 +287,11 @@ angular.module('dashboard')
       }
       //$log.log("adOpenSignreqs.docFilter: " +res);
       return res;
+    };
+
+    self.selected = function(item) {
+      $log.log("adOpenSignreqs.selected");
+      $state.go(APPSTATE.SIGNITEM, {'item': item});
     };
 
     $scope.$watch('closeditems', function(newValue/*, oldValue*/) {
