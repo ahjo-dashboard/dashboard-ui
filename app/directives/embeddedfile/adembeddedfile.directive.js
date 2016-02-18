@@ -33,6 +33,8 @@ angular.module('dashboard')
             var HEIGHT = 'height';
             var RESIZE = 'resize';
             var OPACITY = 'opacity';
+            var TRANSITION = 'transition';
+            var VISIBILITY = 'visibility';
 
             // Element replaced in link because IE 11 and Edge won't display the pdf object if url is passed via Angular property
             //TODO: check filetype and use pdf icon only for pdf
@@ -59,12 +61,16 @@ angular.module('dashboard')
                 function() { return { val : scope.refresh }; },
                 function() {
                     $timeout(function () {
+                        element.css(TRANSITION, 'opacity 0s, visibility 0s, height 400ms');
                         element.css(OPACITY, 0.0);
+                        element.css(VISIBILITY, 'hidden');
                         element.css(HEIGHT, element.parent().height());
                         $timeout(function () {
+                            element.css(TRANSITION, 'opacity 800ms, visibility 800ms');
+                            element.css(VISIBILITY, 'visible');
                             element.css(OPACITY, 1.0);
                         },
-                        200);
+                        100);
                     },
                     100);
                 },
