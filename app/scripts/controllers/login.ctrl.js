@@ -22,10 +22,10 @@ angular.module('dashboard')
         method: 'GET',
         url: ENV.AhjoApi_UserLogin
     }).then(function successCallback(response) {
-        self.loadingUsers = false;
         self.data.options = angular.element(response.data).find('option');
     }, function errorCallback(error) {
         $log.error(error);
+    }).finally(function() {
         self.loadingUsers = false;
     });
 
@@ -41,14 +41,14 @@ angular.module('dashboard')
             withCredentials: true,
             url: ENV.AhjoApi_UserLoginRest
         }).then(function successCallback(/*response*/) {
-            self.login = false;
             self.data.selection = null;
             $state.go(APPSTATE.HOME);
 
         }, function errorCallback(error) {
             $log.error(error);
-            self.login = false;
             self.data.selection = null;
+        }).finally(function() {
+            self.login = false;
         });
     }
 
