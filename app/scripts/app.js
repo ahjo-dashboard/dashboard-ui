@@ -114,9 +114,7 @@ angular.module('dashboard', [
     };
 
     $rootScope.openMenu = function() {
-        if ($rootScope.menu < MENU.FULL) {
-            $rootScope.menu = $rootScope.menu + 1;
-        }
+        $rootScope.menu = MENU.FULL;
     };
 
     $rootScope.closeMenu = function() {

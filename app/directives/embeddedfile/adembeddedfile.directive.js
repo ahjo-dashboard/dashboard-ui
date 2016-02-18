@@ -16,7 +16,7 @@ angular.module('dashboard')
         scope: {
             fileurl: '=',
             filename: '=',
-            parallel: '='
+            refresh: '='
         },
         templateUrl: 'directives/embeddedfile/adembeddedfile.directive.html',
         restrict: 'E',
@@ -30,11 +30,9 @@ angular.module('dashboard')
                 return;
             }
 
-            var PARALLEL_TRUE = 'parallel-true';
-            var PARALLEL_FALSE = 'parallel-false';
             var HEIGHT = 'height';
-            var CLASS = 'class';
             var RESIZE = 'resize';
+            var OPACITY = 'opacity';
 
             // Element replaced in link because IE 11 and Edge won't display the pdf object if url is passed via Angular property
             //TODO: check filetype and use pdf icon only for pdf
@@ -48,6 +46,7 @@ angular.module('dashboard')
 
                 element.empty();
                 element.append($compile(html)(scope));
+                element.css(HEIGHT, element.parent().height());
             }
 
             scope.$watch(
@@ -57,17 +56,17 @@ angular.module('dashboard')
             );
 
             scope.$watch(
+                function() { return { val : scope.refresh }; },
                 function() {
-                    return {
-                        class: element.attr(CLASS)
-                    };
-                },
-                function(data) {
-                    if (data.class && (data.class.indexOf(PARALLEL_TRUE) !== -1 || data.class.indexOf(PARALLEL_FALSE) !== -1)) {
+                    $timeout(function () {
+                        element.css(OPACITY, 0.0);
+                        element.css(HEIGHT, element.parent().height());
                         $timeout(function () {
-                            element.css(HEIGHT, element.parent().height());
-                        }, 100);
-                    }
+                            element.css(OPACITY, 1.0);
+                        },
+                        200);
+                    },
+                    100);
                 },
                 true
             );
