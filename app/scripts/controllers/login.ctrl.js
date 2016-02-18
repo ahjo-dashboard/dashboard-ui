@@ -17,6 +17,7 @@ angular.module('dashboard')
     self.meetings = [];
     self.loadingUsers = true;
     self.login = false;
+    self.error = null;
 
     $http({
         method: 'GET',
@@ -25,11 +26,13 @@ angular.module('dashboard')
         self.data.options = angular.element(response.data).find('option');
     }, function errorCallback(error) {
         $log.error(error);
+        self.error = error;
     }).finally(function() {
         self.loadingUsers = false;
     });
 
     function loginRest() {
+        self.error = null;
         self.login = true;
         $http({
             method: 'POST',
@@ -47,6 +50,7 @@ angular.module('dashboard')
         }, function errorCallback(error) {
             $log.error(error);
             self.data.selection = null;
+            self.error = error;
         }).finally(function() {
             self.login = false;
         });
