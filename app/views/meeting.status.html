@@ -25,27 +25,25 @@
             </ul>
         </div>
 
-
-
-        <div class="ad-topic" ng-repeat="item in msc.object.topicList track by $index">
+        <div class="ad-topic" ng-repeat="topic in msc.object.topicList track by $index">
 
             <div class="btn-group ad-topic-status" uib-dropdown is-open="">
                 <button id="topicButton" type="button" class="btn btn-default btn-lg ad-button ng-class:[{'disabled': !msc.chairman},{'ad-dummy-button': !msc.chairman}]" uib-dropdown-toggle>
-                    <img ng-if="item.topicStatus===1" src="images/state_4.png"></img>
-                    <img ng-if="item.topicStatus===2" src="images/state_4_lock.png"></img>
-                    <img ng-if="item.topicStatus===3" src="images/state_4_lock_remark.png"></img>
-                    <img ng-if="item.topicStatus===4" src="images/state_4_remark.png"></img>
+                    <img ng-if="msc.isPending(topic)" src="images/state_4.png"></img>
+                    <img ng-if="msc.isActive(topic)" src="images/state_4_lock.png"></img>
+                    <img ng-if="msc.isAborted(topic)" src="images/state_4_lock_remark.png"></img>
+                    <img ng-if="msc.isReady(topic)" src="images/state_4_remark.png"></img>
                     <span ng-if="msc.chairman" class="caret"></span>
                 </button>
                 <ul uib-dropdown-menu role="menu" aria-labelledby="topicButton">
-                    <li role="menuitem" ng-click="status=1"><a>1</a></li>
-                    <li role="menuitem" ng-click="status=2"><a>2</a></li>
-                    <li role="menuitem" ng-click="status=3"><a>3</a></li>
-                    <li role="menuitem" ng-click="status=4"><a>4</a></li>
+                    <li role="menuitem" ng-click=""><a>1</a></li>
+                    <li role="menuitem" ng-click=""><a>2</a></li>
+                    <li role="menuitem" ng-click=""><a>3</a></li>
+                    <li role="menuitem" ng-click=""><a>4</a></li>
                 </ul>
             </div>
 
-            <button type="button" class="btn btn-default ad-button ad-topic-button" ng-click="">{{item.title}}</button>
+            <button type="button" class="btn btn-default ad-button ad-topic-button" ng-click="msc.topicSelected(topic)">{{topic.topicTitle}}</button>
         </div>
 
     </div>

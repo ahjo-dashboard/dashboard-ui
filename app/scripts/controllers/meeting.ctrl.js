@@ -31,10 +31,10 @@ angular.module('dashboard')
         .then(function(response) {
             $log.debug("meetingCtrl: getMeeting then:");
             if (response && response.objects instanceof Array) {
-                MEETING.set('OBJECT', response.objects[0]);
+                MEETING.set('MEETING', response.objects[0]);
             }
             else {
-                MEETING.set('OBJECT', {});
+                MEETING.set('MEETING', {});
             }
         },
         function(error) {
@@ -58,6 +58,14 @@ angular.module('dashboard')
 
     self.lowerClicked = function() {
         self.blockMode = (self.blockMode === BLOCKMODE.BOTH || self.blockMode === BLOCKMODE.UPPER) ? BLOCKMODE.LOWER : BLOCKMODE.BOTH;
+    };
+
+    self.isUpperMode = function() {
+        return self.blockMode === BLOCKMODE.UPPER;
+    };
+
+    self.isLowerMode = function() {
+        return self.blockMode === BLOCKMODE.LOWER;
     };
 
     $scope.$on('$destroy', function() {
