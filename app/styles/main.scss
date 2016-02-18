@@ -272,11 +272,25 @@ body {
         border-bottom-width: 0;
         border-right-color: $lower-color;
         padding: 5px;
+        background-color: $upper-color;
+    }
+
+    .ad-flex-item-upper.ad-flex-show-full {
+        border-right-width: 0;
+    }
+
+    .ad-flex-item-upper.ad-flex-hide {
+        padding: 0;
     }
 
     .ad-flex-item-lower {
         @extend .ad-flex-item;
         padding: 5px;
+        background-color: $lower-color;
+    }
+
+    .ad-flex-item-lower.ad-flex-hide {
+        padding: 0;
     }
 
     .ad-flex-header {
