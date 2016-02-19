@@ -1,0 +1,3 @@
+    <button type="button" ng-repeat="i in ctrl.btns" ng-class="[i.style, {'active': i.active}]" model="i.model" ng-click="i.cb()">
+        <ANY translate>{{i.label}}</ANY>
+    </button>
