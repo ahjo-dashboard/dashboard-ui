@@ -55,18 +55,18 @@
         <div class="ad-page-container-flex">
 
             <!-- UPPER START -->
-            <div class="ad-flex-item-upper ng-class:[{'ad-flex-show-full':mc.blockMode === 1, 'ad-flex-show':mc.blockMode === 0, 'ad-flex-hide':mc.blockMode === 2}]">
+            <div class="ad-flex-item-upper ng-class:[{'ad-flex-show-full':mc.isUpperMode(), 'ad-flex-show':mc.isBothMode(), 'ad-flex-hide':mc.isLowerMode()}]">
 
-                <ad-embedded-file id="embeddedFirst" refresh="mc.blockMode" ng-attr-fileurl="'http://www.orimi.com/pdf-test.pdf'" filename="'http://www.orimi.com/pdf-test.pdf'"></ad-embedded-file>
+                <ad-embedded-file id="embeddedFirst" refresh="mc.blockMode" ng-attr-fileurl="mc.upperUrl" filename="mc.upperUrl"></ad-embedded-file>
 
                 <div ng-if="mc.error" class="alert alert-danger" role="alert">{{mc.error}}</div>
             </div>
             <!-- UPPER END -->
 
             <!-- LOWER START -->
-            <div class="ad-flex-item-lower ng-class:[{'ad-flex-show-full':mc.blockMode === 2, 'ad-flex-show':mc.blockMode === 0, 'ad-flex-hide':mc.blockMode === 1}]">
+            <div class="ad-flex-item-lower ng-class:[{'ad-flex-show-full':mc.isLowerMode(), 'ad-flex-show':mc.isBothMode(), 'ad-flex-hide':mc.isUpperMode()}]">
 
-                <ad-embedded-file id="embeddedSecond" refresh="mc.blockMode"  ng-attr-fileurl="'http://www.pdf995.com/samples/pdf.pdf'" filename="'http://www.orimi.com/pdf-test.pdf'"></ad-embedded-file>
+                <ad-embedded-file id="embeddedSecond" refresh="mc.blockMode"  ng-attr-fileurl="mc.lowerUrl" filename="mc.lowerUrl"></ad-embedded-file>
 
             </div>
             <!-- LOWER END -->
