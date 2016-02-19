@@ -66,7 +66,7 @@ angular.module('dashboard')
                     element.css(OPACITY, 0.0);
                     element.css(VISIBILITY, 'hidden');
                     $timeout(function () {
-                        element.css(TRANSITION, 'opacity 400ms, visibility 400ms');
+                        element.css(TRANSITION, 'opacity 1200ms, visibility 200ms');
                         element.css(VISIBILITY, 'visible');
                         element.css(OPACITY, 1.0);
                     },
@@ -79,12 +79,12 @@ angular.module('dashboard')
                 function() { return { val : scope.refresh }; },
                 function() {
                     $timeout(function () {
-                        element.css(TRANSITION, 'opacity 0s, visibility 0s, height 400ms');
+                        element.css(TRANSITION, 'opacity 0s, visibility 0s, height 200ms');
                         element.css(OPACITY, 0.0);
                         element.css(VISIBILITY, 'hidden');
                         element.css(HEIGHT, element.parent().height());
                         $timeout(function () {
-                            element.css(TRANSITION, 'opacity 800ms, visibility 800ms');
+                            element.css(TRANSITION, 'opacity 800ms, visibility 200ms');
                             element.css(VISIBILITY, 'visible');
                             element.css(OPACITY, 1.0);
                         },
