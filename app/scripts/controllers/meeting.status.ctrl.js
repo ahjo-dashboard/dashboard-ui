@@ -12,7 +12,7 @@
 * Controller of the dashboard
 */
 angular.module('dashboard')
-.controller('meetingStatusCtrl',['$log','$scope','$rootScope','$stateParams','DEVICE','$state','MENU','StorageSrv','ENV', 'APPSTATE','TOPICSTATUS','ROLE','KEY', function ($log, $scope, $rootScope, $stateParams, DEVICE, $state, MENU, StorageSrv, ENV, APPSTATE, TOPICSTATUS, ROLE, KEY) {
+.controller('meetingStatusCtrl',['$log','$scope','$rootScope','$stateParams','DEVICE','$state','MENU','StorageSrv','ENV', 'APPSTATE','TOPICSTATUS','MTGROLE','KEY', function ($log, $scope, $rootScope, $stateParams, DEVICE, $state, MENU, StorageSrv, ENV, APPSTATE, TOPICSTATUS, MTGROLE, KEY) {
     $log.debug("meetingStatusCtrl: CONTROLLER");
     var self = this;
     $rootScope.menu = $stateParams.menu;
@@ -22,7 +22,7 @@ angular.module('dashboard')
     self.chairman = false;
 
     for (var i = 0; i < ENV.SupportedRoles.length; i++) {
-        if (ENV.SupportedRoles[i].RoleID === ROLE.CHAIRMAN) {
+        if (ENV.SupportedRoles[i].RoleID === MTGROLE.CHAIRMAN) {
             self.chairman = true;
         }
     }
@@ -50,7 +50,7 @@ angular.module('dashboard')
     self.isSelected = function(topic) {
         var selected = StorageSrv.get(KEY.TOPIC);
         if (topic instanceof Object && selected instanceof Object) {
-            return topic.topicGuid === selected.topicGuid;
+            return (topic.topicGuid && topic.topicGuid === selected.topicGuid);
         }
         return false;
     };

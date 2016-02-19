@@ -43,7 +43,7 @@ angular.module('dashboard')
     }
 )
 .constant(
-    'ROLE', {
+    'MTGROLE', {
         NONE: 0,
         CHAIRMAN: 1,
         PARTICIPANT: 2
