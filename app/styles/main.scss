@@ -210,6 +210,12 @@ body {
             font-size: 1.5em;
         }
 
+        .glyphicon.center {
+            line-height: normal;
+            top: 0 !important;
+            margin: auto;
+        }
+
         .glyphicon.left {
             float: left;
             text-align: left;;

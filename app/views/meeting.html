@@ -14,25 +14,30 @@
                     </button>
                     <ul uib-dropdown-menu role="menu" aria-labelledby="modeButton">
                         <li role="menuitem" ng-click="mc.upperClicked()">
-                            <a ng-if="!mc.isUpperMode()">Laajenna</a>
-                            <a ng-if="mc.isUpperMode()">Pienennä</a>
+                            <a>First</a>
+                            <a>Second</a>
                         </li>
                     </ul>
                 </div>
+                <div class="hidden-xs col-xs-1 btn-group ad-upper-bg">
+                    <button type="button" class="btn btn-info ad-button" ng-click="mc.upperClicked()">
+                        <i class="glyphicon center ng-class:[{'glyphicon-plus':!mc.isUpperMode(), 'glyphicon-minus':mc.isUpperMode()}]"></i>
+                    </button>
+                </div>
                 <div class="col-xs-3 col-md-2 btn-group ad-lower-bg" uib-dropdown is-open="">
-                    <button id="attachmentButton" type="button" class="ng-class: ['btn', 'btn-primary', 'ad-button']" uib-dropdown-toggle>
+                    <button id="attachmentButton" type="button" class="btn btn-primary ad-button" uib-dropdown-toggle>
                         <div>Liitteet</div>
                         <span class="caret"></span>
                     </button>
                     <ul uib-dropdown-menu role="menu" aria-labelledby="attachmentButton">
                         <li role="menuitem" ng-click="mc.lowerClicked()">
-                            <a ng-if="!mc.isLowerMode()">Laajenna</a>
-                            <a ng-if="mc.isLowerMode()">Pienennä</a>
+                            <a>First</a>
+                            <a>Second</a>
                         </li>
                     </ul>
                 </div>
                 <div class="col-xs-3 col-md-2 btn-group ad-lower-bg" uib-dropdown is-open="">
-                    <button id="materialButton" type="button" class="ng-class: ['btn', 'btn-primary', 'ad-button']" uib-dropdown-toggle>
+                    <button id="materialButton" type="button" class="btn btn-primary ad-button" uib-dropdown-toggle>
                         <div>Muu materiaali</div>
                         <span class="caret"></span>
                     </button>
@@ -42,8 +47,14 @@
                     </ul>
                 </div>
                 <div class="col-xs-3 col-md-2 btn-group ad-lower-bg">
-                    <button id="proposalButton" type="button" class="ng-class: ['btn', 'btn-primary', 'ad-button']">
+                    <button id="proposalButton" type="button" class="btn btn-primary ad-button">
                         <div>Ehdotukset</div>
+                    </button>
+                </div>
+
+                <div class="hidden-xs col-xs-1 btn-group ad-lower-bg right">
+                    <button type="button" class="btn btn-info ad-button" ng-click="mc.lowerClicked()">
+                        <i class="glyphicon center ng-class:[{'glyphicon-plus':!mc.isLowerMode(), 'glyphicon-minus':mc.isLowerMode()}]"></i>
                     </button>
                 </div>
             </div>
