@@ -11,7 +11,7 @@
 * # adEmbeddedFile
 */
 angular.module('dashboard')
-.directive('adEmbeddedFile', ['Device', '$timeout', '$log', '$compile', '$window', function (Device, $timeout, $log, $compile, $window) {
+.directive('adEmbeddedFile', ['Device', '$timeout', '$log', '$compile', '$window','$rootScope', function (Device, $timeout, $log, $compile, $window, $rootScope) {
     return {
         scope: {
             fileurl: '=',
@@ -58,15 +58,33 @@ angular.module('dashboard')
             );
 
             scope.$watch(
+                function() {
+                    return $rootScope.menu;
+                },
+                function() {
+                    element.css(TRANSITION, 'opacity 0s, visibility 0s');
+                    element.css(OPACITY, 0.0);
+                    element.css(VISIBILITY, 'hidden');
+                    $timeout(function () {
+                        element.css(TRANSITION, 'opacity 1200ms, visibility 200ms');
+                        element.css(VISIBILITY, 'visible');
+                        element.css(OPACITY, 1.0);
+                    },
+                    100);
+                },
+                true
+            );
+
+            scope.$watch(
                 function() { return { val : scope.refresh }; },
                 function() {
                     $timeout(function () {
-                        element.css(TRANSITION, 'opacity 0s, visibility 0s, height 400ms');
+                        element.css(TRANSITION, 'opacity 0s, visibility 0s, height 200ms');
                         element.css(OPACITY, 0.0);
                         element.css(VISIBILITY, 'hidden');
                         element.css(HEIGHT, element.parent().height());
                         $timeout(function () {
-                            element.css(TRANSITION, 'opacity 800ms, visibility 800ms');
+                            element.css(TRANSITION, 'opacity 800ms, visibility 200ms');
                             element.css(VISIBILITY, 'visible');
                             element.css(OPACITY, 1.0);
                         },

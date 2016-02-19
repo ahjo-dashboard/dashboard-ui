@@ -12,17 +12,17 @@
 * Controller of the dashboard
 */
 angular.module('dashboard')
-.controller('meetingStatusCtrl',['$log','$scope','$rootScope','$stateParams','DEVICE','$state','MENU','MEETING','ENV', 'APPSTATE','TOPICSTATUS', function ($log, $scope, $rootScope, $stateParams, DEVICE, $state, MENU, MEETING, ENV, APPSTATE, TOPICSTATUS) {
+.controller('meetingStatusCtrl',['$log','$scope','$rootScope','$stateParams','DEVICE','$state','MENU','StorageSrv','ENV', 'APPSTATE','TOPICSTATUS','MTGROLE','KEY', function ($log, $scope, $rootScope, $stateParams, DEVICE, $state, MENU, StorageSrv, ENV, APPSTATE, TOPICSTATUS, MTGROLE, KEY) {
     $log.debug("meetingStatusCtrl: CONTROLLER");
     var self = this;
     $rootScope.menu = $stateParams.menu;
     self.mobile = $rootScope.device === DEVICE.MOBILE;
     self.title = 'MOBILE TITLE';
-    self.object = {};
+    self.meeting = {};
     self.chairman = false;
 
     for (var i = 0; i < ENV.SupportedRoles.length; i++) {
-        if (ENV.SupportedRoles[i].RoleID === 1) {
+        if (ENV.SupportedRoles[i].RoleID === MTGROLE.CHAIRMAN) {
             self.chairman = true;
         }
     }
@@ -30,11 +30,11 @@ angular.module('dashboard')
     $scope.$watch(
         // This function returns the value being watched. It is called for each turn of the $digest loop
         function() {
-            return MEETING.get('MEETING');
+            return StorageSrv.get(KEY.MEETING);
         },
         function(newObject, oldObject) {
             if (newObject !== oldObject) {
-                self.object = newObject;
+                self.meeting = newObject;
             }
         }
     );
@@ -44,8 +44,15 @@ angular.module('dashboard')
     };
 
     self.topicSelected = function(topic) {
-        $log.debug("meetingStatusCtrl: topicSelected " + JSON.stringify(topic));
-        MEETING.set('TOPIC', topic);
+        StorageSrv.set(KEY.TOPIC, topic);
+    };
+
+    self.isSelected = function(topic) {
+        var selected = StorageSrv.get(KEY.TOPIC);
+        if (topic instanceof Object && selected instanceof Object) {
+            return (topic.topicGuid && topic.topicGuid === selected.topicGuid);
+        }
+        return false;
     };
 
     self.isPending = function(topic) {

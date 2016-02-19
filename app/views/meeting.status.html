@@ -13,11 +13,11 @@
 
     <div class="ad-page-content">
 
-        <button type="button" class="btn btn-primary btn-lg disabled ad-dummy-button" ng-click="">{{msc.object.meetingTitle}}</button>
+        <button type="button" class="btn btn-primary btn-lg disabled ad-dummy-button" ng-click="">{{msc.meeting.meetingTitle}}</button>
 
         <div class="btn-group btn-block" uib-dropdown is-open="">
             <button id="statusButton" type="button" class="btn btn-primary btn-lg ad-button ng-class:[{'disabled': !msc.chairman},{'ad-dummy-button': !msc.chairman}]" uib-dropdown-toggle>
-                <div>{{msc.object.meetingStatus}} Status</div>
+                <div>{{msc.meeting.meetingStatus}} Status</div>
                 <span ng-if="msc.chairman" class="caret"></span>
             </button>
             <ul uib-dropdown-menu role="menu" aria-labelledby="statusButton">
@@ -25,7 +25,7 @@
             </ul>
         </div>
 
-        <div class="ad-topic" ng-repeat="topic in msc.object.topicList track by $index">
+        <div class="ad-topic" ng-repeat="topic in msc.meeting.topicList track by $index">
 
             <div class="btn-group ad-topic-status" uib-dropdown is-open="">
                 <button id="topicButton" type="button" class="btn btn-default btn-lg ad-button ng-class:[{'disabled': !msc.chairman},{'ad-dummy-button': !msc.chairman}]" uib-dropdown-toggle>
@@ -43,7 +43,7 @@
                 </ul>
             </div>
 
-            <button type="button" class="btn btn-default ad-button ad-topic-button" ng-click="msc.topicSelected(topic)">{{topic.topicTitle}}</button>
+            <button type="button" class="btn btn-default ad-button ad-topic-button ng-class:[{'active': msc.isSelected(topic)}]" ng-click="msc.topicSelected(topic)">{{topic.topicTitle}}</button>
         </div>
 
     </div>
