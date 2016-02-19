@@ -1,10 +1,10 @@
 <div class="ad-page">
     <uib-progressbar ng-if="lc.login || lc.loadingUsers" class="progress-striped active" type="info"><i>Haetaan...</i></uib-progressbar>
+    <div ng-if="lc.error" class="alert alert-danger" role="alert"><ANY translate>STR_FAIL_LOADING</ANY>&nbsp;<ANY translate>STR_TRY_LATER</ANY><br>{{lc.error.status}} {{lc.error.statusText}}</div>
     <form class="ad-center">
         <select style="margin: 10px;" id="ADID" name="ADID" ng-model="lc.data.selection">
             <option ng-repeat="item in lc.data.options track by $index" value="{{item.value}}">{{item.text}}</option>
         </select>
         <input style="margin: 10px;" class="login" type="submit" value="{{ 'STR_LOGIN' | translate}}" ng-click="lc.select()" />
     </form>
-
 </div>
