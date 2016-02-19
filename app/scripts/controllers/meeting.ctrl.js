@@ -15,7 +15,7 @@ angular.module('dashboard')
 .controller('meetingCtrl',['$log','AhjoMeetingSrv','$stateParams','$rootScope','$scope','$state','MENU','BLOCKMODE','StorageSrv', 'APPSTATE','KEY', function ($log, AhjoMeetingSrv, $stateParams, $rootScope, $scope, $state, MENU, BLOCKMODE, StorageSrv, APPSTATE, KEY) {
     $log.debug("meetingCtrl: CONTROLLER");
     var self = this;
-    self.upperUrl = {}; // 'http://wv0001121/Kokoussovellus/Document/Presentation/d19a7a86-f5b8-49b2-b19d-b9fd447ba9be';
+    self.upperUrl = {};
     self.lowerUrl = 'http://www.orimi.com/pdf-test.pdf';
     self.error = null;
     self.blockMode = BLOCKMODE.BOTH;
