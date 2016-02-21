@@ -198,9 +198,9 @@ body {
         background-color: $headingBgColor;
         height: $header-height;
 
-        h3 {
+        h1, h2, h3, h4, h5 {
             color: $headingTxtColor;
-            letter-spacing: -2px;
+            letter-spacing: -1px;
             text-align: center;
         }
 
@@ -238,6 +238,7 @@ body {
             margin: ($header-height - $button-height) * 0.5;
             white-space: normal;
             max-lines: 2;
+            border-radius: 6px;
         }
     }
 
@@ -350,8 +351,8 @@ body {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        border: 0;
-        border-radius: 0;
+        border-width: 0;
+        border-radius: 0px;
         width: 100%;
     }
 

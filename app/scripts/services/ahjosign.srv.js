@@ -9,26 +9,29 @@ angular.module('AhjoSigningService', [
 .factory('SigningOpenApi', function ($resource, ENV) {
     return $resource(ENV.SignApiUrl_GetDocs, {}, {
         get: {
-        method: "GET",
-        cache: true
+            method: "GET",
+            cache: false
         },
         query: {
-        method: "GET",
-        cache: true,
-        isArray: true
+            method: "GET",
+            cache: false,
+            isArray: true
+        },
+        save: {
+            method: "POST"
         }
     });
 })
 .factory('SigningClosedApi', function ($resource, ENV) {
     return $resource(ENV.SignApiUrl_GetByYear, {}, {
         get: {
-        method: "GET",
-        cache: true
+            method: "GET",
+            cache: false
         },
-        query: {
-        method: "GET",
-        cache: true,
-        isArray: true
+            query: {
+            method: "GET",
+            cache: false,
+            isArray: true
         }
     });
 })

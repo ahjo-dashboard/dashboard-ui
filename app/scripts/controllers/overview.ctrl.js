@@ -54,11 +54,6 @@ angular.module('dashboard')
         $state.go(APPSTATE.MEETING, {'meetingItem': meetingItem, 'menu': MENU.FULL});
     };
 
-    self.signItemSelected = function(signingItem) {
-        $log.debug("overviewCtrl.signItemSelected");
-        $state.go(APPSTATE.SIGNITEM, {signItem: signingItem});
-    };
-
     self.showInfo = function() {
         $log.debug("overviewCtrl: showInfo");
     };

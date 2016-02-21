@@ -65,11 +65,15 @@ angular.module('dashboard', [
 
     $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|blob):/);
 })
-.run(function($rootScope, $log, DEVICE, $window, MENU) {
+.run(function($rootScope, $log, DEVICE, $window, MENU, APPSTATE, $state) {
     $rootScope.$on('$stateChangeStart', function (event, next/*, toParams, fromParams*/) {
         $log.debug('app.stateChangeStart: ' +next.name);// +' toParams: ' +JSON.stringify(toParams) +' fromParams: ' +JSON.stringify(fromParams));
     });
     $rootScope.$on('$stateChangeError', console.error.bind(console)); // $log.error.bind didn't work for .spec tests
+
+    $rootScope.goHome = function() {
+        $state.go(APPSTATE.HOME);
+    };
 
     $rootScope.goBack = function() {
         $window.history.back();
