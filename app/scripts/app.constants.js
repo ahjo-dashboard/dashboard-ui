@@ -46,7 +46,13 @@ angular.module('dashboard')
     'MTGROLE', {
         NONE: 0,
         CHAIRMAN: 1,
-        PARTICIPANT: 2
+        PARTICIPANT_FULL: 2,
+        DEMONSTRATOR: 3,
+        SECRETARY: 4,
+        PARTICIPANT_LIMITED: 5,
+        TRANSLATOR: 6,
+        INFORMER: 7,
+        NO_ROLE: 8
     }
 )
 .constant(
