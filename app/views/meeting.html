@@ -12,7 +12,7 @@
                         <div>Esitys</div>
                     </button>
                 </div>
-                <div class="hidden-xs col-sm-2 col-md-1 ad-btn-group-right ad-upper-bg">
+                <div class="hidden-xs col-md-1 ad-btn-group-right ad-upper-bg ng-class:[{'col-sm-1':menuClosed(), 'col-sm-2':!menuClosed()}]">
                     <button type="button" class="btn btn-info ad-button" ng-click="mc.upperClicked()">
                         <i class="glyphicon center ng-class:[{'glyphicon-plus':!mc.isUpperMode(), 'glyphicon-minus':mc.isUpperMode()}]"></i>
                     </button>
@@ -20,12 +20,12 @@
                 <!-- UPPER HEADER END  -->
 
                 <!-- LOWER HEADER START  -->
-                <div class="hidden-xs col-sm-2 col-md-1 ad-btn-group-right ad-lower-bg right">
+                <div class="hidden-xs col-md-1 ad-btn-group-right ad-lower-bg right ng-class:[{'col-sm-1':menuClosed(), 'col-sm-2':!menuClosed()}]">
                     <button type="button" class="btn btn-info ad-button" ng-click="mc.lowerClicked()">
                         <i class="glyphicon center ng-class:[{'glyphicon-plus':!mc.isLowerMode(), 'glyphicon-minus':mc.isLowerMode()}]"></i>
                     </button>
                 </div>
-                <div class="hidden-xs hidden-sm col-xs-3 col-md-2 ad-btn-group-middle ad-lower-bg right" uib-dropdown is-open="">
+                <div class="hidden-xs col-xs-2 ad-btn-group-middle ad-lower-bg right" uib-dropdown is-open="">
                     <button id="materialButton" type="button" class="btn btn-primary ad-button" uib-dropdown-toggle>
                         <div>Muu materiaali</div>
                         <span class="caret"></span>
@@ -35,7 +35,7 @@
                         <li role="menuitem"><a ng-click="">Second</a></li>
                     </ul>
                 </div>
-                <div class="hidden-xs hidden-sm col-xs-3 col-md-2 ad-btn-group-middle ad-lower-bg right" uib-dropdown is-open="">
+                <div class="hidden-xs col-xs-2 ad-btn-group-middle ad-lower-bg right" uib-dropdown is-open="">
                     <button id="attachmentButton" type="button" class="btn btn-primary ad-button" uib-dropdown-toggle>
                         <div>Liitteet</div>
                         <span class="caret"></span>
@@ -47,9 +47,9 @@
                         </li>
                     </ul>
                 </div>
-                <div class="col-xs-2 col-md-2 ad-btn-group-left ad-lower-bg right">
+                <div class="col-xs-2 ad-btn-group-left ad-lower-bg right">
                     <button type="button" class="btn btn-primary ad-button">
-                        <div style="text-overflow: ellipsis; overflow: hidden;">Ehdotukset</div>
+                        <div>Ehdotukset</div>
                     </button>
                 </div>
                 <!-- LOWER HEADER END  -->

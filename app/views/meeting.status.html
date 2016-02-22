@@ -3,10 +3,9 @@
     <div class="ad-page-header">
         <div class="container col-xs-12">
             <div class="row">
-                <i ng-if="menuFull()" class="col-xs-1 col-sm-3 col-md-2 col-lg-3 glyphicon glyphicon-info-sign left" aria-hidden="true" ng-click="msc.showInfo()"></i>
-                <i ng-if="menuFull()" class="col-sm-3 col-md-2 col-lg-3 glyphicon glyphicon-home left" aria-hidden="true" ng-click="msc.goHome()"></i>
-                <i class="col-sm-3 col-md-2 col-lg-3 xs-hidden glyphicon glyphicon-menu-left left" aria-hidden="true" ng-click="closeMenu()"></i>
-                <i class="col-sm-3 col-md-2 col-lg-3 xs-hidden glyphicon glyphicon-menu-right left" aria-hidden="true" ng-click="openMenu()"></i>
+                <i ng-if="menuFull()" class="col-xs-1 col-sm-4 glyphicon glyphicon-info-sign" ng-click="msc.showInfo()"></i>
+                <i ng-if="menuFull()" class="col-sm-4 glyphicon glyphicon-home" ng-click="msc.goHome()"></i>
+                <i class="col-sm-4 xs-hidden glyphicon glyphicon-menu-hamburger" ng-click="closeMenu()"></i>
             </div>
         </div>
     </div>
