@@ -38,7 +38,6 @@ angular.module('dashboard')
             method: 'POST',
             data: 'ADID=' + self.data.selection,
             headers : {
-                'Upgrade-Insecure-Requests' : '1',
                 'Content-Type' : 'application/x-www-form-urlencoded'
             },
             withCredentials: true,
