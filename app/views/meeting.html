@@ -1,30 +1,41 @@
 <div class="ad-page">
 
-    <div class="ad-page-header ad-lower-bg">
-        <div class="container col-xs-12 ad-lower-bg">
+    <div class="ad-page-header">
+        <div class="container col-xs-12">
             <div class="row">
-                <div ng-if="menuClosed()" class="col-xs-1 ad-upper-bg">
-                    <i class="glyphicon glyphicon-menu-right left" aria-hidden="true" ng-click="openMenu()"></i>
+                <!-- UPPER HEADER START  -->
+                <div ng-if="menuClosed()" class="col-xs-1">
+                    <i class="glyphicon glyphicon-menu-hamburger left" aria-hidden="true" ng-click="openMenu()"></i>
                 </div>
-
-                <div class="col-xs-3 col-md-2 btn-group ad-upper-bg" uib-dropdown is-open="">
-                    <button id="modeButton" type="button" class="ng-class: ['btn', 'btn-primary', 'ad-button']" uib-dropdown-toggle>
+                <div class="col-xs-2 col-md-2 ad-btn-group-left ad-upper-bg">
+                    <button type="button" class="btn btn-primary ad-button">
                         <div>Esitys</div>
-                        <span class="caret"></span>
                     </button>
-                    <ul uib-dropdown-menu role="menu" aria-labelledby="modeButton">
-                        <li role="menuitem" ng-click="mc.upperClicked()">
-                            <a>First</a>
-                            <a>Second</a>
-                        </li>
-                    </ul>
                 </div>
-                <div class="hidden-xs col-xs-1 btn-group ad-upper-bg">
+                <div class="hidden-xs col-sm-2 col-md-1 ad-btn-group-right ad-upper-bg">
                     <button type="button" class="btn btn-info ad-button" ng-click="mc.upperClicked()">
                         <i class="glyphicon center ng-class:[{'glyphicon-plus':!mc.isUpperMode(), 'glyphicon-minus':mc.isUpperMode()}]"></i>
                     </button>
                 </div>
-                <div class="col-xs-3 col-md-2 btn-group ad-lower-bg" uib-dropdown is-open="">
+                <!-- UPPER HEADER END  -->
+
+                <!-- LOWER HEADER START  -->
+                <div class="hidden-xs col-sm-2 col-md-1 ad-btn-group-right ad-lower-bg right">
+                    <button type="button" class="btn btn-info ad-button" ng-click="mc.lowerClicked()">
+                        <i class="glyphicon center ng-class:[{'glyphicon-plus':!mc.isLowerMode(), 'glyphicon-minus':mc.isLowerMode()}]"></i>
+                    </button>
+                </div>
+                <div class="hidden-xs hidden-sm col-xs-3 col-md-2 ad-btn-group-middle ad-lower-bg right" uib-dropdown is-open="">
+                    <button id="materialButton" type="button" class="btn btn-primary ad-button" uib-dropdown-toggle>
+                        <div>Muu materiaali</div>
+                        <span class="caret"></span>
+                    </button>
+                    <ul uib-dropdown-menu role="menu" aria-labelledby="materialButton">
+                        <li role="menuitem"><a ng-click="">First</a></li>
+                        <li role="menuitem"><a ng-click="">Second</a></li>
+                    </ul>
+                </div>
+                <div class="hidden-xs hidden-sm col-xs-3 col-md-2 ad-btn-group-middle ad-lower-bg right" uib-dropdown is-open="">
                     <button id="attachmentButton" type="button" class="btn btn-primary ad-button" uib-dropdown-toggle>
                         <div>Liitteet</div>
                         <span class="caret"></span>
@@ -36,27 +47,12 @@
                         </li>
                     </ul>
                 </div>
-                <div class="col-xs-3 col-md-2 btn-group ad-lower-bg" uib-dropdown is-open="">
-                    <button id="materialButton" type="button" class="btn btn-primary ad-button" uib-dropdown-toggle>
-                        <div>Muu materiaali</div>
-                        <span class="caret"></span>
-                    </button>
-                    <ul uib-dropdown-menu role="menu" aria-labelledby="materialButton">
-                        <li role="menuitem"><a ng-click="">First</a></li>
-                        <li role="menuitem"><a ng-click="">Second</a></li>
-                    </ul>
-                </div>
-                <div class="col-xs-3 col-md-2 btn-group ad-lower-bg">
-                    <button id="proposalButton" type="button" class="btn btn-primary ad-button">
-                        <div>Ehdotukset</div>
+                <div class="col-xs-2 col-md-2 ad-btn-group-left ad-lower-bg right">
+                    <button type="button" class="btn btn-primary ad-button">
+                        <div style="text-overflow: ellipsis; overflow: hidden;">Ehdotukset</div>
                     </button>
                 </div>
-
-                <div class="hidden-xs col-xs-1 btn-group ad-lower-bg right">
-                    <button type="button" class="btn btn-info ad-button" ng-click="mc.lowerClicked()">
-                        <i class="glyphicon center ng-class:[{'glyphicon-plus':!mc.isLowerMode(), 'glyphicon-minus':mc.isLowerMode()}]"></i>
-                    </button>
-                </div>
+                <!-- LOWER HEADER END  -->
             </div>
         </div>
     </div>
