@@ -12,6 +12,9 @@
     }
 
     body {
+        $header-height: 60px; // this is for moving main content
+        $button-height: 50px;
+
         .ad-full-page-container {
             padding: 40px;
         }
@@ -20,12 +23,12 @@
                 font-size: 2em;
             }
             .btn {
-                height: 50px;
+                height: $button-height;
                 margin: 0;
-                border-radius: 6px;
+                border-radius: 0;
             }
             .btn-group {
-                padding: 5px;
+                padding: ($header-height - $button-height) * 0.5;
             }
         }
     }
