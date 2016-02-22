@@ -1,4 +1,86 @@
-<div class="scrolling-content-xy no-inherit-animation">
+<div class="ad-page">
+    <div class="ad-page-header">
+        <div class="container col-xs-12">
+            <div class="row">
+
+                <i class="visible-xs-inline col-xs-2 glyphicon glyphicon-home left" aria-hidden="true" ng-click="goHome()"></i>
+                <h4 class="visible-xs-inline col-xs-10">{{sc.fileName}}</h4>
+
+                 <!-- non-XS resolution buttons -->
+                <div class="hidden-xs col-xs-12">
+                    <i class="col-xs-1 glyphicon glyphicon-home left" aria-hidden="true" ng-click="goHome()"></i>
+                    <div class="col-xs-11">
+                        <ad-custom-btns config="sc.btnConfig"></ad-custom-btns>
+                    </div>
+                  <!-- TODO: remove these when sure if btn directive is used or not
+                     <div class="col-xs-12 col-sm-2 btn-group">
+                        <button id="btnReq" type="button" class="btn btn-primary ad-button">
+                            <ANY translate>STR_SIGNING_REQ</ANY>
+                        </button>
+                    </div>
+                    <div class="col-xs-12 col-sm-2 btn-group" uib-dropdown is-open="hideEmbObj">
+                        <button id="btnAtt" type="button" class="btn btn-warning ad-button" uib-dropdown-toggle>
+                             <ANY translate>STR_ATTACHMENTS</ANY>
+                            <span class="caret"></span>
+                        </button>
+                        <ul uib-dropdown-menu role="menu" aria-labelledby="btnAtt">
+                            <li role="menuitem" ng-click="mc.lowerClicked()">
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-xs-12 col-sm-2 btn-group">
+                        <button id="btnReq" type="button" class="btn btn-success ad-button">
+                            <ANY translate>STR_SIGNING_ACCEPT</ANY>
+                        </button>
+                    </div>
+                    <div class="col-xs-12 col-sm-2 btn-group">
+                        <button id="btnReq" type="button" class="btn btn-danger ad-button">
+                            <ANY translate>STR_REJECT</ANY>
+                        </button>
+                    </div>
+                    <div class="col-xs-12 col-sm-2 btn-group">
+                        <button id="btnReq" type="button" class="btn btn-default ad-button">
+                            <ANY translate>STR_CREATE_COMMENT</ANY>
+                        </button>
+                    </div>
+                    <div class="col-xs-12 col-sm-2 btn-group">
+                        <button id="btnReq" type="button" class="btn btn-info ad-button">
+                            <ANY translate>STR_SIGNING_REQ_STATUS</ANY>
+                        </button>
+                    </div> -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="ad-page-content">
+        <div class="ad-page-container-flex">
+            <div class="ad-flex-show-full">
+
+                <uib-progressbar ng-if="sc.ongoing" class="progress-striped active" type="info">
+                </uib-progressbar>
+
+                <div ng-if="sc.error" class="alert alert-danger" role="alert">
+                    <ANY translate>STR_FAIL_OP</ANY><br>{{sc.error.status}} {{sc.error.statusText}}
+                </div>
+
+                <!-- XS resolution buttons -->
+                <div class="visible-xs-inline container col-xs-12">
+                    <div class="row">
+                        <ad-custom-btns config="sc.btnConfig"></ad-custom-btns>
+                    </div>
+                </div>
+
+                <ad-embedded-file ng-if="!sc.error && device === 2 && sc.fileUrl" class="ad-flex-item-upper ad-flex-show-full" id="objAlpha" refresh="" ng-attr-fileurl="sc.fileUrl" ng-attr-filename="sc.fileName">
+                </ad-embedded-file>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- <div class="scrolling-content-xy no-inherit-animation">
     <div class="container-fluid ad-container-fluid">
         <div class="row">
             <div class="col-xs-9">
@@ -48,3 +130,4 @@
     </div>
     <ad-embedded-file ng-if="sic.fileUrl" class="ad-size-full" ng-attr-fileurl="sic.fileUrl" filename="sic.fileName"></ad-embedded-file>
 </div>
+ -->

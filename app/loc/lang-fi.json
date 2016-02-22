@@ -16,5 +16,11 @@
     "STR_STATUS": "Status",
     "STR_LOADING": "Ladataan...",
     "STR_FAIL_LOADING": "Haku ei onnistunut.",
-    "STR_TRY_LATER": "Ole hyvä ja yritä myöhemmin uudestaan."
+    "STR_FAIL_OP": "Toiminto ei onnistunut.",
+    "STR_TRY_LATER": "Ole hyvä ja yritä myöhemmin uudestaan.",
+    "STR_ATTACHMENTS": "Liitteet",
+    "STR_SIGNING_REQ_STATUS": "@:STR_STATUS",
+    "STR_SIGNING_ACCEPT": "Allekirjoita",
+    "STR_REJECT": "Hylkää",
+    "STR_CREATE_COMMENT": "Kommentoi"
 }

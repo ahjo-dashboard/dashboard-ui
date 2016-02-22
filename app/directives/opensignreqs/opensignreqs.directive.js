@@ -186,7 +186,7 @@ angular.module('dashboard')
 
     self.itemSelected = function(item) {
         $log.debug("adOpenSignreqs.adOpenSignreqs: "+ JSON.stringify(item));
-        //$state.go('app.signitem', {signItem : item});
+        $state.go(APPSTATE.SIGNITEM, {'signItem' : item});
     };
 
     /* Resolve display text for item status */
@@ -291,7 +291,7 @@ angular.module('dashboard')
 
     self.selected = function(item) {
       $log.log("adOpenSignreqs.selected");
-      $state.go(APPSTATE.SIGNITEM, {'item': item});
+      $state.go(APPSTATE.SIGNITEM, {'signItem': item});
     };
 
     $scope.$watch('closeditems', function(newValue/*, oldValue*/) {

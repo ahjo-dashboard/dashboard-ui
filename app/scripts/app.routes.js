@@ -74,6 +74,9 @@ angular.module('dashboard')
                     controller: 'signitemCtrl',
                     controllerAs: 'sc'
                 }
+            },
+            params: {
+                signItem: null
             }
         });
     }
@@ -136,6 +139,9 @@ angular.module('dashboard')
                     controller: 'signitemCtrl',
                     controllerAs: 'sc'
                 }
+            },
+            params: {
+                signItem: null
             }
         });
     }
