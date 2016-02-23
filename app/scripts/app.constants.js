@@ -62,6 +62,18 @@ angular.module('dashboard')
     }
 )
 .constant(
+    'MTGSTATUS', {
+        RESERVED: { value: 0, stringID: 'STR_RESERVED_MEETING' },
+        CREATED: { value: 1, stringID: 'STR_CREATED' },
+        TECHNICALLY_OPEN: { value: 2, stringID: 'STR_TECHNICALLY_OPEN' },
+        ACTIVE: { value: 3, stringID: 'STR_ACTIVE' },
+        ABORTED: { value: 4, stringID: 'STR_ABORTED' },
+        OFFICIALLY_CLOSED: { value: 5, stringID: 'STR_OFFICIALLY_CLOSED' },
+        RECORDS_MOVED: { value: 6, stringID: 'STR_RECORDS_MOVED' },
+        TECHNICALLY_CLOSED: { value: 5, stringID: 'STR_TECNICALLY_CLOSED' },
+    }
+)
+.constant(
     'TOPICSTATUS', {
         NONE : 0,
         PENDING : 1,

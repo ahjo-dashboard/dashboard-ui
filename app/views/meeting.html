@@ -7,9 +7,9 @@
                 <div ng-if="menuClosed()" class="col-xs-1">
                     <i class="glyphicon glyphicon-menu-hamburger left" aria-hidden="true" ng-click="openMenu()"></i>
                 </div>
-                <div class="col-xs-2 col-md-2 ad-btn-group-left ad-upper-bg">
+                <div class="col-xs-2 col-lg-2 ad-btn-group-left ad-upper-bg ng-class:[{'col-md-1':menuClosed(), 'col-md-2':!menuClosed()}]">
                     <button type="button" class="btn btn-primary ad-button">
-                        <div>Esitys</div>
+                        <ANY translate>STR_TOPIC</ANY>
                     </button>
                 </div>
                 <div class="hidden-xs col-md-1 ad-btn-group-right ad-upper-bg ng-class:[{'col-sm-1':menuClosed(), 'col-sm-2':!menuClosed()}]">
@@ -25,32 +25,43 @@
                         <i class="glyphicon center ng-class:[{'glyphicon-plus':!mc.isLowerMode(), 'glyphicon-minus':mc.isLowerMode()}]"></i>
                     </button>
                 </div>
-                <div class="hidden-xs col-xs-2 ad-btn-group-middle ad-lower-bg right" uib-dropdown is-open="">
+                <div class="col-xs-2 ad-btn-group-middle ad-lower-bg right">
+                    <button type="button" class="btn btn-primary ad-button">
+                        <ANY translate>STR_PROPOSALS</ANY>
+                    </button>
+                </div>
+                <div class="hidden-xs hidden-sm col-xs-2 ad-btn-group-middle ad-lower-bg right" uib-dropdown is-open="">
                     <button id="materialButton" type="button" class="btn btn-primary ad-button" uib-dropdown-toggle>
-                        <div>Muu materiaali</div>
+                        <ANY translate>STR_OTHER_MATERIAL</ANY>
                         <span class="caret"></span>
                     </button>
                     <ul uib-dropdown-menu role="menu" aria-labelledby="materialButton">
-                        <li role="menuitem"><a ng-click="">First</a></li>
-                        <li role="menuitem"><a ng-click="">Second</a></li>
-                    </ul>
-                </div>
-                <div class="hidden-xs col-xs-2 ad-btn-group-middle ad-lower-bg right" uib-dropdown is-open="">
-                    <button id="attachmentButton" type="button" class="btn btn-primary ad-button" uib-dropdown-toggle>
-                        <div>Liitteet</div>
-                        <span class="caret"></span>
-                    </button>
-                    <ul uib-dropdown-menu role="menu" aria-labelledby="attachmentButton">
-                        <li role="menuitem" ng-click="mc.lowerClicked()">
-                            <a>First</a>
-                            <a>Second</a>
+                        <li role="menuitem" ng-repeat="material in mc.topic.additionalMaterial track by $index" ng-click="mc.additionalMaterial(material)">
+                            <a>{{material.additionalMaterialTitle}}</a>
                         </li>
                     </ul>
                 </div>
-                <div class="col-xs-2 ad-btn-group-left ad-lower-bg right">
-                    <button type="button" class="btn btn-primary ad-button">
-                        <div>Ehdotukset</div>
+                <div class="hidden-xs col-xs-2 ad-btn-group-left ad-lower-bg right" uib-dropdown is-open="">
+                    <button id="decisionButton" type="button" class="btn btn-primary ad-button" uib-dropdown-toggle>
+                        <ANY translate>STR_DECISIONS</ANY>
+                        <span class="caret"></span>
                     </button>
+                    <ul uib-dropdown-menu role="menu" aria-labelledby="decisionButton">
+                        <li role="menuitem" ng-repeat="decision in mc.topic.decision track by $index" ng-click="mc.decisionClicked(decision)">
+                            <a>{{decision.decisionTitle}}</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="hidden-xs col-xs-2 ad-btn-group-left ad-lower-bg right" uib-dropdown is-open="">
+                    <button id="attachmentButton" type="button" class="btn btn-primary ad-button" uib-dropdown-toggle>
+                        <ANY translate>STR_ATTACHMENTS</ANY>
+                        <span class="caret"></span>
+                    </button>
+                    <ul uib-dropdown-menu role="menu" aria-labelledby="attachmentButton">
+                        <li role="menuitem" ng-repeat="attachment in mc.topic.attachment track by $index" ng-click="mc.attachmentClicked(attachment)">
+                            <a>{{attachment.attachmentTitle}}</a>
+                        </li>
+                    </ul>
                 </div>
                 <!-- LOWER HEADER END  -->
             </div>
