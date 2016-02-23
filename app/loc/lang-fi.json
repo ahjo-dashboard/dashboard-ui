@@ -38,5 +38,8 @@
     "STR_TOPIC": "Esitys",
     "STR_PROPOSALS": "Ehdotukset",
     "STR_OTHER_MATERIAL": "Muu materiaali",
-    "STR_DECISIONS": "Päätökset"
+    "STR_DECISIONS": "Päätökset",
+    "STR_MEETING": "Kokous",
+    "STR_AGENCY": "Toimielin",
+    "STR_ROLE": "Rooli"
 }
