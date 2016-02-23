@@ -22,7 +22,7 @@ angular.module('dashboard', [
     'ngDialog',
     'pascalprecht.translate'
 ])
-.config(function($urlRouterProvider, $stateProvider, ENV, G_APP, $logProvider, $provide, $compileProvider, $translateProvider) {
+.config(function($urlRouterProvider, $stateProvider, ENV, G_APP, $logProvider, $provide, $compileProvider, $translateProvider, $httpProvider) {
     // Startup logged always regardless of ENV config, so using console instead of $log
     console.log('dashboard.config: ver: ' +G_APP.app_version  +' env: ' +ENV.app_env +' logging: ' +ENV.app_debuglogs);
 
@@ -64,6 +64,8 @@ angular.module('dashboard', [
     .use('fi');
 
     $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|blob):/);
+
+    $httpProvider.defaults.withCredentials = true;
 })
 .run(function($rootScope, $log, DEVICE, $window, MENU, APPSTATE, $state) {
     $rootScope.$on('$stateChangeStart', function (event, next/*, toParams, fromParams*/) {
