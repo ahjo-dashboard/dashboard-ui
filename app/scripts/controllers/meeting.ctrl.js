@@ -16,8 +16,9 @@ angular.module('dashboard')
     $log.debug("meetingCtrl: CONTROLLER");
     var self = this;
     self.upperUrl = {};
-    self.lowerUrl = 'http://www.orimi.com/pdf-test.pdf';
+    self.lowerUrl = {};
     self.error = null;
+    self.topic = null;
     self.blockMode = BLOCKMODE.BOTH;
     $rootScope.menu = $stateParams.menu;
     var meetingItem = $stateParams.meetingItem;
@@ -62,6 +63,18 @@ angular.module('dashboard')
         self.blockMode = (self.blockMode === BLOCKMODE.BOTH || self.blockMode === BLOCKMODE.UPPER) ? BLOCKMODE.LOWER : BLOCKMODE.BOTH;
     };
 
+    self.attachmentClicked = function(attachment) {
+        self.lowerUrl = (attachment && attachment.link) ? attachment.link : {};
+    };
+
+    self.decisionClicked = function(decision) {
+        self.lowerUrl = (decision && decision.link) ? decision.link : {};
+    };
+
+    self.additionalMaterial = function(material) {
+        self.lowerUrl = (material && material.link) ? material.link : {};
+    };
+
     self.isBothMode = function() {
         return self.blockMode === BLOCKMODE.BOTH;
     };
@@ -79,12 +92,12 @@ angular.module('dashboard')
         function() {
             return StorageSrv.get(KEY.TOPIC);
         },
-        function(newObject, oldObject) {
-            if (newObject !== oldObject) {
-                var link = newObject.esitykset[0].link;
-                var array = link.split('?',1);
-                if (array instanceof Array && array.length) {
-                    self.upperUrl = array[0];
+        function(newTopic, oldTopic) {
+            if (newTopic !== oldTopic) {
+                self.topic = newTopic;
+                if (self.topic) {
+                    var link = self.topic .esitykset[0].link;
+                    self.upperUrl = link ? link : {};
                 }
             }
         }
