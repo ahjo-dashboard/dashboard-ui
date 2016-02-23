@@ -13,7 +13,7 @@
 angular.module('dashboard')
 .directive('adMeetings', function () {
 
-    var controller = ['$log', '$scope', 'ENV', 'AhjoMeetingsSrv', function ($log, $scope, ENV, AhjoMeetingsSrv) {
+    var controller = ['$log', '$scope', 'ENV', 'AhjoMeetingsSrv','$translate', function ($log, $scope, ENV, AhjoMeetingsSrv, $translate) {
         $log.log("adMeetings: CONTROLLER");
         var self = this;
         self.mtgErr = null;
@@ -28,6 +28,24 @@ angular.module('dashboard')
 
         self.aF = null;
         self.rF = null;
+        self.agencyTitle = null;
+        self.roleTitle = null;
+
+        function setTitle() {
+            if (!self.aF) {
+                $translate('STR_AGENCY').then(function (agency) {
+                    self.agencyTitle = agency;
+                });
+            }
+            else {
+                self.agencyTitle = self.aF;
+            }
+            if (!self.rF) {
+                $translate('STR_ROLE').then(function (role) {
+                    self.roleTitle = role;
+                });
+            }
+        }
 
         function setData() {
             self.data = [];
@@ -118,6 +136,7 @@ angular.module('dashboard')
             if (!agency) {
                 parseAgencyDropdown();
             }
+            setTitle();
             $scope.agencyIsOpen = false;
         };
 
@@ -129,8 +148,11 @@ angular.module('dashboard')
             if (!role) {
                 parseRoleDropdown();
             }
+            setTitle();
             $scope.roleIsOpen = false;
         };
+
+        setTitle();
     }];
 
     return {
