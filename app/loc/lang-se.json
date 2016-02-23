@@ -1,3 +1,14 @@
 {
-
+    "STR_RESERVED_MEETING": "Sammanträdet reserverat",
+    "STR_CREATED": "Skapat",
+    "STR_TECHNICALLY_OPEN": "Tekniskt öppnat",
+    "STR_ACTIVE": "Pågår",
+    "STR_ABORTED": "Avbrutet",
+    "STR_OFFICIALLY_CLOSED": "Officiellt avslutat",
+    "STR_RECORDS_MOVED": "Protokollsanteckningarna överförda",
+    "STR_TECNICALLY_CLOSED": "Tekniskt avslutat",
+    "STR_TOPIC_PENDING": "Ej behandlat",
+    "STR_TOPIC_ACTIVE": "Under behandling",
+    "STR_TOPIC_ABORTED": "Behandlingen avbruten",
+    "STR_TOPIC_CLOSED": "Behandlat"
 }

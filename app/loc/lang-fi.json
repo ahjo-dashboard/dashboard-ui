@@ -22,5 +22,17 @@
     "STR_SIGNING_REQ_STATUS": "@:STR_STATUS",
     "STR_SIGNING_ACCEPT": "Allekirjoita",
     "STR_REJECT": "Hylkää",
-    "STR_CREATE_COMMENT": "Kommentoi"
+    "STR_CREATE_COMMENT": "Kommentoi",
+    "STR_RESERVED_MEETING": "Kokous varattu",
+    "STR_CREATED": "Luotu",
+    "STR_TECHNICALLY_OPEN": "Teknisesti avattu",
+    "STR_ACTIVE": "Käynnissä",
+    "STR_ABORTED": "Keskeytetty",
+    "STR_OFFICIALLY_CLOSED": "Päätetty virallisesti",
+    "STR_RECORDS_MOVED": "Pöytäkirjakirjaukset siirretty",
+    "STR_TECNICALLY_CLOSED": "Päätetty teknisesti",
+    "STR_TOPIC_PENDING": "Käsittelemättä",
+    "STR_TOPIC_ACTIVE": "Käsittelyssä",
+    "STR_TOPIC_ABORTED": "Käsittely keskeytetty",
+    "STR_TOPIC_CLOSED": "Käsitelty"
 }

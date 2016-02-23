@@ -12,7 +12,7 @@
 * Controller of the dashboard
 */
 angular.module('dashboard')
-.controller('meetingStatusCtrl',['$log','$scope','$rootScope','$stateParams','DEVICE','$state','MENU','StorageSrv','ENV', 'APPSTATE','TOPICSTATUS','MTGROLE','KEY', function ($log, $scope, $rootScope, $stateParams, DEVICE, $state, MENU, StorageSrv, ENV, APPSTATE, TOPICSTATUS, MTGROLE, KEY) {
+.controller('meetingStatusCtrl',['$log','$scope','$rootScope','$stateParams','DEVICE','$state','MENU','StorageSrv','ENV', 'APPSTATE','TOPICSTATUS','MTGROLE','KEY','MEETINGSTATUS', function ($log, $scope, $rootScope, $stateParams, DEVICE, $state, MENU, StorageSrv, ENV, APPSTATE, TOPICSTATUS, MTGROLE, KEY, MEETINGSTATUS) {
     $log.debug("meetingStatusCtrl: CONTROLLER");
     var self = this;
     $rootScope.menu = $stateParams.menu;
@@ -69,6 +69,16 @@ angular.module('dashboard')
 
     self.isReady = function(topic) {
         return (topic && topic.topicStatus === TOPICSTATUS.READY);
+    };
+
+    self.stringID = function(meeting) {
+        for (var item in MEETINGSTATUS) {
+            if( MEETINGSTATUS.hasOwnProperty(item) ) {
+                if (meeting && meeting.meetingStatus && meeting.meetingStatus === MEETINGSTATUS[item].value) {
+                    return MEETINGSTATUS[item].stringID;
+                }
+            }
+        }
     };
 
     $scope.$on('$destroy', function() {
