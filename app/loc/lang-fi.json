@@ -34,5 +34,9 @@
     "STR_TOPIC_PENDING": "Käsittelemättä",
     "STR_TOPIC_ACTIVE": "Käsittelyssä",
     "STR_TOPIC_ABORTED": "Käsittely keskeytetty",
-    "STR_TOPIC_CLOSED": "Käsitelty"
+    "STR_TOPIC_CLOSED": "Käsitelty",
+    "STR_TOPIC": "Esitys",
+    "STR_PROPOSALS": "Ehdotukset",
+    "STR_OTHER_MATERIAL": "Muu materiaali",
+    "STR_DECISIONS": "Päätökset"
 }

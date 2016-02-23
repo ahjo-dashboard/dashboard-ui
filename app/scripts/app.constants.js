@@ -62,7 +62,7 @@ angular.module('dashboard')
     }
 )
 .constant(
-    'MEETINGSTATUS', {
+    'MTGSTATUS', {
         RESERVED: { value: 0, stringID: 'STR_RESERVED_MEETING' },
         CREATED: { value: 1, stringID: 'STR_CREATED' },
         TECHNICALLY_OPEN: { value: 2, stringID: 'STR_TECHNICALLY_OPEN' },

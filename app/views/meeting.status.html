@@ -16,7 +16,7 @@
 
         <div class="btn-group btn-block" uib-dropdown is-open="">
             <button id="statusButton" type="button" class="btn btn-primary btn-lg ad-button ng-class:[{'disabled': !msc.chairman},{'ad-dummy-button': !msc.chairman}]" uib-dropdown-toggle>
-                <div><ANY translate>{{msc.stringID(msc.meeting)}}</ANY></div>
+                <ANY translate>{{msc.stringID(msc.meeting)}}</ANY>
                 <span ng-if="msc.chairman" class="caret"></span>
             </button>
             <ul uib-dropdown-menu role="menu" aria-labelledby="statusButton">

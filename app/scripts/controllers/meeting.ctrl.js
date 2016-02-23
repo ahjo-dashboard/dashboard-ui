@@ -95,8 +95,8 @@ angular.module('dashboard')
         function(newTopic, oldTopic) {
             if (newTopic !== oldTopic) {
                 self.topic = newTopic;
-                if (self.topic) {
-                    var link = self.topic .esitykset[0].link;
+                if (self.topic && self.topic.esitykset[0]) {
+                    var link = self.topic.esitykset[0].link;
                     self.upperUrl = link ? link : {};
                 }
             }
