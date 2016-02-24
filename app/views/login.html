@@ -1,6 +1,9 @@
 <div class="ad-page">
     <uib-progressbar ng-if="lc.login || lc.loadingUsers" class="progress-striped active" type="info"><i>Haetaan...</i></uib-progressbar>
-    <div ng-if="lc.error" class="alert alert-danger" role="alert"><ANY translate>STR_FAIL_LOADING</ANY>&nbsp;<ANY translate>STR_TRY_LATER</ANY><br>{{lc.error.status}} {{lc.error.statusText}}</div>
+    <div ng-if="lc.error" class="alert alert-danger" role="alert">
+        <span translate-cloak translate>STR_FAIL_LOADING</span>&nbsp;<span translate>STR_TRY_LATER</span>
+        <br>{{lc.error.status}}&nbsp;{{lc.error.statusText}}
+    </div>
     <form class="ad-center">
         <select style="margin: 10px;" id="ADID" name="ADID" ng-model="lc.data.selection">
             <option ng-repeat="item in lc.data.options track by $index" value="{{item.value}}">{{item.text}}</option>
