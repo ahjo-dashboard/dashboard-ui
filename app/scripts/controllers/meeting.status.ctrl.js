@@ -12,14 +12,15 @@
 * Controller of the dashboard
 */
 angular.module('dashboard')
-.controller('meetingStatusCtrl',['$log','$scope','$rootScope','$stateParams','DEVICE','$state','MENU','StorageSrv','ENV', 'APPSTATE','TOPICSTATUS','MTGROLE','KEY','MTGSTATUS', function ($log, $scope, $rootScope, $stateParams, DEVICE, $state, MENU, StorageSrv, ENV, APPSTATE, TOPICSTATUS, MTGROLE, KEY, MTGSTATUS) {
+.controller('meetingStatusCtrl',['$log','$scope','$rootScope','$stateParams','DEVICE','$state','MENU','StorageSrv','ENV', 'APPSTATE','TOPICSTATUS','MTGROLE','KEY','MTGSTATUS','AhjoMeetingSrv', function ($log, $scope, $rootScope, $stateParams, DEVICE, $state, MENU, StorageSrv, ENV, APPSTATE, TOPICSTATUS, MTGROLE, KEY, MTGSTATUS, AhjoMeetingSrv) {
     $log.debug("meetingStatusCtrl: CONTROLLER");
     var self = this;
     $rootScope.menu = $stateParams.menu;
-    self.mobile = $rootScope.device === DEVICE.MOBILE;
+    self.mobile = $rootScope.isScreenXs();
     self.title = 'MOBILE TITLE';
     self.meeting = {};
     self.chairman = false;
+    var meetingItem = $stateParams.meetingItem;
 
     for (var i = 0; i < ENV.SupportedRoles.length; i++) {
         if (ENV.SupportedRoles[i].RoleID === MTGROLE.CHAIRMAN) {
@@ -27,17 +28,36 @@ angular.module('dashboard')
         }
     }
 
-    $scope.$watch(
-        // This function returns the value being watched. It is called for each turn of the $digest loop
-        function() {
-            return StorageSrv.get(KEY.MEETING);
-        },
-        function(newObject, oldObject) {
-            if (newObject !== oldObject) {
-                self.meeting = newObject;
+    if (meetingItem) {
+        AhjoMeetingSrv.getMeeting(meetingItem.meetingGuid)
+        .then(function(response) {
+            $log.debug("meetingStatusCtrl: getMeeting then:");
+            if (response && response.objects instanceof Array && response.objects.length) {
+                self.meeting = response.objects[0];
+                if (self.meeting && self.meeting.topicList.length) {
+                    var topic = self.meeting.topicList[0];
+                    StorageSrv.set(KEY.TOPIC, topic);
+                }
             }
-        }
-    );
+            else {
+                self.meeting = {};
+                StorageSrv.set(KEY.TOPIC, {});
+            }
+        },
+        function(error) {
+            $log.error("meetingStatusCtrl: getMeeting error: " +JSON.stringify(error));
+            self.error = error;
+        },
+        function(notify) {
+            $log.debug("meetingStatusCtrl: getMeeting notify: " +JSON.stringify(notify));
+        })
+        .finally(function() {
+            $log.debug("meetingStatusCtrl: getMeeting finally: ");
+        });
+    }
+    else {
+        $state.go(APPSTATE.HOME, {menu: MENU.CLOSED});
+    }
 
     self.goHome = function() {
         $state.go(APPSTATE.HOME, {menu: MENU.CLOSED});

@@ -50,15 +50,10 @@ angular.module('dashboard')
         .state(APPSTATE.MEETING, {
             url: '/meeting',
             views: {
-                'homeLeftContent': {
+                'homeContent': {
                     templateUrl: 'views/meeting.status.html',
                     controller: 'meetingStatusCtrl',
                     controllerAs: 'msc'
-                },
-                'homeRightContent': {
-                    // templateUrl: 'views/meeting.html', TODO: implement resp mobile meeting view
-                    // controller: 'meetingCtrl',
-                    // controllerAs: 'mc'
                 }
             },
             params: {
