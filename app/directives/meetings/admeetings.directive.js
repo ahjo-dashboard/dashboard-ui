@@ -45,6 +45,9 @@ angular.module('dashboard')
                     self.roleTitle = role;
                 });
             }
+            else {
+                self.roleTitle = self.rF;
+            }
         }
 
         function setData() {

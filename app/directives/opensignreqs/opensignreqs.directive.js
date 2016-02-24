@@ -12,7 +12,7 @@
  */
 angular.module('dashboard')
 .directive('adOpenSignreqs', function () {
-  var controller = ['$log', 'SigningOpenApi', 'SigningClosedApi', 'ENV', '$scope', '$state', 'APPSTATE', function ($log, SigningOpenApi, SigningClosedApi, ENV, $scope, $state, APPSTATE) {
+  var controller = ['$log','SigningOpenApi','SigningClosedApi','ENV','$scope','$state','APPSTATE','$translate', function ($log, SigningOpenApi, SigningClosedApi, ENV, $scope, $state, APPSTATE, $translate) {
     $log.log("adOpenSignreqs.CONTROLLER");
     var self = this;
 
@@ -28,9 +28,30 @@ angular.module('dashboard')
     self.docTypes = [];
     self.FStatus = null;
     self.FType = null;
+    self.docTypeTitle = null;
+    self.docStatusTitle = null;
 
 
     /* PRIVATE FUNCTIONS */
+
+    function setTitle() {
+        if (!self.FType) {
+            $translate('STR_SIGNING_TYPE').then(function (type) {
+                self.docTypeTitle = type;
+            });
+        }
+        else {
+            self.docTypeTitle = self.FType.txt;
+        }
+        if (!self.FStatus) {
+            $translate('STR_STATUS').then(function (status) {
+                self.docStatusTitle = status;
+            });
+        }
+        else {
+            self.docStatusTitle = self.FStatus.txt;
+        }
+    }
 
     function DocStatus(status, txt) {
       this.val = status;
@@ -273,6 +294,7 @@ angular.module('dashboard')
         self.FType = null;
         self.FStatus = null;
       }
+      setTitle();
     };
 
     self.docFilter = function(item) {
@@ -303,6 +325,7 @@ angular.module('dashboard')
       }
     });
 
+    setTitle();
   }];
 
   return {
