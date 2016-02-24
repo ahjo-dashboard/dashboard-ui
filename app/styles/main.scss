@@ -455,6 +455,11 @@ body {
     .ad-dropdown-content {
         white-space: normal !important;
     }
+
+    .ad-btn-group-vertical {
+        @extend .btn-group-vertical;
+        display: block;
+    }
 }
 
 .ad-no-scrollbars { -ms-overflow-style: none; }
