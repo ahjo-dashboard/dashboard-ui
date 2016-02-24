@@ -12,7 +12,7 @@
  */
 angular.module('dashboard')
 .directive('adOpenSignreqs', function () {
-  var controller = ['$log','SigningOpenApi','SigningClosedApi','ENV','$scope','$state','APPSTATE','$translate', function ($log, SigningOpenApi, SigningClosedApi, ENV, $scope, $state, APPSTATE, $translate) {
+  var controller = ['$log','SigningOpenApi','SigningClosedApi','$scope','$state','APPSTATE', 'ESIGNSTATUS', 'ESIGNTYPE', function ($log, SigningOpenApi, SigningClosedApi, $scope, $state, APPSTATE, ESIGNSTATUS, ESIGNTYPE) {
     $log.log("adOpenSignreqs.CONTROLLER");
     var self = this;
 
@@ -36,31 +36,28 @@ angular.module('dashboard')
 
     function setTitle() {
         if (!self.FType) {
-            $translate('STR_SIGNING_TYPE').then(function (type) {
-                self.docTypeTitle = type;
-            });
+          self.docTypeTitle = 'STR_SIGNING_TYPE';
         }
         else {
-            self.docTypeTitle = self.FType.txt;
+            self.docTypeTitle = self.FType.strId;
         }
+
         if (!self.FStatus) {
-            $translate('STR_STATUS').then(function (status) {
-                self.docStatusTitle = status;
-            });
+          self.docStatusTitle = 'STR_SIGNING_REQ_STATUS';
         }
         else {
-            self.docStatusTitle = self.FStatus.txt;
+          self.docStatusTitle = self.FStatus.strId;
         }
     }
 
-    function DocStatus(status, txt) {
+    function DocStatus(status, strId) {
       this.val = status;
-      this.txt = txt;
+      this.strId = strId;
     }
 
-    function DocType(type, txt) {
+    function DocType(type, strId) {
       this.val = type;
-      this.txt = txt;
+      this.strId = strId;
     }
 
     // returns true if 'arr' contains an object with property 'prop' with value 'val'
@@ -84,8 +81,8 @@ angular.module('dashboard')
     }
 
     function cmpStr(a,b) {
-      var m = a.txt.toLowerCase();
-      var n = b.txt.toLowerCase();
+      var m = a.strId.toLowerCase(); // TODO: sorting by localized string would be nice...would need to fetch it async
+      var n = b.strId.toLowerCase();
       if (m < n) { //sort ascending
         return -1;
       }
@@ -101,24 +98,26 @@ angular.module('dashboard')
       for (var i = 0; i < self.model.length; i++) {
         var item = self.model[i];
         if (item && "DocumentType" in item && !hasObjWithPropVal(self.docTypes, 'val', item.DocumentType)) {
-          self.docTypes.push(new DocType(item.DocumentType, self.signReqDocTypeTxt(item.DocumentType)));
+          self.docTypes.push(new DocType(item.DocumentType, self.docTypeStrId(item.DocumentType)));
         }
       }
       self.docTypes.sort(cmpStr);
     }
 
     function parseDocStatuses() {
-      //$log.debug("adOpenSignreqs.parseDocStatuses");
+      //$log.debug("adOpenSignreqs.parseDocStatuses >>>");
       self.docStatuses = [];
       for (var i = 0; i < self.model.length; i++) {
         var item = self.model[i];
         if (item && "Status" in item && !hasObjWithPropVal(self.docStatuses, 'val', item.Status)) {
-          self.docStatuses.push(new DocStatus(item.Status, self.signDocStatusTxt(item.Status)));
+          self.docStatuses.push(new DocStatus(item.Status, self.statusStrId(item.Status)));
         }
       }
       self.docStatuses.sort(cmpStr);
+      //$log.debug("adOpenSignreqs.parseDocStatuses <<<");
     }
 
+    // Update view model after view state changes or finished queries
     function refreshModel() {
       switch(self.viewState) {
         case self.VIEW_OPEN:
@@ -177,7 +176,7 @@ angular.module('dashboard')
     }
 
     function setVwState(state) {
-      $log.debug("adOpenSignreqs.setVwState: " +state);
+      $log.log("adOpenSignreqs.setVwState: " +state);
       self.model = [];
       self.viewState = state;
       self.setModelFilter(null);
@@ -211,37 +210,27 @@ angular.module('dashboard')
     };
 
     /* Resolve display text for item status */
-   self.signDocStatusTxt = function(value) {
-      var res = '';
-      for (var k in ENV.SignApi_DocStatuses) {
-        //console.log("k: " +k +" v: " +ENV.SignApi_DocStatuses[k]); //TODO: remove, and check why array iterated many times
-        if (ENV.SignApi_DocStatuses[k].value === value) {
-          res = ENV.SignApi_DocStatuses[k].name;
-          break;
-        }
-      }
-      return res;
-    };
-
-    self.signDocTypeTxt = function(value) {
-      var res = '';
-      for (var k in ENV.SignApi_DocTypes) {
-        //console.log("k: " +k +" v: " +ENV.SignApi_DocTypes[k]); //TODO: remove, and check why array iterated many times
-        if (ENV.SignApi_DocTypes[k].value === value) {
-          res = ENV.SignApi_DocTypes[k].name;
-          break;
-        }
-      }
-      return res;
-    };
-
-    /* Resolve display text for document type */
-    self.signReqDocTypeTxt = function(value) {
+   self.statusStrId = function(value) {
+      //$log.debug("statusStrId >>> ");
       var res = null;
-      for (var k in ENV.SignApi_DocTypes) {
-        //console.log("k: " +k +" v: " +ENV.SignApi_DocTypes[k]); //TODO: remove, and check why array iterated many times
-        if (ENV.SignApi_DocTypes[k].value === value) {
-          res = ENV.SignApi_DocTypes[k].name;
+      for (var k in ESIGNSTATUS) {
+        if (ESIGNSTATUS[k].value === value) {
+          //$log.debug("statusStrId: found " +ESIGNSTATUS[k].stringId);
+          res = ESIGNSTATUS[k].stringId;
+          break;
+        }
+      }
+      //$log.debug("statusStrId <<<<");
+      return res;
+    };
+
+    // Resolves l18n string id for document type display text
+    self.docTypeStrId = function(value) {
+      var res = null;
+      for (var k in ESIGNTYPE) {
+        //console.log("k: " +k +" v: " +ESIGNTYPE[k].stringId);
+        if (ESIGNTYPE[k].value === value) {
+          res = ESIGNTYPE[k].stringId;
           break;
         }
       }
@@ -261,19 +250,19 @@ angular.module('dashboard')
     self.badgeClass = function(status) {
       var res = 'label-default';
       switch(status) {
-        case ENV.SignApi_DocStatuses.unsigned.value:
+        case ESIGNSTATUS.UNSIGNED.value:
           res = 'label-danger';
           break;
-        case ENV.SignApi_DocStatuses.rejected.value:
+        case ESIGNSTATUS.REJECTED.value:
           res = 'label-warning';
           break;
-        case ENV.SignApi_DocStatuses.signed.value:
+        case ESIGNSTATUS.SIGNED.value:
           res = 'label-success';
           break;
-        case ENV.SignApi_DocStatuses.returned.value:
+        case ESIGNSTATUS.RETURNED.value:
           res = 'label-info';
           break;
-        case ENV.SignApi_DocStatuses.undecided.value:
+        case ESIGNSTATUS.UNDECIDED.value:
           res = 'label-primary';
           break;
         default:
@@ -284,10 +273,10 @@ angular.module('dashboard')
 
     self.setModelFilter = function(filter) {
       if (filter instanceof DocType) {
-        $log.log("adOpenSignreqs.setModelFilter: DocType " +filter.val +"/" +filter.txt);
+        $log.debug("adOpenSignreqs.setModelFilter: DocType " +filter.val +" string:" +filter.strId);
         self.FType = filter;
       } else if (filter instanceof DocStatus) {
-        $log.log("adOpenSignreqs.setModelFilter: DocStatus " +filter.val +"/" +filter.txt);
+        $log.debug("adOpenSignreqs.setModelFilter: DocStatus " +filter.val +" string:" +filter.strId);
         self.FStatus = filter;
       } else {
         $log.debug("adOpenSignreqs.setModelFilter: clear");

@@ -12,7 +12,7 @@
  * Controller of the dashboard
  */
 angular.module('dashboard')
-.controller('signitemCtrl', function ($log, $scope, $state, $stateParams, SigningAttApi, $sce, $timeout, $uibModal, MessageService, ENV, APPSTATE, SigningOpenApi) {
+.controller('signitemCtrl', function ($log, $scope, $state, $stateParams, SigningAttApi, $sce, $timeout, $uibModal, MessageService, ENV, APPSTATE, SigningOpenApi, ESIGNSTATUS) {
     $log.debug("signitemCtrl.config");
 
     var self = this;
@@ -121,11 +121,11 @@ angular.module('dashboard')
     };
 
     self.actionSign = function() {
-        saveStatus(self.item, ENV.SignApi_DocStatuses.signed.value);
+        saveStatus(self.item, ESIGNSTATUS.SIGNED.value);
     };
 
     self.actionReject = function() {
-        saveStatus(self.item, ENV.SignApi_DocStatuses.rejected.value);
+        saveStatus(self.item, ESIGNSTATUS.REJECTED.value);
     };
 
     self.actionCommentCb = function() {
