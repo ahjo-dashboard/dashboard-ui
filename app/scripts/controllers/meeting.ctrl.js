@@ -24,39 +24,6 @@ angular.module('dashboard')
     self.otherMaterialTitle = null;
     self.decisionTitle = null;
     $rootScope.menu = $stateParams.menu;
-    var meetingItem = $stateParams.meetingItem;
-
-    if (meetingItem) {
-        AhjoMeetingSrv.getMeeting(meetingItem.meetingGuid)
-        .then(function(response) {
-            $log.debug("meetingCtrl: getMeeting then:");
-            if (response && response.objects instanceof Array && response.objects.length) {
-                var meeting = response.objects[0];
-                if (meeting && meeting.topicList.length) {
-                    var topic = meeting.topicList[0];
-                    StorageSrv.set(KEY.TOPIC, topic);
-                }
-                StorageSrv.set(KEY.MEETING, meeting);
-            }
-            else {
-                StorageSrv.set(KEY.MEETING, {});
-                StorageSrv.set(KEY.TOPIC, {});
-            }
-        },
-        function(error) {
-            $log.error("meetingCtrl: getMeeting error: " +JSON.stringify(error));
-            self.error = error;
-        },
-        function(notify) {
-            $log.debug("meetingCtrl: getMeeting notify: " +JSON.stringify(notify));
-        })
-        .finally(function() {
-            $log.debug("meetingCtrl: getMeeting finally: ");
-        });
-    }
-    else {
-        $state.go(APPSTATE.HOME, {menu: MENU.CLOSED});
-    }
 
     $translate('STR_PROPOSALS').then(function (title) {
         self.proposalTitle = title;
@@ -117,6 +84,9 @@ angular.module('dashboard')
                 if (self.topic && self.topic.esitykset[0]) {
                     var link = self.topic.esitykset[0].link;
                     self.upperUrl = link ? link : {};
+                }
+                else {
+                    self.upperUrl = {};
                 }
             }
         }

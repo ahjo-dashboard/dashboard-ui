@@ -57,7 +57,6 @@ angular.module('dashboard')
 )
 .constant(
     'KEY', {
-        MEETING: 'meeting',
         TOPIC: 'topic'
     }
 )
