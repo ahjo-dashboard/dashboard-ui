@@ -12,7 +12,7 @@
  * Controller of the dashboard
  */
 angular.module('dashboard')
-.controller('meetingCtrl',['$log','AhjoMeetingSrv','$stateParams','$rootScope','$scope','$state','MENU','BLOCKMODE','StorageSrv', 'APPSTATE','KEY', function ($log, AhjoMeetingSrv, $stateParams, $rootScope, $scope, $state, MENU, BLOCKMODE, StorageSrv, APPSTATE, KEY) {
+.controller('meetingCtrl',['$log','AhjoMeetingSrv','$stateParams','$rootScope','$scope','$state','MENU','BLOCKMODE','StorageSrv', 'APPSTATE','KEY','$translate','PUBLICITY', function ($log, AhjoMeetingSrv, $stateParams, $rootScope, $scope, $state, MENU, BLOCKMODE, StorageSrv, APPSTATE, KEY, $translate, PUBLICITY) {
     $log.debug("meetingCtrl: CONTROLLER");
     var self = this;
     self.upperUrl = {};
@@ -20,6 +20,9 @@ angular.module('dashboard')
     self.error = null;
     self.topic = null;
     self.blockMode = BLOCKMODE.BOTH;
+    self.proposalTitle = null;
+    self.otherMaterialTitle = null;
+    self.decisionTitle = null;
     $rootScope.menu = $stateParams.menu;
     var meetingItem = $stateParams.meetingItem;
 
@@ -55,6 +58,18 @@ angular.module('dashboard')
         $state.go(APPSTATE.HOME, {menu: MENU.CLOSED});
     }
 
+    $translate('STR_PROPOSALS').then(function (title) {
+        self.proposalTitle = title;
+    });
+
+    $translate('STR_OTHER_MATERIAL').then(function (title) {
+        self.otherMaterialTitle = title;
+    });
+
+    $translate('STR_DECISION_HISTORY').then(function (title) {
+        self.decisionTitle = title;
+    });
+
     self.upperClicked = function() {
         self.blockMode = (self.blockMode === BLOCKMODE.BOTH || self.blockMode === BLOCKMODE.LOWER) ? BLOCKMODE.UPPER : BLOCKMODE.BOTH;
     };
@@ -85,6 +100,10 @@ angular.module('dashboard')
 
     self.isLowerMode = function() {
         return self.blockMode === BLOCKMODE.LOWER;
+    };
+
+    self.isSecret = function(item) {
+        return (item && item.publicity) ? (item.publicity === PUBLICITY.SECRET) : false;
     };
 
     $scope.$watch(

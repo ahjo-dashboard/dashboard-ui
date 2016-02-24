@@ -62,6 +62,13 @@ angular.module('dashboard')
     }
 )
 .constant(
+    'PUBLICITY', {
+        NONE: 0,
+        PUBLIC: 1,
+        SECRET: 2
+    }
+)
+.constant(
     'MTGSTATUS', {
         RESERVED: { value: 0, stringID: 'STR_RESERVED_MEETING' },
         CREATED: { value: 1, stringID: 'STR_CREATED' },
