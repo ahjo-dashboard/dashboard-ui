@@ -1,64 +1,61 @@
 <div class="ad-page">
 
     <div class="ad-page-header">
-        <div class="container col-xs-12">
+        <div class="container col-xs-12 ad-app-bg">
             <div class="row">
                 <!-- UPPER HEADER START  -->
                 <div ng-if="menuClosed()" class="col-xs-1">
                     <i class="glyphicon glyphicon-menu-hamburger left" aria-hidden="true" ng-click="openMenu()"></i>
                 </div>
-                <div class="col-xs-2 col-lg-2 ad-btn-group-left ad-upper-bg ng-class:[{'col-md-1':menuClosed(), 'col-md-2':!menuClosed()}]">
-                    <button type="button" class="btn btn-primary ad-button">
-                        <ANY translate>STR_TOPIC</ANY>
+                <div class="hidden-xs col-md-1 ad-btn-group-left ad-upper-bg ng-class:[{'col-sm-1':menuClosed(), 'col-sm-2':!menuClosed()}]">
+                    <button type="button" class="btn btn-info ad-header-button" ng-click="mc.upperClicked()">
+                        <i class="glyphicon center ng-class:[{'glyphicon-plus':!mc.isUpperMode(), 'glyphicon-minus':mc.isUpperMode()}]"></i>
                     </button>
                 </div>
-                <div class="hidden-xs col-md-1 ad-btn-group-right ad-upper-bg ng-class:[{'col-sm-1':menuClosed(), 'col-sm-2':!menuClosed()}]">
-                    <button type="button" class="btn btn-info ad-button" ng-click="mc.upperClicked()">
-                        <i class="glyphicon center ng-class:[{'glyphicon-plus':!mc.isUpperMode(), 'glyphicon-minus':mc.isUpperMode()}]"></i>
+                <div class="col-xs-2 col-lg-2 ad-btn-group-right ad-upper-bg ng-class:[{'col-md-1':menuClosed(), 'col-md-2':!menuClosed()}]">
+                    <button type="button" class="btn btn-primary ad-dummy-header-button disabled">
+                        <ANY translate>STR_TOPIC</ANY>
                     </button>
                 </div>
                 <!-- UPPER HEADER END  -->
 
                 <!-- LOWER HEADER START  -->
                 <div class="hidden-xs col-md-1 ad-btn-group-right ad-lower-bg right ng-class:[{'col-sm-1':menuClosed(), 'col-sm-2':!menuClosed()}]">
-                    <button type="button" class="btn btn-info ad-button" ng-click="mc.lowerClicked()">
+                    <button type="button" class="btn btn-info ad-header-button" ng-click="mc.lowerClicked()">
                         <i class="glyphicon center ng-class:[{'glyphicon-plus':!mc.isLowerMode(), 'glyphicon-minus':mc.isLowerMode()}]"></i>
                     </button>
                 </div>
                 <div class="col-xs-2 ad-btn-group-middle ad-lower-bg right">
-                    <button type="button" class="btn btn-primary ad-button">
-                        <ANY translate>STR_PROPOSALS</ANY>
+                    <button type="button" class="btn btn-primary ad-header-button">
+                        {{mc.proposalTitle}}
                     </button>
                 </div>
-                <div class="hidden-xs hidden-sm col-xs-2 ad-btn-group-middle ad-lower-bg right" uib-dropdown is-open="">
-                    <button id="materialButton" type="button" class="btn btn-primary ad-button" uib-dropdown-toggle>
-                        <ANY translate>STR_OTHER_MATERIAL</ANY>
-                        <span class="caret"></span>
+                <div class="col-xs-2 ad-btn-group-middle ad-lower-bg right" uib-dropdown is-open="">
+                    <button id="materialButton" type="button" class="btn btn-primary ad-header-button" uib-dropdown-toggle>
+                        {{mc.otherMaterialTitle}}
+                        <span class="caret hidden-sm"></span>
                     </button>
                     <ul uib-dropdown-menu role="menu" aria-labelledby="materialButton">
-                        <li role="menuitem" ng-repeat="material in mc.topic.additionalMaterial track by $index" ng-click="mc.additionalMaterial(material)">
-                            <a>{{material.additionalMaterialTitle}}</a>
+                        <ANY class="ad-dropdown-header" translate>STR_ADDITIONAL_MATERIAL</ANY>
+                        <li class="divider"></li>
+                        <li class="ng-class:[{'disabled':mc.isSecret(material)}]" role="menuitem" ng-repeat="material in mc.topic.additionalMaterial track by $index" ng-click="mc.additionalMaterial(material)">
+                            <a class="ad-dropdown-content">{{material.additionalMaterialTitle}}</a>
                         </li>
-                    </ul>
-                </div>
-                <div class="hidden-xs col-xs-2 ad-btn-group-left ad-lower-bg right" uib-dropdown is-open="">
-                    <button id="decisionButton" type="button" class="btn btn-primary ad-button" uib-dropdown-toggle>
-                        <ANY translate>STR_DECISIONS</ANY>
-                        <span class="caret"></span>
-                    </button>
-                    <ul uib-dropdown-menu role="menu" aria-labelledby="decisionButton">
-                        <li role="menuitem" ng-repeat="decision in mc.topic.decision track by $index" ng-click="mc.decisionClicked(decision)">
+                        <li class="divider"></li>
+                        <ANY class="ad-dropdown-header" translate>STR_DECISION_HISTORY</ANY>
+                        <li class="divider"></li>
+                        <li class="ng-class:[{'disabled':mc.isSecret(decision)}]" role="menuitem" ng-repeat="decision in mc.topic.decision track by $index" ng-click="mc.decisionClicked(decision)">
                             <a>{{decision.decisionTitle}}</a>
                         </li>
                     </ul>
                 </div>
                 <div class="hidden-xs col-xs-2 ad-btn-group-left ad-lower-bg right" uib-dropdown is-open="">
-                    <button id="attachmentButton" type="button" class="btn btn-primary ad-button" uib-dropdown-toggle>
+                    <button id="attachmentButton" type="button" class="btn btn-primary ad-header-button" uib-dropdown-toggle>
                         <ANY translate>STR_ATTACHMENTS</ANY>
-                        <span class="caret"></span>
+                        <span class="caret hidden-sm"></span>
                     </button>
                     <ul uib-dropdown-menu role="menu" aria-labelledby="attachmentButton">
-                        <li role="menuitem" ng-repeat="attachment in mc.topic.attachment track by $index" ng-click="mc.attachmentClicked(attachment)">
+                        <li class="ng-class:[{'disabled':mc.isSecret(attachment)}]" role="menuitem" ng-repeat="attachment in mc.topic.attachment track by $index" ng-click="mc.attachmentClicked(attachment)">
                             <a>{{attachment.attachmentTitle}}</a>
                         </li>
                     </ul>
