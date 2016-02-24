@@ -23,8 +23,8 @@ angular.module('dashboard')
     self.tmpUrl = null;
     self.hideEmbObj = false; // TODO: not needed if IE problem worked around by different layout or pdf.js
     self.item = $stateParams.signItem;
-    self.error = null;
     self.ongoing = null;
+    self.alerts = [];
 
     if (!self.item || !self.item.ProcessGuid || !self.item.ProcessGuid.length) {
         $log.error("signitemCtrl: item missing");
@@ -34,8 +34,11 @@ angular.module('dashboard')
         $log.debug("signItemCtrl: name: " +self.item.Name);
     }
 
-
     // PRIVATE FUNCTIONS
+
+    function clearAlerts() {
+        self.alerts.length = 0;
+    }
 
     function drawBlob(blob, delayExpired) {
         if (blob && !self.blob) {
@@ -65,7 +68,6 @@ angular.module('dashboard')
             function(err) {
                 $log.error("signitemCtrl.fetchBlob: SigningAttApi.getPdfBlob " +JSON.stringify(err));
                 self.errCode = err.status;
-                //self.errMsg = err.statusText; Decided not to display to user for now
             })
         .finally(function() {
         });
@@ -81,6 +83,29 @@ angular.module('dashboard')
         $log.debug("signitemCtrl.fetchUrl: " +self.tmpUrl);
     }
 
+    function saveStatus(item, status) {
+        if (!item || !(item instanceof Object) || !("Status" in item)) {
+            $log.debug(item);
+            throw new Error("signitemCtrl.saveStatus: bad arguments");
+        }
+        $log.log("signitemCtrl.saveStatus: " +item.Name +", current status: " +item.Status);
+        clearAlerts();
+
+        self.ongoing = true;
+        item.Status = status;
+        self.responseOpen = SigningOpenApi.save(item, function(value) {
+            $log.debug("adOpenSignreqs.saveStatus: SigningOpenApi.save done. New object: ");
+            $log.debug(value);
+            self.alerts.push({ type: 'success', locId: 'STR_OP_SUCCESS' });
+        }, function(error) {
+            $log.error("adOpenSignreqs.saveStatus: SigningOpenApi.save error: " +JSON.stringify(error));
+            self.alerts.push({ type: 'danger', locId: 'STR_FAIL_OP', resCode: error.status, resTxt: error.statusText });
+        });
+        self.responseOpen.$promise.finally(function() {
+            $log.debug("adOpenSignreqs.saveStatus: SigningOpenApi.save finally");
+            self.ongoing = null;
+        });
+    }
 
     // PUBLIC FUNCTIONS
 
@@ -94,29 +119,6 @@ angular.module('dashboard')
     self.actionAttListCb = function() {
       $log.debug("signitemCtrl.actionAttListCb");
     };
-
-    function saveStatus(item, status) {
-        if (!item || !(item instanceof Object) || !("Status" in item)) {
-            $log.debug(item);
-            throw new Error("signitemCtrl.saveStatus: bad arguments");
-        }
-        $log.log("signitemCtrl.saveStatus: " +item.Name +", current status: " +item.Status);
-
-        self.error = null;
-        self.ongoing = true;
-        item.Status = status;
-        self.responseOpen = SigningOpenApi.save(item, function(value) {
-            $log.debug("adOpenSignreqs.saveStatus: SigningOpenApi.save done. New object: ");
-            $log.debug(value);
-        }, function(error) {
-            $log.error("adOpenSignreqs.saveStatus: SigningOpenApi.save error: " +JSON.stringify(error));
-            self.error = error;
-        });
-        self.responseOpen.$promise.finally(function() {
-            $log.debug("adOpenSignreqs.saveStatus: SigningOpenApi.save finally");
-            self.ongoing = null;
-        });
-    }
 
     self.actionSign = function() {
         saveStatus(self.item, ENV.SignApi_DocStatuses.signed.value);
@@ -134,7 +136,12 @@ angular.module('dashboard')
       $log.debug("signitemCtrl.actionStatustCb");
     };
 
-    function MyBtn(label, cb, model, style, active) {
+    self.closeAlert = function(index) {
+        $log.debug("signitemCtrl.closeAlert " +index);
+        self.alerts.splice(index, 1);
+    };
+
+    function BtnConf(label, cb, model, style, active) {
         var res = this;
         res.label = label;
         res.cb = cb;
@@ -143,15 +150,13 @@ angular.module('dashboard')
         res.active = active;
     }
 
-    var cols = "";
-
     self.btnConfig = [
-        new MyBtn('STR_SIGNING_REQ', self.actiontDocCb, null, cols+' btn btn-primary ad-button'),
-        new MyBtn('STR_ATTACHMENTS', self.actionAttListCb, null, cols+' btn btn-warning ad-button'),
-        new MyBtn('STR_SIGNING_ACCEPT', self.actionSign, null, cols+' btn btn-success ad-button'),
-        new MyBtn('STR_REJECT', self.actionReject, null, cols+' btn btn-danger ad-button'),
-        new MyBtn('STR_CREATE_COMMENT', self.actionCommentCb, null, cols+' btn btn-default ad-button'),
-        new MyBtn('STR_SIGNING_REQ_STATUS', self.actionStatustCb, null, cols+' btn btn-info ad-button')
+        new BtnConf('STR_SIGNING_REQ', self.actiontDocCb, null, 'btn btn-primary ad-button'),
+        new BtnConf('STR_ATTACHMENTS', self.actionAttListCb, null, 'btn btn-info ad-button'),
+        new BtnConf('STR_SIGNING_ACCEPT', self.actionSign, null, 'btn btn-success ad-button'),
+        new BtnConf('STR_REJECT', self.actionReject, null, 'btn btn-warning ad-button'),
+        new BtnConf('STR_CREATE_COMMENT', self.actionCommentCb, null, 'btn btn-default ad-button'),
+        new BtnConf('STR_SIGNING_REQ_STATUS', self.actionStatustCb, null, 'btn btn-info ad-button')
     ];
 
     self.openFileModal = function(fileUrl, fileBlob, fileHeading) {

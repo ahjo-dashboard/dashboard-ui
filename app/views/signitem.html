@@ -4,6 +4,7 @@
             <div class="row">
 
                 <i class="visible-xs-inline col-xs-2 glyphicon glyphicon-home left" aria-hidden="true" ng-click="goHome()"></i>
+
                 <h4 class="visible-xs-inline col-xs-10">{{sc.fileName}}</h4>
 
                  <!-- non-XS resolution buttons -->
@@ -61,9 +62,10 @@
                 <uib-progressbar ng-if="sc.ongoing" class="progress-striped active" type="info">
                 </uib-progressbar>
 
-                <div ng-if="sc.error" class="alert alert-danger" role="alert">
-                    <ANY translate>STR_FAIL_OP</ANY><br>{{sc.error.status}} {{sc.error.statusText}}
-                </div>
+                <uib-alert ng-repeat="i in sc.alerts track by $index" type="{{i.type}}" ng-click="sc.closeAlert($index)" close="sc.closeAlert($index)">
+                    <ANY ng-if="i.locId" translate>{{i.locId}}</ANY>
+                    <div ng-if="i.resCode || resTxt">{{i.resCode}}&nbsp;{{i.resTxt}}</div>
+                </uib-alert>
 
                 <!-- XS resolution buttons -->
                 <div class="visible-xs-inline container col-xs-12">
@@ -72,7 +74,7 @@
                     </div>
                 </div>
 
-                <ad-embedded-file ng-if="!sc.error && device === 2 && sc.fileUrl" class="ad-flex-item-upper ad-flex-show-full" id="objAlpha" refresh="" ng-attr-fileurl="sc.fileUrl" ng-attr-filename="sc.fileName">
+                <ad-embedded-file ng-if="!isScreenXs() && sc.fileUrl" class="ad-flex-item-upper ad-flex-show-full" id="objAlpha" refresh="" ng-attr-fileurl="sc.fileUrl" ng-attr-filename="sc.fileName">
                 </ad-embedded-file>
             </div>
         </div>

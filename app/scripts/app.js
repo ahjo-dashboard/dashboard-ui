@@ -71,7 +71,24 @@ angular.module('dashboard', [
     $rootScope.$on('$stateChangeStart', function (event, next/*, toParams, fromParams*/) {
         $log.debug('app.stateChangeStart: ' +next.name);// +' toParams: ' +JSON.stringify(toParams) +' fromParams: ' +JSON.stringify(fromParams));
     });
+
     $rootScope.$on('$stateChangeError', console.error.bind(console)); // $log.error.bind didn't work for .spec tests
+    // GLOBAL VARIABLES
+    // $rootScope.device    MOBILE = 1, DESKTOP = 2
+    // $rootScope.menu      FULL = 2, HALF = 1,  CLOSED = 0
+
+    var device = document.getElementById("device");
+
+    if (device && window.getComputedStyle(device,null).getPropertyValue("min-width") === '320px') {
+        $rootScope.device = DEVICE.MOBILE;
+    }
+    else {
+        $rootScope.device = DEVICE.DESKTOP;
+    }
+
+    $rootScope.isScreenXs = function() {
+        return $rootScope.device === DEVICE.MOBILE;
+    };
 
     $rootScope.goHome = function() {
         $state.go(APPSTATE.HOME);
@@ -103,16 +120,5 @@ angular.module('dashboard', [
         return $rootScope.menu === MENU.FULL;
     };
 
-    // GLOBAL VARIABLES
-    // $rootScope.device    MOBILE = 1, DESKTOP = 2
-    // $rootScope.menu      FULL = 2, HALF = 1,  CLOSED = 0
 
-    var device = document.getElementById("device");
-
-    if (device && window.getComputedStyle(device,null).getPropertyValue("min-width") === '320px') {
-        $rootScope.device = DEVICE.MOBILE;
-    }
-    else {
-        $rootScope.device = DEVICE.DESKTOP;
-    }
 });
