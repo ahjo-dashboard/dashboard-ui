@@ -42,9 +42,11 @@
                 </ul>
             </div>
 
-            <button type="button" class="btn btn-default ad-button ad-topic-button ng-class:[{'active': msc.isSelected(topic)}]" ng-click="msc.topicSelected(topic)">{{topic.topicTitle}}</button>
+            <button type="button" class="btn btn-default ad-button ad-topic-button ng-class:[{'active': (msc.isSelected(topic) && !msc.mobile)}]" ng-click="msc.topicSelected(topic)">{{topic.topicTitle}}</button>
         </div>
 
     </div>
 
 </div>
+
+<ui-view ng-if="msc.mobile" name="detailsContent"></ui-view>

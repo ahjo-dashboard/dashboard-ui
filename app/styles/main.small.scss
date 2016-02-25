@@ -32,5 +32,36 @@
                 padding: ($header-height - $button-height) * 0.5;
             }
         }
+
+        .ad-btn-group-left {
+            padding-left: 5px !important;
+            padding-right: 1px !important;
+            .btn {
+                border-top-left-radius: 6px !important;
+                border-bottom-left-radius: 6px !important;
+                min-height: $button-height;
+                font-size: 1em;
+            }
+        }
+
+        .ad-btn-group-middle {
+            padding-left: 1px !important;
+            padding-right: 1px !important;
+            .btn {
+                min-height: $button-height;
+                font-size: 1em;
+            }
+        }
+
+        .ad-btn-group-right {
+            padding-left: 1px !important;
+            padding-right: 5px !important;
+            .btn {
+                border-top-right-radius: 6px !important;
+                border-bottom-right-radius: 6px !important;
+                min-height: $button-height;
+                font-size: 1em;
+            }
+        }
     }
 }

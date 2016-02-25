@@ -61,6 +61,20 @@ angular.module('dashboard')
                 meetingItem: null
             }
         })
+        .state(APPSTATE.MEETINGDETAILS, {
+            url: '/details',
+            views: {
+                'detailsContent': {
+                    templateUrl: 'views/meeting.html',
+                    controller: 'meetingCtrl',
+                    controllerAs: 'mc'
+                }
+            },
+            params: {
+                menu: MENU.FULL,
+                meetingItem: null
+            }
+        })
         .state(APPSTATE.SIGNITEM, {
             url: '/signitem',
             views: {

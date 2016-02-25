@@ -36,7 +36,9 @@ angular.module('dashboard')
                 self.meeting = response.objects[0];
                 if (self.meeting && self.meeting.topicList.length) {
                     var topic = self.meeting.topicList[0];
-                    StorageSrv.set(KEY.TOPIC, topic);
+                    if (!self.mobile) {
+                        StorageSrv.set(KEY.TOPIC, topic);
+                    }
                 }
             }
             else {
@@ -65,6 +67,9 @@ angular.module('dashboard')
 
     self.topicSelected = function(topic) {
         StorageSrv.set(KEY.TOPIC, topic);
+        if (self.mobile) {
+            $state.go(APPSTATE.MEETINGDETAILS, {});
+        }
     };
 
     self.isSelected = function(topic) {
