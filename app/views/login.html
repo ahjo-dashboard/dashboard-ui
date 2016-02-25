@@ -1,13 +1,41 @@
-<div class="ad-page">
-    <uib-progressbar ng-if="lc.login || lc.loadingUsers" class="progress-striped active" type="info"><i>Haetaan...</i></uib-progressbar>
-    <div ng-if="lc.error" class="alert alert-danger" role="alert">
-        <span translate-cloak translate>STR_FAIL_LOADING</span>&nbsp;<span translate>STR_TRY_LATER</span>
-        <br>{{lc.error.status}}&nbsp;{{lc.error.statusText}}
+<div class="ad-page-header">
+    <div class="container col-xs-12">
+        <div class="row text-center">
+            <h3>Ahjo Työpöytäsovellus</h4> <h3>testiympäristön valinnat</h3>
+        </div>
     </div>
-    <form class="ad-center">
-        <select style="margin: 10px;" id="ADID" name="ADID" ng-model="lc.data.selection">
-            <option ng-repeat="item in lc.data.options track by $index" value="{{item.value}}">{{item.text}}</option>
-        </select>
-        <input style="margin: 10px;" class="login" type="submit" value="{{ 'STR_LOGIN' | translate}}" ng-click="lc.select()" />
-    </form>
+</div>
+<div class="ad-page-content">
+    <div class="ad-page-container">
+        <div class="container col-xs-12">
+            <div class="row text-center">
+
+                <form>
+                    <div class="db-error">
+                        <h4>Voit valita käyttäjätunnuksen, jolle haetaan testiympäristön kokousten sisältö</h4>
+                        <p>Sähköiset allekirjoitukset haetaan silti omalla tunnuksellasi</p>
+                    </div>
+                        <select ng-if="lc.data.options.length" style="margin: 10px;" id="ADID" name="ADID" ng-model="lc.data.selection">
+                            <option ng-repeat="item in lc.data.options track by $index" value="{{item.value}}">{{item.text}}</option>
+                        </select>
+                        <br>
+                        <input ng-if="lc.data.selection" style="margin: 10px;" class="btn btn-success" type="submit" value="{{'STR_LOGIN' | translate}}" ng-click="lc.select()" />
+                </form>
+
+                <uib-progressbar ng-if="lc.login || lc.loadingUsers" class="progress-striped" type="info"><i>Haetaan...</i></uib-progressbar>
+
+                <uib-alert ng-if="lc.error" type="danger">
+                    <span translate-cloak translate>STR_FAIL_LOADING</span>&nbsp;<span translate>STR_TRY_LATER</span>
+                    <br>{{lc.error.status}}&nbsp;{{lc.error.statusText}}
+                </uib-alert>
+
+            </div>
+            <div class="row text-center">
+                <div class="db-error">
+                    <h4>Voit jatkaa myös omalla tunnuksellasi</h4>
+                    <button type="button" class="btn btn-success" ng-click="goHome()">Jatka omalla tunnuksella</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
