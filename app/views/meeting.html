@@ -1,27 +1,18 @@
 <div class="ad-page">
 
-    <div ng-if="mc.mobile" class="ad-page-header">
-        <div class="container col-xs-12">
-            <div class="row">
-                <i class="col-xs-1 glyphicon glyphicon-menu-left" aria-hidden="true" ng-click="goBack()"></i>
-                <h3 class="col-xs-10">MEETING DETAILS</h3>
-            </div>
-        </div>
-    </div>
-
-    <div class="ng-class:[{'ad-page-header':!mc.mobile, 'ad-page-content':mc.mobile}]">
+    <div class="ad-page-header">
         <div class="container col-xs-12 ad-app-bg">
             <div class="row">
                 <!-- UPPER HEADER START  -->
-                <div ng-if="menuClosed() && !mc.mobile" class="col-xs-1">
+                <div ng-if="menuClosed()" class="col-xs-1">
                     <i class="glyphicon glyphicon-menu-hamburger left" aria-hidden="true" ng-click="openMenu()"></i>
                 </div>
-                <div ng-if="!mc.mobile" class="col-md-1 ad-btn-group-left ad-upper-bg ng-class:[{'col-sm-1':menuClosed(), 'col-sm-2':!menuClosed()}]">
+                <div class="col-md-1 ad-btn-group-left ad-upper-bg ng-class:[{'col-sm-1':menuClosed(), 'col-sm-2':!menuClosed()}]">
                     <button type="button" class="btn btn-info ad-header-button" ng-click="mc.upperClicked()">
                         <i class="glyphicon center ng-class:[{'glyphicon-plus':!mc.isUpperMode(), 'glyphicon-minus':mc.isUpperMode()}]"></i>
                     </button>
                 </div>
-                <div class="col-xs-12 col-sm-2 col-lg-2 ad-btn-group-right ad-upper-bg ng-class:[{'col-md-1':menuClosed(), 'col-md-2':!menuClosed()}]">
+                <div class="col-xs-2 col-lg-2 ad-btn-group-right ad-upper-bg ng-class:[{'col-md-1':menuClosed(), 'col-md-2':!menuClosed()}]">
                     <button type="button" class="btn btn-primary ad-dummy-header-button disabled">
                         <ANY translate>STR_TOPIC</ANY>
                     </button>
@@ -29,17 +20,17 @@
                 <!-- UPPER HEADER END  -->
 
                 <!-- LOWER HEADER START  -->
-                <div ng-if="!mc.mobile" class="col-md-1 ad-btn-group-right ad-lower-bg right ng-class:[{'col-sm-1':menuClosed(), 'col-sm-2':!menuClosed()}]">
+                <div class="col-md-1 ad-btn-group-right ad-lower-bg right ng-class:[{'col-sm-1':menuClosed(), 'col-sm-2':!menuClosed()}]">
                     <button type="button" class="btn btn-info ad-header-button" ng-click="mc.lowerClicked()">
                         <i class="glyphicon center ng-class:[{'glyphicon-plus':!mc.isLowerMode(), 'glyphicon-minus':mc.isLowerMode()}]"></i>
                     </button>
                 </div>
-                <div class="col-xs-12 col-sm-2 ad-btn-group-middle ad-lower-bg right">
+                <div class="col-xs-2 ad-btn-group-middle ad-lower-bg right">
                     <button type="button" class="btn btn-primary ad-header-button">
                         {{mc.proposalTitle}}
                     </button>
                 </div>
-                <div class="col-xs-12 col-sm-2 ad-btn-group-middle ad-lower-bg right" uib-dropdown is-open="">
+                <div class="col-xs-2 ad-btn-group-middle ad-lower-bg right" uib-dropdown is-open="">
                     <button id="materialButton" type="button" class="btn btn-primary ad-header-button" uib-dropdown-toggle>
                         {{mc.otherMaterialTitle}}
                         <span class="caret hidden-sm"></span>
@@ -58,7 +49,7 @@
                         </li>
                     </ul>
                 </div>
-                <div class="col-xs-12 col-sm-2 ad-btn-group-left ad-lower-bg right" uib-dropdown is-open="">
+                <div class="col-xs-2 ad-btn-group-left ad-lower-bg right" uib-dropdown is-open="">
                     <button id="attachmentButton" type="button" class="btn btn-primary ad-header-button" uib-dropdown-toggle>
                         <ANY translate>STR_ATTACHMENTS</ANY>
                         <span class="caret hidden-sm"></span>
@@ -74,7 +65,7 @@
         </div>
     </div>
 
-    <div ng-if="!mc.mobile" class="ad-page-content">
+    <div class="ad-page-content">
 
         <div class="ad-page-container-flex">
 

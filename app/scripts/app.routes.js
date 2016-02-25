@@ -65,7 +65,7 @@ angular.module('dashboard')
             url: '/details',
             views: {
                 'detailsContent': {
-                    templateUrl: 'views/meeting.html',
+                    templateUrl: 'views/mobile.meeting.html',
                     controller: 'meetingCtrl',
                     controllerAs: 'mc'
                 }
