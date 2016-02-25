@@ -35,6 +35,14 @@ angular.module('AhjoSigningService', [
         }
     });
 })
+.factory('SigningPersonInfoApi', function ($resource, ENV) {
+    return $resource(ENV.SIGNAPIURL_PERSONINFO, {}, {
+        get: {
+            method: "GET",
+            cache: false
+        }
+    });
+})
 .factory('SigningAttApi', function($resource, ENV, $log) {
     return $resource(
         ENV.SignApiUrl_GetAttachment,
