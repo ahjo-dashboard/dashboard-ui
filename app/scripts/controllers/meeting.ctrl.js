@@ -73,6 +73,10 @@ angular.module('dashboard')
         return (item && item.publicity) ? (item.publicity === PUBLICITY.SECRET) : false;
     };
 
+    self.isUrlString = function(url) {
+        return (url && (typeof url === "string") && url.length) ? true : false;
+    };
+
     $scope.$watch(
         // This function returns the value being watched. It is called for each turn of the $digest loop
         function() {

@@ -72,7 +72,7 @@
             <!-- UPPER START -->
             <div class="ad-flex-item-upper ng-class:[{'ad-flex-show-full':mc.isUpperMode(), 'ad-flex-show':mc.isBothMode(), 'ad-flex-hide':mc.isLowerMode()}]">
 
-                <ad-embedded-file id="embeddedFirst" refresh="mc.blockMode" ng-attr-fileurl="mc.upperUrl" ng-attr-filename="mc.upperUrl"></ad-embedded-file>
+                <ad-embedded-file ng-if="mc.isUrlString(mc.upperUrl)" refresh="mc.blockMode" ng-attr-fileurl="mc.upperUrl" ng-attr-filename="mc.upperUrl"></ad-embedded-file>
 
                 <div ng-if="mc.error" class="alert alert-danger" role="alert">{{mc.error}}</div>
             </div>
@@ -81,7 +81,7 @@
             <!-- LOWER START -->
             <div class="ad-flex-item-lower ng-class:[{'ad-flex-show-full':mc.isLowerMode(), 'ad-flex-show':mc.isBothMode(), 'ad-flex-hide':mc.isUpperMode()}]">
 
-                <ad-embedded-file id="embeddedSecond" refresh="mc.blockMode"  ng-attr-fileurl="mc.lowerUrl" ng-attr-filename="mc.lowerUrl"></ad-embedded-file>
+                <ad-embedded-file ng-if="mc.isUrlString(mc.lowerUrl)" refresh="mc.blockMode"  ng-attr-fileurl="mc.lowerUrl" ng-attr-filename="mc.lowerUrl"></ad-embedded-file>
 
             </div>
             <!-- LOWER END -->
