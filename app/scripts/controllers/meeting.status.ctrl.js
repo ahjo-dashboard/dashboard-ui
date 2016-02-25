@@ -75,27 +75,21 @@ angular.module('dashboard')
         return false;
     };
 
-    self.isPending = function(topic) {
-        return (topic && topic.topicStatus === TOPICSTATUS.PENDING);
+    self.statusIcon = function(topic) {
+        for (var item in TOPICSTATUS) {
+            if( TOPICSTATUS.hasOwnProperty(item) ) {
+                if (topic && topic.topicStatus && topic.topicStatus === TOPICSTATUS[item].value) {
+                    return TOPICSTATUS[item].iconPath;
+                }
+            }
+        }
     };
 
-    self.isActive = function(topic) {
-        return (topic && topic.topicStatus === TOPICSTATUS.ACTIVE);
-    };
-
-    self.isAborted = function(topic) {
-        return (topic && topic.topicStatus === TOPICSTATUS.ABORTED);
-    };
-
-    self.isReady = function(topic) {
-        return (topic && topic.topicStatus === TOPICSTATUS.READY);
-    };
-
-    self.stringID = function(meeting) {
+    self.stringId = function(meeting) {
         for (var item in MTGSTATUS) {
             if( MTGSTATUS.hasOwnProperty(item) ) {
                 if (meeting && meeting.meetingStatus && meeting.meetingStatus === MTGSTATUS[item].value) {
-                    return MTGSTATUS[item].stringID;
+                    return MTGSTATUS[item].stringId;
                 }
             }
         }
