@@ -87,4 +87,19 @@ angular.module('dashboard')
         ABORTED : 3,
         READY : 4
     }
+)
+.constant(
+    'ESIGNSTATUS', { //SignApi_DocStatuses
+        UNSIGNED: { value: 1, stringId: 'STR_UNSIGNED'},
+        REJECTED: { value: 2, stringId: 'STR_REJECTED'},
+        SIGNED: { value: 4, stringId: 'STR_SIGNED'},
+        RETURNED: { value: 7, stringId: 'STR_RETURNED'},
+        UNDECIDED: { value: 8, stringId: 'STR_UNDECIDED'}
+    }
+)
+.constant(
+    'ESIGNTYPE', {// SignApi_DocTypes
+        POLICYMAKER: { value: 1, stringId: 'STR_SIGNING_DOC_POLICYMAKER'},
+        OFFICIAL: { value: 2, stringId: 'STR_SIGNING_DOC_OFFICIAL'}
+    }
 );
