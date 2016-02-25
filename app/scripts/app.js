@@ -3,6 +3,7 @@
  * Licensed under the MIT license.
  */
 'use strict';
+
 /**
 * @ngdoc overview
 * @name dashboard
@@ -98,6 +99,10 @@ angular.module('dashboard', [
         $window.history.back();
     };
 
+    $rootScope.goErrorLanding = function() {
+        $state.go(APPSTATE.ERROR);
+    };
+
     $rootScope.openMenu = function() {
         $rootScope.menu = MENU.FULL;
     };
@@ -120,5 +125,17 @@ angular.module('dashboard', [
         return $rootScope.menu === MENU.FULL;
     };
 
+});
 
+angular.module('dashboard').config(function($provide) {
+    $provide.decorator("$exceptionHandler", ['$delegate', '$injector', function($delegate, $injector) {
+        return function(aException, aCause) {
+            $delegate(aException, aCause);
+
+            console.log('dashboard.exceptionHandler: redirecting state');
+            var $rs = $injector.get("$rootScope");
+            $rs.apperror = { exception: aException, cause: aCause};
+            $rs.goErrorLanding();
+        };
+    }]);
 });
