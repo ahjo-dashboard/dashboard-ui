@@ -74,7 +74,7 @@ angular.module('dashboard')
     };
 
     self.isUrlString = function(url) {
-        return url && (typeof url === "string") && url.length ? true : false;
+        return (url && (typeof url === "string") && url.length) ? true : false;
     };
 
     $scope.$watch(
