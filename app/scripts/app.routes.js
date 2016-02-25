@@ -21,7 +21,7 @@ angular.module('dashboard')
                 }
             },
             params: {
-                menu: MENU.FULL
+                menu: MENU.CLOSED
             }
         })
         .state(APPSTATE.HOME, {
@@ -57,7 +57,7 @@ angular.module('dashboard')
                 }
             },
             params: {
-                menu: MENU.FULL,
+                menu: MENU.CLOSED,
                 meetingItem: null
             }
         })
@@ -71,7 +71,7 @@ angular.module('dashboard')
                 }
             },
             params: {
-                menu: MENU.FULL,
+                menu: MENU.CLOSED,
                 meetingItem: null
             }
         })
