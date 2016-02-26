@@ -21,7 +21,7 @@ angular.module('dashboard')
                 }
             },
             params: {
-                menu: MENU.FULL
+                menu: MENU.CLOSED
             }
         })
         .state(APPSTATE.HOME, {
@@ -57,7 +57,21 @@ angular.module('dashboard')
                 }
             },
             params: {
-                menu: MENU.FULL,
+                menu: MENU.CLOSED,
+                meetingItem: null
+            }
+        })
+        .state(APPSTATE.MEETINGDETAILS, {
+            url: '/details',
+            views: {
+                'detailsContent': {
+                    templateUrl: 'views/mobile.meeting.html',
+                    controller: 'meetingCtrl',
+                    controllerAs: 'mc'
+                }
+            },
+            params: {
+                menu: MENU.CLOSED,
                 meetingItem: null
             }
         })

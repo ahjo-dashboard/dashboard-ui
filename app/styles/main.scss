@@ -34,6 +34,8 @@ $short-delay: 50ms;
 $upper-color: #204d74;
 $lower-color: #f0ad4e;
 
+$default-font-size: 1.2em;
+
 #device {
     min-width: 320px;
     display: none;
@@ -324,7 +326,7 @@ body {
             border-radius: 0;
             .glyphicon {
                 color: $headingTxtColor;
-                font-size: 1.2em;
+                font-size: $default-font-size;
                 display:block;
                 text-align:center
             }
@@ -373,6 +375,7 @@ body {
     .ad-header-button {
         border-width: 0;
         width: 100%;
+        font-size: $default-font-size;
     }
 
     .ad-dummy-header-button {
@@ -383,27 +386,35 @@ body {
 
     .ad-btn-group-left {
         @extend .btn-group;
-        padding-left: 5px !important;
-        padding-right: 1px !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
         .btn {
-            border-top-left-radius: 6px !important;
-            border-bottom-left-radius: 6px !important;
+            border-top-left-radius: 0 !important;
+            border-bottom-left-radius: 0 !important;
+            min-height: $header-height;
+            font-size: $default-font-size;
         }
     }
 
     .ad-btn-group-middle {
         @extend .btn-group;
-        padding-left: 1px !important;
-        padding-right: 1px !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        .btn {
+            min-height: $header-height;
+            font-size: $default-font-size;
+        }
     }
 
     .ad-btn-group-right {
         @extend .btn-group;
-        padding-left: 1px !important;
-        padding-right: 5px !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
         .btn {
-            border-top-right-radius: 6px !important;
-            border-bottom-right-radius: 6px !important;
+            border-top-right-radius: 0 !important;
+            border-bottom-right-radius: 0 !important;
+            min-height: $header-height;
+            font-size: $default-font-size;
         }
     }
 
@@ -425,7 +436,7 @@ body {
         display: flex;
         flex-direction: column;
         justify-content: center;
-        min-height: 1.2em;
+        min-height: $default-font-size;
     }
 
     .ad-topic {

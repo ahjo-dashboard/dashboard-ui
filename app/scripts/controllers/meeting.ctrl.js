@@ -15,6 +15,7 @@ angular.module('dashboard')
 .controller('meetingCtrl',['$log','AhjoMeetingSrv','$stateParams','$rootScope','$scope','$state','MENU','BLOCKMODE','StorageSrv', 'APPSTATE','KEY','$translate','PUBLICITY', function ($log, AhjoMeetingSrv, $stateParams, $rootScope, $scope, $state, MENU, BLOCKMODE, StorageSrv, APPSTATE, KEY, $translate, PUBLICITY) {
     $log.debug("meetingCtrl: CONTROLLER");
     var self = this;
+    self.mobile = $rootScope.isScreenXs();
     self.upperUrl = {};
     self.lowerUrl = {};
     self.error = null;

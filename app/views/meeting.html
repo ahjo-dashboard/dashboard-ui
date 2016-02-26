@@ -7,7 +7,7 @@
                 <div ng-if="menuClosed()" class="col-xs-1">
                     <i class="glyphicon glyphicon-menu-hamburger left" aria-hidden="true" ng-click="openMenu()"></i>
                 </div>
-                <div class="hidden-xs col-md-1 ad-btn-group-left ad-upper-bg ng-class:[{'col-sm-1':menuClosed(), 'col-sm-2':!menuClosed()}]">
+                <div class="col-md-1 ad-btn-group-left ad-upper-bg ng-class:[{'col-sm-1':menuClosed(), 'col-sm-2':!menuClosed()}]">
                     <button type="button" class="btn btn-info ad-header-button" ng-click="mc.upperClicked()">
                         <i class="glyphicon center ng-class:[{'glyphicon-plus':!mc.isUpperMode(), 'glyphicon-minus':mc.isUpperMode()}]"></i>
                     </button>
@@ -20,7 +20,7 @@
                 <!-- UPPER HEADER END  -->
 
                 <!-- LOWER HEADER START  -->
-                <div class="hidden-xs col-md-1 ad-btn-group-right ad-lower-bg right ng-class:[{'col-sm-1':menuClosed(), 'col-sm-2':!menuClosed()}]">
+                <div class="col-md-1 ad-btn-group-right ad-lower-bg right ng-class:[{'col-sm-1':menuClosed(), 'col-sm-2':!menuClosed()}]">
                     <button type="button" class="btn btn-info ad-header-button" ng-click="mc.lowerClicked()">
                         <i class="glyphicon center ng-class:[{'glyphicon-plus':!mc.isLowerMode(), 'glyphicon-minus':mc.isLowerMode()}]"></i>
                     </button>
@@ -49,7 +49,7 @@
                         </li>
                     </ul>
                 </div>
-                <div class="hidden-xs col-xs-2 ad-btn-group-left ad-lower-bg right" uib-dropdown is-open="">
+                <div class="col-xs-2 ad-btn-group-left ad-lower-bg right" uib-dropdown is-open="">
                     <button id="attachmentButton" type="button" class="btn btn-primary ad-header-button" uib-dropdown-toggle>
                         <ANY translate>STR_ATTACHMENTS</ANY>
                         <span class="caret hidden-sm"></span>
