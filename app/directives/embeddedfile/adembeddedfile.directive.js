@@ -47,8 +47,11 @@ angular.module('dashboard')
                 }
 
                 element.empty();
-                element.append($compile(html)(scope));
-                element.css(HEIGHT, element.parent().height());
+                
+                if (scope.fileurl) {
+                    element.append($compile(html)(scope));
+                    element.css(HEIGHT, element.parent().height());
+                }
             }
 
             scope.$watch(

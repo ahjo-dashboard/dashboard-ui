@@ -12,20 +12,11 @@
  * Controller of the dashboard
  */
 angular.module('dashboard')
-.controller('signitemCtrl', function ($log, $scope, $state, $stateParams, SigningAttApi, $sce, $timeout, $uibModal, MessageService, ENV, APPSTATE, SigningOpenApi, SigningPersonInfoApi, ESIGNSTATUS) {
+.controller('signitemCtrl', function ($log, $scope, $state, $stateParams, SigningAttApi, $sce, $timeout, $uibModal, MessageService, ENV, APPSTATE, SigningOpenApi, SigningPersonInfoApi, ESIGNSTATUS, $rootScope) {
     $log.debug("signitemCtrl.config");
 
     var self = this;
-    self.blob = null;
-    self.fileUrl = {};
-    self.fileName = {};
-    self.remoteUrl = null;
-    self.tmpUrl = null;
-    self.hideEmbObj = false; // TODO: not needed if IE problem worked around by different layout or pdf.js
     self.item = $stateParams.signItem;
-    self.ongoing = null;
-    self.alerts = [];
-
     if (!self.item || !self.item.ProcessGuid || !self.item.ProcessGuid.length) {
         $log.error("signitemCtrl: item missing");
         $state.go(APPSTATE.HOME);
@@ -34,13 +25,42 @@ angular.module('dashboard')
         $log.debug("signItemCtrl: name: " +self.item.Name);
     }
 
+    self.blob = null;
+    self.displayUrl = {};
+    self.fileUrl = {};
+    self.fileName = {};
+    self.remoteUrl = null;
+    self.docUrl = {};
+    self.hideEmbObj = false; // Workaround for IE which displays embedded object always topmost.
+    self.ongoing = false;
+    self.alerts = [];
+    self.isMobile = $rootScope.mobile;
+    self.btnModel = {
+        doc: { disabled: false, active: false },
+        acc: { disabled: false, active: false },
+        rej: { disabled: false, active: false }
+    };
+
     self.requestorName = self.item.RequestorName ? self.item.RequestorName : null;
     self.requestorId = self.item.RequestorId ? self.item.RequestorId : null;
 
     // PRIVATE FUNCTIONS
 
+    function initBtns(btnModel, status) {
+        if (status !== ESIGNSTATUS.UNSIGNED.value) {
+            btnModel.doc.disabled = true;
+            btnModel.acc.disabled = true;
+            btnModel.rej.disabled = true;
+        }
+    }
+
     function clearAlerts() {
         self.alerts.length = 0;
+    }
+
+    function setDisplayUrl(url) {
+        $log.debug("signitemCtrl.setDisplayUrl: " +url);
+        self.displayUrl = url;
     }
 
     function drawBlob(blob, delayExpired) {
@@ -53,9 +73,9 @@ angular.module('dashboard')
         }
 
         if (self.blob && self.fileDrawDelayExpired) {
-            self.fileUrl = URL.createObjectURL(self.blob);
-            //self.fileContent = $sce.trustAsResourceUrl(self.fileUrl);
-            $log.debug("signitemCtrl.drawBlob: set fileUrl: " +self.fileUrl);
+            setDisplayUrl(URL.createObjectURL(self.blob));
+            //self.fileContent = $sce.trustAsResourceUrl(self.displayUrl);
+            $log.debug("signitemCtrl.drawBlob: set fileUrl: " +self.displayUrl);
         }
     }
 
@@ -76,14 +96,9 @@ angular.module('dashboard')
         });
     }
 
-    function drawFileurl() {
-        $log.debug("signitemCtrl.drawFileurl: " +self.tmpUrl +" fileName: " +self.fileName);
-        self.fileUrl = self.tmpUrl;
-    }
-
     function fetchUrl(item) {
-        self.tmpUrl = ENV.SignApiUrl_GetAttachment.replace(":reqId", item.ProcessGuid);
-        $log.debug("signitemCtrl.fetchUrl: " +self.tmpUrl);
+        self.docUrl = ENV.SignApiUrl_GetAttachment.replace(":reqId", item.ProcessGuid);
+        $log.debug("signitemCtrl.fetchUrl: " +self.docUrl);
     }
 
     function saveStatus(item, status) {
@@ -138,11 +153,13 @@ angular.module('dashboard')
 
     // PUBLIC FUNCTIONS
 
-    self.actiontDocCb = function() {
-      $log.debug("signitemCtrl.actiontDocCb");
-      if (!self.fileUrl) {
-        fetchUrl(self.item);
+    self.actionDoc = function() {
+        if (self.isMobile) {
+            self.openFileModal(self.displayUrl);
+        } else {
+            setDisplayUrl(self.docUrl);
         }
+        self.btnModel.doc.active = !self.btnModel.doc.active;
     };
 
     self.actionAttListCb = function() {
@@ -171,33 +188,15 @@ angular.module('dashboard')
         self.alerts.splice(index, 1);
     };
 
-    function BtnConf(label, cb, model, style, active) {
-        var res = this;
-        res.label = label;
-        res.cb = cb;
-        res.model = model;
-        res.style = style;
-        res.active = active;
-    }
-
-
-    self.btnConfig = [
-        new BtnConf('STR_SIGNING_REQ', self.actiontDocCb, null, 'btn btn-primary ad-button'),
-        new BtnConf('STR_ATTACHMENTS', self.actionAttListCb, null, 'btn btn-info ad-button'),
-        new BtnConf('STR_SIGNING_ACCEPT', self.actionSign, null, 'btn btn-success ad-button'),
-        new BtnConf('STR_REJECT', self.actionReject, null, 'btn btn-warning ad-button'),
-        new BtnConf('STR_CREATE_COMMENT', self.actionComment, null, 'btn btn-default ad-button'),
-        new BtnConf('STR_SIGNING_REQ_STATUS', self.actionStatustCb, null, 'btn btn-info ad-button')
-    ];
-
     self.openFileModal = function(fileUrl, fileBlob, fileHeading) {
         $log.debug("signitemCtrl.openFileModal: f: " +fileUrl +" b: " +fileBlob +" h: " +fileHeading);
+        self.ongoing = true;
         var modalInstance = $uibModal.open({
             animation: true,
             templateUrl: 'views/modalfile.html',
             controller: 'modalFileCtrl',
             controllerAs: 'mfc',
-            windowTopClass: 'ad-large-modal',
+            windowTopClass: 'db-large-modal',
             resolve: {
                 aUrl: function() {
                       return fileUrl;
@@ -215,20 +214,30 @@ angular.module('dashboard')
         }, function(arg) {
             $log.debug("signitemCtrl: Modal dismissed: " +arg);
             self.hideEmbObj = false;
+            self.ongoing = false;
         });
     };
 
+    self.isDisabled = function(/* id */) {
+        //$log.debug("signingItemCtrl.isDisabled: " +id);
+        return self.ongoing;
+    };
+
     self.fileName = self.item.Name;
-    var cb = null;
+
+    initBtns(self.btnModel, self.item.Status);
+
     // Both blob and remote url implementations kept, but only one used.
     // Remove later when sure other one won't be needed.
     if (!ENV.app_useBlob) {
         fetchUrl(self.item);
-        cb = drawFileurl;
+        setDisplayUrl(self.docUrl);
     } else {
         fetchBlob(self.item);
-        cb = drawBlob;
+        drawBlob();
     }
 
-    cb();
+    if (self.isMobile) {
+        self.actionDoc();
+    }
 });
