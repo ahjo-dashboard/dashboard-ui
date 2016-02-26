@@ -179,6 +179,14 @@ angular.module('dashboard')
                 templateUrl: 'views/info.html'
             }
         }
+    })
+    .state(APPSTATE.ERROR, {
+        url: '/error',
+        views: {
+            'appView': {
+                templateUrl: 'views/error.html'
+            }
+        }
     });
 
    if (ENV.app_env === 'prod') {

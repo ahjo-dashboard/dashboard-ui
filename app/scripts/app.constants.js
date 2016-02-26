@@ -40,7 +40,8 @@ angular.module('dashboard')
         OVERVIEW: "app.overview",
         MEETING: "app.meeting",
         SIGNITEM: "app.signitem",
-        MEETINGDETAILS: "app.meeting.details"
+        MEETINGDETAILS: "app.meeting.details",
+        ERROR: "error"
     }
 )
 .constant(

@@ -12,7 +12,7 @@
  * Controller of the dashboard
  */
 angular.module('dashboard')
-.controller('signitemCtrl', function ($log, $scope, $state, $stateParams, SigningAttApi, $sce, $timeout, $uibModal, MessageService, ENV, APPSTATE, SigningOpenApi, ESIGNSTATUS) {
+.controller('signitemCtrl', function ($log, $scope, $state, $stateParams, SigningAttApi, $sce, $timeout, $uibModal, MessageService, ENV, APPSTATE, SigningOpenApi, SigningPersonInfoApi, ESIGNSTATUS) {
     $log.debug("signitemCtrl.config");
 
     var self = this;
@@ -33,6 +33,9 @@ angular.module('dashboard')
     } else {
         $log.debug("signItemCtrl: name: " +self.item.Name);
     }
+
+    self.requestorName = self.item.RequestorName ? self.item.RequestorName : null;
+    self.requestorId = self.item.RequestorId ? self.item.RequestorId : null;
 
     // PRIVATE FUNCTIONS
 
@@ -107,6 +110,32 @@ angular.module('dashboard')
         });
     }
 
+    function displayRequestor(person) {
+        if (person && "email" in person) {
+            self.alerts.push({ type: 'info', locId: 'STR_SIGNING_COMMENT_INFO', resTxt: person.email });
+        }
+    }
+
+    function personInfo() {
+        $log.debug("signitemCtrl.personInfo");
+
+        if (!self.personInfo) {
+            self.ongoing = true;
+            self.personInfo = SigningPersonInfoApi.get({userId: self.requestorId}, function(/*data*/) {
+                $log.debug("signitemCtrl.personInfo: api query done");
+                displayRequestor(self.personInfo);
+            }, function(error) {
+                $log.error("signitemCtrl.personInfo: api query error: " +JSON.stringify(error));
+                self.alerts.push({ type: 'danger', locId: 'STR_FAIL_OP', resCode: error.status, resTxt: error.statusText });
+            });
+            self.personInfo.$promise.finally(function() {
+                self.ongoing = false;
+            });
+        } else {
+            displayRequestor(self.personInfo);
+        }
+    }
+
     // PUBLIC FUNCTIONS
 
     self.actiontDocCb = function() {
@@ -128,8 +157,9 @@ angular.module('dashboard')
         saveStatus(self.item, ESIGNSTATUS.REJECTED.value);
     };
 
-    self.actionCommentCb = function() {
-      $log.debug("signitemCtrl.actionCommentCb");
+    self.actionComment = function() {
+        clearAlerts();
+        personInfo();
     };
 
     self.actionStatustCb = function() {
@@ -150,12 +180,13 @@ angular.module('dashboard')
         res.active = active;
     }
 
+
     self.btnConfig = [
         new BtnConf('STR_SIGNING_REQ', self.actiontDocCb, null, 'btn btn-primary ad-button'),
         new BtnConf('STR_ATTACHMENTS', self.actionAttListCb, null, 'btn btn-info ad-button'),
         new BtnConf('STR_SIGNING_ACCEPT', self.actionSign, null, 'btn btn-success ad-button'),
         new BtnConf('STR_REJECT', self.actionReject, null, 'btn btn-warning ad-button'),
-        new BtnConf('STR_CREATE_COMMENT', self.actionCommentCb, null, 'btn btn-default ad-button'),
+        new BtnConf('STR_CREATE_COMMENT', self.actionComment, null, 'btn btn-default ad-button'),
         new BtnConf('STR_SIGNING_REQ_STATUS', self.actionStatustCb, null, 'btn btn-info ad-button')
     ];
 
