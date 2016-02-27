@@ -1,11 +1,13 @@
 <div class="ad-page">
-    <div class="ad-page-header">
+    <div class="db-page-header">
         <div class="container col-xs-12">
             <div class="row">
 
-                <i class="visible-xs-inline col-xs-2 glyphicon glyphicon-home left" aria-hidden="true" ng-click="goHome()"></i>
+                <i ng-if="sc.mobile" class="col-xs-2 glyphicon glyphicon-home left" aria-hidden="true" ng-click="goHome()"></i>
 
-                <h4 class="visible-xs-inline col-xs-10">{{sc.fileName}}</h4>
+                <div ng-if="sc.mobile" class="col-xs-10">
+                    <h4>{{sc.fileName}}</h4>
+                </div>
 
                  <!-- non-XS resolution buttons -->
                 <div class="hidden-xs col-xs-12">
