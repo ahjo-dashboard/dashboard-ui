@@ -3,14 +3,14 @@
         <div class="container col-xs-12">
             <div class="row">
 
-                <i ng-if="sc.mobile" class="col-xs-2 glyphicon glyphicon-home left" aria-hidden="true" ng-click="goHome()"></i>
+                <i ng-if="mobile" class="col-xs-2 glyphicon glyphicon-menu-left" aria-hidden="true" ng-click="goBack()"></i>
 
-                <div ng-if="sc.mobile" class="col-xs-10">
+                <div ng-if="mobile" class="col-xs-10">
                     <h4>{{sc.fileName}}</h4>
                 </div>
 
                  <!-- non-XS resolution buttons -->
-                <div class="hidden-xs col-xs-12">
+                <div class="!mobile col-xs-12">
                     <i class="col-xs-1 glyphicon glyphicon-home left" aria-hidden="true" ng-click="goHome()"></i>
                     <div class="col-xs-11">
                         <ad-custom-btns config="sc.btnConfig"></ad-custom-btns>

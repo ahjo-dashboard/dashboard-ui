@@ -82,9 +82,11 @@ angular.module('dashboard', [
 
     if (device && window.getComputedStyle(device,null).getPropertyValue("min-width") === '320px') {
         $rootScope.device = DEVICE.MOBILE;
+        $rootScope.mobile = true;
     }
     else {
         $rootScope.device = DEVICE.DESKTOP;
+        $rootScope.mobile = false;
     }
 
     $rootScope.isScreenXs = function() {

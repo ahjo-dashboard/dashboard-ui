@@ -16,11 +16,11 @@ angular.module('dashboard')
     $log.debug("meetingStatusCtrl: CONTROLLER");
     var self = this;
     $rootScope.menu = $stateParams.menu;
-    self.mobile = $rootScope.isScreenXs();
     self.title = 'MOBILE TITLE';
     self.meeting = {};
     self.chairman = false;
     var meetingItem = $stateParams.meetingItem;
+    var mobile = $rootScope.mobile;
 
     for (var i = 0; i < ENV.SupportedRoles.length; i++) {
         if (ENV.SupportedRoles[i].RoleID === MTGROLE.CHAIRMAN) {
@@ -36,7 +36,7 @@ angular.module('dashboard')
                 self.meeting = response.objects[0];
                 if (self.meeting && self.meeting.topicList.length) {
                     var topic = self.meeting.topicList[0];
-                    if (!self.mobile) {
+                    if (!mobile) {
                         StorageSrv.set(KEY.TOPIC, topic);
                     }
                 }
@@ -67,7 +67,7 @@ angular.module('dashboard')
 
     self.topicSelected = function(topic) {
         StorageSrv.set(KEY.TOPIC, topic);
-        if (self.mobile) {
+        if (mobile) {
             $state.go(APPSTATE.MEETINGDETAILS, {});
         }
     };

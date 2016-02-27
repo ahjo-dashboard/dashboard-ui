@@ -12,7 +12,7 @@
  * Controller of the dashboard
  */
 angular.module('dashboard')
-.controller('signitemCtrl', function ($log, $scope, $state, $stateParams, SigningAttApi, $sce, $timeout, $uibModal, MessageService, ENV, APPSTATE, SigningOpenApi, SigningPersonInfoApi, ESIGNSTATUS, $rootScope) {
+.controller('signitemCtrl', function ($log, $scope, $state, $stateParams, SigningAttApi, $sce, $timeout, $uibModal, MessageService, ENV, APPSTATE, SigningOpenApi, SigningPersonInfoApi, ESIGNSTATUS) {
     $log.debug("signitemCtrl.config");
 
     var self = this;
@@ -25,7 +25,6 @@ angular.module('dashboard')
     self.item = $stateParams.signItem;
     self.ongoing = null;
     self.alerts = [];
-    self.mobile = $rootScope.isScreenXs();
 
     if (!self.item || !self.item.ProcessGuid || !self.item.ProcessGuid.length) {
         $log.error("signitemCtrl: item missing");
