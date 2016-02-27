@@ -1,6 +1,6 @@
 # Ahjo dashboard-ui
 
-Responsive web front-end for accessing different certain representative IT services of the City of Helsinki.
+Responsive web front-end for accessing certain representative IT services of the City of Helsinki.
 Implemented using Javascript, Angular and Bootstrap.
 
 ## Building & development
@@ -14,13 +14,12 @@ Installing
   * `custom/conf/app.env.dev.json`
   * `custom/conf/app.env.test.json`
   * `custom/conf/app.env.prod.json`
-  * You may implement only relevant overrides and files listed above, not all are mandatory.
 
 Building
 
 * `grunt` for building for default configuration
 * `grunt build:dev|test|prod` for building for a specific configuration
-* `grunt preparedeploy` after building for preparing build output for deployment, if necessary.
+* `grunt preparedeploy` after building for preparing build output for deployment, if necessary. Calls a postbuild script in `custom/tools`
 
 Running on localhost
 
@@ -30,3 +29,6 @@ Running on localhost
 ## Testing
 
 Running `grunt test` will run the unit tests with karma.
+
+## Additional notes
+* For grunt toolchain issues: on access rights you may have to use npm version < 5.7
