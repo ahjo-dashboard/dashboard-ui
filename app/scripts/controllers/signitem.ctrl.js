@@ -159,7 +159,6 @@ angular.module('dashboard')
             } else {
                 setDisplayUrl(self.docUrl);
             }
-            self.btnModel.doc.active = !self.btnModel.doc.active;
         };
 
         self.actionAttListCb = function () {
@@ -198,7 +197,7 @@ angular.module('dashboard')
                 controllerAs: 'mfc',
                 windowTopClass: 'db-large-modal',
                 resolve: {
-                    aUrlß: function () {
+                    aUrl: function () {
                         return fileUrl;
                     },
                     aBlob: function () {
@@ -239,5 +238,7 @@ angular.module('dashboard')
 
         if (self.isMobile) {
             self.actionDoc();
+        } else {
+            self.btnModel.doc.active = true;
         }
     });
