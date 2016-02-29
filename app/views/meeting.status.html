@@ -26,8 +26,7 @@
         <button ng-if="!mobile" type="button" class="btn btn-primary btn-lg disabled ad-dummy-button" ng-click="">{{msc.meeting.meetingTitle}}</button>
 
         <div class="btn-group btn-block" uib-dropdown is-open="">
-            <button id="statusButton" type="button" class="btn btn-primary btn-lg ad-button ng-class:[{'disabled': !msc.chairman},{'ad-dummy-button': !msc.chairman}]" uib-dropdown-toggle>
-                <ANY translate>{{msc.stringId(msc.meeting)}}</ANY>
+            <button id="statusButton" type="button" class="btn btn-primary btn-lg ad-button ng-class:[{'disabled': !msc.chairman},{'ad-dummy-button': !msc.chairman}]" uib-dropdown-toggle translate>{{msc.stringId(msc.meeting)}}
                 <span ng-if="msc.chairman" class="caret"></span>
             </button>
             <ul uib-dropdown-menu role="menu" aria-labelledby="statusButton">

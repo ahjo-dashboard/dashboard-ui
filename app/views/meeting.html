@@ -1,6 +1,6 @@
 <div class="ad-page">
 
-    <div class="ad-page-header">
+    <div ng-if="!mobile" class="ad-page-header">
         <div class="container col-xs-12 ad-app-bg">
             <div class="row">
                 <!-- UPPER HEADER START  -->
@@ -8,55 +8,47 @@
                     <i class="glyphicon glyphicon-menu-hamburger left" aria-hidden="true" ng-click="openMenu()"></i>
                 </div>
                 <div class="col-md-1 ad-btn-group-left ad-upper-bg ng-class:[{'col-sm-1':menuClosed(), 'col-sm-2':!menuClosed()}]">
-                    <button type="button" class="btn btn-info ad-header-button" ng-click="mc.upperClicked()">
-                        <i class="glyphicon center ng-class:[{'glyphicon-plus':!mc.isUpperMode(), 'glyphicon-minus':mc.isUpperMode()}]"></i>
+                    <button type="button" class="btn btn-info ad-header-button" ng-click="ctrl.upperClicked()">
+                        <i class="glyphicon center ng-class:[{'glyphicon-plus':!ctrl.isUpperMode(), 'glyphicon-minus':ctrl.isUpperMode()}]"></i>
                     </button>
                 </div>
                 <div class="col-xs-2 col-lg-2 ad-btn-group-right ad-upper-bg ng-class:[{'col-md-1':menuClosed(), 'col-md-2':!menuClosed()}]">
-                    <button type="button" class="btn btn-primary ad-dummy-header-button disabled">
-                        <ANY translate>STR_TOPIC</ANY>
-                    </button>
+                    <button type="button" class="btn btn-primary ad-dummy-header-button disabled" translate translate-cloak>STR_TOPIC</button>
                 </div>
                 <!-- UPPER HEADER END  -->
 
                 <!-- LOWER HEADER START  -->
                 <div class="col-md-1 ad-btn-group-right ad-lower-bg right ng-class:[{'col-sm-1':menuClosed(), 'col-sm-2':!menuClosed()}]">
-                    <button type="button" class="btn btn-info ad-header-button" ng-click="mc.lowerClicked()">
-                        <i class="glyphicon center ng-class:[{'glyphicon-plus':!mc.isLowerMode(), 'glyphicon-minus':mc.isLowerMode()}]"></i>
+                    <button type="button" class="btn btn-info ad-header-button" ng-click="ctrl.lowerClicked()">
+                        <i class="glyphicon center ng-class:[{'glyphicon-plus':!ctrl.isLowerMode(), 'glyphicon-minus':ctrl.isLowerMode()}]"></i>
                     </button>
                 </div>
                 <div class="col-xs-2 ad-btn-group-middle ad-lower-bg right">
-                    <button type="button" class="btn btn-primary ad-header-button">
-                        {{mc.proposalTitle}}
-                    </button>
+                    <button type="button" class="btn btn-primary ad-header-button" ng-click="ctrl.topicClicked()" translate translate-cloak>STR_PROPOSALS</button>
                 </div>
                 <div class="col-xs-2 ad-btn-group-middle ad-lower-bg right" uib-dropdown is-open="">
-                    <button id="materialButton" type="button" class="btn btn-primary ad-header-button" uib-dropdown-toggle>
-                        {{mc.otherMaterialTitle}}
-                        <span class="caret hidden-sm"></span>
+                    <button id="materialButton" type="button" class="btn btn-primary ad-header-button" uib-dropdown-toggle translate translate-cloak>STR_OTHER_MATERIAL<span class="caret hidden-sm"></span>
                     </button>
                     <ul uib-dropdown-menu role="menu" aria-labelledby="materialButton">
-                        <ANY class="ad-dropdown-header" translate>STR_ADDITIONAL_MATERIAL</ANY>
+                        <div class="ad-dropdown-header" translate translate-cloak>STR_ADDITIONAL_MATERIAL</div>
                         <li class="divider"></li>
-                        <li class="ng-class:[{'disabled':mc.isSecret(material)}]" role="menuitem" ng-repeat="material in mc.topic.additionalMaterial track by $index" ng-click="mc.additionalMaterial(material)">
-                            <a class="ad-dropdown-content">{{material.additionalMaterialTitle}}</a>
+                        <li class="ng-class:[{'disabled':ctrl.isSecret(material)}]" role="menuitem" ng-repeat="material in ctrl.additionalMaterialData.objects track by $index" ng-click="ctrl.additionalMaterialClicked(material)">
+                            <a class="ad-dropdown-content">{{material.title}}</a>
                         </li>
                         <li class="divider"></li>
-                        <ANY class="ad-dropdown-header" translate>STR_DECISION_HISTORY</ANY>
+                        <div class="ad-dropdown-header" translate translate-cloak>STR_DECISION_HISTORY</div>
                         <li class="divider"></li>
-                        <li class="ng-class:[{'disabled':mc.isSecret(decision)}]" role="menuitem" ng-repeat="decision in mc.topic.decision track by $index" ng-click="mc.decisionClicked(decision)">
-                            <a>{{decision.decisionTitle}}</a>
+                        <li class="ng-class:[{'disabled':ctrl.isSecret(decision)}]" role="menuitem" ng-repeat="decision in ctrl.decisionData.objects track by $index" ng-click="ctrl.decisionClicked(decision)">
+                            <a>{{decision.title}}</a>
                         </li>
                     </ul>
                 </div>
                 <div class="col-xs-2 ad-btn-group-left ad-lower-bg right" uib-dropdown is-open="">
-                    <button id="attachmentButton" type="button" class="btn btn-primary ad-header-button" uib-dropdown-toggle>
-                        <ANY translate>STR_ATTACHMENTS</ANY>
-                        <span class="caret hidden-sm"></span>
+                    <button id="attachmentButton" type="button" class="btn btn-primary ad-header-button" uib-dropdown-toggle translate translate-cloak>STR_ATTACHMENTS<span class="caret hidden-sm"></span>
                     </button>
                     <ul uib-dropdown-menu role="menu" aria-labelledby="attachmentButton">
-                        <li class="ng-class:[{'disabled':mc.isSecret(attachment)}]" role="menuitem" ng-repeat="attachment in mc.topic.attachment track by $index" ng-click="mc.attachmentClicked(attachment)">
-                            <a>{{attachment.attachmentTitle}}</a>
+                        <li class="ng-class:[{'disabled':ctrl.isSecret(attachment)}]" role="menuitem" ng-repeat="attachment in ctrl.attachmentData.objects track by $index" ng-click="ctrl.attachmentClicked(attachment)">
+                            <a>{{attachment.title}}</a>
                         </li>
                     </ul>
                 </div>
@@ -65,23 +57,34 @@
         </div>
     </div>
 
-    <div class="ad-page-content">
+    <div ng-if="mobile" class="db-new-page-header">
+        <div class="container col-xs-12">
+            <div class="row">
+                <i class="col-xs-2 glyphicon glyphicon-menu-left" aria-hidden="true" ng-click="goBack()"></i>
+                <div class="col-xs-10">
+                    <h4 >{{ctrl.header}}</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div ng-if="!mobile" class="ad-page-content">
 
         <div class="ad-page-container-flex">
 
             <!-- UPPER START -->
-            <div class="ad-flex-item-upper ng-class:[{'ad-flex-show-full':mc.isUpperMode(), 'ad-flex-show':mc.isBothMode(), 'ad-flex-hide':mc.isLowerMode()}]">
+            <div class="ad-flex-item-upper ng-class:[{'ad-flex-show-full':ctrl.isUpperMode(), 'ad-flex-show':ctrl.isBothMode(), 'ad-flex-hide':ctrl.isLowerMode()}]">
 
-                <ad-embedded-file ng-if="mc.isUrlString(mc.upperUrl)" refresh="mc.blockMode" ng-attr-fileurl="mc.upperUrl" ng-attr-filename="mc.upperUrl"></ad-embedded-file>
+                <ad-embedded-file ng-if="ctrl.isUrlString(ctrl.upperUrl)" refresh="ctrl.blockMode" ng-attr-fileurl="ctrl.upperUrl" ng-attr-filename="ctrl.upperUrl"></ad-embedded-file>
 
-                <div ng-if="mc.error" class="alert alert-danger" role="alert">{{mc.error}}</div>
+                <div ng-if="ctrl.error" class="alert alert-danger" role="alert">{{ctrl.error}}</div>
             </div>
             <!-- UPPER END -->
 
             <!-- LOWER START -->
-            <div class="ad-flex-item-lower ng-class:[{'ad-flex-show-full':mc.isLowerMode(), 'ad-flex-show':mc.isBothMode(), 'ad-flex-hide':mc.isUpperMode()}]">
+            <div class="ad-flex-item-lower ng-class:[{'ad-flex-show-full':ctrl.isLowerMode(), 'ad-flex-show':ctrl.isBothMode(), 'ad-flex-hide':ctrl.isUpperMode()}]">
 
-                <ad-embedded-file ng-if="mc.isUrlString(mc.lowerUrl)" refresh="mc.blockMode"  ng-attr-fileurl="mc.lowerUrl" ng-attr-filename="mc.lowerUrl"></ad-embedded-file>
+                <ad-embedded-file ng-if="ctrl.isUrlString(ctrl.lowerUrl)" refresh="ctrl.blockMode"  ng-attr-fileurl="ctrl.lowerUrl" ng-attr-filename="ctrl.lowerUrl"></ad-embedded-file>
 
             </div>
             <!-- LOWER END -->
@@ -89,4 +92,14 @@
         </div>
     </div>
 
+    <div ng-if="mobile" class="ad-page-content">
+        <button type="button" class="btn btn-primary ad-header-button" ng-click="ctrl.topicClicked()" translate translate-cloak>STR_TOPIC</button>
+        <button type="button" class="btn btn-primary ad-header-button" ng-click="ctrl.attachmentClicked()" translate translate-cloak>STR_ATTACHMENTS</button>
+        <button type="button" class="btn btn-primary ad-header-button" ng-click="ctrl.additionalMaterialClicked()" translate translate-cloak>STR_ADDITIONAL_MATERIAL</button>
+        <button type="button" class="btn btn-primary ad-header-button" ng-click="ctrl.decisionClicked()" translate translate-cloak>STR_DECISION_HISTORY</button>
+        <button type="button" class="btn btn-primary ad-header-button" translate translate-cloak>STR_PROPOSALS</button>
+    </div>
+
 </div>
+
+<ui-view ng-if="mobile" name="childContent"></ui-view>

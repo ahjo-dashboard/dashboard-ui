@@ -65,14 +65,40 @@ angular.module('dashboard')
             url: '/details',
             views: {
                 'detailsContent': {
-                    templateUrl: 'views/mobile.meeting.html',
+                    templateUrl: 'views/meeting.html',
                     controller: 'meetingCtrl',
-                    controllerAs: 'mc'
+                    controllerAs: 'ctrl'
                 }
-            },
-            params: {
-                menu: MENU.CLOSED,
-                meetingItem: null
+            }
+        })
+        .state(APPSTATE.TOPIC, {
+            url: '/topic',
+            views: {
+                'childContent': {
+                    templateUrl: 'views/pdf.html',
+                    controller: 'pdfCtrl',
+                    controllerAs: 'ctrl'
+                }
+            }
+        })
+        .state(APPSTATE.LIST, {
+            url: '/list',
+            views: {
+                'childContent': {
+                    templateUrl: 'views/list.html',
+                    controller: 'listCtrl',
+                    controllerAs: 'ctrl'
+                }
+            }
+        })
+        .state(APPSTATE.LISTPDF, {
+            url: '/pdf',
+            views: {
+                'listContent': {
+                    templateUrl: 'views/pdf.html',
+                    controller: 'pdfCtrl',
+                    controllerAs: 'ctrl'
+                }
             }
         })
         .state(APPSTATE.SIGNITEM, {
@@ -132,7 +158,7 @@ angular.module('dashboard')
                 'homeRightContent': {
                     templateUrl: 'views/meeting.html',
                     controller: 'meetingCtrl',
-                    controllerAs: 'mc'
+                    controllerAs: 'ctrl'
                 }
             },
             params: {

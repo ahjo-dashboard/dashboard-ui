@@ -41,6 +41,9 @@ angular.module('dashboard')
         MEETING: "app.meeting",
         SIGNITEM: "app.signitem",
         MEETINGDETAILS: "app.meeting.details",
+        TOPIC: "app.meeting.details.topic",
+        LIST: "app.meeting.details.list",
+        LISTPDF: "app.meeting.details.list.pdf",
         ERROR: "error"
     }
 )
@@ -59,7 +62,16 @@ angular.module('dashboard')
 )
 .constant(
     'KEY', {
-        TOPIC: 'topic'
+        TOPIC: 'topic',
+        PDF_DATA: 'pdfdata',
+        SELECTION_DATA: 'selectiondata'
+    }
+)
+.constant(
+    'BTNTYPE', {
+        DEFAULT: 'btn-default',
+        PRIMARY: 'btn-primary',
+        SUCCESS: 'btn-success'
     }
 )
 .constant(

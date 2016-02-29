@@ -566,6 +566,9 @@ body {
     display: block;
     padding: 7px 20px 7px 40px;
     margin: 10px 10px;
+    overflow: auto;
+    color: white;
+    text-overflow: ellipsis;
 }
 
 @import "main.small.scss";
