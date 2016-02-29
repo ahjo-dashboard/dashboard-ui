@@ -205,7 +205,6 @@ body {
         h1, h2, h3, h4, h5 {
             color: $headingTxtColor;
             letter-spacing: -1px;
-
         }
 
         .glyphicon {
@@ -223,11 +222,11 @@ body {
 
         .glyphicon.left {
             float: left;
-            text-align: left;;
+            text-align: left;
         }
         .glyphicon.right {
             float: right;
-            text-align: right;;
+            text-align: right;
         }
 
         .left {
@@ -248,6 +247,37 @@ body {
             div {
                 text-overflow: ellipsis;
                 overflow: hidden;
+            }
+        }
+    }
+
+    .db-new-page-header {
+        @extend .ad-page-header;
+        .container {
+            height: inherit;
+            .row {
+                height: inherit;
+                div {
+                    height: inherit;
+                    padding-left: 0;
+                    display: flex;
+                    justify-content:center;
+                    align-content:center;
+                    flex-direction:column;
+                    h3 {
+                        margin-top: 0;
+                        margin-bottom: 0;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                        overflow: hidden;
+                    }
+                    h4 {
+                        margin-top: 0;
+                        margin-bottom: 0;
+                        overflow: hidden;
+                        max-height: 2em;
+                    }
+                }
             }
         }
     }
