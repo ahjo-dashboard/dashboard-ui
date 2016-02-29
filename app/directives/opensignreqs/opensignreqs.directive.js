@@ -12,14 +12,13 @@
  */
 angular.module('dashboard')
     .directive('adOpenSignreqs', function () {
-        var controller = ['$log', 'SigningOpenApi', 'SigningClosedApi', '$scope', '$state', 'APPSTATE', 'ESIGNSTATUS', 'ESIGNTYPE', function ($log, SigningOpenApi, SigningClosedApi, $scope, $state, APPSTATE, ESIGNSTATUS, ESIGNTYPE) {
+        var controller = ['$log', 'SigningOpenApi', 'SigningClosedApi', '$scope', '$state', 'APPSTATE', 'ESIGNSTATUS', 'ESIGNTYPE', '$rootScope', function ($log, SigningOpenApi, SigningClosedApi, $scope, $state, APPSTATE, ESIGNSTATUS, ESIGNTYPE, $rootScope) {
             $log.log("adOpenSignreqs.CONTROLLER");
             var self = this;
 
             self.VIEW_OPEN = 1;
             self.VIEW_CLOSED = 2;
             self.viewState = null;
-
             self.model = [];
             self.errClosed = null;
             self.errOpen = null;
@@ -30,7 +29,7 @@ angular.module('dashboard')
             self.FType = null;
             self.docTypeTitle = null;
             self.docStatusTitle = null;
-
+            self.isMobile = $rootScope.mobile;
 
             /* PRIVATE FUNCTIONS */
 
