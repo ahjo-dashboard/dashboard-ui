@@ -222,11 +222,11 @@ body {
 
         .glyphicon.left {
             float: left;
-            text-align: left;;
+            text-align: left;
         }
         .glyphicon.right {
             float: right;
-            text-align: right;;
+            text-align: right;
         }
 
         .left {
@@ -251,10 +251,10 @@ body {
         }
     }
 
-    .db-page-header {
+    .db-new-page-header {
         @extend .ad-page-header;
         .container {
-            height: inherit;;
+            height: inherit;
             .row {
                 height: inherit;
                 div {
