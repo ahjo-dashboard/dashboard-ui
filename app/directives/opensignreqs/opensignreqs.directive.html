@@ -1,5 +1,5 @@
 <div>
-    <div class="btn-group btn-group-justified">
+    <div class="btn-group ng-class:[{'btn-group-justified':!ctrl.isMobile, 'ad-btn-group-vertical':ctrl.isMobile}]">
 
         <div class="btn-group hidden-xs">
             <button type="button" class="btn btn-success ad-button disabled ng-class:{'ad-dummy-button': !ctrl.loading()};" uib-dropdown-toggle>
@@ -16,8 +16,9 @@
                     <a ng-click="ctrl.setModelFilter(i)"><span translate>{{i.strId}}</span></a>
                 </li>
                 <li class="divider"></li>
-                <li role="menuitem"><a ng-click="ctrl.setModelFilter(null)">
-                    <span translate>STR_CLEAR_SELECTION</span></a>
+                <li role="menuitem">
+                    <a ng-click="ctrl.setModelFilter(null)">
+                        <span translate>STR_CLEAR_SELECTION</span></a>
                 </li>
             </ul>
         </div>
@@ -34,7 +35,7 @@
                 <li role="menuitem"><a ng-click="ctrl.setModelFilter(null)"><span translate>STR_CLEAR_SELECTION</span></a></li>
             </ul>
         </div>
-	</div>
+    </div>
 
     <uib-progressbar ng-if="ctrl.loading()" class="progress-striped active" type="info">
         <i><span translate>STR_LOADING</span></i>
