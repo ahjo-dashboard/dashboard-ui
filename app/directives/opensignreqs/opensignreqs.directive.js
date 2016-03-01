@@ -11,7 +11,8 @@
  * # openSignreqs
  */
 angular.module('dashboard')
-    .directive('adOpenSignreqs', function () {
+    .directive('adOpenSignreqs', [function () {
+        
         var controller = ['$log', 'SigningOpenApi', 'SigningClosedApi', '$scope', '$state', 'APPSTATE', 'ESIGNSTATUS', 'ESIGNTYPE', '$rootScope', function ($log, SigningOpenApi, SigningClosedApi, $scope, $state, APPSTATE, ESIGNSTATUS, ESIGNTYPE, $rootScope) {
             $log.log("adOpenSignreqs.CONTROLLER");
             var self = this;
@@ -326,4 +327,4 @@ angular.module('dashboard')
                 closeditems: '='
             }
         };
-    });
+    }]);

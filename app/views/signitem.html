@@ -32,7 +32,7 @@
                     </div>
                     <div class="col-xs-12 col-sm-10">
                         <div class="col-xs-12 col-sm-2 btn-group">
-                            <button id="btnDoc" type="button" class="btn btn-info ad-button ng-class:{active: !sc.isMobile && sc.btnModel.doc.active}" ng-click="sc.actionDoc()" ng-model="sc.btnModel.doc.active" ng-disabled="sc.isDisabled()">
+                            <button id="btnDoc" type="button" class="btn btn-info ad-button ng-class:{active: !sc.isMobile && sc.btnModel.doc.active}" ng-click="sc.actionDoc()" ng-model="sc.btnModel.doc.active" ng-disabled="sc.btnModel.doc.disabled">
                                 <span translate translate-cloak>STR_SIGNING_REQ</span>
                             </button>
                         </div>
@@ -47,22 +47,22 @@
                             </ul>
                         </div>
                         <div class="col-xs-12 col-sm-2 btn-group">
-                            <button id="btnReq" type="button" class="btn btn-info ad-button" ng-click="sc.actionComment()" ng-disabled="sc.isDisabled()">
+                            <button id="btnReq1" type="button" class="btn btn-info ad-button" ng-click="sc.actionComment()" ng-disabled="sc.isDisabled()">
                                 <span translate translate-cloak>STR_CREATE_COMMENT</span>
                             </button>
                         </div>
                         <div class="col-xs-12 col-sm-2 btn-group">
-                            <button id="btnReq" type="button" class="btn btn-info ad-button" ng-class="sc.actionStatus()" ng-disabled="sc.isDisabled()">
+                            <button id="btnReq2" type="button" class="btn btn-info ad-button" ng-class="sc.actionStatus()" ng-disabled="sc.isDisabled()">
                                 <span translate translate-cloak>STR_SIGNING_REQ_STATUS</span>
                             </button>
                         </div>
                         <div class="col-xs-12 col-sm-2 btn-group">
-                            <button id="btnReq" type="button" class="btn btn-success ad-button" ng-click="sc.actionSign()" ng-disabled="sc.btnModel.acc.disabled">
+                            <button id="btnReq3" type="button" class="btn btn-success ad-button" ng-click="sc.actionSign()" ng-disabled="sc.btnModel.acc.disabled">
                                 <span translate translate-cloak>STR_SIGNING_ACCEPT</span>
                             </button>
                         </div>
                         <div class="col-xs-12 col-sm-2 btn-group">
-                            <button id="btnReq" type="button" class="btn btn-warning ad-button" ng-click="sc.actionReject()" ng-disabled="sc.btnModel.rej.disabled">
+                            <button id="btnReq4" type="button" class="btn btn-warning ad-button" ng-click="sc.actionReject()" ng-disabled="sc.btnModel.rej.disabled">
                                 <span translate translate-cloak>STR_REJECT</span>
                             </button>
                         </div>

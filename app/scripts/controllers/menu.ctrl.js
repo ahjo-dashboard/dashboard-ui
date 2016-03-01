@@ -26,9 +26,9 @@ angular.module('dashboard')
         self.loading = false;
         self.mtgCount = 0;
         if (response && response.objects instanceof Array ) {
-            var date = new Date();
-            date.setFullYear(date .getFullYear() - 4);  // this if for testing. to be removed
-            date = date.toJSON();
+            var dt = new Date();
+            dt.setFullYear(dt.getFullYear() - 4);  // this if for testing. to be removed
+            var date = dt.toJSON();
             self.mtgCount = 0;
 
             for (var i = 0; i < response.objects.length; i++) {

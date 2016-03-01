@@ -11,14 +11,14 @@
 * # adContentDirective
 */
 angular.module('dashboard')
-.directive('adContent', function () {
-    return {
-        scope: {
-            header: '=header',
-            content: '=content'
-        },
-        templateUrl: 'directives/content/adContent.Directive.html',
-        restrict: 'AE',
-        replace: 'true'
-    };
-});
+    .directive('adContent', [function () {
+        return {
+            scope: {
+                header: '=header',
+                content: '=content'
+            },
+            templateUrl: 'directives/content/adContent.Directive.html',
+            restrict: 'AE',
+            replace: 'true'
+        };
+    }]);

@@ -11,15 +11,15 @@
  * # adAttachmentDirective
  */
 angular.module('dashboard')
-  .directive('adAttachment', function () {
-    return {
-      scope: {
-          header: "=header",
-          list: "=list",
-          selected: '&onSelected'
-      },
-      templateUrl: 'directives/attachment/adAttachment.Directive.html',
-      restrict: 'AE',
-      replace: 'true'
-    };
-  });
+    .directive('adAttachment', [function () {
+        return {
+            scope: {
+                header: "=header",
+                list: "=list",
+                selected: '&onSelected'
+            },
+            templateUrl: 'directives/attachment/adAttachment.Directive.html',
+            restrict: 'AE',
+            replace: 'true'
+        };
+    }]);

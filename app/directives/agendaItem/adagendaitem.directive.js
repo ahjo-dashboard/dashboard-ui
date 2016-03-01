@@ -11,15 +11,15 @@
  * # adAgendaItemDirective
  */
 angular.module('dashboard')
-  .directive('adAgendaItem', function () {
-    return {
-      scope: {
-       header: '=header',
-       agenda: '=agenda',
-       selected: '&onSelected'
-      },
-      templateUrl: 'directives/agendaItem/adAgendaItem.Directive.html',
-      restrict: 'AE',
-      replace: 'true'
-    };
-  });
+    .directive('adAgendaItem', [function () {
+        return {
+            scope: {
+                header: '=header',
+                agenda: '=agenda',
+                selected: '&onSelected'
+            },
+            templateUrl: 'directives/agendaItem/adAgendaItem.Directive.html',
+            restrict: 'AE',
+            replace: 'true'
+        };
+    }]);

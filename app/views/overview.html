@@ -18,12 +18,12 @@
             <!-- MEETINGS START -->
             <div ng-if="oc.hasMeetings" class="ad-flex-header">
                 <button type="button" class="btn btn-warning ad-lg ng-class:[{'active':oc.future}]" ng-click="oc.future=true">
-                    <div class="visible-xs-block"><ANY translate>STR_FUTURE</ANY></div>
-                    <div class="hidden-xs"><ANY translate>STR_FUTURE_MEETINGS</ANY></div>
+                    <div class="visible-xs-block" translate>STR_FUTURE</div>
+                    <div class="hidden-xs" translate>STR_FUTURE_MEETINGS</div>
                 </button>
                 <button type="button" class="btn btn-warning ad-lg ng-class:[{'active':!oc.future}]" ng-click="oc.future=false">
-                    <div class="visible-xs-block"><ANY translate>STR_ALL</ANY></div>
-                    <div class="hidden-xs"><ANY translate>STR_ALL_MEETINGS</ANY></div>
+                    <div class="visible-xs-block" translate>STR_ALL</div>
+                    <div class="hidden-xs" translate>STR_ALL_MEETINGS</div>
                 </button>
                 <button type="button" class="hidden-xs btn btn-info ad-xs">
                     <i class="glyphicon glyphicon-info-sign"></i>
@@ -42,12 +42,12 @@
             <!-- SIGNINGS START -->
             <div ng-if="oc.hasEsign" class="ad-flex-header">
                 <button type="button" class="btn btn-warning ad-lg ng-class:[{'active':!oc.closedSignReqs}]" ng-click="oc.closedSignReqs=false">
-                    <div class="visible-xs-block"><ANY translate>STR_OPEN_PLR</ANY></div>
-                    <div class="hidden-xs"><ANY translate>STR_OPEN_SIGNINGS</ANY></div>
+                    <div class="visible-xs-block" translate>STR_OPEN_PLR</div>
+                    <div class="hidden-xs" translate>STR_OPEN_SIGNINGS</div>
                 </button>
                 <button type="button" class="btn btn-warning ad-lg ng-class:[{'active':oc.closedSignReqs}]" ng-click="oc.closedSignReqs=true">
-                    <div class="visible-xs-block"><ANY translate>STR_CLOSED_PLR</ANY></div>
-                    <div class="hidden-xs"><ANY translate>STR_CLOSED_SIGNINGS</ANY></div>
+                    <div class="visible-xs-block" translate>STR_CLOSED_PLR</div>
+                    <div class="hidden-xs" translate>STR_CLOSED_SIGNINGS</div>
                 </button>
                 <button type="button" class="hidden-xs btn btn-info ad-xs">
                     <i class="glyphicon glyphicon-info-sign"></i>
