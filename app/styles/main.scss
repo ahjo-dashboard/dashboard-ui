@@ -35,6 +35,7 @@ $upper-color: #204d74;
 $lower-color: #f0ad4e;
 
 $default-font-size: 1.2em;
+$btn-radius: 8px;
 
 #device {
     min-width: 320px;
@@ -109,8 +110,6 @@ body {
     }
 
     .btn {
-        border-top-left-radius: 0px;
-        border-top-right-radius: 0px;
         border-width: 0px;
         overflow: hidden;
 
@@ -248,7 +247,7 @@ body {
             white-space: normal;
             max-lines: 2;
             word-wrap: break-word;
-            border-radius: 6px;
+            border-radius: $btn-radius;
             div {
                 text-overflow: ellipsis;
                 overflow: hidden;
@@ -411,6 +410,8 @@ body {
         border-width: 0;
         width: 100%;
         font-size: $default-font-size;
+        border-radius: $btn-radius;
+        margin: 2px 2px;
     }
 
     .ad-dummy-header-button {
@@ -424,8 +425,10 @@ body {
         padding-left: 0 !important;
         padding-right: 0 !important;
         .btn {
-            border-top-left-radius: 0 !important;
+            border-top-left-radius: $btn-radius !important;
             border-bottom-left-radius: 0 !important;
+            border-top-right-radius: $btn-radius !important;
+            border-bottom-right-radius: 0 !important;
             min-height: $header-height;
             font-size: $default-font-size;
         }
@@ -436,6 +439,10 @@ body {
         padding-left: 0 !important;
         padding-right: 0 !important;
         .btn {
+            border-top-left-radius: 0 !important;
+            border-bottom-left-radius: 0 !important;
+            border-top-right-radius: 0 !important;
+            border-bottom-right-radius: 0 !important;
             min-height: $header-height;
             font-size: $default-font-size;
         }
@@ -446,8 +453,10 @@ body {
         padding-left: 0 !important;
         padding-right: 0 !important;
         .btn {
+            border-top-left-radius: 0 !important;
+            border-bottom-left-radius: $btn-radius !important;
             border-top-right-radius: 0 !important;
-            border-bottom-right-radius: 0 !important;
+            border-bottom-right-radius: $btn-radius !important;
             min-height: $header-height;
             font-size: $default-font-size;
         }
@@ -555,13 +564,13 @@ body {
     margin: 0;
     display: block;
     overflow: hidden;
-    
+
     .modal-dialog { // Not referenced directly, but needed to make modal fullscreen
         width: 100%;
         height: 100%;
         margin: 0;
         }
-        
+
     .modal-content { // Not referenced directly, but needed to make modal fullscreen
         height: 100%;
         width: 100%;

@@ -38,11 +38,15 @@ angular.module('dashboard')
         self.btnModel = {
             doc: { disabled: false, active: false },
             acc: { disabled: false, active: false },
-            rej: { disabled: false, active: false }
+            rej: { disabled: false, active: false },
+            sta: { disabled: false, active: false },
+            com: { disabled: false, active: false },
+            att: { disabled: false, active: false, count: self.item.AttachmentInfos ? self.item.AttachmentInfos.length : 0 }
         };
 
         self.requestorName = self.item.RequestorName ? self.item.RequestorName : null;
         self.requestorId = self.item.RequestorId ? self.item.RequestorId : null;
+        self.fileName = self.item.Name;
 
         // PRIVATE FUNCTIONS
 
@@ -51,6 +55,12 @@ angular.module('dashboard')
                 btnModel.doc.disabled = true;
                 btnModel.acc.disabled = true;
                 btnModel.rej.disabled = true;
+                btnModel.sta.disabled = false;
+                btnModel.com.disabled = false;
+                btnModel.att.disabled = false;
+            }
+            if (!self.isMobile) {
+                self.btnModel.doc.active = true; // On desktop document is displayed by default
             }
         }
 
@@ -134,7 +144,7 @@ angular.module('dashboard')
         function personInfo() {
             $log.debug("signitemCtrl.personInfo");
 
-            if (!self.personInfo)  {
+            if (!self.personInfo) {
                 self.ongoing = true;
                 self.personInfo = SigningPersonInfoApi.get({ userId: self.requestorId }, function (/*data*/) {
                     $log.debug("signitemCtrl.personInfo: api query done");
@@ -217,12 +227,37 @@ angular.module('dashboard')
             });
         };
 
-        self.isDisabled = function (/* id */) {
-            //$log.debug("signingItemCtrl.isDisabled: " +id);
-            return self.ongoing;
-        };
+        self.isDisabled = function (id) {
+            //$log.debug("signingItemCtrl.isDisabled: " + id);
+            if (self.ongoing) {
+                return true;
+            }
 
-        self.fileName = self.item.Name;
+            var res = false;
+            switch (id) {
+                case 'btnDoc':
+                    res = self.btnModel.doc.disabled;
+                    break;
+                case 'btnAtt':
+                    res = self.btnModel.att.disabled || !self.btnModel.att.count;
+                    break;
+                case 'btnSta':
+                    res = self.btnModel.sta.disabled;
+                    break;
+                case 'btnCom':
+                    res = self.btnModel.com.disabled;
+                    break;
+                case 'btnAcc':
+                    res = self.btnModel.acc.disabled;
+                    break;
+                case 'btnRej':
+                    res = self.btnModel.rej.disabled;
+                    break;
+                default:
+                    break;
+            }
+            return res;
+        };
 
         initBtns(self.btnModel, self.item.Status);
 
@@ -234,11 +269,5 @@ angular.module('dashboard')
         } else {
             fetchBlob(self.item);
             drawBlob();
-        }
-
-        if (self.isMobile) {
-            self.actionDoc();
-        } else {
-            self.btnModel.doc.active = true;
         }
     });

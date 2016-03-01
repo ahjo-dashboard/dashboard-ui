@@ -6,6 +6,8 @@
 /* Small devices (tablets, 768px and up) */
 @media screen and (min-width: 768px) {
 
+$btn-radius: 8px;
+
     #device {
         min-width: 768px;
         display: none;
@@ -28,7 +30,6 @@
             .btn {
                 height: $button-height;
                 margin: 0;
-                border-radius: 0;
             }
             .btn-group {
                 padding: ($header-height - $button-height) * 0.5;
@@ -43,8 +44,10 @@
             padding-left: 5px !important;
             padding-right: 1px !important;
             .btn {
-                border-top-left-radius: 6px !important;
-                border-bottom-left-radius: 6px !important;
+                border-top-left-radius: $btn-radius !important;
+                border-bottom-left-radius: $btn-radius !important;
+                border-top-right-radius: 0 !important;
+                border-bottom-right-radius: 0 !important;
                 min-height: $button-height;
                 font-size: $default-font-size;
             }
@@ -63,8 +66,10 @@
             padding-left: 1px !important;
             padding-right: 5px !important;
             .btn {
-                border-top-right-radius: 6px !important;
-                border-bottom-right-radius: 6px !important;
+                border-top-left-radius: 0 !important;
+                border-bottom-left-radius: 0 !important;
+                border-top-right-radius: $btn-radius !important;
+                border-bottom-right-radius: $btn-radius !important;
                 min-height: $button-height;
                 font-size: $default-font-size;
             }
