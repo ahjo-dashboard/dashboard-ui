@@ -10,6 +10,7 @@ dist/
 .tmp/
 .sass-cache/
 app.env.js
+typings/
 
 # Ignore folder for private conf files
 custom
