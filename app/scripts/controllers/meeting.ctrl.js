@@ -12,7 +12,7 @@
  * Controller of the dashboard
  */
 angular.module('dashboard')
-    .controller('meetingCtrl', ['$log','AhjoMeetingSrv','$stateParams','$rootScope','$scope','$state','MENU','BLOCKMODE','StorageSrv','APPSTATE','KEY','PUBLICITY','BTNTYPE','AttachmentData','ListData', function ($log, AhjoMeetingSrv, $stateParams, $rootScope, $scope, $state, MENU, BLOCKMODE, StorageSrv, APPSTATE, KEY, PUBLICITY, BTNTYPE, AttachmentData, ListData) {
+    .controller('meetingCtrl', ['$log', 'AhjoMeetingSrv', '$stateParams', '$rootScope', '$scope', '$state', 'MENU', 'BLOCKMODE', 'StorageSrv', 'APPSTATE', 'KEY', 'PUBLICITY', 'BTNTYPE', 'AttachmentData', 'ListData', function ($log, AhjoMeetingSrv, $stateParams, $rootScope, $scope, $state, MENU, BLOCKMODE, StorageSrv, APPSTATE, KEY, PUBLICITY, BTNTYPE, AttachmentData, ListData) {
         $log.debug("meetingCtrl: CONTROLLER");
         var self = this;
         var isMobile = $rootScope.mobile;

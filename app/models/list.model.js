@@ -33,7 +33,7 @@ angular.module('dashboard')
             }
             return null;
         };
-        
+
         ListData.createDecisionList = function (title, decision) {
             if (typeof title === 'string') {
                 var array = [];
@@ -48,7 +48,7 @@ angular.module('dashboard')
             }
             return null;
         };
-        
+
         ListData.createAdditionalMaterialList = function (title, material) {
             if (typeof title === 'string') {
                 var array = [];
