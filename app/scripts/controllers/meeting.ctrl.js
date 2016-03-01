@@ -45,8 +45,9 @@ angular.module('dashboard')
             }
 
             self.topicData = topicObject;
+            self.lowerUrl = {};
             self.upperUrl = (self.topicData && self.topicData.link) ? self.topicData.link : {};
-
+            
             var attachmentArray = [];
             for (var i = 0; (topic.attachment && i < topic.attachment.length); i++) {
                 attachmentArray.push({
@@ -81,6 +82,7 @@ angular.module('dashboard')
             self.additionalMaterialData = {title: 'STR_ADDITIONAL_MATERIAL', objects: additionalMaterialArray};
         }
         else {
+            self.lowerUrl = {};
             self.upperUrl = {};
         }
     }
