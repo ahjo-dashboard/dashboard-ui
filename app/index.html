@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta charset="utf-8">
     <meta name="description" content="">
@@ -17,8 +18,9 @@
     <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
-  </head>
-  <body id="ng-app" data-ng-app="dashboard">
+</head>
+
+<body id="ng-app" data-ng-app="dashboard">
     <!-- IE > 9 because of e.g. pdf.js -->
     <!--[if lte IE 9]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
@@ -77,6 +79,7 @@
 
     <script src="scripts/services/ahjo.meetings.srv.js"></script>
     <script src="scripts/services/ahjo.meeting.srv.js"></script>
+    <script src="scripts/services/ahjo.proposals.srv.js"></script>
     <script src="scripts/services/storage.srv.js"></script>
 
     <script src="directives/meetings/admeetings.directive.js"></script>
@@ -93,4 +96,5 @@
     <!-- APP CONTENT -->
     <ui-view name="appView"></ui-view>
 </body>
+
 </html>
