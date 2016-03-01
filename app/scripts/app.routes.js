@@ -92,7 +92,7 @@ angular.module('dashboard')
             }
         })
         .state(APPSTATE.LISTPDF, {
-            url: '/pdf',
+            url: '/attachment',
             views: {
                 'listContent': {
                     templateUrl: 'views/attachment.html',
