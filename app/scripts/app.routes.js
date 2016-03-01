@@ -75,8 +75,8 @@ angular.module('dashboard')
             url: '/topic',
             views: {
                 'childContent': {
-                    templateUrl: 'views/pdf.html',
-                    controller: 'pdfCtrl',
+                    templateUrl: 'views/attachment.html',
+                    controller: 'attachmentCtrl',
                     controllerAs: 'ctrl'
                 }
             }
@@ -95,8 +95,8 @@ angular.module('dashboard')
             url: '/pdf',
             views: {
                 'listContent': {
-                    templateUrl: 'views/pdf.html',
-                    controller: 'pdfCtrl',
+                    templateUrl: 'views/attachment.html',
+                    controller: 'attachmentCtrl',
                     controllerAs: 'ctrl'
                 }
             }
