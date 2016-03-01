@@ -88,6 +88,7 @@ angular.module('dashboard')
                 }
             }
         }
+        return null;
     };
 
     self.stringId = function(meeting) {
@@ -98,6 +99,7 @@ angular.module('dashboard')
                 }
             }
         }
+        return '';
     };
 
     $scope.$on('$destroy', function() {

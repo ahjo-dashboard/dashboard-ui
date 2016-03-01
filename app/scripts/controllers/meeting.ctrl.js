@@ -12,31 +12,78 @@
  * Controller of the dashboard
  */
 angular.module('dashboard')
-.controller('meetingCtrl',['$log','AhjoMeetingSrv','$stateParams','$rootScope','$scope','$state','MENU','BLOCKMODE','StorageSrv', 'APPSTATE','KEY','$translate','PUBLICITY', function ($log, AhjoMeetingSrv, $stateParams, $rootScope, $scope, $state, MENU, BLOCKMODE, StorageSrv, APPSTATE, KEY, $translate, PUBLICITY) {
+.controller('meetingCtrl',['$log','AhjoMeetingSrv','$stateParams','$rootScope','$scope','$state','MENU','BLOCKMODE','StorageSrv', 'APPSTATE','KEY','$translate','PUBLICITY','BTNTYPE', function ($log, AhjoMeetingSrv, $stateParams, $rootScope, $scope, $state, MENU, BLOCKMODE, StorageSrv, APPSTATE, KEY, $translate, PUBLICITY, BTNTYPE) {
     $log.debug("meetingCtrl: CONTROLLER");
     var self = this;
-    self.mobile = $rootScope.isScreenXs();
+    var isMobile = $rootScope.mobile;
     self.upperUrl = {};
     self.lowerUrl = {};
     self.error = null;
-    self.topic = null;
+    self.topic = StorageSrv.get(KEY.TOPIC);
     self.blockMode = BLOCKMODE.BOTH;
-    self.proposalTitle = null;
-    self.otherMaterialTitle = null;
-    self.decisionTitle = null;
+    self.header = '';
     $rootScope.menu = $stateParams.menu;
 
-    $translate('STR_PROPOSALS').then(function (title) {
-        self.proposalTitle = title;
-    });
+    self.topicData = null;
+    self.attachmentData = null;
+    self.decisionData = null;
+    self.additionalMaterialData = null;
 
-    $translate('STR_OTHER_MATERIAL').then(function (title) {
-        self.otherMaterialTitle = title;
-    });
+    function setData(topic) {
+        if (topic instanceof Object) {
+            self.header = topic.topicTitle;
+            var topicObject = {};
+            if (topic.esitykset instanceof Array) {
+                var item = topic.esitykset[0];
+                if (item instanceof Object) {
+                    topicObject = {
+                        title: item.documentTitle ? item.documentTitle : 'STR_TOPIC',
+                        link: item.link ? item.link : {},
+                        type: item.type
+                    };
+                }
+            }
 
-    $translate('STR_DECISION_HISTORY').then(function (title) {
-        self.decisionTitle = title;
-    });
+            self.topicData = topicObject;
+            self.upperUrl = (self.topicData && self.topicData.link) ? self.topicData.link : {};
+
+            var attachmentArray = [];
+            for (var i = 0; (topic.attachment && i < topic.attachment.length); i++) {
+                attachmentArray.push({
+                    title: topic.attachment[i].attachmentTitle,
+                    link: topic.attachment[i].link,
+                    publicity: topic.attachment[i].publicity,
+                    buttonType: BTNTYPE.PRIMARY
+                });
+            }
+            self.attachmentData = {title: 'STR_ATTACHMENTS', objects: attachmentArray};
+
+            var decisionArray = [];
+            for (var j = 0; (topic.decision && j < topic.decision.length); j++) {
+                decisionArray.push({
+                    title: topic.decision[j].decisionTitle,
+                    link: topic.decision[j].link,
+                    publicity: topic.decision[j].publicity,
+                    buttonType: BTNTYPE.PRIMARY
+                });
+            }
+            self.decisionData = {title: 'STR_DECISION_HISTORY', objects: decisionArray};
+
+            var additionalMaterialArray = [];
+            for (var k = 0; (topic.additionalMaterial && k < topic.additionalMaterial.length); k++) {
+                additionalMaterialArray.push({
+                    title: topic.additionalMaterial[k].additionalMaterialTitle,
+                    link: topic.additionalMaterial[k].link,
+                    publicity: topic.additionalMaterial[k].publicity,
+                    buttonType: BTNTYPE.PRIMARY
+                });
+            }
+            self.additionalMaterialData = {title: 'STR_ADDITIONAL_MATERIAL', objects: additionalMaterialArray};
+        }
+        else {
+            self.upperUrl = {};
+        }
+    }
 
     self.upperClicked = function() {
         self.blockMode = (self.blockMode === BLOCKMODE.BOTH || self.blockMode === BLOCKMODE.LOWER) ? BLOCKMODE.UPPER : BLOCKMODE.BOTH;
@@ -46,16 +93,44 @@ angular.module('dashboard')
         self.blockMode = (self.blockMode === BLOCKMODE.BOTH || self.blockMode === BLOCKMODE.UPPER) ? BLOCKMODE.LOWER : BLOCKMODE.BOTH;
     };
 
+    self.topicClicked = function() {
+        if (isMobile) {
+            StorageSrv.set(KEY.LISTPDF_DATA, self.topicData);
+            $state.go(APPSTATE.TOPIC);
+        }
+        else {
+
+        }
+    };
+
     self.attachmentClicked = function(attachment) {
-        self.lowerUrl = (attachment && attachment.link) ? attachment.link : {};
+        if (isMobile) {
+            StorageSrv.set(KEY.SELECTION_DATA, self.attachmentData);
+            $state.go(APPSTATE.LIST);
+        }
+        else if (attachment instanceof Object) {
+            self.lowerUrl = attachment.link ? attachment.link : {};
+        }
     };
 
     self.decisionClicked = function(decision) {
-        self.lowerUrl = (decision && decision.link) ? decision.link : {};
+        if (isMobile) {
+            StorageSrv.set(KEY.SELECTION_DATA, self.decisionData);
+            $state.go(APPSTATE.LIST);
+        }
+        else if (decision instanceof Object) {
+            self.lowerUrl = decision.link ? decision.link : {};
+        }
     };
 
-    self.additionalMaterial = function(material) {
-        self.lowerUrl = (material && material.link) ? material.link : {};
+    self.additionalMaterialClicked = function(material) {
+        if (isMobile) {
+            StorageSrv.set(KEY.SELECTION_DATA, self.additionalMaterialData);
+            $state.go(APPSTATE.LIST);
+        }
+        else if (material instanceof Object) {
+            self.lowerUrl = material.link ? material.link : {};
+        }
     };
 
     self.isBothMode = function() {
@@ -86,13 +161,7 @@ angular.module('dashboard')
         function(newTopic, oldTopic) {
             if (newTopic !== oldTopic) {
                 self.topic = newTopic;
-                if (self.topic && self.topic.esitykset[0]) {
-                    var link = self.topic.esitykset[0].link;
-                    self.upperUrl = link ? link : {};
-                }
-                else {
-                    self.upperUrl = {};
-                }
+                setData(self.topic);
             }
         }
     );
@@ -101,4 +170,5 @@ angular.module('dashboard')
         $log.debug("meetingCtrl: DESTROY");
     });
 
+    setData(self.topic);
 }]);

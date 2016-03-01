@@ -1,0 +1,20 @@
+<div class="ad-page">
+
+    <div class="db-new-page-header">
+        <div class="container col-xs-12">
+            <div class="row">
+                <i class="col-xs-2 glyphicon glyphicon-menu-left" aria-hidden="true" ng-click="goBack()"></i>
+                <div class="col-xs-10">
+                    <h4 translate translate-cloak>{{ctrl.data.title}}</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="ad-page-content">
+        <button ng-repeat="object in ctrl.data.objects track by $index" type="button" class="btn {{object.buttonType}} ad-header-button ng-class:[{'disabled':object.publicity === ctrl.PUBLICITY.SECRET}]" ng-click="ctrl.select(object)">{{object.title}}</button>
+    </div>
+
+</div>
+
+<ui-view ng-if="mobile" name="listContent"></ui-view>
