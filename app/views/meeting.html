@@ -94,9 +94,9 @@
 
     <div ng-if="mobile" class="ad-page-content">
         <button type="button" class="btn btn-primary ad-header-button" ng-click="ctrl.topicClicked()" translate translate-cloak>STR_TOPIC</button>
-        <button type="button" class="btn btn-primary ad-header-button" ng-click="ctrl.attachmentClicked()" translate translate-cloak>STR_ATTACHMENTS</button>
-        <button type="button" class="btn btn-primary ad-header-button" ng-click="ctrl.additionalMaterialClicked()" translate translate-cloak>STR_ADDITIONAL_MATERIAL</button>
-        <button type="button" class="btn btn-primary ad-header-button" ng-click="ctrl.decisionClicked()" translate translate-cloak>STR_DECISION_HISTORY</button>
+        <button type="button" class="btn btn-primary ad-header-button ng-class:[{'disabled':!ctrl.attachmentData.objects.length}]" ng-click="ctrl.attachmentClicked()"><span translate translate-cloak>STR_ATTACHMENTS</span> <span class="badge">{{ctrl.attachmentData.objects.length}}</span></button>
+        <button type="button" class="btn btn-primary ad-header-button ng-class:[{'disabled':!ctrl.additionalMaterialData.objects.length}]" ng-click="ctrl.additionalMaterialClicked()"><span translate translate-cloak>STR_ADDITIONAL_MATERIAL</span> <span class="badge">{{ctrl.additionalMaterialData.objects.length}}</span></button>
+        <button type="button" class="btn btn-primary ad-header-button ng-class:[{'disabled':!ctrl.decisionData.objects.length}]" ng-click="ctrl.decisionClicked()"><span translate translate-cloak>STR_DECISION_HISTORY</span> <span class="badge">{{ctrl.decisionData.objects.length}}</span></button>
         <button type="button" class="btn btn-primary ad-header-button" translate translate-cloak>STR_PROPOSALS</button>
     </div>
 
