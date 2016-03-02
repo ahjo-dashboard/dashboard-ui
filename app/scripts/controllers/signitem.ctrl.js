@@ -52,12 +52,8 @@ angular.module('dashboard')
 
         function initBtns(btnModel, status) {
             if (status !== ESIGNSTATUS.UNSIGNED.value) {
-                btnModel.doc.disabled = true;
                 btnModel.acc.disabled = true;
                 btnModel.rej.disabled = true;
-                btnModel.sta.disabled = false;
-                btnModel.com.disabled = false;
-                btnModel.att.disabled = false;
             }
             if (!self.isMobile) {
                 self.btnModel.doc.active = true; // On desktop document is displayed by default
@@ -257,6 +253,17 @@ angular.module('dashboard')
                     break;
             }
             return res;
+        };
+        /* Resolve css class for signing status */
+        self.statusStyle = function (status) {
+            var s = $rootScope.objWithVal(ESIGNSTATUS, 'value', status);
+            return s ? s.badgeClass : 'label-default';
+        };
+
+        /* Resolve display text for item status */
+        self.statusStrId = function (value) {
+            var s = $rootScope.objWithVal(ESIGNSTATUS, 'value', value);
+            return s ? s.stringId : '';
         };
 
         initBtns(self.btnModel, self.item.Status);
