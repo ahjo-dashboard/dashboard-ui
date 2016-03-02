@@ -12,22 +12,25 @@
 * Model in the dashboard.
 */
 angular.module('dashboard')
-    .factory('AttachmentData', ['BTNTYPE', function (BTNTYPE) {
+    .factory('AttachmentData', ['$log', 'BTNTYPE', function ($log, BTNTYPE) {
 
         function AttachmentData(title, link, publicity, buttonType) {
             this.title = title;
-            this.link = (typeof link === 'string') ? link : {};
+            this.link = link;
             this.publicity = publicity ? publicity : 'true';
             this.buttonType = buttonType ? buttonType : BTNTYPE.PRIMARY;
         }
 
         AttachmentData.create = function (title, link, publicity, buttonType) {
-            if (typeof title === 'string') {
+            if (typeof title === 'string' && typeof link === 'string') {
                 return new AttachmentData(title, link, publicity, buttonType);
             }
+            $log.error('AttachmentData.createAdditionalMaterialList: missing title');
+
             return null;
         };
 
         return AttachmentData;
 
     }]);
+    
