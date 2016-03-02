@@ -12,7 +12,7 @@
  */
 angular.module('dashboard')
     .directive('adOpenSignreqs', [function () {
-        
+
         var controller = ['$log', 'SigningOpenApi', 'SigningClosedApi', '$scope', '$state', 'APPSTATE', 'ESIGNSTATUS', 'ESIGNTYPE', '$rootScope', function ($log, SigningOpenApi, SigningClosedApi, $scope, $state, APPSTATE, ESIGNSTATUS, ESIGNTYPE, $rootScope) {
             $log.log("adOpenSignreqs.CONTROLLER");
             var self = this;
@@ -211,30 +211,14 @@ angular.module('dashboard')
 
             /* Resolve display text for item status */
             self.statusStrId = function (value) {
-                //$log.debug("statusStrId >>> ");
-                var res = null;
-                for (var k in ESIGNSTATUS) {
-                    if (ESIGNSTATUS[k].value === value) {
-                        //$log.debug("statusStrId: found " +ESIGNSTATUS[k].stringId);
-                        res = ESIGNSTATUS[k].stringId;
-                        break;
-                    }
-                }
-                //$log.debug("statusStrId <<<<");
-                return res;
+                var s = $rootScope.objWithVal(ESIGNSTATUS, 'value', value);
+                return s ? s.stringId : '';
             };
 
             // Resolves l18n string id for document type display text
             self.docTypeStrId = function (value) {
-                var res = null;
-                for (var k in ESIGNTYPE) {
-                    //console.log("k: " +k +" v: " +ESIGNTYPE[k].stringId);
-                    if (ESIGNTYPE[k].value === value) {
-                        res = ESIGNTYPE[k].stringId;
-                        break;
-                    }
-                }
-                return res;
+                var s = $rootScope.objWithVal(ESIGNTYPE, 'value', value);
+                return s ? s.stringId : '';
             };
 
             /* Is current state loading data */
@@ -246,29 +230,10 @@ angular.module('dashboard')
                 return res;
             };
 
-            /* Resolve css class for item status */
-            self.badgeClass = function (status) {
-                var res = 'label-default';
-                switch (status) {
-                    case ESIGNSTATUS.UNSIGNED.value:
-                        res = 'label-danger';
-                        break;
-                    case ESIGNSTATUS.REJECTED.value:
-                        res = 'label-warning';
-                        break;
-                    case ESIGNSTATUS.SIGNED.value:
-                        res = 'label-success';
-                        break;
-                    case ESIGNSTATUS.RETURNED.value:
-                        res = 'label-info';
-                        break;
-                    case ESIGNSTATUS.UNDECIDED.value:
-                        res = 'label-primary';
-                        break;
-                    default:
-                        res = 'label-default';
-                }
-                return res;
+            /* Resolve css class for signing status */
+            self.statusStyle = function (status) {
+                var s = $rootScope.objWithVal(ESIGNSTATUS, 'value', status);
+                return s ? s.badgeClass : 'label-default';
             };
 
             self.setModelFilter = function (filter) {
