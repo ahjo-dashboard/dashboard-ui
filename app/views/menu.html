@@ -1,4 +1,3 @@
-
 <div class="ad-page">
 
     <div class="db-new-page-header">
@@ -6,7 +5,7 @@
             <div class="row">
                 <i class="col-xs-2 glyphicon glyphicon-info-sign" aria-hidden="true" ng-click="mc.showInfo()"></i>
                 <div class="col-xs-10">
-                    <h3 >{{mc.title}}</h3>
+                    <h3>{{mc.title}}</h3>
                 </div>
             </div>
         </div>
@@ -14,15 +13,17 @@
 
     <div class="ad-page-content">
 
-        <button type="button" class="btn btn-primary btn-lg btn-block wrap-button-text" ng-click="mc.showMeetings()">
-            <div class="ng-class: [{'col-xs-10':mc.loading, 'col-xs-12':!mc.loading}]"><span translate translate-cloak>STR_MEETINGS</span> <span class="badge">{{mc.mtgCount}}</span>
-            </div>
-            <div class="ng-class: ['ad-progress-bar-parent', {'col-xs-2':mc.loading, 'col-xs-0':!mc.loading}]">
-                <uib-progressbar class="progress-striped active ad-progress-bar" type="info"></uib-progressbar>
-            </div>
-        </button>
-        <button type="button" class="btn btn-primary btn-lg wrap-button-text" ng-click="mc.showSignings()"><span translate translate-cloak>STR_SIGNINGS</span> <span class="badge">{{mc.sgnCount}}</span>
-        </button>
+        <div class="ad-page-container">
+            <button type="button" class="btn btn-info btn-lg btn-block wrap-button-text db-btn-default" ng-click="mc.showMeetings()">
+                <div class="ng-class: [{'col-xs-10':mc.loading, 'col-xs-12':!mc.loading}]"><span translate translate-cloak>STR_MEETINGS</span> <span class="badge">{{mc.mtgCount}}</span>
+                </div>
+                <div class="ng-class: ['ad-progress-bar-parent', {'col-xs-2':mc.loading, 'col-xs-0':!mc.loading}]">
+                    <uib-progressbar class="progress-striped active ad-progress-bar" type="info"></uib-progressbar>
+                </div>
+            </button>
+            <button type="button" class="btn btn-info btn-lg btn-block wrap-button-text db-btn-default" ng-click="mc.showSignings()"><span translate translate-cloak>STR_SIGNINGS</span> <span class="badge">{{mc.sgnCount}}</span>
+            </button>
+        </div>
 
     </div>
 
