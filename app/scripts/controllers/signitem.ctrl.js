@@ -43,6 +43,7 @@ angular.module('dashboard')
             com: { disabled: false, active: false },
             att: { disabled: false, active: false, count: self.item.AttachmentInfos ? self.item.AttachmentInfos.length : 0 }
         };
+        self.displayStatus = true;
 
         self.requestorName = self.item.RequestorName ? self.item.RequestorName : null;
         self.requestorId = self.item.RequestorId ? self.item.RequestorId : null;
@@ -116,18 +117,23 @@ angular.module('dashboard')
             clearAlerts();
 
             self.ongoing = true;
-            item.Status = status;
+            self.displayStatus = false;
+            var oldStatus = item.Status;
+            item.Status = status; // This must be reverted if status change op fails
             self.responseOpen = SigningOpenApi.save(item, function (value) {
                 $log.debug("adOpenSignreqs.saveStatus: SigningOpenApi.save done. New object: ");
                 $log.debug(value);
                 self.alerts.push({ type: 'success', locId: 'STR_OP_SUCCESS' });
+                self.item = value;
             }, function (error) {
                 $log.error("adOpenSignreqs.saveStatus: SigningOpenApi.save error: " + JSON.stringify(error));
                 self.alerts.push({ type: 'danger', locId: 'STR_FAIL_OP', resCode: error.status, resTxt: error.statusText });
+                item.Status = oldStatus;
             });
             self.responseOpen.$promise.finally(function () {
                 $log.debug("adOpenSignreqs.saveStatus: SigningOpenApi.save finally");
                 self.ongoing = null;
+                self.displayStatus = true;
             });
         }
 

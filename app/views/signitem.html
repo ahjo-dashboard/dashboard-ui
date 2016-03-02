@@ -17,7 +17,7 @@
         <div class="ad-page-container">
 
             <div class="btn-lg text-center">
-                <span class="ng-class:['label', sc.statusStyle(sc.item.Status)]" translate>{{sc.statusStrId(sc.item.Status)}}</span>
+                <span ng-hide="!sc.displayStatus" class="ng-class:['label', sc.statusStyle(sc.item.Status)]" translate>{{sc.statusStrId(sc.item.Status)}}</span>
             </div>
 
             <uib-progressbar ng-if="sc.ongoing" class="progress-striped active" type="info">
@@ -69,7 +69,7 @@
                         ng-model="sc.btnModel.doc.active" ng-disabled="sc.isDisabled('btnDoc')">
                             <span translate translate-cloak>STR_SIGNING_REQ</span>
                             <div>
-                                <span class="ng-class:['label', sc.statusStyle(sc.item.Status)]" translate>{{sc.statusStrId(sc.item.Status)}}</span>
+                                <span ng-hide="!sc.displayStatus" class="ng-class:['label', sc.statusStyle(sc.item.Status)]" translate>{{sc.statusStrId(sc.item.Status)}}</span>
                             </div>
                         </button>
                     </div>
