@@ -12,7 +12,7 @@
 * Model in the dashboard.
 */
 angular.module('dashboard')
-    .factory('ListData', ['AttachmentData','$log', function (AttachmentData, $log) {
+    .factory('ListData', ['AttachmentData', '$log', function (AttachmentData, $log) {
 
         function ListData(title, objects) {
             this.title = title;
@@ -32,7 +32,7 @@ angular.module('dashboard')
                 return new ListData(title, array);
             }
             $log.error('ListData.createAttachmentList: missing title');
-            
+
             return null;
         };
 
@@ -49,7 +49,7 @@ angular.module('dashboard')
                 return new ListData(title, array);
             }
             $log.error('ListData.createDecisionList: missing title');
-            
+
             return null;
         };
 
@@ -66,7 +66,7 @@ angular.module('dashboard')
                 return new ListData(title, array);
             }
             $log.error('ListData.createAdditionalMaterialList: missing title');
-            
+
             return null;
         };
 
