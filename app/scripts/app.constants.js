@@ -104,11 +104,11 @@ angular.module('dashboard')
 )
 .constant(
     'ESIGNSTATUS', { //SignApi_DocStatuses
-        UNSIGNED: { value: 1, stringId: 'STR_UNSIGNED'},
-        REJECTED: { value: 2, stringId: 'STR_REJECTED'},
-        SIGNED: { value: 4, stringId: 'STR_SIGNED'},
-        RETURNED: { value: 7, stringId: 'STR_RETURNED'},
-        UNDECIDED: { value: 8, stringId: 'STR_UNDECIDED'}
+        UNSIGNED: { value: 1, stringId: 'STR_UNSIGNED', badgeClass: 'label-danger'},
+        REJECTED: { value: 2, stringId: 'STR_REJECTED', badgeClass: 'label-warning'},
+        SIGNED: { value: 4, stringId: 'STR_SIGNED', badgeClass: 'label-success'},
+        RETURNED: { value: 7, stringId: 'STR_RETURNED', badgeClass: 'label-info'},
+        UNDECIDED: { value: 8, stringId: 'STR_UNDECIDED', badgeClass: 'label-default'}
     }
 )
 .constant(
