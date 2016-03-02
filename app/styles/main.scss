@@ -117,10 +117,12 @@ body {
             padding: 0;
         }
     }
-    
-    .db-btn-default {
+
+    .db-btn-def {
         border: 0;
-        border-radius: 8px;
+        font-size: $default-font-size;
+        border-radius: $btn-radius;
+        margin: 2px 2px;
     }
 
     .panel-heading {
