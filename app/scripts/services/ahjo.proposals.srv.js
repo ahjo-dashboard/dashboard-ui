@@ -23,7 +23,7 @@ angular.module('dashboard')
                 deferred.notify({});
                 $http({
                     method: 'GET',
-                    cache: true,
+                    cache: false,
                     url: ENV.AhjoApi_Proposals.replace('{GUID}', guid)
                 }).then(function (response) {
                     $log.debug("AhjoProposalsSrv: getMeeting then");
