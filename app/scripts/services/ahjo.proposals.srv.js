@@ -6,18 +6,18 @@
 
 /**
 * @ngdoc service
-* @name dashboard.AhjoProposalSrv
+* @name dashboard.AhjoProposalsSrv
 * @description
-* # AhjoProposalSrv
+* # AhjoProposalsSrv
 * Service in the dashboard.
 */
 angular.module('dashboard')
-    .service('AhjoProposalSrv', ['$log', '$http', 'ENV', '$q', '$timeout', function ($log, $http, ENV, $q, $timeout) {
-        $log.log("AhjoProposalSrv: SERVICE");
+    .service('AhjoProposalsSrv', ['$log', '$http', 'ENV', '$q', '$timeout', function ($log, $http, ENV, $q, $timeout) {
+        $log.log("AhjoProposalsSrv: SERVICE");
         var self = this;
 
         self.get = function (guid) {
-            $log.debug("AhjoProposalSrv: get " + guid);
+            $log.debug("AhjoProposalsSrv: get " + guid);
             var deferred = $q.defer();
             $timeout(function () {
                 deferred.notify({});
@@ -26,10 +26,10 @@ angular.module('dashboard')
                     cache: false,
                     url: ENV.AhjoApi_Proposals.replace('{GUID}', guid)
                 }).then(function (response) {
-                    $log.debug("AhjoProposalSrv: get then");
+                    $log.debug("AhjoProposalsSrv: get then");
                     deferred.resolve(response.data);
                 }, function (error) {
-                    $log.error("AhjoProposalSrv: get error");
+                    $log.error("AhjoProposalsSrv: get error");
                     deferred.reject(error);
                 });
             }, 0);
