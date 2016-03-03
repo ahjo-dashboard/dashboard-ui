@@ -1,6 +1,6 @@
 <div class="ad-page">
 
-    <div ng-if="!mobile" class="ad-page-header">
+    <div ng-if="!isMobile" class="ad-page-header">
         <div class="container col-xs-12">
             <div class="row">
                 <i class="col-sm-4 hidden-xs glyphicon glyphicon-menu-hamburger" ng-click="closeMenu()"></i>
@@ -10,7 +10,7 @@
         </div>
     </div>
 
-    <div ng-if="mobile" class="db-new-page-header">
+    <div ng-if="isMobile" class="db-new-page-header">
         <div class="container col-xs-12">
             <div class="row">
                 <i class="col-xs-2 glyphicon glyphicon-menu-left" aria-hidden="true" ng-click="goBack()"></i>
@@ -23,7 +23,7 @@
 
     <div class="ad-page-content">
 
-        <button ng-if="!mobile" type="button" class="btn btn-primary btn-lg disabled ad-dummy-button" ng-click="">{{msc.meeting.meetingTitle}}</button>
+        <button ng-if="!isMobile" type="button" class="btn btn-primary btn-lg disabled ad-dummy-button" ng-click="">{{msc.meeting.meetingTitle}}</button>
 
         <div class="btn-group btn-block" uib-dropdown is-open="">
             <button id="statusButton" type="button" class="btn btn-primary btn-lg ad-button ng-class:[{'disabled': !msc.chairman},{'ad-dummy-button': !msc.chairman}]"
@@ -63,4 +63,4 @@
 
 </div>
 
-<ui-view ng-if="mobile" name="detailsContent"></ui-view>
+<ui-view ng-if="isMobile" name="detailsContent"></ui-view>

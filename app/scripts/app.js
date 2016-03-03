@@ -68,30 +68,24 @@ angular.module('dashboard', [
 
         $httpProvider.defaults.withCredentials = true;
     })
-    .run(function ($rootScope, $log, DEVICE, $window, MENU, APPSTATE, $state) {
+    .run(function ($rootScope, $log, $window, MENU, APPSTATE, $state) {
         $rootScope.$on('$stateChangeStart', function (event, next/*, toParams, fromParams*/) {
             $log.debug('app.stateChangeStart: ' + next.name);// +' toParams: ' +JSON.stringify(toParams) +' fromParams: ' +JSON.stringify(fromParams));
         });
 
         $rootScope.$on('$stateChangeError', console.error.bind(console)); // $log.error.bind didn't work for .spec tests
         // GLOBAL VARIABLES
-        // $rootScope.device    MOBILE = 1, DESKTOP = 2
         // $rootScope.menu      FULL = 2, HALF = 1,  CLOSED = 0
+        // $rootScope.isMobile
 
         var device = document.getElementById("device");
 
         if (device && window.getComputedStyle(device, null).getPropertyValue("min-width") === '320px') {
-            $rootScope.device = DEVICE.MOBILE;
-            $rootScope.mobile = true;
+            $rootScope.isMobile = true;
         }
         else {
-            $rootScope.device = DEVICE.DESKTOP;
-            $rootScope.mobile = false;
+            $rootScope.isMobile = false;
         }
-
-        $rootScope.isScreenXs = function () {
-            return $rootScope.device === DEVICE.MOBILE;
-        };
 
         $rootScope.goHome = function () {
             $state.go(APPSTATE.HOME);
@@ -148,15 +142,16 @@ angular.module('dashboard', [
         };
     });
 
-angular.module('dashboard').config(function ($provide) {
-    $provide.decorator("$exceptionHandler", ['$delegate', '$injector', function ($delegate, $injector) {
-        return function (aException, aCause) {
-            $delegate(aException, aCause);
+angular.module('dashboard')
+    .config(function ($provide) {
+        $provide.decorator("$exceptionHandler", ['$delegate', '$injector', function ($delegate, $injector) {
+            return function (aException, aCause) {
+                $delegate(aException, aCause);
 
-            console.log('dashboard.exceptionHandler: redirecting state');
-            var $rs = $injector.get("$rootScope");
-            $rs.apperror = { exception: aException, cause: aCause };
-            $rs.goErrorLanding();
-        };
-    }]);
-});
+                console.log('dashboard.exceptionHandler: redirecting state');
+                var $rs = $injector.get("$rootScope");
+                $rs.apperror = { exception: aException, cause: aCause };
+                $rs.goErrorLanding();
+            };
+        }]);
+    });

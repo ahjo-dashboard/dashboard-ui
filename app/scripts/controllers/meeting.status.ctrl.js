@@ -12,7 +12,7 @@
 * Controller of the dashboard
 */
 angular.module('dashboard')
-    .controller('meetingStatusCtrl', ['$log', '$scope', '$rootScope', '$stateParams', 'DEVICE', '$state', 'MENU', 'StorageSrv', 'ENV', 'APPSTATE', 'TOPICSTATUS', 'MTGROLE', 'KEY', 'MTGSTATUS', 'AhjoMeetingSrv', function ($log, $scope, $rootScope, $stateParams, DEVICE, $state, MENU, StorageSrv, ENV, APPSTATE, TOPICSTATUS, MTGROLE, KEY, MTGSTATUS, AhjoMeetingSrv) {
+    .controller('meetingStatusCtrl', ['$log', '$scope', '$rootScope', '$stateParams', '$state', 'MENU', 'StorageSrv', 'ENV', 'APPSTATE', 'TOPICSTATUS', 'MTGROLE', 'KEY', 'MTGSTATUS', 'AhjoMeetingSrv', function ($log, $scope, $rootScope, $stateParams, $state, MENU, StorageSrv, ENV, APPSTATE, TOPICSTATUS, MTGROLE, KEY, MTGSTATUS, AhjoMeetingSrv) {
         $log.debug("meetingStatusCtrl: CONTROLLER");
         var self = this;
         $rootScope.menu = $stateParams.menu;
@@ -20,7 +20,7 @@ angular.module('dashboard')
         self.meeting = {};
         self.chairman = false;
         var meetingItem = $stateParams.meetingItem;
-        var mobile = $rootScope.mobile;
+        var isMobile = $rootScope.isMobile;
 
         for (var i = 0; i < ENV.SupportedRoles.length; i++) {
             if (ENV.SupportedRoles[i].RoleID === MTGROLE.CHAIRMAN) {
@@ -29,33 +29,29 @@ angular.module('dashboard')
         }
 
         if (meetingItem) {
-            AhjoMeetingSrv.getMeeting(meetingItem.meetingGuid)
-                .then(function (response) {
-                    $log.debug("meetingStatusCtrl: getMeeting then:");
-                    if (response && response.objects instanceof Array && response.objects.length) {
-                        self.meeting = response.objects[0];
-                        if (self.meeting && self.meeting.topicList.length) {
-                            var topic = self.meeting.topicList[0];
-                            if (!mobile) {
-                                StorageSrv.set(KEY.TOPIC, topic);
-                            }
+            AhjoMeetingSrv.getMeeting(meetingItem.meetingGuid).then(function (response) {
+                $log.debug("meetingStatusCtrl: getMeeting then:");
+                if (response && response.objects instanceof Array && response.objects.length) {
+                    self.meeting = response.objects[0];
+                    if (self.meeting && self.meeting.topicList.length) {
+                        var topic = self.meeting.topicList[0];
+                        if (!isMobile) {
+                            StorageSrv.set(KEY.TOPIC, topic);
                         }
                     }
-                    else {
-                        self.meeting = {};
-                        StorageSrv.set(KEY.TOPIC, {});
-                    }
-                },
-                    function (error) {
-                        $log.error("meetingStatusCtrl: getMeeting error: " + JSON.stringify(error));
-                        self.error = error;
-                    },
-                    function (notify) {
-                        $log.debug("meetingStatusCtrl: getMeeting notify: " + JSON.stringify(notify));
-                    })
-                .finally(function () {
-                    $log.debug("meetingStatusCtrl: getMeeting finally: ");
-                });
+                }
+                else {
+                    self.meeting = {};
+                    StorageSrv.set(KEY.TOPIC, {});
+                }
+            }, function (error) {
+                $log.error("meetingStatusCtrl: getMeeting error: " + JSON.stringify(error));
+                self.error = error;
+            }, function (notify) {
+                $log.debug("meetingStatusCtrl: getMeeting notify: " + JSON.stringify(notify));
+            }).finally(function () {
+                $log.debug("meetingStatusCtrl: getMeeting finally: ");
+            });
         }
         else {
             $state.go(APPSTATE.HOME, { menu: MENU.CLOSED });
@@ -67,7 +63,7 @@ angular.module('dashboard')
 
         self.topicSelected = function (topic) {
             StorageSrv.set(KEY.TOPIC, topic);
-            if (mobile) {
+            if (isMobile) {
                 $state.go(APPSTATE.MEETINGDETAILS, {});
             }
         };

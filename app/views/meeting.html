@@ -1,6 +1,6 @@
 <div class="ad-page">
 
-    <div ng-if="!mobile" class="ad-page-header">
+    <div ng-if="!isMobile" class="ad-page-header">
         <div class="container col-xs-12 ad-app-bg">
             <div class="row">
                 <!-- UPPER HEADER START  -->
@@ -60,7 +60,7 @@
         </div>
     </div>
 
-    <div ng-if="mobile" class="db-new-page-header">
+    <div ng-if="isMobile" class="db-new-page-header">
         <div class="container col-xs-12">
             <div class="row">
                 <i class="col-xs-2 glyphicon glyphicon-menu-left" aria-hidden="true" ng-click="goBack()"></i>
@@ -71,7 +71,7 @@
         </div>
     </div>
 
-    <div ng-if="!mobile" class="ad-page-content">
+    <div ng-if="!isMobile" class="ad-page-content">
 
         <div class="ad-page-container-flex">
 
@@ -95,18 +95,20 @@
         </div>
     </div>
 
-    <div ng-if="mobile" class="ad-page-content">
+    <div ng-if="isMobile" class="ad-page-content">
         <div class="ad-page-container">
-            <button type="button" ng-disabled="!ctrl.topicData" class="btn btn-info btn-lg btn-block wrap-button-text db-btn-default" ng-click="ctrl.topicClicked()"
-            translate translate-cloak>STR_TOPIC</button>
-            <button type="button" ng-disabled="!ctrl.attachmentData.objects.length" class="btn btn-info btn-lg btn-block wrap-button-text db-btn-default" ng-click="ctrl.attachmentClicked()"><span translate translate-cloak>STR_ATTACHMENTS</span> <span class="badge">{{ctrl.attachmentData.objects.length}}</span></button>
+            <button type="button" ng-disabled="!ctrl.topicData" class="btn btn-info btn-lg btn-block wrap-button-text db-btn-default"
+            ng-click="ctrl.topicClicked()" translate translate-cloak>STR_TOPIC</button>
+            <button type="button" ng-disabled="!ctrl.attachmentData.objects.length" class="btn btn-info btn-lg btn-block wrap-button-text db-btn-default"
+            ng-click="ctrl.attachmentClicked()"><span translate translate-cloak>STR_ATTACHMENTS</span> <span class="badge">{{ctrl.attachmentData.objects.length}}</span></button>
             <button type="button" ng-disabled="!ctrl.additionalMaterialData.objects.length" class="btn btn-info btn-lg btn-block wrap-button-text db-btn-default ng-class:[{'disabled':!ctrl.additionalMaterialData.objects.length}]"
             ng-click="ctrl.additionalMaterialClicked()"><span translate translate-cloak>STR_ADDITIONAL_MATERIAL</span> <span class="badge">{{ctrl.additionalMaterialData.objects.length}}</span></button>
-            <button type="button" ng-disabled="!ctrl.decisionData.objects.length" class="btn btn-info btn-lg btn-block wrap-button-text db-btn-default" ng-click="ctrl.decisionClicked()"><span translate translate-cloak>STR_DECISION_HISTORY</span> <span class="badge">{{ctrl.decisionData.objects.length}}</span></button>
+            <button type="button" ng-disabled="!ctrl.decisionData.objects.length" class="btn btn-info btn-lg btn-block wrap-button-text db-btn-default"
+            ng-click="ctrl.decisionClicked()"><span translate translate-cloak>STR_DECISION_HISTORY</span> <span class="badge">{{ctrl.decisionData.objects.length}}</span></button>
             <button type="button" class="btn btn-info btn-lg btn-block wrap-button-text db-btn-default" translate translate-cloak>STR_PROPOSALS</button>
         </div>
     </div>
 
 </div>
 
-<ui-view ng-if="mobile" name="childContent"></ui-view>
+<ui-view ng-if="isMobile" name="childContent"></ui-view>
