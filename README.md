@@ -31,4 +31,4 @@ Running on localhost
 Running `grunt test` will run the unit tests with karma.
 
 ## Additional notes
-* For grunt toolchain issues: on access rights you may have to use npm version < 5.7
+* For grunt toolchain issues: on access rights you may have to use node version < 5.7
