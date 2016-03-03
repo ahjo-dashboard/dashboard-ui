@@ -14,14 +14,21 @@
     <div class="ad-page-content">
 
         <div class="ad-page-container">
-            <button type="button" class="btn btn-info btn-lg btn-block wrap-button-text db-btn-default" ng-click="mc.showMeetings()">
-                <div class="ng-class: [{'col-xs-10':mc.loading, 'col-xs-12':!mc.loading}]"><span translate translate-cloak>STR_MEETINGS</span> <span class="badge">{{mc.mtgCount}}</span>
+            <button type="button" class="btn btn-info btn-lg btn-block wrap-button-text db-btn-def" ng-click="mc.showMeetings()">
+                <div class="ng-class: [{'col-xs-10':mc.loadingMtg, 'col-xs-12':!mc.loadingMtg}]"><span translate translate-cloak>STR_MEETINGS</span> <span class="badge">{{mc.mtgCount}}</span>
                 </div>
-                <div class="ng-class: ['ad-progress-bar-parent', {'col-xs-2':mc.loading, 'col-xs-0':!mc.loading}]">
+                <div class="ng-class: ['ad-progress-bar-parent', {'col-xs-2':mc.loadingMtg, 'col-xs-0':!mc.loadingMtg}]">
                     <uib-progressbar class="progress-striped active ad-progress-bar" type="info"></uib-progressbar>
                 </div>
             </button>
-            <button type="button" class="btn btn-info btn-lg btn-block wrap-button-text db-btn-default" ng-click="mc.showSignings()"><span translate translate-cloak>STR_SIGNINGS</span> <span class="badge">{{mc.sgnCount}}</span>
+            <button type="button" class="btn btn-info btn-lg btn-block wrap-button-text db-btn-def" ng-click="mc.showSignings()"><span translate translate-cloak>STR_SIGNINGS</span> <span class="badge">{{mc.sgnCount}}</span>
+            <div ng-class=" [{'col-xs-10':mc.loadingSgn, 'col-xs-12':!mc.loadingSgn}]">
+                <span translate translate-cloak>STR_SIGNINGS</span>
+                <span class="badge ng-cloak">{{mc.sgnCount}}</span>
+            </div>
+            <div ng-if="mc.loadingSgn" class="ad-progress-bar-parent col-xs-2">
+                <uib-progressbar class="progress-striped active ad-progress-bar" type="info"></uib-progressbar>
+            </div>
             </button>
         </div>
 

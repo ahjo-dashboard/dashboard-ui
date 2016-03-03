@@ -38,19 +38,26 @@ angular.module('dashboard')
         self.btnModel = {
             doc: { disabled: false, active: false },
             acc: { disabled: false, active: false },
-            rej: { disabled: false, active: false }
+            rej: { disabled: false, active: false },
+            sta: { disabled: false, active: false },
+            com: { disabled: false, active: false },
+            att: { disabled: false, active: false, count: self.item.AttachmentInfos ? self.item.AttachmentInfos.length : 0 }
         };
+        self.displayStatus = true;
 
         self.requestorName = self.item.RequestorName ? self.item.RequestorName : null;
         self.requestorId = self.item.RequestorId ? self.item.RequestorId : null;
+        self.fileName = self.item.Name;
 
         // PRIVATE FUNCTIONS
 
         function initBtns(btnModel, status) {
             if (status !== ESIGNSTATUS.UNSIGNED.value) {
-                btnModel.doc.disabled = true;
                 btnModel.acc.disabled = true;
                 btnModel.rej.disabled = true;
+            }
+            if (!self.isMobile) {
+                self.btnModel.doc.active = true; // On desktop document is displayed by default
             }
         }
 
@@ -110,18 +117,23 @@ angular.module('dashboard')
             clearAlerts();
 
             self.ongoing = true;
-            item.Status = status;
+            self.displayStatus = false;
+            var oldStatus = item.Status;
+            item.Status = status; // This must be reverted if status change op fails
             self.responseOpen = SigningOpenApi.save(item, function (value) {
                 $log.debug("adOpenSignreqs.saveStatus: SigningOpenApi.save done. New object: ");
                 $log.debug(value);
                 self.alerts.push({ type: 'success', locId: 'STR_OP_SUCCESS' });
+                self.item = value;
             }, function (error) {
                 $log.error("adOpenSignreqs.saveStatus: SigningOpenApi.save error: " + JSON.stringify(error));
                 self.alerts.push({ type: 'danger', locId: 'STR_FAIL_OP', resCode: error.status, resTxt: error.statusText });
+                item.Status = oldStatus;
             });
             self.responseOpen.$promise.finally(function () {
                 $log.debug("adOpenSignreqs.saveStatus: SigningOpenApi.save finally");
                 self.ongoing = null;
+                self.displayStatus = true;
             });
         }
 
@@ -134,7 +146,7 @@ angular.module('dashboard')
         function personInfo() {
             $log.debug("signitemCtrl.personInfo");
 
-            if (!self.personInfo)  {
+            if (!self.personInfo) {
                 self.ongoing = true;
                 self.personInfo = SigningPersonInfoApi.get({ userId: self.requestorId }, function (/*data*/) {
                     $log.debug("signitemCtrl.personInfo: api query done");
@@ -217,12 +229,48 @@ angular.module('dashboard')
             });
         };
 
-        self.isDisabled = function (/* id */) {
-            //$log.debug("signingItemCtrl.isDisabled: " +id);
-            return self.ongoing;
+        self.isDisabled = function (id) {
+            //$log.debug("signingItemCtrl.isDisabled: " + id);
+            if (self.ongoing) {
+                return true;
+            }
+
+            var res = false;
+            switch (id) {
+                case 'btnDoc':
+                    res = self.btnModel.doc.disabled;
+                    break;
+                case 'btnAtt':
+                    res = self.btnModel.att.disabled || !self.btnModel.att.count;
+                    break;
+                case 'btnSta':
+                    res = self.btnModel.sta.disabled;
+                    break;
+                case 'btnCom':
+                    res = self.btnModel.com.disabled;
+                    break;
+                case 'btnAcc':
+                    res = self.btnModel.acc.disabled;
+                    break;
+                case 'btnRej':
+                    res = self.btnModel.rej.disabled;
+                    break;
+                default:
+                    break;
+            }
+            return res;
+        };
+        /* Resolve css class for signing status */
+        self.statusStyle = function (status) {
+            var s = $rootScope.objWithVal(ESIGNSTATUS, 'value', status);
+            return s ? s.badgeClass : 'label-default';
         };
 
-        self.fileName = self.item.Name;
+        /* Resolve display text for item status */
+        self.statusStrId = function (value) {
+            var s = $rootScope.objWithVal(ESIGNSTATUS, 'value', value);
+            return s ? s.stringId : '';
+        };
 
         initBtns(self.btnModel, self.item.Status);
 
@@ -234,11 +282,5 @@ angular.module('dashboard')
         } else {
             fetchBlob(self.item);
             drawBlob();
-        }
-
-        if (self.isMobile) {
-            self.actionDoc();
-        } else {
-            self.btnModel.doc.active = true;
         }
     });
