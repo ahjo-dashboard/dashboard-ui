@@ -12,14 +12,14 @@
  * Controller of the dashboard
  */
 angular.module('dashboard')
-    .controller('signitemCtrl', function ($log, $scope, $state, $stateParams, SigningAttApi, $sce, $timeout, $uibModal, MessageService, ENV, APPSTATE, SigningOpenApi, SigningPersonInfoApi, ESIGNSTATUS, $rootScope) {
+    .controller('signitemCtrl', function ($log, $scope, $state, $stateParams, SigningAttApi, $sce, $timeout, $uibModal, MessageService, ENV, SigningOpenApi, SigningPersonInfoApi, CONST, $rootScope) {
         $log.debug("signitemCtrl.config");
 
         var self = this;
         self.item = $stateParams.signItem;
         if (!self.item || !self.item.ProcessGuid || !self.item.ProcessGuid.length) {
             $log.error("signitemCtrl: item missing");
-            $state.go(APPSTATE.HOME);
+            $state.go(CONST.APPSTATE.HOME);
             return;
         } else {
             $log.debug("signItemCtrl: name: " + self.item.Name);
@@ -52,7 +52,7 @@ angular.module('dashboard')
         // PRIVATE FUNCTIONS
 
         function initBtns(btnModel, status) {
-            if (status !== ESIGNSTATUS.UNSIGNED.value) {
+            if (status !== CONST.ESIGNSTATUS.UNSIGNED.value) {
                 btnModel.acc.disabled = true;
                 btnModel.rej.disabled = true;
             }
@@ -178,11 +178,11 @@ angular.module('dashboard')
         };
 
         self.actionSign = function () {
-            saveStatus(self.item, ESIGNSTATUS.SIGNED.value);
+            saveStatus(self.item, CONST.ESIGNSTATUS.SIGNED.value);
         };
 
         self.actionReject = function () {
-            saveStatus(self.item, ESIGNSTATUS.REJECTED.value);
+            saveStatus(self.item, CONST.ESIGNSTATUS.REJECTED.value);
         };
 
         self.actionComment = function () {
@@ -262,13 +262,13 @@ angular.module('dashboard')
         };
         /* Resolve css class for signing status */
         self.statusStyle = function (status) {
-            var s = $rootScope.objWithVal(ESIGNSTATUS, 'value', status);
+            var s = $rootScope.objWithVal(CONST.ESIGNSTATUS, 'value', status);
             return s ? s.badgeClass : 'label-default';
         };
 
         /* Resolve display text for item status */
         self.statusStrId = function (value) {
-            var s = $rootScope.objWithVal(ESIGNSTATUS, 'value', value);
+            var s = $rootScope.objWithVal(CONST.ESIGNSTATUS, 'value', value);
             return s ? s.stringId : '';
         };
 

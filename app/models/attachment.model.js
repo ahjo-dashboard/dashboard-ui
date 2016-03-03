@@ -12,13 +12,13 @@
 * Model in the dashboard.
 */
 angular.module('dashboard')
-    .factory('AttachmentData', ['$log', 'BTNTYPE', function ($log, BTNTYPE) {
+    .factory('AttachmentData', ['$log', 'CONST', function ($log, CONST) {
 
         function AttachmentData(title, link, publicity, buttonType) {
             this.title = title;
             this.link = link;
             this.publicity = publicity ? publicity : 'true';
-            this.buttonType = buttonType ? buttonType : BTNTYPE.INFO;
+            this.buttonType = buttonType ? buttonType : CONST.BTNTYPE.INFO;
         }
 
         AttachmentData.create = function (title, link, publicity, buttonType) {
@@ -33,4 +33,3 @@ angular.module('dashboard')
         return AttachmentData;
 
     }]);
-    

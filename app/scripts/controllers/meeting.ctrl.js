@@ -12,15 +12,15 @@
  * Controller of the dashboard
  */
 angular.module('dashboard')
-    .controller('meetingCtrl', ['$log', 'AhjoMeetingSrv', '$stateParams', '$rootScope', '$scope', '$state', 'MENU', 'BLOCKMODE', 'StorageSrv', 'APPSTATE', 'KEY', 'PUBLICITY', 'BTNTYPE', 'AttachmentData', 'ListData', function ($log, AhjoMeetingSrv, $stateParams, $rootScope, $scope, $state, MENU, BLOCKMODE, StorageSrv, APPSTATE, KEY, PUBLICITY, BTNTYPE, AttachmentData, ListData) {
+    .controller('meetingCtrl', ['$log', 'AhjoMeetingSrv', '$stateParams', '$rootScope', '$scope', '$state', 'CONST', 'StorageSrv', 'AttachmentData', 'ListData', function ($log, AhjoMeetingSrv, $stateParams, $rootScope, $scope, $state, CONST, StorageSrv, AttachmentData, ListData) {
         $log.debug("meetingCtrl: CONTROLLER");
         var self = this;
         var isMobile = $rootScope.isMobile;
         self.upperUrl = {};
         self.lowerUrl = {};
         self.error = null;
-        self.topic = StorageSrv.get(KEY.TOPIC);
-        self.blockMode = BLOCKMODE.BOTH;
+        self.topic = StorageSrv.get(CONST.KEY.TOPIC);
+        self.blockMode = CONST.BLOCKMODE.BOTH;
         self.header = '';
         $rootScope.menu = $stateParams.menu;
 
@@ -53,17 +53,17 @@ angular.module('dashboard')
         }
 
         self.upperClicked = function () {
-            self.blockMode = (self.blockMode === BLOCKMODE.BOTH || self.blockMode === BLOCKMODE.LOWER) ? BLOCKMODE.UPPER : BLOCKMODE.BOTH;
+            self.blockMode = (self.blockMode === CONST.BLOCKMODE.BOTH || self.blockMode === CONST.BLOCKMODE.LOWER) ? CONST.BLOCKMODE.UPPER : CONST.BLOCKMODE.BOTH;
         };
 
         self.lowerClicked = function () {
-            self.blockMode = (self.blockMode === BLOCKMODE.BOTH || self.blockMode === BLOCKMODE.UPPER) ? BLOCKMODE.LOWER : BLOCKMODE.BOTH;
+            self.blockMode = (self.blockMode === CONST.BLOCKMODE.BOTH || self.blockMode === CONST.BLOCKMODE.UPPER) ? CONST.BLOCKMODE.LOWER : CONST.BLOCKMODE.BOTH;
         };
 
         self.topicClicked = function () {
             if (isMobile) {
-                StorageSrv.set(KEY.LISTPDF_DATA, self.topicData);
-                $state.go(APPSTATE.TOPIC);
+                StorageSrv.set(CONST.KEY.LISTPDF_DATA, self.topicData);
+                $state.go(CONST.APPSTATE.TOPIC);
             }
             else {
 
@@ -72,8 +72,8 @@ angular.module('dashboard')
 
         self.attachmentClicked = function (attachment) {
             if (isMobile) {
-                StorageSrv.set(KEY.SELECTION_DATA, self.attachmentData);
-                $state.go(APPSTATE.LIST);
+                StorageSrv.set(CONST.KEY.SELECTION_DATA, self.attachmentData);
+                $state.go(CONST.APPSTATE.LIST);
             }
             else if (attachment instanceof Object) {
                 self.lowerUrl = attachment.link ? attachment.link : {};
@@ -82,8 +82,8 @@ angular.module('dashboard')
 
         self.decisionClicked = function (decision) {
             if (isMobile) {
-                StorageSrv.set(KEY.SELECTION_DATA, self.decisionData);
-                $state.go(APPSTATE.LIST);
+                StorageSrv.set(CONST.KEY.SELECTION_DATA, self.decisionData);
+                $state.go(CONST.APPSTATE.LIST);
             }
             else if (decision instanceof Object) {
                 self.lowerUrl = decision.link ? decision.link : {};
@@ -92,8 +92,8 @@ angular.module('dashboard')
 
         self.additionalMaterialClicked = function (material) {
             if (isMobile) {
-                StorageSrv.set(KEY.SELECTION_DATA, self.additionalMaterialData);
-                $state.go(APPSTATE.LIST);
+                StorageSrv.set(CONST.KEY.SELECTION_DATA, self.additionalMaterialData);
+                $state.go(CONST.APPSTATE.LIST);
             }
             else if (material instanceof Object) {
                 self.lowerUrl = material.link ? material.link : {};
@@ -101,19 +101,19 @@ angular.module('dashboard')
         };
 
         self.isBothMode = function () {
-            return self.blockMode === BLOCKMODE.BOTH;
+            return self.blockMode === CONST.BLOCKMODE.BOTH;
         };
 
         self.isUpperMode = function () {
-            return self.blockMode === BLOCKMODE.UPPER;
+            return self.blockMode === CONST.BLOCKMODE.UPPER;
         };
 
         self.isLowerMode = function () {
-            return self.blockMode === BLOCKMODE.LOWER;
+            return self.blockMode === CONST.BLOCKMODE.LOWER;
         };
 
         self.isSecret = function (item) {
-            return (item && item.publicity) ? (item.publicity === PUBLICITY.SECRET) : false;
+            return (item && item.publicity) ? (item.publicity === CONST.PUBLICITY.SECRET) : false;
         };
 
         self.isUrlString = function (url) {
@@ -123,7 +123,7 @@ angular.module('dashboard')
         $scope.$watch(
             // This function returns the value being watched. It is called for each turn of the $digest loop
             function () {
-                return StorageSrv.get(KEY.TOPIC);
+                return StorageSrv.get(CONST.KEY.TOPIC);
             },
             function (newTopic, oldTopic) {
                 if (newTopic !== oldTopic) {
