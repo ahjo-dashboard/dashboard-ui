@@ -123,7 +123,6 @@ angular.module('dashboard')
             self.responseOpen = SigningOpenApi.save(item, function (value) {
                 $log.debug("adOpenSignreqs.saveStatus: SigningOpenApi.save done. New object: ");
                 $log.debug(value);
-                self.alerts.push({ type: 'success', locId: 'STR_OP_SUCCESS' });
                 self.item = value;
             }, function (error) {
                 $log.error("adOpenSignreqs.saveStatus: SigningOpenApi.save error: " + JSON.stringify(error));
@@ -140,7 +139,7 @@ angular.module('dashboard')
         function displayRequestor(person) {
             if (person && "email" in person) {
                 self.requestorEmail = person.email;
-                self.alerts.push({ type: 'info', locId: 'STR_SIGNING_COMMENT_INFO', linkMailto: person.email});
+                self.alerts.push({ type: 'info', locId: 'STR_SIGNING_COMMENT_INFO', linkMailto: person.email });
             } else {
                 $log.error("signItemCtrl.displayRequestor: bad args");
             }
