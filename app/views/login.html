@@ -19,10 +19,10 @@
                             <option ng-repeat="item in lc.data.options track by $index" value="{{item.value}}">{{item.text}}</option>
                         </select>
                         <br>
-                        <input ng-if="lc.data.selection" style="margin: 10px;" class="btn btn-success" type="submit" value="{{'STR_LOGIN' | translate}}" ng-click="lc.select()" />
+                        <input ng-if="lc.data.selection" style="margin: 10px;" class="btn btn-success" type="submit" value="{{'STR_LOGIN' | translate}}" ng-click="lc.select()" ng-disabled="lc.login"/>
                 </form>
 
-                <uib-progressbar ng-if="lc.login || lc.loadingUsers" class="progress-striped" type="info"><i>Haetaan...</i></uib-progressbar>
+                <uib-progressbar ng-if="lc.login || lc.loadingUsers" class="progress-striped" type="info"></uib-progressbar>
 
                 <uib-alert ng-if="lc.error" type="danger">
                     <span translate-cloak translate>STR_FAIL_LOADING</span>&nbsp;<span translate>STR_TRY_LATER</span>
@@ -33,7 +33,7 @@
             <div class="row text-center">
                 <div class="db-error">
                     <h4>Voit jatkaa myös omalla tunnuksellasi</h4>
-                    <button type="button" class="btn btn-success" ng-click="goHome()">Jatka omalla tunnuksella</button>
+                    <button type="button" class="btn btn-success" ng-click="goHome()" ng-disabled="lc.login">Jatka omalla tunnuksella</button>
                 </div>
             </div>
         </div>
