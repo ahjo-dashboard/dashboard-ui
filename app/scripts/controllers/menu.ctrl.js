@@ -12,7 +12,7 @@
 * Controller of the dashboard
 */
 angular.module('dashboard')
-    .controller('menuCtrl', ['$log', '$state', '$rootScope', 'AhjoMeetingsSrv', 'SigningOpenApi', 'HOMEMODE', 'APPSTATE', function ($log, $state, $rootScope, AhjoMeetingsSrv, SigningOpenApi, HOMEMODE, APPSTATE) {
+    .controller('menuCtrl', ['$log', '$state', '$rootScope', 'AhjoMeetingsSrv', 'SigningOpenApi', 'CONST', function ($log, $state, $rootScope, AhjoMeetingsSrv, SigningOpenApi, CONST) {
         $log.log("menuCtrl: CONTROLLER");
         var self = this;
         self.title = 'Ahjo Dashboard';
@@ -69,18 +69,18 @@ angular.module('dashboard')
 
         // PUBLIC FUNCTIONS
         self.showMeetings = function () {
-            $log.debug("menuCtrl: showMeetings" + HOMEMODE.MEETINGS);
-            $state.go(APPSTATE.OVERVIEW, { state: HOMEMODE.MEETINGS });
+            $log.debug("menuCtrl: showMeetings" + CONST.HOMEMODE.MEETINGS);
+            $state.go(CONST.APPSTATE.OVERVIEW, { state: CONST.HOMEMODE.MEETINGS });
         };
 
         self.showSignings = function () {
             $log.debug("menuCtrl: showSignings");
-            $state.go(APPSTATE.OVERVIEW, { state: HOMEMODE.ESIGN });
+            $state.go(CONST.APPSTATE.OVERVIEW, { state: CONST.HOMEMODE.ESIGN });
         };
 
         self.showInfo = function () {
             $log.debug("menuCtrl: showInfo");
-            $state.go(APPSTATE.INFO);
+            $state.go(CONST.APPSTATE.INFO);
         };
 
         getMeetings();

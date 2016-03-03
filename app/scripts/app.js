@@ -68,7 +68,7 @@ angular.module('dashboard', [
 
         $httpProvider.defaults.withCredentials = true;
     })
-    .run(function ($rootScope, $log, $window, MENU, APPSTATE, $state) {
+    .run(function ($rootScope, $log, $window, CONST, $state) {
         $rootScope.$on('$stateChangeStart', function (event, next/*, toParams, fromParams*/) {
             $log.debug('app.stateChangeStart: ' + next.name);// +' toParams: ' +JSON.stringify(toParams) +' fromParams: ' +JSON.stringify(fromParams));
         });
@@ -88,7 +88,7 @@ angular.module('dashboard', [
         }
 
         $rootScope.goHome = function () {
-            $state.go(APPSTATE.HOME);
+            $state.go(CONST.APPSTATE.HOME);
         };
 
         $rootScope.goBack = function () {
@@ -96,29 +96,29 @@ angular.module('dashboard', [
         };
 
         $rootScope.goErrorLanding = function () {
-            $state.go(APPSTATE.ERROR);
+            $state.go(CONST.APPSTATE.ERROR);
         };
 
         $rootScope.openMenu = function () {
-            $rootScope.menu = MENU.FULL;
+            $rootScope.menu = CONST.MENU.FULL;
         };
 
         $rootScope.closeMenu = function () {
-            if ($rootScope.menu > MENU.CLOSED) {
+            if ($rootScope.menu > CONST.MENU.CLOSED) {
                 $rootScope.menu = $rootScope.menu - 1;
             }
         };
 
         $rootScope.menuClosed = function () {
-            return $rootScope.menu === MENU.CLOSED;
+            return $rootScope.menu === CONST.MENU.CLOSED;
         };
 
         $rootScope.menuHalf = function () {
-            return $rootScope.menu === MENU.HALF;
+            return $rootScope.menu === CONST.MENU.HALF;
         };
 
         $rootScope.menuFull = function () {
-            return $rootScope.menu === MENU.FULL;
+            return $rootScope.menu === CONST.MENU.FULL;
         };
 
         // Utility function for looping an object to find the first immediate child object with matching value

@@ -12,7 +12,7 @@
 * Controller of the dashboard
 */
 angular.module('dashboard')
-    .controller('meetingStatusCtrl', ['$log', '$scope', '$rootScope', '$stateParams', '$state', 'MENU', 'StorageSrv', 'ENV', 'APPSTATE', 'TOPICSTATUS', 'MTGROLE', 'KEY', 'MTGSTATUS', 'AhjoMeetingSrv', function ($log, $scope, $rootScope, $stateParams, $state, MENU, StorageSrv, ENV, APPSTATE, TOPICSTATUS, MTGROLE, KEY, MTGSTATUS, AhjoMeetingSrv) {
+    .controller('meetingStatusCtrl', ['$log', '$scope', '$rootScope', '$stateParams', '$state', 'CONST', 'StorageSrv', 'ENV', 'AhjoMeetingSrv', function ($log, $scope, $rootScope, $stateParams, $state, CONST, StorageSrv, ENV, AhjoMeetingSrv) {
         $log.debug("meetingStatusCtrl: CONTROLLER");
         var self = this;
         $rootScope.menu = $stateParams.menu;
@@ -23,7 +23,7 @@ angular.module('dashboard')
         var isMobile = $rootScope.isMobile;
 
         for (var i = 0; i < ENV.SupportedRoles.length; i++) {
-            if (ENV.SupportedRoles[i].RoleID === MTGROLE.CHAIRMAN) {
+            if (ENV.SupportedRoles[i].RoleID === CONST.MTGROLE.CHAIRMAN) {
                 self.chairman = true;
             }
         }
@@ -36,13 +36,13 @@ angular.module('dashboard')
                     if (self.meeting && self.meeting.topicList.length) {
                         var topic = self.meeting.topicList[0];
                         if (!isMobile) {
-                            StorageSrv.set(KEY.TOPIC, topic);
+                            StorageSrv.set(CONST.KEY.TOPIC, topic);
                         }
                     }
                 }
                 else {
                     self.meeting = {};
-                    StorageSrv.set(KEY.TOPIC, {});
+                    StorageSrv.set(CONST.KEY.TOPIC, {});
                 }
             }, function (error) {
                 $log.error("meetingStatusCtrl: getMeeting error: " + JSON.stringify(error));
@@ -54,22 +54,22 @@ angular.module('dashboard')
             });
         }
         else {
-            $state.go(APPSTATE.HOME, { menu: MENU.CLOSED });
+            $state.go(CONST.APPSTATE.HOME, { menu: CONST.MENU.CLOSED });
         }
 
         self.goHome = function () {
-            $state.go(APPSTATE.HOME, { menu: MENU.CLOSED });
+            $state.go(CONST.APPSTATE.HOME, { menu: CONST.MENU.CLOSED });
         };
 
         self.topicSelected = function (topic) {
-            StorageSrv.set(KEY.TOPIC, topic);
+            StorageSrv.set(CONST.KEY.TOPIC, topic);
             if (isMobile) {
-                $state.go(APPSTATE.MEETINGDETAILS, {});
+                $state.go(CONST.APPSTATE.MEETINGDETAILS, {});
             }
         };
 
         self.isSelected = function (topic) {
-            var selected = StorageSrv.get(KEY.TOPIC);
+            var selected = StorageSrv.get(CONST.KEY.TOPIC);
             if (topic instanceof Object && selected instanceof Object) {
                 return (topic.topicGuid && topic.topicGuid === selected.topicGuid);
             }
@@ -77,10 +77,10 @@ angular.module('dashboard')
         };
 
         self.statusIcon = function (topic) {
-            for (var item in TOPICSTATUS) {
-                if (TOPICSTATUS.hasOwnProperty(item)) {
-                    if (topic && topic.topicStatus && topic.topicStatus === TOPICSTATUS[item].value) {
-                        return TOPICSTATUS[item].iconPath;
+            for (var item in CONST.TOPICSTATUS) {
+                if (CONST.TOPICSTATUS.hasOwnProperty(item)) {
+                    if (topic && topic.topicStatus && topic.topicStatus === CONST.TOPICSTATUS[item].value) {
+                        return CONST.TOPICSTATUS[item].iconPath;
                     }
                 }
             }
@@ -88,10 +88,10 @@ angular.module('dashboard')
         };
 
         self.stringId = function (meeting) {
-            for (var item in MTGSTATUS) {
-                if (MTGSTATUS.hasOwnProperty(item)) {
-                    if (meeting && meeting.meetingStatus && meeting.meetingStatus === MTGSTATUS[item].value) {
-                        return MTGSTATUS[item].stringId;
+            for (var item in CONST.MTGSTATUS) {
+                if (CONST.MTGSTATUS.hasOwnProperty(item)) {
+                    if (meeting && meeting.meetingStatus && meeting.meetingStatus === CONST.MTGSTATUS[item].value) {
+                        return CONST.MTGSTATUS[item].stringId;
                     }
                 }
             }
