@@ -64,7 +64,7 @@ angular.module('dashboard', [
             .useSanitizeValueStrategy('escapeParameters')
             .use('fi');
 
-        $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|blob):/);
+        $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|mailto|blob):/);
 
         $httpProvider.defaults.withCredentials = true;
     })
