@@ -18,7 +18,7 @@ angular.module('dashboard')
             this.title = title;
             this.link = link;
             this.publicity = publicity ? publicity : 'true';
-            this.buttonType = buttonType ? buttonType : BTNTYPE.PRIMARY;
+            this.buttonType = buttonType ? buttonType : BTNTYPE.INFO;
         }
 
         AttachmentData.create = function (title, link, publicity, buttonType) {

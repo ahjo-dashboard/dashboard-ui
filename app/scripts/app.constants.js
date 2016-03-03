@@ -71,7 +71,8 @@ angular.module('dashboard')
     'BTNTYPE', {
         DEFAULT: 'btn-default',
         PRIMARY: 'btn-primary',
-        SUCCESS: 'btn-success'
+        SUCCESS: 'btn-success',
+        INFO: 'btn-info'
     }
 )
 .constant(

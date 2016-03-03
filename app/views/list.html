@@ -12,7 +12,10 @@
     </div>
 
     <div class="ad-page-content">
-        <button ng-repeat="object in ctrl.data.objects track by $index" type="button" class="btn {{object.buttonType}} ad-header-button ng-class:[{'disabled':object.publicity === ctrl.PUBLICITY.SECRET}]" ng-click="ctrl.select(object)">{{object.title}}</button>
+        <div class="ad-page-container">
+            <button ng-repeat="object in ctrl.data.objects track by $index" type="button" class="btn btn-info btn-lg btn-block wrap-button-text db-btn-default {{object.buttonType}} ng-class:[{'disabled':object.publicity === ctrl.PUBLICITY.SECRET}]"
+            ng-click="ctrl.select(object)">{{object.title}}</button>
+        </div>
     </div>
 
 </div>
