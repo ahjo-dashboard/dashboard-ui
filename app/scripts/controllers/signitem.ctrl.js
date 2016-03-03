@@ -34,7 +34,7 @@ angular.module('dashboard')
         self.hideEmbObj = false; // Workaround for IE which displays embedded object always topmost.
         self.ongoing = false;
         self.alerts = [];
-        self.isMobile = $rootScope.mobile;
+        self.isMobile = $rootScope.isMobile;
         self.btnModel = {
             doc: { disabled: false, active: false },
             acc: { disabled: false, active: false },

@@ -30,7 +30,7 @@ angular.module('dashboard')
             self.FType = null;
             self.docTypeTitle = null;
             self.docStatusTitle = null;
-            self.isMobile = $rootScope.mobile;
+            self.isMobile = $rootScope.isMobile;
 
             /* PRIVATE FUNCTIONS */
 

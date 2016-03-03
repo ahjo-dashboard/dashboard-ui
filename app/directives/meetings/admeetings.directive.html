@@ -1,6 +1,6 @@
 <div>
 
-    <div class="btn-group ng-class:[{'btn-group-justified':!ctrl.mobile, 'ad-btn-group-vertical':ctrl.mobile}]">
+    <div class="btn-group ng-class:[{'btn-group-justified':!ctrl.isMobile, 'ad-btn-group-vertical':ctrl.isMobile}]">
 
         <div class="hidden-xs btn-group">
             <button type="button" class="btn btn-success ad-dummy-button disabled" uib-dropdown-toggle>
@@ -46,6 +46,7 @@
         </button>
     </ul>
 
-    <div ng-if="ctrl.mtgErr" class="alert alert-danger" role="alert">Haku ei onnistunut. Ole hyvä ja yritä myöhemmin uudestaan.<br>({{ctrl.mtgErr.status}} {{ctrl.mtgErr.statusText}})</div>
+    <div ng-if="ctrl.mtgErr" class="alert alert-danger" role="alert">Haku ei onnistunut. Ole hyvä ja yritä myöhemmin uudestaan.
+        <br>({{ctrl.mtgErr.status}} {{ctrl.mtgErr.statusText}})</div>
 
 </div>

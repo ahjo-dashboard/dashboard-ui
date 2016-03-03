@@ -22,7 +22,7 @@ angular.module('dashboard')
             self.data = [];
             self.date = new Date();
             self.date.setFullYear(self.date.getFullYear() - 4);  // this if for testing. to be removed
-            self.mobile = $rootScope.isScreenXs();
+            self.isMobile = $rootScope.isMobile;
 
             self.agencyData = [];
             self.roleData = [];
@@ -99,27 +99,23 @@ angular.module('dashboard')
                 }
             }
 
-            AhjoMeetingsSrv.getMeetings()
-                .then(function (response) {
-                    self.loading = false;
-                    self.responseData = response;
-                    if ("objects" in self.responseData) {
-                        $log.debug("adMeetings: getMeetings done: " + self.responseData.objects.length);
-                    }
-                },
-                    function (error) {
-                        $log.error("adMeetings: getMeetings error: " + JSON.stringify(error));
-                        self.loading = false;
-                        self.mtgErr = error;
-                    },
-                    function (/*notify*/) {
-                        self.loading = true;
-                    })
-                .finally(function () {
-                    setData();
-                    parseAgencyDropdown();
-                    parseRoleDropdown();
-                });
+            AhjoMeetingsSrv.getMeetings().then(function (response) {
+                self.loading = false;
+                self.responseData = response;
+                if ("objects" in self.responseData) {
+                    $log.debug("adMeetings: getMeetings done: " + self.responseData.objects.length);
+                }
+            }, function (error) {
+                $log.error("adMeetings: getMeetings error: " + JSON.stringify(error));
+                self.loading = false;
+                self.mtgErr = error;
+            }, function (/*notify*/) {
+                self.loading = true;
+            }).finally(function () {
+                setData();
+                parseAgencyDropdown();
+                parseRoleDropdown();
+            });
 
             $scope.$watch('future', function () {
                 setData();
