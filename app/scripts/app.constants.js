@@ -15,6 +15,11 @@ angular.module('dashboard')
             UPPER: 1,
             LOWER: 2
         },
+        'LOWERBLOCKMODE': {
+            PROPOSALS: 0,
+            ATTACHMENTS: 1,
+            MATERIALS: 2
+        },
         'HOMEMODE': {
             ALL: 0,
             MEETINGS: 1,
@@ -31,7 +36,8 @@ angular.module('dashboard')
             MEETINGDETAILS: "app.meeting.details",
             TOPIC: "app.meeting.details.topic",
             LIST: "app.meeting.details.list",
-            LISTPDF: "app.meeting.details.list.pdf",
+            LISTATTACHMENT: "app.meeting.details.list.attachment",
+            LISTPROPOSALS: "app.meeting.details.list.proposals",
             ERROR: "error"
         },
         'MTGROLE': {

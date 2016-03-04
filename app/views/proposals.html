@@ -1,88 +1,20 @@
-<div class="container-fluid ad-container-fluid">
-    <div class="row">
-        <div class="col-xs-7"><h5>Omat ehdotukset</h5></div>
-        <div class="col-xs-5 text-right">
-            <button type="button" class="btn btn-primary btn-md" ng-click="pc.addProposal()">
-                <span class="glyphicon glyphicon-plus-sign">
-                </span>
-            </button>
-            <button type="button" class="btn btn-primary btn-md" ng-click="pc.close()">
-                <span class="glyphicon glyphicon-remove">
-                </span>
-            </button>
-        </div>
-    </div>
-</div>
+<div class="ad-page">
 
-<div class="btn-group-vertical full-width" role="group">
-    <button ng-if="prop.status === 'private' && prop.creator === pc.user" type="button" class="btn btn-default text-align-left wrap-button-text" ng-repeat="prop in pc.draftData.proposals track by $index" ng-init="collapsed = true" ng-class="{'ad-animate-prop':pc.animate}">
-        <div class="row">
-            <div class="col-xs-9">
-                <b>{{prop.type}}</b>
-                <span class="glyphicon glyphicon-user"></span>
-                <div ng-bind-html="prop.text"></div>
-            </div>
-            <div class="col-xs-3 text-right">
-                <label role="button" class="btn btn-primary btn-md ad-btn-margin" aria-expanded="false" ng-click="collapsed = !collapsed">
-                    <span class="glyphicon glyphicon-edit"></span>
-                </label>
-                <label role="button" class="btn btn-primary btn-md ad-btn-margin" aria-expanded="false" ng-click="pc.removeProposal(prop)">
-                    <span class="glyphicon glyphicon-remove-sign"></span>
-                </label>
-                <label role="button" class="btn btn-primary btn-md ad-btn-margin" aria-expanded="false" ng-click="pc.shareProposal(prop)">
-                    <span class="glyphicon glyphicon-share"></span>
-                </label>
-            </div>
-        </div>
-        <div uib-collapse="collapsed">
+    <div class="db-new-page-header">
+        <div class="container col-xs-12">
             <div class="row">
-                <div class="col-xs-12 hidden-md hidden-lg text-right">
-                    <label role="button" class="btn btn-primary btn-md ad-btn-margin" ng-click="prop.text = prop.draftText">
-                        <span class="glyphicon glyphicon-save-file"></span>
-                    </label>
-                </div>
-                <div class="col-xs-12 col-md-10">
-                    <wysiwyg class="hidden-xs" textarea-class="form-control" textarea-height="80px" enable-bootstrap-title="true" textarea-required ng-model="prop.draftText" textarea-menu="pc.editor.menu">
-                    </wysiwyg>
-                    <wysiwyg class="hidden-sm hidden-md hidden-lg" textarea-class="form-control" textarea-height="80px" enable-bootstrap-title="true" textarea-required ng-model="prop.draftText" textarea-menu="pc.smallEditor.menu">
-                    </wysiwyg>
-                </div>
-                <div class="col-md-2 hidden-xs hidden-sm text-right">
-                    <label role="button" class="btn btn-primary btn-md ad-btn-margin" ng-click="prop.text = prop.draftText">
-                        <span class="glyphicon glyphicon-save-file"></span>
-                    </label>
+                <i class="col-xs-2 glyphicon glyphicon-menu-left" aria-hidden="true" ng-click="goBack()" />
+                <div class="col-xs-10">
+                    <h4 translate translate-cloak>STR_PROPOSALS</h4>
                 </div>
             </div>
         </div>
-    </button>
-</div>
-
-<div class="container-fluid ad-container-fluid">
-    <div class="row">
-        <div class="col-xs-12"><h5>Julkaistut ehdotukset</h5></div>
     </div>
-</div>
 
-<div class="btn-group-vertical full-width" role="group">
-    <button ng-if="prop.status === 'public'" type="button" class="btn btn-default text-align-left wrap-button-text" ng-repeat="prop in pc.data.proposals track by $index" ng-class="{'ad-animate-prop-public':pc.animate}">
-        <div ng-if="prop.creator === pc.user" class="row">
-            <div class="col-xs-9 col-md-10">
-                <b>{{prop.type}}</b>
-                <span class="glyphicon glyphicon-user"></span>
-                <div ng-bind-html="prop.text"></div>
-            </div>
-            <div class="col-xs-3 col-md-2 text-right">
-                <label role="button" class="btn btn-primary btn-md ad-btn-margin" aria-expanded="false" ng-click="pc.removeProposal(prop)">
-                    <span class="glyphicon glyphicon-remove-sign"></span>
-                </label>
-            </div>
+    <div class="ad-page-content">
+        <div class="ad-page-container">
+            <db-proposals guid="ctrl.guid"></db-proposals>
         </div>
-        <div ng-if="!(prop.creator === pc.user)" class="row">
-            <div class="col-xs-12">
-                <b>{{prop.type}}</b>
-                <b>{{prop.creator}}</b>
-                <div ng-bind-html="prop.text"></div>
-            </div>
-        </div>
-    </button>
+    </div>
+
 </div>
