@@ -45,13 +45,14 @@ angular.module('dashboard')
             }).then(function successCallback(/*response*/) {
                 self.data.selection = null;
                 $state.go(CONST.APPSTATE.HOME);
-
+                // Don't remove progress bar when continuing with state transition
             }, function errorCallback(error) {
                 $log.error(error);
                 self.data.selection = null;
                 self.error = error;
-            }).finally(function () {
                 self.login = false;
+            }).finally(function () {
+                // Don't remove progress bar when continuing with state transition
             });
         }
 

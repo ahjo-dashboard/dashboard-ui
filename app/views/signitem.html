@@ -23,11 +23,12 @@
             <uib-progressbar ng-if="sc.ongoing" class="progress-striped active" type="info">
             </uib-progressbar>
 
-            <uib-alert ng-repeat="i in sc.alerts track by $index" type="{{i.type}}" ng-click="sc.closeAlert($index)" close="sc.closeAlert($index)">
+                <uib-alert ng-repeat="i in sc.alerts track by $index" type="{{i.type}}" close="sc.closeAlert($index)">
                 <span ng-if="i.locId" translate translate-cloak>{{i.locId}}</span>
                 <div>
                     <span ng-if="i.resCode">{{i.resCode}}&nbsp;</span>
                     <span ng-if="i.resTxt">{{i.resTxt}}</span>
+                        <div ng-if="i.linkMailto"><a href="mailto:{{i.linkMailto}}">{{i.linkMailto}}</a></div>
                 </div>
             </uib-alert>
 
@@ -69,7 +70,7 @@
                         ng-model="sc.btnModel.doc.active" ng-disabled="sc.isDisabled('btnDoc')">
                             <span translate translate-cloak>STR_SIGNING_REQ</span>
                             <div>
-                                <span ng-hide="!sc.displayStatus" class="ng-class:['label', sc.statusStyle(sc.item.Status)]" translate>{{sc.statusStrId(sc.item.Status)}}</span>
+                                <span ng-hide="!sc.displayStatus" class="label ng-class:[sc.statusStyle(sc.item.Status)]" translate translate-cloak>{{sc.statusStrId(sc.item.Status)}}</span>
                             </div>
                         </button>
                     </div>
@@ -117,11 +118,12 @@
                 <uib-progressbar ng-if="sc.ongoing" class="progress-striped active" type="info">
                 </uib-progressbar>
 
-                <uib-alert ng-repeat="i in sc.alerts track by $index" type="{{i.type}}" ng-click="sc.closeAlert($index)" close="sc.closeAlert($index)">
+                <uib-alert ng-repeat="i in sc.alerts track by $index" type="{{i.type}}" close="sc.closeAlert($index)">
                     <span ng-if="i.locId" translate translate-cloak>{{i.locId}}</span>
                     <div>
                         <span ng-if="i.resCode">{{i.resCode}}&nbsp;</span>
                         <span ng-if="i.resTxt">{{i.resTxt}}</span>
+                        <div ng-if="i.linkMailto"><a href="mailto:{{i.linkMailto}}">{{i.linkMailto}}</a></div>
                     </div>
                 </uib-alert>
                 <ad-embedded-file ng-if="sc.displayUrl" ng-hide="sc.hideEmbObj" class="ad-flex-item-upper ad-flex-show-full" refresh="" ng-attr-fileurl="sc.displayUrl"
