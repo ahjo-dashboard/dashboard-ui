@@ -128,7 +128,7 @@ angular.module('dashboard')
         };
 
         self.showEmbeddedFile = function (url) {
-            return (self.isUrlString(url) && self.lowerBlockMode !== CONST.LOWERBLOCKMODE.PROPOSALS) ? true : false;
+            return self.isUrlString(url) && !self.isProposalsActive();
         };
 
         self.isProposalsActive = function () {
