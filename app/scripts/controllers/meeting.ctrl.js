@@ -21,7 +21,8 @@ angular.module('dashboard')
         self.error = null;
         self.topic = StorageSrv.get(CONST.KEY.TOPIC);
         self.blockMode = CONST.BLOCKMODE.BOTH;
-        self.lowerBlockMode = CONST.LOWERBLOCKMODE.PROPOSALS;
+        self.lbms = CONST.LOWERBLOCKMODE;
+        self.lbm = CONST.LOWERBLOCKMODE.PROPOSALS;
         self.header = '';
         $rootScope.menu = $stateParams.menu;
 
@@ -72,7 +73,7 @@ angular.module('dashboard')
         };
 
         self.attachmentClicked = function (attachment) {
-            self.lowerBlockMode = CONST.LOWERBLOCKMODE.ATTACHMENTS;
+            self.lbm = CONST.LOWERBLOCKMODE.ATTACHMENTS;
             if (isMobile) {
                 StorageSrv.set(CONST.KEY.SELECTION_DATA, self.attachmentData);
                 $state.go(CONST.APPSTATE.LIST);
@@ -83,7 +84,7 @@ angular.module('dashboard')
         };
 
         self.decisionClicked = function (decision) {
-            self.lowerBlockMode = CONST.LOWERBLOCKMODE.MATERIALS;
+            self.lbm = CONST.LOWERBLOCKMODE.MATERIALS;
             if (isMobile) {
                 StorageSrv.set(CONST.KEY.SELECTION_DATA, self.decisionData);
                 $state.go(CONST.APPSTATE.LIST);
@@ -94,7 +95,7 @@ angular.module('dashboard')
         };
 
         self.additionalMaterialClicked = function (material) {
-            self.lowerBlockMode = CONST.LOWERBLOCKMODE.MATERIALS;
+            self.lbm = CONST.LOWERBLOCKMODE.MATERIALS;
             if (isMobile) {
                 StorageSrv.set(CONST.KEY.SELECTION_DATA, self.additionalMaterialData);
                 $state.go(CONST.APPSTATE.LIST);
@@ -105,7 +106,7 @@ angular.module('dashboard')
         };
 
         self.proposalsClicked = function () {
-            self.lowerBlockMode = CONST.LOWERBLOCKMODE.PROPOSALS;
+            self.lbm = CONST.LOWERBLOCKMODE.PROPOSALS;
             if (isMobile) {
                 $state.go(CONST.APPSTATE.LISTPROPOSALS);
             }
@@ -128,37 +129,25 @@ angular.module('dashboard')
         };
 
         self.showEmbeddedFile = function (url) {
-            return self.isUrlString(url) && !self.isProposalsActive();
+            return self.isUrlString(url) && !self.isActive(CONST.LOWERBLOCKMODE.PROPOSALS);
         };
 
-        self.isProposalsActive = function () {
-            return self.lowerBlockMode === CONST.LOWERBLOCKMODE.PROPOSALS;
-        };
-
-        self.isAttachmentsActive = function () {
-            return self.lowerBlockMode === CONST.LOWERBLOCKMODE.ATTACHMENTS;
-        };
-
-        self.isMaterialsActive = function () {
-            return self.lowerBlockMode === CONST.LOWERBLOCKMODE.MATERIALS;
+        self.isActive = function (mode) {
+            return self.lbm === mode;
         };
 
         self.isUrlString = function (url) {
             return (url && (typeof url === "string") && url.length) ? true : false;
         };
 
-        $scope.$watch(
-            // This function returns the value being watched. It is called for each turn of the $digest loop
-            function () {
-                return StorageSrv.get(CONST.KEY.TOPIC);
-            },
-            function (newTopic, oldTopic) {
-                if (newTopic !== oldTopic) {
-                    self.topic = newTopic;
-                    setData(self.topic);
-                }
+        $scope.$watch(function () {
+            return StorageSrv.get(CONST.KEY.TOPIC);
+        }, function (newTopic, oldTopic) {
+            if (newTopic !== oldTopic) {
+                self.topic = newTopic;
+                setData(self.topic);
             }
-            );
+        });
 
         $scope.$on('$destroy', function () {
             $log.debug("meetingCtrl: DESTROY");

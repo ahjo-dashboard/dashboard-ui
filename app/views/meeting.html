@@ -24,11 +24,11 @@
                     </button>
                 </div>
                 <div class="col-xs-2 ad-btn-group-middle ad-lower-bg right">
-                    <button type="button" class="btn btn-primary ad-header-button ng-class:[{'active': ctrl.isProposalsActive()}]" ng-click="ctrl.proposalsClicked()"
+                    <button type="button" class="btn btn-primary ad-header-button ng-class:[{'active': ctrl.isActive(ctrl.lbms.PROPOSALS)}]" ng-click="ctrl.proposalsClicked()"
                     translate translate-cloak>STR_PROPOSALS</button>
                 </div>
                 <div class="col-xs-2 ad-btn-group-middle ad-lower-bg right" uib-dropdown is-open="">
-                    <button id="materialButton" type="button" class="btn btn-primary ad-header-button ng-class:[{'active': ctrl.isMaterialsActive()}]"
+                    <button id="materialButton" type="button" class="btn btn-primary ad-header-button ng-class:[{'active': ctrl.isActive(ctrl.lbms.MATERIALS)}]"
                     uib-dropdown-toggle translate translate-cloak>STR_OTHER_MATERIAL<span class="caret hidden-sm"></span>
                     </button>
                     <ul uib-dropdown-menu role="menu" aria-labelledby="materialButton">
@@ -48,7 +48,7 @@
                     </ul>
                 </div>
                 <div class="col-xs-2 ad-btn-group-left ad-lower-bg right" uib-dropdown is-open="">
-                    <button id="attachmentButton" type="button" class="btn btn-primary ad-header-button ng-class:[{'active': ctrl.isAttachmentsActive()}]"
+                    <button id="attachmentButton" type="button" class="btn btn-primary ad-header-button ng-class:[{'active': ctrl.isActive(ctrl.lbms.ATTACHMENTS)}]"
                     uib-dropdown-toggle translate translate-cloak>STR_ATTACHMENTS<span class="caret hidden-sm"></span>
                     </button>
                     <ul uib-dropdown-menu role="menu" aria-labelledby="attachmentButton">
