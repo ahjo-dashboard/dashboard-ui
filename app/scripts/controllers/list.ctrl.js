@@ -17,7 +17,7 @@ angular.module('dashboard')
         self.select = function (item) {
             if (item && item.publicity !== CONST.PUBLICITY.SECRET) {
                 StorageSrv.set(CONST.KEY.LISTPDF_DATA, item);
-                $state.go(CONST.APPSTATE.LISTPDF);
+                $state.go(CONST.APPSTATE.LISTATTACHMENT);
             }
         };
 

@@ -91,12 +91,22 @@ angular.module('dashboard')
                         }
                     }
                 })
-                .state(CONST.APPSTATE.LISTPDF, {
+                .state(CONST.APPSTATE.LISTATTACHMENT, {
                     url: '/attachment',
                     views: {
                         'listContent': {
                             templateUrl: 'views/attachment.html',
                             controller: 'attachmentCtrl',
+                            controllerAs: 'ctrl'
+                        }
+                    }
+                })
+                .state(CONST.APPSTATE.LISTPROPOSALS, {
+                    url: '/proposals',
+                    views: {
+                        'listContent': {
+                            templateUrl: 'views/proposals.html',
+                            controller: 'proposalsCtrl',
                             controllerAs: 'ctrl'
                         }
                     }

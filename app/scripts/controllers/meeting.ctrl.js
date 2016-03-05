@@ -21,6 +21,7 @@ angular.module('dashboard')
         self.error = null;
         self.topic = StorageSrv.get(CONST.KEY.TOPIC);
         self.blockMode = CONST.BLOCKMODE.BOTH;
+        self.lowerBlockMode = CONST.LOWERBLOCKMODE.PROPOSALS;
         self.header = '';
         $rootScope.menu = $stateParams.menu;
 
@@ -71,6 +72,7 @@ angular.module('dashboard')
         };
 
         self.attachmentClicked = function (attachment) {
+            self.lowerBlockMode = CONST.LOWERBLOCKMODE.ATTACHMENTS;
             if (isMobile) {
                 StorageSrv.set(CONST.KEY.SELECTION_DATA, self.attachmentData);
                 $state.go(CONST.APPSTATE.LIST);
@@ -81,6 +83,7 @@ angular.module('dashboard')
         };
 
         self.decisionClicked = function (decision) {
+            self.lowerBlockMode = CONST.LOWERBLOCKMODE.MATERIALS;
             if (isMobile) {
                 StorageSrv.set(CONST.KEY.SELECTION_DATA, self.decisionData);
                 $state.go(CONST.APPSTATE.LIST);
@@ -91,12 +94,20 @@ angular.module('dashboard')
         };
 
         self.additionalMaterialClicked = function (material) {
+            self.lowerBlockMode = CONST.LOWERBLOCKMODE.MATERIALS;
             if (isMobile) {
                 StorageSrv.set(CONST.KEY.SELECTION_DATA, self.additionalMaterialData);
                 $state.go(CONST.APPSTATE.LIST);
             }
             else if (material instanceof Object) {
                 self.lowerUrl = material.link ? material.link : {};
+            }
+        };
+
+        self.proposalsClicked = function () {
+            self.lowerBlockMode = CONST.LOWERBLOCKMODE.PROPOSALS;
+            if (isMobile) {
+                $state.go(CONST.APPSTATE.LISTPROPOSALS);
             }
         };
 
@@ -114,6 +125,22 @@ angular.module('dashboard')
 
         self.isSecret = function (item) {
             return (item && item.publicity) ? (item.publicity === CONST.PUBLICITY.SECRET) : false;
+        };
+
+        self.showEmbeddedFile = function (url) {
+            return self.isUrlString(url) && !self.isProposalsActive();
+        };
+
+        self.isProposalsActive = function () {
+            return self.lowerBlockMode === CONST.LOWERBLOCKMODE.PROPOSALS;
+        };
+
+        self.isAttachmentsActive = function () {
+            return self.lowerBlockMode === CONST.LOWERBLOCKMODE.ATTACHMENTS;
+        };
+
+        self.isMaterialsActive = function () {
+            return self.lowerBlockMode === CONST.LOWERBLOCKMODE.MATERIALS;
         };
 
         self.isUrlString = function (url) {
