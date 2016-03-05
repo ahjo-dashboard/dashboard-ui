@@ -24,7 +24,7 @@
                     </button>
                 </div>
                 <div class="col-xs-2 ad-btn-group-middle ad-lower-bg right">
-                    <button type="button" class="btn btn-primary ad-header-button ng-class:[{'active': ctrl.isProposalsActive()}]" ng-click="ctrl.proposalsClicked()"
+                    <button type="button" class="btn btn-primary ad-header-button ng-class:[{'active': ctrl.isActive(ctrl.lbms.PROPOSALS)}]" ng-click="ctrl.proposalsClicked()"
                     translate translate-cloak>STR_PROPOSALS</button>
                 </div>
                 <div class="col-xs-2 ad-btn-group-middle ad-lower-bg right" uib-dropdown is-open="">
@@ -51,7 +51,7 @@
                     </ul>
                 </div>
                 <div class="col-xs-2 ad-btn-group-left ad-lower-bg right" uib-dropdown is-open="">
-                    <button id="attachmentButton" type="button" class="btn btn-primary ad-header-button ng-class:[{'active': ctrl.isAttachmentsActive()}]"
+                    <button id="attachmentButton" type="button" class="btn btn-primary ad-header-button ng-class:[{'active': ctrl.isActive(ctrl.lbms.ATTACHMENTS)}]"
                     uib-dropdown-toggle>
                         <span translate translate-cloak>STR_ATTACHMENTS</span>
                         <span class="badge ng-cloak hidden-sm">{{ctrl.attachmentData.objects.length}}</span>
