@@ -29,7 +29,10 @@
                 </div>
                 <div class="col-xs-2 ad-btn-group-middle ad-lower-bg right" uib-dropdown is-open="">
                     <button id="materialButton" type="button" class="btn btn-primary ad-header-button ng-class:[{'active': ctrl.isMaterialsActive()}]"
-                    uib-dropdown-toggle translate translate-cloak>STR_OTHER_MATERIAL<span class="caret hidden-sm"></span>
+                    uib-dropdown-toggle>
+                        <span translate translate-cloak>STR_OTHER_MATERIAL</span>
+                        <span class="badge ng-cloak hidden-sm">{{ctrl.additionalMaterialData.objects.length + ctrl.decisionData.objects.length}}</span>
+                        <span class="caret hidden-sm"></span>
                     </button>
                     <ul uib-dropdown-menu role="menu" aria-labelledby="materialButton">
                         <div class="ad-dropdown-header" translate translate-cloak>STR_ADDITIONAL_MATERIAL</div>
@@ -49,7 +52,10 @@
                 </div>
                 <div class="col-xs-2 ad-btn-group-left ad-lower-bg right" uib-dropdown is-open="">
                     <button id="attachmentButton" type="button" class="btn btn-primary ad-header-button ng-class:[{'active': ctrl.isAttachmentsActive()}]"
-                    uib-dropdown-toggle translate translate-cloak>STR_ATTACHMENTS<span class="caret hidden-sm"></span>
+                    uib-dropdown-toggle>
+                        <span translate translate-cloak>STR_ATTACHMENTS</span>
+                        <span class="badge ng-cloak hidden-sm">{{ctrl.attachmentData.objects.length}}</span>
+                        <span class="caret hidden-sm"></span>
                     </button>
                     <ul uib-dropdown-menu role="menu" aria-labelledby="attachmentButton">
                         <li class="ng-class:[{'disabled': ctrl.isSecret(attachment)}]" role="menuitem" ng-repeat="attachment in ctrl.attachmentData.objects track by $index"
