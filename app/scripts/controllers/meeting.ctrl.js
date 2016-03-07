@@ -38,6 +38,12 @@ angular.module('dashboard')
                     if (item instanceof Object) {
                         self.topicData = AttachmentData.create((item.documentTitle ? item.documentTitle : 'STR_TOPIC'), item.link);
                     }
+                    else {
+                        self.topicData = null;
+                    }
+                }
+                else {
+                    self.topicData = null;
                 }
 
                 self.lowerUrl = {};
