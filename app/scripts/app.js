@@ -96,6 +96,7 @@ angular.module('dashboard', [
         else {
             $rootScope.isMobile = false;
         }
+        $log.debug("app.isMobile: " + $rootScope.isMobile);
 
         $rootScope.goHome = function () {
             $state.go(CONST.APPSTATE.HOME);
