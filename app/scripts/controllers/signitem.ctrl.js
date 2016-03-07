@@ -12,7 +12,7 @@
  * Controller of the dashboard
  */
 angular.module('dashboard')
-    .controller('signitemCtrl', function ($log, $scope, $state, $stateParams, SigningAttApi, $sce, $timeout, $uibModal, MessageService, ENV, SigningOpenApi, SigningPersonInfoApi, CONST, $rootScope) {
+    .controller('signitemCtrl', function ($log, $scope, $state, $stateParams, SigningAttApi, $sce, $timeout, $uibModal, MessageService, ENV, SigningOpenApi, SigningPersonInfoApi, CONST, $rootScope, SigningDocSignaturesApi) {
         $log.debug("signitemCtrl.config");
 
         var self = this;
@@ -35,21 +35,35 @@ angular.module('dashboard')
         self.ongoing = false;
         self.alerts = [];
         self.isMobile = $rootScope.isMobile;
+        // self.attModel = ListData.signingAttachmentList('STR_ATTACHMENTS', self.item.AttachmentInfos);
         self.btnModel = {
-            doc: { disabled: false, active: false },
-            acc: { disabled: false, active: false },
-            rej: { disabled: false, active: false },
-            sta: { disabled: false, active: false },
-            com: { disabled: false, active: false },
-            att: { disabled: false, active: false, count: self.item.AttachmentInfos ? self.item.AttachmentInfos.length : 0 }
+            doc: { id: 'doc', disabled: false, active: false, hide: false },
+            acc: { id: 'acc', disabled: false, active: false },
+            rej: { id: 'rej', disabled: false, active: false },
+            sta: { id: 'sta', disabled: false, active: false },
+            com: { id: 'com', disabled: false, active: false },
+            att: { id: 'att', disabled: false, active: false, count: self.item.AttachmentInfos ? self.item.AttachmentInfos.length : 0 }
         };
         self.displayStatus = true;
-
         self.requestorName = self.item.RequestorName ? self.item.RequestorName : null;
         self.requestorId = self.item.RequestorId ? self.item.RequestorId : null;
         self.fileName = self.item.Name;
+        self.docSignings = null;
 
         // PRIVATE FUNCTIONS
+
+        function setBtnActive(id) {
+            if (typeof id !== 'string' && id.length <= 0) {
+                $log.error("signingItemCtrl.setBtnActive: bad args");
+                return;
+            }
+
+            for (var i in self.btnModel) {
+                self.btnModel[i].active = id === i ? true : false;
+                // $log.debug("btn: " + self.btnModel[i].id + " active: " + self.btnModel[i].active);
+            }
+        }
+
 
         function initBtns(btnModel, status) {
             if (status !== CONST.ESIGNSTATUS.UNSIGNED.value) {
@@ -57,7 +71,7 @@ angular.module('dashboard')
                 btnModel.rej.disabled = true;
             }
             if (!self.isMobile) {
-                self.btnModel.doc.active = true; // On desktop document is displayed by default
+                setBtnActive(self.btnModel.doc.id); // On desktop document is displayed by default
             }
         }
 
@@ -68,6 +82,7 @@ angular.module('dashboard')
         function setDisplayUrl(url) {
             $log.debug("signitemCtrl.setDisplayUrl: " + url);
             self.displayUrl = url;
+            setBtnActive(self.btnModel.doc.id);
         }
 
         function drawBlob(blob, delayExpired) {
@@ -165,7 +180,43 @@ angular.module('dashboard')
                 displayRequestor(self.personInfo);
             }
         }
+        // rooli nimi tila aika dd.mm.yyy hh:mm, vanassa status myös värikoodilla
+        function displaySignings(sgn) {
+            if (!sgn || !("Signers" in sgn)) {
+                $log.error("signItemCtrl.displaySignings: bad args");
+                return;
+            }
+            $log.debug("signItemCtrl.displaySignings: " +sgn.Signers.length);
+            if (!$rootScope.isMobile) {
+                self.btnModel.doc.hide = true;
+                setBtnActive(self.btnModel.sta.id);
+                self.listMdl = sgn.Signers;
+            }
+            else {
+                $state.go(CONST.APPSTATE.DOCSIGNERS, { 'signers': sgn.Signers });
+            }
+        }
 
+        function docSignings(item) {
+            $log.debug("signitemCtrl.docSignings");
+            self.listMdl = null;
+            if (!item || !("Guid" in item) || !item.Guid || self.ongoing) {
+                $log.error("signItemCtrl.docSignings: bad args");
+                return;
+            }
+
+            self.ongoing = true;
+            self.docSignings = SigningDocSignaturesApi.get({ reqId: item.ProcessGuid }, function (/*data*/) {
+                $log.debug("signitemCtrl.docSignings: api query done");
+                displaySignings(self.docSignings);
+            }, function (error) {
+                $log.error("signitemCtrl.docSignings: api query error: " + JSON.stringify(error));
+                self.alerts.push({ type: 'danger', locId: 'STR_FAIL_OP', resCode: error.status, resTxt: error.statusText });
+            });
+            self.docSignings.$promise.finally(function () {
+                self.ongoing = false;
+            });
+        }
         // PUBLIC FUNCTIONS
 
         self.actionDoc = function () {
@@ -174,6 +225,8 @@ angular.module('dashboard')
             } else {
                 setDisplayUrl(self.docUrl);
             }
+            self.btnModel.doc.hide = false;
+            self.listMdl = null;
         };
 
         self.actionAttListCb = function () {
@@ -193,8 +246,8 @@ angular.module('dashboard')
             personInfo();
         };
 
-        self.actionStatustCb = function () {
-            $log.debug("signitemCtrl.actionStatustCb");
+        self.actionSignings = function () {
+            docSignings(self.item);
         };
 
         self.closeAlert = function (index) {
@@ -233,36 +286,28 @@ angular.module('dashboard')
         };
 
         self.isDisabled = function (id) {
-            //$log.debug("signingItemCtrl.isDisabled: " + id);
-            if (self.ongoing) {
-                return true;
-            }
-
+            // $log.debug("signingItemCtrl.isDisabled: " + id);
             var res = false;
-            switch (id) {
-                case 'btnDoc':
-                    res = self.btnModel.doc.disabled;
-                    break;
-                case 'btnAtt':
-                    res = self.btnModel.att.disabled || !self.btnModel.att.count;
-                    break;
-                case 'btnSta':
-                    res = self.btnModel.sta.disabled;
-                    break;
-                case 'btnCom':
-                    res = self.btnModel.com.disabled;
-                    break;
-                case 'btnAcc':
-                    res = self.btnModel.acc.disabled;
-                    break;
-                case 'btnRej':
-                    res = self.btnModel.rej.disabled;
-                    break;
-                default:
-                    break;
+            if (self.ongoing) {
+                res = true;
+            }
+            else {
+                switch (id) {
+                    case self.btnModel.att.id:
+                        res = self.btnModel.att.disabled || !self.btnModel.att.count;
+                        break;
+                    default:
+                        res = self.btnModel[id].disabled;
+                        break;
+                }
             }
             return res;
         };
+        self.isActive = function (id) {
+            //$log.debug("signingItemCtrl.isActive: " + id + "=" +self.btnModel[id].active);
+            return !self.isMobile && self.btnModel[id].active;
+        };
+
         /* Resolve css class for signing status */
         self.statusStyle = function (status) {
             var s = $rootScope.objWithVal(CONST.ESIGNSTATUS, 'value', status);
