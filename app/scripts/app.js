@@ -79,6 +79,16 @@ angular.module('dashboard', [
         // $rootScope.isMobile
 
         var device = document.getElementById("device");
+        // Resolves using User Agent if browser is Microsoft Internet Explorer
+
+        function isIeInUa() {
+            var ua = $window.navigator.userAgent;
+            var res = ua.indexOf('Trident') > 0 || ua.indexOf('MSIE') > 0;
+            $log.debug("app.isIeInUa: " + res + ", userAgent=" + ua);
+            return res;
+        }
+
+        $rootScope.isIe = isIeInUa();
 
         if (device && window.getComputedStyle(device, null).getPropertyValue("min-width") === '320px') {
             $rootScope.isMobile = true;
