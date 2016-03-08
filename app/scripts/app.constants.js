@@ -33,6 +33,7 @@ angular.module('dashboard')
             OVERVIEW: "app.overview",
             MEETING: "app.meeting",
             SIGNITEM: "app.signitem",
+            DOCSIGNERS: 'app.signitem.docsigners',
             MEETINGDETAILS: "app.meeting.details",
             TOPIC: "app.meeting.details.topic",
             LIST: "app.meeting.details.list",

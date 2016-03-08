@@ -123,6 +123,19 @@ angular.module('dashboard')
                     params: {
                         signItem: null
                     }
+                })
+                .state(CONST.APPSTATE.DOCSIGNERS, {
+                    url: '/docsigners',
+                    views: {
+                        'childContent': {
+                            templateUrl: 'views/docsigners.html',
+                            controller: 'docSignersCtrl',
+                            controllerAs: 'ctrl'
+                        }
+                    },
+                    params: {
+                        signers: null
+                    }
                 });
         }
         else {
