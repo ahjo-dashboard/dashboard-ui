@@ -11,9 +11,9 @@
  * # openSignreqs
  */
 angular.module('dashboard')
-    .directive('adOpenSignreqs', [function () {
+    .directive('adOpenSignreqs', [function() {
 
-        var controller = ['$log', 'SigningOpenApi', 'SigningClosedApi', '$scope', '$state', '$rootScope', 'CONST', function ($log, SigningOpenApi, SigningClosedApi, $scope, $state, $rootScope, CONST) {
+        var controller = ['$log', 'SigningOpenApi', 'SigningClosedApi', '$scope', '$state', '$rootScope', 'CONST', function($log, SigningOpenApi, SigningClosedApi, $scope, $state, $rootScope, CONST) {
             $log.log("adOpenSignreqs.CONTROLLER");
             var self = this;
 
@@ -159,17 +159,17 @@ angular.module('dashboard')
             function getClosed() {
                 $log.debug("adOpenSignreqs: SigningOpenApi.query closed");
                 self.loadingClosed = true;
-                self.responseClosed = SigningClosedApi.query({ byYear: 2015 }, function (/*data*/) { // TODO: fix byYear
+                self.responseClosed = SigningClosedApi.query({ byYear: 2015 }, function(/*data*/) { // TODO: fix byYear
                     $log.debug("adOpenSignreqs: SigningOpenApi.query closed done: " + self.responseClosed.length);
                     self.loadingClosed = false;
                     self.errClosed = null;
                 },
-                    function (error) {
+                    function(error) {
                         $log.error("adOpenSignreqs: SigningOpenApi.query closed error: " + JSON.stringify(error));
                         self.loadingClosed = false;
                         self.errClosed = error;
                     });
-                self.responseClosed.$promise.finally(function () {
+                self.responseClosed.$promise.finally(function() {
                     $log.debug("adOpenSignreqs: SigningOpenApi.query closed finally");
                     refreshModel();
                 });
@@ -204,25 +204,25 @@ angular.module('dashboard')
 
             /* PUBLIC FUNCTIONS */
 
-            self.itemSelected = function (item) {
+            self.itemSelected = function(item) {
                 $log.debug("adOpenSignreqs.adOpenSignreqs: " + JSON.stringify(item));
                 $state.go(CONST.APPSTATE.SIGNITEM, { 'signItem': item });
             };
 
             /* Resolve display text for item status */
-            self.statusStrId = function (value) {
+            self.statusStrId = function(value) {
                 var s = $rootScope.objWithVal(CONST.ESIGNSTATUS, 'value', value);
                 return s ? s.stringId : '';
             };
 
             // Resolves l18n string id for document type display text
-            self.docTypeStrId = function (value) {
+            self.docTypeStrId = function(value) {
                 var s = $rootScope.objWithVal(CONST.ESIGNTYPE, 'value', value);
                 return s ? s.stringId : '';
             };
 
             /* Is current state loading data */
-            self.loading = function () {
+            self.loading = function() {
                 var res = false;
                 if ((self.viewState === self.VIEW_OPEN && self.loadingOpen) || (self.viewState === self.VIEW_CLOSED && self.loadingClosed)) {
                     res = true;
@@ -231,12 +231,12 @@ angular.module('dashboard')
             };
 
             /* Resolve css class for signing status */
-            self.statusStyle = function (status) {
+            self.statusStyle = function(status) {
                 var s = $rootScope.objWithVal(CONST.ESIGNSTATUS, 'value', status);
                 return s ? s.badgeClass : 'label-default';
             };
 
-            self.setModelFilter = function (filter) {
+            self.setModelFilter = function(filter) {
                 if (filter instanceof DocType) {
                     $log.debug("adOpenSignreqs.setModelFilter: DocType " + filter.val + " string:" + filter.strId);
                     self.FType = filter;
@@ -251,7 +251,7 @@ angular.module('dashboard')
                 setTitle();
             };
 
-            self.docFilter = function (item) {
+            self.docFilter = function(item) {
                 var res = true;
                 if (self.FType) {
                     res = item.DocumentType === self.FType.val;
@@ -265,12 +265,12 @@ angular.module('dashboard')
                 return res;
             };
 
-            self.selected = function (item) {
+            self.selected = function(item) {
                 $log.log("adOpenSignreqs.selected");
                 $state.go(CONST.APPSTATE.SIGNITEM, { 'signItem': item });
             };
 
-            $scope.$watch('closeditems', function (newValue/*, oldValue*/) {
+            $scope.$watch('closeditems', function(newValue/*, oldValue*/) {
                 //$log.debug("adOpenSignreqs.watch closeditems: " +newValue +" old:" +oldValue);
                 if (newValue) {
                     setVwState(self.VIEW_CLOSED);
