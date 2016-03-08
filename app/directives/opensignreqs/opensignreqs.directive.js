@@ -279,6 +279,10 @@ angular.module('dashboard')
                 }
             });
 
+            self.isDisabled = function(/* id */) {
+                return self.viewState === self.VIEW_OPEN ? self.loadingOpen : self.loadingClosed;
+            };
+
             setTitle();
         }];
 
