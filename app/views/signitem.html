@@ -53,7 +53,7 @@
             ng-click="sc.actionSign()" ng-disabled="sc.isDisabled(sc.btnModel.acc.id)">
                 <span translate translate-cloak>STR_SIGNING_ACCEPT</span>
             </button>
-            <button id="sc.btnModel.rej.id" type="button" class="btn btn-block btn-lg btn-warning db-btn-def ng-class: {active: sc.isActive(sc.btnModel.rej.id)}"
+            <button id="sc.btnModel.rej.id" type="button" class="btn btn-block btn-lg btn-danger db-btn-def ng-class: {active: sc.isActive(sc.btnModel.rej.id)}"
             ng-click="sc.actionReject()" ng-disabled="sc.isDisabled(sc.btnModel.rej.id)">
                 <span translate translate-cloak>STR_REJECT</span>
             </button>
@@ -110,7 +110,7 @@
                         </button>
                     </div>
                     <div class="col-xs-12 col-sm-2 ad-btn-group-right">
-                        <button id="sc.btnModel.rej.id" type="button" class="btn btn-warning ad-header-button ng-class:
+                        <button id="sc.btnModel.rej.id" type="button" class="btn btn-danger ad-header-button ng-class:
                         {active: sc.isActive(sc.btnModel.rej.id)}" ng-click="sc.actionReject()" ng-disabled="sc.isDisabled(sc.btnModel.rej.id)">
                             <span translate translate-cloak>STR_REJECT</span>
                         </button>

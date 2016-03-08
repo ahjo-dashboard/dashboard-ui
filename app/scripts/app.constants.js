@@ -85,8 +85,8 @@ angular.module('dashboard')
             READY: { value: 4, iconPath: "images/state_4_remark.png" }
         },
         'ESIGNSTATUS': { //SignApi_DocStatuses
-            UNSIGNED: { value: 1, stringId: 'STR_UNSIGNED', badgeClass: 'label-danger' },
-            REJECTED: { value: 2, stringId: 'STR_REJECTED', badgeClass: 'label-warning' },
+            UNSIGNED: { value: 1, stringId: 'STR_UNSIGNED', badgeClass: 'label-warning' },
+            REJECTED: { value: 2, stringId: 'STR_REJECTED', badgeClass: 'label-danger' },
             SIGNED: { value: 4, stringId: 'STR_SIGNED', badgeClass: 'label-success' },
             RETURNED: { value: 7, stringId: 'STR_RETURNED', badgeClass: 'label-info' },
             UNDECIDED: { value: 8, stringId: 'STR_UNDECIDED', badgeClass: 'label-default' }
