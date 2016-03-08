@@ -33,12 +33,12 @@
                 </button>
             </div>
 
-            <div ng-if="oc.hasMeetings"  class="ad-flex-item ng-class:[{'ad-flex-show-full':oc.blockMode === 1, 'ad-flex-show':oc.blockMode === 0, 'ad-flex-hide':oc.blockMode === 2}]">
+            <div ng-if="oc.hasMeetings" class="ad-flex-item ng-class:[{'ad-flex-show-full':oc.blockMode === 1, 'ad-flex-show':oc.blockMode === 0, 'ad-flex-hide':oc.blockMode === 2}]">
                 <ad-meetings future="oc.future" on-selected="oc.meetingItemSelected(meetingItem)">
                 </ad-meetings>
             </div>
             <!-- MEETINGS END -->
-
+            <br>
             <!-- SIGNINGS START -->
             <div ng-if="oc.hasEsign" class="ad-flex-header">
                 <button type="button" class="btn btn-warning ad-lg ng-class:[{'active':!oc.closedSignReqs}]" ng-click="oc.closedSignReqs=false">
@@ -59,7 +59,7 @@
 
             <div ng-if="oc.hasEsign" class="ad-flex-item ng-class:[{'ad-flex-show-full':oc.blockMode === 2, 'ad-flex-show':oc.blockMode === 0, 'ad-flex-hide':oc.blockMode === 1}]">
                 <ad-open-signreqs closeditems="oc.closedSignReqs"></ad-open-signreqs>
-            <!-- SIGNINGS END -->
+                <!-- SIGNINGS END -->
             </div>
 
         </div>
