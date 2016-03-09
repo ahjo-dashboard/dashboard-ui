@@ -12,14 +12,15 @@
  * Controller of the dashboard
  */
 angular.module('dashboard')
-    .controller('overviewCtrl', ['$scope', '$log', 'ENV', 'SigningOpenApi', '$state', '$rootScope', 'CONST', '$stateParams', function ($scope, $log, ENV, SigningOpenApi, $state, $rootScope, CONST, $stateParams) {
+    .controller('overviewCtrl', ['$scope', '$log', 'ENV', 'SigningOpenApi', '$state', '$rootScope', 'CONST', '$stateParams', 'MTGD', function($scope, $log, ENV, SigningOpenApi, $state, $rootScope, CONST, $stateParams, MTGD) {
         $log.debug("overviewCtrl: CONTROLLER, mode: ", $stateParams.state);
         var self = this;
         self.loading = 0;
         self.signReqsHeader = 'Avoimet allekirjoituspyynnöt';
         self.signErr = null;
         self.blockMode = CONST.BLOCKMODE.BOTH;
-        self.future = true;
+        self.vblMtgs = MTGD.VISIBLE.OPEN;
+        self.vbl = MTGD.VISIBLE;
         self.closedSignReqs = false;
 
         var mode = $stateParams.state;
@@ -49,24 +50,28 @@ angular.module('dashboard')
 
         localStorage.overviewState = mode;
 
-        self.meetingItemSelected = function (meetingItem) {
+        self.meetingItemSelected = function(meetingItem) {
             $log.debug("overviewCtrl.meetingItemSelected");
             $state.go(CONST.APPSTATE.MEETING, { 'meetingItem': meetingItem, 'menu': CONST.MENU.FULL });
         };
 
-        self.showInfo = function () {
+        self.showInfo = function() {
             $log.debug("overviewCtrl: showInfo");
         };
 
-        self.upperClicked = function () {
+        self.upperClicked = function() {
             self.blockMode = (self.blockMode === CONST.BLOCKMODE.BOTH || self.blockMode === CONST.BLOCKMODE.LOWER) ? CONST.BLOCKMODE.UPPER : CONST.BLOCKMODE.BOTH;
         };
 
-        self.lowerClicked = function () {
+        self.lowerClicked = function() {
             self.blockMode = (self.blockMode === CONST.BLOCKMODE.BOTH || self.blockMode === CONST.BLOCKMODE.UPPER) ? CONST.BLOCKMODE.LOWER : CONST.BLOCKMODE.BOTH;
         };
 
-        $scope.$on('$destroy', function () {
+        self.setMtgsVisible = function(mtgs) {
+            self.vblMtgs = mtgs;
+        };
+
+        $scope.$on('$destroy', function() {
             $log.debug("overviewCtrl: DESTROY");
         });
     }]);
