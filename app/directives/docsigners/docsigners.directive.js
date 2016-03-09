@@ -34,10 +34,9 @@ angular.module('dashboard')
                 return s ? s.stringId : '';
             };
 
-            // Resolves l18n string id for document type display text
-            self.docTypeStrId = function (value) {
-                var s = $rootScope.objWithVal(CONST.ESIGNTYPE, 'value', value);
-                return s ? s.stringId : '';
+            self.roleStrId = function (value) {
+                var s = $rootScope.objWithVal(CONST.ESIGNROLE, 'value', value);
+                return s ? s.stringId : value;
             };
 
             /* Resolve css class for signing status */
