@@ -19,6 +19,7 @@ angular.module('dashboard')
 
             self.VIEW_OPEN = 1;
             self.VIEW_CLOSED = 2;
+            self.CLOSED_MAXTASKS = 2;
             self.viewState = null;
             self.model = [];
             self.errClosed = null;
@@ -31,7 +32,9 @@ angular.module('dashboard')
             self.docTypeTitle = null;
             self.docStatusTitle = null;
             self.isMobile = $rootScope.isMobile;
-
+            self.modelOpen = null;
+            self.modelClosed = []; // View data model for closed singing reqs
+            self.ongoingClosed = []; // Ongoing tasks for fetching closed signing reqs
             /* PRIVATE FUNCTIONS */
 
             function setTitle() {
@@ -122,11 +125,11 @@ angular.module('dashboard')
                 switch (self.viewState) {
                     case self.VIEW_OPEN:
                         self.error = self.errOpen;
-                        self.model = self.responseOpen;
+                        self.model = self.modelOpen;
                         break;
                     case self.VIEW_CLOSED:
                         self.error = self.errClosed;
-                        self.model = self.responseClosed;
+                        self.model = self.modelClosed;
                         break;
                     default:
                         $log.error("adOpenSignreqs.refreshModel: Should not reach default here!");
@@ -140,37 +143,49 @@ angular.module('dashboard')
             function getOpen() {
                 $log.debug("adOpenSignreqs: SigningOpenApi.query open");
                 self.loadingOpen = true;
-                self.responseOpen = SigningOpenApi.query(function () {
-                    $log.debug("adOpenSignreqs: SigningOpenApi.query open done: " + self.responseOpen.length);
+                self.modelOpen = SigningOpenApi.query(function() {
+                    $log.debug("adOpenSignreqs: SigningOpenApi.query open done: " + self.modelOpen.length);
                     self.loadingOpen = false;
                     self.errOpen = null;
-                },
-                    function (error) {
-                        $log.error("adOpenSignreqs: SigningOpenApi.query open error: " + JSON.stringify(error));
-                        self.loadingOpen = false;
-                        self.errOpen = error;
-                    });
-                self.responseOpen.$promise.finally(function () {
+                }, function(error) {
+                    $log.error("adOpenSignreqs: SigningOpenApi.query open error: " + JSON.stringify(error));
+                    self.loadingOpen = false;
+                    self.errOpen = error;
+                });
+                self.modelOpen.$promise.finally(function() {
                     $log.debug("adOpenSignreqs: SigningOpenApi.query open finally");
                     refreshModel();
                 });
             }
 
-            function getClosed() {
-                $log.debug("adOpenSignreqs: SigningOpenApi.query closed");
-                self.loadingClosed = true;
-                self.responseClosed = SigningClosedApi.query({ byYear: 2015 }, function(/*data*/) { // TODO: fix byYear
-                    $log.debug("adOpenSignreqs: SigningOpenApi.query closed done: " + self.responseClosed.length);
-                    self.loadingClosed = false;
+            /* Fetch signing documents by year */
+            function getClosed(newY, arr) {
+                $log.debug("adOpenSignreqs.getClosed: SigningOpenApi.query closed: " + newY);
+
+                if (!newY || !arr || !(arr instanceof Object) || arr.length >= self.CLOSED_MAXTASKS) {
+                    $log.error("adOpenSignreqs.getClosed: bad args!");
+                    return;
+                }
+
+                var tmp = { year: newY, prom: null };
+                arr.push(tmp);
+
+                tmp.prom = SigningClosedApi.query({ byYear: newY }, function(/*data*/) {
+                    var data = tmp.prom;
+                    $log.debug("adOpenSignreqs.getClosed: SigningOpenApi.query closed (" + tmp.year + ") done: count: " + data.length);
+                    Array.prototype.push.apply(self.modelClosed, data);
                     self.errClosed = null;
-                },
-                    function(error) {
-                        $log.error("adOpenSignreqs: SigningOpenApi.query closed error: " + JSON.stringify(error));
-                        self.loadingClosed = false;
-                        self.errClosed = error;
-                    });
-                self.responseClosed.$promise.finally(function() {
-                    $log.debug("adOpenSignreqs: SigningOpenApi.query closed finally");
+                }, function(error) {
+                    $log.error("adOpenSignreqs.getClosed: SigningOpenApi.query (" + tmp.year + ") error: " + JSON.stringify(error));
+                    self.errClosed = error;
+                });
+                tmp.prom.$promise.finally(function() {
+                    $log.debug("adOpenSignreqs.getClosed: SigningOpenApi.query finally (" + tmp.year + ")");
+                    var ind = arr.indexOf(tmp); // Supported starting IE 9
+                    if (ind !== -1) {
+                        $log.debug("adOpenSignreqs.getClosed: removing task for year " + tmp.year);
+                        arr.splice(ind, 1);
+                    }
                     refreshModel();
                 });
             }
@@ -183,15 +198,17 @@ angular.module('dashboard')
                 self.model = [];
                 switch (state) {
                     case self.VIEW_OPEN:
-                        if (!self.responseOpen) {
+                        if (!self.modelOpen) {
                             getOpen();
                         } else {
                             refreshModel();
                         }
                         break;
                     case self.VIEW_CLOSED:
-                        if (!self.responseClosed) {
-                            getClosed();
+                        if (!self.modelClosed.length) {
+                            var year = new Date().getFullYear();
+                            getClosed(year, self.ongoingClosed);
+                            getClosed(year - 1, self.ongoingClosed);
                         } else {
                             refreshModel();
                         }
@@ -221,10 +238,10 @@ angular.module('dashboard')
                 return s ? s.stringId : '';
             };
 
-            /* Is current state loading data */
+            /* Resolves if current state is loading data */
             self.loading = function() {
                 var res = false;
-                if ((self.viewState === self.VIEW_OPEN && self.loadingOpen) || (self.viewState === self.VIEW_CLOSED && self.loadingClosed)) {
+                if ((self.viewState === self.VIEW_OPEN && self.loadingOpen) || (self.viewState === self.VIEW_CLOSED && self.ongoingClosed.length)) {
                     res = true;
                 }
                 return res;
