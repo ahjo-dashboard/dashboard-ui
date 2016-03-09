@@ -238,9 +238,9 @@ angular.module('dashboard')
                 }
             });
 
-        if (ENV.app_env === 'prod') {
-            $urlRouterProvider.otherwise('/home');
-        } else {
+        if (ENV.app_env === 'dev' || ENV.app_env === 'test') {
             $urlRouterProvider.otherwise('/login');
+        } else {
+            $urlRouterProvider.otherwise('/home');
         }
     }]);

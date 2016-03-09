@@ -19,6 +19,7 @@ angular.module('dashboard')
             var self = this;
             self.isMobile = $rootScope.isMobile;
             self.listModel = $scope.listmodel;
+            self.isMobile = $scope.ismobile;
 
             // $log.debug("docSigners: " + JSON.stringify(self.listModel));
 
@@ -54,7 +55,8 @@ angular.module('dashboard')
             restrict: 'E',
             replace: 'true',
             scope: {
-                listmodel: '='
+                listmodel: '=',
+                ismobile: '='
             }
         };
     }]);

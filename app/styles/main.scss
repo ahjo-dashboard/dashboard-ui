@@ -416,6 +416,21 @@ body {
         margin: 2px 2px;
     }
 
+    .db-colheader-btn {
+        border-width: 0;
+        border-radius: 0;
+        width: 100%;
+    }
+
+    .db-colheader-btn-dummy {
+        @extend .db-colheader-btn;
+        opacity: 1.0 !important;
+        outline: none !important;
+    }
+
+    .db-nopadding {
+        padding: 0 !important;
+    }
     .ad-dummy-header-button {
         @extend .ad-header-button;
         opacity: 1.0 !important;
