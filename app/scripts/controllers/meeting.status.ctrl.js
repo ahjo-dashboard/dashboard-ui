@@ -95,7 +95,7 @@ angular.module('dashboard')
                     }
                 }
             }
-            return '';
+            return 'tuntematon';
         };
 
         $scope.$on('$destroy', function () {
