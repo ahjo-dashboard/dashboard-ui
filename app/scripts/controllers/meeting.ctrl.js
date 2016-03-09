@@ -26,10 +26,10 @@ angular.module('dashboard')
         self.header = '';
         $rootScope.menu = $stateParams.menu;
 
-        self.topicData = null;
-        self.attachmentData = null;
-        self.decisionData = null;
-        self.additionalMaterialData = null;
+        self.tData = null;
+        self.aData = null;
+        self.dData = null;
+        self.amData = null;
 
         function setData(topic) {
             if (topic instanceof Object) {
@@ -37,22 +37,22 @@ angular.module('dashboard')
                 if (topic.esitykset instanceof Array) {
                     var item = topic.esitykset[0];
                     if (item instanceof Object) {
-                        self.topicData = AttachmentData.create((item.documentTitle ? item.documentTitle : 'STR_TOPIC'), item.link);
+                        self.tData = AttachmentData.create((item.documentTitle ? item.documentTitle : 'STR_TOPIC'), item.link);
                     }
                     else {
-                        self.topicData = null;
+                        self.tData = null;
                     }
                 }
                 else {
-                    self.topicData = null;
+                    self.tData = null;
                 }
 
                 self.lowerUrl = {};
-                self.upperUrl = (self.topicData && self.topicData.link) ? self.topicData.link : {};
+                self.upperUrl = (self.tData && self.tData.link) ? self.tData.link : {};
 
-                self.attachmentData = ListData.createAttachmentList('STR_ATTACHMENTS', topic.attachment);
-                self.decisionData = ListData.createDecisionList('STR_DECISION_HISTORY', topic.decision);
-                self.additionalMaterialData = ListData.createAdditionalMaterialList('STR_ADDITIONAL_MATERIAL', topic.additionalMaterial);
+                self.aData = ListData.createAttachmentList('STR_ATTACHMENTS', topic.attachment);
+                self.dData = ListData.createDecisionList('STR_DECISION_HISTORY', topic.decision);
+                self.amData = ListData.createAdditionalMaterialList('STR_ADDITIONAL_MATERIAL', topic.additionalMaterial);
             }
             else {
                 self.lowerUrl = {};
@@ -70,7 +70,7 @@ angular.module('dashboard')
 
         self.topicClicked = function () {
             if (isMobile) {
-                StorageSrv.set(CONST.KEY.LISTPDF_DATA, self.topicData);
+                StorageSrv.set(CONST.KEY.LISTPDF_DATA, self.tData);
                 $state.go(CONST.APPSTATE.TOPIC);
             }
             else {
@@ -81,7 +81,7 @@ angular.module('dashboard')
         self.attachmentClicked = function (attachment) {
             self.lbm = CONST.LOWERBLOCKMODE.ATTACHMENTS;
             if (isMobile) {
-                StorageSrv.set(CONST.KEY.SELECTION_DATA, self.attachmentData);
+                StorageSrv.set(CONST.KEY.SELECTION_DATA, self.aData);
                 $state.go(CONST.APPSTATE.LIST);
             }
             else if (attachment instanceof Object) {
@@ -92,7 +92,7 @@ angular.module('dashboard')
         self.decisionClicked = function (decision) {
             self.lbm = CONST.LOWERBLOCKMODE.MATERIALS;
             if (isMobile) {
-                StorageSrv.set(CONST.KEY.SELECTION_DATA, self.decisionData);
+                StorageSrv.set(CONST.KEY.SELECTION_DATA, self.dData);
                 $state.go(CONST.APPSTATE.LIST);
             }
             else if (decision instanceof Object) {
@@ -103,7 +103,7 @@ angular.module('dashboard')
         self.additionalMaterialClicked = function (material) {
             self.lbm = CONST.LOWERBLOCKMODE.MATERIALS;
             if (isMobile) {
-                StorageSrv.set(CONST.KEY.SELECTION_DATA, self.additionalMaterialData);
+                StorageSrv.set(CONST.KEY.SELECTION_DATA, self.amData);
                 $state.go(CONST.APPSTATE.LIST);
             }
             else if (material instanceof Object) {
