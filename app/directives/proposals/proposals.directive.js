@@ -11,50 +11,153 @@
  * # proposalsDirective
  */
 angular.module('dashboard')
-    .directive('dbProposals', [function () {
+    .constant('PROPS', {
+        'PUBLISHED': {
+            NO: 0,
+            YES: 1
+        },
+        'TYPE': [
+            { value: 1, text: "Päätös" },
+            { value: 2, text: "Esityksen muutos" },
+            { value: 3, text: "Pöydällepanoehdotus" },
+            { value: 4, text: "Palautusehdotus" },
+            { value: 5, text: "Vastaehdotus" },
+            { value: 6, text: "Hylkäysehdotus" },
+            { value: 7, text: "Ponsi" },
+            { value: 8, text: "Eriävä mielipide" },
+            { value: 9, text: "Esteellinen" },
+            { value: 10, text: "Esityksen poisto" }
+        ]
+    })
+    .directive('dbProposals', [function() {
 
-        var controller = ['$log', '$scope', 'AhjoProposalsSrv', function ($log, $scope, AhjoProposalsSrv) {
+        var controller = ['$log', '$scope', 'AhjoProposalsSrv', 'PROPS', '$rootScope', function($log, $scope, AhjoProposalsSrv, PROPS, $rootScope) {
             $log.log("dbProposals: CONTROLLER");
             var self = this;
-            self.proposals = [];
-            var guid = $scope.guid;
+            self.proposals = null;
+            self.tps = PROPS.TYPE;
+            self.published = PROPS.PUBLISHED;
+            self.isMobile = $rootScope.isMobile;
 
             function getProposals(guid) {
-
                 if (typeof guid === 'string') {
-                    AhjoProposalsSrv.get(guid).then(function (response) {
-                        $log.debug("meetingCtrl: get then: ");
-                        if (response instanceof Object && response.objects instanceof Array) {
-                            self.proposals = response.objects;
+                    var getResult = null;
+
+                    AhjoProposalsSrv.get({ 'guid': guid }).$promise.then(function(response) {
+                        $log.debug("dbProposals: get then: ");
+                        getResult = response.objects;
+                    }, function(error) {
+                        $log.error("dbProposals: get error: " + JSON.stringify(error));
+                    }, function(notify) {
+                        $log.debug("dbProposals: get notify: " + JSON.stringify(notify));
+                    }).finally(function() {
+                        $log.debug("dbProposals: get finally: ");
+                        if (getResult instanceof Object) {
+                            self.proposals = angular.copy(getResult);
                         }
-                        else {
-                            self.proposals = [];
-                        }
-                    }, function (error) {
-                        $log.error("meetingCtrl: get error: " + JSON.stringify(error));
-                    }, function (notify) {
-                        $log.debug("meetingCtrl: get notify: " + JSON.stringify(notify));
-                    }).finally(function () {
-                        $log.debug("meetingCtrl: get finally: ");
                     });
+                }
+                else {
+                    $log.error('dbProposals: getProposals parameter invalid');
                 }
             }
 
-            getProposals(guid);
+            function postProposal(proposal) {
+                if (proposal instanceof Object) {
+                    var postResult = null;
 
-            $scope.$watch(function () {
+                    AhjoProposalsSrv.post(proposal).$promise.then(function(response) {
+                        $log.debug("dbProposals: post then: " + JSON.stringify(response));
+                        postResult = (response instanceof Object) ? response.Data : null;
+                    }, function(error) {
+                        $log.error("dbProposals: post error: " + JSON.stringify(error));
+                    }, function(notify) {
+                        $log.debug("dbProposals: post notify: " + JSON.stringify(notify));
+                    }).finally(function() {
+                        $log.debug("dbProposals: post finally: ");
+                        if (postResult instanceof Object) {
+                            $log.debug(JSON.stringify(postResult.Message));
+                        }
+                    });
+                }
+                else {
+                    $log.error('dbProposals: postProposal parameter invalid');
+                }
+            }
+
+            function deleteProposal(proposal) {
+                if (proposal instanceof Object) {
+                    AhjoProposalsSrv.delete(proposal).$promise.then(function(response) {
+                        $log.debug("dbProposals: delete then: " + JSON.stringify(response));
+                    }, function(error) {
+                        $log.error("dbProposals: delete error: " + JSON.stringify(error));
+                    }, function(notify) {
+                        $log.debug("dbProposals: delete notify: " + JSON.stringify(notify));
+                    }).finally(function() {
+                        $log.debug("dbProposals: delete finally: ");
+                    });
+                }
+                else {
+                    $log.error('dbProposals: deleteProposal parameter invalid');
+                }
+            }
+
+            function createDraft(item) {
+                return {
+                    "personGuid": "926eee0b-8e94-4a14-beec-d9b60590547f",
+                    "proposalGuid": "",
+                    "firstName": "",
+                    "lastName": "",
+                    "personName": "",
+                    "topicGuid": $scope.guid,
+                    "text": "",
+                    "proposalType": item.value,
+                    "remarkDescription": "",
+                    "isPublished": 0,
+                    "isTranslatedIcon": "",
+                    "isPublishedIcon": "",
+                    "translated": "",
+                    "language": "fi",
+                    "insertDateTime": "",
+                    "orderNumber": "",
+                    "translationText": "",
+                    "translationTaskGuid": "",
+                    "translationTime": "",
+                    "isMinuteEntryBase": "",
+                    "isModified": "",
+                    "isCopy": "",
+                    "isNew": true
+                };
+            }
+
+            self.post = function(proposal) {
+                postProposal(proposal);
+            };
+
+            self.delete = function(proposal) {
+                deleteProposal(proposal);
+            };
+
+            self.addProposal = function(item) {
+                if ((self.proposals instanceof Array) === false) {
+                    self.proposals = [];
+                }
+                self.proposals.splice(0, 0, createDraft(item));
+            };
+
+            $scope.$watch(function() {
                 return {
                     guid: $scope.guid
                 };
-            }, function (data) {
-                if (data instanceof Object) {
-                    getProposals(data.guid);
-                }
+            }, function(data) {
+                getProposals(data.guid);
             }, true);
 
-            $scope.$on('$destroy', function () {
+            $scope.$on('$destroy', function() {
                 $log.debug("dbProposals: DESTROY");
             });
+
+            getProposals($scope.guid);
 
         }];
 
@@ -65,7 +168,7 @@ angular.module('dashboard')
             templateUrl: 'directives/proposals/proposals.Directive.html',
             restrict: 'AE',
             controller: controller,
-            controllerAs: 'ctrl',
+            controllerAs: 'c',
             replace: 'true'
         };
     }]);

@@ -97,7 +97,7 @@
             <div class="ad-flex-item-lower ng-class:[{'ad-flex-show-full': ctrl.isLowerMode(), 'ad-flex-show': ctrl.isBothMode(), 'ad-flex-hide': ctrl.isUpperMode()}]">
 
                 <ad-embedded-file ng-if="ctrl.showEmbeddedFile(ctrl.lowerUrl)" refresh="ctrl.blockMode" ng-attr-fileurl="ctrl.lowerUrl" ng-attr-filename="ctrl.lowerUrl"></ad-embedded-file>
-                <db-proposals ng-if="ctrl.isProposalsActive()" guid="ctrl.topic.topicGuid"></db-proposals>
+                <db-proposals ng-if="ctrl.isActive(ctrl.lbms.PROPOSALS)" guid="ctrl.topic.topicGuid"></db-proposals>
 
             </div>
             <!-- LOWER END -->

@@ -1,0 +1,68 @@
+/**
+ * (c) 2016 Tieto Finland Oy
+ * Licensed under the MIT license.
+ */
+
+@import "bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
+
+.prop-element {
+    background-color: white;
+    margin: auto;
+    padding: 10px;
+    border-style: solid;
+    border-width: thin;
+    border-radius: 4px;
+}
+
+.prop-header {
+    padding-left: 1px;
+    padding-right: 1px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.prop-header-text {
+    margin-top: 5px;
+    margin-bottom: 3px;
+}
+
+.prop-button {
+    text-align: center !important;
+}
+
+.prop-text {
+    min-height: 2em;
+    margin-top: 3px;
+}
+
+.prop-text-header {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: auto;
+    max-height: 1.6em;
+}
+
+.prop-row {
+    @extend .row;
+    margin: 0;
+    display: flex;
+    align-items: center;
+}
+
+.prop-row-child {
+    padding: 0;
+}
+
+/* Small devices (tablets, 768px and up) */
+@media screen and (min-width: 768px) {
+
+    .prop-element {
+        border-radius: 8px;
+    }
+
+    .prop-header-text {
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+}
