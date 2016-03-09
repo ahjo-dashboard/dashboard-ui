@@ -22,6 +22,7 @@ angular.module('dashboard')
         self.future = true;
         self.closedSignReqs = false;
 
+        $rootScope.menu = CONST.MENU.CLOSED;
         var mode = $stateParams.state;
         var storedMode = localStorage.overviewState;
 
