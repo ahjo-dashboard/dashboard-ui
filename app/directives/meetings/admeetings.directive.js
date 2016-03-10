@@ -11,18 +11,23 @@
 * # adMeetingsDirective
 */
 angular.module('dashboard')
-    .directive('adMeetings', [function () {
+    .constant('MTGD', {
+        'VISIBLE': {
+            OPEN: 4,
+            CLOSED: 5
+        }
+    })
+    .directive('adMeetings', [function() {
 
-        var controller = ['$log', '$scope', 'ENV', 'AhjoMeetingsSrv', '$translate', '$rootScope', function ($log, $scope, ENV, AhjoMeetingsSrv, $translate, $rootScope) {
+        var controller = ['$log', '$scope', 'ENV', 'AhjoMeetingsSrv', '$translate', '$rootScope', 'MTGD', function($log, $scope, ENV, AhjoMeetingsSrv, $translate, $rootScope, MTGD) {
             $log.log("adMeetings: CONTROLLER");
             var self = this;
             self.mtgErr = null;
             self.loading = false;
             self.responseData = {};
             self.data = [];
-            self.date = new Date();
-            self.date.setFullYear(self.date.getFullYear() - 4);  // this if for testing. to be removed
             self.isMobile = $rootScope.isMobile;
+            $scope.visibleMeetings = MTGD.VISIBLE.OPEN;
 
             self.agencyData = [];
             self.roleData = [];
@@ -34,7 +39,7 @@ angular.module('dashboard')
 
             function setTitle() {
                 if (!self.aF) {
-                    $translate('STR_AGENCY').then(function (agency) {
+                    $translate('STR_AGENCY').then(function(agency) {
                         self.agencyTitle = agency;
                     });
                 }
@@ -42,7 +47,7 @@ angular.module('dashboard')
                     self.agencyTitle = self.aF;
                 }
                 if (!self.rF) {
-                    $translate('STR_ROLE').then(function (role) {
+                    $translate('STR_ROLE').then(function(role) {
                         self.roleTitle = role;
                     });
                 }
@@ -53,13 +58,18 @@ angular.module('dashboard')
 
             function setData() {
                 self.data = [];
-                var date = self.date.toJSON();
                 if (self.responseData instanceof Object && self.responseData.objects instanceof Array) {
                     for (var i = 0; i < self.responseData.objects.length; i++) {
                         var item = self.responseData.objects[i];
-                        var time = item.meetingTime;
                         var aVisible = self.aF ? (self.aF === item.agencyName) : true;
-                        var fVisible = ($scope.future && time) ? date < time : true;
+                        var fVisible = false;
+
+                        if ($scope.visibleMeetings === MTGD.VISIBLE.OPEN && item.state) {
+                            fVisible = item.state <= MTGD.VISIBLE.OPEN;
+                        }
+                        else if ($scope.visibleMeetings === MTGD.VISIBLE.CLOSED && item.state) {
+                            fVisible = item.state >= MTGD.VISIBLE.CLOSED;
+                        }
 
                         for (var j = 0; j < item.roleIDs.length; j++) {
                             var role = item.roleIDs[j].RoleName;
@@ -99,36 +109,41 @@ angular.module('dashboard')
                 }
             }
 
-            AhjoMeetingsSrv.getMeetings().then(function (response) {
+            AhjoMeetingsSrv.getMeetings().then(function(response) {
                 self.loading = false;
                 self.responseData = response;
                 if ("objects" in self.responseData) {
                     $log.debug("adMeetings: getMeetings done: " + self.responseData.objects.length);
                 }
-            }, function (error) {
+            }, function(error) {
                 $log.error("adMeetings: getMeetings error: " + JSON.stringify(error));
                 self.loading = false;
                 self.mtgErr = error;
-            }, function (/*notify*/) {
+            }, function(/*notify*/) {
                 self.loading = true;
-            }).finally(function () {
+            }).finally(function() {
                 setData();
                 parseAgencyDropdown();
                 parseRoleDropdown();
             });
 
-            $scope.$watch('future', function () {
+            $scope.$watch(function() {
+                return {
+                    visibleMeetings: $scope.visibleMeetings
+                };
+            }, function(data) {
+                $log.debug("WATCH " + JSON.stringify(data));
                 setData();
                 parseAgencyDropdown();
                 parseRoleDropdown();
-            });
+            }, true);
 
-            self.meetingSelected = function (meeting) {
+            self.meetingSelected = function(meeting) {
                 $log.debug("adMeetings: meetingSelected: " + JSON.stringify(meeting));
                 // $state.go('app.meeting', {meetingItem : meeting});
             };
 
-            self.setAgencyFilter = function (agency) {
+            self.setAgencyFilter = function(agency) {
                 $log.debug("adMeetings: setAgencyFilter: " + agency);
                 self.aF = agency;
                 setData();
@@ -140,7 +155,7 @@ angular.module('dashboard')
                 $scope.agencyIsOpen = false;
             };
 
-            self.setRoleFilter = function (role) {
+            self.setRoleFilter = function(role) {
                 $log.debug("adMeetings: setRoleFilter: " + role);
                 self.rF = role;
                 setData();
@@ -157,7 +172,7 @@ angular.module('dashboard')
 
         return {
             scope: {
-                future: '=',
+                visibleMeetings: '=',
                 selected: '&onSelected'
             },
             templateUrl: 'directives/meetings/adMeetings.Directive.html',
