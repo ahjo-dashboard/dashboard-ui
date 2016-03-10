@@ -23,6 +23,7 @@ angular.module('dashboard')
         self.vbl = MTGD.VISIBLE;
         self.closedSignReqs = false;
 
+        $rootScope.menu = CONST.MENU.CLOSED;
         var mode = $stateParams.state;
         var storedMode = localStorage.overviewState;
 
