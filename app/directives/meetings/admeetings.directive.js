@@ -66,7 +66,7 @@ angular.module('dashboard')
                             var role = item.roleIDs[j].RoleName;
                             var roleId = item.roleIDs[j].RoleID;
 
-                            var rVisible = (roleId === 2) ? true : false;
+                            var rVisible = (roleId === 2);
                             self.data.push({
                                 'meeting': item,
                                 'role': role,
