@@ -35,7 +35,6 @@ angular.module('dashboard')
             self.aF = null;
             self.rF = null;
             self.agencyTitle = null;
-            self.roleTitle = null;
 
             function setTitle() {
                 if (!self.aF) {
@@ -45,14 +44,6 @@ angular.module('dashboard')
                 }
                 else {
                     self.agencyTitle = self.aF;
-                }
-                if (!self.rF) {
-                    $translate('STR_ROLE').then(function(role) {
-                        self.roleTitle = role;
-                    });
-                }
-                else {
-                    self.roleTitle = self.rF;
                 }
             }
 
@@ -73,7 +64,9 @@ angular.module('dashboard')
 
                         for (var j = 0; j < item.roleIDs.length; j++) {
                             var role = item.roleIDs[j].RoleName;
-                            var rVisible = self.rF ? (self.rF === role) : true;
+                            var roleId = item.roleIDs[j].RoleID;
+
+                            var rVisible = (roleId === 2) ? true : false;
                             self.data.push({
                                 'meeting': item,
                                 'role': role,
