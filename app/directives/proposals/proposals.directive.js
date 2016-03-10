@@ -66,6 +66,10 @@ angular.module('dashboard')
                 if (proposal instanceof Object) {
                     var postResult = null;
 
+                    if (proposal.isNew) {
+                        delete proposal.isNew;
+                    }
+
                     AhjoProposalsSrv.post(proposal).$promise.then(function(response) {
                         $log.debug("dbProposals: post then: " + JSON.stringify(response));
                         postResult = (response instanceof Object) ? response.Data : null;
@@ -87,18 +91,30 @@ angular.module('dashboard')
 
             function deleteProposal(proposal) {
                 if (proposal instanceof Object) {
-                    AhjoProposalsSrv.delete(proposal).$promise.then(function(response) {
-                        $log.debug("dbProposals: delete then: " + JSON.stringify(response));
-                    }, function(error) {
-                        $log.error("dbProposals: delete error: " + JSON.stringify(error));
-                    }, function(notify) {
-                        $log.debug("dbProposals: delete notify: " + JSON.stringify(notify));
-                    }).finally(function() {
-                        $log.debug("dbProposals: delete finally: ");
-                    });
-                }
-                else {
-                    $log.error('dbProposals: deleteProposal parameter invalid');
+                    if (proposal.isNew && self.proposals instanceof Array) {
+                        for (var index = 0; index < self.proposals.length; index++) {
+                            if (angular.equals(proposal, self.proposals[index])) {
+                                self.proposals.splice(index, 1);
+                                continue;
+                            }
+                        }
+                    }
+                    else {
+                        if (proposal instanceof Object) {
+                            AhjoProposalsSrv.delete(proposal).$promise.then(function(response) {
+                                $log.debug("dbProposals: delete then: " + JSON.stringify(response));
+                            }, function(error) {
+                                $log.error("dbProposals: delete error: " + JSON.stringify(error));
+                            }, function(notify) {
+                                $log.debug("dbProposals: delete notify: " + JSON.stringify(notify));
+                            }).finally(function() {
+                                $log.debug("dbProposals: delete finally: ");
+                            });
+                        }
+                        else {
+                            $log.error('dbProposals: deleteProposal parameter invalid');
+                        }
+                    }
                 }
             }
 
