@@ -94,5 +94,7 @@ angular.module('dashboard')
         'ESIGNTYPE': {// SignApi_DocTypes
             POLICYMAKER: { value: 1, stringId: 'STR_SIGNING_DOC_POLICYMAKER' },
             OFFICIAL: { value: 2, stringId: 'STR_SIGNING_DOC_OFFICIAL' }
+        },
+        'ESIGNROLE': {
         }
     });
