@@ -95,7 +95,6 @@ angular.module('dashboard')
                         for (var index = 0; index < self.proposals.length; index++) {
                             if (angular.equals(proposal, self.proposals[index])) {
                                 self.proposals.splice(index, 1);
-                                continue;
                             }
                         }
                     }

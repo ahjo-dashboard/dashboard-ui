@@ -19,8 +19,8 @@ h1, h2, h3, h4, h5 {
 }
 
 .prop-header {
-    padding-left: 1px;
-    padding-right: 1px;
+    padding-left: 3px;
+    padding-right: 3px;
     padding-top: 5px;
     padding-bottom: 5px;
 }
@@ -32,6 +32,7 @@ h1, h2, h3, h4, h5 {
 
 .prop-button {
     text-align: center !important;
+    min-height: 50px;
 }
 
 .prop-text {
