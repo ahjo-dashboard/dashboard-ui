@@ -76,8 +76,8 @@ h1, h2, h3, h4, h5 {
     }
 
     .prop-page {
-        margin-left: 15px;
-        margin-right: 15px;
+        margin-left: 10px;
+        margin-right: 10px;
     }
 
     .prop-element {
@@ -90,7 +90,21 @@ h1, h2, h3, h4, h5 {
     }
 
     .prop-label {
-        margin-top: 0;
-        margin-bottom: 0;
+        margin-top: 2px;
+        margin-bottom: 2px;
+        margin-left: 1px;
+        margin-right: 1px;
+    }
+
+    .prop-icon {
+        margin-right: 5px;
+    }
+}
+
+/* Medium devices (desktops, 992px and up) */
+@media screen and (min-width: 992px) {
+    .prop-page {
+        margin-left: 15px;
+        margin-right: 15px;
     }
 }
