@@ -22,7 +22,7 @@
                         <input ng-if="lc.data.selection" style="margin: 10px;" class="btn btn-success" type="submit" value="{{'STR_LOGIN' | translate}}" ng-click="lc.select()" ng-disabled="lc.login"/>
                 </form>
 
-                <uib-progressbar ng-if="lc.login || lc.loadingUsers" class="progress-striped" type="info"></uib-progressbar>
+                <uib-progressbar ng-if="lc.login || lc.loadingUsers" class="progress-striped active" type="info"></uib-progressbar>
 
                 <uib-alert ng-if="lc.error" type="danger">
                     <span translate-cloak translate>STR_FAIL_LOADING</span>&nbsp;<span translate>STR_TRY_LATER</span>
