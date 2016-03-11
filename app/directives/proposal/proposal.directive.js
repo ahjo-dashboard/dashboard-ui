@@ -33,7 +33,7 @@ angular.module('dashboard')
 
             self.mode = PROP.MODE.COLLAPSED;
             self.mds = PROP.MODE;
-            self.isPublished = false;
+            self.isPbl = false;
             self.isUser = false;
             self.editedText = "";
             self.smallEditor = {
@@ -56,13 +56,12 @@ angular.module('dashboard')
 
             function setProposal(proposal) {
                 if (proposal instanceof Object) {
-                    self.isPublished = (proposal.isPublished === PROPS.PUBLISHED.YES);
+                    self.isPbl = (proposal.isPublished === PROPS.PUBLISHED.YES);
                     self.isUser = (proposal.personGuid === self.testUserGuid);
                     self.editedText = proposal.text;
 
                     if (proposal.isNew) {
                         self.mode = PROP.MODE.EDITOR;
-                        delete proposal.isNew;
                     }
                 }
             }
@@ -77,11 +76,11 @@ angular.module('dashboard')
                     $scope.proposal.text = self.editedText;
                     $scope.onPost({ proposal: $scope.proposal });
                 }
-                self.mode = PROP.MODE.OPEN;
+                self.mode = PROP.MODE.COLLAPSED;
             };
 
             self.cancelEditing = function() {
-                self.mode = (self.editedText && self.editedText.length) ? PROP.MODE.OPEN : PROP.MODE.COLLAPSED;
+                self.mode = PROP.MODE.COLLAPSED;
             };
 
             self.deleteProposal = function() {
@@ -94,7 +93,7 @@ angular.module('dashboard')
             };
 
             self.open = function() {
-                self.mode = PROP.MODE.OPEN;
+                self.mode = self.isPbl ? PROP.MODE.OPEN : PROP.MODE.EDITOR;
             };
 
             self.collapse = function() {
