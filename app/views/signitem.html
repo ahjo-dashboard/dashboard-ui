@@ -32,28 +32,28 @@
                 </div>
             </uib-alert>
 
-            <button id="sc.btnModel.doc.id" type="button" class="btn btn-block btn-lg btn-info db-btn-def ng-class: {active: sc.isActive(sc.btnModel.doc.id)}"
+            <button id="sc.btnModel.doc.id" type="button" class="btn btn-block btn-lg db-btn-prim ng-class: {active: sc.isActive(sc.btnModel.doc.id)}"
             ng-click="sc.actionDoc()" ng-model="sc.btnModel.doc.active" ng-disabled="sc.isDisabled(sc.btnModel.doc.id)">
                 <span translate translate-cloak>STR_SIGNING_REQ</span>
             </button>
-            <button id="sc.btnModel.att.id" type="button" class="btn btn-block btn-lg btn-info db-btn-def ng-class: {active: sc.isActive(sc.btnModel.att.id)}"
+            <button id="sc.btnModel.att.id" type="button" class="btn btn-block btn-lg db-btn-prim ng-class: {active: sc.isActive(sc.btnModel.att.id)}"
             uib-dropdown-toggle ng-disabled="sc.isDisabled(sc.btnModel.att.id)">
                 <span translate translate-cloak>STR_ATTACHMENTS</span>
                 <span class="badge ng-cloak">{{sc.btnModel.att.count}}</span>
             </button>
-            <button id="sc.btnModel.sta.id" type="button" class="btn btn-block btn-lg btn-info db-btn-def ng-class: {active: sc.isActive(sc.btnModel.sta.id)}"
+            <button id="sc.btnModel.sta.id" type="button" class="btn btn-block btn-lg db-btn-prim ng-class: {active: sc.isActive(sc.btnModel.sta.id)}"
             ng-click="sc.actionSignings()" ng-disabled="sc.isDisabled(sc.btnModel.sta.id)">
                 <span translate translate-cloak>STR_SIGNING_REQ_STATUS</span>
             </button>
-            <button id="sc.btnModel.com.id" type="button" class="btn btn-block btn-lg btn-info db-btn-def ng-class: {active: sc.isActive(sc.btnModel.com.id)}"
+            <button id="sc.btnModel.com.id" type="button" class="btn btn-block btn-lg db-btn-prim ng-class: {active: sc.isActive(sc.btnModel.com.id)}"
             ng-click="sc.actionComment()" ng-disabled="sc.isDisabled(sc.btnModel.com.id)">
                 <span translate translate-cloak>STR_CREATE_COMMENT</span>
             </button>
-            <button id="sc.btnModel.acc.id" type="button" class="btn btn-block btn-lg btn-success db-btn-def ng-class: {active: sc.isActive(sc.btnModel.acc.id)}"
+            <button id="sc.btnModel.acc.id" type="button" class="btn btn-block btn-lg btn-success ng-class: {active: sc.isActive(sc.btnModel.acc.id)}"
             ng-click="sc.actionSign()" ng-disabled="sc.isDisabled(sc.btnModel.acc.id)">
                 <span translate translate-cloak>STR_SIGNING_ACCEPT</span>
             </button>
-            <button id="sc.btnModel.rej.id" type="button" class="btn btn-block btn-lg btn-danger db-btn-def ng-class: {active: sc.isActive(sc.btnModel.rej.id)}"
+            <button id="sc.btnModel.rej.id" type="button" class="btn btn-block btn-lg btn-danger ng-class: {active: sc.isActive(sc.btnModel.rej.id)}"
             ng-click="sc.actionReject()" ng-disabled="sc.isDisabled(sc.btnModel.rej.id)">
                 <span translate translate-cloak>STR_REJECT</span>
             </button>
@@ -70,8 +70,8 @@
                     <i class="hidden-sm col-sm-6 glyphicon glyphicon-info-sign left" aria-hidden="true"></i>
                 </div>
                 <div class="col-xs-12 col-sm-11">
-                    <div class="col-xs-12 col-sm-2 ad-btn-group-left">
-                        <button id="sc.btnModel.doc.id" type="button" class="btn btn-info ad-header-button ng-class: {active: sc.isActive(sc.btnModel.doc.id)}"
+                    <div class="col-xs-12 col-sm-2 btn-group">
+                        <button id="sc.btnModel.doc.id" type="button" class="btn btn-block db-btn-prim ng-class: {active: sc.isActive(sc.btnModel.doc.id)}"
                         ng-click="sc.actionDoc()" ng-model="sc.btnModel.doc.active" ng-disabled="sc.isDisabled(sc.btnModel.doc.id)">
                             <span translate translate-cloak>STR_SIGNING_REQ</span>
                             <div>
@@ -79,8 +79,8 @@
                             </div>
                         </button>
                     </div>
-                    <div class="col-xs-12 col-sm-2 ad-btn-group-middle" uib-dropdown is-open="hideEmbObj">
-                        <button id="sc.btnModel.att.id" type="button" class="btn btn-info ad-header-button ng-class:
+                    <div class="col-xs-12 col-sm-2 btn-group" uib-dropdown is-open="hideEmbObj">
+                        <button id="sc.btnModel.att.id" type="button" class="btn btn-block db-btn-prim ng-class:
                         {active: sc.isActive(sc.btnModel.att.id)}" uib-dropdown-toggle ng-disabled="sc.isDisabled(sc.btnModel.att.id)">
                             <span translate translate-cloak>STR_ATTACHMENTS</span>
                             <span class="badge ng-cloak">{{sc.btnModel.att.count}}</span>
@@ -91,26 +91,26 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="col-xs-12 col-sm-2 ad-btn-group-right">
-                        <button id="sc.btnModel.sta.id" type="button" class="btn btn-info ad-header-button ng-class:
+                    <div class="col-xs-12 col-sm-2 btn-group">
+                        <button id="sc.btnModel.sta.id" type="button" class="btn btn-block db-btn-prim ng-class:
                         {active: sc.isActive(sc.btnModel.sta.id)}" ng-click="sc.actionSignings()" ng-disabled="sc.isDisabled(sc.btnModel.sta.id)">
                             <span translate translate-cloak>STR_SIGNING_REQ_STATUS</span>
                         </button>
                     </div>
                     <div class="col-xs-12 col-sm-2 btn-group">
-                        <button id="sc.btnModel.com.id" type="button" class="btn btn-info ad-header-button ng-class:
+                        <button id="sc.btnModel.com.id" type="button" class="btn btn-block db-btn-prim ng-class:
                         {active: sc.isActive(sc.btnModel.com.id)}" ng-click="sc.actionComment()" ng-disabled="sc.isDisabled(sc.btnModel.com.id)">
                             <span translate translate-cloak>STR_CREATE_COMMENT</span>
                         </button>
                     </div>
                     <div class="col-xs-12 col-sm-2 ad-btn-group-left">
-                        <button id="sc.btnModel.acc.id" type="button" class="btn btn-success ad-header-button ng-class:
+                        <button id="sc.btnModel.acc.id" type="button" class="btn btn-success btn-block ng-class:
                         {active: sc.isActive(sc.btnModel.acc.id)}" ng-click="sc.actionSign()" ng-disabled="sc.isDisabled(sc.btnModel.acc.id)">
                             <span translate translate-cloak>STR_SIGNING_ACCEPT</span>
                         </button>
                     </div>
                     <div class="col-xs-12 col-sm-2 ad-btn-group-right">
-                        <button id="sc.btnModel.rej.id" type="button" class="btn btn-danger ad-header-button ng-class:
+                        <button id="sc.btnModel.rej.id" type="button" class="btn btn-danger btn-block ng-class:
                         {active: sc.isActive(sc.btnModel.rej.id)}" ng-click="sc.actionReject()" ng-disabled="sc.isDisabled(sc.btnModel.rej.id)">
                             <span translate translate-cloak>STR_REJECT</span>
                         </button>
@@ -127,7 +127,7 @@
         <div class="ad-page-container-flex">
 
             <div class="ad-flex-show-full">
-                <div class="ad-page-container">
+                <div class="ad-horiz-container">
                     <uib-progressbar ng-if="sc.ongoing" class="progress-striped active" type="info">
                     </uib-progressbar>
 
@@ -143,10 +143,10 @@
                     <div ng-if="sc.listMdl">
                         <doc-signers listmodel="sc.listMdl" ismobile="isMobile"></doc-signers>
                     </div>
-                </div>
 
-                <ad-embedded-file ng-if="sc.displayUrl" ng-hide="sc.btnModel.doc.hide" class="ad-flex-item-upper
-                        ad-flex-show-full" refresh="" ng-attr-fileurl="sc.displayUrl" ng-attr-filename="sc.fileName">
+                </div>
+                <ad-embedded-file ng-if="sc.displayUrl" ng-hide="sc.btnModel.doc.hide" class="ad-flex-item-upper ad-flex-show-full" refresh=""
+                ng-attr-fileurl="sc.displayUrl" ng-attr-filename="sc.fileName">
                 </ad-embedded-file>
 
             </div>
