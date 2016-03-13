@@ -23,11 +23,12 @@
 
     <div class="ad-page-content">
 
-        <button ng-if="!isMobile" type="button" class="btn btn-primary btn-lg disabled ad-dummy-button" ng-click="">{{msc.meeting.meetingTitle}}</button>
+        <button ng-if="!isMobile" type="button" class="btn db-btn-prim btn-lg disabled ad-dummy-button" ng-click="">{{msc.meeting.meetingTitle}}</button>
 
-        <div class="btn-group btn-block" uib-dropdown is-open="">
-            <button id="statusButton" type="button" class="btn btn-primary btn-lg ad-button ng-class:[{'disabled': !msc.chairman},{'ad-dummy-button': !msc.chairman}]"
-            uib-dropdown-toggle translate>{{msc.stringId(msc.meeting)}}
+        <div class="btn-group btn-block text-center" uib-dropdown is-open="">
+            <button id="statusButton" type="button" class="btn db-btn-prim btn-lg ad-button text-center ng-class:[{'disabled': !msc.chairman},{'ad-dummy-button': !msc.chairman}]"
+            uib-dropdown-toggle>
+                <span class="db-label ng-class: [msc.mtgStatusClass(msc.meeting)]" translate>{{msc.stringId(msc.meeting)}}</span>
                 <span ng-if="msc.chairman" class="caret"></span>
             </button>
             <ul uib-dropdown-menu role="menu" aria-labelledby="statusButton">
@@ -37,7 +38,7 @@
             </ul>
         </div>
 
-        <div class="ad-page-container">
+        <div>
             <div class="ad-topic" ng-repeat="topic in msc.meeting.topicList track by $index">
 
                 <div class="btn-group ad-topic-status" uib-dropdown is-open="">
@@ -54,7 +55,7 @@
                     </ul>
                 </div>
 
-                <button type="button" class="btn btn-default ad-button ad-topic-button ng-class:[{'active': (msc.isSelected(topic) && !mobile)}]"
+                <button type="button" class="btn btn-default ad-button ad-topic-button db-btn-agenda ng-class:[{'active': (msc.isSelected(topic) && !mobile)}]"
                 ng-click="msc.topicSelected(topic)">{{topic.topicTitle}}</button>
             </div>
         </div>

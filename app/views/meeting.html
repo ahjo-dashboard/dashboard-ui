@@ -1,35 +1,36 @@
 <div class="ad-page">
 
     <div ng-if="!isMobile" class="ad-page-header">
-        <div class="container col-xs-12 ad-app-bg">
+        <div class="container col-xs-12 ad-upper-bg">
             <div class="row">
-                <!-- UPPER HEADER START  -->
+                <!-- UPPER HEADER START -->
                 <div ng-if="menuClosed()" class="col-xs-1">
                     <i class="glyphicon glyphicon-menu-hamburger left" aria-hidden="true" ng-click="openMenu()"></i>
                 </div>
-                <div class="col-md-1 ad-btn-group-left ad-upper-bg ng-class:[{'col-sm-1':menuClosed(), 'col-sm-2':!menuClosed()}]">
-                    <button type="button" class="btn btn-info ad-header-button" ng-click="ctrl.upperClicked()">
+                <div class="col-md-1 btn-group ad-upper-bg ng-class:[{'col-sm-1':menuClosed(), 'col-sm-2':!menuClosed()}]">
+                    <button type="button" class="btn db-btn-prim btn-block" ng-click="ctrl.upperClicked()">
                         <i class="glyphicon center ng-class:[{'glyphicon-plus': !ctrl.isUpperMode(), 'glyphicon-minus': ctrl.isUpperMode()}]"></i>
                     </button>
                 </div>
-                <div class="col-xs-2 col-lg-2 ad-btn-group-right ad-upper-bg ng-class:[{'col-md-1':menuClosed(), 'col-md-2':!menuClosed()}]">
-                    <button type="button" class="btn btn-primary ad-dummy-header-button disabled" translate translate-cloak>STR_TOPIC</button>
-                </div>
-                <!-- UPPER HEADER END  -->
+                <!-- UPPER HEADER END -->
 
-                <!-- LOWER HEADER START  -->
-                <div class="col-md-1 ad-btn-group-right ad-lower-bg right ng-class:[{'col-sm-1':menuClosed(), 'col-sm-2':!menuClosed()}]">
-                    <button type="button" class="btn btn-info ad-header-button" ng-click="ctrl.lowerClicked()">
+                <!-- LOWER HEADER START -->
+                <div class="col-md-1 btn-group ad-lower-bg right ng-class:[{'col-sm-1':menuClosed(), 'col-sm-2':!menuClosed()}]">
+                    <button type="button" class="btn db-btn-prim btn-block" ng-click="ctrl.lowerClicked()">
                         <i class="glyphicon center ng-class:[{'glyphicon-plus': !ctrl.isLowerMode(), 'glyphicon-minus': ctrl.isLowerMode()}]"></i>
                     </button>
                 </div>
-                <div class="col-xs-2 ad-btn-group-middle ad-lower-bg right">
-                    <button type="button" class="btn btn-primary ad-header-button ng-class:[{'active': ctrl.isActive(ctrl.lbms.PROPOSALS)}]"
+                <div class="col-xs-2 btn-group ad-lower-bg right">
+                    <button type="button" class="btn db-btn-prim btn-block disabled"
+                    ng-click="" translate translate-cloak>STR_OWN_NOTES</button>
+                </div>
+                <div class="col-xs-2 btn-group ad-lower-bg right">
+                    <button type="button" class="btn db-btn-prim btn-block ng-class:[{'active': ctrl.isActive(ctrl.lbms.PROPOSALS)}]"
                     ng-click="ctrl.proposalsClicked()" translate translate-cloak>STR_PROPOSALS</button>
                 </div>
-                <div class="col-xs-2 ad-btn-group-middle ad-lower-bg right" uib-dropdown is-open="">
+                <div class="col-xs-2 btn-group ad-lower-bg right" uib-dropdown is-open="">
                     <button id="materialButton" type="button" data-ng-disabled="(!ctrl.amData.objects.length && !ctrl.dData.objects.length)"
-                    class="btn btn-primary ad-header-button ng-class:[{'active': ctrl.isMaterialsActive()}]" uib-dropdown-toggle>
+                    class="btn db-btn-prim btn-block ng-class:[{'active': ctrl.isMaterialsActive()}]" uib-dropdown-toggle>
                         <span translate translate-cloak>STR_OTHER_MATERIAL</span>
                         <span ng-if="(ctrl.amData.objects.length && ctrl.dData.objects.length)" class="badge ng-cloak hidden-sm">{{ctrl.amData.objects.length + ctrl.dData.objects.length}}</span>
                         <span ng-if="(ctrl.amData.objects.length && ctrl.dData.objects.length)" class="caret hidden-sm"></span>
@@ -50,8 +51,8 @@
                         </li>
                     </ul>
                 </div>
-                <div class="col-xs-2 ad-btn-group-left ad-lower-bg right" uib-dropdown is-open="">
-                    <button id="attachmentButton" type="button" data-ng-disabled="!ctrl.aData.objects.length" class="btn btn-primary ad-header-button ng-class:[{'active': ctrl.isActive(ctrl.lbms.ATTACHMENTS)}]"
+                <div class="col-xs-2 btn-group ad-lower-bg right" uib-dropdown is-open="">
+                    <button id="attachmentButton" type="button" data-ng-disabled="!ctrl.aData.objects.length" class="btn db-btn-prim btn-block ng-class:[{'active': ctrl.isActive(ctrl.lbms.ATTACHMENTS)}]"
                     uib-dropdown-toggle>
                         <span translate translate-cloak>STR_ATTACHMENTS</span>
                         <span ng-if="ctrl.aData.objects.length" class="badge ng-cloak hidden-sm">{{ctrl.aData.objects.length}}</span>
@@ -64,7 +65,7 @@
                         </li>
                     </ul>
                 </div>
-                <!-- LOWER HEADER END  -->
+                <!-- LOWER HEADER END -->
             </div>
         </div>
     </div>
@@ -107,15 +108,15 @@
 
     <div ng-if="isMobile" class="ad-page-content">
         <div class="ad-page-container">
-            <button type="button" ng-disabled="!ctrl.tData" class="btn btn-info btn-lg btn-block wrap-button-text db-btn-default" ng-click="ctrl.topicClicked()"
+            <button type="button" ng-disabled="!ctrl.tData" class="btn btn-info btn-lg btn-block wrap-button-text db-btn-prim" ng-click="ctrl.topicClicked()"
             translate translate-cloak>STR_TOPIC</button>
-            <button type="button" ng-disabled="!ctrl.aData.objects.length" class="btn btn-info btn-lg btn-block wrap-button-text db-btn-default"
+            <button type="button" ng-disabled="!ctrl.aData.objects.length" class="btn btn-info btn-lg btn-block wrap-button-text db-btn-prim"
             ng-click="ctrl.attachmentClicked()"><span translate translate-cloak>STR_ATTACHMENTS</span> <span class="badge">{{ctrl.aData.objects.length}}</span></button>
-            <button type="button" ng-disabled="!ctrl.amData.objects.length" class="btn btn-info btn-lg btn-block wrap-button-text db-btn-default ng-class:[{'disabled': !ctrl.amData.objects.length}]"
+            <button type="button" ng-disabled="!ctrl.amData.objects.length" class="btn btn-info btn-lg btn-block wrap-button-text db-btn-prim ng-class:[{'disabled': !ctrl.amData.objects.length}]"
             ng-click="ctrl.additionalMaterialClicked()"><span translate translate-cloak>STR_ADDITIONAL_MATERIAL</span> <span class="badge">{{ctrl.amData.objects.length}}</span></button>
-            <button type="button" ng-disabled="!ctrl.dData.objects.length" class="btn btn-info btn-lg btn-block wrap-button-text db-btn-default"
+            <button type="button" ng-disabled="!ctrl.dData.objects.length" class="btn btn-info btn-lg btn-block wrap-button-text db-btn-prim"
             ng-click="ctrl.decisionClicked()"><span translate translate-cloak>STR_DECISION_HISTORY</span> <span class="badge">{{ctrl.dData.objects.length}}</span></button>
-            <button type="button" class="btn btn-info btn-lg btn-block wrap-button-text db-btn-default" ng-click="ctrl.proposalsClicked()"
+            <button type="button" class="btn btn-info btn-lg btn-block wrap-button-text db-btn-prim" ng-click="ctrl.proposalsClicked()"
             translate translate-cloak>STR_PROPOSALS</button>
         </div>
     </div>

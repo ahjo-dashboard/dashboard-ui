@@ -98,6 +98,10 @@ angular.module('dashboard')
             return 'tuntematon';
         };
 
+        self.mtgStatusClass = function(meeting) {
+            var s = $rootScope.objWithVal(CONST.MTGSTATUS, 'value', meeting.meetingStatus);
+            return s ? s.badgeClass : 'label-default';
+        };
 
         $scope.$on('$destroy', function() {
             $log.debug("meetingStatusCtrl: DESTROY");
