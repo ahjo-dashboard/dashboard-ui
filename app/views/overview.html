@@ -17,18 +17,20 @@
 
             <!-- MEETINGS START -->
             <div ng-if="oc.hasMeetings" class="ad-flex-header">
-                <button type="button" class="btn btn-warning ad-lg ng-class:[{'active':oc.vblMtgs === oc.vbl.OPEN}]" ng-click="oc.setMtgsVisible(oc.vbl.OPEN)">
+                <button type="button" class="btn db-btn-prim ad-lg db-btn-list-topleft-xs db-btn-list-topleft-sm ng-class:[{'active':oc.vblMtgs === oc.vbl.OPEN}]"
+                ng-click="oc.setMtgsVisible(oc.vbl.OPEN)">
                     <div class="visible-xs-block" translate>STR_OPEN_PLR</div>
                     <div class="hidden-xs" translate>STR_OPEN_MEETINGS</div>
                 </button>
-                <button type="button" class="btn btn-warning ad-lg ng-class:[{'active':oc.vblMtgs === oc.vbl.CLOSED}]" ng-click="oc.setMtgsVisible(oc.vbl.CLOSED)">
+                <button type="button" class="btn db-btn-prim ad-lg db-btn-list-topright-xs ng-class:[{'active':oc.vblMtgs === oc.vbl.CLOSED}]"
+                ng-click="oc.setMtgsVisible(oc.vbl.CLOSED)">
                     <div class="visible-xs-block" translate>STR_CLOSED_PLR</div>
                     <div class="hidden-xs" translate>STR_CLOSED_MEETINGS</div>
                 </button>
-                <button type="button" class="hidden-xs btn btn-info ad-xs">
+                <button type="button" class="hidden-xs btn db-btn-prim ad-xs">
                     <i class="glyphicon glyphicon-info-sign"></i>
                 </button>
-                <button type="button" class="hidden-xs btn btn-info ad-xs" ng-click="oc.upperClicked()">
+                <button type="button" class="hidden-xs btn db-btn-prim ad-xs db-btn-list-topright-sm" ng-click="oc.upperClicked()">
                     <i class="ng-class: ['glyphicon', {'glyphicon-plus':oc.blockMode !== 1, 'glyphicon-minus':oc.blockMode === 1}]"></i>
                 </button>
             </div>
@@ -38,21 +40,22 @@
                 </ad-meetings>
             </div>
             <!-- MEETINGS END -->
-            <br>
+            <br ng-if="!isMobile">
             <!-- SIGNINGS START -->
             <div ng-if="oc.hasEsign" class="ad-flex-header">
-                <button type="button" class="btn btn-warning ad-lg ng-class:[{'active':!oc.closedSignReqs}]" ng-click="oc.closedSignReqs=false">
+                <button type="button" class="btn db-btn-prim ad-lg db-btn-list-topleft-xs db-btn-list-topleft-sm ng-class:[{'active':!oc.closedSignReqs}]"
+                ng-click="oc.closedSignReqs=false">
                     <div class="visible-xs-block" translate>STR_OPEN_PLR</div>
                     <div class="hidden-xs" translate>STR_OPEN_SIGNINGS</div>
                 </button>
-                <button type="button" class="btn btn-warning ad-lg ng-class:[{'active':oc.closedSignReqs}]" ng-click="oc.closedSignReqs=true">
+                <button type="button" class="btn db-btn-prim ad-lg db-btn-list-topright-xs ng-class:[{'active':oc.closedSignReqs}]" ng-click="oc.closedSignReqs=true">
                     <div class="visible-xs-block" translate>STR_CLOSED_PLR</div>
                     <div class="hidden-xs" translate>STR_CLOSED_SIGNINGS</div>
                 </button>
-                <button type="button" class="hidden-xs btn btn-info ad-xs">
+                <button type="button" class="hidden-xs btn db-btn-prim ad-xs">
                     <i class="glyphicon glyphicon-info-sign"></i>
                 </button>
-                <button type="button" class="hidden-xs btn btn-info ad-xs" ng-click="oc.lowerClicked()">
+                <button type="button" class="hidden-xs btn db-btn-prim ad-xs db-btn-list-topright-sm" ng-click="oc.lowerClicked()">
                     <i class="glyphicon ng-class:[{'glyphicon-plus':oc.blockMode !== 2, 'glyphicon-minus':oc.blockMode === 2}]"></i>
                 </button>
             </div>
