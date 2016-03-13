@@ -18,7 +18,7 @@
     "STR_OP_SUCCESS": "Toiminto onnistui",
     "STR_TRY_LATER": "Ole hyvä ja yritä myöhemmin uudestaan.",
     "STR_ATTACHMENTS": "Liitteet",
-    "STR_UNSIGNED": "Ei allekirjoitettu",
+    "STR_UNSIGNED": "Pyydetty",
     "STR_REJECTED": "Hylätty",
     "STR_SIGNED": "Allekirjoitettu",
     "STR_RETURNED": "Palautettu",
@@ -48,6 +48,7 @@
     "STR_OTHER_MATERIAL": "Muu materiaali",
     "STR_ADDITIONAL_MATERIAL": "Oheismateriaali",
     "STR_DECISION_HISTORY": "Päätöshistoria",
+    "STR_OWN_NOTES": "Oma merkintä",
     "STR_MEETING": "Kokous",
     "STR_AGENCY": "Toimielin",
     "STR_ROLE": "Rooli"
