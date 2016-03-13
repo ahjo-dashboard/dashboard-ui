@@ -31,11 +31,15 @@ $long-delay: 600ms;
 $default-delay: 400ms;
 $short-delay: 50ms;
 
-$upper-color: #204d74;
-$lower-color: #f0ad4e;
+$upper-color0: #204d74;
+$upper-color: #848c94;
+
+//$lower-color: #f0ad4e;
+$lower-color: #ffd64b;
 
 $default-font-size: 1.2em;
-$btn-radius: 8px;
+$tablist-tabborder-width: 2px;
+$btn-radius: 6px;
 
 #device {
     min-width: 320px;
@@ -48,13 +52,17 @@ body {
     height: 100%;
     $header-height: 60px; // this is for moving main content
     $button-height: 40px;
-    $appbgcolor: rgb(51, 122, 183);
 
+    $appbgcolor0: #337AB7;
+    $appbgcolor1: #c4c9cc;
+    $appbgcolor2: rgb(226, 228, 230);
+    $appbgcolor: white;
     $headingTxtColor: white;
-    $focusedColor: rgb(40, 96, 144);
+    $focusedColor: #3e7ebe;
     $headingBgColor: $focusedColor;
     $headingL2BgColor: $appbgcolor;
     $borderColor: $focusedColor;
+    $mtg-item-right-margin: 5px;
 
     background-color: $appbgcolor;
     padding: 0;
@@ -112,17 +120,65 @@ body {
     .btn {
         border-width: 0px;
         overflow: hidden;
+        font-size: $default-font-size;
 
         div {
             padding: 0;
         }
     }
 
-    .db-btn-def {
-        border: 0;
-        font-size: $default-font-size;
-        border-radius: $btn-radius;
-        margin: 2px 2px;
+    .db-label {
+        @extend .label;
+        font-size: inherit !important;
+    }
+
+    $btn-prim-color-bg: #4591d3;
+    $btn-prim-color-active-bg: #276aa5;
+    .db-btn-prim{
+        @include button-variant($headingTxtColor, $btn-prim-color-bg, $btn-prim-color-bg);
+    }
+
+    $btn-colhea-color-bg: darken($btn-prim-color-bg, 10%);
+    $btn-colhea-color-border: $btn-colhea-color-bg;
+    .db-btn-colhea {
+        @include button-variant($headingTxtColor, $btn-colhea-color-bg, $btn-colhea-color-border);
+        border-radius: 0;
+        border-style: none !important;
+    }
+
+    .db-btn-colhea-dummy {
+        @extend .db-btn-colhea;
+        opacity: 1.0 !important;
+        outline: none !important;
+    }
+
+   .db-btn-agenda {
+    }
+    // .db-btn-agenda:hover,
+    // .db-btn-agenda:focus,
+    .db-btn-agenda:active,
+    .db-btn-agenda.active {
+        background-color: $upper-color !important;
+        border-color: $upper-color;
+        color: $headingTxtColor;
+    }
+
+    .db-tablist {
+        button {
+            border-left-width: $tablist-tabborder-width;
+            border-right-width: $tablist-tabborder-width;
+            border-left-color: $btn-prim-color-active-bg;
+            border-right-color: $btn-prim-color-active-bg;
+            border-left-style: solid;
+            border-right-style: solid;
+        }
+
+        button:first-child { border-radius: 0px; }
+        button:last-child {
+            border-bottom-color: $btn-prim-color-active-bg;
+            border-bottom-width: $tablist-tabborder-width;
+            border-bottom-style: solid;
+        }
     }
 
     .panel-heading {
@@ -292,8 +348,9 @@ body {
         padding: 10px;
     }
 
-    .ad-full-page-container {
-        padding: 0px;
+    .ad-horiz-container {
+        padding-left: 10px;
+        padding-right: 10px;
     }
 
     .ad-page-container-flex {
@@ -322,10 +379,11 @@ body {
         border-style: solid;
         border-top-width: 0;
         border-left-width: 0;
-        border-right-width: thick;
+        border-right-width: 0;
         border-bottom-width: 0;
         border-right-color: $lower-color;
         padding: 5px;
+        padding-top: 15px;
         background-color: $upper-color;
     }
 
@@ -341,6 +399,7 @@ body {
         @extend .ad-flex-item;
         padding: 5px;
         background-color: $lower-color;
+        padding-right: $mtg-item-right-margin;
     }
 
     .ad-flex-item-lower.ad-flex-hide {
@@ -408,33 +467,15 @@ body {
         outline: none !important;
     }
 
-    .ad-header-button {
-        border-width: 0;
-        width: 100%;
-        font-size: $default-font-size;
-        border-radius: $btn-radius;
-        margin: 2px 2px;
-    }
-
-    .db-colheader-btn {
-        border-width: 0;
-        border-radius: 0;
-        width: 100%;
-    }
-
-    .db-colheader-btn-dummy {
-        @extend .db-colheader-btn;
-        opacity: 1.0 !important;
-        outline: none !important;
+    @media screen and (max-width: 767px) {
+        .db-btn-list-topleft-xs { border-top-left-radius: $btn-radius !important; }
+        .db-btn-list-topright-xs { border-top-right-radius: $btn-radius !important; }
+        .db-btn-list-topleft-sm {}
+        .db-btn-list-topright-sm {}
     }
 
     .db-nopadding {
         padding: 0 !important;
-    }
-    .ad-dummy-header-button {
-        @extend .ad-header-button;
-        opacity: 1.0 !important;
-        outline: none !important;
     }
 
     .ad-btn-group-left {
@@ -534,7 +575,7 @@ body {
     }
 
     .db-error {
-        color: $headingTxtColor;
+        color: black;
 
         a:link, a:visited {
             color: #FF0000;
