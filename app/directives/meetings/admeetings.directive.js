@@ -111,11 +111,11 @@ angular.module('dashboard')
                 $log.error("adMeetings: getMeetings error: " + JSON.stringify(error));
                 self.mtgErr = error;
             }, function(/*notify*/) {
-                self.loading = false;
             }).finally(function() {
                 setData();
                 parseAgencyDropdown();
                 parseRoleDropdown();
+                self.loading = false;
             });
 
             $scope.$watch(function() {

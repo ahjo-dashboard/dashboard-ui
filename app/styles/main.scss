@@ -132,6 +132,7 @@ body {
         font-size: inherit !important;
     }
 
+    // db-btn-prim
     $btn-prim-color-bg: #4591d3;
     $btn-prim-color-active-bg: #276aa5;
     .db-btn-prim{
@@ -152,10 +153,7 @@ body {
         outline: none !important;
     }
 
-   .db-btn-agenda {
-    }
-    // .db-btn-agenda:hover,
-    // .db-btn-agenda:focus,
+    // db-btn-agenda
     .db-btn-agenda:active,
     .db-btn-agenda.active {
         background-color: $upper-color !important;
@@ -470,8 +468,6 @@ body {
     @media screen and (max-width: 767px) {
         .db-btn-list-topleft-xs { border-top-left-radius: $btn-radius !important; }
         .db-btn-list-topright-xs { border-top-right-radius: $btn-radius !important; }
-        .db-btn-list-topleft-sm {}
-        .db-btn-list-topright-sm {}
     }
 
     .db-nopadding {
@@ -575,7 +571,7 @@ body {
     }
 
     .db-error {
-        color: black;
+        color: #555;
 
         a:link, a:visited {
             color: #FF0000;
