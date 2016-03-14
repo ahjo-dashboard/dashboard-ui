@@ -161,6 +161,11 @@ body {
         outline: none !important;
     }
 
+    .db-btn-hdr{
+        @include button-variant($headingTxtColor, $headingBgColor, $headingBgColor);
+        margin-top: 5px !important;
+    }
+
     // db-btn-agenda
     .db-btn-agenda:active,
     .db-btn-agenda.active {
@@ -260,6 +265,10 @@ body {
         background-color: $appbgcolor;
     }
 
+    .glyphicon.center:before {
+        vertical-align: middle;
+    }
+
     .ad-page-header {
         position: absolute;
         top: 0;
@@ -329,8 +338,8 @@ body {
                     height: inherit;
                     padding-left: 0;
                     display: flex;
-                    justify-content:center;
-                    align-content:center;
+                    justify-content: center;
+                    align-content: center;
                     flex-direction:column;
                     h3 {
                         margin-top: 0;
@@ -428,8 +437,8 @@ body {
             .glyphicon {
                 color: $headingTxtColor;
                 font-size: $default-font-size;
-                display:block;
-                text-align:center
+                display: block;
+                text-align: center;
             }
         }
 

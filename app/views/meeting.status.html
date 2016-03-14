@@ -3,9 +3,18 @@
     <div ng-if="!isMobile" class="ad-page-header">
         <div class="container col-xs-12">
             <div class="row">
-                <i class="col-sm-4 hidden-xs glyphicon glyphicon-menu-hamburger" ng-click="closeMenu()"></i>
-                <i ng-if="menuFull()" class="col-sm-4 glyphicon glyphicon-home" ng-click="msc.goHome()"></i>
-                <i ng-if="menuFull()" class="col-xs-1 col-sm-4 glyphicon glyphicon-info-sign" ng-click="msc.showInfo()"></i>
+                <div class="col-sm-4">
+                    <button type="button" class="btn db-btn-hdr glyphicon center glyphicon-menu-hamburger" ng-click="closeMenu()">
+                    </button>
+                </div>
+                <div ng-if="menuFull()" class="col-sm-4">
+                    <button type="button" class="btn db-btn-hdr glyphicon center glyphicon-home" ng-click="msc.goHome()">
+                    </button>
+                </div>
+                <div ng-if="menuFull()" class="col-xs-4 animate-if">
+                    <button type="button" class="btn db-btn-hdr glyphicon center glyphicon-info-sign disabled" ng-click="">
+                    </button>
+                </div>
             </div>
         </div>
     </div>

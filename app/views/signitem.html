@@ -66,92 +66,98 @@
         <div class="col-xs-12 container">
             <div class="row">
                 <div class="col-xs-2 col-sm-1">
-                    <i class="col-xs-12 col-sm-6 glyphicon glyphicon-home left" aria-hidden="true" ng-click="goHome()"></i>
-                    <i class="hidden-sm col-sm-6 glyphicon glyphicon-info-sign left" aria-hidden="true"></i>
-                </div>
-                <div class="col-xs-12 col-sm-11">
-                    <div class="col-xs-12 col-sm-2 btn-group">
-                        <button id="sc.btnModel.doc.id" type="button" class="btn btn-block db-btn-prim ng-class: {active: sc.isActive(sc.btnModel.doc.id)}"
-                        ng-click="sc.actionDoc()" ng-model="sc.btnModel.doc.active" ng-disabled="sc.isDisabled(sc.btnModel.doc.id)">
-                            <span translate translate-cloak>STR_SIGNING_REQ</span>
-                            <div>
-                                <span ng-hide="!sc.displayStatus" class="label ng-class:[sc.statusStyle(sc.item.Status)]" translate translate-cloak>{{sc.statusStrId(sc.item.Status)}}</span>
-                            </div>
+                    <div class="col-xs-6">
+                        <button type="button" class="btn btn-xs db-btn-hdr glyphicon glyphicon-home center" ng-click="sc.goHome()">
                         </button>
                     </div>
-                    <div class="col-xs-12 col-sm-2 btn-group" uib-dropdown is-open="hideEmbObj">
-                        <button id="sc.btnModel.att.id" type="button" class="btn btn-block db-btn-prim ng-class:
-                        {active: sc.isActive(sc.btnModel.att.id)}" uib-dropdown-toggle ng-disabled="sc.isDisabled(sc.btnModel.att.id)">
-                            <span translate translate-cloak>STR_ATTACHMENTS</span>
-                            <span class="badge ng-cloak">{{sc.btnModel.att.count}}</span>
-                            <span class="caret"></span>
-                        </button>
-                        <ul uib-dropdown-menu role="menu" aria-labelledby="btnAtt">
-                            <li role="menuitem" ng-click="mc.lowerClicked()">
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="col-xs-12 col-sm-2 btn-group">
-                        <button id="sc.btnModel.sta.id" type="button" class="btn btn-block db-btn-prim ng-class:
-                        {active: sc.isActive(sc.btnModel.sta.id)}" ng-click="sc.actionSignings()" ng-disabled="sc.isDisabled(sc.btnModel.sta.id)">
-                            <span translate translate-cloak>STR_SIGNING_REQ_STATUS</span>
-                        </button>
-                    </div>
-                    <div class="col-xs-12 col-sm-2 btn-group">
-                        <button id="sc.btnModel.com.id" type="button" class="btn btn-block db-btn-prim ng-class:
-                        {active: sc.isActive(sc.btnModel.com.id)}" ng-click="sc.actionComment()" ng-disabled="sc.isDisabled(sc.btnModel.com.id)">
-                            <span translate translate-cloak>STR_CREATE_COMMENT</span>
-                        </button>
-                    </div>
-                    <div class="col-xs-12 col-sm-2 ad-btn-group-left">
-                        <button id="sc.btnModel.acc.id" type="button" class="btn btn-success btn-block ng-class:
-                        {active: sc.isActive(sc.btnModel.acc.id)}" ng-click="sc.actionSign()" ng-disabled="sc.isDisabled(sc.btnModel.acc.id)">
-                            <span translate translate-cloak>STR_SIGNING_ACCEPT</span>
-                        </button>
-                    </div>
-                    <div class="col-xs-12 col-sm-2 ad-btn-group-right">
-                        <button id="sc.btnModel.rej.id" type="button" class="btn btn-danger btn-block ng-class:
-                        {active: sc.isActive(sc.btnModel.rej.id)}" ng-click="sc.actionReject()" ng-disabled="sc.isDisabled(sc.btnModel.rej.id)">
-                            <span translate translate-cloak>STR_REJECT</span>
+                    <div class="col-xs-6">
+                        <button type="button" class="btn btn-xs db-btn-hdr glyphicon glyphicon-info-sign center disabled" ng-click="">
                         </button>
                     </div>
                 </div>
-            </div>
-
-        </div>
-
-    </div>
-
-    <!-- DESKTOP content -->
-    <div ng-if="!isMobile" class="ad-page-content">
-        <div class="ad-page-container-flex">
-
-            <div class="ad-flex-show-full">
-                <div class="ad-horiz-container">
-                    <uib-progressbar ng-if="sc.ongoing" class="progress-striped active" type="info">
-                    </uib-progressbar>
-
-                    <uib-alert ng-repeat="i in sc.alerts track by $index" type="{{i.type}}" close="sc.closeAlert($index)">
-                        <span ng-if="i.locId" translate translate-cloak>{{i.locId}}</span>
+            <div class="col-xs-12 col-sm-11">
+                <div class="col-xs-12 col-sm-2 btn-group">
+                    <button id="sc.btnModel.doc.id" type="button" class="btn btn-block db-btn-prim ng-class: {active: sc.isActive(sc.btnModel.doc.id)}"
+                    ng-click="sc.actionDoc()" ng-model="sc.btnModel.doc.active" ng-disabled="sc.isDisabled(sc.btnModel.doc.id)">
+                        <span translate translate-cloak>STR_SIGNING_REQ</span>
                         <div>
-                            <span ng-if="i.resCode">{{i.resCode}}&nbsp;</span>
-                            <span ng-if="i.resTxt">{{i.resTxt}}</span>
-                            <div ng-if="i.linkMailto"><a href="mailto:{{i.linkMailto}}">{{i.linkMailto}}</a></div>
+                            <span ng-hide="!sc.displayStatus" class="label ng-class:[sc.statusStyle(sc.item.Status)]" translate translate-cloak>{{sc.statusStrId(sc.item.Status)}}</span>
                         </div>
-                    </uib-alert>
-
-                    <div ng-if="sc.listMdl">
-                        <doc-signers listmodel="sc.listMdl" ismobile="isMobile"></doc-signers>
-                    </div>
-
+                    </button>
                 </div>
-                <ad-embedded-file ng-if="sc.displayUrl" ng-hide="sc.btnModel.doc.hide" class="ad-flex-item-upper ad-flex-show-full" refresh=""
-                ng-attr-fileurl="sc.displayUrl" ng-attr-filename="sc.fileName">
-                </ad-embedded-file>
-
+                <div class="col-xs-12 col-sm-2 btn-group" uib-dropdown is-open="hideEmbObj">
+                    <button id="sc.btnModel.att.id" type="button" class="btn btn-block db-btn-prim ng-class:
+                        {active: sc.isActive(sc.btnModel.att.id)}" uib-dropdown-toggle ng-disabled="sc.isDisabled(sc.btnModel.att.id)">
+                        <span translate translate-cloak>STR_ATTACHMENTS</span>
+                        <span class="badge ng-cloak">{{sc.btnModel.att.count}}</span>
+                        <span class="caret"></span>
+                    </button>
+                    <ul uib-dropdown-menu role="menu" aria-labelledby="btnAtt">
+                        <li role="menuitem" ng-click="mc.lowerClicked()">
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-xs-12 col-sm-2 btn-group">
+                    <button id="sc.btnModel.sta.id" type="button" class="btn btn-block db-btn-prim ng-class:
+                        {active: sc.isActive(sc.btnModel.sta.id)}" ng-click="sc.actionSignings()" ng-disabled="sc.isDisabled(sc.btnModel.sta.id)">
+                        <span translate translate-cloak>STR_SIGNING_REQ_STATUS</span>
+                    </button>
+                </div>
+                <div class="col-xs-12 col-sm-2 btn-group">
+                    <button id="sc.btnModel.com.id" type="button" class="btn btn-block db-btn-prim ng-class:
+                        {active: sc.isActive(sc.btnModel.com.id)}" ng-click="sc.actionComment()" ng-disabled="sc.isDisabled(sc.btnModel.com.id)">
+                        <span translate translate-cloak>STR_CREATE_COMMENT</span>
+                    </button>
+                </div>
+                <div class="col-xs-12 col-sm-2 ad-btn-group-left">
+                    <button id="sc.btnModel.acc.id" type="button" class="btn btn-success btn-block ng-class:
+                        {active: sc.isActive(sc.btnModel.acc.id)}" ng-click="sc.actionSign()" ng-disabled="sc.isDisabled(sc.btnModel.acc.id)">
+                        <span translate translate-cloak>STR_SIGNING_ACCEPT</span>
+                    </button>
+                </div>
+                <div class="col-xs-12 col-sm-2 ad-btn-group-right">
+                    <button id="sc.btnModel.rej.id" type="button" class="btn btn-danger btn-block ng-class:
+                        {active: sc.isActive(sc.btnModel.rej.id)}" ng-click="sc.actionReject()" ng-disabled="sc.isDisabled(sc.btnModel.rej.id)">
+                        <span translate translate-cloak>STR_REJECT</span>
+                    </button>
+                </div>
             </div>
         </div>
+
     </div>
+
+</div>
+
+<!-- DESKTOP content -->
+<div ng-if="!isMobile" class="ad-page-content">
+    <div class="ad-page-container-flex">
+
+        <div class="ad-flex-show-full">
+            <div class="ad-horiz-container">
+                <uib-progressbar ng-if="sc.ongoing" class="progress-striped active" type="info">
+                </uib-progressbar>
+
+                <uib-alert ng-repeat="i in sc.alerts track by $index" type="{{i.type}}" close="sc.closeAlert($index)">
+                    <span ng-if="i.locId" translate translate-cloak>{{i.locId}}</span>
+                    <div>
+                        <span ng-if="i.resCode">{{i.resCode}}&nbsp;</span>
+                        <span ng-if="i.resTxt">{{i.resTxt}}</span>
+                        <div ng-if="i.linkMailto"><a href="mailto:{{i.linkMailto}}">{{i.linkMailto}}</a></div>
+                    </div>
+                </uib-alert>
+
+                <div ng-if="sc.listMdl">
+                    <doc-signers listmodel="sc.listMdl" ismobile="isMobile"></doc-signers>
+                </div>
+
+            </div>
+            <ad-embedded-file ng-if="sc.displayUrl" ng-hide="sc.btnModel.doc.hide" class="ad-flex-item-upper ad-flex-show-full" refresh=""
+            ng-attr-fileurl="sc.displayUrl" ng-attr-filename="sc.fileName">
+            </ad-embedded-file>
+
+        </div>
+    </div>
+</div>
 </div>
 
 <ui-view ng-if="isMobile" name="childContent"></ui-view>
