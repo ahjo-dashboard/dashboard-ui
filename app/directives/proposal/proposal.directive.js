@@ -25,7 +25,7 @@ angular.module('dashboard')
     })
     .directive('dbProposal', [function() {
 
-        var controller = ['$log', '$scope', 'PROPS', 'PROP','$rootScope', function($log, $scope, PROPS, PROP, $rootScope) {
+        var controller = ['$log', '$scope', 'PROPS', 'PROP', '$rootScope', function($log, $scope, PROPS, PROP, $rootScope) {
             $log.debug("dbProposal: CONTROLLER");
             var self = this;
 
@@ -101,7 +101,7 @@ angular.module('dashboard')
             };
 
             self.typeText = function(value) {
-                var obj  = $rootScope.objWithVal(PROPS.TYPE, 'value', value);
+                var obj = $rootScope.objWithVal(PROPS.TYPE, 'value', value);
                 return (obj && obj.text) ? obj.text : value;
             };
 
@@ -112,6 +112,20 @@ angular.module('dashboard')
             }, function(data) {
                 setProposal(data.proposal);
             }, true);
+
+            var watcher = $rootScope.$on(PROPS.TOGGLE, function(event, data) {
+                console.log(data);
+                if (self.isPbl) {
+                    if (data) {
+                        self.open();
+                    }
+                    else {
+                        self.collapse();
+                    }
+                }
+            });
+
+            $scope.$on('$destroy', watcher);
 
             $scope.$on('$destroy', function() {
                 $log.debug("dbProposal: DESTROY");
