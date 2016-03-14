@@ -1,7 +1,7 @@
 <div class="prop-element">
 
     <div class="prop-row">
-        <div class="prop-row-child ng-class:[{'col-xs-8': (c.mode !== c.mds.COLLAPSED)},{'col-xs-7': (c.mode === c.mds.COLLAPSED && !c.isPbl)},{'col-xs-9': (c.mode === c.mds.COLLAPSED && c.isUser && c.isPbl)},{'col-xs-10': (c.mode === c.mds.COLLAPSED && !c.isUser && c.isPbl)},{'col-sm-7': (c.mode !== c.mds.COLLAPSED)},{'col-sm-8': (c.mode === c.mds.COLLAPSED && !c.isPbl)},{'col-sm-9': (c.mode === c.mds.COLLAPSED && c.isUser && c.isPbl)},{'col-sm-10': (c.mode === c.mds.COLLAPSED && !c.isUser && c.isPbl)},{'col-md-9': (c.mode !== c.mds.COLLAPSED)},{'col-md-9': (c.mode === c.mds.COLLAPSED)}]">
+        <div class="prop-row-child ng-class:[{'col-xs-8': (c.mode !== c.mds.COLLAPSED)},{'col-xs-7': (c.mode === c.mds.COLLAPSED && !c.isPbl)},{'col-xs-8': (c.mode === c.mds.COLLAPSED && c.isUser && c.isPbl)},{'col-xs-10': (c.mode === c.mds.COLLAPSED && !c.isUser && c.isPbl)},{'col-sm-7': (c.mode !== c.mds.COLLAPSED)},{'col-sm-8': (c.mode === c.mds.COLLAPSED && !c.isPbl)},{'col-sm-9': (c.mode === c.mds.COLLAPSED && c.isUser && c.isPbl)},{'col-sm-10': (c.mode === c.mds.COLLAPSED && !c.isUser && c.isPbl)},{'col-md-9': (c.mode !== c.mds.COLLAPSED)},{'col-md-9': (c.mode === c.mds.COLLAPSED)}]">
             <p class="prop-text-oneliner"><b>{{c.typeText(proposal.proposalType)}}</b>&nbsp;&nbsp;<span ng-if="(c.mode === c.mds.COLLAPSED)"
                 class="animate-if" ng-bind-html="proposal.text"></span>
             </p>
@@ -11,7 +11,7 @@
             </div>
         </div>
 
-        <div class="prop-row-child text-right ng-class:[{'col-xs-4': (c.mode !== c.mds.COLLAPSED)},{'col-xs-5': (c.mode === c.mds.COLLAPSED && !c.isPbl)},{'col-xs-3': (c.mode === c.mds.COLLAPSED && c.isUser && c.isPbl)},{'col-xs-2': (c.mode === c.mds.COLLAPSED && !c.isUser && c.isPbl)},{'col-sm-5': (c.mode !== c.mds.COLLAPSED)},{'col-sm-4': (c.mode === c.mds.COLLAPSED && !c.isPbl)},{'col-sm-3': (c.mode === c.mds.COLLAPSED && c.isUser && c.isPbl)},{'col-sm-2': (c.mode === c.mds.COLLAPSED && !c.isUser && c.isPbl)},{'col-md-3': (c.mode !== c.mds.COLLAPSED)},{'col-md-3': (c.mode === c.mds.COLLAPSED)}]">
+        <div class="prop-row-child text-right ng-class:[{'col-xs-4': (c.mode !== c.mds.COLLAPSED)},{'col-xs-5': (c.mode === c.mds.COLLAPSED && !c.isPbl)},{'col-xs-4': (c.mode === c.mds.COLLAPSED && c.isUser && c.isPbl)},{'col-xs-2': (c.mode === c.mds.COLLAPSED && !c.isUser && c.isPbl)},{'col-sm-5': (c.mode !== c.mds.COLLAPSED)},{'col-sm-4': (c.mode === c.mds.COLLAPSED && !c.isPbl)},{'col-sm-3': (c.mode === c.mds.COLLAPSED && c.isUser && c.isPbl)},{'col-sm-2': (c.mode === c.mds.COLLAPSED && !c.isUser && c.isPbl)},{'col-md-3': (c.mode !== c.mds.COLLAPSED)},{'col-md-3': (c.mode === c.mds.COLLAPSED)}]">
             <label ng-if="c.mode === c.mds.COLLAPSED && !c.isPbl" role="button" class="btn btn-primary btn-md animate-if prop-label" aria-expanded="false"
             ng-click="c.startEditing()">
                 <span class="glyphicon glyphicon-edit"></span>
