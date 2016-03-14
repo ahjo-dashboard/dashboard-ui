@@ -18,26 +18,26 @@
             </ul>
         </div>
 
-        <div class="btn-group" ">
-            <button id="roleButton " type="button " class="btn btn-success ad-dummy-button disabled" translate translate-cloak>STR_ROLE</button>
+        <div class="btn-group">
+            <button id="roleButton" type="button" class="btn btn-success ad-dummy-button disabled" translate translate-cloak>STR_ROLE</button>
         </div>
 
     </div>
 
-    <uib-progressbar ng-if="ctrl.loading " class="progress-striped active " type="info "><i>Haetaan...</i></uib-progressbar>
+    <uib-progressbar ng-if="ctrl.loading" class="progress-striped active" type="info"><i>Haetaan...</i></uib-progressbar>
 
-    <ul ng-if="!ctrl.mtgErr " class="list-group ">
-        <button ng-if="item.visible " type="button " class="list-group-item " ng-repeat="item in ctrl.data | orderBy:'meeting.meetingDate':true track by $index
-        " ng-click="selected({meetingItem:item.meeting}) ">
-            <div class="row ">
-                <div class="col-xs-12 col-sm-4 ">{{item.meeting.name}}</div>
-                <div class="col-xs-12 col-sm-4 ">{{item.meeting.agencyName}}</div>
-                <div class="col-xs-12 col-sm-4 ">{{item.role}}</div>
+    <ul ng-if="!ctrl.mtgErr" class="list-group">
+        <button ng-if="item.visible" type="button" class="list-group-item" ng-repeat="item in ctrl.data | orderBy:'meeting.meetingDate':true track by $index"
+        ng-click="selected({meetingItem:item.meeting})">
+            <div class="row">
+                <div class="col-xs-12 col-sm-4">{{item.meeting.name}}</div>
+                <div class="col-xs-12 col-sm-4">{{item.meeting.agencyName}}</div>
+                <div class="col-xs-12 col-sm-4">{{item.role}}</div>
             </div>
         </button>
     </ul>
 
-    <div ng-if="ctrl.mtgErr " class="alert alert-danger " role="alert ">Haku ei onnistunut. Ole hyvä ja yritä myöhemmin uudestaan.
+    <div ng-if="ctrl.mtgErr" class="alert alert-danger" role="alert">Haku ei onnistunut. Ole hyvä ja yritä myöhemmin uudestaan.
         <br>({{ctrl.mtgErr.status}} {{ctrl.mtgErr.statusText}})</div>
 
 </div>
