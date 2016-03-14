@@ -102,7 +102,7 @@ angular.module('dashboard')
 
         self.mtgStatusClass = function(meeting) {
             var s = $rootScope.objWithVal(CONST.MTGSTATUS, 'value', meeting.meetingStatus);
-            return s ? s.badgeClass : 'label-default';
+            return s ? s.badgeClass : 'label-danger';
         };
 
         $scope.$on('$destroy', function() {
