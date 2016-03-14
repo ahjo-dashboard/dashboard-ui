@@ -1,30 +1,30 @@
-<ul class="list-group">
+<ul class="list-group db-tablist">
 
-    <div ng-if="!ctrl.isMobile" class="btn-group btn-group-justified">
-        <div class="btn-group">
-            <button type="button" class="btn btn-success ad-dummy-button disabled">
+    <div>
+        <div class="col-xs-12 col-sm-3 db-nopadding">
+            <button type="button" class="btn btn-block db-btn-colhea-dummy db-btn-list-topleft-xs db-btn-list-topright-xs db-btn-list-topleft-sm disabled">
                 <span>Nimi</span>
             </button>
         </div>
-        <div class="btn-group">
-            <button type="button" class="btn btn-success ad-dummy-button disabled">
+        <div class="col-xs-12 col-sm-3 db-nopadding">
+            <button type="button" class="btn btn-block db-btn-colhea-dummy disabled">
                 <span>Rooli</span>
             </button>
         </div>
-        <div class="btn-group">
-            <button type="button" class="btn btn-success ad-dummy-button disabled">
+        <div class="col-xs-6 col-sm-3 db-nopadding">
+            <button type="button" class="btn btn-block db-btn-colhea-dummy disabled">
                 <span>Tila</span>
             </button>
         </div>
-        <div class="btn-group">
-            <button type="button" class="btn btn-success ad-dummy-button disabled">
+        <div class="col-xs-6 col-sm-3 db-nopadding">
+            <button type="button" class="btn btn-block db-btn-colhea-dummy db-btn-list-topright-sm disabled">
                 <span>Aika</span>
             </button>
         </div>
     </div>
 
-    <button type="button " class="list-group-item col-xs-12" ng-repeat="i in ctrl.listModel track by $index">
-        <div class="row ">
+    <button type="button"class="list-group-item col-xs-12" ng-repeat="i in ctrl.listModel track by $index">
+        <div class="row">
             <div class="col-xs-12 col-sm-3">
                 {{i.name}}
             </div>
@@ -32,10 +32,10 @@
                 {{ctrl.roleStrId(i.role)}}
             </div>
             <div class="col-xs-6 col-sm-3">
-                <span class="ng-class: [ 'label', ctrl.statusStyle(i.status)] " translate>{{ctrl.statusStrId(i.status)}}</span>
+                <span class="ng-class: [ 'label', ctrl.statusStyle(i.status)]"translate>{{ctrl.statusStrId(i.status)}}</span>
             </div>
             <div class="col-xs-6 col-sm-3">
-                <span>{{i.statusChangedTime | date:'yyyy-MM-dd hh:mm'}}</span>
+                <span>{{i.statusChangedTime | date:'yyyy-MM-dd HH:mm'}}</span>
             </div>
         </div>
     </button>

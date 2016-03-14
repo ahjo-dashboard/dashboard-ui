@@ -19,8 +19,8 @@ $btn-radius: 8px;
 
         $default-font-size: 1.0em;
 
-        .ad-full-page-container {
-            padding: 40px;
+        .btn {
+            font-size: $default-font-size;
         }
 
         .ad-page-header {
@@ -34,10 +34,6 @@ $btn-radius: 8px;
             .btn-group {
                 padding: ($header-height - $button-height) * 0.5;
             }
-        }
-
-        .ad-header-button {
-            font-size: $default-font-size;
         }
 
         .ad-btn-group-left {
@@ -75,4 +71,7 @@ $btn-radius: 8px;
             }
         }
     }
+
+    .db-btn-list-topleft-sm { border-top-left-radius: $btn-radius !important; }
+    .db-btn-list-topright-sm { border-top-right-radius: $btn-radius !important; }
 }

@@ -103,21 +103,19 @@ angular.module('dashboard')
             }
 
             AhjoMeetingsSrv.getMeetings().then(function(response) {
-                self.loading = false;
                 self.responseData = response;
                 if ("objects" in self.responseData) {
                     $log.debug("adMeetings: getMeetings done: " + self.responseData.objects.length);
                 }
             }, function(error) {
                 $log.error("adMeetings: getMeetings error: " + JSON.stringify(error));
-                self.loading = false;
                 self.mtgErr = error;
             }, function(/*notify*/) {
-                self.loading = true;
             }).finally(function() {
                 setData();
                 parseAgencyDropdown();
                 parseRoleDropdown();
+                self.loading = false;
             });
 
             $scope.$watch(function() {
