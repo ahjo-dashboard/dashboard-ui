@@ -19,6 +19,7 @@ angular.module('dashboard')
         self.title = 'MOBILE TITLE';
         self.meeting = {};
         self.chairman = false;
+        self.loading = true;
         var meetingItem = $stateParams.meetingItem;
         var isMobile = $rootScope.isMobile;
 
@@ -51,6 +52,7 @@ angular.module('dashboard')
                 $log.debug("meetingStatusCtrl: getMeeting notify: " + JSON.stringify(notify));
             }).finally(function() {
                 $log.debug("meetingStatusCtrl: getMeeting finally: ");
+                self.loading = false;
             });
         }
         else {
@@ -95,7 +97,7 @@ angular.module('dashboard')
                     }
                 }
             }
-            return 'tuntematon';
+            return 'STR_TOPIC_UNKNOWN';
         };
 
         self.mtgStatusClass = function(meeting) {
