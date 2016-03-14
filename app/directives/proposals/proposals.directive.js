@@ -27,7 +27,8 @@ angular.module('dashboard')
             { value: 8, text: "Eriävä mielipide" },
             { value: 9, text: "Esteellinen" },
             { value: 10, text: "Esityksen poisto" }
-        ]
+        ],
+        'TOGGLE': 'PROPS.TOGGLE'
     })
     .directive('dbProposals', [function() {
 
@@ -38,6 +39,7 @@ angular.module('dashboard')
             self.tps = PROPS.TYPE;
             self.published = PROPS.PUBLISHED;
             self.isMobile = $rootScope.isMobile;
+            self.isAllOpen = false;
 
             function getProposals(guid) {
                 if (typeof guid === 'string') {
@@ -158,6 +160,11 @@ angular.module('dashboard')
                     self.proposals = [];
                 }
                 self.proposals.splice(0, 0, createDraft(item));
+            };
+
+            self.toggleAll = function() {
+                self.isAllOpen = !self.isAllOpen;
+                $rootScope.$emit(PROPS.TOGGLE, self.isAllOpen);
             };
 
             $scope.$watch(function() {

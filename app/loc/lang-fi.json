@@ -1,5 +1,5 @@
 {
-    "STR_LOGIN" : "Kirjaudu",
+    "STR_LOGIN": "Kirjaudu",
     "STR_MEETINGS": "Kokoukset",
     "STR_SIGNINGS": "Allekirjoitukset",
     "STR_OPEN_MEETINGS": "Avoimet kokoukset",
@@ -50,5 +50,10 @@
     "STR_DECISION_HISTORY": "Päätöshistoria",
     "STR_MEETING": "Kokous",
     "STR_AGENCY": "Toimielin",
-    "STR_ROLE": "Rooli"
+    "STR_ROLE": "Rooli",
+    "STR_OPEN_ALL": "Avaa kaikki",
+    "STR_CLOSE_ALL": "Sulje kaikki",
+    "STR_PUBLIC_PROPOSALS": "Julkaistut ehdotukset",
+    "STR_PRIVATE_PROPOSALS": "Julkaisemattomat ehdotukset",
+    "STR_CREATE_PROPOSAL": "Luo ehdotus"
 }
