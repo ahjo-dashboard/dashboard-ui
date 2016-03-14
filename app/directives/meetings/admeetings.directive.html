@@ -3,7 +3,7 @@
     <div class="btn-group ng-class:[{'btn-group-justified':!ctrl.isMobile, 'ad-btn-group-vertical':ctrl.isMobile}]">
 
         <div class="hidden-xs btn-group">
-            <button type="button" class="btn btn-success ad-dummy-button disabled" translate>STR_MEETING</button>
+            <button type="button" class="btn btn-success ad-dummy-button disabled" translate translate-cloak>STR_MEETING</button>
         </div>
 
         <div class="btn-group" uib-dropdown is-open="agencyIsOpen">
@@ -18,8 +18,8 @@
             </ul>
         </div>
 
-        <div class="btn-group"">
-            <button id="roleButton" type="button" class="btn btn-success ad-dummy-button disabled" translate>STR_ROLE</button>
+        <div class="btn-group">
+            <button id="roleButton" type="button" class="btn btn-success ad-dummy-button disabled" translate translate-cloak>STR_ROLE</button>
         </div>
 
     </div>
@@ -27,7 +27,8 @@
     <uib-progressbar ng-if="ctrl.loading" class="progress-striped active" type="info"><i>Haetaan...</i></uib-progressbar>
 
     <ul ng-if="!ctrl.mtgErr" class="list-group">
-        <button ng-if="item.visible" type="button" class="list-group-item" ng-repeat="item in ctrl.data track by $index" ng-click="selected({meetingItem:item.meeting})">
+        <button ng-if="item.visible" type="button" class="list-group-item" ng-repeat="item in ctrl.data | orderBy:'meeting.meetingDate':true track by $index"
+        ng-click="selected({meetingItem:item.meeting})">
             <div class="row">
                 <div class="col-xs-12 col-sm-4">{{item.meeting.name}}</div>
                 <div class="col-xs-12 col-sm-4">{{item.meeting.agencyName}}</div>
