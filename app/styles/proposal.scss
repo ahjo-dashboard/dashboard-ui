@@ -28,12 +28,14 @@ h1, h2, h3, h4, h5 {
 .prop-header-text {
     margin-top: 5px;
     margin-bottom: 3px;
+    min-height: 40px;
+    display: flex;
+    align-items: center;
 }
 
 .prop-button {
     text-align: center !important;
     min-height: 50px;
-    border-radius: 8px;
 }
 
 .prop-text {
@@ -96,6 +98,10 @@ h1, h2, h3, h4, h5 {
     .prop-header-text {
         margin-top: 10px;
         margin-bottom: 10px;
+    }
+
+    .prop-button {
+        border-radius: 8px;
     }
 
     .prop-icon {
