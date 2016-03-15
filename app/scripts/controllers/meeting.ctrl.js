@@ -12,7 +12,7 @@
  * Controller of the dashboard
  */
 angular.module('dashboard')
-    .controller('meetingCtrl', ['$log', 'AhjoMeetingSrv', '$stateParams', '$rootScope', '$scope', '$state', 'CONST', 'StorageSrv', 'AttachmentData', 'ListData', function ($log, AhjoMeetingSrv, $stateParams, $rootScope, $scope, $state, CONST, StorageSrv, AttachmentData, ListData) {
+    .controller('meetingCtrl', ['$log', 'AhjoMeetingSrv', '$stateParams', '$rootScope', '$scope', '$state', 'CONST', 'StorageSrv', 'AttachmentData', 'ListData', function($log, AhjoMeetingSrv, $stateParams, $rootScope, $scope, $state, CONST, StorageSrv, AttachmentData, ListData) {
         $log.debug("meetingCtrl: CONTROLLER");
         var self = this;
         var isMobile = $rootScope.isMobile;
@@ -20,7 +20,7 @@ angular.module('dashboard')
         self.lowerUrl = {};
         self.error = null;
         self.topic = StorageSrv.get(CONST.KEY.TOPIC);
-        self.blockMode = CONST.BLOCKMODE.BOTH;
+        self.blockMode = CONST.BLOCKMODE.UPPER;
         self.lbms = CONST.LOWERBLOCKMODE;
         self.lbm = CONST.LOWERBLOCKMODE.PROPOSALS;
         self.header = '';
@@ -60,25 +60,28 @@ angular.module('dashboard')
             }
         }
 
-        self.upperClicked = function () {
+        function checkMode() {
+            if (!isMobile && self.isUpperMode()) {
+                self.blockMode = CONST.BLOCKMODE.BOTH;
+            }
+        }
+
+        self.upperClicked = function() {
             self.blockMode = (self.blockMode === CONST.BLOCKMODE.BOTH || self.blockMode === CONST.BLOCKMODE.LOWER) ? CONST.BLOCKMODE.UPPER : CONST.BLOCKMODE.BOTH;
         };
 
-        self.lowerClicked = function () {
+        self.lowerClicked = function() {
             self.blockMode = (self.blockMode === CONST.BLOCKMODE.BOTH || self.blockMode === CONST.BLOCKMODE.UPPER) ? CONST.BLOCKMODE.LOWER : CONST.BLOCKMODE.BOTH;
         };
 
-        self.topicClicked = function () {
+        self.topicClicked = function() {
             if (isMobile) {
                 StorageSrv.set(CONST.KEY.LISTPDF_DATA, self.tData);
                 $state.go(CONST.APPSTATE.TOPIC);
             }
-            else {
-
-            }
         };
 
-        self.attachmentClicked = function (attachment) {
+        self.attachmentClicked = function(attachment) {
             self.lbm = CONST.LOWERBLOCKMODE.ATTACHMENTS;
             if (isMobile) {
                 StorageSrv.set(CONST.KEY.SELECTION_DATA, self.aData);
@@ -87,9 +90,10 @@ angular.module('dashboard')
             else if (attachment instanceof Object) {
                 self.lowerUrl = attachment.link ? attachment.link : {};
             }
+            checkMode();
         };
 
-        self.decisionClicked = function (decision) {
+        self.decisionClicked = function(decision) {
             self.lbm = CONST.LOWERBLOCKMODE.MATERIALS;
             if (isMobile) {
                 StorageSrv.set(CONST.KEY.SELECTION_DATA, self.dData);
@@ -98,9 +102,10 @@ angular.module('dashboard')
             else if (decision instanceof Object) {
                 self.lowerUrl = decision.link ? decision.link : {};
             }
+            checkMode();
         };
 
-        self.additionalMaterialClicked = function (material) {
+        self.additionalMaterialClicked = function(material) {
             self.lbm = CONST.LOWERBLOCKMODE.MATERIALS;
             if (isMobile) {
                 StorageSrv.set(CONST.KEY.SELECTION_DATA, self.amData);
@@ -109,53 +114,55 @@ angular.module('dashboard')
             else if (material instanceof Object) {
                 self.lowerUrl = material.link ? material.link : {};
             }
+            checkMode();
         };
 
-        self.proposalsClicked = function () {
+        self.proposalsClicked = function() {
             self.lbm = CONST.LOWERBLOCKMODE.PROPOSALS;
             if (isMobile) {
                 $state.go(CONST.APPSTATE.LISTPROPOSALS);
             }
+            checkMode();
         };
 
-        self.isBothMode = function () {
+        self.isBothMode = function() {
             return self.blockMode === CONST.BLOCKMODE.BOTH;
         };
 
-        self.isUpperMode = function () {
+        self.isUpperMode = function() {
             return self.blockMode === CONST.BLOCKMODE.UPPER;
         };
 
-        self.isLowerMode = function () {
+        self.isLowerMode = function() {
             return self.blockMode === CONST.BLOCKMODE.LOWER;
         };
 
-        self.isSecret = function (item) {
+        self.isSecret = function(item) {
             return (item && item.publicity) ? (item.publicity === CONST.PUBLICITY.SECRET) : false;
         };
 
-        self.showEmbeddedFile = function (url) {
+        self.showEmbeddedFile = function(url) {
             return self.isUrlString(url) && !self.isActive(CONST.LOWERBLOCKMODE.PROPOSALS);
         };
 
-        self.isActive = function (mode) {
+        self.isActive = function(mode) {
             return self.lbm === mode;
         };
 
-        self.isUrlString = function (url) {
+        self.isUrlString = function(url) {
             return (url && (typeof url === "string") && url.length) ? true : false;
         };
 
-        $scope.$watch(function () {
+        $scope.$watch(function() {
             return StorageSrv.get(CONST.KEY.TOPIC);
-        }, function (newTopic, oldTopic) {
+        }, function(newTopic, oldTopic) {
             if (newTopic !== oldTopic) {
                 self.topic = newTopic;
                 setData(self.topic);
             }
         });
 
-        $scope.$on('$destroy', function () {
+        $scope.$on('$destroy', function() {
             $log.debug("meetingCtrl: DESTROY");
         });
 
