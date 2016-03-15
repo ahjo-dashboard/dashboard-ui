@@ -56,7 +56,6 @@ angular.module('dashboard')
                         $log.debug("dbProposals: get finally: ");
                         if (getResult instanceof Object) {
                             self.proposals = angular.copy(getResult);
-                            console.log(self.proposals);
                         }
                     });
                 }
