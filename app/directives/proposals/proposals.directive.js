@@ -41,6 +41,16 @@ angular.module('dashboard')
             self.isMobile = $rootScope.isMobile;
             self.isAllOpen = false;
 
+            function removeProposal(proposal) {
+                if (proposal instanceof Object) {
+                    for (var index = 0; index < self.proposals.length; index++) {
+                        if (angular.equals(proposal, self.proposals[index])) {
+                            self.proposals.splice(index, 1);
+                        }
+                    }
+                }
+            }
+
             function getProposals(guid) {
                 if (typeof guid === 'string') {
                     var getResult = null;
@@ -94,28 +104,23 @@ angular.module('dashboard')
             function deleteProposal(proposal) {
                 if (proposal instanceof Object) {
                     if (proposal.isNew && self.proposals instanceof Array) {
-                        for (var index = 0; index < self.proposals.length; index++) {
-                            if (angular.equals(proposal, self.proposals[index])) {
-                                self.proposals.splice(index, 1);
-                            }
-                        }
+                        removeProposal(proposal);
                     }
                     else {
-                        if (proposal instanceof Object) {
-                            AhjoProposalsSrv.delete(proposal).$promise.then(function(response) {
-                                $log.debug("dbProposals: delete then: " + JSON.stringify(response));
-                            }, function(error) {
-                                $log.error("dbProposals: delete error: " + JSON.stringify(error));
-                            }, function(notify) {
-                                $log.debug("dbProposals: delete notify: " + JSON.stringify(notify));
-                            }).finally(function() {
-                                $log.debug("dbProposals: delete finally: ");
-                            });
-                        }
-                        else {
-                            $log.error('dbProposals: deleteProposal parameter invalid');
-                        }
+                        AhjoProposalsSrv.delete(proposal).$promise.then(function(response) {
+                            $log.debug("dbProposals: delete then: " + JSON.stringify(response));
+                            removeProposal(proposal);
+                        }, function(error) {
+                            $log.error("dbProposals: delete error: " + JSON.stringify(error));
+                        }, function(notify) {
+                            $log.debug("dbProposals: delete notify: " + JSON.stringify(notify));
+                        }).finally(function() {
+                            $log.debug("dbProposals: delete finally: " + proposal.proposalGuid);
+                        });
                     }
+                }
+                else {
+                    $log.error('dbProposals: deleteProposal parameter invalid');
                 }
             }
 
