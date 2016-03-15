@@ -68,6 +68,15 @@ h1, h2, h3, h4, h5 {
     margin-bottom: 2px;
 }
 
+label {
+    padding-top: 8px !important;
+    padding-bottom: 6px !important;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+}
+
+.glyphicon { font-size: 20px !important; }
+
 /* Small devices (tablets, 768px and up) */
 @media screen and (min-width: 768px) {
 
