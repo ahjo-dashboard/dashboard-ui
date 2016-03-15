@@ -320,6 +320,11 @@ angular.module('dashboard')
             return s ? s.stringId : '';
         };
 
+        self.goHome = function() {
+            self.ongoing = true;
+            $rootScope.goHome();
+        };
+
         initBtns(self.btnModel, self.item.Status);
 
         // Both blob and remote url implementations kept, but only one used.

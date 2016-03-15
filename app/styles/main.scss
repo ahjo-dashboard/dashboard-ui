@@ -132,6 +132,14 @@ body {
         font-size: inherit !important;
     }
 
+    .db-label-pur {
+        background-color: #9370d8;
+    }
+
+    .db-label-yel {
+        background-color: #cccc00;
+    }
+
     // db-btn-prim
     $btn-prim-color-bg: #4591d3;
     $btn-prim-color-active-bg: #276aa5;
@@ -151,6 +159,11 @@ body {
         @extend .db-btn-colhea;
         opacity: 1.0 !important;
         outline: none !important;
+    }
+
+    .db-btn-hdr{
+        @include button-variant($headingTxtColor, $headingBgColor, $headingBgColor);
+        margin-top: 5px !important;
     }
 
     // db-btn-agenda
@@ -252,6 +265,10 @@ body {
         background-color: $appbgcolor;
     }
 
+    .glyphicon.center:before {
+        vertical-align: middle;
+    }
+
     .ad-page-header {
         position: absolute;
         top: 0;
@@ -321,8 +338,8 @@ body {
                     height: inherit;
                     padding-left: 0;
                     display: flex;
-                    justify-content:center;
-                    align-content:center;
+                    justify-content: center;
+                    align-content: center;
                     flex-direction:column;
                     h3 {
                         margin-top: 0;
@@ -420,8 +437,8 @@ body {
             .glyphicon {
                 color: $headingTxtColor;
                 font-size: $default-font-size;
-                display:block;
-                text-align:center
+                display: block;
+                text-align: center;
             }
         }
 

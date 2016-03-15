@@ -3,9 +3,18 @@
     <div ng-if="!isMobile" class="ad-page-header">
         <div class="container col-xs-12">
             <div class="row">
-                <i class="col-sm-4 hidden-xs glyphicon glyphicon-menu-hamburger" ng-click="closeMenu()"></i>
-                <i ng-if="menuFull()" class="col-sm-4 glyphicon glyphicon-home" ng-click="msc.goHome()"></i>
-                <i ng-if="menuFull()" class="col-xs-1 col-sm-4 glyphicon glyphicon-info-sign" ng-click="msc.showInfo()"></i>
+                <div class="col-sm-4">
+                    <button type="button" class="btn db-btn-hdr glyphicon center glyphicon-menu-hamburger" ng-click="closeMenu()">
+                    </button>
+                </div>
+                <div ng-if="menuFull()" class="col-sm-4">
+                    <button type="button" class="btn db-btn-hdr glyphicon center glyphicon-home" ng-click="msc.goHome()">
+                    </button>
+                </div>
+                <div ng-if="menuFull()" class="col-xs-4 animate-if">
+                    <button type="button" class="btn db-btn-hdr glyphicon center glyphicon-info-sign disabled" ng-click="">
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -23,12 +32,17 @@
 
     <div class="ad-page-content">
 
-        <button ng-if="!isMobile" type="button" class="btn db-btn-prim btn-lg disabled ad-dummy-button" ng-click="">{{msc.meeting.meetingTitle}}</button>
+        <button ng-if="!isMobile" type="button" class="btn db-btn-prim btn-lg disabled ad-dummy-button">{{msc.meeting.meetingTitle}}</button>
 
         <div class="btn-group btn-block text-center" uib-dropdown is-open="">
             <button id="statusButton" type="button" class="btn db-btn-prim btn-lg ad-button text-center ng-class:[{'disabled': !msc.chairman},{'ad-dummy-button': !msc.chairman}]"
             uib-dropdown-toggle>
-                <span class="db-label ng-class: [msc.mtgStatusClass(msc.meeting)]" translate>{{msc.stringId(msc.meeting)}}</span>
+
+                <uib-progressbar ng-if='msc.loading' class="animate-if col-xs-12 progress-striped active" type="info"></uib-progressbar>
+
+                <span ng-if='!msc.loading' class="animate-if db-label ng-class: [msc.mtgStatusClass(msc.meeting)]">
+                    <span translate translate-cloak>{{msc.stringId(msc.meeting)}}</span>
+                </span>
                 <span ng-if="msc.chairman" class="caret"></span>
             </button>
             <ul uib-dropdown-menu role="menu" aria-labelledby="statusButton">

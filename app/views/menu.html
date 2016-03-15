@@ -14,14 +14,14 @@
     <div class="ad-page-content">
 
         <div class="ad-page-container">
-            <button type="button" class="btn btn-info btn-lg btn-block wrap-button-text db-btn-prim" ng-click="mc.showMeetings()">
+            <button type="button" class="btn btn-lg btn-block wrap-button-text db-btn-prim" ng-click="mc.showMeetings()">
                 <div class="ng-class: [{'col-xs-10':mc.loadingMtg, 'col-xs-12':!mc.loadingMtg}]"><span translate translate-cloak>STR_MEETINGS</span> <span class="badge">{{mc.mtgCount}}</span>
                 </div>
                 <div ng-if="mc.loadingMtg" class="ad-progress-bar-parent col-xs-2">
                     <uib-progressbar class="progress-striped active ad-progress-bar" type="info"></uib-progressbar>
                 </div>
             </button>
-            <button type="button" class="btn btn-info btn-lg btn-block wrap-button-text db-btn-prim" ng-click="mc.showSignings()">
+            <button type="button" class="btn btn-lg btn-block wrap-button-text db-btn-prim" ng-click="mc.showSignings()">
                 <div ng-class="[{'col-xs-10':mc.loadingSgn, 'col-xs-12':!mc.loadingSgn}]">
                     <span translate translate-cloak>STR_SIGNINGS</span>
                     <span class="badge ng-cloak">{{mc.sgnCount}}</span>
