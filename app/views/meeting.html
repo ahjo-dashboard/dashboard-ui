@@ -25,7 +25,7 @@
                 </div>
                 <div class="col-xs-2 btn-group ad-lower-bg right">
                     <button type="button" class="btn db-btn-prim btn-block ng-class:[{'active': (ctrl.isActive(ctrl.lbms.PROPOSALS) && !ctrl.isUpperMode())}]"
-                    ng-click="ctrl.proposalsClicked()" translate translate-cloak>STR_PROPOSALS</button>
+                    translate translate-cloak>STR_PROPOSALS</button>
                 </div>
                 <div class="col-xs-2 btn-group ad-lower-bg right" uib-dropdown is-open="">
                     <button id="materialButton" type="button" data-ng-disabled="(!ctrl.amData.objects.length && !ctrl.dData.objects.length)"
@@ -69,15 +69,9 @@
         </div>
     </div>
 
-    <div ng-if="isMobile" class="db-new-page-header">
-        <div class="container col-xs-12">
-            <div class="row">
-                <i class="col-xs-2 glyphicon glyphicon-menu-left" aria-hidden="true" ng-click="goBack()"></i>
-                <div class="col-xs-10">
-                    <h4>{{ctrl.header}}</h4>
-                </div>
-            </div>
-        </div>
+    <div ng-if="isMobile" class="ad-page-header db-center">
+        <i class="glyphicon glyphicon-menu-left" aria-hidden="true" ng-click="goBack()"></i>
+        <h4 ng-class="ng-cloak">{{ctrl.header}}</h4>
     </div>
 
     <div ng-if="!isMobile" class="ad-page-content">

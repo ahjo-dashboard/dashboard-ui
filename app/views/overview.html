@@ -1,13 +1,13 @@
 <div class="ad-page">
-    <div class="db-new-page-header">
-        <div class="container col-xs-12">
-            <div class="row">
-                <i class="visible-xs-inline col-xs-2 glyphicon glyphicon-menu-left" aria-hidden="true" ng-click="goHome()"></i>
-                <div class="col-xs-10">
-                    <h3 ng-if="oc.hasMeetings" class="visible-xs-inline col-xs-10" translate>STR_MEETINGS</h3>
-                    <h3 ng-if="oc.hasEsign" class="visible-xs-inline col-xs-10" translate>STR_SIGNINGS</h3>
-                </div>
-            </div>
+    <div class="ad-page-header db-center">
+        <div ng-if="isMobile" class="db-center">
+            <i class="visible-xs-inline glyphicon glyphicon-menu-left" aria-hidden="true" ng-click="goHome()"></i>
+            <h3 ng-if="oc.hasMeetings" class="" translate>STR_MEETINGS</h3>
+            <h3 ng-if="oc.hasEsign" class="" translate>STR_SIGNINGS</h3>
+        </div>
+        <div ng-if="!isMobile" class="db-center">
+            <img src="images/vaakuna.jpg">
+            <h3 class="" translate translate-cloak>STR_APPNAME</h3>
         </div>
     </div>
 

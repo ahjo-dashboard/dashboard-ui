@@ -1,7 +1,7 @@
 <div class="ad-page">
 
-    <div ng-if="!isMobile" class="ad-page-header">
-        <div class="container col-xs-12">
+    <div ng-if="!isMobile" class="ad-page-header db-center">
+        <div class="col-xs-12">
             <div class="row">
                 <div class="col-sm-4">
                     <button type="button" class="btn db-btn-hdr glyphicon center glyphicon-menu-hamburger" ng-click="closeMenu()">
@@ -19,15 +19,9 @@
         </div>
     </div>
 
-    <div ng-if="isMobile" class="db-new-page-header">
-        <div class="container col-xs-12">
-            <div class="row">
-                <i class="col-xs-2 glyphicon glyphicon-menu-left" aria-hidden="true" ng-click="goBack()"></i>
-                <div class="col-xs-10">
-                    <h4>{{msc.meeting.meetingTitle}}</h4>
-                </div>
-            </div>
-        </div>
+    <div ng-if="isMobile" class="ad-page-header db-center">
+        <i class="glyphicon glyphicon-menu-left" aria-hidden="true" ng-click="goBack()"></i>
+        <h4 ng-class="ng-cloak">{{msc.meeting.meetingTitle}}</h4>
     </div>
 
     <div class="ad-page-content">
