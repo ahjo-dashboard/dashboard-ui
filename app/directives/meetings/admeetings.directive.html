@@ -31,10 +31,11 @@
         <uib-progressbar ng-if="ctrl.loading" class="progress-striped active" type="info"><i>Haetaan...</i></uib-progressbar>
 
         <ul ng-if="!ctrl.mtgErr" class="list-group db-tablist">
-            <button ng-if="item.visible" type="button" class="list-group-item" ng-repeat="item in ctrl.data | orderBy:'meeting.meetingDate':true track by $index"
+            <button ng-if="item.visible" type="button" class="list-group-item" ng-repeat="item in ctrl.data | orderBy:'meeting.meetingDate': reverse track by $index"
             ng-click="selected({meetingItem:item.meeting})">
                 <div class="row">
-                    <div class="col-xs-12 col-sm-4">{{item.meeting.name}}</div>
+                    <div class="col-xs-12 col-sm-4"><b>{{item.meeting.name}}</b>
+                        <br>{{item.meeting.meetingDate | date:'yyyy-MM-dd HH:mm' }}</div>
                     <div class="col-xs-12 col-sm-4">{{item.meeting.agencyName}}</div>
                     <div class="col-xs-12 col-sm-4">{{item.role}}</div>
                 </div>

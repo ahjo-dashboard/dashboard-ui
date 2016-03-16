@@ -40,7 +40,7 @@
     <div class="col-xs-12">
         <div class="row">
             <db-proposal ng-if="(p.isPublished === c.published.YES)" proposal="p" guid="guid" on-post="c.post(p)" on-delete="c.delete(p)"
-            ng-repeat="p in c.proposals track by $index">
+            ng-repeat="p in c.proposals | orderBy:'insertDateTime': true track by $index">
             </db-proposal>
         </div>
     </div>
