@@ -24,13 +24,13 @@
             ng-click="c.cancelEditing()">
                 <span class="glyphicon glyphicon-remove"></span>
             </label>
-            <label ng-if="c.mode === c.mds.COLLAPSED && c.isUser" role="button" class="btn btn-primary btn-md animate-if prop-label"
-            aria-expanded="false" ng-click="c.deleteProposal()">
-                <span class="glyphicon glyphicon-trash"></span>
-            </label>
             <label ng-if="c.mode === c.mds.COLLAPSED && !c.isPbl && c.editedText.length" role="button" class="btn btn-primary btn-md animate-if prop-label"
             aria-expanded="false" ng-click="c.shareProposal()">
                 <span class="glyphicon glyphicon-send"></span>
+            </label>
+            <label ng-if="c.mode === c.mds.COLLAPSED && c.isUser" role="button" class="btn btn-primary btn-md animate-if prop-label"
+            aria-expanded="false" ng-click="c.deleteProposal()">
+                <span class="glyphicon glyphicon-trash"></span>
             </label>
             <label ng-if="(c.mode === c.mds.COLLAPSED && c.isPbl)" role="button" class="btn btn-primary btn-md animate-if prop-label"
             aria-expanded="false" ng-click="c.open()">
