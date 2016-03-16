@@ -21,16 +21,15 @@
                     </button>
                 </div>
                 <div class="col-xs-2 btn-group ad-lower-bg right">
-                    <button type="button" class="btn db-btn-prim btn-block disabled"
-                    ng-click="" translate translate-cloak>STR_OWN_NOTES</button>
+                    <button type="button" class="btn db-btn-prim btn-block disabled" ng-click="" translate translate-cloak>STR_OWN_NOTES</button>
                 </div>
                 <div class="col-xs-2 btn-group ad-lower-bg right">
-                    <button type="button" class="btn db-btn-prim btn-block ng-class:[{'active': ctrl.isActive(ctrl.lbms.PROPOSALS)}]"
+                    <button type="button" class="btn db-btn-prim btn-block ng-class:[{'active': (ctrl.isActive(ctrl.lbms.PROPOSALS) && !ctrl.isUpperMode())}]"
                     ng-click="ctrl.proposalsClicked()" translate translate-cloak>STR_PROPOSALS</button>
                 </div>
                 <div class="col-xs-2 btn-group ad-lower-bg right" uib-dropdown is-open="">
                     <button id="materialButton" type="button" data-ng-disabled="(!ctrl.amData.objects.length && !ctrl.dData.objects.length)"
-                    class="btn db-btn-prim btn-block ng-class:[{'active': ctrl.isMaterialsActive()}]" uib-dropdown-toggle>
+                    class="btn db-btn-prim btn-block ng-class:[{'active': ctrl.isActive(ctrl.lbms.MATERIALS)}]" uib-dropdown-toggle>
                         <span translate translate-cloak>STR_OTHER_MATERIAL</span>
                         <span ng-if="(ctrl.amData.objects.length && ctrl.dData.objects.length)" class="badge ng-cloak hidden-sm">{{ctrl.amData.objects.length + ctrl.dData.objects.length}}</span>
                         <span ng-if="(ctrl.amData.objects.length && ctrl.dData.objects.length)" class="caret hidden-sm"></span>
