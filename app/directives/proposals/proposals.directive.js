@@ -42,12 +42,13 @@ angular.module('dashboard')
             self.isAllOpen = false;
 
             function getProposals(guid) {
+                $log.debug("dbProposals: getProposals: " + guid);
                 if (typeof guid === 'string') {
                     var getResult = null;
 
                     AhjoProposalsSrv.get({ 'guid': guid }).$promise.then(function(response) {
                         $log.debug("dbProposals: get then: ");
-                        getResult = response.objects;
+                        getResult = (response instanceof Object) ? response.objects : null;
                     }, function(error) {
                         $log.error("dbProposals: get error: " + JSON.stringify(error));
                     }, function(notify) {
@@ -65,6 +66,7 @@ angular.module('dashboard')
             }
 
             function postProposal(proposal) {
+                $log.debug("dbProposals: postProposal: " + JSON.stringify(proposal));
                 if (proposal instanceof Object) {
                     var postResult = null;
 
@@ -82,7 +84,7 @@ angular.module('dashboard')
                     }).finally(function() {
                         $log.debug("dbProposals: post finally: ");
                         if (postResult instanceof Object) {
-                            $log.debug(JSON.stringify(postResult.Message));
+                            getProposals($scope.guid);
                         }
                     });
                 }
@@ -92,6 +94,7 @@ angular.module('dashboard')
             }
 
             function deleteProposal(proposal) {
+                $log.debug("dbProposals: deleteProposal: " + JSON.stringify(proposal));
                 if (proposal instanceof Object) {
                     if (proposal.isNew && self.proposals instanceof Array) {
                         for (var index = 0; index < self.proposals.length; index++) {
@@ -101,21 +104,24 @@ angular.module('dashboard')
                         }
                     }
                     else {
-                        if (proposal instanceof Object) {
-                            AhjoProposalsSrv.delete(proposal).$promise.then(function(response) {
-                                $log.debug("dbProposals: delete then: " + JSON.stringify(response));
-                            }, function(error) {
-                                $log.error("dbProposals: delete error: " + JSON.stringify(error));
-                            }, function(notify) {
-                                $log.debug("dbProposals: delete notify: " + JSON.stringify(notify));
-                            }).finally(function() {
-                                $log.debug("dbProposals: delete finally: ");
-                            });
-                        }
-                        else {
-                            $log.error('dbProposals: deleteProposal parameter invalid');
-                        }
+                        var deleteResult = null;
+                        AhjoProposalsSrv.delete(proposal).$promise.then(function(response) {
+                            $log.debug("dbProposals: delete then: " + JSON.stringify(response));
+                            deleteResult = (response instanceof Object) ? response : null;
+                        }, function(error) {
+                            $log.error("dbProposals: delete error: " + JSON.stringify(error));
+                        }, function(notify) {
+                            $log.debug("dbProposals: delete notify: " + JSON.stringify(notify));
+                        }).finally(function() {
+                            $log.debug("dbProposals: delete finally: ");
+                            if (deleteResult instanceof Object) {
+                                getProposals($scope.guid);
+                            }
+                        });
                     }
+                }
+                else {
+                    $log.error('dbProposals: deleteProposal parameter invalid');
                 }
             }
 
