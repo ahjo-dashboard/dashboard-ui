@@ -12,7 +12,7 @@
         </div>
 
         <div class="prop-row-child text-right ng-class:[{'col-xs-4': (c.mode !== c.mds.COLLAPSED)},{'col-xs-5': (c.mode === c.mds.COLLAPSED && !c.isPbl)},{'col-xs-4': (c.mode === c.mds.COLLAPSED && c.isUser && c.isPbl)},{'col-xs-2': (c.mode === c.mds.COLLAPSED && !c.isUser && c.isPbl)},{'col-sm-5': (c.mode !== c.mds.COLLAPSED)},{'col-sm-4': (c.mode === c.mds.COLLAPSED && !c.isPbl)},{'col-sm-3': (c.mode === c.mds.COLLAPSED && c.isUser && c.isPbl)},{'col-sm-2': (c.mode === c.mds.COLLAPSED && !c.isUser && c.isPbl)},{'col-md-3': (c.mode !== c.mds.COLLAPSED)},{'col-md-3': (c.mode === c.mds.COLLAPSED)}]">
-            <label ng-if="c.mode === c.mds.COLLAPSED && !c.isPbl" role="button" class="btn btn-primary btn-md animate-if prop-label"
+            <label ng-if="c.mode === c.mds.COLLAPSED && !c.isPbl" role="button" class="btn db-btn-prim btn-md animate-if prop-label"
             aria-expanded="false" ng-click="c.startEditing()">
                 <span class="glyphicon glyphicon-pencil"></span>
             </label>
@@ -24,19 +24,19 @@
             ng-click="c.cancelEditing()">
                 <span class="glyphicon glyphicon-remove"></span>
             </label>
-            <label ng-if="c.mode === c.mds.COLLAPSED && !c.isPbl && c.editedText.length" role="button" class="btn btn-primary btn-md animate-if prop-label"
+            <label ng-if="c.mode === c.mds.COLLAPSED && !c.isPbl && c.editedText.length" role="button" class="btn btn-success btn-md animate-if prop-label"
             aria-expanded="false" ng-click="c.shareProposal()">
                 <span class="glyphicon glyphicon-send"></span>
             </label>
-            <label ng-if="c.mode === c.mds.COLLAPSED && c.isUser" role="button" class="btn btn-primary btn-md animate-if prop-label"
-            aria-expanded="false" ng-click="c.deleteProposal()">
+            <label ng-if="c.mode === c.mds.COLLAPSED && c.isUser" role="button" class="btn btn-danger btn-md animate-if prop-label" aria-expanded="false"
+            ng-click="c.deleteProposal()">
                 <span class="glyphicon glyphicon-trash"></span>
             </label>
-            <label ng-if="(c.mode === c.mds.COLLAPSED && c.isPbl)" role="button" class="btn btn-primary btn-md animate-if prop-label"
+            <label ng-if="(c.mode === c.mds.COLLAPSED && c.isPbl)" role="button" class="btn db-btn-prim btn-md animate-if prop-label"
             aria-expanded="false" ng-click="c.open()">
                 <span class="glyphicon glyphicon-plus"></span>
             </label>
-            <label ng-if="c.mode === c.mds.OPEN" role="button" class="btn btn-primary btn-md animate-if prop-label" aria-expanded="false"
+            <label ng-if="c.mode === c.mds.OPEN" role="button" class="btn db-btn-prim btn-md animate-if prop-label" aria-expanded="false"
             ng-click="c.collapse()">
                 <span class="glyphicon glyphicon-minus"></span>
             </label>
