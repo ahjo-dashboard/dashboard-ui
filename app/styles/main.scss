@@ -37,6 +37,7 @@ $lower-color: #ffc44b;
 $default-font-size: 1.2em;
 $tablist-tabborder-width: 2px;
 $btn-radius: 6px;
+$header-leftmargin: 10px;
 
 #device {
     min-width: 320px;
@@ -111,6 +112,11 @@ body {
         padding-right: 10px;
         padding-top: 5px;
         padding-bottom: 5px;
+    }
+
+    h1, h2, h3, h4, h5 {
+        margin-top: 0px;
+        margin-bottom: 0px;
     }
 
     .btn {
@@ -287,15 +293,21 @@ body {
         background-color: $headingBgColor;
         height: $header-height;
 
-        i, img {
-            margin-left: 10px;
-            margin-right: 10px;
+        // Not set for all element types because that would mix desktop layout which uses cols while mobile doesn't.
+        h1:not(:first-child),
+        h2:not(:first-child),
+        h3:not(:first-child),
+        h4:not(:first-child),
+        h5:not(:first-child) {
+            margin-left: $header-leftmargin;
+        }
+
+        *:first-child:not(div) {
+            margin-left: $header-leftmargin;
         }
 
         h1, h2, h3, h4, h5 {
             color: $headingTxtColor;
-            margin-top: 10px;
-            margin-bottom: 10px;
         }
 
         .glyphicon {
