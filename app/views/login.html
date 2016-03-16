@@ -1,8 +1,7 @@
 <div class="ad-page-header">
-    <div class="container col-xs-12">
-        <div class="row text-center">
-            <h3>Ahjo Työpöytäsovellus</h3> <h3>testiympäristön valinnat</h3>
-        </div>
+    <div ng-if="!isMobile" class="ad-page-header db-center">
+        <img src="images/vaakuna.jpg">
+        <h3 translate translate-cloak>STR_APPNAME</h3>
     </div>
 </div>
 <div class="ad-page-content">
@@ -15,11 +14,12 @@
                         <h4>Voit valita käyttäjätunnuksen, jolle haetaan testiympäristön kokousten sisältö</h4>
                         <p>Sähköiset allekirjoitukset haetaan silti omalla tunnuksellasi</p>
                     </div>
-                        <select ng-if="lc.data.options.length" style="margin: 10px;" id="ADID" name="ADID" ng-model="lc.data.selection">
-                            <option ng-repeat="item in lc.data.options track by $index" value="{{item.value}}">{{item.text}}</option>
-                        </select>
-                        <br>
-                        <input ng-if="lc.data.selection" style="margin: 10px;" class="btn btn-success" type="submit" value="{{'STR_LOGIN' | translate}}" ng-click="lc.select()" ng-disabled="lc.login"/>
+                    <select ng-if="lc.data.options.length" style="margin: 10px;" id="ADID" name="ADID" ng-model="lc.data.selection">
+                        <option ng-repeat="item in lc.data.options track by $index" value="{{item.value}}">{{item.text}}</option>
+                    </select>
+                    <br>
+                    <input ng-if="lc.data.selection" style="margin: 10px;" class="btn btn-success" type="submit" value="{{'STR_LOGIN' | translate}}"
+                    ng-click="lc.select()" ng-disabled="lc.login" />
                 </form>
 
                 <uib-progressbar ng-if="lc.login || lc.loadingUsers" class="progress-striped active" type="info"></uib-progressbar>

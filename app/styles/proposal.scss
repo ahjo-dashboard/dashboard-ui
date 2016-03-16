@@ -5,8 +5,10 @@
 
 @import "bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
 
+$font-color: black;
+
 h1, h2, h3, h4, h5 {
-    color: #555;
+    color: $font-color;
 }
 
 .prop-element {
@@ -81,10 +83,6 @@ h1, h2, h3, h4, h5 {
 
 /* Small devices (tablets, 768px and up) */
 @media screen and (min-width: 768px) {
-
-    h1, h2, h3, h4, h5 {
-        color: black;
-    }
 
     .prop-page {
         margin-left: 10px;

@@ -31,15 +31,13 @@ $long-delay: 600ms;
 $default-delay: 400ms;
 $short-delay: 50ms;
 
-$upper-color0: #204d74;
-$upper-color: #848c94;
-
-//$lower-color: #f0ad4e;
-$lower-color: #ffd64b;
+$upper-color: #276aa5;
+$lower-color: #ffc44b;
 
 $default-font-size: 1.2em;
 $tablist-tabborder-width: 2px;
 $btn-radius: 6px;
+$header-leftmargin: 10px;
 
 #device {
     min-width: 320px;
@@ -62,7 +60,6 @@ body {
     $headingBgColor: $focusedColor;
     $headingL2BgColor: $appbgcolor;
     $borderColor: $focusedColor;
-    $mtg-item-right-margin: 5px;
 
     background-color: $appbgcolor;
     padding: 0;
@@ -117,6 +114,11 @@ body {
         padding-bottom: 5px;
     }
 
+    h1, h2, h3, h4, h5 {
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+
     .btn {
         border-width: 0px;
         overflow: hidden;
@@ -137,7 +139,8 @@ body {
     }
 
     .db-label-yel {
-        background-color: #cccc00;
+        background-color: #ffff00;
+        color: #555;
     }
 
     // db-btn-prim
@@ -161,9 +164,20 @@ body {
         outline: none !important;
     }
 
+    .db-center {
+        display: flex;
+        align-items: center;
+        -moz-box-direction: row;
+        -webkit-box-direction: row;
+        -webkit-box-orient: horizontal;
+        -webkit-flex-direction: row;
+        -ms-flexbox-direction: row;
+        -ms-flex-direction: row;
+        flex-direction: row;
+    }
+
     .db-btn-hdr{
         @include button-variant($headingTxtColor, $headingBgColor, $headingBgColor);
-        margin-top: 5px !important;
     }
 
     // db-btn-agenda
@@ -279,9 +293,21 @@ body {
         background-color: $headingBgColor;
         height: $header-height;
 
+        // Not set for all element types because that would mix desktop layout which uses cols while mobile doesn't.
+        h1:not(:first-child),
+        h2:not(:first-child),
+        h3:not(:first-child),
+        h4:not(:first-child),
+        h5:not(:first-child) {
+            margin-left: $header-leftmargin;
+        }
+
+        *:first-child:not(div) {
+            margin-left: $header-leftmargin;
+        }
+
         h1, h2, h3, h4, h5 {
             color: $headingTxtColor;
-            letter-spacing: -1px;
         }
 
         .glyphicon {
@@ -340,7 +366,7 @@ body {
                     display: flex;
                     justify-content: center;
                     align-content: center;
-                    flex-direction:column;
+                    flex-direction: column;
                     h3 {
                         margin-top: 0;
                         margin-bottom: 0;
@@ -389,6 +415,7 @@ body {
         transition: all $short-delay linear;
     }
 
+    $mtg-item-padding: 5px 10px 10px 10px;
     .ad-flex-item-upper {
         @extend .ad-flex-item;
         border-style: solid;
@@ -397,8 +424,7 @@ body {
         border-right-width: 0;
         border-bottom-width: 0;
         border-right-color: $lower-color;
-        padding: 5px;
-        padding-top: 15px;
+        padding: $mtg-item-padding;
         background-color: $upper-color;
     }
 
@@ -412,9 +438,8 @@ body {
 
     .ad-flex-item-lower {
         @extend .ad-flex-item;
-        padding: 5px;
+        padding: $mtg-item-padding;
         background-color: $lower-color;
-        padding-right: $mtg-item-right-margin;
     }
 
     .ad-flex-item-lower.ad-flex-hide {
