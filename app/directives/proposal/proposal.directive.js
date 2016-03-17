@@ -14,8 +14,21 @@ angular.module('dashboard')
     .constant('PROP', {
         'MODE': {
             COLLAPSED: 'COLLAPSED',
-            OPEN: 'OPEN',
-            EDITOR: 'EDITOR'
+            OPEN: 'OPEN'
+        },
+        'STATUS': {
+            PUBLIC: 'PUBLIC',
+            PUBLISHED: 'PUBLISHED',
+            DRAFT: 'DRAFT'
+        },
+        'BTN': {
+            OPEN: { icon: 'glyphicon-plus', action: 'OPEN', type: 'db-btn-prim' },
+            CLOSE: { icon: 'glyphicon-minus', action: 'CLOSE', type: 'db-btn-prim' },
+            EDIT: { icon: 'glyphicon-pencil', action: 'EDIT', type: 'btn-success' },
+            OK: { icon: 'glyphicon-ok', action: 'OK', type: 'db-btn-prim' },
+            CANCEL: { icon: 'glyphicon-remove', action: 'CANCEL', type: 'btn-warning' },
+            SEND: { icon: 'glyphicon-send', action: 'SEND', type: 'db-btn-prim' },
+            DELETE: { icon: 'glyphicon-trash', action: 'DELETE', type: 'btn-danger' }
         }
     })
     .filter('unsafe', function($sce) {
@@ -29,80 +42,177 @@ angular.module('dashboard')
             $log.debug("dbProposal: CONTROLLER");
             var self = this;
 
-            self.testUserGuid = "926eee0b-8e94-4a14-beec-d9b60590547f"; // Elina Aalto
-
             self.mode = PROP.MODE.COLLAPSED;
-            self.mds = PROP.MODE;
-            self.isPbl = false;
-            self.isUser = false;
+            self.status = PROP.STATUS.PUBLIC;
             self.editedText = "";
-            self.smallEditor = {
-                'menu': [
-                    ['bold', 'italic', 'underline', 'strikethrough', 'subscript', 'superscript']
-                ]
-            };
+
+            self.leftBtn = null;
+            self.middleBtn = null;
+            self.rightBtn = null;
+
             self.editor = {
-                'menu': [
-                    // ['bold', 'italic', 'underline', 'strikethrough', 'subscript', 'superscript'],
-                    // ['format-block'],
-                    // ['font'],
-                    // ['font-size'],
-                    // ['font-color', 'hilite-color'],
-                    // ['remove-format'],
-                    // ['ordered-list', 'unordered-list', 'outdent', 'indent'],
-                    // ['left-justify', 'center-justify', 'right-justify']
-                ]
+                'menu': []
             };
+
+            function setMode(mode) {
+                $log.debug("dbProposal: setMode " + mode);
+                self.mode = mode;
+
+                switch (self.mode) {
+                    case PROP.MODE.COLLAPSED:
+                        if (self.isDraft()) {
+                            self.leftBtn = PROP.BTN.EDIT;
+                            self.middleBtn = PROP.BTN.SEND;
+                            self.rightBtn = PROP.BTN.DELETE;
+                        }
+                        else {
+                            self.rightBtn = PROP.BTN.OPEN;
+                        }
+                        break;
+
+                    case PROP.MODE.OPEN:
+                        if (self.isPublic()) {
+                            self.rightBtn = PROP.BTN.CLOSE;
+                        }
+                        if (self.isDraft()) {
+                            self.leftBtn = PROP.BTN.OK;
+                            self.middleBtn = PROP.BTN.CANCEL;
+                            self.rightBtn = null;
+                        }
+                        break;
+
+                    case PROP.MODE.COLLAPSED:
+                        if (self.isDraft()) {
+                            self.leftBtn = PROP.BTN.EDIT;
+                            self.middleBtn = PROP.BTN.SEND;
+                            self.rightBtn = PROP.BTN.DELETE;
+                        }
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+
+            function setStatus(status) {
+                $log.debug("dbProposal: setStatus " + status);
+                self.status = status;
+
+                switch (self.status) {
+                    case PROP.STATUS.PUBLIC:
+                        self.rightBtn = PROP.BTN.OPEN;
+                        break;
+
+                    case PROP.STATUS.PUBLISHED:
+                        self.middleBtn = PROP.BTN.DELETE;
+                        self.rightBtn = PROP.BTN.OPEN;
+                        break;
+
+                    case PROP.STATUS.DRAFT:
+                        self.leftBtn = PROP.BTN.EDIT;
+                        self.middleBtn = PROP.BTN.SEND;
+                        self.rightBtn = PROP.BTN.DELETE;
+                        break;
+
+                    default:
+                        break;
+                }
+            }
 
             function setProposal(proposal) {
                 if (proposal instanceof Object) {
-                    self.isPbl = (proposal.isPublished === PROPS.PUBLISHED.YES);
-                    self.isUser = (proposal.personGuid === self.testUserGuid);
+                    if (proposal.isOwnProposal) {
+                        setStatus((proposal.isPublished === 1) ? PROP.STATUS.PUBLISHED : PROP.STATUS.DRAFT);
+                    }
+                    else {
+                        setStatus(PROP.STATUS.PUBLIC);
+                    }
                     self.editedText = proposal.text;
 
                     if (proposal.isNew) {
-                        self.mode = PROP.MODE.EDITOR;
+                        setMode(PROP.MODE.OPEN);
                     }
                 }
             }
 
-            self.startEditing = function() {
+            function startEditing() {
                 self.editedText = $scope.proposal.text;
-                self.mode = PROP.MODE.EDITOR;
-            };
+            }
 
-            self.endEditing = function() {
+            function endEditing() {
                 if ($scope.proposal.text !== self.editedText) {
                     $scope.proposal.text = self.editedText;
                     $scope.onPost({ proposal: $scope.proposal });
                 }
-                self.mode = PROP.MODE.COLLAPSED;
-            };
-
-            self.cancelEditing = function() {
-                self.mode = PROP.MODE.COLLAPSED;
-            };
-
-            self.deleteProposal = function() {
-                $scope.onDelete({ proposal: $scope.proposal });
-            };
-
-            self.shareProposal = function() {
-                $scope.proposal.isPublished = PROPS.PUBLISHED.YES;
-                $scope.onPost({ proposal: $scope.proposal });
-            };
-
-            self.open = function() {
-                self.mode = self.isPbl ? PROP.MODE.OPEN : PROP.MODE.EDITOR;
-            };
-
-            self.collapse = function() {
-                self.mode = PROP.MODE.COLLAPSED;
-            };
+            }
 
             self.typeText = function(value) {
                 var obj = $rootScope.objWithVal(PROPS.TYPE, 'value', value);
                 return (obj && obj.text) ? obj.text : value;
+            };
+
+            self.toggleOpen = function() {
+                if (self.status === PROP.STATUS.DRAFT) {
+                    if (self.mode === PROP.MODE.COLLAPSED) {
+                        startEditing();
+                    }
+                    else {
+                        endEditing();
+                    }
+                }
+                setMode(self.mode === PROP.MODE.COLLAPSED ? PROP.MODE.OPEN : PROP.MODE.COLLAPSED);
+            };
+
+            self.isDraft = function() {
+                return self.status === PROP.STATUS.DRAFT;
+            };
+
+            self.isEditing = function() {
+                return (self.isDraft() && self.mode === PROP.MODE.OPEN);
+            };
+
+            self.isReading = function() {
+                return (self.isPublic() && self.mode === PROP.MODE.OPEN);
+            };
+
+            self.isPublished = function() {
+                return self.status === PROP.STATUS.PUBLISHED;
+            };
+
+            self.isPublic = function() {
+                return (self.status === PROP.STATUS.PUBLIC || self.status === PROP.STATUS.PUBLISHED);
+            };
+
+            self.isCollapsed = function() {
+                return (self.mode === PROP.MODE.COLLAPSED);
+            };
+
+            self.act = function(action) {
+                $log.debug("dbProposal: act " + action);
+                if (action === PROP.BTN.CLOSE.action) {
+                    setMode(PROP.MODE.COLLAPSED);
+                }
+                else if (action === PROP.BTN.OPEN.action) {
+                    setMode(PROP.MODE.OPEN);
+                }
+                else if (action === PROP.BTN.CANCEL.action) {
+                    setMode(PROP.MODE.COLLAPSED);
+                }
+                else if (action === PROP.BTN.OK.action) {
+                    endEditing();
+                    setMode(PROP.MODE.COLLAPSED);
+                }
+                else if (action === PROP.BTN.DELETE.action) {
+                    $scope.onDelete({ proposal: $scope.proposal });
+                }
+                else if (action === PROP.BTN.SEND.action) {
+                    $scope.proposal.isPublished = PROPS.PUBLISHED.YES;
+                    $scope.onPost({ proposal: $scope.proposal });
+                }
+                else if (action === PROP.BTN.EDIT.action) {
+                    startEditing();
+                    setMode(PROP.MODE.OPEN);
+                }
             };
 
             $scope.$watch(function() {
@@ -114,13 +224,12 @@ angular.module('dashboard')
             }, true);
 
             var watcher = $rootScope.$on(PROPS.TOGGLE, function(event, data) {
-                console.log(data);
-                if (self.isPbl) {
+                if (($scope.proposal.isPublished === PROPS.PUBLISHED.YES)) {
                     if (data) {
-                        self.open();
+                        setMode(PROP.MODE.OPEN);
                     }
                     else {
-                        self.collapse();
+                        setMode(PROP.MODE.COLLAPSED);
                     }
                 }
             });
