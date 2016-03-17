@@ -96,5 +96,14 @@ angular.module('dashboard')
             OFFICIAL: { value: 2, stringId: 'STR_SIGNING_DOC_OFFICIAL' }
         },
         'ESIGNROLE': {
+            CM: { value: 1, stringId: 'STR_SROLE_CM' },
+            SEC: { value: 2, stringId: 'STR_SROLE_SEC' },
+            REV: { value: 3, stringId: 'STR_SROLE_REV' },
+            REV_BAK: { value: 4, stringId: 'STR_SROLE_REV_BAK' },
+            DISPW: { value: 5, stringId: 'STR_SROLE_DISPW' },
+            DMAKER: { value: 6, stringId: 'STR_SROLE_DMAKER' },
+            IREV_CONF: { value: 7, stringId: 'STR_SROLE_IREV_CONF' },
+            IREV: { value: 8, stringId: 'STR_SROLE_IREV' },
+            CONF: { value: 9, stringId: 'STR_SROLE_CONF' }
         }
     });

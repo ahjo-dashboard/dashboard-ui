@@ -36,7 +36,7 @@ angular.module('dashboard')
 
             self.roleStrId = function (value) {
                 var s = $rootScope.objWithVal(CONST.ESIGNROLE, 'value', value);
-                return s ? s.stringId : value;
+                return s ? s.stringId : '';
             };
 
             /* Resolve css class for signing status */
