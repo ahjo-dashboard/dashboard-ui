@@ -158,6 +158,7 @@ angular.module('dashboard')
                 self.alerts.push({ type: 'info', locId: 'STR_SIGNING_COMMENT_INFO', linkMailto: person.email });
             } else {
                 $log.error("signItemCtrl.displayRequestor: bad args");
+                self.alerts.push({ type: 'warning', locId: 'STR_SIGNING_NO_EMAIL'});
             }
         }
 
