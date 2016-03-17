@@ -42,7 +42,7 @@ angular.module('dashboard')
             rej: { id: 'rej', disabled: false, active: false },
             sta: { id: 'sta', disabled: false, active: false },
             com: { id: 'com', disabled: false, active: false },
-            att: { id: 'att', disabled: false, active: false, count: self.item.AttachmentInfos ? self.item.AttachmentInfos.length : 0 }
+            att: { id: 'att', disabled: true, active: false, count: self.item.AttachmentInfos ? self.item.AttachmentInfos.length : 0 } //TODO: disabled until attachments implemented
         };
         self.displayStatus = true;
         self.requestorName = self.item.RequestorName ? self.item.RequestorName : null;
