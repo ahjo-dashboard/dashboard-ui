@@ -22,9 +22,15 @@ angular.module('dashboard')
             restrict: 'E',
             replace: 'true',
             link: function(scope, element/*, attrs */) {
-                // IE displays <object> (embedded pdf) always on top so it covers modals, dropdowns, menus etc.
-                // Quick workaround to revert to use pdf.js on IE
-                scope.useHtmlObject = !$rootScope.isIe;
+
+                // As a workaround display only a download link on smartphone screens
+                // TODO: do a waterproof multi-platform object-alttext solution.
+                scope.useHtmlObject = !$rootScope.isMobile;
+
+                // TODO: enable this on a platform where only a link should be displayed
+                // scope.useHtmlObject = !$rootScope.isIe;
+
+                $log.debug("adEmbeddedFile.setObj: " + scope.fileurl + " useHtmlObject: " + scope.useHtmlObject);
 
                 if (!scope.fileurl) {
                     return;
@@ -39,7 +45,6 @@ angular.module('dashboard')
                 // Element replaced in link because IE 11 and Edge won't display the pdf object if url is passed via Angular property
                 //TODO: check filetype and use pdf icon only for pdf
                 function setObj() {
-                    $log.debug("adEmbeddedFile.setObj: " + scope.fileurl);
                     var altObj = '<a href="' + scope.fileurl + '" class="ad-pdfLink" title="' + scope.filename + '" target="_blank">Avaa tiedosto "' + scope.filename + '"</a>';
                     var html = '<object type="application/pdf" class="ad-embedded-pdf" data="' + scope.fileurl + '">' + altObj + '</object>';
                     if (!scope.useHtmlObject) {
