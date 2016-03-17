@@ -12,7 +12,7 @@
  * Controller of the dashboard
  */
 angular.module('dashboard')
-    .controller('meetingCtrl', ['$log', 'AhjoMeetingSrv', '$stateParams', '$rootScope', '$scope', '$state', 'CONST', 'StorageSrv', 'AttachmentData', 'ListData', function($log, AhjoMeetingSrv, $stateParams, $rootScope, $scope, $state, CONST, StorageSrv, AttachmentData, ListData) {
+    .controller('meetingCtrl', ['$log', 'AhjoMeetingSrv', '$stateParams', '$rootScope', '$scope', '$state', 'CONST', 'StorageSrv', 'AttachmentData', 'ListData', 'PROPS', function($log, AhjoMeetingSrv, $stateParams, $rootScope, $scope, $state, CONST, StorageSrv, AttachmentData, ListData, PROPS) {
         $log.debug("meetingCtrl: CONTROLLER");
         var self = this;
         var isMobile = $rootScope.isMobile;
@@ -30,6 +30,8 @@ angular.module('dashboard')
         self.aData = null;
         self.dData = null;
         self.amData = null;
+
+        self.propCount = null;
 
         function setData(topic) {
             if (topic instanceof Object) {
@@ -161,6 +163,12 @@ angular.module('dashboard')
                 setData(self.topic);
             }
         });
+
+        var watcher = $rootScope.$on(PROPS.COUNT, function(event, data) {
+            self.propCount = (data instanceof Object) ? data.published : null;
+        });
+
+        $scope.$on('$destroy', watcher);
 
         $scope.$on('$destroy', function() {
             $log.debug("meetingCtrl: DESTROY");

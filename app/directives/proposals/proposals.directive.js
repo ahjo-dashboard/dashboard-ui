@@ -28,7 +28,8 @@ angular.module('dashboard')
             { value: 9, text: "Esteellinen" },
             { value: 10, text: "Esityksen poisto" }
         ],
-        'TOGGLE': 'PROPS.TOGGLE'
+        'TOGGLE': 'PROPS.TOGGLE',
+        'COUNT': 'PROPS.COUNT'
     })
     .directive('dbProposals', [function() {
 
@@ -40,6 +41,24 @@ angular.module('dashboard')
             self.published = PROPS.PUBLISHED;
             self.isMobile = $rootScope.isMobile;
             self.isAllOpen = false;
+
+            function countProposals() {
+                var drafts = 0;
+                var published = 0;
+
+                angular.forEach(self.proposals, function(item) {
+                    if (item instanceof Object) {
+                        if (item.isPublished === PROPS.PUBLISHED.YES) {
+                            published++;
+                        }
+                        else if (item.isPublished === PROPS.PUBLISHED.NO) {
+                            drafts++;
+                        }
+                    }
+                });
+
+                $rootScope.$emit(PROPS.COUNT, { 'drafts': drafts, 'published': published });
+            }
 
             function getProposals(guid) {
                 $log.debug("dbProposals: getProposals: " + guid);
@@ -57,6 +76,7 @@ angular.module('dashboard')
                         $log.debug("dbProposals: get finally: ");
                         if (getResult instanceof Object) {
                             self.proposals = angular.copy(getResult);
+                            countProposals();
                         }
                     });
                 }
