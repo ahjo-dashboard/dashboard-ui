@@ -53,16 +53,13 @@ body {
     $header-height: 60px; // this is for moving main content
     $button-height: 40px;
 
-    $appbgcolor0: #337AB7;
-    $appbgcolor1: #c4c9cc;
-    $appbgcolor2: rgb(226, 228, 230);
     $appbgcolor: white;
     $focusedColor: #3e7ebe;
     $headingBgColor: $focusedColor;
     $headingL2BgColor: $appbgcolor;
     $borderColor: $focusedColor;
-
     background-color: $appbgcolor;
+
     padding: 0;
 
     .ad-app-bg { background-color: $appbgcolor !important; }
