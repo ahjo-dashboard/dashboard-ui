@@ -221,7 +221,7 @@ angular.module('dashboard')
 
         self.actionDoc = function() {
             if (self.isMobile) {
-                self.openFileModal(self.displayUrl);
+                self.openFileModal(self.displayUrl, null, self.fileName);
             } else {
                 setDisplayUrl(self.docUrl);
             }
