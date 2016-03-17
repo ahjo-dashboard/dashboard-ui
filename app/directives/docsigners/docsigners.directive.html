@@ -29,7 +29,7 @@
                 {{i.name}}
             </div>
             <div class="col-xs-12 col-sm-3">
-                {{ctrl.roleStrId(i.role)}}
+                <span translate translate-cloak>{{ctrl.roleStrId(i.role)}}</span>
             </div>
             <div class="col-xs-6 col-sm-3">
                 <span class="ng-class: [ 'label', ctrl.statusStyle(i.status)]"translate>{{ctrl.statusStrId(i.status)}}</span>
