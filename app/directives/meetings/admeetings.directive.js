@@ -23,7 +23,7 @@ angular.module('dashboard')
             $log.log("adMeetings: CONTROLLER");
             var self = this;
             self.mtgErr = null;
-            self.loading = false;
+            self.loading = true;
             self.responseData = {};
             self.data = [];
             self.isMobile = $rootScope.isMobile;
