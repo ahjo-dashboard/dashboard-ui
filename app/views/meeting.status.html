@@ -11,7 +11,7 @@
                     <button type="button" class="btn db-btn-hdr glyphicon center glyphicon-home" ng-click="msc.goHome()">
                     </button>
                 </div>
-                <div ng-if="menuFull()" class="col-xs-4 animate-if">
+                <div ng-if="menuFull()" class="col-xs-4">
                     <button type="button" class="btn db-btn-hdr glyphicon center glyphicon-info-sign disabled" ng-click="">
                     </button>
                 </div>
@@ -32,9 +32,9 @@
             <button id="statusButton" type="button" class="btn db-btn-prim btn-lg ad-button text-center ng-class:[{'disabled': !msc.chairman},{'ad-dummy-button': !msc.chairman}]"
             uib-dropdown-toggle>
 
-                <uib-progressbar ng-if='msc.loading' class="animate-if col-xs-12 progress-striped active" type="info"></uib-progressbar>
+                <uib-progressbar ng-if='msc.loading' class="col-xs-12 progress-striped active" type="info"></uib-progressbar>
 
-                <span ng-if='!msc.loading' class="animate-if db-label ng-class: [msc.mtgStatusClass(msc.meeting)]">
+                <span ng-if='!msc.loading' class="db-label ng-class: [msc.mtgStatusClass(msc.meeting)]">
                     <span translate translate-cloak>{{msc.stringId(msc.meeting)}}</span>
                 </span>
                 <span ng-if="msc.chairman" class="caret"></span>

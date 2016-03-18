@@ -28,6 +28,7 @@ angular.module('dashboard')
             OK: { icon: 'glyphicon-ok', action: 'OK', type: 'db-btn-prim' },
             CANCEL: { icon: 'glyphicon-remove', action: 'CANCEL', type: 'btn-warning' },
             SEND: { icon: 'glyphicon-send', action: 'SEND', type: 'btn-success' },
+            DISABLEDSEND: { icon: 'glyphicon-send', action: 'SEND', type: 'btn-success', disabled: true },
             DELETE: { icon: 'glyphicon-trash', action: 'DELETE', type: 'btn-danger' }
         }
     })
@@ -62,7 +63,7 @@ angular.module('dashboard')
                     case PROP.MODE.COLLAPSED:
                         if (self.isDraft()) {
                             self.leftBtn = PROP.BTN.EDIT;
-                            self.middleBtn = PROP.BTN.SEND;
+                            self.middleBtn = (($scope.proposal instanceof Object) && $scope.proposal.text) ? PROP.BTN.SEND : PROP.BTN.DISABLEDSEND;
                             self.rightBtn = PROP.BTN.DELETE;
                         }
                         else {
@@ -110,7 +111,7 @@ angular.module('dashboard')
 
                     case PROP.STATUS.DRAFT:
                         self.leftBtn = PROP.BTN.EDIT;
-                        self.middleBtn = PROP.BTN.SEND;
+                        self.middleBtn = (($scope.proposal instanceof Object) && $scope.proposal.text) ? PROP.BTN.SEND : PROP.BTN.DISABLEDSEND;
                         self.rightBtn = PROP.BTN.DELETE;
                         break;
 
@@ -120,18 +121,18 @@ angular.module('dashboard')
             }
 
             function setProposal(proposal) {
+                $log.debug("dbProposal: setProposal " + proposal);
                 if (proposal instanceof Object) {
-                    if (proposal.isOwnProposal) {
+                    if (proposal.isNew) {
+                        setMode(PROP.MODE.OPEN);
+                    }
+                    else if (proposal.isOwnProposal) {
                         setStatus((proposal.isPublished === 1) ? PROP.STATUS.PUBLISHED : PROP.STATUS.DRAFT);
                     }
                     else {
                         setStatus(PROP.STATUS.PUBLIC);
                     }
                     self.editedText = proposal.text;
-
-                    if (proposal.isNew) {
-                        setMode(PROP.MODE.OPEN);
-                    }
                 }
             }
 
@@ -149,18 +150,6 @@ angular.module('dashboard')
             self.typeText = function(value) {
                 var obj = $rootScope.objWithVal(PROPS.TYPE, 'value', value);
                 return (obj && obj.text) ? obj.text : value;
-            };
-
-            self.toggleOpen = function() {
-                if (self.status === PROP.STATUS.DRAFT) {
-                    if (self.mode === PROP.MODE.COLLAPSED) {
-                        startEditing();
-                    }
-                    else {
-                        endEditing();
-                    }
-                }
-                setMode(self.mode === PROP.MODE.COLLAPSED ? PROP.MODE.OPEN : PROP.MODE.COLLAPSED);
             };
 
             self.isDraft = function() {
