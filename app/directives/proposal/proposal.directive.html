@@ -1,49 +1,26 @@
 <div class="prop-element">
 
     <div class="prop-row">
-        <div class="prop-row-child ng-class:[{'col-xs-8': (c.mode !== c.mds.COLLAPSED)},{'col-xs-7': (c.mode === c.mds.COLLAPSED && !c.isPbl)},{'col-xs-8': (c.mode === c.mds.COLLAPSED && c.isUser && c.isPbl)},{'col-xs-10': (c.mode === c.mds.COLLAPSED && !c.isUser && c.isPbl)},{'col-sm-7': (c.mode !== c.mds.COLLAPSED)},{'col-sm-8': (c.mode === c.mds.COLLAPSED && !c.isPbl)},{'col-sm-9': (c.mode === c.mds.COLLAPSED && c.isUser && c.isPbl)},{'col-sm-10': (c.mode === c.mds.COLLAPSED && !c.isUser && c.isPbl)},{'col-md-9': (c.mode !== c.mds.COLLAPSED)},{'col-md-9': (c.mode === c.mds.COLLAPSED)}]">
-            <p class="prop-text-oneliner"><b>{{c.typeText(proposal.proposalType)}}</b>&nbsp;&nbsp;<span ng-if="(c.mode === c.mds.COLLAPSED)" class="animate-if"
-                ng-bind-html="proposal.text"></span>
+        <div class="prop-row-child col-xs-6 col-sm-8 col-md-9">
+            <p class="prop-text-oneliner"><b>{{c.typeText(proposal.proposalType)}}</b>&nbsp;&nbsp;<span ng-if="c.isCollapsed()" class="animate-if" ng-bind-html="proposal.text"></span>
             </p>
-            <div>
-                <span ng-if="c.isUser" class="glyphicon glyphicon-user animate-if prop-icon"></span>
-                <span class="animate-if">{{proposal.personName}}</span>
-            </div>
+            <div>{{proposal.personName}}</div>
         </div>
 
-        <div class="prop-row-child text-right ng-class:[{'col-xs-4': (c.mode !== c.mds.COLLAPSED)},{'col-xs-5': (c.mode === c.mds.COLLAPSED && !c.isPbl)},{'col-xs-4': (c.mode === c.mds.COLLAPSED && c.isUser && c.isPbl)},{'col-xs-2': (c.mode === c.mds.COLLAPSED && !c.isUser && c.isPbl)},{'col-sm-5': (c.mode !== c.mds.COLLAPSED)},{'col-sm-4': (c.mode === c.mds.COLLAPSED && !c.isPbl)},{'col-sm-3': (c.mode === c.mds.COLLAPSED && c.isUser && c.isPbl)},{'col-sm-2': (c.mode === c.mds.COLLAPSED && !c.isUser && c.isPbl)},{'col-md-3': (c.mode !== c.mds.COLLAPSED)},{'col-md-3': (c.mode === c.mds.COLLAPSED)}]">
-            <label ng-if="c.mode === c.mds.COLLAPSED && !c.isPbl" role="button" class="btn db-btn-prim btn-md animate-if prop-label"
-            aria-expanded="false" ng-click="c.startEditing()">
-                <span class="glyphicon glyphicon-pencil"></span>
-            </label>
-            <label ng-if="c.mode === c.mds.EDITOR" role="button" class="btn btn-success btn-md animate-if prop-label" aria-expanded="false"
-            ng-click="c.endEditing()">
-                <span class="glyphicon glyphicon-ok"></span>
-            </label>
-            <label ng-if="c.mode === c.mds.EDITOR" role="button" class="btn btn-warning btn-md animate-if prop-label" aria-expanded="false"
-            ng-click="c.cancelEditing()">
-                <span class="glyphicon glyphicon-remove"></span>
-            </label>
-            <label ng-if="c.mode === c.mds.COLLAPSED && !c.isPbl && c.editedText.length" role="button" class="btn btn-success btn-md animate-if prop-label"
-            aria-expanded="false" ng-click="c.shareProposal()">
-                <span class="glyphicon glyphicon-send"></span>
-            </label>
-            <label ng-if="c.mode === c.mds.COLLAPSED && c.isUser" role="button" class="btn btn-danger btn-md animate-if prop-label" aria-expanded="false"
-            ng-click="c.deleteProposal()">
-                <span class="glyphicon glyphicon-trash"></span>
-            </label>
-            <label ng-if="(c.mode === c.mds.COLLAPSED && c.isPbl)" role="button" class="btn db-btn-prim btn-md animate-if prop-label"
-            aria-expanded="false" ng-click="c.open()">
-                <span class="glyphicon glyphicon-plus"></span>
-            </label>
-            <label ng-if="c.mode === c.mds.OPEN" role="button" class="btn db-btn-prim btn-md animate-if prop-label" aria-expanded="false"
-            ng-click="c.collapse()">
-                <span class="glyphicon glyphicon-minus"></span>
-            </label>
+        <div class="prop-row-child text-right col-xs-6 col-sm-4 col-md-3">
+            <button ng-if="c.leftBtn" class="btn {{c.leftBtn.type}} btn-md animate-if prop-label" ng-click="c.act(c.leftBtn.action)">
+                <span class="glyphicon {{c.leftBtn.icon}}"></span>
+            </button>
+            <button ng-if="c.middleBtn" class="btn {{c.middleBtn.type}} btn-md animate-if prop-label" ng-click="c.act(c.middleBtn.action)">
+                <span class="glyphicon {{c.middleBtn.icon}}"></span>
+            </button>
+            <button ng-if="c.rightBtn" class="btn {{c.rightBtn.type}} btn-md animate-if prop-label" ng-click="c.act(c.rightBtn.action)">
+                <span class="glyphicon {{c.rightBtn.icon}}"></span>
+            </button>
         </div>
     </div>
 
-    <div uib-collapse="c.mode !== c.mds.OPEN">
+    <div uib-collapse="!c.isReading()">
         <div class="row">
             <div class="col-xs-12">
                 <div class="prop-text" ng-bind-html="proposal.text | unsafe"></div>
@@ -52,7 +29,7 @@
         </div>
     </div>
 
-    <div uib-collapse="c.mode !== c.mds.EDITOR" class="prop-editor">
+    <div uib-collapse="!c.isEditing()" class="prop-editor">
         <div class="row">
             <div class="col-xs-12">
                 <wysiwyg textarea-class="form-control" textarea-height="auto" enable-bootstrap-title="true" textarea-required ng-model="c.editedText"
