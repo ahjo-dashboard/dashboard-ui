@@ -106,15 +106,23 @@
     <div ng-if="isMobile" class="ad-page-content">
         <div class="ad-page-container">
             <button type="button" ng-disabled="!ctrl.tData" class="btn btn-info btn-lg btn-block wrap-button-text db-btn-prim" ng-click="ctrl.topicClicked()"
-            translate translate-cloak>STR_TOPIC</button>
+            translate translate-cloak>STR_TOPIC
+            </button>
             <button type="button" ng-disabled="!ctrl.aData.objects.length" class="btn btn-info btn-lg btn-block wrap-button-text db-btn-prim"
-            ng-click="ctrl.attachmentClicked()"><span translate translate-cloak>STR_ATTACHMENTS</span> <span class="badge">{{ctrl.aData.objects.length}}</span></button>
+            ng-click="ctrl.attachmentClicked()">
+                <span translate translate-cloak>STR_ATTACHMENTS</span> <span class="badge">{{ctrl.aData.objects.length}}</span>
+            </button>
             <button type="button" ng-disabled="!ctrl.amData.objects.length" class="btn btn-info btn-lg btn-block wrap-button-text db-btn-prim ng-class:[{'disabled': !ctrl.amData.objects.length}]"
-            ng-click="ctrl.additionalMaterialClicked()"><span translate translate-cloak>STR_ADDITIONAL_MATERIAL</span> <span class="badge">{{ctrl.amData.objects.length}}</span></button>
+            ng-click="ctrl.additionalMaterialClicked()">
+                <span translate translate-cloak>STR_ADDITIONAL_MATERIAL</span> <span class="badge">{{ctrl.amData.objects.length}}</span>
+            </button>
             <button type="button" ng-disabled="!ctrl.dData.objects.length" class="btn btn-info btn-lg btn-block wrap-button-text db-btn-prim"
-            ng-click="ctrl.decisionClicked()"><span translate translate-cloak>STR_DECISION_HISTORY</span> <span class="badge">{{ctrl.dData.objects.length}}</span></button>
-            <button type="button" class="btn btn-info btn-lg btn-block wrap-button-text db-btn-prim" ng-click="ctrl.proposalsClicked()"
-            translate translate-cloak>STR_PROPOSALS</button>
+            ng-click="ctrl.decisionClicked()">
+                <span translate translate-cloak>STR_DECISION_HISTORY</span> <span class="badge">{{ctrl.dData.objects.length}}</span>
+            </button>
+            <button type="button" class="btn btn-info btn-lg btn-block wrap-button-text db-btn-prim" ng-click="ctrl.proposalsClicked()">
+                <span translate translate-cloak>STR_PROPOSALS</span> <span class="badge">{{ctrl.propCount}}</span>
+            </button>
         </div>
     </div>
 
