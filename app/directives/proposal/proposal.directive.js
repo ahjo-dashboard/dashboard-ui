@@ -141,8 +141,8 @@ angular.module('dashboard')
             }
 
             function endEditing() {
-                if ($scope.proposal.text !== self.editedText) {
-                    $scope.proposal.text = self.editedText;
+                if ($scope.proposal.text !== self.editedText || !self.editedText) {
+                    $scope.proposal.text = self.editedText ? self.editedText : '';
                     $scope.onPost({ proposal: $scope.proposal });
                 }
             }
