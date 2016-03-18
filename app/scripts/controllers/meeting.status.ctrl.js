@@ -82,7 +82,20 @@ angular.module('dashboard')
             for (var item in CONST.TOPICSTATUS) {
                 if (CONST.TOPICSTATUS.hasOwnProperty(item)) {
                     if (topic && topic.topicStatus && topic.topicStatus === CONST.TOPICSTATUS[item].value) {
-                        return CONST.TOPICSTATUS[item].iconPath;
+                        // $log.debug("meetingStatusCtrl.statusIcon: '" + topic.title + "' topicStatus: " + topic.topicStatus + " publicity: " + topic.publicity + " esitykset.length: " + topic.esitykset.length);
+                        var res = null;
+                        var props = topic.esitykset.length > 0;
+                        var conf = topic.publicity !== CONST.PUBLICITY.PUBLIC;
+                        if (!conf && !props) {
+                            res = CONST.TOPICSTATUS[item].iconPath;
+                        } else if (!conf && props) {
+                            res = CONST.TOPICSTATUS[item].icon_props;
+                        } else if (conf && !props) {
+                            res = CONST.TOPICSTATUS[item].icon_conf;
+                        } else if (conf && props) {
+                            res = CONST.TOPICSTATUS[item].icon_conf_props;
+                        }
+                        return res;
                     }
                 }
             }

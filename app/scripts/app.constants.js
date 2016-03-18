@@ -78,11 +78,11 @@ angular.module('dashboard')
             TECHNICALLY_CLOSED: { value: 5, stringId: 'STR_TECNICALLY_CLOSED', badgeClass: 'label-success' },
         },
         'TOPICSTATUS': {
-            NONE: { value: 0, iconPath: "" },
-            PENDING: { value: 1, iconPath: "images/state_4.png" },
-            ACTIVE: { value: 2, iconPath: "images/state_4_lock.png" },
-            ABORTED: { value: 3, iconPath: "images/state_4_lock_remark.png" },
-            READY: { value: 4, iconPath: "images/state_4_remark.png" }
+            NONE: { value: 0, iconPath: "", icon_conf: "", icon_props: "", icon_conf_prop: ""  },
+            PENDING: { value: 1, iconPath: "images/state_4.png", icon_conf: "images/state_4_conf.png", icon_props: "images/state_4_props.png", icon_conf_props: "images/state_4_conf_props.png" },
+            ACTIVE: { value: 2, iconPath: "images/state_1.png", icon_conf: "images/state_1_conf.png", icon_props: "images/state_1_props.png", icon_conf_props: "images/state_1_conf_props.png" },
+            ABORTED: { value: 3, iconPath: "images/state_3.png", icon_conf: "images/state_3_conf.png", icon_props: "images/state_3_props.png", icon_conf_props: "images/state_3_conf_props.png" },
+            READY: { value: 4, iconPath: "images/state_2.png", icon_conf: "images/state_2_conf.png", icon_props: "images/state_2_props.png", icon_conf_props: "images/state_2_conf_props.png" }
         },
         'ESIGNSTATUS': { //SignApi_DocStatuses
             UNSIGNED: { value: 1, stringId: 'STR_UNSIGNED', badgeClass: 'label-warning' },
