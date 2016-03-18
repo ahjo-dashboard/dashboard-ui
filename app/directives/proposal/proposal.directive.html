@@ -2,19 +2,19 @@
 
     <div class="prop-row">
         <div class="prop-row-child col-xs-6 col-sm-8 col-md-9">
-            <p class="prop-text-oneliner"><b>{{c.typeText(proposal.proposalType)}}</b>&nbsp;&nbsp;<span ng-if="c.isCollapsed()" class="animate-if" ng-bind-html="proposal.text"></span>
+            <p class="prop-text-oneliner"><b>{{c.typeText(proposal.proposalType)}}</b>&nbsp;&nbsp;<span ng-if="c.isCollapsed()" ng-bind-html="proposal.text"></span>
             </p>
             <div>{{proposal.personName}}</div>
         </div>
 
         <div class="prop-row-child text-right col-xs-6 col-sm-4 col-md-3">
-            <button ng-if="c.leftBtn" class="btn {{c.leftBtn.type}} btn-md animate-if prop-label" ng-click="c.act(c.leftBtn.action)">
+            <button ng-if="c.leftBtn" class="btn {{c.leftBtn.type}} btn-md prop-label" ng-disabled="c.leftBnt.disabled" ng-click="c.act(c.leftBtn.action)">
                 <span class="glyphicon {{c.leftBtn.icon}}"></span>
             </button>
-            <button ng-if="c.middleBtn" class="btn {{c.middleBtn.type}} btn-md animate-if prop-label" ng-click="c.act(c.middleBtn.action)">
+            <button ng-if="c.middleBtn" class="btn {{c.middleBtn.type}} btn-md prop-label" ng-disabled="c.middleBtn.disabled" ng-click="c.act(c.middleBtn.action)">
                 <span class="glyphicon {{c.middleBtn.icon}}"></span>
             </button>
-            <button ng-if="c.rightBtn" class="btn {{c.rightBtn.type}} btn-md animate-if prop-label" ng-click="c.act(c.rightBtn.action)">
+            <button ng-if="c.rightBtn" class="btn {{c.rightBtn.type}} btn-md prop-label" ng-disabled="c.rightBtn.disabled" ng-click="c.act(c.rightBtn.action)">
                 <span class="glyphicon {{c.rightBtn.icon}}"></span>
             </button>
         </div>

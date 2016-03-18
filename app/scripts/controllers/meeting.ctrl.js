@@ -155,6 +155,12 @@ angular.module('dashboard')
             return (url && (typeof url === "string") && url.length) ? true : false;
         };
 
+        self.materialCount = function () {
+            var decisionCount = ((self.dData instanceof Object) && (self.dData.objects instanceof Array)) ? self.dData.objects.length : 0;
+            var additionalMaterialCount = ((self.amData instanceof Object) && (self.amData.objects instanceof Array)) ? self.amData.objects.length : 0;
+            return decisionCount + additionalMaterialCount;
+        };
+
         $scope.$watch(function() {
             return StorageSrv.get(CONST.KEY.TOPIC);
         }, function(newTopic, oldTopic) {
