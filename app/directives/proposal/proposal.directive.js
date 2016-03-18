@@ -24,10 +24,10 @@ angular.module('dashboard')
         'BTN': {
             OPEN: { icon: 'glyphicon-plus', action: 'OPEN', type: 'db-btn-prim' },
             CLOSE: { icon: 'glyphicon-minus', action: 'CLOSE', type: 'db-btn-prim' },
-            EDIT: { icon: 'glyphicon-pencil', action: 'EDIT', type: 'btn-success' },
+            EDIT: { icon: 'glyphicon-pencil', action: 'EDIT', type: 'db-btn-prim' },
             OK: { icon: 'glyphicon-ok', action: 'OK', type: 'db-btn-prim' },
             CANCEL: { icon: 'glyphicon-remove', action: 'CANCEL', type: 'btn-warning' },
-            SEND: { icon: 'glyphicon-send', action: 'SEND', type: 'db-btn-prim' },
+            SEND: { icon: 'glyphicon-send', action: 'SEND', type: 'btn-success' },
             DELETE: { icon: 'glyphicon-trash', action: 'DELETE', type: 'btn-danger' }
         }
     })
