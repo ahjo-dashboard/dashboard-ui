@@ -22,14 +22,14 @@ angular.module('dashboard')
             DRAFT: 'DRAFT'
         },
         'BTN': {
-            OPEN: { icon: 'glyphicon-plus', action: 'OPEN', type: 'db-btn-prim' },
-            CLOSE: { icon: 'glyphicon-minus', action: 'CLOSE', type: 'db-btn-prim' },
-            EDIT: { icon: 'glyphicon-pencil', action: 'EDIT', type: 'db-btn-prim' },
-            OK: { icon: 'glyphicon-ok', action: 'OK', type: 'db-btn-prim' },
-            CANCEL: { icon: 'glyphicon-remove', action: 'CANCEL', type: 'btn-warning' },
-            SEND: { icon: 'glyphicon-send', action: 'SEND', type: 'btn-success' },
-            DISABLEDSEND: { icon: 'glyphicon-send', action: 'SEND', type: 'btn-success', disabled: true },
-            DELETE: { icon: 'glyphicon-trash', action: 'DELETE', type: 'btn-danger' }
+            OPEN: { icon: 'glyphicon-plus', action: 'OPEN', type: 'db-btn-prim', tooltip: 'STR_OPEN' },
+            CLOSE: { icon: 'glyphicon-minus', action: 'CLOSE', type: 'db-btn-prim', tooltip: 'STR_CLOSE' },
+            EDIT: { icon: 'glyphicon-pencil', action: 'EDIT', type: 'db-btn-prim', tooltip: 'STR_EDIT' },
+            OK: { icon: 'glyphicon-ok', action: 'OK', type: 'db-btn-prim', tooltip: 'STR_SAVE' },
+            CANCEL: { icon: 'glyphicon-remove', action: 'CANCEL', type: 'btn-warning', tooltip: 'STR_CANCEL' },
+            SEND: { icon: 'glyphicon-send', action: 'SEND', type: 'btn-success', tooltip: 'STR_PUBLISH' },
+            DISABLEDSEND: { icon: 'glyphicon-send', action: 'SEND', type: 'btn-success', disabled: true, tooltip: 'STR_PUBLISH' },
+            DELETE: { icon: 'glyphicon-trash', action: 'DELETE', type: 'btn-danger', tooltip: 'STR_DELETE' }
         }
     })
     .filter('unsafe', function($sce) {
@@ -47,9 +47,9 @@ angular.module('dashboard')
             self.status = PROP.STATUS.PUBLIC;
             self.editedText = "";
 
-            self.leftBtn = null;
-            self.middleBtn = null;
-            self.rightBtn = null;
+            self.lBtn = null;
+            self.mBtn = null;
+            self.rBtn = null;
 
             self.editor = {
                 'menu': []
@@ -62,31 +62,31 @@ angular.module('dashboard')
                 switch (self.mode) {
                     case PROP.MODE.COLLAPSED:
                         if (self.isDraft()) {
-                            self.leftBtn = PROP.BTN.EDIT;
-                            self.middleBtn = (($scope.proposal instanceof Object) && $scope.proposal.text) ? PROP.BTN.SEND : PROP.BTN.DISABLEDSEND;
-                            self.rightBtn = PROP.BTN.DELETE;
+                            self.lBtn = PROP.BTN.EDIT;
+                            self.mBtn = (($scope.proposal instanceof Object) && $scope.proposal.text) ? PROP.BTN.SEND : PROP.BTN.DISABLEDSEND;
+                            self.rBtn = PROP.BTN.DELETE;
                         }
                         else {
-                            self.rightBtn = PROP.BTN.OPEN;
+                            self.rBtn = PROP.BTN.OPEN;
                         }
                         break;
 
                     case PROP.MODE.OPEN:
                         if (self.isPublic()) {
-                            self.rightBtn = PROP.BTN.CLOSE;
+                            self.rBtn = PROP.BTN.CLOSE;
                         }
                         if (self.isDraft()) {
-                            self.leftBtn = PROP.BTN.OK;
-                            self.middleBtn = PROP.BTN.CANCEL;
-                            self.rightBtn = null;
+                            self.lBtn = PROP.BTN.OK;
+                            self.mBtn = PROP.BTN.CANCEL;
+                            self.rBtn = null;
                         }
                         break;
 
                     case PROP.MODE.COLLAPSED:
                         if (self.isDraft()) {
-                            self.leftBtn = PROP.BTN.EDIT;
-                            self.middleBtn = PROP.BTN.SEND;
-                            self.rightBtn = PROP.BTN.DELETE;
+                            self.lBtn = PROP.BTN.EDIT;
+                            self.mBtn = PROP.BTN.SEND;
+                            self.rBtn = PROP.BTN.DELETE;
                         }
                         break;
 
@@ -101,18 +101,18 @@ angular.module('dashboard')
 
                 switch (self.status) {
                     case PROP.STATUS.PUBLIC:
-                        self.rightBtn = PROP.BTN.OPEN;
+                        self.rBtn = PROP.BTN.OPEN;
                         break;
 
                     case PROP.STATUS.PUBLISHED:
-                        self.middleBtn = PROP.BTN.DELETE;
-                        self.rightBtn = PROP.BTN.OPEN;
+                        self.mBtn = PROP.BTN.DELETE;
+                        self.rBtn = PROP.BTN.OPEN;
                         break;
 
                     case PROP.STATUS.DRAFT:
-                        self.leftBtn = PROP.BTN.EDIT;
-                        self.middleBtn = (($scope.proposal instanceof Object) && $scope.proposal.text) ? PROP.BTN.SEND : PROP.BTN.DISABLEDSEND;
-                        self.rightBtn = PROP.BTN.DELETE;
+                        self.lBtn = PROP.BTN.EDIT;
+                        self.mBtn = (($scope.proposal instanceof Object) && $scope.proposal.text) ? PROP.BTN.SEND : PROP.BTN.DISABLEDSEND;
+                        self.rBtn = PROP.BTN.DELETE;
                         break;
 
                     default:
