@@ -8,14 +8,14 @@
         </div>
 
         <div class="prop-row-child text-right col-xs-6 col-sm-4 col-md-3">
-            <button ng-if="c.leftBtn" class="btn {{c.leftBtn.type}} btn-md prop-label" ng-disabled="c.leftBnt.disabled" ng-click="c.act(c.leftBtn.action)">
-                <span class="glyphicon {{c.leftBtn.icon}}"></span>
+            <button ng-if="c.lBtn" class="btn {{c.lBtn.type}} btn-md prop-label" ng-disabled="c.lBtn.disabled" ng-click="c.act(c.lBtn.action)" uib-tooltip="{{c.lBtn.tooltip | translate}}">
+                <span class="glyphicon {{c.lBtn.icon}}"></span>
             </button>
-            <button ng-if="c.middleBtn" class="btn {{c.middleBtn.type}} btn-md prop-label" ng-disabled="c.middleBtn.disabled" ng-click="c.act(c.middleBtn.action)">
-                <span class="glyphicon {{c.middleBtn.icon}}"></span>
+            <button ng-if="c.mBtn" class="btn {{c.mBtn.type}} btn-md prop-label" ng-disabled="c.mBtn.disabled" ng-click="c.act(c.mBtn.action)" uib-tooltip="{{c.mBtn.tooltip | translate}}">
+                <span class="glyphicon {{c.mBtn.icon}}"></span>
             </button>
-            <button ng-if="c.rightBtn" class="btn {{c.rightBtn.type}} btn-md prop-label" ng-disabled="c.rightBtn.disabled" ng-click="c.act(c.rightBtn.action)">
-                <span class="glyphicon {{c.rightBtn.icon}}"></span>
+            <button ng-if="c.rBtn" class="btn {{c.rBtn.type}} btn-md prop-label" ng-disabled="c.rBtn.disabled" ng-click="c.act(c.rBtn.action)" uib-tooltip="{{c.rBtn.tooltip | translate}}">
+                <span class="glyphicon {{c.rBtn.icon}}"></span>
             </button>
         </div>
     </div>

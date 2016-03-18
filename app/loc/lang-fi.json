@@ -68,5 +68,12 @@
     "STR_CLOSE_ALL": "Sulje kaikki",
     "STR_PUBLIC_PROPOSALS": "Julkaistut ehdotukset",
     "STR_PRIVATE_PROPOSALS": "Julkaisemattomat ehdotukset",
-    "STR_CREATE_PROPOSAL": "Luo ehdotus"
+    "STR_CREATE_PROPOSAL": "Luo ehdotus",
+    "STR_OPEN": "Avaa",
+    "STR_CLOSE": "Sulje",
+    "STR_SAVE": "Tallenna",
+    "STR_CANCEL": "Peruuta",
+    "STR_PUBLISH": "Julkaise",
+    "STR_DELETE": "Poista",
+    "STR_EDIT": "Muokkaa"
 }
