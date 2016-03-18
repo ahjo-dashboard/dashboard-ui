@@ -84,7 +84,7 @@ angular.module('dashboard')
                     if (topic && topic.topicStatus && topic.topicStatus === CONST.TOPICSTATUS[item].value) {
                         // $log.debug("meetingStatusCtrl.statusIcon: '" + topic.title + "' topicStatus: " + topic.topicStatus + " publicity: " + topic.publicity + " esitykset.length: " + topic.esitykset.length);
                         var res = null;
-                        var props = topic.esitykset.length > 0;
+                        var props = topic.includePublishedRemark;
                         var conf = topic.publicity !== CONST.PUBLICITY.PUBLIC;
                         if (!conf && !props) {
                             res = CONST.TOPICSTATUS[item].iconPath;
