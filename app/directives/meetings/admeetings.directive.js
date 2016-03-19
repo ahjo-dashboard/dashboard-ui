@@ -27,7 +27,6 @@ angular.module('dashboard')
             self.responseData = {};
             self.data = [];
             self.isMobile = $rootScope.isMobile;
-            $scope.visibleMeetings = MTGD.VISIBLE.OPEN;
 
             self.agencyData = [];
             self.roleData = [];
@@ -123,7 +122,7 @@ angular.module('dashboard')
                     visibleMeetings: $scope.visibleMeetings
                 };
             }, function(data) {
-                $log.debug("WATCH " + JSON.stringify(data));
+                $log.debug("adMeetings: WATCH " + JSON.stringify(data));
                 setData();
                 parseAgencyDropdown();
                 parseRoleDropdown();

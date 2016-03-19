@@ -55,7 +55,9 @@ angular.module('dashboard')
         'KEY': {
             TOPIC: 'topic',
             PDF_DATA: 'pdfdata',
-            SELECTION_DATA: 'selectiondata'
+            SELECTION_DATA: 'selectiondata',
+            VISIBLE_MTGS: 'visiblemeetings',
+            SIGNING_RES: 'signingres'
         },
         'BTNTYPE': {
             DEFAULT: 'btn-default',
@@ -78,7 +80,7 @@ angular.module('dashboard')
             TECHNICALLY_CLOSED: { value: 5, stringId: 'STR_TECNICALLY_CLOSED', badgeClass: 'label-success' },
         },
         'TOPICSTATUS': {
-            NONE: { value: 0, iconPath: "", icon_conf: "", icon_props: "", icon_conf_prop: ""  },
+            NONE: { value: 0, iconPath: "", icon_conf: "", icon_props: "", icon_conf_prop: "" },
             PENDING: { value: 1, iconPath: "images/mtgag_state_1.png", icon_conf: "images/mtgag_state_1_conf.png", icon_props: "images/mtgag_state_1_props.png", icon_conf_props: "images/mtgag_state_1_conf_props.png" },
             ACTIVE: { value: 2, iconPath: "images/mtgag_state_2.png", icon_conf: "images/mtgag_state_2_conf.png", icon_props: "images/mtgag_state_2_props.png", icon_conf_props: "images/mtgag_state_2_conf_props.png" },
             ABORTED: { value: 3, iconPath: "images/mtgag_state_3.png", icon_conf: "images/mtgag_state_3_conf.png", icon_props: "images/mtgag_state_3_props.png", icon_conf_props: "images/mtgag_state_3_conf_props.png" },
