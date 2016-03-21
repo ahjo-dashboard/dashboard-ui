@@ -26,7 +26,7 @@ angular.module('dashboard')
             CLOSE: { icon: 'glyphicon-minus', action: 'CLOSE', type: 'db-btn-prim', tooltip: 'STR_CLOSE', confirm: false },
             EDIT: { icon: 'glyphicon-pencil', action: 'EDIT', type: 'db-btn-prim', tooltip: 'STR_EDIT', confirm: false },
             OK: { icon: 'glyphicon-ok', action: 'OK', type: 'db-btn-prim', tooltip: 'STR_SAVE', confirm: false },
-            CANCEL: { icon: 'glyphicon-remove', action: 'CANCEL', type: 'btn-warning', tooltip: 'STR_CANCEL' },
+            CANCEL: { icon: 'glyphicon-remove', action: 'CANCEL', type: 'btn-warning', tooltip: 'STR_CANCEL', confirm: false },
             SEND: { icon: 'glyphicon-send', action: 'SEND', type: 'btn-success', tooltip: 'STR_PUBLISH', confirm: true, title: 'Vahvista', text: 'STR_CNFM_SEND_PROP', ok: 'STR_PUBLISH', cancel: 'STR_CANCEL' },
             DISABLEDSEND: { icon: 'glyphicon-send', action: 'SEND', type: 'btn-success', disabled: true, tooltip: 'STR_PUBLISH', confirm: false, title: 'Vahvista', text: 'STR_CNFM_SEND_PROP', ok: 'STR_PUBLISH', cancel: 'STR_CANCEL' },
             DELETE: { icon: 'glyphicon-trash', action: 'DELETE', type: 'btn-danger', tooltip: 'STR_DELETE', confirm: true, title: 'Vahvista', text: 'STR_CNFM_DEL_PROP', ok: 'STR_DELETE', cancel: 'STR_CANCEL' }
