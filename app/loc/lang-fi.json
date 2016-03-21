@@ -75,5 +75,7 @@
     "STR_CANCEL": "Peruuta",
     "STR_PUBLISH": "Julkaise",
     "STR_DELETE": "Poista",
-    "STR_EDIT": "Muokkaa"
+    "STR_EDIT": "Muokkaa",
+    "STR_CNFM_DEL_PROP": "Haluatko poistaa ehdotuksen",
+    "STR_CNFM_SEND_PROP": "Haluatko julkaista ehdotuksen"
 }

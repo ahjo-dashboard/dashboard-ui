@@ -8,13 +8,20 @@
         </div>
 
         <div class="prop-row-child text-right col-xs-6 col-sm-4 col-md-3">
-            <button ng-if="c.lBtn" class="btn {{c.lBtn.type}} btn-md prop-label" ng-disabled="c.lBtn.disabled" ng-click="c.act(c.lBtn.action)" uib-tooltip="{{c.lBtn.tooltip | translate}}">
+            <button ng-if="c.lBtn" class="btn {{c.lBtn.type}} btn-md prop-label" ng-disabled="c.lBtn.disabled" ng-click="c.act(c.lBtn.action)"
+            confirm-if="c.lBtn.confirm" <button ng-if="c.lBtn" class="btn {{c.lBtn.type}} btn-md prop-label" ng-disabled="c.lBtn.disabled"
+            ng-click="c.act(c.lBtn.action)" confirm-if="c.lBtn.confirm" confirm="{{c.lBtn.text | translate}}" confirm-title="{{c.lBtn.title}}"
+            confirm-ok="{{c.lBtn.ok | translate}}" confirm-cancel="{{c.lBtn.cancel | translate}}" uib-tooltip="{{c.lBtn.tooltip | translate}}">
                 <span class="glyphicon {{c.lBtn.icon}}"></span>
             </button>
-            <button ng-if="c.mBtn" class="btn {{c.mBtn.type}} btn-md prop-label" ng-disabled="c.mBtn.disabled" ng-click="c.act(c.mBtn.action)" uib-tooltip="{{c.mBtn.tooltip | translate}}">
+            <button ng-if="c.mBtn" class="btn {{c.mBtn.type}} btn-md prop-label" ng-disabled="c.mBtn.disabled" ng-click="c.act(c.mBtn.action)"
+            confirm-if="c.mBtn.confirm" confirm="{{c.mBtn.text | translate}}" confirm-title="{{c.mBtn.title}}" confirm-ok="{{c.mBtn.ok | translate}}"
+            confirm-cancel="{{c.mBtn.cancel | translate}}" uib-tooltip="{{c.mBtn.tooltip | translate}}">
                 <span class="glyphicon {{c.mBtn.icon}}"></span>
             </button>
-            <button ng-if="c.rBtn" class="btn {{c.rBtn.type}} btn-md prop-label" ng-disabled="c.rBtn.disabled" ng-click="c.act(c.rBtn.action)" uib-tooltip="{{c.rBtn.tooltip | translate}}">
+            <button ng-if="c.rBtn" class="btn {{c.rBtn.type}} btn-md prop-label" ng-disabled="c.rBtn.disabled" ng-click="c.act(c.rBtn.action)"
+            confirm-if="c.rBtn.confirm" confirm="{{c.rBtn.text | translate}}" confirm-title="{{c.rBtn.title}}" confirm-ok="{{c.rBtn.ok | translate}}"
+            confirm-cancel="{{c.rBtn.cancel | translate}}" uib-tooltip="{{c.rBtn.tooltip | translate}}">
                 <span class="glyphicon {{c.rBtn.icon}}"></span>
             </button>
         </div>
