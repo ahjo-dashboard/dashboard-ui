@@ -20,7 +20,6 @@ angular.module('dashboard', [
     'ui.bootstrap',
     'ngSanitize',
     'wysiwyg.module',
-    'ngDialog',
     'pascalprecht.translate'
 ])
     .config(function ($urlRouterProvider, $stateProvider, ENV, G_APP, $logProvider, $provide, $compileProvider, $translateProvider, $httpProvider) {
