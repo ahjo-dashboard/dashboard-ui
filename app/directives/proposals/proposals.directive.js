@@ -145,7 +145,7 @@ angular.module('dashboard')
                 }
             }
 
-            function createDraft(item) {
+            function createDraft(type) {
                 return {
                     "personGuid": "926eee0b-8e94-4a14-beec-d9b60590547f",
                     "proposalGuid": "",
@@ -154,7 +154,7 @@ angular.module('dashboard')
                     "personName": "",
                     "topicGuid": $scope.guid,
                     "text": "",
-                    "proposalType": item.value,
+                    "proposalType": type,
                     "remarkDescription": "",
                     "isPublished": 0,
                     "isTranslatedIcon": "",
@@ -181,11 +181,22 @@ angular.module('dashboard')
                 deleteProposal(proposal);
             };
 
+            self.copy = function(proposal) {
+                var draft = createDraft(proposal.proposalType);
+                draft.text = proposal.text;
+                self.proposals.splice(0, 0, draft);
+            };
+
             self.addProposal = function(item) {
-                if ((self.proposals instanceof Array) === false) {
-                    self.proposals = [];
+                if (item instanceof Object) {
+                    if ((self.proposals instanceof Array) === false) {
+                        self.proposals = [];
+                    }
+                    self.proposals.splice(0, 0, createDraft(item.value));
                 }
-                self.proposals.splice(0, 0, createDraft(item));
+                else {
+                    $log.error('dbProposals: addProposal parameter invalid');
+                }
             };
 
             self.toggleAll = function() {
