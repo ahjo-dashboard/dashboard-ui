@@ -27,9 +27,10 @@ angular.module('dashboard')
             EDIT: { icon: 'glyphicon-pencil', action: 'EDIT', type: 'db-btn-prim', tooltip: 'STR_EDIT', confirm: false },
             OK: { icon: 'glyphicon-ok', action: 'OK', type: 'db-btn-prim', tooltip: 'STR_SAVE', confirm: false },
             CANCEL: { icon: 'glyphicon-remove', action: 'CANCEL', type: 'btn-warning', tooltip: 'STR_CANCEL', confirm: false },
-            SEND: { icon: 'glyphicon-send', action: 'SEND', type: 'btn-success', tooltip: 'STR_PUBLISH', confirm: true, title: 'Vahvista', text: 'STR_CNFM_SEND_PROP', ok: 'STR_PUBLISH', cancel: 'STR_CANCEL' },
-            DISABLEDSEND: { icon: 'glyphicon-send', action: 'SEND', type: 'btn-success', disabled: true, tooltip: 'STR_PUBLISH', confirm: false, title: 'Vahvista', text: 'STR_CNFM_SEND_PROP', ok: 'STR_PUBLISH', cancel: 'STR_CANCEL' },
-            DELETE: { icon: 'glyphicon-trash', action: 'DELETE', type: 'btn-danger', tooltip: 'STR_DELETE', confirm: true, title: 'Vahvista', text: 'STR_CNFM_DEL_PROP', ok: 'STR_DELETE', cancel: 'STR_CANCEL' }
+            SEND: { icon: 'glyphicon-send', action: 'SEND', type: 'btn-success', tooltip: 'STR_PUBLISH', confirm: true, title: 'STR_CONFIRM', text: 'STR_CNFM_SEND_PROP', ok: 'STR_PUBLISH', cancel: 'STR_CANCEL' },
+            DISABLEDSEND: { icon: 'glyphicon-send', action: 'SEND', type: 'btn-success', disabled: true, tooltip: 'STR_PUBLISH', confirm: false, title: 'STR_CONFIRM', text: 'STR_CNFM_SEND_PROP', ok: 'STR_PUBLISH', cancel: 'STR_CANCEL' },
+            DELETE: { icon: 'glyphicon-trash', action: 'DELETE', type: 'btn-danger', tooltip: 'STR_DELETE', confirm: true, title: 'STR_CONFIRM', text: 'STR_CNFM_DEL_PROP', ok: 'STR_DELETE', cancel: 'STR_CANCEL' },
+            COPY: { icon: 'glyphicon-pencil', action: 'COPY', type: 'db-btn-prim', tooltip: 'STR_COPY', confirm: true, title: 'STR_CONFIRM', text: 'STR_CNFM_COPY_PROP' }
         }
     })
     .filter('unsafe', function($sce) {
@@ -105,6 +106,7 @@ angular.module('dashboard')
                         break;
 
                     case PROP.STATUS.PUBLISHED:
+                        self.lBtn = PROP.BTN.COPY;
                         self.mBtn = PROP.BTN.DELETE;
                         self.rBtn = PROP.BTN.OPEN;
                         break;
@@ -203,6 +205,9 @@ angular.module('dashboard')
                     startEditing();
                     setMode(PROP.MODE.OPEN);
                 }
+                else if (action === PROP.BTN.COPY.action) {
+                    $scope.onCopy({ proposal: $scope.proposal });
+                }
             };
 
             $scope.$watch(function() {
@@ -236,7 +241,8 @@ angular.module('dashboard')
                 proposal: '=',
                 guid: '=',
                 onPost: '&',
-                onDelete: '&'
+                onDelete: '&',
+                onCopy: '&'
             },
             templateUrl: 'directives/proposal/proposal.Directive.html',
             restrict: 'AE',

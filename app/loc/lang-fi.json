@@ -76,6 +76,9 @@
     "STR_PUBLISH": "Julkaise",
     "STR_DELETE": "Poista",
     "STR_EDIT": "Muokkaa",
-    "STR_CNFM_DEL_PROP": "Haluatko poistaa ehdotuksen",
-    "STR_CNFM_SEND_PROP": "Haluatko julkaista ehdotuksen"
+    "STR_CONFIRM": "Vahvista",
+    "STR_COPY": "Kopioi julkaisemattomaksi",
+    "STR_CNFM_DEL_PROP": "Haluatko poistaa ehdotuksen?",
+    "STR_CNFM_SEND_PROP": "Haluatko julkaista ehdotuksen?",
+    "STR_CNFM_COPY_PROP": "Haluatko kopioida ehdotuksen julkaisemattomaksi?"
 }
