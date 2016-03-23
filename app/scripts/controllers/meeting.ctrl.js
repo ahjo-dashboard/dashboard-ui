@@ -34,6 +34,8 @@ angular.module('dashboard')
         self.propCount = null;
 
         function setData(topic) {
+            self.lowerUrl = {};
+            self.upperUrl = {};
             if (topic instanceof Object) {
                 self.header = topic.topicTitle;
                 if (topic.esitykset instanceof Array) {
@@ -49,16 +51,11 @@ angular.module('dashboard')
                     self.tData = null;
                 }
 
-                self.lowerUrl = {};
                 self.upperUrl = (self.tData && self.tData.link) ? self.tData.link : {};
 
                 self.aData = ListData.createAttachmentList('STR_ATTACHMENTS', topic.attachment);
                 self.dData = ListData.createDecisionList('STR_DECISION_HISTORY', topic.decision);
                 self.amData = ListData.createAdditionalMaterialList('STR_ADDITIONAL_MATERIAL', topic.additionalMaterial);
-            }
-            else {
-                self.lowerUrl = {};
-                self.upperUrl = {};
             }
         }
 
@@ -155,7 +152,7 @@ angular.module('dashboard')
             return (url && (typeof url === "string") && url.length) ? true : false;
         };
 
-        self.materialCount = function () {
+        self.materialCount = function() {
             var decisionCount = ((self.dData instanceof Object) && (self.dData.objects instanceof Array)) ? self.dData.objects.length : 0;
             var additionalMaterialCount = ((self.amData instanceof Object) && (self.amData.objects instanceof Array)) ? self.amData.objects.length : 0;
             return decisionCount + additionalMaterialCount;

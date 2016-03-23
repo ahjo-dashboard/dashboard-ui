@@ -30,6 +30,8 @@ angular.module('dashboard')
         }
 
         if (meetingItem) {
+            self.meeting = {};
+            StorageSrv.set(CONST.KEY.TOPIC, {});
             AhjoMeetingSrv.getMeeting(meetingItem.meetingGuid).then(function(response) {
                 $log.debug("meetingStatusCtrl: getMeeting then:");
                 if (response && response.objects instanceof Array && response.objects.length) {
@@ -43,10 +45,6 @@ angular.module('dashboard')
                         }
                         StorageSrv.set(CONST.KEY.LAST_EVENT_ID, self.meeting.lastEventId);
                     }
-                }
-                else {
-                    self.meeting = {};
-                    StorageSrv.set(CONST.KEY.TOPIC, {});
                 }
             }, function(error) {
                 $log.error("meetingStatusCtrl: getMeeting error: " + JSON.stringify(error));
