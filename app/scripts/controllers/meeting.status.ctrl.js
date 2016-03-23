@@ -20,7 +20,7 @@ angular.module('dashboard')
         self.meeting = {};
         self.chairman = false;
         self.loading = true;
-        var meetingItem = $stateParams.meetingItem;
+        var meetingItem = StorageSrv.get(CONST.KEY.MEETING_ITEM);
         var isMobile = $rootScope.isMobile;
 
         for (var i = 0; i < ENV.SupportedRoles.length; i++) {

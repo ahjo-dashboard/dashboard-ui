@@ -67,7 +67,8 @@ angular.module('dashboard')
 
         self.meetingItemSelected = function(meetingItem) {
             $log.debug("overviewCtrl.meetingItemSelected");
-            $state.go(CONST.APPSTATE.MEETING, { 'meetingItem': meetingItem, 'menu': CONST.MENU.FULL });
+            StorageSrv.set(CONST.KEY.MEETING_ITEM, meetingItem);
+            $state.go(CONST.APPSTATE.MEETING, { 'menu': CONST.MENU.FULL });
         };
 
         self.showInfo = function() {

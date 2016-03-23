@@ -128,11 +128,6 @@ angular.module('dashboard')
                 parseRoleDropdown();
             }, true);
 
-            self.meetingSelected = function(meeting) {
-                $log.debug("adMeetings: meetingSelected: " + JSON.stringify(meeting));
-                // $state.go('app.meeting', {meetingItem : meeting});
-            };
-
             self.setAgencyFilter = function(agency) {
                 $log.debug("adMeetings: setAgencyFilter: " + agency);
                 self.aF = agency;
