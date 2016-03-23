@@ -123,7 +123,6 @@ angular.module('dashboard')
             }
 
             function setProposal(proposal) {
-                $log.debug("dbProposal: setProposal " + proposal);
                 if (proposal instanceof Object) {
                     if (proposal.isNew) {
                         setStatus(PROP.STATUS.DRAFT);

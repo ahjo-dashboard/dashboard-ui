@@ -12,7 +12,7 @@
 * Controller of the dashboard
 */
 angular.module('dashboard')
-    .controller('meetingStatusCtrl', ['$log', '$scope', '$rootScope', '$stateParams', '$state', 'CONST', 'StorageSrv', 'ENV', 'AhjoMeetingSrv', function($log, $scope, $rootScope, $stateParams, $state, CONST, StorageSrv, ENV, AhjoMeetingSrv) {
+    .controller('meetingStatusCtrl', ['$log', '$scope', '$rootScope', '$stateParams', '$state', 'CONST', 'StorageSrv', 'ENV', 'AhjoMeetingSrv', '$interval', function($log, $scope, $rootScope, $stateParams, $state, CONST, StorageSrv, ENV, AhjoMeetingSrv, $interval) {
         $log.debug("meetingStatusCtrl: CONTROLLER");
         var self = this;
         $rootScope.menu = $stateParams.menu;
@@ -22,10 +22,30 @@ angular.module('dashboard')
         self.loading = true;
         var meetingItem = StorageSrv.get(CONST.KEY.MEETING_ITEM);
         var isMobile = $rootScope.isMobile;
+        var pollingTimer = null;
+        var lastEventId = null;
 
         for (var i = 0; i < ENV.SupportedRoles.length; i++) {
             if (ENV.SupportedRoles[i].RoleID === CONST.MTGROLE.CHAIRMAN) {
                 self.chairman = true;
+            }
+        }
+
+        function getEvents() {
+            $log.debug("meetingStatusCtrl: getEvents");
+            if (lastEventId && meetingItem.meetingGuid) {
+                AhjoMeetingSrv.getEvents(lastEventId, meetingItem.meetingGuid).then(function(response) {
+                    $log.debug("meetingStatusCtrl: getEvents then: " + JSON.stringify(response));
+                }, function(error) {
+                    $log.error("meetingStatusCtrl: getEvents error: " + JSON.stringify(error));
+                }, function(notify) {
+                    $log.debug("meetingStatusCtrl: getEvents notify: " + JSON.stringify(notify));
+                }).finally(function() {
+                    $log.debug("meetingStatusCtrl: getEvents finally: ");
+                });
+            }
+            else {
+                $log.error("meetingStatusCtrl: getEvents invalid parameter:");
             }
         }
 
@@ -43,7 +63,8 @@ angular.module('dashboard')
                                 StorageSrv.set(CONST.KEY.TOPIC, topic);
                             }
                         }
-                        StorageSrv.set(CONST.KEY.LAST_EVENT_ID, self.meeting.lastEventId);
+                        lastEventId = 19734; // self.meeting.lastEventId; // this is for testing
+                        pollingTimer = $interval(getEvents, 10000);
                     }
                 }
             }, function(error) {
@@ -83,7 +104,6 @@ angular.module('dashboard')
             for (var item in CONST.TOPICSTATUS) {
                 if (CONST.TOPICSTATUS.hasOwnProperty(item)) {
                     if (topic && topic.topicStatus && topic.topicStatus === CONST.TOPICSTATUS[item].value) {
-                        // $log.debug("meetingStatusCtrl.statusIcon: '" + topic.title + "' topicStatus: " + topic.topicStatus + " publicity: " + topic.publicity + " esitykset.length: " + topic.esitykset.length);
                         var res = null;
                         var props = topic.includePublishedRemark;
                         var conf = topic.publicity !== CONST.PUBLICITY.PUBLIC;
@@ -121,6 +141,7 @@ angular.module('dashboard')
 
         $scope.$on('$destroy', function() {
             $log.debug("meetingStatusCtrl: DESTROY");
+            $interval.cancel(pollingTimer);
         });
 
     }]);
