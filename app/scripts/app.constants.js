@@ -58,8 +58,7 @@ angular.module('dashboard')
             SELECTION_DATA: 'selectiondata',
             VISIBLE_MTGS: 'visiblemeetings',
             SIGNING_RES: 'signingres',
-            MEETING_ITEM: 'meetingitem',
-            LAST_EVENT_ID: 'lasteventid'
+            MEETING_ITEM: 'meetingitem'
         },
         'BTNTYPE': {
             DEFAULT: 'btn-default',
