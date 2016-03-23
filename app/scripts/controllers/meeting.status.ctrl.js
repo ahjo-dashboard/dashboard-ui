@@ -34,11 +34,14 @@ angular.module('dashboard')
                 $log.debug("meetingStatusCtrl: getMeeting then:");
                 if (response && response.objects instanceof Array && response.objects.length) {
                     self.meeting = response.objects[0];
-                    if (self.meeting && self.meeting.topicList.length) {
-                        var topic = self.meeting.topicList[0];
-                        if (!isMobile) {
-                            StorageSrv.set(CONST.KEY.TOPIC, topic);
+                    if (self.meeting instanceof Object) {
+                        if (self.meeting.topicList.length) {
+                            var topic = self.meeting.topicList[0];
+                            if (!isMobile) {
+                                StorageSrv.set(CONST.KEY.TOPIC, topic);
+                            }
                         }
+                        StorageSrv.set(CONST.KEY.LAST_EVENT_ID, self.meeting.lastEventId);
                     }
                 }
                 else {
