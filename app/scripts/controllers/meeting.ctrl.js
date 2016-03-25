@@ -32,6 +32,10 @@ angular.module('dashboard')
         self.amData = null;
 
         self.propCount = null;
+        self.linkConfig = {
+            title: 'STR_TOPIC',
+            class: 'btn btn-info btn-lg btn-block wrap-button-text db-btn-prim'
+        };
 
         function setData(topic) {
             self.lowerUrl = {};
