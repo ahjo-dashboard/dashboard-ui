@@ -23,7 +23,7 @@ angular.module('dashboard', [
     'pascalprecht.translate',
     'angular-confirm'
 ])
-    .config(function ($urlRouterProvider, $stateProvider, ENV, G_APP, $logProvider, $provide, $compileProvider, $translateProvider, $httpProvider) {
+    .config(function($urlRouterProvider, $stateProvider, ENV, G_APP, $logProvider, $provide, $compileProvider, $translateProvider, $httpProvider) {
         // Startup logged always regardless of ENV config, so using console instead of $log
         console.log('dashboard.config: ver: ' + G_APP.app_version + ' env: ' + ENV.app_env + ' logging: ' + ENV.app_debuglogs);
 
@@ -36,17 +36,17 @@ angular.module('dashboard', [
         $logProvider.debugEnabled(doDbg);
 
         /* Override $log functions to respect app-level setting for logging */
-        $provide.decorator('$log', function ($delegate) {
+        $provide.decorator('$log', function($delegate) {
             var infoFn = $delegate.info;
             var logFn = $delegate.log;
 
-            $delegate.info = function () {
+            $delegate.info = function() {
                 if ($logProvider.debugEnabled()) {
                     infoFn.apply(null, arguments);
                 }
             };
 
-            $delegate.log = function () {
+            $delegate.log = function() {
                 if ($logProvider.debugEnabled()) {
                     logFn.apply(null, arguments);
                 }
@@ -68,8 +68,8 @@ angular.module('dashboard', [
 
         $httpProvider.defaults.withCredentials = true;
     })
-    .run(function ($rootScope, $log, $window, CONST, $state) {
-        $rootScope.$on('$stateChangeStart', function (event, next/*, toParams, fromParams*/) {
+    .run(function($rootScope, $log, $window, CONST, $state, $timeout) {
+        $rootScope.$on('$stateChangeStart', function(event, next/*, toParams, fromParams*/) {
             $log.debug('app.stateChangeStart: ' + next.name);// +' toParams: ' +JSON.stringify(toParams) +' fromParams: ' +JSON.stringify(fromParams));
         });
 
@@ -98,43 +98,55 @@ angular.module('dashboard', [
         }
         $log.debug("app.isMobile: " + $rootScope.isMobile);
 
-        $rootScope.goHome = function () {
+        $rootScope.goHome = function() {
             $state.go(CONST.APPSTATE.HOME);
         };
 
-        $rootScope.goBack = function () {
+        $rootScope.goBack = function() {
             $window.history.back();
         };
 
-        $rootScope.goErrorLanding = function () {
+        $rootScope.goErrorLanding = function() {
             $state.go(CONST.APPSTATE.ERROR);
         };
 
-        $rootScope.openMenu = function () {
-            $rootScope.menu = CONST.MENU.FULL;
+        $rootScope.openMenu = function() {
+            $rootScope.$emit(CONST.MENUACTIVE, true);
+            $timeout(function() {
+                $rootScope.menu = CONST.MENU.FULL;
+                $timeout(function() {
+                    $rootScope.$emit(CONST.MENUACTIVE, false);
+                }, 300);
+            }, 0);
         };
 
-        $rootScope.closeMenu = function () {
+        $rootScope.closeMenu = function() {
             if ($rootScope.menu > CONST.MENU.CLOSED) {
-                $rootScope.menu = $rootScope.menu - 1;
+                $rootScope.$emit(CONST.MENUACTIVE, true);
+                $timeout(function() {
+                    $rootScope.menu = $rootScope.menu - 1;
+                    $timeout(function() {
+                        $rootScope.$emit(CONST.MENUACTIVE, false);
+                    }, 300);
+                }, 0);
             }
         };
 
-        $rootScope.menuClosed = function () {
+        $rootScope.menuClosed = function() {
             return $rootScope.menu === CONST.MENU.CLOSED;
         };
 
-        $rootScope.menuHalf = function () {
+        $rootScope.menuHalf = function() {
             return $rootScope.menu === CONST.MENU.HALF;
         };
 
-        $rootScope.menuFull = function () {
+        $rootScope.menuFull = function() {
             return $rootScope.menu === CONST.MENU.FULL;
         };
 
         // Utility function for looping an object to find the first immediate child object with matching value
         // Returns null on bad arguments or if no match.
-        $rootScope.objWithVal = function (arr, prop, val) {
+        $rootScope.objWithVal = function(arr, prop, val) {
             var res = null;
             if (!arr || typeof arr !== 'object' || !prop) {
                 $log.error("app.objWithVal: bad arguments: arr:" + arr + " prop:" + prop + " val:" + val);
@@ -154,9 +166,9 @@ angular.module('dashboard', [
     });
 
 angular.module('dashboard')
-    .config(function ($provide) {
-        $provide.decorator("$exceptionHandler", ['$delegate', '$injector', function ($delegate, $injector) {
-            return function (aException, aCause) {
+    .config(function($provide) {
+        $provide.decorator("$exceptionHandler", ['$delegate', '$injector', function($delegate, $injector) {
+            return function(aException, aCause) {
                 $delegate(aException, aCause);
 
                 console.log('dashboard.exceptionHandler: redirecting state');

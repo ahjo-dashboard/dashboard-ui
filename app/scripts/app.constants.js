@@ -10,6 +10,7 @@ angular.module('dashboard')
             HALF: 1,
             FULL: 2
         },
+        'MENUACTIVE': 'MENUACTIVE',
         'BLOCKMODE': {
             BOTH: 0,
             UPPER: 1,
