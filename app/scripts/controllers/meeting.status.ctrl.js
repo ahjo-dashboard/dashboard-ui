@@ -31,11 +31,34 @@ angular.module('dashboard')
             }
         }
 
+        function remarkUpdated(event) {
+            $log.debug("meetingStatusCtrl: remarkUpdated");
+            if (event.MeetingID === meetingItem.meetingGuid) {
+                $rootScope.$emit(CONST.PROPOSALEVENT, event);
+            }
+        }
+
         function getEvents() {
             $log.debug("meetingStatusCtrl: getEvents");
             if (lastEventId && meetingItem.meetingGuid) {
                 AhjoMeetingSrv.getEvents(lastEventId, meetingItem.meetingGuid).then(function(response) {
-                    $log.debug("meetingStatusCtrl: getEvents then: " + JSON.stringify(response));
+                    $log.debug("meetingStatusCtrl: getEvents then: ");
+                    if (response instanceof Array) {
+                        response.forEach(function(event) {
+                            switch (event.TypeName) {
+                                case CONST.MTGEVENT.LASTEVENTID:
+                                    lastEventId = event.LastEventId;
+                                    break;
+                                case CONST.MTGEVENT.REMARKPUBLISHED:
+                                case CONST.MTGEVENT.REMARKDELETED:
+                                    remarkUpdated(event);
+                                    break;
+                                default:
+                                    $log.error("meetingStatusCtrl: unsupported TypeName: " + event.TypeName);
+                                    break;
+                            }
+                        }, this);
+                    }
                 }, function(error) {
                     $log.error("meetingStatusCtrl: getEvents error: " + JSON.stringify(error));
                 }, function(notify) {
@@ -63,7 +86,8 @@ angular.module('dashboard')
                                 StorageSrv.set(CONST.KEY.TOPIC, topic);
                             }
                         }
-                        lastEventId = 19734; // self.meeting.lastEventId; // this is for testing
+                        self.meeting.eventDataId = 19734; // this is for testing
+                        lastEventId = self.meeting.eventDataId;
                         pollingTimer = $interval(getEvents, 10000);
                     }
                 }

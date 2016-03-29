@@ -33,7 +33,7 @@ angular.module('dashboard')
     })
     .directive('dbProposals', [function() {
 
-        var controller = ['$log', '$scope', 'AhjoProposalsSrv', 'PROPS', '$rootScope', function($log, $scope, AhjoProposalsSrv, PROPS, $rootScope) {
+        var controller = ['$log', '$scope', 'AhjoProposalsSrv', 'PROPS', '$rootScope', 'CONST', function($log, $scope, AhjoProposalsSrv, PROPS, $rootScope, CONST) {
             $log.log("dbProposals: CONTROLLER");
             var self = this;
             self.proposals = null;
@@ -211,6 +211,25 @@ angular.module('dashboard')
             }, function(data) {
                 getProposals(data.guid);
             }, true);
+
+            var watcher = $rootScope.$on(CONST.PROPOSALEVENT, function(event, data) {
+                if (data instanceof Object) {
+                    switch (data.TypeName) {
+                        case CONST.MTGEVENT.REMARKPUBLISHED:
+                        case CONST.MTGEVENT.REMARKDELETED:
+                            getProposals($scope.guid);
+                            break;
+                        default:
+                            $log.error("meetingStatusCtrl: unsupported TypeName: " + event.TypeName);
+                            break;
+                    }
+                }
+                else {
+                    $log.error("meetingStatusCtrl: invalid parameter:");
+                }
+            });
+
+            $scope.$on('$destroy', watcher);
 
             $scope.$on('$destroy', function() {
                 $log.debug("dbProposals: DESTROY");
