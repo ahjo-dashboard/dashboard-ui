@@ -49,7 +49,6 @@ $font-color-header: white;
 html { height: 100%; }
 
 body {
-    height: 100%;
     $header-height: 60px; // this is for moving main content
     $button-height: 40px;
 
@@ -61,6 +60,11 @@ body {
     background-color: $appbgcolor;
 
     padding: 0;
+
+    .db-frame {
+        height: 100%;
+        width: 100%;
+    }
 
     .ad-app-bg { background-color: $appbgcolor !important; }
     .ad-upper-bg { background-color: $upper-color !important; }
