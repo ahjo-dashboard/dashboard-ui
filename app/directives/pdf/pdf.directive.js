@@ -23,15 +23,9 @@ angular.module('dashboard')
             replace: 'true',
             link: function(scope, element/*, attrs */) {
 
-                $log.debug('pdfDirective: link ' + scope.uri);
-
                 var HEIGHT = 'height';
                 var WIDTH = 'width';
                 var RESIZE = 'resize';
-                var OPACITY = 'opacity';
-                var TRANSITION = 'transition';
-                var VISIBILITY = 'visibility';
-                var DELAY = 100;
                 var timer;
                 var pending = false;
                 var hidden = false;
@@ -39,9 +33,8 @@ angular.module('dashboard')
                 function hide() {
                     if (!hidden) {
                         hidden = true;
-                        element.css(TRANSITION, 'opacity 50ms, visibility 100ms');
-                        element.css(OPACITY, 0.0);
-                        element.css(VISIBILITY, 'hidden');
+                        element.removeClass('db-visible-pdf');
+                        element.addClass('db-hidden-pdf');
                     }
                 }
 
@@ -54,15 +47,14 @@ angular.module('dashboard')
                                 timer = undefined;
                                 element.css(HEIGHT, element.parent().height());
                                 element.css(WIDTH, element.parent().width());
-                                element.css(TRANSITION, 'opacity 100ms, visibility 50ms');
-                                element.css(VISIBILITY, 'visible');
-                                element.css(OPACITY, 1.0);
+                                element.removeClass('db-hidden-pdf');
+                                element.addClass('db-visible-pdf');
                                 hidden = false;
                             }
                             else {
                                 pending = false;
                             }
-                        }, DELAY);
+                        }, 100);
                     }
                 }
 
@@ -73,7 +65,7 @@ angular.module('dashboard')
                     function() {
                         hide();
                         element.empty();
-                        element.append($compile('<iframe class="db-frame" src=' + scope.uri + '></iframe>')(scope));
+                        element.append($compile('<iframe src=' + scope.uri + '></iframe>')(scope));
                         show();
                     },
                     true
