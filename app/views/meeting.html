@@ -30,7 +30,7 @@
                         <span ng-if="true" class="badge ng-cloak hidden-sm">{{ctrl.propCount}}</span>
                     </button>
                 </div>
-                <div class="col-xs-2 btn-group ad-lower-bg right" uib-dropdown is-open="">
+                <div class="col-xs-2 btn-group ad-lower-bg right" uib-dropdown is-open="" on-toggle="ctrl.mToggled(open)">
                     <button id="materialButton" type="button" data-ng-disabled="!ctrl.materialCount()"
                     class="btn db-btn-prim btn-block ng-class:[{'active': (ctrl.isActive(ctrl.lbms.MATERIALS) && !ctrl.isUpperMode())}]"
                     uib-dropdown-toggle>
@@ -54,7 +54,7 @@
                         </li>
                     </ul>
                 </div>
-                <div class="col-xs-2 btn-group ad-lower-bg right" uib-dropdown is-open="">
+                <div class="col-xs-2 btn-group ad-lower-bg right" uib-dropdown is-open="" on-toggle="ctrl.aToggled(open)">
                     <button id="attachmentButton" type="button" data-ng-disabled="!ctrl.aData.objects.length" class="btn db-btn-prim btn-block ng-class:[{'active': (ctrl.isActive(ctrl.lbms.ATTACHMENTS) && !ctrl.isUpperMode())}]"
                     uib-dropdown-toggle>
                         <span translate translate-cloak>STR_ATTACHMENTS</span>
@@ -85,7 +85,7 @@
             <!-- UPPER START -->
             <div class="ad-flex-item-upper ng-class:[{'ad-flex-show-full': ctrl.isUpperMode(), 'ad-flex-show': ctrl.isBothMode(), 'ad-flex-hide': ctrl.isLowerMode()}]">
 
-                <ad-embedded-file ng-if="ctrl.isUrlString(ctrl.upperUrl)" refresh="ctrl.blockMode" ng-attr-fileurl="ctrl.upperUrl" ng-attr-filename="ctrl.upperUrl"></ad-embedded-file>
+                <db-pdf ng-if="ctrl.isUrlString(ctrl.upperUrl)" ng-attr-uri="ctrl.upperUrl" ng-attr-mode="ctrl.blockMode" ng-attr-hide="ctrl.hide"></db-pdf>
 
                 <div ng-if="ctrl.error" class="alert alert-danger" role="alert">{{ctrl.error}}</div>
             </div>
@@ -94,7 +94,7 @@
             <!-- LOWER START -->
             <div class="ad-flex-item-lower ng-class:[{'ad-flex-show-full': ctrl.isLowerMode(), 'ad-flex-show': ctrl.isBothMode(), 'ad-flex-hide': ctrl.isUpperMode()}]">
 
-                <ad-embedded-file ng-if="ctrl.showEmbeddedFile(ctrl.lowerUrl)" refresh="ctrl.blockMode" ng-attr-fileurl="ctrl.lowerUrl" ng-attr-filename="ctrl.lowerUrl"></ad-embedded-file>
+                <db-pdf ng-if="ctrl.showEmbeddedFile(ctrl.lowerUrl)" ng-attr-uri="ctrl.lowerUrl" ng-attr-mode="ctrl.blockMode"></db-pdf>
                 <db-proposals ng-if="ctrl.isActive(ctrl.lbms.PROPOSALS)" guid="ctrl.topic.topicGuid"></db-proposals>
 
             </div>

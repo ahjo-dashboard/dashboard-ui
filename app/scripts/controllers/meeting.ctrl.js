@@ -25,6 +25,7 @@ angular.module('dashboard')
         self.lbm = CONST.LOWERBLOCKMODE.PROPOSALS;
         self.header = '';
         $rootScope.menu = $stateParams.menu;
+        self.hide = false;
 
         self.tData = null;
         self.aData = null;
@@ -36,6 +37,10 @@ angular.module('dashboard')
             title: 'STR_TOPIC',
             class: 'btn btn-info btn-lg btn-block wrap-button-text db-btn-prim'
         };
+
+        var attachmentDropdownOpen = false;
+        var materialsDropdownOpen = false;
+        var isIe = $rootScope.isIe;
 
         function setData(topic) {
             self.lowerUrl = {};
@@ -126,6 +131,16 @@ angular.module('dashboard')
                 $state.go(CONST.APPSTATE.LISTPROPOSALS);
             }
             checkMode();
+        };
+
+        self.aToggled = function(open) {
+            attachmentDropdownOpen = open;
+            self.hide = (attachmentDropdownOpen || materialsDropdownOpen) && isIe;
+        };
+
+        self.mToggled = function(open) {
+            materialsDropdownOpen = open;
+            self.hide = (attachmentDropdownOpen || materialsDropdownOpen) && isIe;
         };
 
         self.isBothMode = function() {

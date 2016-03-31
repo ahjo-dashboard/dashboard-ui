@@ -86,8 +86,7 @@ angular.module('dashboard')
                                 StorageSrv.set(CONST.KEY.TOPIC, topic);
                             }
                         }
-                        self.meeting.eventDataId = 19734; // this is for testing
-                        lastEventId = self.meeting.eventDataId;
+                        lastEventId = self.meeting.lastEventId; // 19734;
                         pollingTimer = $interval(getEvents, 10000);
                     }
                 }
