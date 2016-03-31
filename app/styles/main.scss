@@ -46,6 +46,11 @@ $font-color-header: white;
     display: none;
 }
 
+iframe {
+    height: 100%;
+    width: 100%;
+}
+
 html { height: 100%; }
 
 body {
@@ -60,11 +65,6 @@ body {
     background-color: $appbgcolor;
 
     padding: 0;
-
-    .db-frame {
-        height: 100%;
-        width: 100%;
-    }
 
     .ad-app-bg { background-color: $appbgcolor !important; }
     .ad-upper-bg { background-color: $upper-color !important; }
@@ -206,6 +206,18 @@ body {
             border-bottom-width: $tablist-tabborder-width;
             border-bottom-style: solid;
         }
+    }
+
+    .db-hidden-pdf {
+        visibility: hidden;
+        opacity: 0.0;
+        transition: visibility 100ms, opacity 100ms;
+    }
+
+    .db-visible-pdf {
+        visibility: visible;
+        opacity: 1.0;
+        transition: visibility 800ms, opacity 800ms;
     }
 
     .panel-heading {
