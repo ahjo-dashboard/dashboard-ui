@@ -74,7 +74,7 @@ angular.module('dashboard')
 
         if (meetingItem) {
             self.meeting = {};
-            StorageSrv.set(CONST.KEY.TOPIC, {});
+            StorageSrv.delete(CONST.KEY.TOPIC);
             AhjoMeetingSrv.getMeeting(meetingItem.meetingGuid).then(function(response) {
                 $log.debug("meetingStatusCtrl: getMeeting then:");
                 if (response && response.objects instanceof Array && response.objects.length) {

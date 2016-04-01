@@ -14,7 +14,7 @@
 angular.module('dashboard')
     .factory('StorageSrv', function() {
         var Data = {};
-        var sessionStorageKeys = ['meetingitem'];
+        var sessionStorageKeys = ['meetingitem', 'topic'];
 
         Data.set = function(key, val) {
             Data[key] = val;
@@ -32,6 +32,10 @@ angular.module('dashboard')
                 val = Data[key];
             }
             return val;
+        };
+
+        Data.delete = function(key) {
+            delete Data[key];
         };
 
         return Data;
