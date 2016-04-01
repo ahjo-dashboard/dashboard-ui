@@ -123,6 +123,7 @@ angular.module('dashboard')
             }
 
             function setProposal(proposal) {
+                $log.debug("dbProposal: setProposal " + proposal);
                 if (proposal instanceof Object) {
                     if (proposal.isNew) {
                         setStatus(PROP.STATUS.DRAFT);
@@ -187,9 +188,15 @@ angular.module('dashboard')
                     setMode(PROP.MODE.OPEN);
                 }
                 else if (action === PROP.BTN.CANCEL.action) {
+                    if ($scope.proposal.isNew) {
+                        delete $scope.proposal.isNew;
+                    }
                     setMode(PROP.MODE.COLLAPSED);
                 }
                 else if (action === PROP.BTN.OK.action) {
+                    if ($scope.proposal.isNew) {
+                        delete $scope.proposal.isNew;
+                    }
                     endEditing();
                     setMode(PROP.MODE.COLLAPSED);
                 }
