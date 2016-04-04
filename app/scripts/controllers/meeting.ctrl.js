@@ -12,7 +12,7 @@
  * Controller of the dashboard
  */
 angular.module('dashboard')
-    .controller('meetingCtrl', ['$log', 'AhjoMeetingSrv', '$stateParams', '$rootScope', '$scope', '$state', 'CONST', 'StorageSrv', 'AttachmentData', 'ListData', 'PROPS', function($log, AhjoMeetingSrv, $stateParams, $rootScope, $scope, $state, CONST, StorageSrv, AttachmentData, ListData, PROPS) {
+    .controller('meetingCtrl', ['$log', 'AhjoMeetingSrv', '$rootScope', '$scope', '$state', 'CONST', 'StorageSrv', 'AttachmentData', 'ListData', 'PROPS', function($log, AhjoMeetingSrv, $rootScope, $scope, $state, CONST, StorageSrv, AttachmentData, ListData, PROPS) {
         $log.debug("meetingCtrl: CONTROLLER");
         var self = this;
         var isMobile = $rootScope.isMobile;
@@ -24,7 +24,7 @@ angular.module('dashboard')
         self.lbms = CONST.LOWERBLOCKMODE;
         self.lbm = CONST.LOWERBLOCKMODE.PROPOSALS;
         self.header = '';
-        $rootScope.menu = $stateParams.menu;
+        $rootScope.menu = CONST.MENU.FULL;
         self.hide = false;
 
         self.tData = null;

@@ -12,9 +12,31 @@
 * Service in the dashboard.
 */
 angular.module('dashboard')
-    .factory('StorageSrv', function () {
+    .factory('StorageSrv', function() {
         var Data = {};
-        Data.set = function (key, val) { Data[key] = val; };
-        Data.get = function (key) { return Data[key]; };
+        var sessionStorageKeys = ['meetingitem', 'topic'];
+
+        Data.set = function(key, val) {
+            Data[key] = val;
+            if (val !== undefined && sessionStorageKeys.indexOf(key) > -1) {
+                var dataToStore = JSON.stringify(val);
+                sessionStorage.setItem(key, dataToStore);
+            }
+        };
+
+        Data.get = function(key) {
+            var val = Data[key];
+            if (val === undefined && sessionStorageKeys.indexOf(key) > -1) {
+                var localData = JSON.parse(sessionStorage.getItem(key));
+                Data[key] = localData;
+                val = Data[key];
+            }
+            return val;
+        };
+
+        Data.delete = function(key) {
+            delete Data[key];
+        };
+
         return Data;
     });
