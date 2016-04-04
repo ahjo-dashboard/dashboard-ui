@@ -57,7 +57,6 @@ angular.module('dashboard')
             };
 
             function setMode(mode) {
-                $log.debug("dbProposal: setMode " + mode);
                 self.mode = mode;
 
                 switch (self.mode) {
@@ -97,7 +96,6 @@ angular.module('dashboard')
             }
 
             function setStatus(status) {
-                $log.debug("dbProposal: setStatus " + status);
                 self.status = status;
 
                 switch (self.status) {
@@ -179,7 +177,6 @@ angular.module('dashboard')
             };
 
             self.act = function(action) {
-                $log.debug("dbProposal: act " + action);
                 if (action === PROP.BTN.CLOSE.action) {
                     setMode(PROP.MODE.COLLAPSED);
                 }
@@ -187,9 +184,15 @@ angular.module('dashboard')
                     setMode(PROP.MODE.OPEN);
                 }
                 else if (action === PROP.BTN.CANCEL.action) {
+                    if ($scope.proposal.isNew) {
+                        delete $scope.proposal.isNew;
+                    }
                     setMode(PROP.MODE.COLLAPSED);
                 }
                 else if (action === PROP.BTN.OK.action) {
+                    if ($scope.proposal.isNew) {
+                        delete $scope.proposal.isNew;
+                    }
                     endEditing();
                     setMode(PROP.MODE.COLLAPSED);
                 }
