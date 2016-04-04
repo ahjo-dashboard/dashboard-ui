@@ -169,6 +169,7 @@ angular.module('dashboard')
                     "isMinuteEntryBase": "",
                     "isModified": "",
                     "isCopy": "",
+                    "isOwnProposal": true,
                     "isNew": true
                 };
             }

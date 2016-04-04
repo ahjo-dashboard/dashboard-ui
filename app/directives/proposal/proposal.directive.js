@@ -177,38 +177,52 @@ angular.module('dashboard')
             };
 
             self.act = function(action) {
-                if (action === PROP.BTN.CLOSE.action) {
-                    setMode(PROP.MODE.COLLAPSED);
-                }
-                else if (action === PROP.BTN.OPEN.action) {
-                    setMode(PROP.MODE.OPEN);
-                }
-                else if (action === PROP.BTN.CANCEL.action) {
-                    if ($scope.proposal.isNew) {
-                        delete $scope.proposal.isNew;
-                    }
-                    setMode(PROP.MODE.COLLAPSED);
-                }
-                else if (action === PROP.BTN.OK.action) {
-                    if ($scope.proposal.isNew) {
-                        delete $scope.proposal.isNew;
-                    }
-                    endEditing();
-                    setMode(PROP.MODE.COLLAPSED);
-                }
-                else if (action === PROP.BTN.DELETE.action) {
-                    $scope.onDelete({ proposal: $scope.proposal });
-                }
-                else if (action === PROP.BTN.SEND.action) {
-                    $scope.proposal.isPublished = PROPS.PUBLISHED.YES;
-                    $scope.onPost({ proposal: $scope.proposal });
-                }
-                else if (action === PROP.BTN.EDIT.action) {
-                    startEditing();
-                    setMode(PROP.MODE.OPEN);
-                }
-                else if (action === PROP.BTN.COPY.action) {
-                    $scope.onCopy({ proposal: $scope.proposal });
+
+                switch (action) {
+                    case PROP.BTN.CLOSE.action:
+                        setMode(PROP.MODE.COLLAPSED);
+                        break;
+
+                    case PROP.BTN.OPEN.action:
+                        setMode(PROP.MODE.OPEN);
+                        break;
+
+                    case PROP.BTN.CANCEL.action:
+                        if ($scope.proposal.isNew) {
+                            delete $scope.proposal.isNew;
+                        }
+                        setMode(PROP.MODE.COLLAPSED);
+                        break;
+
+                    case PROP.BTN.OK.action:
+                        if ($scope.proposal.isNew) {
+                            delete $scope.proposal.isNew;
+                        }
+                        endEditing();
+                        setMode(PROP.MODE.COLLAPSED);
+                        break;
+
+                    case PROP.BTN.DELETE.action:
+                        $scope.onDelete({ proposal: $scope.proposal });
+                        break;
+
+                    case PROP.BTN.SEND.action:
+                        $scope.proposal.isPublished = PROPS.PUBLISHED.YES;
+                        $scope.onPost({ proposal: $scope.proposal });
+                        break;
+
+                    case PROP.BTN.EDIT.action:
+                        startEditing();
+                        setMode(PROP.MODE.OPEN);
+                        break;
+
+                    case PROP.BTN.COPY.action:
+                        $scope.onCopy({ proposal: $scope.proposal });
+                        break;
+
+                    default:
+                        $log.error("dbProposal: unsupported action");
+                        break;
                 }
             };
 
