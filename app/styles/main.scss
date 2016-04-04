@@ -191,7 +191,7 @@ body {
     }
 
     .db-tablist {
-        button {
+        button, a {
             border-left-width: $tablist-tabborder-width;
             border-right-width: $tablist-tabborder-width;
             border-left-color: $btn-prim-color-active-bg;
@@ -200,8 +200,8 @@ body {
             border-right-style: solid;
         }
 
-        button:first-child { border-radius: 0px; }
-        button:last-child {
+        button:first-child, a:first-child { border-radius: 0px; }
+        button:last-child, a:last-child {
             border-bottom-color: $btn-prim-color-active-bg;
             border-bottom-width: $tablist-tabborder-width;
             border-bottom-style: solid;
@@ -401,6 +401,13 @@ body {
 
     .ad-page-container {
         padding: 10px;
+    }
+
+    .ad-mob-page-container {
+        padding-top: 0;
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-bottom: 10px;
     }
 
     .ad-horiz-container {
