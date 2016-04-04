@@ -95,7 +95,7 @@ angular.module('dashboard', [
 
         // onbeforeunload Confirmation displayed without the custom text on Safari and FF.
         $window.onbeforeunload = function() {
-            return $rootScope.txtConfirmCloseApp;
+            return $state.is(CONST.APPSTATE.HOME) || $state.is(CONST.APPSTATE.LOGIN) ? undefined : $rootScope.txtConfirmCloseApp;
         };
 
         $rootScope.isIe = isIeInUa();
