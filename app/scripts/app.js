@@ -68,7 +68,7 @@ angular.module('dashboard', [
 
         $httpProvider.defaults.withCredentials = true;
     })
-    .run(function($rootScope, $log, $window, CONST, $state, $timeout) {
+    .run(function($rootScope, $log, $window, CONST, $state, $timeout, $translate) {
         $rootScope.$on('$stateChangeStart', function(event, next/*, toParams, fromParams*/) {
             $log.debug('app.stateChangeStart: ' + next.name);// +' toParams: ' +JSON.stringify(toParams) +' fromParams: ' +JSON.stringify(fromParams));
         });
@@ -88,9 +88,14 @@ angular.module('dashboard', [
             return res;
         }
 
-        // this is working in IE and Safari.
-        window.onbeforeunload = function() {
-            return "Haluatko sulkea työpöydän?";
+        $rootScope.txtConfirmCloseApp = '';
+        $translate('STR_CONFIRM_CLOSE_APP').then(function(translation) {
+            $rootScope.txtConfirmCloseApp = translation;
+        });
+
+        // onbeforeunload Confirmation displayed without the custom text on Safari and FF.
+        $window.onbeforeunload = function() {
+            return $state.is(CONST.APPSTATE.HOME) || $state.is(CONST.APPSTATE.LOGIN) ? undefined : $rootScope.txtConfirmCloseApp;
         };
 
         $rootScope.isIe = isIeInUa();
