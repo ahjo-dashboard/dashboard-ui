@@ -88,6 +88,11 @@ angular.module('dashboard', [
             return res;
         }
 
+        // this is working in IE and Safari.
+        window.onbeforeunload = function() {
+            return "Haluatko sulkea työpöydän?";
+        };
+
         $rootScope.isIe = isIeInUa();
 
         if (device && window.getComputedStyle(device, null).getPropertyValue("min-width") === '320px') {
