@@ -1,11 +1,12 @@
 <div class="ad-page">
 
-    <div ng-if="!isMobile" class="ad-page-header">
+    <div ng-if="!isMobile" class="ad-page-header db-center">
         <div class="container col-xs-12 ad-upper-bg">
             <div class="row">
                 <!-- UPPER HEADER START -->
-                <div ng-if="menuClosed()" class="col-xs-1">
-                    <i class="glyphicon glyphicon-menu-hamburger left" aria-hidden="true" ng-click="openMenu()"></i>
+                <div ng-show="menuClosed()" class="col-xs-1 btn-group">
+                    <button type="button" class="btn db-btn-hdr glyphicon center glyphicon-menu-hamburger" ng-click="openMenu()">
+                    </button>
                 </div>
                 <div class="col-md-1 btn-group ad-upper-bg ng-class:[{'col-sm-1':menuClosed(), 'col-sm-2':!menuClosed()}]">
                     <button type="button" class="btn db-btn-prim btn-block" ng-click="ctrl.upperClicked()">
@@ -27,7 +28,14 @@
                     <button type="button" class="btn db-btn-prim btn-block ng-class:[{'active': (ctrl.isActive(ctrl.lbms.PROPOSALS) && !ctrl.isUpperMode())}]"
                     ng-click="ctrl.proposalsClicked()">
                         <span translate translate-cloak>STR_PROPOSALS</span>
-                        <span ng-if="true" class="badge ng-cloak hidden-sm">{{ctrl.propCount}}</span>
+                        <span ng-if="true" class="badge ng-cloak hidden-sm">  <!-- TODO: display dynamically -->
+                            <span class="db-center">
+                                {{ctrl.propCount}}
+                                <span ng-show="false">  <!-- TODO: display dynamically -->
+                                    &nbsp;<span class="glyphicon glyphicon-exclamation-sign db-newprops" aria-hidden="true"></span>
+                                </span>
+                            </span>
+                        </span>
                     </button>
                 </div>
                 <div class="col-xs-2 btn-group ad-lower-bg right" uib-dropdown is-open="" on-toggle="ctrl.mToggled(open)">
@@ -118,7 +126,15 @@
                 <span translate translate-cloak>STR_DECISION_HISTORY</span> <span class="badge">{{ctrl.dData.objects.length}}</span>
             </button>
             <button type="button" class="btn btn-info btn-lg btn-block wrap-button-text db-btn-prim" ng-click="ctrl.proposalsClicked()">
-                <span translate translate-cloak>STR_PROPOSALS</span> <span class="badge">{{ctrl.propCount}}</span>
+                <span translate translate-cloak>STR_PROPOSALS</span>
+                <span class="badge">  <!-- TODO: display dynamically -->
+                    <span class="db-center">
+                        {{ctrl.propCount}}
+                        <span ng-show="true">  <!-- TODO: display dynamically -->
+                            &nbsp;<span class="glyphicon glyphicon-exclamation-sign db-newprops" aria-hidden="true"></span>
+                        </span>
+                    </span>
+                </span>
             </button>
         </div>
     </div>

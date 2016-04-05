@@ -89,10 +89,10 @@ angular.module('dashboard')
         },
         'TOPICSTATUS': {
             NONE: { value: 0, iconPath: "", icon_conf: "", icon_props: "", icon_conf_prop: "" },
-            PENDING: { value: 1, iconPath: "images/mtgag_state_1.png", icon_conf: "images/mtgag_state_1_conf.png", icon_props: "images/mtgag_state_1_props.png", icon_conf_props: "images/mtgag_state_1_conf_props.png" },
-            ACTIVE: { value: 2, iconPath: "images/mtgag_state_2.png", icon_conf: "images/mtgag_state_2_conf.png", icon_props: "images/mtgag_state_2_props.png", icon_conf_props: "images/mtgag_state_2_conf_props.png" },
-            ABORTED: { value: 3, iconPath: "images/mtgag_state_3.png", icon_conf: "images/mtgag_state_3_conf.png", icon_props: "images/mtgag_state_3_props.png", icon_conf_props: "images/mtgag_state_3_conf_props.png" },
-            READY: { value: 4, iconPath: "images/mtgag_state_4.png", icon_conf: "images/mtgag_state_4_conf.png", icon_props: "images/mtgag_state_4_props.png", icon_conf_props: "images/mtgag_state_4_conf_props.png" }
+            PENDING: { value: 1, iconPath: "images/mtg-states/mtg-ag-state-1.png"},
+            ACTIVE: { value: 2, iconPath: "images/mtg-states/mtg-ag-state-2.png"},
+            ABORTED: { value: 3, iconPath: "images/mtg-states/mtg-ag-state-3.png"},
+            READY: { value: 4, iconPath: "images/mtg-states/mtg-ag-state-4.png"}
         },
         'ESIGNSTATUS': { //SignApi_DocStatuses
             UNSIGNED: { value: 1, stringId: 'STR_UNSIGNED', badgeClass: 'label-warning' },

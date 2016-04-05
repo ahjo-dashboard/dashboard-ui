@@ -2,9 +2,12 @@
 
     <div class="prop-row">
         <div class="prop-row-child col-xs-6 col-sm-8 col-md-9">
-            <p class="prop-text-oneliner"><b>{{c.typeText(proposal.proposalType)}}</b>&nbsp;&nbsp;<span ng-if="c.isCollapsed()" ng-bind-html="proposal.text"></span>
+            <p class="prop-text-oneliner">
+                <!-- TODO: display below newprops icon dynamically -->
+                <span ng-show="false" class="glyphicon glyphicon-exclamation-sign db-newprops" aria-hidden="true"></span>
+                <b>{{c.typeText(proposal.proposalType)}}</b>&nbsp;&nbsp;<span ng-if="c.isCollapsed()" ng-bind-html="proposal.text"></span>
             </p>
-            <div>{{proposal.personName}}</div>
+            <p>{{proposal.personName}}</p>
         </div>
 
         <div class="prop-row-child text-right col-xs-6 col-sm-4 col-md-3">

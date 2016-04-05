@@ -33,6 +33,7 @@ $btn-radius: 6px;
 $header-leftmargin: 10px;
 $font-color-body: #555;
 $font-color-header: white;
+$proposals-color: orange;
 
 .browsehappy {
     margin: 0.2em 0;
@@ -59,12 +60,32 @@ body {
 
     $appbgcolor: white;
     $focusedColor: #3e7ebe;
-    $headingBgColor: $focusedColor;
+    $headingBgColor: $upper-color;
     $headingL2BgColor: $appbgcolor;
     $borderColor: $focusedColor;
     background-color: $appbgcolor;
 
     padding: 0;
+
+    .db-iconwrapper {
+        position: relative;
+        width: 24px; //TODO: explicit w/h from icon dimensions. Check for better approaches.
+        height: 22px;
+
+        img {
+            position: absolute;
+
+        }
+    }
+
+    // db-newprops meant to be used to either span-icon or to its parent.
+    .db-newprops {
+        padding-left: 0 !important; // Remove loose space in meeting.status.html icon
+        color: $proposals-color !important;
+        span {
+            color: $proposals-color !important;
+        }
+    }
 
     .ad-app-bg { background-color: $appbgcolor !important; }
     .ad-upper-bg { background-color: $upper-color !important; }
@@ -302,6 +323,7 @@ body {
         top: 0;
         left: 0;
         right: 0;
+        padding-left: $header-leftmargin;
 
         border: 0;
         background-color: $headingBgColor;
@@ -316,9 +338,6 @@ body {
             margin-left: $header-leftmargin;
         }
 
-        *:first-child:not(div) {
-            margin-left: $header-leftmargin;
-        }
 
         h1, h2, h3, h4, h5 {
             color: $font-color-header;
@@ -326,8 +345,6 @@ body {
 
         .glyphicon {
             color: $font-color-header;
-            line-height: $header-height;
-            font-size: 1.5em;
             text-align: center;
         }
 

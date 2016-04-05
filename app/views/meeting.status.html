@@ -52,7 +52,11 @@
                 <div class="btn-group ad-topic-status" uib-dropdown is-open="">
                     <button id="topicButton" type="button" class="btn btn-default btn-lg ad-button ng-class:[{'disabled': !msc.chairman},{'ad-dummy-button': !msc.chairman}]"
                     uib-dropdown-toggle>
-                        <img ng-src="{{msc.statusIcon(topic)}}">
+                        <div class="db-iconwrapper">
+                            <img ng-src="{{msc.statusIcon(topic)}}">
+                            <img ng-show="topic.includePublishedRemark" ng-src="images/mtg-states/prop-indicator.png">
+                            <img ng-show="{{msc.isTopicPublic(topic)}}" ng-src="images/mtg-states/conf-indicator.png">
+                        </div>
                         <span ng-if="msc.chairman" class="caret"></span>
                     </button>
                     <ul uib-dropdown-menu role="menu" aria-labelledby="topicButton">
@@ -61,6 +65,12 @@
                         <li role="menuitem" ng-click=""><a>3</a></li>
                         <li role="menuitem" ng-click=""><a>4</a></li>
                     </ul>
+                </div>
+
+                <div ng-show="false" class="btn-group ad-topic-status"> <!-- TODO: display dynamically -->
+                    <button id="topicButton" type="button" class="btn btn-default btn-lg disabled ad-dummy-button db-newprops">
+                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                    </button>
                 </div>
 
                 <button type="button" class="btn btn-default ad-button ad-topic-button db-btn-agenda ng-class:[{'active': (msc.isSelected(topic) && !mobile)}]"

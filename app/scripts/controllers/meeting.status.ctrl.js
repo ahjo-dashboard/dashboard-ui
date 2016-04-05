@@ -123,23 +123,19 @@ angular.module('dashboard')
             return false;
         };
 
+        self.isTopicPublic = function(topic) {
+            return topic.publicity === CONST.PUBLICITY.PUBLIC;
+        };
+
+        self.hasTopicNewProps = function(/*topic*/) {
+            return true; //TODO: implement
+        };
+
         self.statusIcon = function(topic) {
-            for (var item in CONST.TOPICSTATUS) {
-                if (CONST.TOPICSTATUS.hasOwnProperty(item)) {
-                    if (topic && topic.topicStatus && topic.topicStatus === CONST.TOPICSTATUS[item].value) {
-                        var res = null;
-                        var props = topic.includePublishedRemark;
-                        var conf = topic.publicity !== CONST.PUBLICITY.PUBLIC;
-                        if (!conf && !props) {
-                            res = CONST.TOPICSTATUS[item].iconPath;
-                        } else if (!conf && props) {
-                            res = CONST.TOPICSTATUS[item].icon_props;
-                        } else if (conf && !props) {
-                            res = CONST.TOPICSTATUS[item].icon_conf;
-                        } else if (conf && props) {
-                            res = CONST.TOPICSTATUS[item].icon_conf_props;
-                        }
-                        return res;
+            if (topic && topic.topicStatus) {
+                for (var item in CONST.TOPICSTATUS) {
+                    if (CONST.TOPICSTATUS.hasOwnProperty(item) && topic.topicStatus === CONST.TOPICSTATUS[item].value) {
+                        return CONST.TOPICSTATUS[item].iconPath;
                     }
                 }
             }
