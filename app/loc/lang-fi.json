@@ -81,5 +81,8 @@
     "STR_COPY": "Kopioi julkaisemattomaksi",
     "STR_CNFM_DEL_PROP": "Haluatko poistaa ehdotuksen?",
     "STR_CNFM_SEND_PROP": "Haluatko julkaista ehdotuksen?",
-    "STR_CNFM_COPY_PROP": "Haluatko kopioida ehdotuksen julkaisemattomaksi?"
+    "STR_CNFM_COPY_PROP": "Haluatko kopioida ehdotuksen julkaisemattomaksi?",
+    "STR_YES": "Kyllä",
+    "STR_NO": "Ei",
+    "STR_CNFM_TEXT": "Haluatko suorittaa toiminnon?"
 }
