@@ -88,7 +88,6 @@ angular.module('dashboard')
                         return { hide: scope.hide };
                     },
                     function(data) {
-                        console.log(data);
                         if (data.hide) {
                             hide();
                         }
