@@ -31,7 +31,6 @@ angular.module('dashboard')
         self.fileName = {};
         self.remoteUrl = null;
         self.docUrl = {};
-        self.hideEmbObj = false; // Workaround for IE which displays embedded object always topmost.
         self.ongoing = false;
         self.alerts = [];
         self.isMobile = $rootScope.isMobile;
@@ -42,8 +41,12 @@ angular.module('dashboard')
             rej: { id: 'rej', disabled: false, active: false },
             sta: { id: 'sta', disabled: false, active: false },
             com: { id: 'com', disabled: false, active: false },
-            att: { id: 'att', disabled: true, active: false, count: self.item.AttachmentInfos ? self.item.AttachmentInfos.length : 0 } //TODO: disabled until attachments implemented
+            att: { id: 'att', disabled: true, active: false,
+                count: self.item.AttachmentInfos ? self.item.AttachmentInfos.length : 0,
+                toggle: function(arg) { self.btnModel.att.isOpen = arg; },
+                isOpen: false }
         };
+
         self.displayStatus = true;
         self.requestorName = self.item.RequestorName ? self.item.RequestorName : null;
         self.requestorId = self.item.RequestorId ? self.item.RequestorId : null;
@@ -158,7 +161,7 @@ angular.module('dashboard')
                 self.alerts.push({ type: 'info', locId: 'STR_SIGNING_COMMENT_INFO', linkMailto: person.email });
             } else {
                 $log.error("signItemCtrl.displayRequestor: bad args");
-                self.alerts.push({ type: 'warning', locId: 'STR_SIGNING_NO_EMAIL'});
+                self.alerts.push({ type: 'warning', locId: 'STR_SIGNING_NO_EMAIL' });
             }
         }
 
@@ -304,6 +307,17 @@ angular.module('dashboard')
             }
             return res;
         };
+
+        // Checks if an element should be hidden dynamically or not.
+        self.isHidden = function() {
+            // For now needed only for hiding emb pdf when att dropdown is open,
+            // Extend with id argument in future if necessary.
+
+            // Workaround on IE to hide <object> pdf because IE displays it topmost covering modals and dropdowns.
+            return $rootScope.isIe && self.btnModel.att.isOpen;
+        };
+
+
         self.isActive = function(id) {
             //$log.debug("signingItemCtrl.isActive: " + id + "=" +self.btnModel[id].active);
             return !self.isMobile && self.btnModel[id].active;

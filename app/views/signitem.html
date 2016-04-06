@@ -79,7 +79,7 @@
                             </div>
                         </button>
                     </div>
-                    <div class="col-xs-12 col-sm-2 btn-group" uib-dropdown is-open="hideEmbObj">
+                    <div class="col-xs-12 col-sm-2 btn-group" uib-dropdown on-toggle="sc.btnModel.att.toggle(open)">
                         <button id="sc.btnModel.att.id" type="button" class="btn btn-block db-btn-prim ng-class:
                         {active: sc.isActive(sc.btnModel.att.id)}" uib-dropdown-toggle ng-disabled="sc.isDisabled(sc.btnModel.att.id)">
                             <span translate translate-cloak>STR_ATTACHMENTS</span>
@@ -145,7 +145,7 @@
                     </div>
 
                 </div>
-                <ad-embedded-file ng-if="sc.displayUrl" ng-hide="sc.btnModel.doc.hide" class="ad-flex-item-upper ad-flex-show-full" refresh=""
+                <ad-embedded-file ng-if="sc.displayUrl" ng-hide="sc.isHidden()" class="ad-flex-item-upper ad-flex-show-full" refresh=""
                 ng-attr-fileurl="sc.displayUrl" ng-attr-filename="sc.fileName">
                 </ad-embedded-file>
 
