@@ -4,7 +4,7 @@
         <div class="prop-row-child col-xs-6 col-sm-8 col-md-9">
             <p class="prop-text-oneliner">
                 <!-- TODO: display below newprops icon dynamically -->
-                <span ng-show="false" class="glyphicon glyphicon-exclamation-sign db-newprops" aria-hidden="true"></span>
+                <span ng-show="c.isModified" class="glyphicon glyphicon-exclamation-sign db-newprops" aria-hidden="true" tooltip-enable="c.isTooltips" uib-dropdown-toggle uib-tooltip="{{'STR_INFO_NEW_PROPS' | translate}}" tooltip-placement="right"></span>
                 <b>{{c.typeText(proposal.proposalType)}}</b>&nbsp;&nbsp;<span ng-if="c.isCollapsed()" ng-bind-html="proposal.text"></span>
             </p>
             <p>{{proposal.personName}}</p>

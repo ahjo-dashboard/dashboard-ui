@@ -43,6 +43,7 @@ angular.module('dashboard')
         var controller = ['$log', '$scope', 'PROPS', 'PROP', '$rootScope', function($log, $scope, PROPS, PROP, $rootScope) {
             $log.debug("dbProposal: CONTROLLER");
             var self = this;
+            self.isTooltips = $rootScope.isTooltips;
 
             self.mode = PROP.MODE.COLLAPSED;
             self.status = PROP.STATUS.PUBLIC;
