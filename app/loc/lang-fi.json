@@ -82,8 +82,6 @@
     "STR_CNFM_DEL_PROP": "Haluatko poistaa ehdotuksen?",
     "STR_CNFM_SEND_PROP": "Haluatko julkaista ehdotuksen?",
     "STR_CNFM_COPY_PROP": "Luo ehdotuksesta uusi julkaisematon kopio?",
-    "STR_YES": "Kyllä",
-    "STR_NO": "Ei",
     "STR_CNFM_TEXT": "Vahvista toiminto",
     "STR_INFO_NEW_PROPS": "Uusia lukemattomia ehdotuksia"
 }
