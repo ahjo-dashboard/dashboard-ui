@@ -12,7 +12,7 @@
  * Controller of the dashboard
  */
 angular.module('dashboard')
-    .controller('signitemCtrl', function($log, $scope, $state, $stateParams, SigningAttApi, $sce, $timeout, $uibModal, ENV, SigningOpenApi, SigningPersonInfoApi, CONST, $rootScope, SigningDocSignaturesApi) {
+    .controller('signitemCtrl', function($log, $scope, $state, $stateParams, SigningAttApi, $sce, $timeout, $uibModal, ENV, SigningOpenApi, SigningPersonInfoApi, CONST, $rootScope, SigningDocSignaturesApi, ListData) {
         $log.debug("signitemCtrl.config");
 
         var self = this;
@@ -34,17 +34,25 @@ angular.module('dashboard')
         self.ongoing = false;
         self.alerts = [];
         self.isMobile = $rootScope.isMobile;
-        // self.attModel = ListData.signingAttachmentList('STR_ATTACHMENTS', self.item.AttachmentInfos);
+
+        self.attModel = [];
+        var atts = [];
+        for (var i = 0; angular.isArray(self.item.AttachmentInfos) && i < self.item.AttachmentInfos.length; i++) {
+            atts.push(JSON.parse(self.item.AttachmentInfos[i])); // API returns a string array of attachment infos
+        }
+        self.attModel = ListData.createEsignAttachmentList('STR_ATTACHMENTS', atts);
+
         self.btnModel = {
             doc: { id: 'doc', disabled: false, active: false, hide: false },
             acc: { id: 'acc', disabled: false, active: false },
             rej: { id: 'rej', disabled: false, active: false },
             sta: { id: 'sta', disabled: false, active: false },
             com: { id: 'com', disabled: false, active: false },
-            att: { id: 'att', disabled: true, active: false,
-                count: self.item.AttachmentInfos ? self.item.AttachmentInfos.length : 0,
+            att: {
+                id: 'att', disabled: false, active: false, isOpen: false,
+                count: self.attModel ? self.attModel.objects.length : 0,
                 toggle: function(arg) { self.btnModel.att.isOpen = arg; },
-                isOpen: false }
+            }
         };
 
         self.displayStatus = true;
@@ -233,8 +241,8 @@ angular.module('dashboard')
             self.listMdl = null;
         };
 
-        self.actionAttListCb = function() {
-            $log.debug("signitemCtrl.actionAttListCb");
+        self.attachmentClicked = function() {
+            $log.debug("signitemCtrl.attachmentClicked");
         };
 
         self.actionSign = function() {
