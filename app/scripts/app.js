@@ -79,8 +79,16 @@ angular.module('dashboard', [
         // $rootScope.isMobile
 
         var device = document.getElementById("device");
-        // Resolves using User Agent if browser is Microsoft Internet Explorer
+        if (device && window.getComputedStyle(device, null).getPropertyValue("min-width") === '320px') {
+            $rootScope.isMobile = true;
+        }
+        else {
+            $rootScope.isMobile = false;
+        }
+        $log.debug("app.run.isMobile: " + $rootScope.isMobile);
+        $rootScope.isTooltips = !$rootScope.isMobile;
 
+        // Resolves using User Agent if browser is Microsoft Internet Explorer
         function isIeInUa() {
             var ua = $window.navigator.userAgent;
             var res = ua.indexOf('Trident') > 0 || ua.indexOf('MSIE') > 0;
@@ -99,14 +107,6 @@ angular.module('dashboard', [
         };
 
         $rootScope.isIe = isIeInUa();
-
-        if (device && window.getComputedStyle(device, null).getPropertyValue("min-width") === '320px') {
-            $rootScope.isMobile = true;
-        }
-        else {
-            $rootScope.isMobile = false;
-        }
-        $log.debug("app.isMobile: " + $rootScope.isMobile);
 
         $rootScope.goHome = function() {
             $state.go(CONST.APPSTATE.HOME);
