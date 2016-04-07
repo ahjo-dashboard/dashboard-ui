@@ -58,7 +58,7 @@
                         <li class="divider"></li>
                         <li class="ng-class:[{'disabled': ctrl.isSecret(decision)}]" role="menuitem" ng-repeat="decision in ctrl.dData.objects track by $index"
                         ng-click="ctrl.decisionClicked(decision)">
-                            <a>{{decision.title}}</a>
+                            <a class="ad-dropdown-content">{{decision.title}}</a>
                         </li>
                     </ul>
                 </div>
@@ -72,7 +72,7 @@
                     <ul uib-dropdown-menu role="menu" aria-labelledby="attachmentButton">
                         <li class="ng-class:[{'disabled': ctrl.isSecret(attachment)}]" role="menuitem" ng-repeat="attachment in ctrl.aData.objects track by $index"
                         ng-click="ctrl.attachmentClicked(attachment)">
-                            <a>{{attachment.title}}</a>
+                            <a class="ad-dropdown-content">{{attachment.title}}</a>
                         </li>
                     </ul>
                 </div>
