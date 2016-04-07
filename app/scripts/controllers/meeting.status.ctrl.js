@@ -12,7 +12,7 @@
 * Controller of the dashboard
 */
 angular.module('dashboard')
-    .controller('meetingStatusCtrl', ['$log', '$scope', '$rootScope', '$stateParams', '$state', 'CONST', 'StorageSrv', 'ENV', 'AhjoMeetingSrv', '$interval', function($log, $scope, $rootScope, $stateParams, $state, CONST, StorageSrv, ENV, AhjoMeetingSrv, $interval) {
+    .controller('meetingStatusCtrl', ['$log', '$scope', '$rootScope', '$stateParams', '$state', 'CONST', 'StorageSrv', 'ENV', 'AhjoMeetingSrv', '$timeout', function($log, $scope, $rootScope, $stateParams, $state, CONST, StorageSrv, ENV, AhjoMeetingSrv, $timeout) {
         $log.debug("meetingStatusCtrl: CONTROLLER");
         var self = this;
         $rootScope.menu = $stateParams.menu;
@@ -65,6 +65,10 @@ angular.module('dashboard')
                     $log.debug("meetingStatusCtrl: getEvents notify: " + JSON.stringify(notify));
                 }).finally(function() {
                     $log.debug("meetingStatusCtrl: getEvents finally: ");
+                    $timeout.cancel(pollingTimer);
+                    pollingTimer = $timeout(function() {
+                        getEvents();
+                    }, 10000);
                 });
             }
             else {
@@ -87,7 +91,10 @@ angular.module('dashboard')
                             }
                         }
                         lastEventId = self.meeting.lastEventId; // 19734;
-                        pollingTimer = $interval(getEvents, 10000);
+                        $timeout.cancel(pollingTimer);
+                        pollingTimer = $timeout(function() {
+                            getEvents();
+                        }, 10000);
                     }
                 }
             }, function(error) {
@@ -160,7 +167,7 @@ angular.module('dashboard')
 
         $scope.$on('$destroy', function() {
             $log.debug("meetingStatusCtrl: DESTROY");
-            $interval.cancel(pollingTimer);
+            $timeout.cancel(pollingTimer);
         });
 
     }]);
