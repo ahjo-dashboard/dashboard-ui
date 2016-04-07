@@ -23,12 +23,12 @@ angular.module('dashboard')
                     controller: function($scope, $uibModalInstance, config) {
                         $scope.title = 'STR_CONFIRM';
                         $scope.text = 'STR_CNFM_TEXT';
-                        $scope.yes = 'STR_YES';
-                        $scope.no = 'STR_NO';
+                        $scope.yes = 'STR_CONFIRM';
+                        $scope.no = 'STR_CANCEL';
 
                         if (config instanceof Object) {
                             $scope.title = config.title === undefined ? $scope.title : config.title;
-                            $scope.title = config.text === undefined ? $scope.text : config.text;
+                            $scope.text = config.text === undefined ? $scope.text : config.text;
                             $scope.yes = config.yes === undefined ? $scope.yes : config.yes;
                             $scope.no = config.no === undefined ? $scope.no : config.no;
                         }
