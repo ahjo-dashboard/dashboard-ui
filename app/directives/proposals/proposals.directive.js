@@ -193,7 +193,12 @@ angular.module('dashboard')
                     if ((self.proposals instanceof Array) === false) {
                         self.proposals = [];
                     }
-                    self.proposals.splice(0, 0, createDraft(item.value));
+                    if (item.isModified) {
+                        self.proposals.splice(0, 0, item);
+                    }
+                    else {
+                        self.proposals.splice(0, 0, createDraft(item.value));
+                    }
                 }
                 else {
                     $log.error('dbProposals: addProposal parameter invalid');
@@ -217,8 +222,11 @@ angular.module('dashboard')
                 if (data instanceof Object) {
                     switch (data.TypeName) {
                         case CONST.MTGEVENT.REMARKPUBLISHED:
+                            if (data.Proposal instanceof Object && data.Proposal.topicGuid === $scope.guid) {
+                                self.addProposal(data.Proposal);
+                            }
+                            break;
                         case CONST.MTGEVENT.REMARKDELETED:
-                            getProposals($scope.guid);
                             break;
                         default:
                             $log.error("meetingStatusCtrl: unsupported TypeName: " + event.TypeName);
