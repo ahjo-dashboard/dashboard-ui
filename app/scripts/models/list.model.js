@@ -73,4 +73,3 @@ angular.module('dashboard')
         return ListData;
 
     }]);
-    
