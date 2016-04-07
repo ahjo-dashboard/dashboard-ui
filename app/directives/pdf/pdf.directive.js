@@ -65,7 +65,8 @@ angular.module('dashboard')
                     function() {
                         hide();
                         element.empty();
-                        element.append($compile('<iframe src=' + scope.uri + '></iframe>')(scope));
+                        var uri = '<iframe src=' + scope.uri + '?secondary=false&amp;mixed=false#view=FitH&amp;toolbar=0&amp;statusbar=0&amp;messages=0&amp;navpanes=0"></iframe>';
+                        element.append($compile(uri)(scope));
                         show();
                     },
                     true
@@ -87,7 +88,6 @@ angular.module('dashboard')
                         return { hide: scope.hide };
                     },
                     function(data) {
-                        console.log(data);
                         if (data.hide) {
                             hide();
                         }
