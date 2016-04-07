@@ -87,7 +87,7 @@
                             <span class="caret"></span>
                         </button>
                         <ul uib-dropdown-menu role="menu" aria-labelledby="btnAtt">
-                            <li role="menuitem" ng-repeat="a in sc.attModel.objects" ng-click="sc.attachmentClicked(a)">
+                            <li role="menuitem" ng-repeat="a in sc.attModel.objects" ng-click="sc.actionAttachment(a)">
                                 <a class="ad-dropdown-content">{{a.title}}</a>
                             </li>
                         </ul>

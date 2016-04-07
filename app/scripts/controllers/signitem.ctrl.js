@@ -38,7 +38,8 @@ angular.module('dashboard')
         self.attModel = [];
         var atts = [];
         for (var i = 0; angular.isArray(self.item.AttachmentInfos) && i < self.item.AttachmentInfos.length; i++) {
-            atts.push(JSON.parse(self.item.AttachmentInfos[i])); // API returns a string array of attachment infos
+            atts.push(JSON.parse(self.item.AttachmentInfos[i])); // API returns items as JSON strings so parse into object
+            // Example attachment info item: {"Id":"123456789", "ParentTitle":"abc", "Title":"xyz.pdf"}
         }
         self.attModel = ListData.createEsignAttachmentList('STR_ATTACHMENTS', atts);
 
@@ -64,7 +65,7 @@ angular.module('dashboard')
         // PRIVATE FUNCTIONS
 
         function setBtnActive(id) {
-            if (typeof id !== 'string' && id.length <= 0) {
+            if (!angular.isString(id) && id.length <= 0) {
                 $log.error("signingItemCtrl.setBtnActive: bad args");
                 return;
             }
@@ -74,7 +75,6 @@ angular.module('dashboard')
                 // $log.debug("btn: " + self.btnModel[i].id + " active: " + self.btnModel[i].active);
             }
         }
-
 
         function initBtns(btnModel, status) {
             if (status !== CONST.ESIGNSTATUS.UNSIGNED.value) {
@@ -129,9 +129,13 @@ angular.module('dashboard')
                 });
         }
 
-        function fetchUrl(item) {
+        function resolveDocUrl(item) {
             self.docUrl = ENV.SignApiUrl_GetAttachment.replace(":reqId", item.ProcessGuid);
-            $log.debug("signitemCtrl.fetchUrl: " + self.docUrl);
+            $log.debug("signitemCtrl.resolveDocUrl: " + self.docUrl);
+        }
+
+        function resolveAttUrl(item, att) {
+            return angular.isObject(item) && angular.isObject(att) ? ENV.SIGNAPIURL_ATT.replace(":reqGuid", item.ProcessGuid).replace(":attGuid", att.link) : undefined;
         }
 
         function saveStatus(item, status) {
@@ -241,8 +245,10 @@ angular.module('dashboard')
             self.listMdl = null;
         };
 
-        self.attachmentClicked = function() {
-            $log.debug("signitemCtrl.attachmentClicked");
+        self.actionAttachment = function(att) {
+            setBtnActive(self.btnModel.att.id);
+            self.displayUrl = resolveAttUrl(self.item, att);
+            $log.debug("signitemCtrl.actionAttachment: " + self.displayUrl);
         };
 
         self.actionSign = function() {
@@ -353,7 +359,7 @@ angular.module('dashboard')
         // Both blob and remote url implementations kept, but only one used.
         // Remove later when sure other one won't be needed.
         if (!ENV.app_useBlob) {
-            fetchUrl(self.item);
+            resolveDocUrl(self.item);
             setDisplayUrl(self.docUrl);
         } else {
             fetchBlob(self.item);
