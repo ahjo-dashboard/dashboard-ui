@@ -48,6 +48,7 @@ angular.module('dashboard')
             self.mode = PROP.MODE.COLLAPSED;
             self.status = PROP.STATUS.PUBLIC;
             self.editedText = "";
+            self.isModified = false;
 
             self.lBtn = null;
             self.mBtn = null;
@@ -133,6 +134,7 @@ angular.module('dashboard')
                     else {
                         setStatus(PROP.STATUS.PUBLIC);
                     }
+                    self.isModified = proposal.isModified;
                     self.editedText = proposal.text;
                 }
             }
