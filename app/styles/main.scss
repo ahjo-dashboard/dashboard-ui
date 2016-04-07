@@ -643,6 +643,7 @@ body {
 
     .ad-dropdown-content {
         white-space: normal !important;
+        min-width: 25vw !important; // Value selected subjectively to not to squeeze long items to too many rows
     }
 
     .ad-btn-group-vertical {
