@@ -12,7 +12,7 @@
  * Controller of the dashboard
  */
 angular.module('dashboard')
-    .controller('signitemCtrl', function($log, $scope, $state, $stateParams, SigningAttApi, $sce, $timeout, $uibModal, ENV, SigningOpenApi, SigningPersonInfoApi, CONST, $rootScope, SigningDocSignaturesApi) {
+    .controller('signitemCtrl', function($log, $scope, $state, $stateParams, SigningAttApi, $sce, $timeout, $uibModal, ENV, SigningOpenApi, SigningPersonInfoApi, CONST, $rootScope, SigningDocSignaturesApi, ListData) {
         $log.debug("signitemCtrl.config");
 
         var self = this;
@@ -31,19 +31,31 @@ angular.module('dashboard')
         self.fileName = {};
         self.remoteUrl = null;
         self.docUrl = {};
-        self.hideEmbObj = false; // Workaround for IE which displays embedded object always topmost.
         self.ongoing = false;
         self.alerts = [];
         self.isMobile = $rootScope.isMobile;
-        // self.attModel = ListData.signingAttachmentList('STR_ATTACHMENTS', self.item.AttachmentInfos);
+
+        self.attModel = [];
+        var atts = [];
+        for (var i = 0; angular.isArray(self.item.AttachmentInfos) && i < self.item.AttachmentInfos.length; i++) {
+            atts.push(JSON.parse(self.item.AttachmentInfos[i])); // API returns items as JSON strings so parse into object
+            // Example attachment info item: {"Id":"123456789", "ParentTitle":"abc", "Title":"xyz.pdf"}
+        }
+        self.attModel = ListData.createEsignAttachmentList('STR_ATTACHMENTS', atts);
+
         self.btnModel = {
             doc: { id: 'doc', disabled: false, active: false, hide: false },
             acc: { id: 'acc', disabled: false, active: false },
             rej: { id: 'rej', disabled: false, active: false },
             sta: { id: 'sta', disabled: false, active: false },
             com: { id: 'com', disabled: false, active: false },
-            att: { id: 'att', disabled: true, active: false, count: self.item.AttachmentInfos ? self.item.AttachmentInfos.length : 0 } //TODO: disabled until attachments implemented
+            att: {
+                id: 'att', disabled: false, active: false, isOpen: false,
+                count: self.attModel ? self.attModel.objects.length : 0,
+                toggle: function(arg) { self.btnModel.att.isOpen = arg; },
+            }
         };
+
         self.displayStatus = true;
         self.requestorName = self.item.RequestorName ? self.item.RequestorName : null;
         self.requestorId = self.item.RequestorId ? self.item.RequestorId : null;
@@ -53,7 +65,7 @@ angular.module('dashboard')
         // PRIVATE FUNCTIONS
 
         function setBtnActive(id) {
-            if (typeof id !== 'string' && id.length <= 0) {
+            if (!angular.isString(id) && id.length <= 0) {
                 $log.error("signingItemCtrl.setBtnActive: bad args");
                 return;
             }
@@ -63,7 +75,6 @@ angular.module('dashboard')
                 // $log.debug("btn: " + self.btnModel[i].id + " active: " + self.btnModel[i].active);
             }
         }
-
 
         function initBtns(btnModel, status) {
             if (status !== CONST.ESIGNSTATUS.UNSIGNED.value) {
@@ -118,9 +129,13 @@ angular.module('dashboard')
                 });
         }
 
-        function fetchUrl(item) {
+        function resolveDocUrl(item) {
             self.docUrl = ENV.SignApiUrl_GetAttachment.replace(":reqId", item.ProcessGuid);
-            $log.debug("signitemCtrl.fetchUrl: " + self.docUrl);
+            $log.debug("signitemCtrl.resolveDocUrl: " + self.docUrl);
+        }
+
+        function resolveAttUrl(item, att) {
+            return angular.isObject(item) && angular.isObject(att) ? ENV.SIGNAPIURL_ATT.replace(":reqGuid", item.ProcessGuid).replace(":attGuid", att.link) : undefined;
         }
 
         function saveStatus(item, status) {
@@ -158,7 +173,7 @@ angular.module('dashboard')
                 self.alerts.push({ type: 'info', locId: 'STR_SIGNING_COMMENT_INFO', linkMailto: person.email });
             } else {
                 $log.error("signItemCtrl.displayRequestor: bad args");
-                self.alerts.push({ type: 'warning', locId: 'STR_SIGNING_NO_EMAIL'});
+                self.alerts.push({ type: 'warning', locId: 'STR_SIGNING_NO_EMAIL' });
             }
         }
 
@@ -230,8 +245,10 @@ angular.module('dashboard')
             self.listMdl = null;
         };
 
-        self.actionAttListCb = function() {
-            $log.debug("signitemCtrl.actionAttListCb");
+        self.actionAttachment = function(att) {
+            setBtnActive(self.btnModel.att.id);
+            self.displayUrl = resolveAttUrl(self.item, att);
+            $log.debug("signitemCtrl.actionAttachment: " + self.displayUrl);
         };
 
         self.actionSign = function() {
@@ -304,6 +321,17 @@ angular.module('dashboard')
             }
             return res;
         };
+
+        // Checks if an element should be hidden dynamically or not.
+        self.isHidden = function() {
+            // For now needed only for hiding emb pdf when att dropdown is open,
+            // Extend with id argument in future if necessary.
+
+            // Workaround on IE to hide <object> pdf because IE displays it topmost covering modals and dropdowns.
+            return $rootScope.isIe && self.btnModel.att.isOpen;
+        };
+
+
         self.isActive = function(id) {
             //$log.debug("signingItemCtrl.isActive: " + id + "=" +self.btnModel[id].active);
             return !self.isMobile && self.btnModel[id].active;
@@ -331,7 +359,7 @@ angular.module('dashboard')
         // Both blob and remote url implementations kept, but only one used.
         // Remove later when sure other one won't be needed.
         if (!ENV.app_useBlob) {
-            fetchUrl(self.item);
+            resolveDocUrl(self.item);
             setDisplayUrl(self.docUrl);
         } else {
             fetchBlob(self.item);

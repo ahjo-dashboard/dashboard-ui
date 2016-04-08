@@ -79,15 +79,16 @@
                             </div>
                         </button>
                     </div>
-                    <div class="col-xs-12 col-sm-2 btn-group" uib-dropdown is-open="hideEmbObj">
+                    <div class="col-xs-12 col-sm-2 btn-group" uib-dropdown on-toggle="sc.btnModel.att.toggle(open)">
                         <button id="sc.btnModel.att.id" type="button" class="btn btn-block db-btn-prim ng-class:
                         {active: sc.isActive(sc.btnModel.att.id)}" uib-dropdown-toggle ng-disabled="sc.isDisabled(sc.btnModel.att.id)">
-                            <span translate translate-cloak>STR_ATTACHMENTS</span>
-                            <span class="badge ng-cloak">{{sc.btnModel.att.count}}</span>
+                            <span translate translate-cloak>{{sc.attModel.title}}</span>
+                            <span class="badge ng-cloak">{{sc.attModel.objects.length}}</span>
                             <span class="caret"></span>
                         </button>
                         <ul uib-dropdown-menu role="menu" aria-labelledby="btnAtt">
-                            <li role="menuitem" ng-click="mc.lowerClicked()">
+                            <li role="menuitem" ng-repeat="a in sc.attModel.objects" ng-click="sc.actionAttachment(a)">
+                                <a class="ad-dropdown-content">{{a.title}}</a>
                             </li>
                         </ul>
                     </div>
@@ -145,7 +146,7 @@
                     </div>
 
                 </div>
-                <ad-embedded-file ng-if="sc.displayUrl" ng-hide="sc.btnModel.doc.hide" class="ad-flex-item-upper ad-flex-show-full" refresh=""
+                <ad-embedded-file ng-if="sc.displayUrl" ng-hide="sc.isHidden()" class="ad-flex-item-upper ad-flex-show-full" refresh=""
                 ng-attr-fileurl="sc.displayUrl" ng-attr-filename="sc.fileName">
                 </ad-embedded-file>
 
