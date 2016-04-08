@@ -61,7 +61,7 @@ angular.module('dashboard')
 
         return {
             scope: {
-                confirmActive: '=',
+                confirmEnabled: '=',
                 confirmConfig: '=',
                 ngClick: '&'
             },
@@ -73,7 +73,7 @@ angular.module('dashboard')
                 element.unbind(CLK).bind(CLK, function($event) {
                     $event.preventDefault();
 
-                    if (scope.confirmActive === undefined || scope.confirmActive) {
+                    if (scope.confirmEnabled === undefined || scope.confirmEnabled) {
                         scope.open();
                     }
                     else {
