@@ -29,7 +29,8 @@ angular.module('dashboard')
             { value: 10, text: "Esityksen poisto" }
         ],
         'TOGGLE': 'PROPS.TOGGLE',
-        'COUNT': 'PROPS.COUNT'
+        'COUNT': 'PROPS.COUNT',
+        'EDITING': 'PROPS.EDITING'
     })
     .directive('dbProposals', [function() {
 
@@ -41,6 +42,7 @@ angular.module('dashboard')
             self.published = PROPS.PUBLISHED;
             self.isMobile = $rootScope.isMobile;
             self.isAllOpen = false;
+            var editCount = 0;
 
             function countProposals() {
                 var drafts = 0;
@@ -58,6 +60,23 @@ angular.module('dashboard')
                 });
 
                 $rootScope.$emit(PROPS.COUNT, { 'drafts': drafts, 'published': published });
+            }
+
+            function checkIsEditing() {
+                var count = 0;
+                angular.forEach(self.proposals, function(item) {
+                    if (angular.isObject(item) && angular.isFunction(item.isEditing) && item.isEditing()) {
+                        count++;
+                    }
+                });
+
+                if (!editCount && count) {
+                    $rootScope.$emit(CONST.PROPOSALISEDITING, true);
+                }
+                else if (editCount && !count) {
+                    $rootScope.$emit(CONST.PROPOSALISEDITING, false);
+                }
+                editCount = count;
             }
 
             function getProposals(guid) {
@@ -92,6 +111,9 @@ angular.module('dashboard')
 
                     if (proposal.isNew) {
                         delete proposal.isNew;
+                    }
+                    if (proposal.isEditing) {
+                        delete proposal.isEditing;
                     }
 
                     AhjoProposalsSrv.post(proposal).$promise.then(function(response) {
@@ -218,7 +240,7 @@ angular.module('dashboard')
                 getProposals(data.guid);
             }, true);
 
-            var watcher = $rootScope.$on(CONST.PROPOSALEVENT, function(event, data) {
+            var eventWatcher = $rootScope.$on(CONST.PROPOSALEVENT, function(event, data) {
                 if (data instanceof Object) {
                     switch (data.TypeName) {
                         case CONST.MTGEVENT.REMARKPUBLISHED:
@@ -238,13 +260,20 @@ angular.module('dashboard')
                 }
             });
 
-            $scope.$on('$destroy', watcher);
+            var editingWatcher = $rootScope.$on(PROPS.EDITING, function(event, sender) {
+                if (angular.isObject(sender)) {
+                    if (self.proposals.indexOf(sender) >= 0) {
+                        checkIsEditing();
+                    }
+                }
+            });
+
+            $scope.$on('$destroy', eventWatcher);
+            $scope.$on('$destroy', editingWatcher);
 
             $scope.$on('$destroy', function() {
                 $log.debug("dbProposals: DESTROY");
             });
-
-            getProposals($scope.guid);
 
         }];
 

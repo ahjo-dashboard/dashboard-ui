@@ -8,7 +8,7 @@
                     </button>
                 </div>
                 <div ng-if="menuFull()" class="col-sm-4">
-                    <button type="button" class="btn db-btn-hdr glyphicon center glyphicon-home" ng-click="msc.goHome()">
+                    <button db-confirm confirm-active="msc.isEditing" confirm-config="msc.unsavedConfig" type="button" class="btn db-btn-hdr glyphicon center glyphicon-home" ng-click="msc.goHome()">
                     </button>
                 </div>
                 <div ng-if="menuFull()" class="col-xs-4">
@@ -67,13 +67,15 @@
                     </ul>
                 </div>
 
-                <div ng-show="true" class="btn-group ad-topic-status"> <!-- TODO: display dynamically -->
-                    <button id="topicButton" type="button" class="btn btn-default btn-lg disabled ad-dummy-button db-newprops" uib-dropdown-toggle tooltip-enable="isTooltips" uib-tooltip="{{'STR_INFO_NEW_PROPS' | translate}}" tooltip-placement="right">
+                <div ng-show="true" class="btn-group ad-topic-status">
+                    <!-- TODO: display dynamically -->
+                    <button id="topicButton" type="button" class="btn btn-default btn-lg disabled ad-dummy-button db-newprops" uib-dropdown-toggle
+                    tooltip-enable="isTooltips" uib-tooltip="{{'STR_INFO_NEW_PROPS' | translate}}" tooltip-placement="right">
                         <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                     </button>
                 </div>
 
-                <button type="button" class="btn btn-default ad-button ad-topic-button db-btn-agenda ng-class:[{'active': (msc.isSelected(topic) && !mobile)}]"
+                <button db-confirm confirm-active="msc.isEditing" confirm-config="msc.unsavedConfig" type="button" class="btn btn-default ad-button ad-topic-button db-btn-agenda ng-class:[{'active': (msc.isSelected(topic) && !mobile)}]"
                 ng-click="msc.topicSelected(topic)">{{topic.topicTitle}}</button>
             </div>
         </div>

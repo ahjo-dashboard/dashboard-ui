@@ -67,6 +67,7 @@ angular.module('dashboard')
                             self.lBtn = PROP.BTN.EDIT;
                             self.mBtn = (($scope.proposal instanceof Object) && $scope.proposal.text) ? PROP.BTN.SEND : PROP.BTN.DISABLEDSEND;
                             self.rBtn = PROP.BTN.DELETE;
+                            $rootScope.$emit(PROPS.EDITING, $scope.proposal);
                         }
                         else {
                             self.rBtn = PROP.BTN.OPEN;
@@ -74,21 +75,14 @@ angular.module('dashboard')
                         break;
 
                     case PROP.MODE.OPEN:
-                        if (self.isPublic()) {
-                            self.rBtn = PROP.BTN.CLOSE;
-                        }
                         if (self.isDraft()) {
                             self.lBtn = PROP.BTN.OK;
                             self.mBtn = PROP.BTN.CANCEL;
                             self.rBtn = null;
+                            $rootScope.$emit(PROPS.EDITING, $scope.proposal);
                         }
-                        break;
-
-                    case PROP.MODE.COLLAPSED:
-                        if (self.isDraft()) {
-                            self.lBtn = PROP.BTN.EDIT;
-                            self.mBtn = PROP.BTN.SEND;
-                            self.rBtn = PROP.BTN.DELETE;
+                        else {
+                            self.rBtn = PROP.BTN.CLOSE;
                         }
                         break;
 
@@ -136,6 +130,8 @@ angular.module('dashboard')
                     }
                     self.isModified = proposal.isModified;
                     self.editedText = proposal.text;
+
+                    proposal.isEditing = self.isEditing;
                 }
             }
 

@@ -37,6 +37,8 @@ angular.module('dashboard')
             title: 'STR_TOPIC',
             class: 'btn btn-info btn-lg btn-block wrap-button-text db-btn-prim'
         };
+        self.unsavedConfig = { title: 'STR_WARNING_UNSAVED', text: null, yes: 'STR_CONTINUE' };
+        self.isEditing = false;
 
         var attachmentDropdownOpen = false;
         var materialsDropdownOpen = false;
@@ -186,11 +188,16 @@ angular.module('dashboard')
             }
         });
 
-        var watcher = $rootScope.$on(PROPS.COUNT, function(event, data) {
+        var proposalCountWatcher = $rootScope.$on(PROPS.COUNT, function(event, data) {
             self.propCount = (data instanceof Object) ? data.published : null;
         });
 
-        $scope.$on('$destroy', watcher);
+        var isEditingWatcher = $rootScope.$on(CONST.PROPOSALISEDITING, function(event, isEditing) {
+            self.isEditing = isEditing;
+        });
+
+        $scope.$on('$destroy', isEditingWatcher);
+        $scope.$on('$destroy', proposalCountWatcher);
 
         $scope.$on('$destroy', function() {
             $log.debug("meetingCtrl: DESTROY");
