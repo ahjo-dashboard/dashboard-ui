@@ -20,6 +20,8 @@ angular.module('dashboard')
         self.meeting = {};
         self.chairman = false;
         self.loading = true;
+        self.isEditing = false;
+        self.unsavedConfig = { title: 'STR_WARNING_UNSAVED', text: null, yes: 'STR_CONTINUE' };
         var meetingItem = StorageSrv.get(CONST.KEY.MEETING_ITEM);
         var isMobile = $rootScope.isMobile;
         var pollingTimer = null;
@@ -164,6 +166,12 @@ angular.module('dashboard')
             var s = $rootScope.objWithVal(CONST.MTGSTATUS, 'value', meeting.meetingStatus);
             return s ? s.badgeClass : 'label-danger';
         };
+
+        var isEditingWatcher = $rootScope.$on(CONST.PROPOSALISEDITING, function(event, isEditing) {
+            self.isEditing = isEditing;
+        });
+
+        $scope.$on('$destroy', isEditingWatcher);
 
         $scope.$on('$destroy', function() {
             $log.debug("meetingStatusCtrl: DESTROY");

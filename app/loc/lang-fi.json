@@ -83,5 +83,7 @@
     "STR_CNFM_SEND_PROP": "Haluatko julkaista ehdotuksen?",
     "STR_CNFM_COPY_PROP": "Luo ehdotuksesta uusi julkaisematon kopio?",
     "STR_CNFM_TEXT": "Vahvista toiminto",
-    "STR_INFO_NEW_PROPS": "Uusia lukemattomia ehdotuksia"
+    "STR_INFO_NEW_PROPS": "Uusia lukemattomia ehdotuksia",
+    "STR_WARNING_UNSAVED": "Työpöydällä on tallentamattomia tietoja. Haluatko jatkaa tallentamatta?",
+    "STR_CONTINUE": "Jatka"
 }

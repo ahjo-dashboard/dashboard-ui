@@ -12,6 +12,7 @@ angular.module('dashboard')
         },
         'MENUACTIVE': 'MENUACTIVE',
         'PROPOSALEVENT': 'PROPOSALEVENT',
+        'PROPOSALISEDITING': 'PROPOSALISEDITING',
         'BLOCKMODE': {
             BOTH: 0,
             UPPER: 1,
@@ -89,10 +90,10 @@ angular.module('dashboard')
         },
         'TOPICSTATUS': {
             NONE: { value: 0, iconPath: "", icon_conf: "", icon_props: "", icon_conf_prop: "" },
-            PENDING: { value: 1, iconPath: "images/mtg-states/mtg-ag-state-1.png"},
-            ACTIVE: { value: 2, iconPath: "images/mtg-states/mtg-ag-state-2.png"},
-            ABORTED: { value: 3, iconPath: "images/mtg-states/mtg-ag-state-3.png"},
-            READY: { value: 4, iconPath: "images/mtg-states/mtg-ag-state-4.png"}
+            PENDING: { value: 1, iconPath: "images/mtg-states/mtg-ag-state-1.png" },
+            ACTIVE: { value: 2, iconPath: "images/mtg-states/mtg-ag-state-2.png" },
+            ABORTED: { value: 3, iconPath: "images/mtg-states/mtg-ag-state-3.png" },
+            READY: { value: 4, iconPath: "images/mtg-states/mtg-ag-state-4.png" }
         },
         'ESIGNSTATUS': { //SignApi_DocStatuses
             UNSIGNED: { value: 1, stringId: 'STR_UNSIGNED', badgeClass: 'label-warning' },
