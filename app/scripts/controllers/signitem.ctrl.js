@@ -25,12 +25,8 @@ angular.module('dashboard')
             $log.debug("signItemCtrl: name: " + self.item.Name);
         }
 
-        self.blob = null;
-        self.displayUrl = {};
-        self.fileUrl = {};
         self.fileName = {};
         self.remoteUrl = null;
-        self.docUrl = {};
         self.ongoing = false;
         self.alerts = [];
         self.isMobile = $rootScope.isMobile;
@@ -112,54 +108,6 @@ angular.module('dashboard')
             self.alerts.length = 0;
         }
 
-        function setDisplayUrl(url) {
-            $log.debug("signitemCtrl.setDisplayUrl: " + url);
-            self.displayUrl = url;
-            setBtnActive(self.btnModel.doc.id);
-        }
-
-        function drawBlob(blob, delayExpired) {
-            if (blob && !self.blob) {
-                self.blob = blob;
-            }
-
-            if (delayExpired) {
-                self.fileDrawDelayExpired = delayExpired;
-            }
-
-            if (self.blob && self.fileDrawDelayExpired) {
-                setDisplayUrl(URL.createObjectURL(self.blob));
-                //self.fileContent = $sce.trustAsResourceUrl(self.displayUrl);
-                $log.debug("signitemCtrl.drawBlob: set fileUrl: " + self.displayUrl);
-            }
-        }
-
-        function fetchBlob(item) {
-            $log.debug("signitemCtrl.fetchBlob: SigningAttApi.getPdfBlob guid=" + item.ProcessGuid);
-
-            SigningAttApi.getPdfBlob({ reqId: item.ProcessGuid }).$promise
-                .then(
-                function(response) {
-                    var blob = new Blob([(response.pdfBlob)], { type: 'application/pdf' });
-                    drawBlob(blob, false);
-                },
-                function(err) {
-                    $log.error("signitemCtrl.fetchBlob: SigningAttApi.getPdfBlob " + JSON.stringify(err));
-                    self.errCode = err.status;
-                })
-                .finally(function() {
-                });
-        }
-
-        function resolveDocUrl(item) {
-            self.docUrl = ENV.SignApiUrl_GetAttachment.replace(":reqId", item.ProcessGuid);
-            $log.debug("signitemCtrl.resolveDocUrl: " + self.docUrl);
-        }
-
-        function resolveAttUrl(item, att) {
-            return angular.isObject(item) && angular.isObject(att) ? ENV.SIGNAPIURL_ATT.replace(":reqGuid", item.ProcessGuid).replace(":attGuid", att.link) : undefined;
-        }
-
         function saveStatus(item, status) {
             if (!item || !(item instanceof Object) || !("Status" in item)) {
                 $log.debug(item);
@@ -218,7 +166,7 @@ angular.module('dashboard')
                 displayRequestor(self.personInfo);
             }
         }
-        // rooli nimi tila aika dd.mm.yyy hh:mm, vanassa status myös värikoodilla
+
         function displaySignings(sgn) {
             if (!sgn || !("Signers" in sgn)) {
                 $log.error("signItemCtrl.displaySignings: bad args");
@@ -293,36 +241,6 @@ angular.module('dashboard')
             self.alerts.splice(index, 1);
         };
 
-        self.openFileModal = function(fileUrl, fileBlob, fileHeading) {
-            $log.debug("signitemCtrl.openFileModal: f: " + fileUrl + " b: " + fileBlob + " h: " + fileHeading);
-            self.ongoing = true;
-            var modalInstance = $uibModal.open({
-                animation: true,
-                templateUrl: 'views/modalfile.html',
-                controller: 'modalFileCtrl',
-                controllerAs: 'mfc',
-                windowTopClass: 'db-large-modal',
-                resolve: {
-                    aUrl: function() {
-                        return fileUrl;
-                    },
-                    aBlob: function() {
-                        return fileBlob;
-                    },
-                    aHeading: function() {
-                        return fileHeading;
-                    }
-                }
-            });
-            self.hideEmbObj = true;
-            modalInstance.result.then(function(/* arg here passed from controller */) {
-            }, function(arg) {
-                $log.debug("signitemCtrl: Modal dismissed: " + arg);
-                self.hideEmbObj = false;
-                self.ongoing = false;
-            });
-        };
-
         self.isDisabled = function(id) {
             // $log.debug("signingItemCtrl.isDisabled: " + id);
             var res = false;
@@ -386,14 +304,4 @@ angular.module('dashboard')
         };
 
         initBtns(self.btnModel, self.item.Status);
-
-        // Both blob and remote url implementations kept, but only one used.
-        // Remove later when sure other one won't be needed.
-        if (!ENV.app_useBlob) {
-            resolveDocUrl(self.item);
-            setDisplayUrl(self.docUrl);
-        } else {
-            fetchBlob(self.item);
-            drawBlob();
-        }
     });
