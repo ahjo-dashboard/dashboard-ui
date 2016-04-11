@@ -4,7 +4,7 @@
 */
 'use strict';
 angular.module('dashboard')
-    .config(['$urlRouterProvider', '$stateProvider', 'ENV', 'CONST', function ($urlRouterProvider, $stateProvider, ENV, CONST) {
+    .config(['$urlRouterProvider', '$stateProvider', 'ENV', 'CONST', function($urlRouterProvider, $stateProvider, ENV, CONST) {
         var device = angular.element('#device');
 
         if (device && device.css('min-width') === '320px') {
@@ -204,20 +204,6 @@ angular.module('dashboard')
 
         /* COMMON states and routings to MOBILE and DESKTOP */
 
-        if (ENV.app_env !== 'prod') {
-            $stateProvider
-                .state(CONST.APPSTATE.LOGIN, {
-                    url: '/login',
-                    views: {
-                        'homeContent': {
-                            templateUrl: 'views/login.html',
-                            controller: 'loginCtrl',
-                            controllerAs: 'lc'
-                        }
-                    }
-                });
-        }
-
         $stateProvider
             .state(CONST.APPSTATE.INFO, {
                 url: '/info',
@@ -236,7 +222,18 @@ angular.module('dashboard')
                 }
             });
 
-        if (ENV.app_env === 'dev' || ENV.app_env === 'test') {
+        if (ENV.app_env !== 'prod') {
+            $stateProvider
+                .state(CONST.APPSTATE.LOGIN, {
+                    url: '/login',
+                    views: {
+                        'homeContent': {
+                            templateUrl: 'views/login.html',
+                            controller: 'loginCtrl',
+                            controllerAs: 'lc'
+                        }
+                    }
+                });
             $urlRouterProvider.otherwise('/login');
         } else {
             $urlRouterProvider.otherwise('/home');

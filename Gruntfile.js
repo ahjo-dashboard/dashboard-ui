@@ -500,9 +500,14 @@ module.exports = function (grunt) {
                     ENV: grunt.file.readJSON('custom/conf/app.env.dev.json'),
                 }
             },
-            test: {
+            test1: {
                 constants: {
-                    ENV: grunt.file.readJSON('custom/conf/app.env.test.json'),
+                    ENV: grunt.file.readJSON('custom/conf/app.env.test1.json'),
+                }
+            },
+            test2: {
+                constants: {
+                    ENV: grunt.file.readJSON('custom/conf/app.env.test2.json'),
                 }
             },
             prod: {
@@ -619,8 +624,15 @@ module.exports = function (grunt) {
         'build'
     ]);
 
-    grunt.registerTask('build:test', [
-        'ngconstant:test',
+    grunt.registerTask('build:test1', [
+        'ngconstant:test1',
+        'newer:jshint',
+        'test',
+        'build'
+    ]);
+
+    grunt.registerTask('build:test2', [
+        'ngconstant:test2',
         'newer:jshint',
         'test',
         'build'
