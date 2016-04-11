@@ -45,8 +45,8 @@ angular.module('dashboard')
 
         self.btnModel = {
             doc: { id: 'doc', disabled: false, active: false, hide: false },
-            acc: { id: 'acc', disabled: false, active: false },
-            rej: { id: 'rej', disabled: false, active: false },
+            acc: { id: 'acc', disabled: false, active: false, cConf: { title: 'STR_CNFM_TEXT', text: 'STR_CNFM_SIGN_ACC', yes: 'STR_YES', no: 'STR_NO' } },
+            rej: { id: 'rej', disabled: false, active: false, cConf: { title: 'STR_CNFM_TEXT', text: 'STR_CNFM_SIGN_REJ', yes: 'STR_YES', no: 'STR_NO' } },
             sta: { id: 'sta', disabled: false, active: false },
             com: { id: 'com', disabled: false, active: false },
             att: {

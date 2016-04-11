@@ -44,11 +44,11 @@
                 <span translate translate-cloak>STR_CREATE_COMMENT</span>
             </button>
             <button id="sc.btnModel.acc.id" type="button" class="btn btn-block btn-lg btn-success ng-class: {active: sc.isActive(sc.btnModel.acc.id)}"
-            ng-click="sc.actionSign()" ng-disabled="sc.isDisabled(sc.btnModel.acc.id)">
+            ng-click="sc.actionSign()" ng-disabled="sc.isDisabled(sc.btnModel.acc.id)"  db-confirm confirm-config="sc.btnModel.acc.cConf">
                 <span translate translate-cloak>STR_SIGNING_ACCEPT</span>
             </button>
             <button id="sc.btnModel.rej.id" type="button" class="btn btn-block btn-lg btn-danger ng-class: {active: sc.isActive(sc.btnModel.rej.id)}"
-            ng-click="sc.actionReject()" ng-disabled="sc.isDisabled(sc.btnModel.rej.id)">
+            ng-click="sc.actionReject()" ng-disabled="sc.isDisabled(sc.btnModel.rej.id)" db-confirm confirm-config="sc.btnModel.rej.cConf">
                 <span translate translate-cloak>STR_REJECT</span>
             </button>
             <doc-signers ng-if="sc.listMdl" listmodel="sc.listMdl"></doc-signers>
@@ -106,13 +106,13 @@
                     </div>
                     <div class="col-xs-12 col-sm-2 ad-btn-group-left">
                         <button id="sc.btnModel.acc.id" type="button" class="btn btn-success btn-block ng-class:
-                        {active: sc.isActive(sc.btnModel.acc.id)}" ng-click="sc.actionSign()" ng-disabled="sc.isDisabled(sc.btnModel.acc.id)">
+                        {active: sc.isActive(sc.btnModel.acc.id)}" ng-click="sc.actionSign()" ng-disabled="sc.isDisabled(sc.btnModel.acc.id)" db-confirm confirm-config="sc.btnModel.acc.cConf">
                             <span translate translate-cloak>STR_SIGNING_ACCEPT</span>
                         </button>
                     </div>
                     <div class="col-xs-12 col-sm-2 ad-btn-group-right">
                         <button id="sc.btnModel.rej.id" type="button" class="btn btn-danger btn-block ng-class:
-                        {active: sc.isActive(sc.btnModel.rej.id)}" ng-click="sc.actionReject()" ng-disabled="sc.isDisabled(sc.btnModel.rej.id)">
+                        {active: sc.isActive(sc.btnModel.rej.id)}" ng-click="sc.actionReject()" ng-disabled="sc.isDisabled(sc.btnModel.rej.id)" db-confirm confirm-config="sc.btnModel.rej.cConf">
                             <span translate translate-cloak>STR_REJECT</span>
                         </button>
                     </div>
