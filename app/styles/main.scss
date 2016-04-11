@@ -416,6 +416,14 @@ body {
         }
     }
 
+    .db-confirm-header {
+        padding-left: $header-leftmargin;
+        background-color: $headingBgColor;
+        h1, h2, h3, h4, h5 {
+            color: $font-color-header;
+        }
+    }
+
     .ad-page-container {
         padding: 10px;
     }
