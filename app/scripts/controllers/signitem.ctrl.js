@@ -43,14 +43,19 @@ angular.module('dashboard')
         }
         self.attModel = ListData.createEsignAttachmentList('STR_ATTACHMENTS', atts);
 
+        // MODEL OBJECTS FOR ACTIONS
+        // disabled: true if button should be disabled
+        // active: true if button should displayed active
+        // hide: true if content specific to the button should be hidden
         self.btnModel = {
-            doc: { id: 'doc', disabled: false, active: false, hide: false },
-            acc: { id: 'acc', disabled: false, active: false, cConf: { title: 'STR_CNFM_TEXT', text: 'STR_CNFM_SIGN_ACC', yes: 'STR_YES', no: 'STR_NO' } },
-            rej: { id: 'rej', disabled: false, active: false, cConf: { title: 'STR_CNFM_TEXT', text: 'STR_CNFM_SIGN_REJ', yes: 'STR_YES', no: 'STR_NO' } },
-            sta: { id: 'sta', disabled: false, active: false },
+            doc: { id: 'doc', disabled: false, active: false, hide: true, url: null },
+            acc: { id: 'acc', disabled: false, active: false, hide: true, cConf: { title: 'STR_CNFM_TEXT', text: 'STR_CNFM_SIGN_ACC', yes: 'STR_YES', no: 'STR_NO' } },
+            rej: { id: 'rej', disabled: false, active: false, hide: true, cConf: { title: 'STR_CNFM_TEXT', text: 'STR_CNFM_SIGN_REJ', yes: 'STR_YES', no: 'STR_NO' } },
+            sta: { id: 'sta', disabled: false, active: false, hide: true, signers: null },
             com: { id: 'com', disabled: false, active: false },
             att: {
-                id: 'att', disabled: false, active: false, isOpen: false,
+                id: 'att', disabled: false, active: false, hide: true, url: undefined,
+                isOpen: false,
                 count: self.attModel ? self.attModel.objects.length : 0,
                 toggle: function(arg) { self.btnModel.att.isOpen = arg; },
             }
@@ -71,12 +76,29 @@ angular.module('dashboard')
             }
 
             for (var i in self.btnModel) {
-                self.btnModel[i].active = id === i ? true : false;
+                if (id === i) {
+                    self.btnModel[i].active = true;
+                    self.btnModel[i].hide = false;
+                } else {
+                    self.btnModel[i].active = false;
+                    self.btnModel[i].hide = true;
+                }
+
                 // $log.debug("btn: " + self.btnModel[i].id + " active: " + self.btnModel[i].active);
             }
         }
 
+        function resolveDocUrl(item) {
+            return ENV.SignApiUrl_GetAttachment.replace(":reqId", item.ProcessGuid);
+        }
+
+        function resolveAttUrl(item, att) {
+            return angular.isObject(item) && angular.isObject(att) ? ENV.SIGNAPIURL_ATT.replace(":reqGuid", item.ProcessGuid).replace(":attGuid", att.link) : undefined;
+        }
+
         function initBtns(btnModel, status) {
+            self.btnModel.doc.url = resolveDocUrl(self.item);
+
             if (status !== CONST.ESIGNSTATUS.UNSIGNED.value) {
                 btnModel.acc.disabled = true;
                 btnModel.rej.disabled = true;
@@ -203,19 +225,15 @@ angular.module('dashboard')
                 return;
             }
             $log.debug("signItemCtrl.displaySignings: " + sgn.Signers.length);
-            if (!$rootScope.isMobile) {
-                self.btnModel.doc.hide = true;
-                setBtnActive(self.btnModel.sta.id);
-                self.listMdl = sgn.Signers;
-            }
-            else {
-                $state.go(CONST.APPSTATE.DOCSIGNERS, { 'signers': sgn.Signers });
+            self.btnModel.sta.signers = sgn.Signers;
+            if ($rootScope.isMobile) {
+                $state.go(CONST.APPSTATE.DOCSIGNERS, { 'signers': self.btnModel.sta.signers });
             }
         }
 
         function docSignings(item) {
             $log.debug("signitemCtrl.docSignings");
-            self.listMdl = null;
+            self.btnModel.sta.hide = true;
             if (!item || !("Guid" in item) || !item.Guid || self.ongoing) {
                 $log.error("signItemCtrl.docSignings: bad args");
                 return;
@@ -236,36 +254,38 @@ angular.module('dashboard')
         // PUBLIC FUNCTIONS
 
         self.actionDoc = function() {
-            if (self.isMobile) {
-                self.openFileModal(self.displayUrl, null, self.fileName);
-            } else {
-                setDisplayUrl(self.docUrl);
-            }
-            self.btnModel.doc.hide = false;
-            self.listMdl = null;
+            clearAlerts();
+            $log.debug("signitemCtrl.actionDoc: " + self.btnModel.doc.url);
+            setBtnActive(self.btnModel.doc.id);
         };
 
         self.actionAttachment = function(att) {
+            clearAlerts();
+            self.btnModel.att.url = resolveAttUrl(self.item, att);
+            $log.debug("signitemCtrl.actionAttachment: " + self.btnModel.att.url);
             setBtnActive(self.btnModel.att.id);
-            self.displayUrl = resolveAttUrl(self.item, att);
-            $log.debug("signitemCtrl.actionAttachment: " + self.displayUrl);
         };
 
         self.actionSign = function() {
+            clearAlerts();
             saveStatus(self.item, CONST.ESIGNSTATUS.SIGNED.value);
         };
 
         self.actionReject = function() {
+            clearAlerts();
             saveStatus(self.item, CONST.ESIGNSTATUS.REJECTED.value);
         };
 
         self.actionComment = function() {
             clearAlerts();
             personInfo();
+            setBtnActive(self.btnModel.com.id);
         };
 
         self.actionSignings = function() {
+            clearAlerts();
             docSignings(self.item);
+            setBtnActive(self.btnModel.sta.id);
         };
 
         self.closeAlert = function(index) {
@@ -323,14 +343,25 @@ angular.module('dashboard')
         };
 
         // Checks if an element should be hidden dynamically or not.
-        self.isHidden = function() {
-            // For now needed only for hiding emb pdf when att dropdown is open,
-            // Extend with id argument in future if necessary.
-
-            // Workaround on IE to hide <object> pdf because IE displays it topmost covering modals and dropdowns.
-            return $rootScope.isIe && self.btnModel.att.isOpen;
+        self.isHidden = function(id) {
+            // $log.debug("signingItemCtrl.isHidden: " + id);
+            var res = false;
+            if (self.ongoing) {
+                res = true;
+            }
+            else {
+                switch (id) {
+                    case self.btnModel.doc.id:
+                        // Workaround on IE to hide <object> pdf because IE displays it topmost covering modals and dropdowns.
+                        res = self.btnModel.doc.hide || ($rootScope.isIe && self.btnModel.att.isOpen);
+                        break;
+                    default:
+                        res = self.btnModel[id].hide;
+                        break;
+                }
+            }
+            return res;
         };
-
 
         self.isActive = function(id) {
             //$log.debug("signingItemCtrl.isActive: " + id + "=" +self.btnModel[id].active);
@@ -350,7 +381,7 @@ angular.module('dashboard')
         };
 
         self.goHome = function() {
-            self.ongoing = true;
+            self.ongoing = true; // Display progress bar in case transition change takes time
             $rootScope.goHome();
         };
 

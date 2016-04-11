@@ -43,15 +43,15 @@
             ng-click="sc.actionComment()" ng-disabled="sc.isDisabled(sc.btnModel.com.id)">
                 <span translate translate-cloak>STR_CREATE_COMMENT</span>
             </button>
+            <br>
             <button id="sc.btnModel.acc.id" type="button" class="btn btn-block btn-lg btn-success ng-class: {active: sc.isActive(sc.btnModel.acc.id)}"
-            ng-click="sc.actionSign()" ng-disabled="sc.isDisabled(sc.btnModel.acc.id)"  db-confirm confirm-config="sc.btnModel.acc.cConf">
+            ng-click="sc.actionSign()" ng-disabled="sc.isDisabled(sc.btnModel.acc.id)" db-confirm confirm-config="sc.btnModel.acc.cConf">
                 <span translate translate-cloak>STR_SIGNING_ACCEPT</span>
             </button>
             <button id="sc.btnModel.rej.id" type="button" class="btn btn-block btn-lg btn-danger ng-class: {active: sc.isActive(sc.btnModel.rej.id)}"
             ng-click="sc.actionReject()" ng-disabled="sc.isDisabled(sc.btnModel.rej.id)" db-confirm confirm-config="sc.btnModel.rej.cConf">
                 <span translate translate-cloak>STR_REJECT</span>
             </button>
-            <doc-signers ng-if="sc.listMdl" listmodel="sc.listMdl"></doc-signers>
         </div>
     </div>
 
@@ -106,13 +106,15 @@
                     </div>
                     <div class="col-xs-12 col-sm-2 ad-btn-group-left">
                         <button id="sc.btnModel.acc.id" type="button" class="btn btn-success btn-block ng-class:
-                        {active: sc.isActive(sc.btnModel.acc.id)}" ng-click="sc.actionSign()" ng-disabled="sc.isDisabled(sc.btnModel.acc.id)" db-confirm confirm-config="sc.btnModel.acc.cConf">
+                        {active: sc.isActive(sc.btnModel.acc.id)}" ng-click="sc.actionSign()" ng-disabled="sc.isDisabled(sc.btnModel.acc.id)"
+                        db-confirm confirm-config="sc.btnModel.acc.cConf">
                             <span translate translate-cloak>STR_SIGNING_ACCEPT</span>
                         </button>
                     </div>
                     <div class="col-xs-12 col-sm-2 ad-btn-group-right">
                         <button id="sc.btnModel.rej.id" type="button" class="btn btn-danger btn-block ng-class:
-                        {active: sc.isActive(sc.btnModel.rej.id)}" ng-click="sc.actionReject()" ng-disabled="sc.isDisabled(sc.btnModel.rej.id)" db-confirm confirm-config="sc.btnModel.rej.cConf">
+                        {active: sc.isActive(sc.btnModel.rej.id)}" ng-click="sc.actionReject()" ng-disabled="sc.isDisabled(sc.btnModel.rej.id)"
+                        db-confirm confirm-config="sc.btnModel.rej.cConf">
                             <span translate translate-cloak>STR_REJECT</span>
                         </button>
                     </div>
@@ -141,15 +143,14 @@
                         </div>
                     </uib-alert>
 
-                    <div ng-if="sc.listMdl">
-                        <doc-signers listmodel="sc.listMdl" ismobile="isMobile"></doc-signers>
+                    <div ng-if="sc.btnModel.sta.signers">
+                        <doc-signers ng-hide="sc.isHidden(sc.btnModel.sta.id)" listmodel="sc.btnModel.sta.signers" ismobile="isMobile"></doc-signers>
                     </div>
 
                 </div>
-                <ad-embedded-file ng-if="sc.displayUrl" ng-hide="sc.isHidden()" class="ad-flex-item-upper ad-flex-show-full" refresh=""
-                ng-attr-fileurl="sc.displayUrl" ng-attr-filename="sc.fileName">
-                </ad-embedded-file>
 
+                <db-pdf ng-if="sc.btnModel.doc.url" ng-show="!sc.isHidden(sc.btnModel.doc.id)" ng-attr-uri="sc.btnModel.doc.url"></db-pdf>
+                <db-pdf ng-if="sc.btnModel.att.url" ng-show="!sc.isHidden(sc.btnModel.att.id)" ng-attr-uri="sc.btnModel.att.url"></db-pdf>
             </div>
         </div>
     </div>
