@@ -8,7 +8,7 @@
                 <button id="typeButton" type="button" class="prop-button btn btn-block ng-class:[{'btn-info': c.isMobile},{' db-btn-prim': !c.isMobile}]" uib-dropdown-toggle translate translate-cloak>STR_CREATE_PROPOSAL<span class="caret hidden-sm"></span>
                 </button>
                 <ul uib-dropdown-menu role="menu" aria-labelledby="typeButton">
-                    <li class="" role="menuitem" ng-repeat="type in c.tps track by $index" ng-click="c.addProposal(type)">
+                    <li class="" role="menuitem" ng-repeat="type in c.tps track by $index" ng-click="c.addProposalClicked(type)">
                         <a>{{type.text}}</a>
                     </li>
                 </ul>

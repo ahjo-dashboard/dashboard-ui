@@ -70,7 +70,7 @@ angular.module('dashboard')
                     $timeout.cancel(pollingTimer);
                     pollingTimer = $timeout(function() {
                         getEvents();
-                    }, 10000);
+                    }, CONST.POLLINGTIMEOUT);
                 });
             }
             else {
@@ -96,7 +96,7 @@ angular.module('dashboard')
                         $timeout.cancel(pollingTimer);
                         pollingTimer = $timeout(function() {
                             getEvents();
-                        }, 10000);
+                        }, CONST.POLLINGTIMEOUT);
                     }
                 }
             }, function(error) {
