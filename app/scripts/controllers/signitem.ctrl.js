@@ -45,15 +45,18 @@ angular.module('dashboard')
         // hide: true if content specific to the button should be hidden
         self.btnModel = {
             doc: { id: 'doc', disabled: false, active: false, hide: true, url: null },
-            acc: { id: 'acc', disabled: false, active: false, hide: true, cConf: { title: 'STR_CNFM_TEXT', text: 'STR_CNFM_SIGN_ACC', yes: 'STR_YES', no: 'STR_NO' } },
-            rej: { id: 'rej', disabled: false, active: false, hide: true, cConf: { title: 'STR_CNFM_TEXT', text: 'STR_CNFM_SIGN_REJ', yes: 'STR_YES', no: 'STR_NO' } },
+            acc: { id: 'acc', disabled: false, active: false, hide: true, cConf: { title: 'STR_CNFM_TEXT', text: 'STR_CNFM_SIGN_ACC', yes: 'STR_YES', no: 'STR_NO', isOpen: false } },
+            rej: { id: 'rej', disabled: false, active: false, hide: true, cConf: { title: 'STR_CNFM_TEXT', text: 'STR_CNFM_SIGN_REJ', yes: 'STR_YES', no: 'STR_NO', isOpen: false } },
             sta: { id: 'sta', disabled: false, active: false, hide: true, signers: null },
             com: { id: 'com', disabled: false, active: false },
             att: {
                 id: 'att', disabled: false, active: false, hide: true, url: undefined,
                 isOpen: false,
                 count: self.attModel ? self.attModel.objects.length : 0,
-                toggle: function(arg) { self.btnModel.att.isOpen = arg; },
+                toggle: function(arg) {
+                    //$log.debug("signingItemCtrl: dropdown att toggled: " + arg + ", active: " + this.active);
+                    self.btnModel.att.isOpen = arg;
+                },
             }
         };
 
@@ -237,7 +240,7 @@ angular.module('dashboard')
         };
 
         self.closeAlert = function(index) {
-            $log.debug("signitemCtrl.closeAlert " + index);
+            // $log.debug("signitemCtrl.closeAlert " + index);
             self.alerts.splice(index, 1);
         };
 
@@ -260,9 +263,18 @@ angular.module('dashboard')
             return res;
         };
 
+        function isModalOpen() {
+            return self.btnModel.acc.cConf.isOpen || self.btnModel.rej.cConf.isOpen;
+        }
+
+        // Workaround on IE to hide <object> pdf because IE displays it topmost covering modals and dropdowns.
+        function hidePdfOnIe() {
+            return $rootScope.isIe && (self.btnModel.att.isOpen || isModalOpen());
+        }
+
         // Checks if an element should be hidden dynamically or not.
         self.isHidden = function(id) {
-            // $log.debug("signingItemCtrl.isHidden: " + id);
+           // $log.debug("signingItemCtrl.isHidden: " + id);
             var res = false;
             if (self.ongoing) {
                 res = true;
@@ -270,8 +282,10 @@ angular.module('dashboard')
             else {
                 switch (id) {
                     case self.btnModel.doc.id:
-                        // Workaround on IE to hide <object> pdf because IE displays it topmost covering modals and dropdowns.
-                        res = self.btnModel.doc.hide || ($rootScope.isIe && self.btnModel.att.isOpen);
+                        res = self.btnModel.doc.hide || hidePdfOnIe();
+                        break;
+                    case self.btnModel.att.id:
+                        res = self.btnModel.att.hide || hidePdfOnIe();
                         break;
                     default:
                         res = self.btnModel[id].hide;

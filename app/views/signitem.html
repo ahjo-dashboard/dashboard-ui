@@ -149,8 +149,8 @@
 
                 </div>
 
-                <db-pdf ng-if="sc.btnModel.doc.url" ng-show="!sc.isHidden(sc.btnModel.doc.id)" ng-attr-uri="sc.btnModel.doc.url"></db-pdf>
-                <db-pdf ng-if="sc.btnModel.att.url" ng-show="!sc.isHidden(sc.btnModel.att.id)" ng-attr-uri="sc.btnModel.att.url"></db-pdf>
+                <db-pdf ng-if="sc.btnModel.doc.url" ng-hide="sc.isHidden(sc.btnModel.doc.id)" ng-attr-uri="sc.btnModel.doc.url"></db-pdf>
+                <db-pdf ng-if="sc.btnModel.att.url" ng-hide="sc.isHidden(sc.btnModel.att.id)" ng-attr-uri="sc.btnModel.att.url"></db-pdf>
             </div>
         </div>
     </div>
