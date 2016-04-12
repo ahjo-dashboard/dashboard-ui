@@ -16,12 +16,13 @@ angular.module('dashboard')
             scope: {
                 uri: '=',
                 mode: '=',
-                hide: '='
+                hide: '=',
+                animate: '='
             },
             templateUrl: 'directives/pdf/pdf.Directive.html',
             restrict: 'AE',
             replace: 'true',
-            link: function(scope, element/*, attrs */) {
+            link: function(scope, element, attrs) {
 
                 var HEIGHT = 'height';
                 var WIDTH = 'width';
@@ -29,12 +30,15 @@ angular.module('dashboard')
                 var timer;
                 var pending = false;
                 var hidden = false;
+                var anim = angular.isDefined(attrs.animate);
 
                 function hide() {
                     if (!hidden) {
                         hidden = true;
-                        element.removeClass('db-visible-pdf');
-                        element.addClass('db-hidden-pdf');
+                        if (anim) {
+                            element.removeClass('db-visible-pdf');
+                            element.addClass('db-hidden-pdf');
+                        }
                     }
                 }
 
@@ -47,8 +51,10 @@ angular.module('dashboard')
                                 timer = undefined;
                                 element.css(HEIGHT, element.parent().height());
                                 element.css(WIDTH, element.parent().width());
-                                element.removeClass('db-hidden-pdf');
-                                element.addClass('db-visible-pdf');
+                                if (anim) {
+                                    element.removeClass('db-hidden-pdf');
+                                    element.addClass('db-visible-pdf');
+                                }
                                 hidden = false;
                             }
                             else {
