@@ -16,6 +16,7 @@ angular.module('dashboard')
         var controller = ['$log', '$scope', '$uibModal', function($log, $scope, $uibModal) {
             $log.debug("dbConfirm: CONTROLLER");
 
+            var conf;
             $scope.open = function() {
                 var modalInstance = $uibModal.open({
                     animation: true,
@@ -27,6 +28,7 @@ angular.module('dashboard')
                         $scope.no = 'STR_CANCEL';
 
                         if (config instanceof Object) {
+                            conf = config; // Directive sets config.isOpen true/false when modal is open/closed
                             $scope.title = config.title === undefined ? $scope.title : config.title;
                             $scope.text = config.text === undefined ? $scope.text : config.text;
                             $scope.yes = config.yes === undefined ? $scope.yes : config.yes;
@@ -52,10 +54,23 @@ angular.module('dashboard')
                     $scope.ngClick();
                 });
 
+                modalInstance.opened.then(function() {
+                    if (angular.isObject(conf)) {
+                        console.log(conf);
+                        conf.isOpen = true;
+                    }
+                });
+
+                modalInstance.closed.then(function() {
+                    if (angular.isObject(conf)) {
+                        conf.isOpen = false;
+                    }
+                });
+
             };
 
             $scope.$on('$destroy', function() {
-                $log.debug("dbConfirm: DESTROY");
+                //$log.debug("dbConfirm: DESTROY");
             });
         }];
 
