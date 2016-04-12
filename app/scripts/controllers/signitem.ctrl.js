@@ -25,12 +25,8 @@ angular.module('dashboard')
             $log.debug("signItemCtrl: name: " + self.item.Name);
         }
 
-        self.blob = null;
-        self.displayUrl = {};
-        self.fileUrl = {};
         self.fileName = {};
         self.remoteUrl = null;
-        self.docUrl = {};
         self.ongoing = false;
         self.alerts = [];
         self.isMobile = $rootScope.isMobile;
@@ -43,14 +39,19 @@ angular.module('dashboard')
         }
         self.attModel = ListData.createEsignAttachmentList('STR_ATTACHMENTS', atts);
 
+        // MODEL OBJECTS FOR ACTIONS
+        // disabled: true if button should be disabled
+        // active: true if button should displayed active
+        // hide: true if content specific to the button should be hidden
         self.btnModel = {
-            doc: { id: 'doc', disabled: false, active: false, hide: false },
-            acc: { id: 'acc', disabled: false, active: false, cConf: { title: 'STR_CNFM_TEXT', text: 'STR_CNFM_SIGN_ACC', yes: 'STR_YES', no: 'STR_NO' } },
-            rej: { id: 'rej', disabled: false, active: false, cConf: { title: 'STR_CNFM_TEXT', text: 'STR_CNFM_SIGN_REJ', yes: 'STR_YES', no: 'STR_NO' } },
-            sta: { id: 'sta', disabled: false, active: false },
+            doc: { id: 'doc', disabled: false, active: false, hide: true, url: null },
+            acc: { id: 'acc', disabled: false, active: false, hide: true, cConf: { title: 'STR_CNFM_TEXT', text: 'STR_CNFM_SIGN_ACC', yes: 'STR_YES', no: 'STR_NO' } },
+            rej: { id: 'rej', disabled: false, active: false, hide: true, cConf: { title: 'STR_CNFM_TEXT', text: 'STR_CNFM_SIGN_REJ', yes: 'STR_YES', no: 'STR_NO' } },
+            sta: { id: 'sta', disabled: false, active: false, hide: true, signers: null },
             com: { id: 'com', disabled: false, active: false },
             att: {
-                id: 'att', disabled: false, active: false, isOpen: false,
+                id: 'att', disabled: false, active: false, hide: true, url: undefined,
+                isOpen: false,
                 count: self.attModel ? self.attModel.objects.length : 0,
                 toggle: function(arg) { self.btnModel.att.isOpen = arg; },
             }
@@ -71,12 +72,29 @@ angular.module('dashboard')
             }
 
             for (var i in self.btnModel) {
-                self.btnModel[i].active = id === i ? true : false;
+                if (id === i) {
+                    self.btnModel[i].active = true;
+                    self.btnModel[i].hide = false;
+                } else {
+                    self.btnModel[i].active = false;
+                    self.btnModel[i].hide = true;
+                }
+
                 // $log.debug("btn: " + self.btnModel[i].id + " active: " + self.btnModel[i].active);
             }
         }
 
+        function resolveDocUrl(item) {
+            return ENV.SignApiUrl_GetAttachment.replace(":reqId", item.ProcessGuid);
+        }
+
+        function resolveAttUrl(item, att) {
+            return angular.isObject(item) && angular.isObject(att) ? ENV.SIGNAPIURL_ATT.replace(":reqGuid", item.ProcessGuid).replace(":attGuid", att.link) : undefined;
+        }
+
         function initBtns(btnModel, status) {
+            self.btnModel.doc.url = resolveDocUrl(self.item);
+
             if (status !== CONST.ESIGNSTATUS.UNSIGNED.value) {
                 btnModel.acc.disabled = true;
                 btnModel.rej.disabled = true;
@@ -88,54 +106,6 @@ angular.module('dashboard')
 
         function clearAlerts() {
             self.alerts.length = 0;
-        }
-
-        function setDisplayUrl(url) {
-            $log.debug("signitemCtrl.setDisplayUrl: " + url);
-            self.displayUrl = url;
-            setBtnActive(self.btnModel.doc.id);
-        }
-
-        function drawBlob(blob, delayExpired) {
-            if (blob && !self.blob) {
-                self.blob = blob;
-            }
-
-            if (delayExpired) {
-                self.fileDrawDelayExpired = delayExpired;
-            }
-
-            if (self.blob && self.fileDrawDelayExpired) {
-                setDisplayUrl(URL.createObjectURL(self.blob));
-                //self.fileContent = $sce.trustAsResourceUrl(self.displayUrl);
-                $log.debug("signitemCtrl.drawBlob: set fileUrl: " + self.displayUrl);
-            }
-        }
-
-        function fetchBlob(item) {
-            $log.debug("signitemCtrl.fetchBlob: SigningAttApi.getPdfBlob guid=" + item.ProcessGuid);
-
-            SigningAttApi.getPdfBlob({ reqId: item.ProcessGuid }).$promise
-                .then(
-                function(response) {
-                    var blob = new Blob([(response.pdfBlob)], { type: 'application/pdf' });
-                    drawBlob(blob, false);
-                },
-                function(err) {
-                    $log.error("signitemCtrl.fetchBlob: SigningAttApi.getPdfBlob " + JSON.stringify(err));
-                    self.errCode = err.status;
-                })
-                .finally(function() {
-                });
-        }
-
-        function resolveDocUrl(item) {
-            self.docUrl = ENV.SignApiUrl_GetAttachment.replace(":reqId", item.ProcessGuid);
-            $log.debug("signitemCtrl.resolveDocUrl: " + self.docUrl);
-        }
-
-        function resolveAttUrl(item, att) {
-            return angular.isObject(item) && angular.isObject(att) ? ENV.SIGNAPIURL_ATT.replace(":reqGuid", item.ProcessGuid).replace(":attGuid", att.link) : undefined;
         }
 
         function saveStatus(item, status) {
@@ -196,26 +166,22 @@ angular.module('dashboard')
                 displayRequestor(self.personInfo);
             }
         }
-        // rooli nimi tila aika dd.mm.yyy hh:mm, vanassa status myös värikoodilla
+
         function displaySignings(sgn) {
             if (!sgn || !("Signers" in sgn)) {
                 $log.error("signItemCtrl.displaySignings: bad args");
                 return;
             }
             $log.debug("signItemCtrl.displaySignings: " + sgn.Signers.length);
-            if (!$rootScope.isMobile) {
-                self.btnModel.doc.hide = true;
-                setBtnActive(self.btnModel.sta.id);
-                self.listMdl = sgn.Signers;
-            }
-            else {
-                $state.go(CONST.APPSTATE.DOCSIGNERS, { 'signers': sgn.Signers });
+            self.btnModel.sta.signers = sgn.Signers;
+            if ($rootScope.isMobile) {
+                $state.go(CONST.APPSTATE.DOCSIGNERS, { 'signers': self.btnModel.sta.signers });
             }
         }
 
         function docSignings(item) {
             $log.debug("signitemCtrl.docSignings");
-            self.listMdl = null;
+            self.btnModel.sta.hide = true;
             if (!item || !("Guid" in item) || !item.Guid || self.ongoing) {
                 $log.error("signItemCtrl.docSignings: bad args");
                 return;
@@ -236,71 +202,43 @@ angular.module('dashboard')
         // PUBLIC FUNCTIONS
 
         self.actionDoc = function() {
-            if (self.isMobile) {
-                self.openFileModal(self.displayUrl, null, self.fileName);
-            } else {
-                setDisplayUrl(self.docUrl);
-            }
-            self.btnModel.doc.hide = false;
-            self.listMdl = null;
+            clearAlerts();
+            $log.debug("signitemCtrl.actionDoc: " + self.btnModel.doc.url);
+            setBtnActive(self.btnModel.doc.id);
         };
 
         self.actionAttachment = function(att) {
+            clearAlerts();
+            self.btnModel.att.url = resolveAttUrl(self.item, att);
+            $log.debug("signitemCtrl.actionAttachment: " + self.btnModel.att.url);
             setBtnActive(self.btnModel.att.id);
-            self.displayUrl = resolveAttUrl(self.item, att);
-            $log.debug("signitemCtrl.actionAttachment: " + self.displayUrl);
         };
 
         self.actionSign = function() {
+            clearAlerts();
             saveStatus(self.item, CONST.ESIGNSTATUS.SIGNED.value);
         };
 
         self.actionReject = function() {
+            clearAlerts();
             saveStatus(self.item, CONST.ESIGNSTATUS.REJECTED.value);
         };
 
         self.actionComment = function() {
             clearAlerts();
             personInfo();
+            setBtnActive(self.btnModel.com.id);
         };
 
         self.actionSignings = function() {
+            clearAlerts();
             docSignings(self.item);
+            setBtnActive(self.btnModel.sta.id);
         };
 
         self.closeAlert = function(index) {
             $log.debug("signitemCtrl.closeAlert " + index);
             self.alerts.splice(index, 1);
-        };
-
-        self.openFileModal = function(fileUrl, fileBlob, fileHeading) {
-            $log.debug("signitemCtrl.openFileModal: f: " + fileUrl + " b: " + fileBlob + " h: " + fileHeading);
-            self.ongoing = true;
-            var modalInstance = $uibModal.open({
-                animation: true,
-                templateUrl: 'views/modalfile.html',
-                controller: 'modalFileCtrl',
-                controllerAs: 'mfc',
-                windowTopClass: 'db-large-modal',
-                resolve: {
-                    aUrl: function() {
-                        return fileUrl;
-                    },
-                    aBlob: function() {
-                        return fileBlob;
-                    },
-                    aHeading: function() {
-                        return fileHeading;
-                    }
-                }
-            });
-            self.hideEmbObj = true;
-            modalInstance.result.then(function(/* arg here passed from controller */) {
-            }, function(arg) {
-                $log.debug("signitemCtrl: Modal dismissed: " + arg);
-                self.hideEmbObj = false;
-                self.ongoing = false;
-            });
         };
 
         self.isDisabled = function(id) {
@@ -323,14 +261,25 @@ angular.module('dashboard')
         };
 
         // Checks if an element should be hidden dynamically or not.
-        self.isHidden = function() {
-            // For now needed only for hiding emb pdf when att dropdown is open,
-            // Extend with id argument in future if necessary.
-
-            // Workaround on IE to hide <object> pdf because IE displays it topmost covering modals and dropdowns.
-            return $rootScope.isIe && self.btnModel.att.isOpen;
+        self.isHidden = function(id) {
+            // $log.debug("signingItemCtrl.isHidden: " + id);
+            var res = false;
+            if (self.ongoing) {
+                res = true;
+            }
+            else {
+                switch (id) {
+                    case self.btnModel.doc.id:
+                        // Workaround on IE to hide <object> pdf because IE displays it topmost covering modals and dropdowns.
+                        res = self.btnModel.doc.hide || ($rootScope.isIe && self.btnModel.att.isOpen);
+                        break;
+                    default:
+                        res = self.btnModel[id].hide;
+                        break;
+                }
+            }
+            return res;
         };
-
 
         self.isActive = function(id) {
             //$log.debug("signingItemCtrl.isActive: " + id + "=" +self.btnModel[id].active);
@@ -350,19 +299,9 @@ angular.module('dashboard')
         };
 
         self.goHome = function() {
-            self.ongoing = true;
+            self.ongoing = true; // Display progress bar in case transition change takes time
             $rootScope.goHome();
         };
 
         initBtns(self.btnModel, self.item.Status);
-
-        // Both blob and remote url implementations kept, but only one used.
-        // Remove later when sure other one won't be needed.
-        if (!ENV.app_useBlob) {
-            resolveDocUrl(self.item);
-            setDisplayUrl(self.docUrl);
-        } else {
-            fetchBlob(self.item);
-            drawBlob();
-        }
     });
