@@ -12,13 +12,14 @@ Installing
   * (Optional: Run `bower install` for installing bower components)
 * Copy your specific environment settings into following directory. Default configurations are read build-time from `conf/app.env.default.json`. Specific settings for a target env may be overridden in
   * `custom/conf/app.env.dev.json`
-  * `custom/conf/app.env.test.json`
+  * `custom/conf/app.env.test1.json`
+  * `custom/conf/app.env.test2.json`
   * `custom/conf/app.env.prod.json`
 
 Building
 
 * `grunt` for building for default configuration
-* `grunt build:dev|test|prod` for building for a specific configuration
+* `grunt build:dev|test1|test2|prod` for building for a specific configuration
 * `grunt preparedeploy` after building for preparing build output for deployment, if necessary. Calls a postbuild script in `custom/tools`
 
 Running on localhost
