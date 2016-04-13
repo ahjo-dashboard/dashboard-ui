@@ -73,39 +73,73 @@ angular.module('dashboard', [
         });
 
         $rootScope.$on('$stateChangeError', console.error.bind(console)); // $log.error.bind didn't work for .spec tests
+
         // GLOBAL VARIABLES
         // $rootScope.menu      FULL = 2, HALF = 1,  CLOSED = 0
         // $rootScope.isMobile
+        // $rootScope.isTooltips
 
-        var device = document.getElementById("device");
-        if (device && window.getComputedStyle(device, null).getPropertyValue("min-width") === '320px') {
-            $rootScope.isMobile = true;
-        }
-        else {
-            $rootScope.isMobile = false;
-        }
-        $log.debug("app.run.isMobile: " + $rootScope.isMobile);
-        $rootScope.isTooltips = !$rootScope.isMobile;
-
-        // Resolves using User Agent if browser is Microsoft Internet Explorer
-        function isIeInUa() {
-            var ua = $window.navigator.userAgent;
-            var res = ua.indexOf('Trident') > 0 || ua.indexOf('MSIE') > 0;
-            $log.debug("app.isIeInUa: " + res + ", userAgent=" + ua);
+        function isResoXs() {
+            var device = document.getElementById("device");
+            var res = (device && window.getComputedStyle(device, null).getPropertyValue("min-width") === '320px');
+            $log.debug("app.isResoXs: " + res);
             return res;
         }
 
+        function isUaIe() {
+            var ua = $window.navigator.userAgent;
+            var res = ua.match(/Trident/i) || ua.match(/MSIE/i);
+            return null !== res;
+        }
+
+        function isUaMobile() {
+            var ua = $window.navigator.userAgent;
+            var dev = {
+                Android: function() {
+                    return ua.match(/Android/i);
+                },
+                BlackBerry: function() {
+                    return ua.match(/BlackBerry/i);
+                },
+                iOS: function() {
+                    return ua.match(/iPhone|iPad|iPod/i);
+                },
+                Opera: function() {
+                    return ua.match(/Opera Mini/i);
+                },
+                Windows: function() {
+                    return ua.match(/IEMobile/i);
+                },
+                isMobile: function() {
+                    return (dev.Android() || dev.BlackBerry() || dev.iOS() || dev.Opera() || dev.Windows()) !== null;
+                }
+            };
+            var res = dev.isMobile();
+            $log.debug("app.isUaMobile: " + res);
+            return res;
+        }
+
+        $rootScope.isClientMobile = function() {
+            var res = isUaMobile() || isResoXs();
+            // $log.debug("app.isClientMobile: " + res);
+            return res;
+        };
+
+        console.log("app.run: UA=" + $window.navigator.userAgent);
+        $rootScope.isIe = isUaIe();
+        $rootScope.isMobile = $rootScope.isClientMobile();
+        $rootScope.isTooltips = !$rootScope.isMobile;
+        console.log("app.run: IE=" + $rootScope.isIe + " Mobile=" + $rootScope.isMobile + " Tooltips=" + $rootScope.isTooltips);
+
+        // Confirmation for tab/browser closing
         $rootScope.txtConfirmCloseApp = '';
         $translate('STR_CONFIRM_CLOSE_APP').then(function(translation) {
             $rootScope.txtConfirmCloseApp = translation;
         });
-
-        // onbeforeunload Confirmation displayed without the custom text on Safari and FF.
         $window.onbeforeunload = function() {
+            // onbeforeunload Confirmation will be displayed without the custom text by Safari and FF.
             return $state.is(CONST.APPSTATE.HOME) || $state.is(CONST.APPSTATE.LOGIN) ? undefined : $rootScope.txtConfirmCloseApp;
         };
-
-        $rootScope.isIe = isIeInUa();
 
         $rootScope.goHome = function() {
             $state.go(CONST.APPSTATE.HOME);
