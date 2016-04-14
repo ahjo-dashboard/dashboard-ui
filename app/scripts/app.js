@@ -67,7 +67,7 @@ angular.module('dashboard', [
 
         $httpProvider.defaults.withCredentials = true;
     })
-    .run(function($rootScope, $log, $window, CONST, $state, $timeout, $translate) {
+    .run(function($rootScope, $log, $window, CONST, $state, $timeout, $translate, Utils) {
         $rootScope.$on('$stateChangeStart', function(event, next/*, toParams, fromParams*/) {
             $log.debug('app.stateChangeStart: ' + next.name);// +' toParams: ' +JSON.stringify(toParams) +' fromParams: ' +JSON.stringify(fromParams));
         });
@@ -79,55 +79,10 @@ angular.module('dashboard', [
         // $rootScope.isMobile
         // $rootScope.isTooltips
 
-        function isResoXs() {
-            var device = document.getElementById("device");
-            var res = (device && window.getComputedStyle(device, null).getPropertyValue("min-width") === '320px');
-            $log.debug("app.isResoXs: " + res);
-            return res;
-        }
-
-        function isUaIe() {
-            var ua = $window.navigator.userAgent;
-            var res = ua.match(/Trident/i) || ua.match(/MSIE/i);
-            return null !== res;
-        }
-
-        function isUaMobile() {
-            var ua = $window.navigator.userAgent;
-            var dev = {
-                Android: function() {
-                    return ua.match(/Android/i);
-                },
-                BlackBerry: function() {
-                    return ua.match(/BlackBerry/i);
-                },
-                iOS: function() {
-                    return ua.match(/iPhone|iPad|iPod/i);
-                },
-                Opera: function() {
-                    return ua.match(/Opera Mini/i);
-                },
-                Windows: function() {
-                    return ua.match(/IEMobile/i);
-                },
-                isMobile: function() {
-                    return (dev.Android() || dev.BlackBerry() || dev.iOS() || dev.Opera() || dev.Windows()) !== null;
-                }
-            };
-            var res = dev.isMobile();
-            $log.debug("app.isUaMobile: " + res);
-            return res;
-        }
-
-        $rootScope.isClientMobile = function() {
-            var res = isUaMobile() || isResoXs();
-            // $log.debug("app.isClientMobile: " + res);
-            return res;
-        };
 
         console.log("app.run: UA=" + $window.navigator.userAgent);
-        $rootScope.isIe = isUaIe();
-        $rootScope.isMobile = $rootScope.isClientMobile();
+        $rootScope.isIe = Utils.isUaIe($window.navigator.userAgent);
+        $rootScope.isMobile = Utils.isClientMobile();
         $rootScope.isTooltips = !$rootScope.isMobile;
         console.log("app.run: IE=" + $rootScope.isIe + " Mobile=" + $rootScope.isMobile + " Tooltips=" + $rootScope.isTooltips);
 
