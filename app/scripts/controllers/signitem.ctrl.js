@@ -30,6 +30,10 @@ angular.module('dashboard')
         self.ongoing = false;
         self.alerts = [];
         self.isMobile = $rootScope.isMobile;
+        self.linkConfig = {
+            title: 'STR_SIGNING_REQ',
+            class: 'btn btn-info btn-lg btn-block wrap-button-text db-btn-prim' // Used only on mobile
+        };
 
         self.attModel = [];
         var atts = [];
