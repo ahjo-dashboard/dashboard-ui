@@ -22,7 +22,7 @@ angular.module('dashboard')
             restrict: 'AE',
             replace: 'true',
             link: function(scope/*, element, attrs */) {
-                $log.debug("dbLink: link");
+                $log.debug("dbLink: link uri:" + scope.uri);
 
                 scope.$on('$destroy', function() {
                     $log.debug("dbLink: DESTROY");
