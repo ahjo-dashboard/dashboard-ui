@@ -226,6 +226,8 @@ body {
             border-bottom-color: $btn-prim-color-active-bg;
             border-bottom-width: $tablist-tabborder-width;
             border-bottom-style: solid;
+            border-bottom-left-radius: $btn-radius;
+            border-bottom-right-radius: $btn-radius;
         }
     }
 
