@@ -55,7 +55,11 @@ angular.module('dashboard')
                         }
                         else if (item.isPublished === PROPS.PUBLISHED.NO) {
                             drafts++;
+                        } else {
+                            $log.error("dbProposals.countProposals: item ignored, bad properties");
                         }
+                    } else {
+                        $log.error("dbProposals.countProposals: item ignored, bad type");
                     }
                 });
 
