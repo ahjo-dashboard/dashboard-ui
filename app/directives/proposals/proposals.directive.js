@@ -30,7 +30,7 @@ angular.module('dashboard')
         ],
         'TOGGLE': 'PROPS.TOGGLE',
         'COUNT': 'PROPS.COUNT',
-        'EDITING': 'PROPS.EDITING'
+        'MODECHANGE': 'PROPS.MODECHANGE'
     })
     .directive('dbProposals', [function() {
 
@@ -42,7 +42,7 @@ angular.module('dashboard')
             self.published = PROPS.PUBLISHED;
             self.isMobile = $rootScope.isMobile;
             self.isAllOpen = false;
-            var editCount = 0;
+            var unsavedCount = 0;
 
             function countProposals() {
                 var drafts = 0;
@@ -66,50 +66,38 @@ angular.module('dashboard')
                 $rootScope.$emit(PROPS.COUNT, { 'drafts': drafts, 'published': published });
             }
 
-            function checkIsEditing() {
-                var count = 0;
+            function checkProposals() {
+                $log.debug("dbProposals: checkProposals: " + unsavedCount);
+                var unsaved = 0;
                 angular.forEach(self.proposals, function(item) {
-                    if (angular.isObject(item) && angular.isFunction(item.isEditing) && item.isEditing()) {
-                        count++;
+                    if (angular.isObject(item) && item.isPublished === null) {
+                        unsaved++;
                     }
                 });
 
-                if (!editCount && count) {
+                if (!unsavedCount && unsaved) {
                     $rootScope.$emit(CONST.PROPOSALISEDITING, true);
                 }
-                else if (editCount && !count) {
+                else if (unsavedCount && !unsaved) {
                     $rootScope.$emit(CONST.PROPOSALISEDITING, false);
                 }
-                editCount = count;
+                unsavedCount = unsaved;
             }
 
             function createDraft(type) {
-                return {
-                    "personGuid": "926eee0b-8e94-4a14-beec-d9b60590547f",
-                    "proposalGuid": "",
-                    "firstName": "",
-                    "lastName": "",
-                    "personName": "",
-                    "topicGuid": $scope.guid,
-                    "text": "",
-                    "proposalType": type,
-                    "remarkDescription": "",
-                    "isPublished": PROPS.PUBLISHED.NO,
-                    "isTranslatedIcon": "",
-                    "isPublishedIcon": "",
-                    "translated": "",
-                    "language": "fi",
-                    "insertDateTime": "",
-                    "orderNumber": "",
-                    "translationText": "",
-                    "translationTaskGuid": "",
-                    "translationTime": "",
-                    "isMinuteEntryBase": "",
-                    "isModified": "",
-                    "isCopy": "",
-                    "isOwnProposal": true,
-                    "isNew": true
-                };
+                if (type) {
+                    return {
+                        "personGuid": "926eee0b-8e94-4a14-beec-d9b60590547f",
+                        "topicGuid": $scope.guid,
+                        "text": "",
+                        "proposalType": type,
+                        "isPublished": null,
+                        "isOwnProposal": true
+                    };
+                }
+                else {
+                    return null;
+                }
             }
 
             function getProposals(guid) {
@@ -118,7 +106,7 @@ angular.module('dashboard')
                     var getResult = null;
 
                     AhjoProposalsSrv.get({ 'guid': guid }).$promise.then(function(response) {
-                        $log.debug("dbProposals: get then: ");
+                        $log.debug("dbProposals: get then: " + JSON.stringify(response));
                         getResult = (response instanceof Object) ? response.objects : null;
                     }, function(error) {
                         $log.error("dbProposals: get error: " + JSON.stringify(error));
@@ -137,44 +125,14 @@ angular.module('dashboard')
                 }
             }
 
-            function postProposal(proposal) {
-                $log.debug("dbProposals: postProposal: " + JSON.stringify(proposal));
-                if (proposal instanceof Object) {
-                    var postResult = null;
-
-                    delete proposal.isNew;
-                    delete proposal.isEditing;
-
-                    AhjoProposalsSrv.post(proposal).$promise.then(function(response) {
-                        $log.debug("dbProposals: post then: " + JSON.stringify(response));
-                        postResult = (response instanceof Object) ? response.Data : null;
-                    }, function(error) {
-                        $log.error("dbProposals: post error: " + JSON.stringify(error));
-                    }, function(notify) {
-                        $log.debug("dbProposals: post notify: " + JSON.stringify(notify));
-                    }).finally(function() {
-                        $log.debug("dbProposals: post finally: ");
-                        if (postResult instanceof Object) {
-                            getProposals($scope.guid);
-                        }
-                    });
-                }
-                else {
-                    $log.error('dbProposals: postProposal parameter invalid');
-                }
-            }
-
-            function addProposal(item) {
-                if (angular.isObject(item)) {
-                    if ((self.proposals instanceof Array) === false) {
+            function addProposal(type) {
+                $log.debug("dbProposals: addProposal: " + type);
+                if (angular.isObject(type)) {
+                    if (!angular.isArray(self.proposals)) {
                         self.proposals = [];
                     }
-                    if (item.isModified) {
-                        self.proposals.splice(0, 0, item);
-                    }
-                    else {
-                        self.proposals.splice(0, 0, createDraft(item.value));
-                    }
+                    var draft = createDraft(type.value);
+                    self.proposals.splice(0, 0, draft);
                 }
                 else {
                     $log.error('dbProposals: addProposal parameter invalid');
@@ -182,59 +140,47 @@ angular.module('dashboard')
                 countProposals();
             }
 
-            function removeProposal(proposal) {
-                $log.debug("dbProposals: removeProposal: " + JSON.stringify(proposal));
-                for (var index = self.proposals.length + CONST.NOTFOUND; angular.isArray(self.proposals) && index > CONST.NOTFOUND; index--) {
+            function removeProposal(guid) {
+                var search = angular.isArray(self.proposals);
+                for (var index = self.proposals.length + CONST.NOTFOUND; search && index > CONST.NOTFOUND; index--) {
                     var localProposal = self.proposals[index];
-                    // proposal will be removed if proposal or proposalGuid equals
-                    if (angular.equals(proposal, localProposal) || angular.equals(proposal, localProposal.proposalGuid)) {
+                    if (angular.equals(guid, localProposal.proposalGuid)) {
                         self.proposals.splice(index, 1);
+                        search = false;
                     }
                 }
+                checkProposals();
                 countProposals();
             }
 
-            function deleteProposal(proposal) {
-                $log.debug("dbProposals: deleteProposal: " + JSON.stringify(proposal));
-                if (proposal instanceof Object) {
-                    if (proposal.isPublished === PROPS.PUBLISHED.YES) {
-                        AhjoProposalsSrv.delete(proposal).$promise.then(function(response) {
-                            if (angular.isObject(response) && angular.isObject(response.Data) && angular.isObject(response.Data.Data)) {
-                                removeProposal(response.Data.Data.ProposalGuid);
-                            }
-                        }, function(error) {
-                            $log.error("dbProposals: delete error: " + JSON.stringify(error));
-                        }, function(/*notify*/) {
+            self.delete = function(data) {
+                if (angular.isObject(data)) {
+                    removeProposal(data.guid);
+                }
+                else {
+                    $log.error('dbProposals: delete parameter invalid');
+                }
+            };
 
-                        }).finally(function() {
-
-                        });
+            self.copy = function(data) {
+                $log.debug("dbProposals: copy: " + JSON.stringify(data));
+                if (angular.isObject(data)) {
+                    var draft = createDraft(data.proposal.proposalType);
+                    if (angular.isObject(draft)) {
+                        draft.text = data.proposal.text;
+                        self.proposals.splice(0, 0, draft);
                     }
                     else {
-                        removeProposal(proposal);
+                        $log.error('dbProposals: draft invalid');
                     }
                 }
                 else {
-                    $log.error('dbProposals: deleteProposal parameter invalid');
+                    $log.error('dbProposals: copy parameter invalid');
                 }
-            }
-
-            self.post = function(proposal) {
-                postProposal(proposal);
             };
 
-            self.delete = function(proposal) {
-                deleteProposal(proposal);
-            };
-
-            self.copy = function(proposal) {
-                var draft = createDraft(proposal.proposalType);
-                draft.text = proposal.text;
-                self.proposals.splice(0, 0, draft);
-            };
-
-            self.addProposalClicked = function(item) {
-                addProposal(item);
+            self.addProposalClicked = function(type) {
+                addProposal(type);
             };
 
             self.toggleAll = function() {
@@ -255,12 +201,12 @@ angular.module('dashboard')
                     switch (data.TypeName) {
                         case CONST.MTGEVENT.REMARKPUBLISHED:
                             if (data.Proposal instanceof Object && data.Proposal.topicGuid === $scope.guid) {
-                                addProposal(data.Proposal);
+
                             }
                             break;
                         case CONST.MTGEVENT.REMARKDELETED:
                             if (data.TopicGuid === $scope.guid) {
-                                removeProposal(data.DeletedProposal);
+
                             }
                             break;
                         default:
@@ -273,16 +219,16 @@ angular.module('dashboard')
                 }
             });
 
-            var editingWatcher = $rootScope.$on(PROPS.EDITING, function(event, sender) {
+            var modeWatcher = $rootScope.$on(PROPS.MODECHANGE, function(event, sender) {
                 if (angular.isObject(sender)) {
                     if (self.proposals.indexOf(sender) >= 0) {
-                        checkIsEditing();
+                        checkProposals();
                     }
                 }
             });
 
             $scope.$on('$destroy', eventWatcher);
-            $scope.$on('$destroy', editingWatcher);
+            $scope.$on('$destroy', modeWatcher);
 
             $scope.$on('$destroy', function() {
                 $log.debug("dbProposals: DESTROY");

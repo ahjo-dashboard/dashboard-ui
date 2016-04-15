@@ -5,7 +5,8 @@
                 <h4 class="prop-header-text" translate translate-cloak>STR_PRIVATE_PROPOSALS</h4>
             </div>
             <div class="prop-row-child col-xs-12 col-md-3 col-lg-2 btn-group" uib-dropdown is-open="">
-                <button id="typeButton" type="button" class="prop-button btn btn-block ng-class:[{'btn-info': c.isMobile},{' db-btn-prim': !c.isMobile}]" uib-dropdown-toggle translate translate-cloak>STR_CREATE_PROPOSAL<span class="caret hidden-sm"></span>
+                <button id="typeButton" type="button" class="prop-button btn btn-block ng-class:[{'btn-info': c.isMobile},{' db-btn-prim': !c.isMobile}]"
+                uib-dropdown-toggle translate translate-cloak>STR_CREATE_PROPOSAL<span class="caret hidden-sm"></span>
                 </button>
                 <ul uib-dropdown-menu role="menu" aria-labelledby="typeButton">
                     <li class="" role="menuitem" ng-repeat="type in c.tps track by $index" ng-click="c.addProposalClicked(type)">
@@ -17,7 +18,8 @@
     </div>
     <div class="col-xs-12">
         <div class="row">
-            <db-proposal ng-if="(p.isPublished === c.published.NO)" proposal="p" guid="guid" on-post="c.post(p)" on-delete="c.delete(p)" on-copy="c.copy(p)" ng-repeat="p in c.proposals track by $index">
+            <db-proposal ng-if="(p.isPublished === c.published.NO || p.isPublished === null)" proposal="p" guid="guid" on-delete="c.delete(data)" on-copy="c.copy(data)"
+            ng-repeat="p in c.proposals track by $index">
             </db-proposal>
         </div>
     </div>
@@ -27,7 +29,8 @@
                 <h4 class="prop-header-text" translate translate-cloak>STR_PUBLIC_PROPOSALS</h4>
             </div>
             <div class="prop-row-child col-xs-12 col-md-3 col-lg-2">
-                <button id="typeButton" type="button" class="prop-button btn btn-block ng-class:[{'btn-info': c.isMobile},{' db-btn-prim': !c.isMobile}]" ng-click="c.toggleAll()">
+                <button id="typeButton" type="button" class="prop-button btn btn-block ng-class:[{'btn-info': c.isMobile},{' db-btn-prim': !c.isMobile}]"
+                ng-click="c.toggleAll()">
                     <div ng-if="!c.isAllOpen" translate translate-cloak>STR_OPEN_ALL</div>
                     <div ng-if="c.isAllOpen" translate translate-cloak>STR_CLOSE_ALL</div>
                 </button>
@@ -36,7 +39,8 @@
     </div>
     <div class="col-xs-12">
         <div class="row">
-            <db-proposal ng-if="(p.isPublished === c.published.YES)" proposal="p" guid="guid" on-post="c.post(p)" on-delete="c.delete(p)" on-copy="c.copy(p)" ng-repeat="p in c.proposals | orderBy:'insertDateTime': true track by $index">
+            <db-proposal ng-if="(p.isPublished === c.published.YES)" proposal="p" guid="guid" on-delete="c.delete(data)" on-copy="c.copy(data)"
+            ng-repeat="p in c.proposals | orderBy:'insertDateTime': true track by $index">
             </db-proposal>
         </div>
     </div>

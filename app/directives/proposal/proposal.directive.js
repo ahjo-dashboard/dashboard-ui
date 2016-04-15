@@ -40,7 +40,7 @@ angular.module('dashboard')
     })
     .directive('dbProposal', [function() {
 
-        var controller = ['$log', '$scope', 'PROPS', 'PROP', '$rootScope', function($log, $scope, PROPS, PROP, $rootScope) {
+        var controller = ['$log', '$scope', 'PROPS', 'PROP', '$rootScope', 'AhjoProposalsSrv', function($log, $scope, PROPS, PROP, $rootScope, AhjoProposalsSrv) {
             $log.debug("dbProposal: CONTROLLER");
             var self = this;
             self.isTooltips = $rootScope.isTooltips;
@@ -49,6 +49,7 @@ angular.module('dashboard')
             self.status = PROP.STATUS.PUBLIC;
             self.editedText = "";
             self.isModified = false;
+            var previousIsPublished = null;
 
             self.lBtn = null;
             self.mBtn = null;
@@ -63,11 +64,10 @@ angular.module('dashboard')
 
                 switch (self.mode) {
                     case PROP.MODE.COLLAPSED:
-                        if (self.isDraft()) {
+                        if (self.status === PROP.STATUS.DRAFT) {
                             self.lBtn = PROP.BTN.EDIT;
                             self.mBtn = (($scope.proposal instanceof Object) && $scope.proposal.text) ? PROP.BTN.SEND : PROP.BTN.DISABLEDSEND;
                             self.rBtn = PROP.BTN.DELETE;
-                            $rootScope.$emit(PROPS.EDITING, $scope.proposal);
                         }
                         else {
                             self.rBtn = PROP.BTN.OPEN;
@@ -75,11 +75,10 @@ angular.module('dashboard')
                         break;
 
                     case PROP.MODE.OPEN:
-                        if (self.isDraft()) {
+                        if (self.status === PROP.STATUS.DRAFT) {
                             self.lBtn = PROP.BTN.OK;
                             self.mBtn = PROP.BTN.CANCEL;
                             self.rBtn = null;
-                            $rootScope.$emit(PROPS.EDITING, $scope.proposal);
                         }
                         else {
                             self.rBtn = PROP.BTN.CLOSE;
@@ -89,6 +88,7 @@ angular.module('dashboard')
                     default:
                         break;
                 }
+                $rootScope.$emit(PROPS.MODECHANGE, $scope.proposal);
             }
 
             function setStatus(status) {
@@ -117,32 +117,70 @@ angular.module('dashboard')
             }
 
             function setProposal(proposal) {
-                if (proposal instanceof Object) {
-                    if (proposal.isNew) {
+                if (angular.isObject(proposal)) {
+                    if (proposal.isPublished === null) {
                         setStatus(PROP.STATUS.DRAFT);
                         setMode(PROP.MODE.OPEN);
                     }
                     else if (proposal.isOwnProposal) {
-                        setStatus((proposal.isPublished === 1) ? PROP.STATUS.PUBLISHED : PROP.STATUS.DRAFT);
+                        setStatus((proposal.isPublished === PROPS.PUBLISHED.YES) ? PROP.STATUS.PUBLISHED : PROP.STATUS.DRAFT);
+                        setMode(PROP.MODE.COLLAPSED);
                     }
                     else {
                         setStatus(PROP.STATUS.PUBLIC);
                     }
                     self.isModified = proposal.isModified;
                     self.editedText = proposal.text;
-
-                    proposal.isEditing = self.isEditing;
                 }
             }
 
-            function startEditing() {
-                self.editedText = $scope.proposal.text;
+            function postProposal(proposal) {
+                $log.debug("dbProposal: postProposal: " + JSON.stringify(proposal));
+                if (angular.isObject(proposal)) {
+
+                    var copy = angular.copy(proposal);
+                    if (copy.isPublished === null) {
+                        copy.isPublished = PROPS.PUBLISHED.NO;
+                    }
+                    else if (copy.isPublished === PROPS.PUBLISHED.NO) {
+                        copy.isPublished = PROPS.PUBLISHED.YES;
+                    }
+
+                    AhjoProposalsSrv.post(copy).$promise.then(function(response) {
+                        $log.debug("dbProposal: post then: " + JSON.stringify(response));
+                        if (angular.isObject(response) && angular.isObject(response.Data)) {
+                            angular.merge($scope.proposal, response.Data);
+                        }
+                        else {
+                            $log.error('dbProposal: postProposal invalid response');
+                        }
+                    }, function(error) {
+                        $log.error("dbProposal: post error: " + JSON.stringify(error));
+                    });
+                }
+                else {
+                    $log.error('dbProposal: postProposal invalid parameter');
+                }
             }
 
-            function endEditing() {
-                if ($scope.proposal.text !== self.editedText || !self.editedText) {
-                    $scope.proposal.text = self.editedText ? self.editedText : '';
-                    $scope.onPost({ proposal: $scope.proposal });
+            function deleteProposal(proposal) {
+                $log.debug("dbProposal: deleteProposal: " + JSON.stringify(proposal));
+                if (angular.isObject(proposal)) {
+                    if (proposal.proposalGuid) {
+                        AhjoProposalsSrv.delete(proposal).$promise.then(function(response) {
+                            if (angular.isObject(response) && angular.isObject(response.Data) && angular.isObject(response.Data.Data)) {
+                                $scope.onDelete({ data: { guid: response.Data.Data.proposalGuid } });
+                            }
+                        }, function(error) {
+                            $log.error("dbProposal: delete error: " + JSON.stringify(error));
+                        });
+                    }
+                    else {
+                        $scope.onDelete({ data: { guid: proposal.proposalGuid } });
+                    }
+                }
+                else {
+                    $log.error('dbProposal: deleteProposal invalid parameter');
                 }
             }
 
@@ -151,12 +189,8 @@ angular.module('dashboard')
                 return (obj && obj.text) ? obj.text : value;
             };
 
-            self.isDraft = function() {
-                return self.status === PROP.STATUS.DRAFT;
-            };
-
             self.isEditing = function() {
-                return (self.isDraft() && self.mode === PROP.MODE.OPEN);
+                return (self.status === PROP.STATUS.DRAFT && self.mode === PROP.MODE.OPEN);
             };
 
             self.isReading = function() {
@@ -187,36 +221,33 @@ angular.module('dashboard')
                         break;
 
                     case PROP.BTN.CANCEL.action:
-                        if ($scope.proposal.isNew) {
-                            delete $scope.proposal.isNew;
-                        }
+                        $scope.proposal.isPublished = previousIsPublished;
                         setMode(PROP.MODE.COLLAPSED);
                         break;
 
                     case PROP.BTN.OK.action:
-                        if ($scope.proposal.isNew) {
-                            delete $scope.proposal.isNew;
-                        }
-                        endEditing();
+                        $scope.proposal.text = self.editedText ? self.editedText : '';
+                        postProposal($scope.proposal);
                         setMode(PROP.MODE.COLLAPSED);
                         break;
 
                     case PROP.BTN.DELETE.action:
-                        $scope.onDelete({ proposal: $scope.proposal });
+                        deleteProposal($scope.proposal);
                         break;
 
                     case PROP.BTN.SEND.action:
-                        $scope.proposal.isPublished = PROPS.PUBLISHED.YES;
-                        $scope.onPost({ proposal: $scope.proposal });
+                        postProposal($scope.proposal);
                         break;
 
                     case PROP.BTN.EDIT.action:
-                        startEditing();
+                        self.editedText = $scope.proposal.text;
+                        previousIsPublished = $scope.proposal.isPublished;
+                        $scope.proposal.isPublished = null;
                         setMode(PROP.MODE.OPEN);
                         break;
 
                     case PROP.BTN.COPY.action:
-                        $scope.onCopy({ proposal: $scope.proposal });
+                        $scope.onCopy({ data: { proposal: $scope.proposal } });
                         break;
 
                     default:
@@ -255,7 +286,6 @@ angular.module('dashboard')
             scope: {
                 proposal: '=',
                 guid: '=',
-                onPost: '&',
                 onDelete: '&',
                 onCopy: '&'
             },
