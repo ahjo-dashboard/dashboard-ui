@@ -206,10 +206,6 @@ angular.module('dashboard')
                 return (self.isPublic() && self.mode === PROP.MODE.OPEN);
             };
 
-            self.isPublished = function() {
-                return self.status === PROP.STATUS.PUBLISHED;
-            };
-
             self.isPublic = function() {
                 return (self.status === PROP.STATUS.PUBLIC || self.status === PROP.STATUS.PUBLISHED);
             };
