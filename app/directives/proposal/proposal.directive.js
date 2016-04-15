@@ -49,6 +49,7 @@ angular.module('dashboard')
             self.status = PROP.STATUS.PUBLIC;
             self.editedText = "";
             self.isModified = false;
+            self.updating = false;
             var previousIsPublished = null;
 
             self.lBtn = null;
@@ -137,6 +138,7 @@ angular.module('dashboard')
             function postProposal(proposal) {
                 $log.debug("dbProposal: postProposal: " + JSON.stringify(proposal));
                 if (angular.isObject(proposal)) {
+                    self.updating = true;
 
                     var copy = angular.copy(proposal);
                     if (copy.isPublished === null) {
@@ -156,6 +158,9 @@ angular.module('dashboard')
                         }
                     }, function(error) {
                         $log.error("dbProposal: post error: " + JSON.stringify(error));
+                    }).finally(function() {
+                        $log.debug("dbProposal: post finally: ");
+                        self.updating = false;
                     });
                 }
                 else {
@@ -166,13 +171,17 @@ angular.module('dashboard')
             function deleteProposal(proposal) {
                 $log.debug("dbProposal: deleteProposal: " + JSON.stringify(proposal));
                 if (angular.isObject(proposal)) {
-                    if (proposal.proposalGuid) {
+                    if (proposal.isPublished === PROPS.PUBLISHED.NO || proposal.isPublished === PROPS.PUBLISHED.YES) {
+                        self.updating = true;
                         AhjoProposalsSrv.delete(proposal).$promise.then(function(response) {
                             if (angular.isObject(response) && angular.isObject(response.Data) && angular.isObject(response.Data.Data)) {
                                 $scope.onDelete({ data: { guid: response.Data.Data.proposalGuid } });
                             }
                         }, function(error) {
                             $log.error("dbProposal: delete error: " + JSON.stringify(error));
+                        }).finally(function() {
+                            $log.debug("dbProposal: delete finally: ");
+                            self.updating = false;
                         });
                     }
                     else {
