@@ -4,10 +4,9 @@
 */
 'use strict';
 angular.module('dashboard')
-    .config(['$urlRouterProvider', '$stateProvider', 'ENV', 'CONST', function($urlRouterProvider, $stateProvider, ENV, CONST) {
-        var device = angular.element('#device');
-
-        if (device && device.css('min-width') === '320px') {
+    .config(['$urlRouterProvider', '$stateProvider', 'ENV', 'CONST', 'UtilsProvider', function($urlRouterProvider, $stateProvider, ENV, CONST, UtilsProvider) {
+        var utils = UtilsProvider.$get();
+        if (utils && angular.isFunction(utils.isClientMobile) && utils.isClientMobile()) {
             /* MOBILE States and routings */
             $stateProvider
                 .state(CONST.APPSTATE.APP, {

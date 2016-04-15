@@ -55,7 +55,7 @@
                         <div class="db-iconwrapper">
                             <img ng-src="{{msc.statusIcon(topic)}}">
                             <img ng-show="topic.includePublishedRemark" ng-src="images/mtg-states/prop-indicator.png">
-                            <img ng-show="{{msc.isTopicPublic(topic)}}" ng-src="images/mtg-states/conf-indicator.png">
+                            <img ng-show="{{!msc.isTopicPublic(topic)}}" ng-src="images/mtg-states/conf-indicator.png">
                         </div>
                         <span ng-if="msc.chairman" class="caret"></span>
                     </button>
