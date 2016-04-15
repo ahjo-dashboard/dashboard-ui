@@ -5,7 +5,7 @@
                 <h4 class="prop-header-text" translate translate-cloak>STR_PRIVATE_PROPOSALS</h4>
             </div>
             <div class="prop-row-child col-xs-12 col-md-3 col-lg-2 btn-group" uib-dropdown is-open="">
-                <button id="typeButton" type="button" class="prop-button btn btn-block ng-class:[{'btn-info': c.isMobile},{' db-btn-prim': !c.isMobile}]"
+                <button id="typeButton" type="button" ng-disabled="c.unsavedCount" class="prop-button btn btn-block ng-class:[{'btn-info': c.isMobile},{' db-btn-prim': !c.isMobile}]"
                 uib-dropdown-toggle translate translate-cloak>STR_CREATE_PROPOSAL<span class="caret hidden-sm"></span>
                 </button>
                 <ul uib-dropdown-menu role="menu" aria-labelledby="typeButton">

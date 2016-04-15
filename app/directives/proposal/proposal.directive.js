@@ -88,7 +88,7 @@ angular.module('dashboard')
                     default:
                         break;
                 }
-                $rootScope.$emit(PROPS.MODECHANGE, $scope.proposal);
+                $rootScope.$emit(PROPS.MODECHANGE, { sender: $scope.proposal });
             }
 
             function setStatus(status) {

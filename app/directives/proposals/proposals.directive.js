@@ -42,7 +42,7 @@ angular.module('dashboard')
             self.published = PROPS.PUBLISHED;
             self.isMobile = $rootScope.isMobile;
             self.isAllOpen = false;
-            var unsavedCount = 0;
+            self.unsavedCount = 0;
 
             function countProposals() {
                 var drafts = 0;
@@ -67,7 +67,6 @@ angular.module('dashboard')
             }
 
             function checkProposals() {
-                $log.debug("dbProposals: checkProposals: " + unsavedCount);
                 var unsaved = 0;
                 angular.forEach(self.proposals, function(item) {
                     if (angular.isObject(item) && item.isPublished === null) {
@@ -75,13 +74,13 @@ angular.module('dashboard')
                     }
                 });
 
-                if (!unsavedCount && unsaved) {
+                if (!self.unsavedCount && unsaved) {
                     $rootScope.$emit(CONST.PROPOSALISEDITING, true);
                 }
-                else if (unsavedCount && !unsaved) {
+                else if (self.unsavedCount && !unsaved) {
                     $rootScope.$emit(CONST.PROPOSALISEDITING, false);
                 }
-                unsavedCount = unsaved;
+                self.unsavedCount = unsaved;
             }
 
             function createDraft(type) {
@@ -219,9 +218,9 @@ angular.module('dashboard')
                 }
             });
 
-            var modeWatcher = $rootScope.$on(PROPS.MODECHANGE, function(event, sender) {
-                if (angular.isObject(sender)) {
-                    if (self.proposals.indexOf(sender) >= 0) {
+            var modeWatcher = $rootScope.$on(PROPS.MODECHANGE, function(event, data) {
+                if (angular.isObject(data) && angular.isObject(data.sender)) {
+                    if (self.proposals.indexOf(data.sender) >= 0) {
                         checkProposals();
                     }
                 }
