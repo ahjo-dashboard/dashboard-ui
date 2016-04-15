@@ -21,7 +21,7 @@ angular.module('dashboard')
         self.chairman = false;
         self.loading = true;
         self.isEditing = false;
-        self.unsavedConfig = { title: 'STR_WARNING_UNSAVED', text: null, yes: 'STR_CONTINUE' };
+        self.unsavedConfig = { title: 'STR_CONFIRM', text: 'STR_WARNING_UNSAVED', yes: 'STR_CONTINUE' };
         var meetingItem = StorageSrv.get(CONST.KEY.MEETING_ITEM);
         var isMobile = $rootScope.isMobile;
         var pollingTimer = null;
