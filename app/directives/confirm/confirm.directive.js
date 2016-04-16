@@ -52,6 +52,8 @@ angular.module('dashboard')
 
                 modalInstance.result.then(function() {
                     $scope.ngClick();
+                }, function() {
+                    $scope.onReject();
                 });
 
                 modalInstance.opened.then(function() {
@@ -78,7 +80,8 @@ angular.module('dashboard')
             scope: {
                 confirmEnabled: '=',
                 confirmConfig: '=',
-                ngClick: '&'
+                ngClick: '&',
+                onReject: '&'
             },
             restrict: 'A',
             controller: controller,
