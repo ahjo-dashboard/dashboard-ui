@@ -11,48 +11,60 @@
  * # pdfDirective
  */
 angular.module('dashboard')
-    .directive('dbPdf', ['$compile', '$rootScope', '$window', 'CONST', '$log', '$interval', function($compile, $rootScope, $window, CONST, $log, $interval) {
+    .directive('dbPdf', ['$compile', '$rootScope', '$window', 'CONST', '$log', '$interval', function ($compile, $rootScope, $window, CONST, $log, $interval) {
         return {
             scope: {
                 uri: '=',
                 mode: '=',
-                hide: '=',
-                animate: '='
+                hide: '='
             },
             templateUrl: 'directives/pdf/pdf.Directive.html',
             restrict: 'AE',
             replace: 'true',
-            link: function(scope, element, attrs) {
+            link: function (scope, element/*, attrs*/) {
 
                 var HEIGHT = 'height';
                 var WIDTH = 'width';
                 var RESIZE = 'resize';
+                var SRC = 'src';
+                var params = "?secondary=false&amp;mixed=false#view=FitH&amp;toolbar=0&amp;statusbar=0&amp;messages=0&amp;navpanes=0";
                 var timer;
                 var pending = false;
                 var hidden = false;
-                var anim = angular.isDefined(attrs.animate);
+                var anim = false;
+
+                if (scope.uri) {
+                    element.attr(SRC, scope.uri + params);
+                }
+
+                element.css(HEIGHT, element.parent().height());
+                element.css(WIDTH, element.parent().width());
 
                 function hide() {
                     if (!hidden) {
                         hidden = true;
-                        if (anim) {
-                            element.removeClass('db-visible-pdf');
-                            element.addClass('db-hidden-pdf');
-                        }
+                        element.removeClass('db-visible-pdf');
+                        element.removeClass('db-visible-pdf-anim');
+                        element.addClass('db-hidden-pdf');
                     }
                 }
 
                 function show() {
                     pending = true;
                     if (!angular.isDefined(timer)) {
-                        timer = $interval(function() {
+                        timer = $interval(function () {
                             if (!pending) {
                                 $interval.cancel(timer);
                                 timer = undefined;
                                 element.css(HEIGHT, element.parent().height());
                                 element.css(WIDTH, element.parent().width());
+                                element.removeClass('db-hidden-pdf');
                                 if (anim) {
-                                    element.removeClass('db-hidden-pdf');
+                                    element.removeClass('db-visible-pdf');
+                                    element.addClass('db-visible-pdf-anim');
+                                }
+                                else {
+                                    element.removeClass('db-visible-pdf-anim');
                                     element.addClass('db-visible-pdf');
                                 }
                                 hidden = false;
@@ -65,65 +77,77 @@ angular.module('dashboard')
                 }
 
                 scope.$watch(
-                    function() {
+                    function () {
                         return { uri: scope.uri };
                     },
-                    function() {
-                        hide();
-                        element.empty();
-                        var uri = '<iframe src=' + scope.uri + '?secondary=false&amp;mixed=false#view=FitH&amp;toolbar=0&amp;statusbar=0&amp;messages=0&amp;navpanes=0"></iframe>';
-                        element.append($compile(uri)(scope));
-                        show();
+                    function () {
+                        var src = element.attr(SRC);
+                        var newSrc = scope.uri + params;
+                        if (src !== newSrc) {
+                            anim = false;
+                            element.attr(SRC, newSrc);
+                        }
                     },
                     true
                 );
 
                 scope.$watch(
-                    function() {
+                    function () {
                         return { mode: scope.mode };
                     },
-                    function() {
+                    function () {
                         hide();
+                        anim = true;
                         show();
                     },
                     true
                 );
 
                 scope.$watch(
-                    function() {
+                    function () {
                         return { hide: scope.hide };
                     },
-                    function(data) {
+                    function (data) {
                         if (data.hide) {
+                            if (angular.isDefined(timer)) {
+                                $interval.cancel(timer);
+                            }
+                            timer = null;
                             hide();
                         }
                         else {
+                            anim = false;
+                            if (angular.isDefined(timer) ) {
+                                $interval.cancel(timer);
+                            }
+                            timer = undefined;
                             show();
                         }
                     },
                     true
                 );
 
-                angular.element($window).bind(RESIZE, function() {
+                angular.element($window).bind(RESIZE, function () {
                     hide();
+                    anim = true;
                     show();
                 });
 
-                var watcher = $rootScope.$on(CONST.MENUACTIVE, function(event, data) {
+                var watcher = $rootScope.$on(CONST.MENUACTIVE, function (event, data) {
                     if (data) {
                         hide();
                     }
                     else {
+                        anim = true;
                         show();
                     }
                 });
 
                 scope.$on('$destroy', watcher);
 
-                scope.$on('$destroy', function() {
+                scope.$on('$destroy', function () {
                     $log.debug("pdfDirective: DESTROY");
                 });
-
             }
         };
     }]);

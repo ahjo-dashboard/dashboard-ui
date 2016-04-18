@@ -234,13 +234,24 @@ body {
     .db-hidden-pdf {
         visibility: hidden;
         opacity: 0.0;
-        transition: visibility 100ms, opacity 100ms;
+        transition-property: visibility, opacity;
+        transition-duration: 0s;
+        transition-timing-function: ease-in;
+        transition-delay: 0s;
     }
 
     .db-visible-pdf {
         visibility: visible;
         opacity: 1.0;
-        transition: visibility 800ms, opacity 800ms;
+        transition-property: visibility, opacity;
+        transition-duration: 0s;
+        transition-timing-function: ease-in;
+        transition-delay: 0s;
+    }
+
+    .db-visible-pdf-anim {
+        @extend .db-visible-pdf;
+        transition-duration: 1s;
     }
 
     .panel-heading {
