@@ -109,10 +109,18 @@ angular.module('dashboard')
                     },
                     function (data) {
                         if (data.hide) {
+                            if (angular.isDefined(timer)) {
+                                $interval.cancel(timer);
+                            }
+                            timer = null;
                             hide();
                         }
                         else {
                             anim = false;
+                            if (angular.isDefined(timer) ) {
+                                $interval.cancel(timer);
+                            }
+                            timer = undefined;
                             show();
                         }
                     },

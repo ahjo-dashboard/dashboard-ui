@@ -102,21 +102,22 @@ angular.module('dashboard')
             function getProposals(guid) {
                 $log.debug("dbProposals: getProposals: " + guid);
                 if (typeof guid === 'string') {
-                    var getResult = null;
-
                     AhjoProposalsSrv.get({ 'guid': guid }).$promise.then(function(response) {
-                        $log.debug("dbProposals: get then: ");
-                        getResult = (response instanceof Object) ? response.objects : null;
+                        $log.debug("dbProposals: get then");
+                        if (angular.isObject(response) && angular.isArray(response.objects)) {
+                            self.proposals = angular.copy(response.objects);
+                        }
+                        else {
+                            $log.error('dbProposals: getProposals invalid response');
+                            self.proposals = null;
+                        }
                     }, function(error) {
                         $log.error("dbProposals: get error: " + JSON.stringify(error));
                     }, function(notify) {
                         $log.debug("dbProposals: get notify: " + JSON.stringify(notify));
                     }).finally(function() {
                         $log.debug("dbProposals: get finally: ");
-                        if (getResult instanceof Object) {
-                            self.proposals = angular.copy(getResult);
-                            countProposals();
-                        }
+                        countProposals();
                     });
                 }
                 else {
