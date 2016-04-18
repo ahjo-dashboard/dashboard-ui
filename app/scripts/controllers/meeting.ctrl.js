@@ -34,7 +34,7 @@ angular.module('dashboard')
 
         self.propCount = null;
         self.linkConfig = {
-            title: 'STR_TOPIC',
+            title: 'STR_TOPIC_DOWNLOAD',
             class: 'btn btn-info btn-lg btn-block wrap-button-text db-btn-prim'
         };
         self.unsavedConfig = { title: 'STR_CONFIRM', text: 'STR_WARNING_UNSAVED', yes: 'STR_CONTINUE' };
