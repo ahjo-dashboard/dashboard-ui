@@ -93,7 +93,7 @@
             <!-- UPPER START -->
             <div class="ad-flex-item-upper ng-class:[{'ad-flex-show-full': ctrl.isUpperMode(), 'ad-flex-show': ctrl.isBothMode(), 'ad-flex-hide': ctrl.isLowerMode()}]">
 
-                <db-pdf ng-if="ctrl.isUrlString(ctrl.upperUrl)" ng-attr-uri="ctrl.upperUrl" ng-attr-mode="ctrl.blockMode" ng-attr-hide="ctrl.hide" animate></db-pdf>
+                <db-pdf ng-if="ctrl.isUrlString(ctrl.upperUrl)" ng-attr-uri="ctrl.upperUrl" ng-attr-mode="ctrl.blockMode" ng-attr-hide="ctrl.hide"></db-pdf>
 
                 <div ng-if="ctrl.error" class="alert alert-danger" role="alert">{{ctrl.error}}</div>
             </div>
@@ -102,7 +102,7 @@
             <!-- LOWER START -->
             <div class="ad-flex-item-lower ng-class:[{'ad-flex-show-full': ctrl.isLowerMode(), 'ad-flex-show': ctrl.isBothMode(), 'ad-flex-hide': ctrl.isUpperMode()}]">
 
-                <db-pdf ng-if="ctrl.showEmbeddedFile(ctrl.lowerUrl)" ng-attr-uri="ctrl.lowerUrl" ng-attr-mode="ctrl.blockMode" animate></db-pdf>
+                <db-pdf ng-if="ctrl.showEmbeddedFile(ctrl.lowerUrl)" ng-attr-uri="ctrl.lowerUrl" ng-attr-mode="ctrl.blockMode"></db-pdf>
                 <db-proposals ng-if="ctrl.isActive(ctrl.lbms.PROPOSALS)" guid="ctrl.topic.topicGuid"></db-proposals>
 
             </div>

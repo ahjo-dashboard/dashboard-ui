@@ -105,7 +105,7 @@ angular.module('dashboard')
                     var getResult = null;
 
                     AhjoProposalsSrv.get({ 'guid': guid }).$promise.then(function(response) {
-                        $log.debug("dbProposals: get then: " + JSON.stringify(response));
+                        $log.debug("dbProposals: get then: ");
                         getResult = (response instanceof Object) ? response.objects : null;
                     }, function(error) {
                         $log.error("dbProposals: get error: " + JSON.stringify(error));

@@ -112,9 +112,7 @@ angular.module('dashboard', [
             $rootScope.$emit(CONST.MENUACTIVE, true);
             $timeout(function() {
                 $rootScope.menu = CONST.MENU.FULL;
-                $timeout(function() {
-                    $rootScope.$emit(CONST.MENUACTIVE, false);
-                }, 300);
+                $rootScope.$emit(CONST.MENUACTIVE, false);
             }, 0);
         };
 
@@ -123,9 +121,7 @@ angular.module('dashboard', [
                 $rootScope.$emit(CONST.MENUACTIVE, true);
                 $timeout(function() {
                     $rootScope.menu = $rootScope.menu - 1;
-                    $timeout(function() {
-                        $rootScope.$emit(CONST.MENUACTIVE, false);
-                    }, 300);
+                    $rootScope.$emit(CONST.MENUACTIVE, false);
                 }, 0);
             }
         };
