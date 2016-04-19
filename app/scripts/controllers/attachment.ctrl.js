@@ -11,7 +11,7 @@ angular.module('dashboard')
     .controller('attachmentCtrl', ['$log', '$scope', 'StorageSrv', 'CONST', function ($log, $scope, StorageSrv, CONST) {
         $log.debug("attachmentCtrl: CONTROLLER");
         var self = this;
-        self.data = StorageSrv.get(CONST.KEY.LISTPDF_DATA);
+        self.data = StorageSrv.getKey(CONST.KEY.LISTPDF_DATA);
 
         $scope.$on('$destroy', function () {
             $log.debug("attachmentCtrl: DESTROY");

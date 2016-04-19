@@ -17,7 +17,7 @@ angular.module('dashboard')
         var self = this;
         self.guid = null;
 
-        var topic = StorageSrv.get(CONST.KEY.TOPIC);
+        var topic = StorageSrv.getKey(CONST.KEY.TOPIC);
         if (topic instanceof Object) {
             self.guid = topic.topicGuid;
         }
