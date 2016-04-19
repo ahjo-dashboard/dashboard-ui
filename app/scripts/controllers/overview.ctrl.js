@@ -12,7 +12,7 @@
  * Controller of the dashboard
  */
 angular.module('dashboard')
-    .controller('overviewCtrl', ['$scope', '$log', 'ENV', 'SigningOpenApi', '$state', '$rootScope', 'CONST', '$stateParams', 'MTGD', 'StorageSrv', function($scope, $log, ENV, SigningOpenApi, $state, $rootScope, CONST, $stateParams, MTGD, StorageSrv) {
+    .controller('overviewCtrl', ['$scope', '$log', 'ENV', 'SigningOpenApi', '$state', '$rootScope', 'CONST', '$stateParams', 'MTGD', 'StorageSrv', function ($scope, $log, ENV, SigningOpenApi, $state, $rootScope, CONST, $stateParams, MTGD, StorageSrv) {
         $log.debug("overviewCtrl: CONTROLLER, mode: ", $stateParams.state);
         var self = this;
         self.loading = 0;
@@ -21,7 +21,7 @@ angular.module('dashboard')
         self.blockMode = CONST.BLOCKMODE.BOTH;
         self.vbl = MTGD.VISIBLE;
 
-        var visibleMtgs = StorageSrv.get(CONST.KEY.VISIBLE_MTGS);
+        var visibleMtgs = StorageSrv.getKey(CONST.KEY.VISIBLE_MTGS);
         switch (visibleMtgs) {
             case MTGD.VISIBLE.OPEN:
                 self.vblMtgs = MTGD.VISIBLE.OPEN;
@@ -34,7 +34,7 @@ angular.module('dashboard')
                 break;
         }
 
-        var signingRes = StorageSrv.get(CONST.KEY.SIGNING_RES);
+        var signingRes = StorageSrv.getKey(CONST.KEY.SIGNING_RES);
         self.closedSignReqs = signingRes ? signingRes : false;
 
         $rootScope.menu = CONST.MENU.CLOSED;
@@ -65,35 +65,35 @@ angular.module('dashboard')
 
         localStorage.overviewState = mode;
 
-        self.meetingItemSelected = function(meetingItem) {
+        self.meetingItemSelected = function (meetingItem) {
             $log.debug("overviewCtrl.meetingItemSelected");
-            StorageSrv.set(CONST.KEY.MEETING_ITEM, meetingItem);
+            StorageSrv.setKey(CONST.KEY.MEETING_ITEM, meetingItem);
             $state.go(CONST.APPSTATE.MEETING, { 'menu': CONST.MENU.FULL });
         };
 
-        self.showInfo = function() {
+        self.showInfo = function () {
             $log.debug("overviewCtrl: showInfo");
         };
 
-        self.upperClicked = function() {
+        self.upperClicked = function () {
             self.blockMode = (self.blockMode === CONST.BLOCKMODE.BOTH || self.blockMode === CONST.BLOCKMODE.LOWER) ? CONST.BLOCKMODE.UPPER : CONST.BLOCKMODE.BOTH;
         };
 
-        self.lowerClicked = function() {
+        self.lowerClicked = function () {
             self.blockMode = (self.blockMode === CONST.BLOCKMODE.BOTH || self.blockMode === CONST.BLOCKMODE.UPPER) ? CONST.BLOCKMODE.LOWER : CONST.BLOCKMODE.BOTH;
         };
 
-        self.setMtgsVisible = function(mtgs) {
+        self.setMtgsVisible = function (mtgs) {
             self.vblMtgs = mtgs;
-            StorageSrv.set(CONST.KEY.VISIBLE_MTGS, mtgs);
+            StorageSrv.setKey(CONST.KEY.VISIBLE_MTGS, mtgs);
         };
 
-        self.setClosedSignReqs = function(value) {
+        self.setClosedSignReqs = function (value) {
             self.closedSignReqs = value;
-            StorageSrv.set(CONST.KEY.SIGNING_RES, value);
+            StorageSrv.setKey(CONST.KEY.SIGNING_RES, value);
         };
 
-        $scope.$on('$destroy', function() {
+        $scope.$on('$destroy', function () {
             $log.debug("overviewCtrl: DESTROY");
         });
     }]);

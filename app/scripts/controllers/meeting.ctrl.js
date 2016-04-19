@@ -12,14 +12,14 @@
  * Controller of the dashboard
  */
 angular.module('dashboard')
-    .controller('meetingCtrl', ['$log', 'AhjoMeetingSrv', '$rootScope', '$scope', '$state', 'CONST', 'StorageSrv', 'AttachmentData', 'ListData', 'PROPS', function($log, AhjoMeetingSrv, $rootScope, $scope, $state, CONST, StorageSrv, AttachmentData, ListData, PROPS) {
+    .controller('meetingCtrl', ['$log', 'AhjoMeetingSrv', '$rootScope', '$scope', '$state', 'CONST', 'StorageSrv', 'AttachmentData', 'ListData', 'PROPS', function ($log, AhjoMeetingSrv, $rootScope, $scope, $state, CONST, StorageSrv, AttachmentData, ListData, PROPS) {
         $log.debug("meetingCtrl: CONTROLLER");
         var self = this;
         var isMobile = $rootScope.isMobile;
         self.upperUrl = {};
         self.lowerUrl = {};
         self.error = null;
-        self.topic = StorageSrv.get(CONST.KEY.TOPIC);
+        self.topic = StorageSrv.getKey(CONST.KEY.TOPIC);
         self.blockMode = CONST.BLOCKMODE.UPPER;
         self.lbms = CONST.LOWERBLOCKMODE;
         self.lbm = CONST.LOWERBLOCKMODE.PROPOSALS;
@@ -76,25 +76,25 @@ angular.module('dashboard')
             }
         }
 
-        self.upperClicked = function() {
+        self.upperClicked = function () {
             self.blockMode = (self.blockMode === CONST.BLOCKMODE.BOTH || self.blockMode === CONST.BLOCKMODE.LOWER) ? CONST.BLOCKMODE.UPPER : CONST.BLOCKMODE.BOTH;
         };
 
-        self.lowerClicked = function() {
+        self.lowerClicked = function () {
             self.blockMode = (self.blockMode === CONST.BLOCKMODE.BOTH || self.blockMode === CONST.BLOCKMODE.UPPER) ? CONST.BLOCKMODE.LOWER : CONST.BLOCKMODE.BOTH;
         };
 
-        self.topicClicked = function() {
+        self.topicClicked = function () {
             if (isMobile) {
-                StorageSrv.set(CONST.KEY.LISTPDF_DATA, self.tData);
+                StorageSrv.setKey(CONST.KEY.LISTPDF_DATA, self.tData);
                 $state.go(CONST.APPSTATE.TOPIC);
             }
         };
 
-        self.attachmentClicked = function(attachment) {
+        self.attachmentClicked = function (attachment) {
             self.lbm = CONST.LOWERBLOCKMODE.ATTACHMENTS;
             if (isMobile) {
-                StorageSrv.set(CONST.KEY.SELECTION_DATA, self.aData);
+                StorageSrv.setKey(CONST.KEY.SELECTION_DATA, self.aData);
                 $state.go(CONST.APPSTATE.LIST);
             }
             else if (attachment instanceof Object) {
@@ -103,10 +103,10 @@ angular.module('dashboard')
             checkMode();
         };
 
-        self.decisionClicked = function(decision) {
+        self.decisionClicked = function (decision) {
             self.lbm = CONST.LOWERBLOCKMODE.MATERIALS;
             if (isMobile) {
-                StorageSrv.set(CONST.KEY.SELECTION_DATA, self.dData);
+                StorageSrv.setKey(CONST.KEY.SELECTION_DATA, self.dData);
                 $state.go(CONST.APPSTATE.LIST);
             }
             else if (decision instanceof Object) {
@@ -115,10 +115,10 @@ angular.module('dashboard')
             checkMode();
         };
 
-        self.additionalMaterialClicked = function(material) {
+        self.additionalMaterialClicked = function (material) {
             self.lbm = CONST.LOWERBLOCKMODE.MATERIALS;
             if (isMobile) {
-                StorageSrv.set(CONST.KEY.SELECTION_DATA, self.amData);
+                StorageSrv.setKey(CONST.KEY.SELECTION_DATA, self.amData);
                 $state.go(CONST.APPSTATE.LIST);
             }
             else if (material instanceof Object) {
@@ -127,7 +127,7 @@ angular.module('dashboard')
             checkMode();
         };
 
-        self.proposalsClicked = function() {
+        self.proposalsClicked = function () {
             self.lbm = CONST.LOWERBLOCKMODE.PROPOSALS;
             if (isMobile) {
                 $state.go(CONST.APPSTATE.LISTPROPOSALS);
@@ -135,71 +135,71 @@ angular.module('dashboard')
             checkMode();
         };
 
-        self.aToggled = function(open) {
+        self.aToggled = function (open) {
             attachmentDropdownOpen = open;
             self.hide = (attachmentDropdownOpen || materialsDropdownOpen) && isIe;
         };
 
-        self.mToggled = function(open) {
+        self.mToggled = function (open) {
             materialsDropdownOpen = open;
             self.hide = (attachmentDropdownOpen || materialsDropdownOpen) && isIe;
         };
 
-        self.isBothMode = function() {
+        self.isBothMode = function () {
             return self.blockMode === CONST.BLOCKMODE.BOTH;
         };
 
-        self.isUpperMode = function() {
+        self.isUpperMode = function () {
             return self.blockMode === CONST.BLOCKMODE.UPPER;
         };
 
-        self.isLowerMode = function() {
+        self.isLowerMode = function () {
             return self.blockMode === CONST.BLOCKMODE.LOWER;
         };
 
-        self.isSecret = function(item) {
+        self.isSecret = function (item) {
             return (item && item.publicity) ? (item.publicity === CONST.PUBLICITY.SECRET) : false;
         };
 
-        self.showEmbeddedFile = function(url) {
+        self.showEmbeddedFile = function (url) {
             return self.isUrlString(url) && !self.isActive(CONST.LOWERBLOCKMODE.PROPOSALS);
         };
 
-        self.isActive = function(mode) {
+        self.isActive = function (mode) {
             return self.lbm === mode;
         };
 
-        self.isUrlString = function(url) {
+        self.isUrlString = function (url) {
             return (url && (typeof url === "string") && url.length) ? true : false;
         };
 
-        self.materialCount = function() {
+        self.materialCount = function () {
             var decisionCount = ((self.dData instanceof Object) && (self.dData.objects instanceof Array)) ? self.dData.objects.length : 0;
             var additionalMaterialCount = ((self.amData instanceof Object) && (self.amData.objects instanceof Array)) ? self.amData.objects.length : 0;
             return decisionCount + additionalMaterialCount;
         };
 
-        $scope.$watch(function() {
-            return StorageSrv.get(CONST.KEY.TOPIC);
-        }, function(newTopic, oldTopic) {
+        $scope.$watch(function () {
+            return StorageSrv.getKey(CONST.KEY.TOPIC);
+        }, function (newTopic, oldTopic) {
             if (newTopic !== oldTopic) {
                 self.topic = newTopic;
                 setData(self.topic);
             }
         });
 
-        var proposalCountWatcher = $rootScope.$on(PROPS.COUNT, function(event, data) {
+        var proposalCountWatcher = $rootScope.$on(PROPS.COUNT, function (event, data) {
             self.propCount = (data instanceof Object) ? data.published : null;
         });
 
-        var isEditingWatcher = $rootScope.$on(CONST.PROPOSALISEDITING, function(event, isEditing) {
+        var isEditingWatcher = $rootScope.$on(CONST.PROPOSALISEDITING, function (event, isEditing) {
             self.isEditing = isEditing;
         });
 
         $scope.$on('$destroy', isEditingWatcher);
         $scope.$on('$destroy', proposalCountWatcher);
 
-        $scope.$on('$destroy', function() {
+        $scope.$on('$destroy', function () {
             $log.debug("meetingCtrl: DESTROY");
         });
 

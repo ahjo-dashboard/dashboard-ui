@@ -8,12 +8,12 @@
  * Controller of the dashboard
  */
 angular.module('dashboard')
-    .controller('listCtrl', ['$log', '$scope', 'StorageSrv', 'CONST', function($log, $scope, StorageSrv, CONST) {
+    .controller('listCtrl', ['$log', '$scope', 'StorageSrv', 'CONST', function ($log, $scope, StorageSrv, CONST) {
         $log.debug("listCtrl: CONTROLLER");
         var self = this;
-        self.data = StorageSrv.get(CONST.KEY.SELECTION_DATA);
+        self.data = StorageSrv.getKey(CONST.KEY.SELECTION_DATA);
 
-        $scope.$on('$destroy', function() {
+        $scope.$on('$destroy', function () {
             $log.debug("listCtrl: DESTROY");
         });
     }]);

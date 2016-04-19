@@ -22,7 +22,7 @@ angular.module('dashboard')
         self.loading = true;
         self.isEditing = false;
         self.unsavedConfig = { title: 'STR_CONFIRM', text: 'STR_WARNING_UNSAVED', yes: 'STR_CONTINUE' };
-        var meetingItem = StorageSrv.get(CONST.KEY.MEETING_ITEM);
+        var meetingItem = StorageSrv.getKey(CONST.KEY.MEETING_ITEM);
         var isMobile = $rootScope.isMobile;
         var pollingTimer = null;
         var lastEventId = null;
@@ -81,7 +81,7 @@ angular.module('dashboard')
 
         if (meetingItem) {
             self.meeting = {};
-            StorageSrv.delete(CONST.KEY.TOPIC);
+            StorageSrv.deleteKey(CONST.KEY.TOPIC);
             AhjoMeetingSrv.getMeeting(meetingItem.meetingGuid).then(function (response) {
                 $log.debug("meetingStatusCtrl: getMeeting then:");
                 if (response && response.objects instanceof Array && response.objects.length) {
@@ -91,7 +91,7 @@ angular.module('dashboard')
                             var topic = self.meeting.topicList[0];
                             if (!isMobile) {
                                 selectedTopicGuid = topic.topicGuid;
-                                StorageSrv.set(CONST.KEY.TOPIC, topic);
+                                StorageSrv.setKey(CONST.KEY.TOPIC, topic);
                             }
                         }
                         lastEventId = self.meeting.lastEventId; // 19734;
@@ -121,7 +121,7 @@ angular.module('dashboard')
 
         self.topicSelected = function (topic) {
             selectedTopicGuid = topic.topicGuid;
-            StorageSrv.set(CONST.KEY.TOPIC, topic);
+            StorageSrv.setKey(CONST.KEY.TOPIC, topic);
             if (isMobile) {
                 $state.go(CONST.APPSTATE.MEETINGDETAILS, {});
             }
