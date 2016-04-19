@@ -39,6 +39,7 @@ angular.module('dashboard')
             MEETING: "app.meeting",
             SIGNITEM: "app.signitem",
             DOCSIGNERS: 'app.signitem.docsigners',
+            SIGNLISTATT: 'app.signitem.signattlist',
             MEETINGDETAILS: "app.meeting.details",
             TOPIC: "app.meeting.details.topic",
             LIST: "app.meeting.details.list",

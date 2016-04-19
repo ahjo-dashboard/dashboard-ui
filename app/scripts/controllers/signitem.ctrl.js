@@ -12,7 +12,7 @@
  * Controller of the dashboard
  */
 angular.module('dashboard')
-    .controller('signitemCtrl', function($log, $scope, $state, $stateParams, SigningAttApi, $sce, $timeout, $uibModal, ENV, SigningOpenApi, SigningPersonInfoApi, CONST, $rootScope, SigningDocSignaturesApi, ListData) {
+    .controller('signitemCtrl', function($log, $scope, $state, $stateParams, SigningAttApi, $sce, $timeout, $uibModal, ENV, SigningOpenApi, SigningPersonInfoApi, CONST, $rootScope, SigningDocSignaturesApi, ListData, StorageSrv) {
         $log.debug("signitemCtrl.config");
 
         var self = this;
@@ -35,13 +35,12 @@ angular.module('dashboard')
             class: 'btn btn-info btn-lg btn-block wrap-button-text db-btn-prim' // Used only on mobile
         };
 
-        self.attModel = [];
         var atts = [];
         for (var i = 0; angular.isArray(self.item.AttachmentInfos) && i < self.item.AttachmentInfos.length; i++) {
             atts.push(JSON.parse(self.item.AttachmentInfos[i])); // API returns items as JSON strings so parse into object
             // Example attachment info item: {"Id":"123456789", "ParentTitle":"abc", "Title":"xyz.pdf"}
         }
-        self.attModel = ListData.createEsignAttachmentList('STR_ATTACHMENTS', atts);
+        self.attModel = ListData.createEsignAttachmentList('STR_ATTACHMENTS', atts, self.item);
 
         // MODEL OBJECTS FOR ACTIONS
         // disabled: true if button should be disabled
@@ -93,10 +92,6 @@ angular.module('dashboard')
 
         function resolveDocUrl(item) {
             return ENV.SignApiUrl_GetAttachment.replace(":reqId", item.ProcessGuid);
-        }
-
-        function resolveAttUrl(item, att) {
-            return angular.isObject(item) && angular.isObject(att) ? ENV.SIGNAPIURL_ATT.replace(":reqGuid", item.ProcessGuid).replace(":attGuid", att.link) : undefined;
         }
 
         function initBtns(btnModel, status) {
@@ -206,6 +201,16 @@ angular.module('dashboard')
                 self.ongoing = false;
             });
         }
+
+        function isModalOpen() {
+            return self.btnModel.acc.cConf.isOpen || self.btnModel.rej.cConf.isOpen;
+        }
+
+        // Workaround on IE to hide <object> pdf because IE displays it topmost covering modals and dropdowns.
+        function hidePdfOnIe() {
+            return $rootScope.isIe && (self.btnModel.att.isOpen || isModalOpen());
+        }
+
         // PUBLIC FUNCTIONS
 
         self.actionDoc = function() {
@@ -216,9 +221,22 @@ angular.module('dashboard')
 
         self.actionAttachment = function(att) {
             clearAlerts();
-            self.btnModel.att.url = resolveAttUrl(self.item, att);
-            $log.debug("signitemCtrl.actionAttachment: " + self.btnModel.att.url);
-            setBtnActive(self.btnModel.att.id);
+            if (!$rootScope.isMobile || !angular.isObject(att)) {
+                self.btnModel.att.url = att.link;
+                $log.debug("signitemCtrl.actionAttachment: " + self.btnModel.att.url);
+                setBtnActive(self.btnModel.att.id);
+            } else {
+                $log.error("signitemCtrl.actionAttachment: bad state or args");
+            }
+        };
+
+        self.actionAttList = function() {
+            if ($rootScope.isMobile) {
+                StorageSrv.set(CONST.KEY.SELECTION_DATA, self.attModel);
+                $state.go(CONST.APPSTATE.SIGNLISTATT);
+            } else {
+                $log.error("signitemCtrl.actionAttList: bad state");
+            }
         };
 
         self.actionSign = function() {
@@ -267,18 +285,9 @@ angular.module('dashboard')
             return res;
         };
 
-        function isModalOpen() {
-            return self.btnModel.acc.cConf.isOpen || self.btnModel.rej.cConf.isOpen;
-        }
-
-        // Workaround on IE to hide <object> pdf because IE displays it topmost covering modals and dropdowns.
-        function hidePdfOnIe() {
-            return $rootScope.isIe && (self.btnModel.att.isOpen || isModalOpen());
-        }
-
         // Checks if an element should be hidden dynamically or not.
         self.isHidden = function(id) {
-           // $log.debug("signingItemCtrl.isHidden: " + id);
+            // $log.debug("signingItemCtrl.isHidden: " + id);
             var res = false;
             if (self.ongoing) {
                 res = true;

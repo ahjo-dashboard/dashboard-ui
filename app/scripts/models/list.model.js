@@ -12,7 +12,7 @@
 * Model in the dashboard.
 */
 angular.module('dashboard')
-    .factory('ListData', ['AttachmentData', '$log', function(AttachmentData, $log) {
+    .factory('ListData', ['AttachmentData', '$log', 'ENV', function(AttachmentData, $log, ENV) {
 
         function ListData(title, objects) {
             this.title = title;
@@ -70,14 +70,18 @@ angular.module('dashboard')
             return null;
         };
 
-        ListData.createEsignAttachmentList = function(title, argArr) {
+        function resolveAttUrl(item, att) {
+            return angular.isObject(item) && angular.isObject(att) ? ENV.SIGNAPIURL_ATT.replace(":reqGuid", item.ProcessGuid).replace(":attGuid", att.Id) : undefined;
+        }
+
+        ListData.createEsignAttachmentList = function(title, argArr, signItem) {
             var array = [];
             if (angular.isString(title) && angular.isArray(argArr)) {
                 for (var i = 0; (i < argArr.length); i++) {
                     var e = argArr[i];
-                    var item = AttachmentData.create(e.Title, e.Id, null, null);
-                    if (item) {
-                        array.push(item);
+                    var listItem = AttachmentData.create(e.Title, resolveAttUrl(signItem, e), null, null);
+                    if (listItem) {
+                        array.push(listItem);
                     }
                 }
             } else {

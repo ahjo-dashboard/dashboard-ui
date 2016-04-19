@@ -28,7 +28,7 @@
 
             <db-link ng-attr-config="sc.linkConfig" ng-attr-uri="sc.btnModel.doc.url"></db-link>
             <button id="sc.btnModel.att.id" type="button" class="btn btn-block btn-lg db-btn-prim ng-class: {active: sc.isActive(sc.btnModel.att.id)}"
-            uib-dropdown-toggle ng-disabled="sc.isDisabled(sc.btnModel.att.id)">
+            uib-dropdown-toggle ng-disabled="sc.isDisabled(sc.btnModel.att.id)" ng-click="sc.actionAttList()">
                 <span translate translate-cloak>STR_ATTACHMENTS</span>
                 <span class="badge ng-cloak">{{sc.btnModel.att.count}}</span>
             </button>

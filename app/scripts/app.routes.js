@@ -134,6 +134,16 @@ angular.module('dashboard')
                     params: {
                         signers: null
                     }
+                })
+                .state(CONST.APPSTATE.SIGNLISTATT, {
+                    url: '/signattlist',
+                    views: {
+                        'childContent': {
+                            templateUrl: 'views/list.html',
+                            controller: 'listCtrl',
+                            controllerAs: 'ctrl'
+                        }
+                    }
                 });
         }
         else {
