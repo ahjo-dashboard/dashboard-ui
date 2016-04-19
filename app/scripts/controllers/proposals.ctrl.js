@@ -16,10 +16,12 @@ angular.module('dashboard')
         $log.debug("proposalsCtrl: CONTROLLER");
         var self = this;
         self.guid = null;
+        self.personGuid = null;
 
         var topic = StorageSrv.getKey(CONST.KEY.TOPIC);
-        if (topic instanceof Object) {
+        if (angular.isObject(topic)) {
             self.guid = topic.topicGuid;
+            self.personGuid = topic.userPersonGuid;
         }
         else {
             $log.error('proposalsCtrl: topic missing');

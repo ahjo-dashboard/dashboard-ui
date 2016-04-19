@@ -17,7 +17,7 @@ angular.module('dashboard')
         var self = this;
         $rootScope.menu = $stateParams.menu;
         self.title = 'MOBILE TITLE';
-        self.meeting = {};
+        self.meeting = null;
         self.chairman = false;
         self.loading = true;
         self.isEditing = false;
@@ -25,6 +25,7 @@ angular.module('dashboard')
         var meetingItem = StorageSrv.getKey(CONST.KEY.MEETING_ITEM);
         var isMobile = $rootScope.isMobile;
         var pollingTimer = null;
+        var userPersonGuid = null;
         var lastEventId = null;
         var selectedTopicGuid = null;
 
@@ -80,20 +81,28 @@ angular.module('dashboard')
         }
 
         if (meetingItem) {
-            self.meeting = {};
+            self.meeting = null;
             StorageSrv.deleteKey(CONST.KEY.TOPIC);
             AhjoMeetingSrv.getMeeting(meetingItem.meetingGuid).then(function (response) {
                 $log.debug("meetingStatusCtrl: getMeeting then:");
-                if (response && response.objects instanceof Array && response.objects.length) {
+                if (angular.isObject(response) && angular.isArray(response.objects) && response.objects.length) {
                     self.meeting = response.objects[0];
-                    if (self.meeting instanceof Object) {
+                    if (angular.isObject(self.meeting)) {
                         if (self.meeting.topicList.length) {
                             var topic = self.meeting.topicList[0];
-                            if (!isMobile) {
+                            if (angular.isObject(topic)) {
                                 selectedTopicGuid = topic.topicGuid;
-                                StorageSrv.setKey(CONST.KEY.TOPIC, topic);
+                                topic.userPersonGuid = self.meeting.userPersonGuid;
+                                if (!isMobile) {
+                                    StorageSrv.setKey(CONST.KEY.TOPIC, topic);
+                                }
+                            }
+                            else {
+                                $log.error("meetingStatusCtrl: getMeeting: invalid topic");
                             }
                         }
+                        userPersonGuid = self.meeting.userPersonGuid;
+                        console.log('PERSON GUID ' + userPersonGuid);
                         lastEventId = self.meeting.lastEventId; // 19734;
                         $timeout.cancel(pollingTimer);
                         pollingTimer = $timeout(function () {
@@ -120,27 +129,28 @@ angular.module('dashboard')
         };
 
         self.topicSelected = function (topic) {
-            selectedTopicGuid = topic.topicGuid;
-            StorageSrv.setKey(CONST.KEY.TOPIC, topic);
-            if (isMobile) {
-                $state.go(CONST.APPSTATE.MEETINGDETAILS, {});
+            if (angular.isObject(topic)) {
+                selectedTopicGuid = topic.topicGuid;
+                StorageSrv.setKey(CONST.KEY.TOPIC, topic);
+                if (isMobile) {
+                    $state.go(CONST.APPSTATE.MEETINGDETAILS, {});
+                }
+            }
+            else {
+                $log.error("meetingStatusCtrl: topicSelected: invalid parameter");
             }
         };
 
         self.isSelected = function (topic) {
-            return (topic.topicGuid && topic.topicGuid === selectedTopicGuid);
+            return (angular.isObject(topic) && topic.topicGuid === selectedTopicGuid);
         };
 
         self.isTopicPublic = function (topic) {
-            return topic.publicity === CONST.PUBLICITY.PUBLIC;
-        };
-
-        self.hasTopicNewProps = function (/*topic*/) {
-            return true; //TODO: implement
+            return (angular.isObject(topic) && topic.publicity === CONST.PUBLICITY.PUBLIC);
         };
 
         self.statusIcon = function (topic) {
-            if (topic && topic.topicStatus) {
+            if (angular.isObject(topic) && topic.topicStatus) {
                 for (var item in CONST.TOPICSTATUS) {
                     if (CONST.TOPICSTATUS.hasOwnProperty(item) && topic.topicStatus === CONST.TOPICSTATUS[item].value) {
                         return CONST.TOPICSTATUS[item].iconPath;
@@ -153,7 +163,7 @@ angular.module('dashboard')
         self.stringId = function (meeting) {
             for (var item in CONST.MTGSTATUS) {
                 if (CONST.MTGSTATUS.hasOwnProperty(item)) {
-                    if (meeting && meeting.meetingStatus && meeting.meetingStatus === CONST.MTGSTATUS[item].value) {
+                    if (angular.isObject(meeting) && meeting.meetingStatus === CONST.MTGSTATUS[item].value) {
                         return CONST.MTGSTATUS[item].stringId;
                     }
                 }
@@ -162,8 +172,11 @@ angular.module('dashboard')
         };
 
         self.mtgStatusClass = function (meeting) {
-            var s = $rootScope.objWithVal(CONST.MTGSTATUS, 'value', meeting.meetingStatus);
-            return s ? s.badgeClass : 'label-danger';
+            if (angular.isObject(meeting)) {
+                var s = $rootScope.objWithVal(CONST.MTGSTATUS, 'value', meeting.meetingStatus);
+                return s ? s.badgeClass : 'label-danger';
+            }
+            return 'label-danger';
         };
 
         var isEditingWatcher = $rootScope.$on(CONST.PROPOSALISEDITING, function (event, isEditing) {
