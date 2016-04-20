@@ -86,7 +86,7 @@ angular.module('dashboard')
             function createDraft(type) {
                 if (type) {
                     return {
-                        "personGuid": "926eee0b-8e94-4a14-beec-d9b60590547f",
+                        "personGuid": $scope.personGuid,
                         "topicGuid": $scope.guid,
                         "text": "",
                         "proposalType": type,
@@ -238,7 +238,8 @@ angular.module('dashboard')
 
         return {
             scope: {
-                guid: '='
+                guid: '=',
+                personGuid: '='
             },
             templateUrl: 'directives/proposals/proposals.Directive.html',
             restrict: 'AE',
