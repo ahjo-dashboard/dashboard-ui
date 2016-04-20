@@ -206,7 +206,8 @@ angular.module('dashboard')
                 }
             }
 
-            self.delete = function (data) {
+            self.remove = function (data) {
+                $log.debug("dbProposals: remove: " + JSON.stringify(data));
                 if (angular.isObject(data)) {
                     removeProposal(data.guid);
                 }

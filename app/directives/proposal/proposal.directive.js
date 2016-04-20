@@ -183,8 +183,9 @@ angular.module('dashboard')
                     if (proposal.isPublished === PROPS.PUBLISHED.NO || proposal.isPublished === PROPS.PUBLISHED.YES) {
                         self.updating = true;
                         AhjoProposalsSrv.delete(proposal).$promise.then(function (response) {
-                            if (angular.isObject(response) && angular.isObject(response.Data) && angular.isObject(response.Data.Data)) {
-                                $scope.onDelete({ data: { guid: response.Data.Data.proposalGuid } });
+                            $log.debug("dbProposal: delete then: " + JSON.stringify(response));
+                            if (angular.isObject(response) && angular.isObject(response.Data)) {
+                                $scope.onRemove({ data: { guid: response.Data.proposalGuid } });
                             }
                         }, function (error) {
                             $log.error("dbProposal: delete error: " + JSON.stringify(error));
@@ -194,7 +195,7 @@ angular.module('dashboard')
                         });
                     }
                     else {
-                        $scope.onDelete({ data: { guid: proposal.proposalGuid } });
+                        $scope.onRemove({ data: { guid: proposal.proposalGuid } });
                     }
                 }
                 else {
@@ -230,7 +231,7 @@ angular.module('dashboard')
             };
 
             self.isReading = function () {
-                return (self.status === PROP.STATUS.PUBLIC || self.status === PROP.STATUS.PUBLISHED && self.mode === PROP.MODE.OPEN);
+                return ((self.status === PROP.STATUS.PUBLIC || self.status === PROP.STATUS.PUBLISHED) && self.mode === PROP.MODE.OPEN);
             };
 
             self.isCollapsed = function () {
@@ -322,7 +323,7 @@ angular.module('dashboard')
             scope: {
                 proposal: '=',
                 guid: '=',
-                onDelete: '&',
+                onRemove: '&',
                 onCopy: '&'
             },
             templateUrl: 'directives/proposal/proposal.Directive.html',

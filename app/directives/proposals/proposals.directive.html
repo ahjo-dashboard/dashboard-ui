@@ -18,7 +18,7 @@
     </div>
     <div class="col-xs-12">
         <div class="row">
-            <db-proposal ng-if="(p.isPublished === c.published.NO || p.isPublished === null)" proposal="p" guid="guid" on-delete="c.del(data)"
+            <db-proposal ng-if="(p.isPublished === c.published.NO || p.isPublished === null)" proposal="p" guid="guid" on-remove="c.remove(data)"
                 on-copy="c.copy(data)" ng-repeat="p in c.proposals track by $index">
             </db-proposal>
         </div>
@@ -39,7 +39,7 @@
     </div>
     <div class="col-xs-12">
         <div class="row">
-            <db-proposal ng-if="(p.isPublished === c.published.YES)" proposal="p" guid="guid" on-delete="c.del(data)" on-copy="c.copy(data)"
+            <db-proposal ng-if="(p.isPublished === c.published.YES)" proposal="p" guid="guid" on-remove="c.remove(data)" on-copy="c.copy(data)"
                 ng-repeat="p in c.proposals | orderBy:'insertDateTime': true track by $index">
             </db-proposal>
         </div>
