@@ -52,6 +52,13 @@ angular.module('dashboard')
                                 case CONST.MTGEVENT.REMARKDELETED:
                                     proposalEvents.push(event);
                                     break;
+                                case CONST.MTGEVENT.MEETINGSTATECHANGED:
+                                    if (angular.isObject(event) && angular.isObject(self.meeting)) {
+                                        self.meeting.meetingStatus = event.MeetingStateType;
+                                    }
+                                    break;
+                                case CONST.MTGEVENT.TOPICSTATECHANGED:
+                                    break;
                                 default:
                                     $log.error("meetingStatusCtrl: unsupported TypeName: " + event.TypeName);
                                     break;
@@ -105,7 +112,7 @@ angular.module('dashboard')
                             }
                         }
                         userPersonGuid = self.meeting.userPersonGuid;
-                        lastEventId = self.meeting.lastEventId; // 19734;
+                        lastEventId = self.meeting.lastEventId; // 19734, 20281;
                         $timeout.cancel(pollingTimer);
                         pollingTimer = $timeout(function () {
                             getEvents();

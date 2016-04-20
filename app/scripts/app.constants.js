@@ -85,13 +85,15 @@ angular.module('dashboard')
             ABORTED: { value: 4, stringId: 'STR_ABORTED', badgeClass: 'db-label-pur' },
             OFFICIALLY_CLOSED: { value: 5, stringId: 'STR_OFFICIALLY_CLOSED', badgeClass: 'label-success' },
             RECORDS_MOVED: { value: 6, stringId: 'STR_RECORDS_MOVED', badgeClass: 'label-success' },
-            TECHNICALLY_CLOSED: { value: 5, stringId: 'STR_TECNICALLY_CLOSED', badgeClass: 'label-success' },
+            TECHNICALLY_CLOSED: { value: 7, stringId: 'STR_TECNICALLY_CLOSED', badgeClass: 'label-success' },
         },
         'MTGEVENT': {
             LASTEVENTID: 'LastEventId',
             REMARKPUBLISHED: 'RemarkPublishedEvent',
             REMARKUPDATED: 'PublishRemarkUpdateEvent',
-            REMARKDELETED: 'RemarkDeletedEvent'
+            REMARKDELETED: 'RemarkDeletedEvent',
+            MEETINGSTATECHANGED: 'MeetingStateChangedEvent',
+            TOPICSTATECHANGED: 'TopicStateChangedEvent'
         },
         'TOPICSTATUS': {
             NONE: { value: 0, iconPath: "", icon_conf: "", icon_props: "", icon_conf_prop: "" },
