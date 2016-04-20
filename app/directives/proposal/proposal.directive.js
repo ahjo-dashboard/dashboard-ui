@@ -46,8 +46,8 @@ angular.module('dashboard')
             self.isTooltips = $rootScope.isTooltips;
             self.uiProposal = null;
 
-            self.mode = PROP.MODE.COLLAPSED;
-            self.status = PROP.STATUS.PUBLIC;
+            self.mode = null;
+            self.status = null;
             self.editedText = "";
             self.updating = false;
             var previousIsPublished = null;
