@@ -33,22 +33,22 @@ angular.module('dashboard')
             COPY: { icon: 'glyphicon-copyright-mark', action: 'COPY', type: 'db-btn-prim', tooltip: 'STR_COPY', active: true, config: { title: 'STR_CNFM_COPY_PROP', text: null } }
         }
     })
-    .filter('unsafe', function($sce) {
-        return function(val) {
+    .filter('unsafe', function ($sce) {
+        return function (val) {
             return $sce.trustAsHtml(val);
         };
     })
-    .directive('dbProposal', [function() {
+    .directive('dbProposal', [function () {
 
-        var controller = ['$log', '$scope', 'PROPS', 'PROP', '$rootScope', 'AhjoProposalsSrv', function($log, $scope, PROPS, PROP, $rootScope, AhjoProposalsSrv) {
+        var controller = ['$log', '$scope', 'PROPS', 'PROP', '$rootScope', 'AhjoProposalsSrv', 'StorageSrv', 'CONST', function ($log, $scope, PROPS, PROP, $rootScope, AhjoProposalsSrv, StorageSrv, CONST) {
             $log.debug("dbProposal: CONTROLLER");
             var self = this;
             self.isTooltips = $rootScope.isTooltips;
+            self.uiProposal = null;
 
             self.mode = PROP.MODE.COLLAPSED;
             self.status = PROP.STATUS.PUBLIC;
             self.editedText = "";
-            self.isModified = false;
             self.updating = false;
             var previousIsPublished = null;
 
@@ -61,6 +61,9 @@ angular.module('dashboard')
             };
 
             function setMode(mode) {
+                if (mode === self.mode) {
+                    return;
+                }
                 self.mode = mode;
 
                 switch (self.mode) {
@@ -93,6 +96,10 @@ angular.module('dashboard')
             }
 
             function setStatus(status) {
+                if (status === self.status) {
+                    return;
+                }
+
                 self.status = status;
 
                 switch (self.status) {
@@ -118,7 +125,10 @@ angular.module('dashboard')
             }
 
             function setProposal(proposal) {
+                $log.debug("dbProposal: setProposal");
                 if (angular.isObject(proposal)) {
+                    self.uiProposal = proposal;
+
                     if (proposal.isPublished === null) {
                         setStatus(PROP.STATUS.DRAFT);
                         setMode(PROP.MODE.OPEN);
@@ -130,7 +140,6 @@ angular.module('dashboard')
                     else {
                         setStatus(PROP.STATUS.PUBLIC);
                     }
-                    self.isModified = proposal.isModified;
                     self.editedText = proposal.text;
                 }
             }
@@ -148,7 +157,7 @@ angular.module('dashboard')
                         copy.isPublished = PROPS.PUBLISHED.YES;
                     }
 
-                    AhjoProposalsSrv.post(copy).$promise.then(function(response) {
+                    AhjoProposalsSrv.post(copy).$promise.then(function (response) {
                         $log.debug("dbProposal: post then: " + JSON.stringify(response));
                         if (angular.isObject(response) && angular.isObject(response.Data)) {
                             angular.merge($scope.proposal, response.Data);
@@ -156,9 +165,9 @@ angular.module('dashboard')
                         else {
                             $log.error('dbProposal: postProposal invalid response');
                         }
-                    }, function(error) {
+                    }, function (error) {
                         $log.error("dbProposal: post error: " + JSON.stringify(error));
-                    }).finally(function() {
+                    }).finally(function () {
                         $log.debug("dbProposal: post finally: ");
                         self.updating = false;
                     });
@@ -173,13 +182,13 @@ angular.module('dashboard')
                 if (angular.isObject(proposal)) {
                     if (proposal.isPublished === PROPS.PUBLISHED.NO || proposal.isPublished === PROPS.PUBLISHED.YES) {
                         self.updating = true;
-                        AhjoProposalsSrv.delete(proposal).$promise.then(function(response) {
+                        AhjoProposalsSrv.delete(proposal).$promise.then(function (response) {
                             if (angular.isObject(response) && angular.isObject(response.Data) && angular.isObject(response.Data.Data)) {
                                 $scope.onDelete({ data: { guid: response.Data.Data.proposalGuid } });
                             }
-                        }, function(error) {
+                        }, function (error) {
                             $log.error("dbProposal: delete error: " + JSON.stringify(error));
-                        }).finally(function() {
+                        }).finally(function () {
                             $log.debug("dbProposal: delete finally: ");
                             self.updating = false;
                         });
@@ -193,28 +202,42 @@ angular.module('dashboard')
                 }
             }
 
-            self.typeText = function(value) {
+            function updatePolledEvents() {
+                $log.debug("dbProposal: updatePolledEvents");
+                var events = angular.copy(StorageSrv.getKey(CONST.KEY.PROPOSAL_EVENT_ARRAY));
+                if (angular.isArray(events)) {
+                    var found = false;
+                    for (var index = events.length + CONST.NOTFOUND; index > CONST.NOTFOUND; index--) {
+                        var event = events[index];
+                        if (angular.isObject(event.Proposal) && angular.equals(event.Proposal.proposalGuid, $scope.proposal.proposalGuid)) {
+                            events.splice(index, 1);
+                            found = true;
+                        }
+                    }
+                    if (found) {
+                        StorageSrv.setKey(CONST.KEY.PROPOSAL_EVENT_ARRAY, events);
+                    }
+                }
+            }
+
+            self.typeText = function (value) {
                 var obj = $rootScope.objWithVal(PROPS.TYPE, 'value', value);
                 return (obj && obj.text) ? obj.text : value;
             };
 
-            self.isEditing = function() {
+            self.isEditing = function () {
                 return (self.status === PROP.STATUS.DRAFT && self.mode === PROP.MODE.OPEN);
             };
 
-            self.isReading = function() {
-                return (self.isPublic() && self.mode === PROP.MODE.OPEN);
+            self.isReading = function () {
+                return (self.status === PROP.STATUS.PUBLIC || self.status === PROP.STATUS.PUBLISHED && self.mode === PROP.MODE.OPEN);
             };
 
-            self.isPublic = function() {
-                return (self.status === PROP.STATUS.PUBLIC || self.status === PROP.STATUS.PUBLISHED);
-            };
-
-            self.isCollapsed = function() {
+            self.isCollapsed = function () {
                 return (self.mode === PROP.MODE.COLLAPSED);
             };
 
-            self.act = function(action) {
+            self.act = function (action) {
 
                 switch (action) {
                     case PROP.BTN.CLOSE.action:
@@ -223,6 +246,10 @@ angular.module('dashboard')
 
                     case PROP.BTN.OPEN.action:
                         setMode(PROP.MODE.OPEN);
+                        if (self.uiProposal.isModified) {
+                            updatePolledEvents();
+                            $scope.proposal.isModified = false;
+                        }
                         break;
 
                     case PROP.BTN.CANCEL.action:
@@ -261,15 +288,19 @@ angular.module('dashboard')
                 }
             };
 
-            $scope.$watch(function() {
+            setProposal($scope.proposal);
+
+            $scope.$watch(function () {
                 return {
                     proposal: $scope.proposal
                 };
-            }, function(data) {
-                setProposal(data.proposal);
+            }, function (data) {
+                if (!angular.equals(data.proposal, self.uiProposal)) {
+                    setProposal(data.proposal);
+                }
             }, true);
 
-            var watcher = $rootScope.$on(PROPS.TOGGLE, function(event, data) {
+            var watcher = $rootScope.$on(PROPS.TOGGLE, function (event, data) {
                 if (($scope.proposal.isPublished === PROPS.PUBLISHED.YES)) {
                     if (data) {
                         setMode(PROP.MODE.OPEN);
@@ -282,7 +313,7 @@ angular.module('dashboard')
 
             $scope.$on('$destroy', watcher);
 
-            $scope.$on('$destroy', function() {
+            $scope.$on('$destroy', function () {
                 $log.debug("dbProposal: DESTROY");
             });
         }];

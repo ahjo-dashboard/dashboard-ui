@@ -35,16 +35,10 @@ angular.module('dashboard')
             }
         }
 
-        function remarkUpdated(event) {
-            $log.debug("meetingStatusCtrl: remarkUpdated");
-            if (event.MeetingID === meetingItem.meetingGuid) {
-                $rootScope.$emit(CONST.PROPOSALEVENT, event);
-            }
-        }
-
         function getEvents() {
             $log.debug("meetingStatusCtrl: getEvents");
             if (lastEventId && meetingItem.meetingGuid) {
+                var proposalEvents = [];
                 AhjoMeetingSrv.getEvents(lastEventId, meetingItem.meetingGuid).then(function (response) {
                     $log.debug("meetingStatusCtrl: getEvents then: ");
                     if (response instanceof Array) {
@@ -54,8 +48,9 @@ angular.module('dashboard')
                                     lastEventId = event.LastEventId;
                                     break;
                                 case CONST.MTGEVENT.REMARKPUBLISHED:
+                                case CONST.MTGEVENT.REMARKUPDATED:
                                 case CONST.MTGEVENT.REMARKDELETED:
-                                    remarkUpdated(event);
+                                    proposalEvents.push(event);
                                     break;
                                 default:
                                     $log.error("meetingStatusCtrl: unsupported TypeName: " + event.TypeName);
@@ -73,6 +68,14 @@ angular.module('dashboard')
                     pollingTimer = $timeout(function () {
                         getEvents();
                     }, CONST.POLLINGTIMEOUT);
+
+                    if (proposalEvents.length) {
+                        var events = angular.copy(StorageSrv.getKey(CONST.KEY.PROPOSAL_EVENT_ARRAY));
+                        if (angular.isArray(events)) {
+                            var concated = events.concat(proposalEvents);
+                            StorageSrv.setKey(CONST.KEY.PROPOSAL_EVENT_ARRAY, concated);
+                        }
+                    }
                 });
             }
             else {
@@ -102,7 +105,6 @@ angular.module('dashboard')
                             }
                         }
                         userPersonGuid = self.meeting.userPersonGuid;
-                        console.log('PERSON GUID ' + userPersonGuid);
                         lastEventId = self.meeting.lastEventId; // 19734;
                         $timeout.cancel(pollingTimer);
                         pollingTimer = $timeout(function () {

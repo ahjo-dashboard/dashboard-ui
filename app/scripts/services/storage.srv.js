@@ -12,29 +12,50 @@
 * Service in the dashboard.
 */
 angular.module('dashboard')
-    .factory('StorageSrv', function () {
+    .factory('StorageSrv', function (CONST, $log) {
         var data = {};
-        var sessionStorageKeys = ['meetingitem', 'topic'];
+        var sessionStorageKeys = [CONST.KEY.MEETING_ITEM, CONST.KEY.TOPIC];
+        var arrays = [CONST.KEY.PROPOSAL_EVENT_ARRAY];
 
         return {
             setKey: function (key, val) {
-                data[key] = val;
-                if (val !== undefined && sessionStorageKeys.indexOf(key) > -1) {
-                    var dataToStore = JSON.stringify(val);
-                    sessionStorage.setItem(key, dataToStore);
+                if (typeof key === "string" && val !== undefined) {
+                    data[key] = val;
+                    if (val !== undefined && sessionStorageKeys.indexOf(key) > CONST.NOTFOUND) {
+                        var dataToStore = JSON.stringify(val);
+                        sessionStorage.setItem(key, dataToStore);
+                    }
+                }
+                else {
+                    $log.error("StorageSrv: setKey invalid parameter");
                 }
             },
             getKey: function (key) {
-                var val = data[key];
-                if (val === undefined && sessionStorageKeys.indexOf(key) > -1) {
-                    var localData = JSON.parse(sessionStorage.getItem(key));
-                    data[key] = localData;
-                    val = data[key];
+                if (typeof key === "string") {
+                    var val = data[key];
+                    if (val === undefined && sessionStorageKeys.indexOf(key) > CONST.NOTFOUND) {
+                        var localData = JSON.parse(sessionStorage.getItem(key));
+                        data[key] = localData;
+                        val = data[key];
+                    }
+                    if (val === undefined && arrays.indexOf(key) > CONST.NOTFOUND) {
+                        data[key] = [];
+                        val = data[key];
+                    }
+                    return val;
                 }
-                return val;
+                else {
+                    $log.error("StorageSrv: getKey invalid parameter");
+                }
+                return null;
             },
             deleteKey: function (key) {
-                delete data[key];
+                if (typeof key === "string") {
+                    delete data[key];
+                }
+                else {
+                    $log.error("StorageSrv: deleteKey invalid parameter");
+                }
             }
         };
     });

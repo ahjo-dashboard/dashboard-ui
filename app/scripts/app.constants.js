@@ -64,7 +64,8 @@ angular.module('dashboard')
             SELECTION_DATA: 'selectiondata',
             VISIBLE_MTGS: 'visiblemeetings',
             SIGNING_RES: 'signingres',
-            MEETING_ITEM: 'meetingitem'
+            MEETING_ITEM: 'meetingitem',
+            PROPOSAL_EVENT_ARRAY: 'proposaleventarray'
         },
         'BTNTYPE': {
             DEFAULT: 'btn-default',
@@ -89,6 +90,7 @@ angular.module('dashboard')
         'MTGEVENT': {
             LASTEVENTID: 'LastEventId',
             REMARKPUBLISHED: 'RemarkPublishedEvent',
+            REMARKUPDATED: 'PublishRemarkUpdateEvent',
             REMARKDELETED: 'RemarkDeletedEvent'
         },
         'TOPICSTATUS': {
