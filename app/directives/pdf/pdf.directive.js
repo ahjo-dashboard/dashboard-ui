@@ -26,7 +26,7 @@ angular.module('dashboard')
                 var HEIGHT = 'height';
                 var WIDTH = 'width';
                 var RESIZE = 'resize';
-                var SRC = 'src';
+                var SRC = 'data';
                 var params = "?secondary=false&amp;mixed=false#view=FitH&amp;toolbar=0&amp;statusbar=0&amp;messages=0&amp;navpanes=0";
                 var timer;
                 var pending = false;
