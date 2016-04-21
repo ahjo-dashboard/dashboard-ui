@@ -12,7 +12,7 @@
  * Controller of the dashboard
  */
 angular.module('dashboard')
-    .controller('signitemCtrl', function($log, $scope, $state, $stateParams, SigningAttApi, $sce, $timeout, $uibModal, ENV, SigningOpenApi, SigningPersonInfoApi, CONST, $rootScope, SigningDocSignaturesApi, ListData, StorageSrv) {
+    .controller('signitemCtrl', function ($log, $scope, $state, $stateParams, SigningAttApi, $sce, $timeout, $uibModal, ENV, SigningOpenApi, SigningPersonInfoApi, CONST, $rootScope, SigningDocSignaturesApi, ListData, StorageSrv) {
         $log.debug("signitemCtrl.config");
 
         var self = this;
@@ -56,7 +56,7 @@ angular.module('dashboard')
                 id: 'att', disabled: false, active: false, hide: true, url: undefined,
                 isOpen: false,
                 count: self.attModel ? self.attModel.objects.length : 0,
-                toggle: function(arg) {
+                toggle: function (arg) {
                     //$log.debug("signingItemCtrl: dropdown att toggled: " + arg + ", active: " + this.active);
                     self.btnModel.att.isOpen = arg;
                 },
@@ -122,16 +122,16 @@ angular.module('dashboard')
             self.displayStatus = false;
             var oldStatus = item.Status;
             item.Status = status; // This must be reverted if status change op fails
-            self.responseOpen = SigningOpenApi.save(item, function(value) {
+            self.responseOpen = SigningOpenApi.save(item, function (value) {
                 $log.debug("adOpenSignreqs.saveStatus: SigningOpenApi.save done. New object: ");
                 $log.debug(value);
                 self.item = value;
-            }, function(error) {
+            }, function (error) {
                 $log.error("adOpenSignreqs.saveStatus: SigningOpenApi.save error: " + JSON.stringify(error));
                 self.alerts.push({ type: 'danger', locId: 'STR_FAIL_OP', resCode: error.status, resTxt: error.statusText });
                 item.Status = oldStatus;
             });
-            self.responseOpen.$promise.finally(function() {
+            self.responseOpen.$promise.finally(function () {
                 $log.debug("adOpenSignreqs.saveStatus: SigningOpenApi.save finally");
                 self.ongoing = null;
                 self.displayStatus = true;
@@ -154,14 +154,14 @@ angular.module('dashboard')
 
             if (!self.personInfo) {
                 self.ongoing = true;
-                self.personInfo = SigningPersonInfoApi.get({ userId: self.requestorId }, function(/*data*/) {
+                self.personInfo = SigningPersonInfoApi.get({ userId: self.requestorId }, function (/*data*/) {
                     $log.debug("signitemCtrl.personInfo: api query done");
                     displayRequestor(self.personInfo);
-                }, function(error) {
+                }, function (error) {
                     $log.error("signitemCtrl.personInfo: api query error: " + JSON.stringify(error));
                     self.alerts.push({ type: 'danger', locId: 'STR_FAIL_OP', resCode: error.status, resTxt: error.statusText });
                 });
-                self.personInfo.$promise.finally(function() {
+                self.personInfo.$promise.finally(function () {
                     self.ongoing = false;
                 });
             } else {
@@ -190,14 +190,14 @@ angular.module('dashboard')
             }
 
             self.ongoing = true;
-            self.docSignings = SigningDocSignaturesApi.get({ reqId: item.ProcessGuid }, function(/*data*/) {
+            self.docSignings = SigningDocSignaturesApi.get({ reqId: item.ProcessGuid }, function (/*data*/) {
                 $log.debug("signitemCtrl.docSignings: api query done");
                 displaySignings(self.docSignings);
-            }, function(error) {
+            }, function (error) {
                 $log.error("signitemCtrl.docSignings: api query error: " + JSON.stringify(error));
                 self.alerts.push({ type: 'danger', locId: 'STR_FAIL_OP', resCode: error.status, resTxt: error.statusText });
             });
-            self.docSignings.$promise.finally(function() {
+            self.docSignings.$promise.finally(function () {
                 self.ongoing = false;
             });
         }
@@ -213,13 +213,13 @@ angular.module('dashboard')
 
         // PUBLIC FUNCTIONS
 
-        self.actionDoc = function() {
+        self.actionDoc = function () {
             clearAlerts();
             $log.debug("signitemCtrl.actionDoc: " + self.btnModel.doc.url);
             setBtnActive(self.btnModel.doc.id);
         };
 
-        self.actionAttachment = function(att) {
+        self.actionAttachment = function (att) {
             clearAlerts();
             if (!$rootScope.isMobile || !angular.isObject(att)) {
                 self.btnModel.att.url = att.link;
@@ -230,43 +230,43 @@ angular.module('dashboard')
             }
         };
 
-        self.actionAttList = function() {
+        self.actionAttList = function () {
             if ($rootScope.isMobile) {
-                StorageSrv.set(CONST.KEY.SELECTION_DATA, self.attModel);
+                StorageSrv.setKey(CONST.KEY.SELECTION_DATA, self.attModel);
                 $state.go(CONST.APPSTATE.SIGNLISTATT);
             } else {
                 $log.error("signitemCtrl.actionAttList: bad state");
             }
         };
 
-        self.actionSign = function() {
+        self.actionSign = function () {
             clearAlerts();
             saveStatus(self.item, CONST.ESIGNSTATUS.SIGNED.value);
         };
 
-        self.actionReject = function() {
+        self.actionReject = function () {
             clearAlerts();
             saveStatus(self.item, CONST.ESIGNSTATUS.REJECTED.value);
         };
 
-        self.actionComment = function() {
+        self.actionComment = function () {
             clearAlerts();
             personInfo();
             setBtnActive(self.btnModel.com.id);
         };
 
-        self.actionSignings = function() {
+        self.actionSignings = function () {
             clearAlerts();
             docSignings(self.item);
             setBtnActive(self.btnModel.sta.id);
         };
 
-        self.closeAlert = function(index) {
+        self.closeAlert = function (index) {
             // $log.debug("signitemCtrl.closeAlert " + index);
             self.alerts.splice(index, 1);
         };
 
-        self.isDisabled = function(id) {
+        self.isDisabled = function (id) {
             // $log.debug("signingItemCtrl.isDisabled: " + id);
             var res = false;
             if (self.ongoing) {
@@ -286,7 +286,7 @@ angular.module('dashboard')
         };
 
         // Checks if an element should be hidden dynamically or not.
-        self.isHidden = function(id) {
+        self.isHidden = function (id) {
             // $log.debug("signingItemCtrl.isHidden: " + id);
             var res = false;
             if (self.ongoing) {
@@ -308,24 +308,24 @@ angular.module('dashboard')
             return res;
         };
 
-        self.isActive = function(id) {
+        self.isActive = function (id) {
             //$log.debug("signingItemCtrl.isActive: " + id + "=" +self.btnModel[id].active);
             return !self.isMobile && self.btnModel[id].active;
         };
 
         /* Resolve css class for signing status */
-        self.statusStyle = function(status) {
+        self.statusStyle = function (status) {
             var s = $rootScope.objWithVal(CONST.ESIGNSTATUS, 'value', status);
             return s ? s.badgeClass : 'label-default';
         };
 
         /* Resolve display text for item status */
-        self.statusStrId = function(value) {
+        self.statusStrId = function (value) {
             var s = $rootScope.objWithVal(CONST.ESIGNSTATUS, 'value', value);
             return s ? s.stringId : '';
         };
 
-        self.goHome = function() {
+        self.goHome = function () {
             self.ongoing = true; // Display progress bar in case transition change takes time
             $rootScope.goHome();
         };

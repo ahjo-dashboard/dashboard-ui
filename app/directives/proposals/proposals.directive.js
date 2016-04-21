@@ -32,9 +32,9 @@ angular.module('dashboard')
         'COUNT': 'PROPS.COUNT',
         'MODECHANGE': 'PROPS.MODECHANGE'
     })
-    .directive('dbProposals', [function() {
+    .directive('dbProposals', [function () {
 
-        var controller = ['$log', '$scope', 'AhjoProposalsSrv', 'PROPS', '$rootScope', 'CONST', function($log, $scope, AhjoProposalsSrv, PROPS, $rootScope, CONST) {
+        var controller = ['$log', '$scope', 'AhjoProposalsSrv', 'PROPS', '$rootScope', 'CONST', 'StorageSrv', function ($log, $scope, AhjoProposalsSrv, PROPS, $rootScope, CONST, StorageSrv) {
             $log.log("dbProposals: CONTROLLER");
             var self = this;
             self.proposals = null;
@@ -48,18 +48,14 @@ angular.module('dashboard')
                 var drafts = 0;
                 var published = 0;
 
-                angular.forEach(self.proposals, function(item) {
-                    if (item instanceof Object) {
-                        if (item.isPublished === PROPS.PUBLISHED.YES) {
+                angular.forEach(self.proposals, function (prop) {
+                    if (angular.isObject(prop)) {
+                        if (prop.isPublished === PROPS.PUBLISHED.YES) {
                             published++;
                         }
-                        else if (item.isPublished === PROPS.PUBLISHED.NO) {
+                        else if (prop.isPublished === PROPS.PUBLISHED.NO) {
                             drafts++;
-                        } else {
-                            $log.error("dbProposals.countProposals: item ignored, bad properties");
                         }
-                    } else {
-                        $log.error("dbProposals.countProposals: item ignored, bad type");
                     }
                 });
 
@@ -68,7 +64,7 @@ angular.module('dashboard')
 
             function checkProposals() {
                 var unsaved = 0;
-                angular.forEach(self.proposals, function(item) {
+                angular.forEach(self.proposals, function (item) {
                     if (angular.isObject(item) && item.isPublished === null) {
                         unsaved++;
                     }
@@ -99,10 +95,78 @@ angular.module('dashboard')
                 }
             }
 
+            function removeProposal(guid) {
+                $log.debug("dbProposals: removeProposal");
+                var search = angular.isArray(self.proposals);
+                for (var index = self.proposals.length + CONST.NOTFOUND; search && index > CONST.NOTFOUND; index--) {
+                    var prop = self.proposals[index];
+                    if (angular.equals(guid, prop.proposalGuid)) {
+                        self.proposals.splice(index, 1);
+                        search = false;
+                    }
+                }
+                checkProposals();
+                countProposals();
+            }
+
+            function updateProposal(proposal) {
+                $log.debug("dbProposals: updateProposal");
+                if (angular.isObject(proposal)) {
+                    if (!angular.isArray(self.proposals)) {
+                        self.proposals = [];
+                    }
+                    var notFound = true;
+                    for (var index = 0; notFound && index < self.proposals.length; index++) {
+                        var prop = self.proposals[index];
+                        if (angular.isObject(prop) && angular.equals(proposal.proposalGuid, prop.proposalGuid)) {
+                            angular.merge(prop, proposal);
+                            notFound = false;
+                        }
+                    }
+                    if (notFound) {
+                        self.proposals.splice(0, 0, proposal);
+                    }
+                    countProposals();
+                }
+                else {
+                    $log.error('dbProposals: updateProposal parameter invalid');
+                }
+            }
+
+            function updateEvents(events) {
+                $log.debug("dbProposals: updateEvents");
+                if (angular.isArray(events)) {
+                    angular.forEach(events, function (event) {
+                        if (angular.isObject(event)) {
+                            switch (event.TypeName) {
+                                case CONST.MTGEVENT.REMARKPUBLISHED:
+                                case CONST.MTGEVENT.REMARKUPDATED:
+                                    if (angular.isObject(event.Proposal) && angular.equals(event.Proposal.topicGuid, $scope.guid)) {
+                                        updateProposal(event.Proposal);
+                                    }
+                                    break;
+
+                                case CONST.MTGEVENT.REMARKDELETED:
+                                    if (angular.isObject(event) && angular.equals(event.TopicGuid, $scope.guid)) {
+                                        removeProposal(event.DeletedProposal);
+                                    }
+                                    break;
+
+                                default:
+                                    break;
+                            }
+                        }
+                    });
+                }
+                else {
+                    $log.error('dbProposals: updateEvents parameter invalid');
+                }
+            }
+
             function getProposals(guid) {
                 $log.debug("dbProposals: getProposals: " + guid);
                 if (typeof guid === 'string') {
-                    AhjoProposalsSrv.get({ 'guid': guid }).$promise.then(function(response) {
+                    AhjoProposalsSrv.get({ 'guid': guid }).$promise.then(function (response) {
                         $log.debug("dbProposals: get then");
                         if (angular.isObject(response) && angular.isArray(response.objects)) {
                             self.proposals = angular.copy(response.objects);
@@ -111,12 +175,14 @@ angular.module('dashboard')
                             $log.error('dbProposals: getProposals invalid response');
                             self.proposals = null;
                         }
-                    }, function(error) {
+                    }, function (error) {
                         $log.error("dbProposals: get error: " + JSON.stringify(error));
-                    }, function(notify) {
+                    }, function (notify) {
                         $log.debug("dbProposals: get notify: " + JSON.stringify(notify));
-                    }).finally(function() {
+                    }).finally(function () {
                         $log.debug("dbProposals: get finally: ");
+                        var events = angular.copy(StorageSrv.getKey(CONST.KEY.PROPOSAL_EVENT_ARRAY));
+                        updateEvents(events);
                         countProposals();
                     });
                 }
@@ -133,27 +199,15 @@ angular.module('dashboard')
                     }
                     var draft = createDraft(type.value);
                     self.proposals.splice(0, 0, draft);
+                    countProposals();
                 }
                 else {
                     $log.error('dbProposals: addProposal parameter invalid');
                 }
-                countProposals();
             }
 
-            function removeProposal(guid) {
-                var search = angular.isArray(self.proposals);
-                for (var index = self.proposals.length + CONST.NOTFOUND; search && index > CONST.NOTFOUND; index--) {
-                    var localProposal = self.proposals[index];
-                    if (angular.equals(guid, localProposal.proposalGuid)) {
-                        self.proposals.splice(index, 1);
-                        search = false;
-                    }
-                }
-                checkProposals();
-                countProposals();
-            }
-
-            self.delete = function(data) {
+            self.remove = function (data) {
+                $log.debug("dbProposals: remove: " + JSON.stringify(data));
                 if (angular.isObject(data)) {
                     removeProposal(data.guid);
                 }
@@ -162,7 +216,7 @@ angular.module('dashboard')
                 }
             };
 
-            self.copy = function(data) {
+            self.copy = function (data) {
                 $log.debug("dbProposals: copy: " + JSON.stringify(data));
                 if (angular.isObject(data)) {
                     var draft = createDraft(data.proposal.proposalType);
@@ -179,47 +233,32 @@ angular.module('dashboard')
                 }
             };
 
-            self.addProposalClicked = function(type) {
+            self.addProposalClicked = function (type) {
                 addProposal(type);
             };
 
-            self.toggleAll = function() {
+            self.toggleAll = function () {
                 self.isAllOpen = !self.isAllOpen;
                 $rootScope.$emit(PROPS.TOGGLE, self.isAllOpen);
             };
 
-            $scope.$watch(function() {
+            $scope.$watch(function () {
                 return {
                     guid: $scope.guid
                 };
-            }, function(data) {
+            }, function (data) {
                 getProposals(data.guid);
             }, true);
 
-            var eventWatcher = $rootScope.$on(CONST.PROPOSALEVENT, function(event, data) {
-                if (data instanceof Object) {
-                    switch (data.TypeName) {
-                        case CONST.MTGEVENT.REMARKPUBLISHED:
-                            if (data.Proposal instanceof Object && data.Proposal.topicGuid === $scope.guid) {
-
-                            }
-                            break;
-                        case CONST.MTGEVENT.REMARKDELETED:
-                            if (data.TopicGuid === $scope.guid) {
-
-                            }
-                            break;
-                        default:
-                            $log.error("meetingStatusCtrl: unsupported TypeName: " + event.TypeName);
-                            break;
-                    }
-                }
-                else {
-                    $log.error("meetingStatusCtrl: invalid parameter:");
+            $scope.$watch(function () {
+                return StorageSrv.getKey(CONST.KEY.PROPOSAL_EVENT_ARRAY);
+            }, function (events, oldEvents) {
+                if (!angular.equals(events, oldEvents)) {
+                    updateEvents(events);
                 }
             });
 
-            var modeWatcher = $rootScope.$on(PROPS.MODECHANGE, function(event, data) {
+            var modeWatcher = $rootScope.$on(PROPS.MODECHANGE, function (event, data) {
                 if (angular.isObject(data) && angular.isObject(data.sender)) {
                     if (self.proposals.indexOf(data.sender) >= 0) {
                         checkProposals();
@@ -227,10 +266,9 @@ angular.module('dashboard')
                 }
             });
 
-            $scope.$on('$destroy', eventWatcher);
             $scope.$on('$destroy', modeWatcher);
 
-            $scope.$on('$destroy', function() {
+            $scope.$on('$destroy', function () {
                 $log.debug("dbProposals: DESTROY");
             });
 
