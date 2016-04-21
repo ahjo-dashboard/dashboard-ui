@@ -35,6 +35,48 @@ angular.module('dashboard')
             }
         }
 
+        function meetingStatusChanged(event) {
+            $log.debug("meetingStatusCtrl: meetingStatusChanged");
+            if (angular.isObject(event) && angular.isObject(self.meeting)) {
+                self.meeting.meetingStatus = event.MeetingStateType;
+            }
+        }
+
+        function topicStatusChanged(event) {
+            $log.debug("meetingStatusCtrl: topicStatusChanged");
+            if (angular.isObject(event) && angular.isObject(self.meeting) && angular.isArray(self.meeting.topicList)) {
+                for (var i = 0; i < self.meeting.topicList.length; i++) {
+                    var topic = self.meeting.topicList[i];
+                    if (angular.isObject(topic) && angular.equals(topic.topicGuid, event.TopicID)) {
+                        topic.topicStatus = event.TopicStateType;
+                    }
+                }
+            }
+        }
+
+        function proposalsStatusChanged(events) {
+            $log.debug("meetingStatusCtrl: proposalsStatusChanged");
+            if (angular.isArray(events) && angular.isObject(self.meeting) && angular.isArray(self.meeting.topicList)) {
+
+                var changedTopicGuidArray = [];
+                angular.forEach(events, function (topic) {
+                    if (angular.isObject(topic) && angular.isObject(topic.Proposal) && topic.Proposal.topicGuid) {
+                        changedTopicGuidArray.push(topic.Proposal.topicGuid);
+                    }
+                }, changedTopicGuidArray);
+
+                for (var j = 0; j < self.meeting.topicList.length; j++) {
+                    var topic = self.meeting.topicList[j];
+                    if (angular.isObject(topic)) {
+                        topic.isModified = (changedTopicGuidArray.indexOf(topic.topicGuid) > CONST.NOTFOUND);
+                        if (!isMobile && angular.equals(topic.topicGuid, selectedTopicGuid)) {
+                            StorageSrv.setKey(CONST.KEY.TOPIC, angular.copy(topic));
+                        }
+                    }
+                }
+            }
+        }
+
         function getEvents() {
             $log.debug("meetingStatusCtrl: getEvents");
             if (lastEventId && meetingItem.meetingGuid) {
@@ -53,11 +95,10 @@ angular.module('dashboard')
                                     proposalEvents.push(event);
                                     break;
                                 case CONST.MTGEVENT.MEETINGSTATECHANGED:
-                                    if (angular.isObject(event) && angular.isObject(self.meeting)) {
-                                        self.meeting.meetingStatus = event.MeetingStateType;
-                                    }
+                                    meetingStatusChanged(event);
                                     break;
                                 case CONST.MTGEVENT.TOPICSTATECHANGED:
+                                    topicStatusChanged(event);
                                     break;
                                 default:
                                     $log.error("meetingStatusCtrl: unsupported TypeName: " + event.TypeName);
@@ -140,7 +181,7 @@ angular.module('dashboard')
         self.topicSelected = function (topic) {
             if (angular.isObject(topic)) {
                 selectedTopicGuid = topic.topicGuid;
-                StorageSrv.setKey(CONST.KEY.TOPIC, topic);
+                StorageSrv.setKey(CONST.KEY.TOPIC, angular.copy(topic));
                 if (isMobile) {
                     $state.go(CONST.APPSTATE.MEETINGDETAILS, {});
                 }
@@ -187,6 +228,14 @@ angular.module('dashboard')
             }
             return 'label-danger';
         };
+
+        $scope.$watch(function () {
+            return StorageSrv.getKey(CONST.KEY.PROPOSAL_EVENT_ARRAY);
+        }, function (events, oldEvents) {
+            if (!angular.equals(events, oldEvents)) {
+                proposalsStatusChanged(events);
+            }
+        });
 
         var isEditingWatcher = $rootScope.$on(CONST.PROPOSALISEDITING, function (event, isEditing) {
             self.isEditing = isEditing;

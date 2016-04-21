@@ -16,10 +16,10 @@ angular.module('dashboard')
         $log.debug("meetingCtrl: CONTROLLER");
         var self = this;
         var isMobile = $rootScope.isMobile;
-        self.upperUrl = {};
-        self.lowerUrl = {};
+        self.upperUrl = null;
+        self.lowerUrl = null;
         self.error = null;
-        self.topic = StorageSrv.getKey(CONST.KEY.TOPIC);
+        self.topic = null;
         self.blockMode = CONST.BLOCKMODE.UPPER;
         self.lbms = CONST.LOWERBLOCKMODE;
         self.lbm = CONST.LOWERBLOCKMODE.PROPOSALS;
@@ -45,21 +45,21 @@ angular.module('dashboard')
         var isIe = $rootScope.isIe;
 
         function setData(topic) {
-            self.lowerUrl = {};
-            self.upperUrl = {};
-            if (topic instanceof Object) {
+            self.topic = null;
+            self.aData = null;
+            self.tData = null;
+            self.dData = null;
+            self.lowerUrl = null;
+            self.upperUrl = null;
+
+            if (angular.isObject(topic)) {
+                self.topic = topic;
                 self.header = topic.topicTitle;
-                if (topic.esitykset instanceof Array) {
+                if (angular.isArray(topic.esitykset)) {
                     var item = topic.esitykset[0];
-                    if (item instanceof Object) {
+                    if (angular.isObject(item)) {
                         self.tData = AttachmentData.create((item.documentTitle ? item.documentTitle : 'STR_TOPIC'), item.link);
                     }
-                    else {
-                        self.tData = null;
-                    }
-                }
-                else {
-                    self.tData = null;
                 }
 
                 self.upperUrl = (self.tData && self.tData.link) ? self.tData.link : {};
@@ -181,10 +181,9 @@ angular.module('dashboard')
 
         $scope.$watch(function () {
             return StorageSrv.getKey(CONST.KEY.TOPIC);
-        }, function (newTopic, oldTopic) {
-            if (newTopic !== oldTopic) {
-                self.topic = newTopic;
-                setData(self.topic);
+        }, function (topic, oldTopic) {
+            if (!angular.equals(topic, oldTopic)) {
+                setData(topic);
             }
         });
 
@@ -203,5 +202,5 @@ angular.module('dashboard')
             $log.debug("meetingCtrl: DESTROY");
         });
 
-        setData(self.topic);
+        setData(StorageSrv.getKey(CONST.KEY.TOPIC));
     }]);
