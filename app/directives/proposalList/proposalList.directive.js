@@ -6,9 +6,9 @@
 
 /**
  * @ngdoc directive
- * @name dashboard.proposals:proposalsDirective
+ * @name dashboard.proposalList:proposalListDirective
  * @description
- * # proposalsDirective
+ * # proposalListDirective
  */
 angular.module('dashboard')
     .constant('PROPS', {
@@ -32,10 +32,10 @@ angular.module('dashboard')
         'COUNT': 'PROPS.COUNT',
         'MODECHANGE': 'PROPS.MODECHANGE'
     })
-    .directive('dbProposals', [function () {
+    .directive('dbProposalList', [function () {
 
         var controller = ['$log', '$scope', 'AhjoProposalsSrv', 'PROPS', '$rootScope', 'CONST', 'StorageSrv', function ($log, $scope, AhjoProposalsSrv, PROPS, $rootScope, CONST, StorageSrv) {
-            $log.log("dbProposals: CONTROLLER");
+            $log.log("dbProposalList: CONTROLLER");
             var self = this;
             self.proposals = null;
             self.tps = PROPS.TYPE;
@@ -96,7 +96,7 @@ angular.module('dashboard')
             }
 
             function removeProposal(guid) {
-                $log.debug("dbProposals: removeProposal");
+                $log.debug("dbProposalList: removeProposal");
                 var search = angular.isArray(self.proposals);
                 for (var index = self.proposals.length + CONST.NOTFOUND; search && index > CONST.NOTFOUND; index--) {
                     var prop = self.proposals[index];
@@ -110,7 +110,7 @@ angular.module('dashboard')
             }
 
             function updateProposal(proposal) {
-                $log.debug("dbProposals: updateProposal");
+                $log.debug("dbProposalList: updateProposal");
                 if (angular.isObject(proposal)) {
                     if (!angular.isArray(self.proposals)) {
                         self.proposals = [];
@@ -129,12 +129,12 @@ angular.module('dashboard')
                     countProposals();
                 }
                 else {
-                    $log.error('dbProposals: updateProposal parameter invalid');
+                    $log.error('dbProposalList: updateProposal parameter invalid');
                 }
             }
 
             function updateEvents(events) {
-                $log.debug("dbProposals: updateEvents");
+                $log.debug("dbProposalList: updateEvents");
                 if (angular.isArray(events)) {
                     angular.forEach(events, function (event) {
                         if (angular.isObject(event)) {
@@ -159,40 +159,40 @@ angular.module('dashboard')
                     });
                 }
                 else {
-                    $log.error('dbProposals: updateEvents parameter invalid');
+                    $log.error('dbProposalList: updateEvents parameter invalid');
                 }
             }
 
             function getProposals(guid) {
-                $log.debug("dbProposals: getProposals: " + guid);
+                $log.debug("dbProposalList: getProposals: " + guid);
                 if (typeof guid === 'string') {
                     AhjoProposalsSrv.get({ 'guid': guid }).$promise.then(function (response) {
-                        $log.debug("dbProposals: get then");
+                        $log.debug("dbProposalList: get then");
                         if (angular.isObject(response) && angular.isArray(response.objects)) {
                             self.proposals = angular.copy(response.objects);
                         }
                         else {
-                            $log.error('dbProposals: getProposals invalid response');
+                            $log.error('dbProposalList: getProposals invalid response');
                             self.proposals = null;
                         }
                     }, function (error) {
-                        $log.error("dbProposals: get error: " + JSON.stringify(error));
+                        $log.error("dbProposalList: get error: " + JSON.stringify(error));
                     }, function (notify) {
-                        $log.debug("dbProposals: get notify: " + JSON.stringify(notify));
+                        $log.debug("dbProposalList: get notify: " + JSON.stringify(notify));
                     }).finally(function () {
-                        $log.debug("dbProposals: get finally: ");
+                        $log.debug("dbProposalList: get finally: ");
                         var events = angular.copy(StorageSrv.getKey(CONST.KEY.PROPOSAL_EVENT_ARRAY));
                         updateEvents(events);
                         countProposals();
                     });
                 }
                 else {
-                    $log.error('dbProposals: getProposals parameter invalid');
+                    $log.error('dbProposalList: getProposals parameter invalid');
                 }
             }
 
             function addProposal(type) {
-                $log.debug("dbProposals: addProposal: " + type);
+                $log.debug("dbProposalList: addProposal: " + type);
                 if (angular.isObject(type)) {
                     if (!angular.isArray(self.proposals)) {
                         self.proposals = [];
@@ -202,22 +202,22 @@ angular.module('dashboard')
                     countProposals();
                 }
                 else {
-                    $log.error('dbProposals: addProposal parameter invalid');
+                    $log.error('dbProposalList: addProposal parameter invalid');
                 }
             }
 
             self.remove = function (data) {
-                $log.debug("dbProposals: remove: " + JSON.stringify(data));
+                $log.debug("dbProposalList: remove: " + JSON.stringify(data));
                 if (angular.isObject(data)) {
                     removeProposal(data.guid);
                 }
                 else {
-                    $log.error('dbProposals: delete parameter invalid');
+                    $log.error('dbProposalList: delete parameter invalid');
                 }
             };
 
             self.copy = function (data) {
-                $log.debug("dbProposals: copy: " + JSON.stringify(data));
+                $log.debug("dbProposalList: copy: " + JSON.stringify(data));
                 if (angular.isObject(data)) {
                     var draft = createDraft(data.proposal.proposalType);
                     if (angular.isObject(draft)) {
@@ -225,11 +225,11 @@ angular.module('dashboard')
                         self.proposals.splice(0, 0, draft);
                     }
                     else {
-                        $log.error('dbProposals: draft invalid');
+                        $log.error('dbProposalList: draft invalid');
                     }
                 }
                 else {
-                    $log.error('dbProposals: copy parameter invalid');
+                    $log.error('dbProposalList: copy parameter invalid');
                 }
             };
 
@@ -269,7 +269,7 @@ angular.module('dashboard')
             $scope.$on('$destroy', modeWatcher);
 
             $scope.$on('$destroy', function () {
-                $log.debug("dbProposals: DESTROY");
+                $log.debug("dbProposalList: DESTROY");
             });
 
         }];
@@ -279,7 +279,7 @@ angular.module('dashboard')
                 guid: '=',
                 personGuid: '='
             },
-            templateUrl: 'directives/proposals/proposals.Directive.html',
+            templateUrl: 'directives/proposalList/proposalList.Directive.html',
             restrict: 'AE',
             controller: controller,
             controllerAs: 'c',
