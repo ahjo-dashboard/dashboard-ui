@@ -296,6 +296,9 @@ angular.module('dashboard')
                     proposal: $scope.proposal
                 };
             }, function (data) {
+                // scope.proposal is acting level and self.uiProposal is showing level
+                // this is implemented for performance reasons to avoid two way binding
+                // when data is changed in acting level it will be updated to showing level via setProposal function
                 if (!angular.equals(data.proposal, self.uiProposal)) {
                     setProposal(data.proposal);
                 }
