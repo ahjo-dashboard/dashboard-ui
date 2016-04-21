@@ -103,7 +103,7 @@
             <div class="ad-flex-item-lower ng-class:[{'ad-flex-show-full': ctrl.isLowerMode(), 'ad-flex-show': ctrl.isBothMode(), 'ad-flex-hide': ctrl.isUpperMode()}]">
 
                 <db-pdf ng-if="ctrl.showEmbeddedFile(ctrl.lowerUrl)" ng-attr-uri="ctrl.lowerUrl" ng-attr-mode="ctrl.blockMode"></db-pdf>
-                <db-proposals ng-if="ctrl.isActive(ctrl.lbms.PROPOSALS)" guid="ctrl.topic.topicGuid"></db-proposals>
+                <db-proposal-list ng-if="ctrl.isActive(ctrl.lbms.PROPOSALS)" guid="ctrl.topic.topicGuid"></db-proposal-list>
 
             </div>
             <!-- LOWER END -->
