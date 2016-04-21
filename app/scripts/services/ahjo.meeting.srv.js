@@ -23,7 +23,7 @@ angular.module('dashboard')
                 deferred.notify({});
                 $http({
                     method: 'GET',
-                    cache: true,
+                    cache: false,
                     url: ENV.AhjoApi_Meeting.replace('{GUID}', guid)
                 }).then(function(response) {
                     $log.debug("AhjoMeetingSrv: getMeeting then");
@@ -44,7 +44,7 @@ angular.module('dashboard')
                 deferred.notify({});
                 $http({
                     method: 'GET',
-                    cache: true,
+                    cache: false,
                     url: ENV.AhjoApi_Events.replace(':id', eventId).replace(':meetingGuid', meetingGuid)
                 }).then(function(response) {
                     $log.debug("AhjoMeetingSrv: getEvents then");
