@@ -31,7 +31,7 @@
                         <span ng-if="true" class="badge ng-cloak hidden-sm">  <!-- TODO: display dynamically -->
                             <span class="db-center">
                                 {{ctrl.propCount}}
-                                <span ng-show="false">  <!-- TODO: display dynamically -->
+                                <span ng-show="ctrl.topic.isModified">
                                     &nbsp;<span class="glyphicon glyphicon-bell db-newprops" aria-hidden="true"></span>
                                 </span>
                             </span>
@@ -130,7 +130,7 @@
                 <span class="badge">  <!-- TODO: display dynamically -->
                     <span class="db-center">
                         {{ctrl.propCount}}
-                        <span ng-show="true">  <!-- TODO: display dynamically -->
+                        <span ng-show="ctrl.topic.isModified">
                             &nbsp;<span class="glyphicon glyphicon-bell db-newprops" aria-hidden="true"></span>
                         </span>
                     </span>
