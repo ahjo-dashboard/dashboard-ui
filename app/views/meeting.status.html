@@ -29,7 +29,7 @@
         <button ng-if="!isMobile" type="button" class="btn db-btn-prim btn-lg disabled ad-dummy-button">{{msc.meeting.meetingTitle}}</button>
 
         <div class="btn-group btn-block text-center" uib-dropdown is-open="">
-            <button id="statusButton" type="button" class="btn db-btn-prim btn-lg ad-button text-center ng-class:[{'disabled': !msc.chairman},{'ad-dummy-button': !msc.chairman}]"
+            <button id="statusButton" type="button" class="db-nopadding btn db-btn-prim btn-lg ad-button text-center ng-class:[{'disabled': !msc.chairman},{'ad-dummy-button': !msc.chairman}]"
             uib-dropdown-toggle>
 
                 <uib-progressbar ng-if='msc.loading' class="col-xs-12 progress-striped active" type="info">
