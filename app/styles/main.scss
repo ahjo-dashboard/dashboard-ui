@@ -67,6 +67,13 @@ body {
 
     padding: 0;
 
+    font-family: "Trebuchet MS", Helvetica, sans-serif;
+
+    h1, h2, h3, h4, h5 {
+        font-family: Avant Garde,Avantgarde,Century Gothic,CenturyGothic,AppleGothic,sans-serif;
+        font-weight: 900;
+    }
+
     .db-iconwrapper {
         position: relative;
         width: 24px; //TODO: explicit w/h from icon dimensions. Check for better approaches.
