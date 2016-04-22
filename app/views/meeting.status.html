@@ -32,7 +32,9 @@
             <button id="statusButton" type="button" class="btn db-btn-prim btn-lg ad-button text-center ng-class:[{'disabled': !msc.chairman},{'ad-dummy-button': !msc.chairman}]"
             uib-dropdown-toggle>
 
-                <uib-progressbar ng-if='msc.loading' class="col-xs-12 progress-striped active" type="info"></uib-progressbar>
+                <uib-progressbar ng-if='msc.loading' class="col-xs-12 progress-striped active" type="info">
+                    <span translate translate-cloak>STR_LOADING_DATA</span>
+                </uib-progressbar>
 
                 <span ng-if='!msc.loading' class="db-label ng-class: [msc.mtgStatusClass(msc.meeting)]">
                     <span translate translate-cloak>{{msc.stringId(msc.meeting)}}</span>
