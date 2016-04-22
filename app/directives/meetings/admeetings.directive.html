@@ -7,7 +7,7 @@
             </button>
         </div>
 
-        <div class="col-xs-12 col-sm-4 btn-group db-nopadding" uib-dropdown is-open="agencyIsOpen">
+        <div class="col-xs-12 col-sm-3 btn-group db-nopadding" uib-dropdown is-open="agencyIsOpen">
             <button id="agencyButton" type="button" class="btn btn-block db-btn-colhea" uib-dropdown-toggle ng-disabled="ctrl.loading">
                 <span class="ng-cloak">{{ctrl.agencyTitle}}</span>
                 <span class="caret"></span>
@@ -19,11 +19,16 @@
             </ul>
         </div>
 
-        <div class="hidden-xs col-xs-12 col-sm-4 db-nopadding">
+        <div class="hidden-xs col-xs-12 col-sm-3 db-nopadding">
             <button id="roleButton" type="button" class="btn btn-block disabled ng-class:{'db-btn-colhea': ctrl.loading, 'db-btn-colhea-dummy': !ctrl.loading}"
             translate>STR_ROLE</button>
         </div>
 
+        <div class="hidden-xs col-xs-12 col-sm-2 db-nopadding">
+            <button id="roleButton" type="button" class="btn btn-block disabled ng-class:{'db-btn-colhea': ctrl.loading, 'db-btn-colhea-dummy': !ctrl.loading}" translate translate-cloak>
+                STR_STATUS
+            </button>
+        </div>
     </div>
 
     <div class="row">
@@ -34,10 +39,17 @@
             <button ng-if="item.visible" type="button" class="list-group-item" ng-repeat="item in ctrl.data | orderBy:'meeting.meetingDate': reverse track by $index"
             ng-click="selected({meetingItem:item.meeting})">
                 <div class="row">
-                    <div class="col-xs-12 col-sm-4"><b>{{item.meeting.name}}</b>
-                        <br>{{item.meeting.meetingDate | date:'yyyy-MM-dd HH:mm' }}</div>
-                    <div class="col-xs-12 col-sm-4">{{item.meeting.agencyName}}</div>
-                    <div class="col-xs-12 col-sm-4">{{item.role}}</div>
+                    <div class="col-xs-12 col-sm-4">
+                        <b>{{item.meeting.name}}</b>
+                        <br>{{item.meeting.meetingDate | date:'yyyy-MM-dd HH:mm' }}
+                    </div>
+                    <div class="col-xs-12 col-sm-3">{{item.meeting.agencyName}}</div>
+                    <div class="col-xs-12 col-sm-3">{{item.role}}</div>
+                    <div class="col-xs-12 col-sm-2">
+                        <span class="db-label ng-class: [ctrl.mtgStatusClass(item)]" translate translate-cloak>
+                            {{ctrl.statusStringId(item)}}
+                        </span>
+                    </div>
                 </div>
             </button>
         </ul>

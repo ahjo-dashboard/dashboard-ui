@@ -19,7 +19,7 @@ angular.module('dashboard')
     })
     .directive('adMeetings', [function() {
 
-        var controller = ['$log', '$scope', 'ENV', 'AhjoMeetingsSrv', '$translate', '$rootScope', 'MTGD', function($log, $scope, ENV, AhjoMeetingsSrv, $translate, $rootScope, MTGD) {
+        var controller = ['$log', '$scope', 'ENV', 'AhjoMeetingsSrv', '$translate', '$rootScope', 'MTGD', 'CONST', function($log, $scope, ENV, AhjoMeetingsSrv, $translate, $rootScope, MTGD, CONST) {
             $log.log("adMeetings: CONTROLLER");
             var self = this;
             self.mtgErr = null;
@@ -150,6 +150,27 @@ angular.module('dashboard')
                 }
                 setTitle();
                 $scope.roleIsOpen = false;
+            };
+
+            self.statusStringId = function (arg) {
+                if (angular.isObject(arg) && angular.isDefined(arg.meeting) && angular.isDefined(arg.meeting.state)) {
+                    for (var item in CONST.MTGSTATUS) {
+                        if (CONST.MTGSTATUS.hasOwnProperty(item)) {
+                            if (arg.meeting.state === CONST.MTGSTATUS[item].value) {
+                                return CONST.MTGSTATUS[item].stringId;
+                            }
+                        }
+                    }
+                }
+                return 'STR_TOPIC_UNKNOWN';
+            };
+
+            self.mtgStatusClass = function (arg) {
+                if (angular.isObject(arg) && angular.isDefined(arg.meeting.state) && angular.isDefined(arg.meeting.state)) {
+                    var s = $rootScope.objWithVal(CONST.MTGSTATUS, 'value', arg.meeting.state);
+                    return s ? s.badgeClass : 'db-badge-red';
+                }
+                return 'db-badge-red';
             };
 
             setTitle();
