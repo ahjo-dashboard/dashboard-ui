@@ -24,13 +24,13 @@ angular.module('dashboard')
         'BTN': {
             OPEN: { icon: 'glyphicon-plus', action: 'OPEN', type: 'db-btn-prim', tooltip: 'STR_OPEN', active: false },
             CLOSE: { icon: 'glyphicon-minus', action: 'CLOSE', type: 'db-btn-prim', tooltip: 'STR_CLOSE', active: false },
-            EDIT: { icon: 'glyphicon-pencil', action: 'EDIT', type: 'db-btn-prim', tooltip: 'STR_EDIT', active: false },
+            EDIT: { icon: 'glyphicon-pencil', action: 'EDIT', type: 'db-btn-prim', disabled: false, tooltip: 'STR_EDIT', active: false },
             OK: { icon: 'glyphicon-ok', action: 'OK', type: 'db-btn-prim', tooltip: 'STR_SAVE', active: false },
             CANCEL: { icon: 'glyphicon-remove', action: 'CANCEL', type: 'btn-warning', tooltip: 'STR_CANCEL', active: false },
             SEND: { icon: 'glyphicon-send', action: 'SEND', type: 'btn-success', tooltip: 'STR_PUBLISH', active: true, config: { title: 'STR_CNFM_SEND_PROP', text: null, yes: 'STR_PUBLISH' } },
             DISABLEDSEND: { icon: 'glyphicon-send', action: 'SEND', type: 'btn-success', disabled: true, tooltip: 'STR_PUBLISH', active: false },
             DELETE: { icon: 'glyphicon-trash', action: 'DELETE', type: 'btn-danger', tooltip: 'STR_DELETE', active: true, config: { title: 'STR_CNFM_DEL_PROP', text: null, yes: 'STR_DELETE' } },
-            COPY: { icon: 'glyphicon-copyright-mark', action: 'COPY', type: 'db-btn-prim', tooltip: 'STR_COPY', active: true, config: { title: 'STR_CNFM_COPY_PROP', text: null } }
+            COPY: { icon: 'glyphicon-copyright-mark', action: 'COPY', type: 'db-btn-prim', disabled: false, tooltip: 'STR_COPY', active: true, config: { title: 'STR_CNFM_COPY_PROP', text: null } }
         }
     })
     .filter('unsafe', function ($sce) {
@@ -51,6 +51,7 @@ angular.module('dashboard')
             self.editedText = "";
             self.updating = false;
             var previousIsPublished = null;
+            var createDisabled = false;
 
             self.lBtn = null;
             self.mBtn = null;
@@ -59,6 +60,27 @@ angular.module('dashboard')
             self.editor = {
                 'menu': []
             };
+
+            function isSaved(proposal) {
+                if (angular.isObject(proposal) && (proposal.isPublished === PROPS.PUBLISHED.NO || proposal.isPublished === PROPS.PUBLISHED.YES)) {
+                    return true;
+                }
+                return false;
+            }
+
+            function refreshButtons(disabled) {
+                $log.debug("dbProposal: refreshButtons: " + disabled);
+                createDisabled = disabled;
+                if (angular.equals(self.lBtn, PROP.BTN.EDIT) || angular.equals(self.lBtn, PROP.BTN.COPY)) {
+                    self.lBtn.disabled = disabled;
+                }
+                if (angular.equals(self.mBtn, PROP.BTN.EDIT) || angular.equals(self.mBtn, PROP.BTN.COPY)) {
+                    self.mBtn.disabled = disabled;
+                }
+                if (angular.equals(self.rBtn, PROP.BTN.EDIT) || angular.equals(self.rBtn, PROP.BTN.COPY)) {
+                    self.rBtn.disabled = disabled;
+                }
+            }
 
             function setMode(mode) {
                 if (mode === self.mode) {
@@ -92,7 +114,6 @@ angular.module('dashboard')
                     default:
                         break;
                 }
-                $rootScope.$emit(PROPS.MODECHANGE, { sender: $scope.proposal });
             }
 
             function setStatus(status) {
@@ -132,6 +153,7 @@ angular.module('dashboard')
                     if (proposal.isPublished === null) {
                         setStatus(PROP.STATUS.DRAFT);
                         setMode(PROP.MODE.OPEN);
+                        previousIsPublished = proposal.isPublished;
                     }
                     else if (proposal.isOwnProposal) {
                         setStatus((proposal.isPublished === PROPS.PUBLISHED.YES) ? PROP.STATUS.PUBLISHED : PROP.STATUS.DRAFT);
@@ -170,6 +192,7 @@ angular.module('dashboard')
                     }).finally(function () {
                         $log.debug("dbProposal: post finally: ");
                         self.updating = false;
+                        $rootScope.$emit(PROPS.UPDATED, { sender: $scope.proposal });
                     });
                 }
                 else {
@@ -180,7 +203,7 @@ angular.module('dashboard')
             function deleteProposal(proposal) {
                 $log.debug("dbProposal: deleteProposal: " + JSON.stringify(proposal));
                 if (angular.isObject(proposal)) {
-                    if (proposal.isPublished === PROPS.PUBLISHED.NO || proposal.isPublished === PROPS.PUBLISHED.YES) {
+                    if (isSaved(proposal)) {
                         self.updating = true;
                         AhjoProposalsSrv.delete(proposal).$promise.then(function (response) {
                             $log.debug("dbProposal: delete then: " + JSON.stringify(response));
@@ -255,7 +278,11 @@ angular.module('dashboard')
 
                     case PROP.BTN.CANCEL.action:
                         $scope.proposal.isPublished = previousIsPublished;
+                        if (!isSaved($scope.proposal)) {
+                            deleteProposal($scope.proposal);
+                        }
                         setMode(PROP.MODE.COLLAPSED);
+                        $rootScope.$emit(PROPS.UPDATED, { sender: $scope.proposal });
                         break;
 
                     case PROP.BTN.OK.action:
@@ -277,6 +304,7 @@ angular.module('dashboard')
                         previousIsPublished = $scope.proposal.isPublished;
                         $scope.proposal.isPublished = null;
                         setMode(PROP.MODE.OPEN);
+                        $rootScope.$emit(PROPS.UPDATED, { sender: $scope.proposal });
                         break;
 
                     case PROP.BTN.COPY.action:
@@ -304,6 +332,18 @@ angular.module('dashboard')
                 }
             }, true);
 
+            $scope.$watch(function () {
+                return {
+                    disableCreate: $scope.disableCreate
+                };
+            }, function (data) {
+                if (angular.isObject(data)) {
+                    if (createDisabled !== data.disableCreate) {
+                        refreshButtons(data.disableCreate);
+                    }
+                }
+            }, true);
+
             var watcher = $rootScope.$on(PROPS.TOGGLE, function (event, data) {
                 if (($scope.proposal.isPublished === PROPS.PUBLISHED.YES)) {
                     if (data) {
@@ -326,6 +366,7 @@ angular.module('dashboard')
             scope: {
                 proposal: '=',
                 guid: '=',
+                disableCreate: '=',
                 onRemove: '&',
                 onCopy: '&'
             },

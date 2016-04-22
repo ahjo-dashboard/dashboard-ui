@@ -30,7 +30,7 @@ angular.module('dashboard')
         ],
         'TOGGLE': 'PROPS.TOGGLE',
         'COUNT': 'PROPS.COUNT',
-        'MODECHANGE': 'PROPS.MODECHANGE'
+        'UPDATED': 'PROPS.UPDATED'
     })
     .directive('dbProposalList', [function () {
 
@@ -200,6 +200,7 @@ angular.module('dashboard')
                     var draft = createDraft(type.value);
                     self.proposals.splice(0, 0, draft);
                     countProposals();
+                    checkProposals();
                 }
                 else {
                     $log.error('dbProposalList: addProposal parameter invalid');
@@ -258,7 +259,7 @@ angular.module('dashboard')
                 }
             });
 
-            var modeWatcher = $rootScope.$on(PROPS.MODECHANGE, function (event, data) {
+            var proposalWatcher = $rootScope.$on(PROPS.UPDATED, function (event, data) {
                 if (angular.isObject(data) && angular.isObject(data.sender)) {
                     if (self.proposals.indexOf(data.sender) >= 0) {
                         checkProposals();
@@ -266,7 +267,7 @@ angular.module('dashboard')
                 }
             });
 
-            $scope.$on('$destroy', modeWatcher);
+            $scope.$on('$destroy', proposalWatcher);
 
             $scope.$on('$destroy', function () {
                 $log.debug("dbProposalList: DESTROY");
