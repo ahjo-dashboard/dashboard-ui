@@ -1,6 +1,6 @@
 <div class="ad-page">
 
-    <div ng-if="!isMobile" class="ad-page-header db-center">
+    <div ng-if="!msc.isMobile" class="ad-page-header db-center">
         <div class="col-xs-12">
             <div class="row">
                 <div class="col-sm-4">
@@ -19,14 +19,14 @@
         </div>
     </div>
 
-    <div ng-if="isMobile" class="ad-page-header db-center">
+    <div ng-if="msc.isMobile" class="ad-page-header db-center">
         <i class="glyphicon glyphicon-menu-left" aria-hidden="true" ng-click="goBack()"></i>
         <h4 ng-cloak>{{msc.meeting.meetingTitle}}</h4>
     </div>
 
     <div class="ad-page-content">
 
-        <button ng-if="!isMobile" type="button" class="btn db-btn-prim btn-lg disabled ad-dummy-button">{{msc.meeting.meetingTitle}}</button>
+        <button ng-if="!msc.isMobile" type="button" class="btn db-btn-prim btn-lg disabled ad-dummy-button">{{msc.meeting.meetingTitle}}</button>
 
         <div class="btn-group btn-block text-center" uib-dropdown is-open="">
             <button id="statusButton" type="button" class="db-nopadding btn db-btn-prim btn-lg ad-button text-center ng-class:[{'disabled': !msc.chairman},{'ad-dummy-button': !msc.chairman}]"
@@ -78,7 +78,7 @@
                     </button>
                 </div>
 
-                <button db-confirm confirm-enabled="msc.isEditing" confirm-config="msc.unsavedConfig" type="button" class="btn btn-default ad-button ad-topic-button db-btn-agenda ng-class:[{'active': (msc.isSelected(topic) && !isMobile)}]"
+                <button db-confirm confirm-enabled="msc.isEditing" confirm-config="msc.unsavedConfig" type="button" class="btn btn-default ad-button ad-topic-button db-btn-agenda ng-class:[{'active': (msc.isSelected(topic) && !msc.isMobile)}]"
                 ng-click="msc.topicSelected(topic)">{{topic.topicTitle}}</button>
             </div>
         </div>
@@ -87,4 +87,4 @@
 
 </div>
 
-<ui-view ng-if="isMobile" name="detailsContent"></ui-view>
+<ui-view ng-if="msc.isMobile" name="detailsContent"></ui-view>

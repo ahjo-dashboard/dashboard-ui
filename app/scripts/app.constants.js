@@ -65,7 +65,8 @@ angular.module('dashboard')
             VISIBLE_MTGS: 'visiblemeetings',
             SIGNING_RES: 'signingres',
             MEETING_ITEM: 'meetingitem',
-            PROPOSAL_EVENT_ARRAY: 'proposaleventarray'
+            PROPOSAL_EVENT_ARRAY: 'proposaleventarray',
+            VALUE: 'value'
         },
         'BTNTYPE': {
             DEFAULT: 'btn-default',
@@ -78,14 +79,14 @@ angular.module('dashboard')
             SECRET: 2
         },
         'MTGSTATUS': {
-            RESERVED: { value: 0, stringId: 'STR_RESERVED_MEETING', badgeClass: 'label-default' },
-            CREATED: { value: 1, stringId: 'STR_CREATED', badgeClass: 'label-default' },
-            TECHNICALLY_OPEN: { value: 2, stringId: 'STR_TECHNICALLY_OPEN', badgeClass: 'label-default' },
-            ACTIVE: { value: 3, stringId: 'STR_ACTIVE', badgeClass: 'db-label-yel' },
-            ABORTED: { value: 4, stringId: 'STR_ABORTED', badgeClass: 'db-label-pur' },
-            OFFICIALLY_CLOSED: { value: 5, stringId: 'STR_OFFICIALLY_CLOSED', badgeClass: 'label-success' },
-            RECORDS_MOVED: { value: 6, stringId: 'STR_RECORDS_MOVED', badgeClass: 'label-success' },
-            TECHNICALLY_CLOSED: { value: 7, stringId: 'STR_TECNICALLY_CLOSED', badgeClass: 'label-success' },
+            RESERVED: { value: 0, stringId: 'STR_RESERVED_MEETING', badgeClass: 'db-badge-dark' },
+            CREATED: { value: 1, stringId: 'STR_CREATED', badgeClass: 'db-badge-dark' },
+            TECHNICALLY_OPEN: { value: 2, stringId: 'STR_TECHNICALLY_OPEN', badgeClass: 'db-badge-dark' },
+            ACTIVE: { value: 3, stringId: 'STR_ACTIVE', badgeClass: 'db-badge-yel' },
+            ABORTED: { value: 4, stringId: 'STR_ABORTED', badgeClass: 'db-badge-pur' },
+            OFFICIALLY_CLOSED: { value: 5, stringId: 'STR_OFFICIALLY_CLOSED', badgeClass: 'db-badge-gre' },
+            RECORDS_MOVED: { value: 6, stringId: 'STR_RECORDS_MOVED', badgeClass: 'db-badge-gre' },
+            TECHNICALLY_CLOSED: { value: 7, stringId: 'STR_TECNICALLY_CLOSED', badgeClass: 'db-badge-gre' },
         },
         'MTGEVENT': {
             LASTEVENTID: 'LastEventId',
@@ -103,11 +104,11 @@ angular.module('dashboard')
             READY: { value: 4, iconPath: "images/mtg-states/mtg-ag-state-4.png" }
         },
         'ESIGNSTATUS': { //SignApi_DocStatuses
-            UNSIGNED: { value: 1, stringId: 'STR_UNSIGNED', badgeClass: 'label-warning' },
-            REJECTED: { value: 2, stringId: 'STR_REJECTED', badgeClass: 'label-danger' },
-            SIGNED: { value: 4, stringId: 'STR_SIGNED', badgeClass: 'label-success' },
-            RETURNED: { value: 7, stringId: 'STR_RETURNED', badgeClass: 'label-info' },
-            UNDECIDED: { value: 8, stringId: 'STR_UNDECIDED', badgeClass: 'label-default' }
+            UNSIGNED: { value: 1, stringId: 'STR_UNSIGNED', badgeClass: 'db-badge-ora' },
+            REJECTED: { value: 2, stringId: 'STR_REJECTED', badgeClass: 'db-badge-red' },
+            SIGNED: { value: 4, stringId: 'STR_SIGNED', badgeClass: 'db-badge-gre' },
+            RETURNED: { value: 7, stringId: 'STR_RETURNED', badgeClass: 'db-badge-red' },
+            UNDECIDED: { value: 8, stringId: 'STR_UNDECIDED', badgeClass: 'db-badge-dark' }
         },
         'ESIGNTYPE': {// SignApi_DocTypes
             POLICYMAKER: { value: 1, stringId: 'STR_SIGNING_DOC_POLICYMAKER' },

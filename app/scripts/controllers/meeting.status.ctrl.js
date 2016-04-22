@@ -23,7 +23,7 @@ angular.module('dashboard')
         self.isEditing = false;
         self.unsavedConfig = { title: 'STR_CONFIRM', text: 'STR_WARNING_UNSAVED', yes: 'STR_CONTINUE' };
         var meetingItem = StorageSrv.getKey(CONST.KEY.MEETING_ITEM);
-        var isMobile = $rootScope.isMobile;
+        self.isMobile = $rootScope.isMobile;
         var pollingTimer = null;
         var userPersonGuid = null;
         var lastEventId = null;
@@ -69,7 +69,7 @@ angular.module('dashboard')
                     var topic = self.meeting.topicList[j];
                     if (angular.isObject(topic)) {
                         topic.isModified = (changedTopicGuidArray.indexOf(topic.topicGuid) > CONST.NOTFOUND);
-                        if (!isMobile && angular.equals(topic.topicGuid, selectedTopicGuid)) {
+                        if (!self.isMobile && angular.equals(topic.topicGuid, selectedTopicGuid)) {
                             StorageSrv.setKey(CONST.KEY.TOPIC, angular.copy(topic));
                         }
                     }
@@ -144,7 +144,7 @@ angular.module('dashboard')
                             if (angular.isObject(topic)) {
                                 selectedTopicGuid = topic.topicGuid;
                                 topic.userPersonGuid = self.meeting.userPersonGuid;
-                                if (!isMobile) {
+                                if (!self.isMobile) {
                                     StorageSrv.setKey(CONST.KEY.TOPIC, topic);
                                 }
                             }
@@ -182,7 +182,7 @@ angular.module('dashboard')
             if (angular.isObject(topic)) {
                 selectedTopicGuid = topic.topicGuid;
                 StorageSrv.setKey(CONST.KEY.TOPIC, angular.copy(topic));
-                if (isMobile) {
+                if (self.isMobile) {
                     $state.go(CONST.APPSTATE.MEETINGDETAILS, {});
                 }
             }
@@ -223,10 +223,10 @@ angular.module('dashboard')
 
         self.mtgStatusClass = function (meeting) {
             if (angular.isObject(meeting)) {
-                var s = $rootScope.objWithVal(CONST.MTGSTATUS, 'value', meeting.meetingStatus);
-                return s ? s.badgeClass : 'label-danger';
+                var s = $rootScope.objWithVal(CONST.MTGSTATUS, CONST.KEY.VALUE, meeting.meetingStatus);
+                return s ? s.badgeClass : 'db-badge-red';
             }
-            return 'label-danger';
+            return 'db-badge-red';
         };
 
         $scope.$watch(function () {

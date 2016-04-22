@@ -31,9 +31,10 @@ $default-font-size: 1.2em;
 $tablist-tabborder-width: 2px;
 $btn-radius: 6px;
 $header-leftmargin: 10px;
-$font-color-body: #555;
+$font-color-body: #404040;
 $font-color-header: white;
 $proposals-color: orange;
+$badge-font-color: white;
 
 .browsehappy {
     margin: 0.2em 0;
@@ -164,15 +165,47 @@ body {
         font-size: inherit !important;
     }
 
-    .db-label-pur {
+    .db-badge {
+        width: 100%;
+        color: $badge-font-color;
+        h1, h2, h3, h4, h5 {
+            color: $badge-font-color;
+        }
+    }
+
+    .db-badge-pur {
+        @extend .db-badge;
         background-color: #9370d8;
     }
 
-    .db-label-yel {
+    .db-badge-yel {
+        @extend .db-badge;
         background-color: #fee901;
-        color: #555;
+        color: #404040;
+        h1, h2, h3, h4, h5 {
+            color: #404040;
+        }
     }
 
+    .db-badge-gre {
+        @extend .db-badge;
+        background-color: #5cb85c;
+    }
+
+    .db-badge-dark {
+        @extend .db-badge;
+        background-color: #777777;
+    }
+
+    .db-badge-red {
+        @extend .db-badge;
+        background-color: #d9534f;
+    }
+
+    .db-badge-ora {
+        @extend .db-badge;
+        background-color: #f0ad4e;
+    }
     // db-btn-prim
     $btn-prim-color-bg: #4591d3;
     $btn-prim-color-active-bg: #276aa5;
