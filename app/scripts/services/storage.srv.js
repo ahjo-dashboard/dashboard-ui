@@ -56,6 +56,9 @@ angular.module('dashboard')
                 else {
                     $log.error("StorageSrv: deleteKey invalid parameter");
                 }
+            },
+            reset: function () {
+                data = {};
             }
         };
     });
