@@ -11,38 +11,51 @@
  * # proposalListDirective
  */
 angular.module('dashboard')
-    .constant('PROPS', {
-        'PUBLISHED': {
-            NO: 0,
-            YES: 1
-        },
-        'TYPE': [
-            { value: 1, text: "Päätös" },
-            { value: 2, text: "Esityksen muutos" },
-            { value: 3, text: "Pöydällepanoehdotus" },
-            { value: 4, text: "Palautusehdotus" },
-            { value: 5, text: "Vastaehdotus" },
-            { value: 6, text: "Hylkäysehdotus" },
-            { value: 7, text: "Ponsi" },
-            { value: 8, text: "Eriävä mielipide" },
-            { value: 9, text: "Esteellinen" },
-            { value: 10, text: "Esityksen poisto" }
-        ],
-        'TOGGLE': 'PROPS.TOGGLE',
-        'COUNT': 'PROPS.COUNT',
-        'UPDATED': 'PROPS.UPDATED'
+    .factory('PROPS', function (CONST) {
+        return {
+            'PUBLISHED': {
+                NO: 0,
+                YES: 1
+            },
+            'TYPE': [
+                { value: 1, text: "Päätös", roles: [] },
+                { value: 2, text: "Esityksen muutos", roles: [] },
+                { value: 3, text: "Pöydällepanoehdotus", roles: [CONST.MTGROLE.PARTICIPANT_FULL] },
+                { value: 4, text: "Palautusehdotus", roles: [CONST.MTGROLE.PARTICIPANT_FULL] },
+                { value: 5, text: "Vastaehdotus", roles: [CONST.MTGROLE.PARTICIPANT_FULL] },
+                { value: 6, text: "Hylkäysehdotus", roles: [CONST.MTGROLE.PARTICIPANT_FULL] },
+                { value: 7, text: "Ponsi", roles: [CONST.MTGROLE.PARTICIPANT_FULL] },
+                { value: 8, text: "Eriävä mielipide", roles: [CONST.MTGROLE.PARTICIPANT_FULL] },
+                { value: 9, text: "Esteellinen", roles: [] },
+                { value: 10, text: "Esityksen poisto", roles: [] }
+            ],
+            'TOGGLE': 'PROPS.TOGGLE',
+            'COUNT': 'PROPS.COUNT',
+            'UPDATED': 'PROPS.UPDATED'
+        };
     })
     .directive('dbProposalList', [function () {
 
         var controller = ['$log', '$scope', 'AhjoProposalsSrv', 'PROPS', '$rootScope', 'CONST', 'StorageSrv', function ($log, $scope, AhjoProposalsSrv, PROPS, $rootScope, CONST, StorageSrv) {
             $log.log("dbProposalList: CONTROLLER");
             var self = this;
+            var role = CONST.MTGROLE.PARTICIPANT_FULL; // todo: pending support for other roles.
             self.proposals = null;
-            self.tps = PROPS.TYPE;
+            self.tps = null;
             self.published = PROPS.PUBLISHED;
             self.isMobile = $rootScope.isMobile;
             self.isAllOpen = false;
             self.unsavedCount = 0;
+
+            function setTypes() {
+                $log.debug("dbProposalList: setTypes");
+                self.tps = [];
+                angular.forEach(PROPS.TYPE, function (type) {
+                    if (angular.isObject(type) && angular.isArray(type.roles) && type.roles.indexOf(role) > CONST.NOTFOUND) {
+                        this.push(type);
+                    }
+                }, self.tps);
+            }
 
             function countProposals() {
                 var drafts = 0;
@@ -273,6 +286,7 @@ angular.module('dashboard')
                 $log.debug("dbProposalList: DESTROY");
             });
 
+            setTypes();
         }];
 
         return {
