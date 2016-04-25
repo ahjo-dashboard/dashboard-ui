@@ -46,7 +46,7 @@ angular.module('dashboard')
                 }
 
                 if (!self.FStatus) {
-                    self.docStatusTitle = 'STR_SIGNING_REQ_STATUS';
+                    self.docStatusTitle = 'STR_STATUS';
                 }
                 else {
                     self.docStatusTitle = self.FStatus.strId;
