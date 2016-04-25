@@ -85,9 +85,9 @@ angular.module('dashboard')
                     $log.debug("meetingStatusCtrl: getEvents then: ");
                     if (response instanceof Array) {
                         response.forEach(function (event) {
-                            switch (event.TypeName) {
+                            switch (event.typeName) {
                                 case CONST.MTGEVENT.LASTEVENTID:
-                                    lastEventId = event.LastEventId;
+                                    lastEventId = event.lastEventId;
                                     break;
                                 case CONST.MTGEVENT.REMARKPUBLISHED:
                                 case CONST.MTGEVENT.REMARKUPDATED:
@@ -101,7 +101,7 @@ angular.module('dashboard')
                                     topicStatusChanged(event);
                                     break;
                                 default:
-                                    $log.error("meetingStatusCtrl: unsupported TypeName: " + event.TypeName);
+                                    $log.error("meetingStatusCtrl: unsupported typeName: " + event.typeName);
                                     break;
                             }
                         }, this);

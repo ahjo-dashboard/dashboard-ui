@@ -138,7 +138,7 @@ angular.module('dashboard')
                 if (angular.isArray(events)) {
                     angular.forEach(events, function (event) {
                         if (angular.isObject(event)) {
-                            switch (event.TypeName) {
+                            switch (event.typeName) {
                                 case CONST.MTGEVENT.REMARKPUBLISHED:
                                 case CONST.MTGEVENT.REMARKUPDATED:
                                     if (angular.isObject(event.Proposal) && angular.equals(event.Proposal.topicGuid, $scope.guid)) {
