@@ -19,7 +19,7 @@
             </div>
 
             <uib-alert type="warning" ng-if="sc.item.Comment && sc.item.Comment.length">
-                    {{sc.item.Comment}}
+                {{sc.item.Comment}}
             </uib-alert>
 
             <uib-alert ng-repeat="i in sc.alerts track by $index" type="{{i.type}}" close="sc.closeAlert($index)">
@@ -62,7 +62,7 @@
             <div class="row db-center">
                 <div class="col-xs-2 db-center db-nopadding">
                     <button type="button" class="btn db-btn-hdr glyphicon glyphicon-home center" ng-click="sc.goHome()">
-                        </button>
+                    </button>
                     <button type="button" class="btn db-btn-hdr glyphicon glyphicon-info-sign center disabled" ng-click="">
                     </button>
                 </div>
@@ -123,7 +123,7 @@
 
     <!-- DESKTOP content -->
     <div ng-if="!isMobile" class="ad-page-content">
-        <div class="ad-page-container-flex"">
+        <div class="ad-page-container-flex">
 
             <uib-progressbar ng-if="sc.ongoing" class="progress-striped active" type="info">
             </uib-progressbar>
@@ -140,9 +140,9 @@
                         </div>
                     </uib-alert>
 
-                    <div ng-if="sc.btnModel.sta.signers">
-                        <doc-signers ng-hide="sc.isHidden(sc.btnModel.sta.id)" listmodel="sc.btnModel.sta.signers" ismobile="isMobile"></doc-signers>
-                    </div>
+                    <doc-signers ng-if="sc.btnModel.sta.signers" ng-hide="sc.isHidden(sc.btnModel.sta.id)" listmodel="sc.btnModel.sta.signers"
+                        ismobile="isMobile">
+                    </doc-signers>
 
                 </div>
 
