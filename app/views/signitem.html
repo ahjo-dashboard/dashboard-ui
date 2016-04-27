@@ -37,11 +37,11 @@
                 <span translate translate-cloak>STR_ATTACHMENTS</span>
                 <span class="badge ng-cloak">{{sc.btnModel.att.count}}</span>
             </button>
-            <button id="sc.btnModel.acc.id" type="button" class="btn btn-block btn-lg btn-success ng-class: {active: sc.isActive(sc.btnModel.acc.id)}"
+            <button id="sc.btnModel.acc.id" ng-hide="sc.btnModel.acc.hideBtn" type="button" class="btn btn-block btn-lg btn-success ng-class: {active: sc.isActive(sc.btnModel.acc.id)}"
                 ng-click="sc.actionSign()" ng-disabled="sc.isDisabled(sc.btnModel.acc.id)" db-confirm confirm-config="sc.btnModel.acc.cConf">
                 <span translate translate-cloak>STR_SIGNING_ACCEPT</span>
             </button>
-            <button id="sc.btnModel.rej.id" type="button" class="btn btn-block btn-lg btn-danger ng-class: {active: sc.isActive(sc.btnModel.rej.id)}"
+            <button id="sc.btnModel.rej.id" ng-hide="sc.btnModel.rej.hideBtn" type="button" class="btn btn-block btn-lg btn-danger ng-class: {active: sc.isActive(sc.btnModel.rej.id)}"
                 ng-click="sc.actionReject()" ng-disabled="sc.isDisabled(sc.btnModel.rej.id)" db-confirm confirm-config="sc.btnModel.rej.cConf">
                 <span translate translate-cloak>STR_REJECT</span>
             </button>
