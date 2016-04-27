@@ -19,15 +19,15 @@ angular.module('dashboard')
             },
             'TYPE': [
                 { value: 1, text: "Päätös", roles: [] },
-                { value: 2, text: "Esityksen muutos", roles: [] },
-                { value: 3, text: "Pöydällepanoehdotus", roles: [CONST.MTGROLE.PARTICIPANT_FULL] },
-                { value: 4, text: "Palautusehdotus", roles: [CONST.MTGROLE.PARTICIPANT_FULL] },
-                { value: 5, text: "Vastaehdotus", roles: [CONST.MTGROLE.PARTICIPANT_FULL] },
-                { value: 6, text: "Hylkäysehdotus", roles: [CONST.MTGROLE.PARTICIPANT_FULL] },
-                { value: 7, text: "Ponsi", roles: [CONST.MTGROLE.PARTICIPANT_FULL] },
-                { value: 8, text: "Eriävä mielipide", roles: [CONST.MTGROLE.PARTICIPANT_FULL] },
-                { value: 9, text: "Esteellinen", roles: [] },
-                { value: 10, text: "Esityksen poisto", roles: [] }
+                { value: 2, text: "Esityksen muutos", roles: [], cityCouncilRoles: [] },
+                { value: 3, text: "Pöydällepanoehdotus", roles: [CONST.MTGROLE.PARTICIPANT_FULL], cityCouncilRoles: [CONST.MTGROLE.PARTICIPANT_FULL] },
+                { value: 4, text: "Palautusehdotus", roles: [CONST.MTGROLE.PARTICIPANT_FULL], cityCouncilRoles: [CONST.MTGROLE.PARTICIPANT_FULL] },
+                { value: 5, text: "Vastaehdotus", roles: [CONST.MTGROLE.PARTICIPANT_FULL], cityCouncilRoles: [CONST.MTGROLE.PARTICIPANT_FULL] },
+                { value: 6, text: "Hylkäysehdotus", roles: [CONST.MTGROLE.PARTICIPANT_FULL], cityCouncilRoles: [CONST.MTGROLE.PARTICIPANT_FULL] },
+                { value: 7, text: "Ponsi", roles: [], cityCouncilRoles: [CONST.MTGROLE.PARTICIPANT_FULL] },
+                { value: 8, text: "Eriävä mielipide", roles: [CONST.MTGROLE.PARTICIPANT_FULL], cityCouncilRoles: [CONST.MTGROLE.PARTICIPANT_FULL] },
+                { value: 9, text: "Esteellinen", roles: [], cityCouncilRoles: [] },
+                { value: 10, text: "Esityksen poisto", roles: [], cityCouncilRoles: [] }
             ],
             'TOGGLE': 'PROPS.TOGGLE',
             'COUNT': 'PROPS.COUNT',
@@ -40,6 +40,9 @@ angular.module('dashboard')
             $log.log("dbProposalList: CONTROLLER");
             var self = this;
             var role = CONST.MTGROLE.PARTICIPANT_FULL; // todo: pending support for other roles.
+            var personGuid = null;
+            var topicGuid = null;
+            var isCityCouncil = null;
             self.proposals = null;
             self.tps = null;
             self.published = PROPS.PUBLISHED;
@@ -51,8 +54,11 @@ angular.module('dashboard')
                 $log.debug("dbProposalList: setTypes");
                 self.tps = [];
                 angular.forEach(PROPS.TYPE, function (type) {
-                    if (angular.isObject(type) && angular.isArray(type.roles) && type.roles.indexOf(role) > CONST.NOTFOUND) {
-                        this.push(type);
+                    if (angular.isObject(type)) {
+                        var array = isCityCouncil ? type.cityCouncilRoles : type.roles;
+                        if (angular.isArray(array) && array.indexOf(role) > CONST.NOTFOUND) {
+                            this.push(type);
+                        }
                     }
                 }, self.tps);
             }
@@ -94,9 +100,12 @@ angular.module('dashboard')
 
             function createDraft(type) {
                 if (type) {
+                    if (!personGuid || !topicGuid) {
+                        $log.error('dbProposalList: createDraft personGuid or topicGuid missing');
+                    }
                     return {
-                        "personGuid": $scope.personGuid,
-                        "topicGuid": $scope.guid,
+                        "personGuid": personGuid,
+                        "topicGuid": topicGuid,
                         "text": "",
                         "proposalType": type,
                         "isPublished": null,
@@ -154,13 +163,13 @@ angular.module('dashboard')
                             switch (event.typeName) {
                                 case CONST.MTGEVENT.REMARKPUBLISHED:
                                 case CONST.MTGEVENT.REMARKUPDATED:
-                                    if (angular.isObject(event.Proposal) && angular.equals(event.Proposal.topicGuid, $scope.guid)) {
+                                    if (angular.isObject(event.Proposal) && angular.equals(event.Proposal.topicGuid, topicGuid)) {
                                         updateProposal(event.Proposal);
                                     }
                                     break;
 
                                 case CONST.MTGEVENT.REMARKDELETED:
-                                    if (angular.isObject(event) && angular.equals(event.TopicGuid, $scope.guid)) {
+                                    if (angular.isObject(event) && angular.equals(event.TopicGuid, topicGuid)) {
                                         removeProposal(event.DeletedProposal);
                                     }
                                     break;
@@ -258,10 +267,17 @@ angular.module('dashboard')
 
             $scope.$watch(function () {
                 return {
-                    guid: $scope.guid
+                    topic: $scope.topic
                 };
             }, function (data) {
-                getProposals(data.guid);
+                if (angular.isObject(data) && angular.isObject(data.topic) && !angular.equals(topicGuid, data.topic.topicGuid)) {
+                    personGuid = data.topic.userPersonGuid;
+                    topicGuid = data.topic.topicGuid;
+                    isCityCouncil = data.topic.isCityCouncil;
+                    getProposals(topicGuid);
+                    setTypes();
+                }
+
             }, true);
 
             $scope.$watch(function () {
@@ -285,14 +301,11 @@ angular.module('dashboard')
             $scope.$on('$destroy', function () {
                 $log.debug("dbProposalList: DESTROY");
             });
-
-            setTypes();
         }];
 
         return {
             scope: {
-                guid: '=',
-                personGuid: '='
+                topic: '='
             },
             templateUrl: 'directives/proposalList/proposalList.Directive.html',
             restrict: 'AE',

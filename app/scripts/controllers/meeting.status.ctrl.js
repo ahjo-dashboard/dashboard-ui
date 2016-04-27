@@ -25,7 +25,6 @@ angular.module('dashboard')
         var meetingItem = StorageSrv.getKey(CONST.KEY.MEETING_ITEM);
         self.isMobile = $rootScope.isMobile;
         var pollingTimer = null;
-        var userPersonGuid = null;
         var lastEventId = null;
         var selectedTopicGuid = null;
 
@@ -133,26 +132,28 @@ angular.module('dashboard')
 
         if (meetingItem) {
             self.meeting = null;
+            selectedTopicGuid = null;
             StorageSrv.deleteKey(CONST.KEY.TOPIC);
             AhjoMeetingSrv.getMeeting(meetingItem.meetingGuid).then(function (response) {
                 $log.debug("meetingStatusCtrl: getMeeting then:");
                 if (angular.isObject(response) && angular.isArray(response.objects) && response.objects.length) {
                     self.meeting = response.objects[0];
-                    if (angular.isObject(self.meeting)) {
-                        if (self.meeting.topicList.length) {
-                            var topic = self.meeting.topicList[0];
+                    if (angular.isObject(self.meeting) && angular.isArray(self.meeting.topicList)) {
+
+                        angular.forEach(self.meeting.topicList, function (topic) {
                             if (angular.isObject(topic)) {
-                                selectedTopicGuid = topic.topicGuid;
                                 topic.userPersonGuid = self.meeting.userPersonGuid;
-                                if (!self.isMobile) {
-                                    StorageSrv.setKey(CONST.KEY.TOPIC, topic);
+                                topic.isCityCouncil = self.meeting.isCityCouncil;
+
+                                if (!selectedTopicGuid && topic.topicGuid) {
+                                    selectedTopicGuid = topic.topicGuid;
+                                    if (!self.isMobile) {
+                                        StorageSrv.setKey(CONST.KEY.TOPIC, topic);
+                                    }
                                 }
                             }
-                            else {
-                                $log.error("meetingStatusCtrl: getMeeting: invalid topic");
-                            }
-                        }
-                        userPersonGuid = self.meeting.userPersonGuid;
+                        }, this);
+
                         lastEventId = self.meeting.lastEventId; // 19734, 20281;
                         $timeout.cancel(pollingTimer);
                         pollingTimer = $timeout(function () {
@@ -180,6 +181,8 @@ angular.module('dashboard')
 
         self.topicSelected = function (topic) {
             if (angular.isObject(topic)) {
+                topic.userPersonGuid = self.meeting.userPersonGuid;
+                topic.isCityCouncil = self.meeting.isCityCouncil;
                 selectedTopicGuid = topic.topicGuid;
                 StorageSrv.setKey(CONST.KEY.TOPIC, angular.copy(topic));
                 if (self.isMobile) {

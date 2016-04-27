@@ -15,15 +15,9 @@ angular.module('dashboard')
     .controller('proposalsCtrl', ['$log', '$scope', 'StorageSrv', 'CONST', function ($log, $scope, StorageSrv, CONST) {
         $log.debug("proposalsCtrl: CONTROLLER");
         var self = this;
-        self.guid = null;
-        self.personGuid = null;
+        self.topic = StorageSrv.getKey(CONST.KEY.TOPIC);
 
-        var topic = StorageSrv.getKey(CONST.KEY.TOPIC);
-        if (angular.isObject(topic)) {
-            self.guid = topic.topicGuid;
-            self.personGuid = topic.userPersonGuid;
-        }
-        else {
+        if (!angular.isObject(self.topic)) {
             $log.error('proposalsCtrl: topic missing');
         }
 
