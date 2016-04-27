@@ -8,9 +8,8 @@
 * Controller of the dashboard
 */
 angular.module('dashboard')
-    .controller('loginCtrl', ['$log', '$http', '$state', 'ENV', 'CONST', function ($log, $http, $state, ENV, CONST) {
+    .controller('loginCtrl', ['$log', '$http', '$state', 'ENV', 'CONST', '$timeout', function ($log, $http, $state, ENV, CONST, $timeout) {
         $log.log("loginCtrl.CONSTRUCT");
-        $log.log(ENV.AhjoApi_UserLogin);
 
         var self = this;
         self.data = { selection: null, options: [] };
@@ -19,16 +18,31 @@ angular.module('dashboard')
         self.login = false;
         self.error = null;
 
+        $log.debug("loginCtrl GET options start");
         $http({
             method: 'GET',
             url: ENV.AhjoApi_UserLogin
         }).then(function successCallback(response) {
-            self.data.options = angular.element(response.data).find('option');
+            $log.debug("loginCtrl GET options success");
+            $timeout(function () {
+                // $log.debug("loginCtrl GET options find starting");
+                var sel_resp = angular.element(response.data).find('option');
+
+                var sel = [];
+                // Collect only relevant properties
+                for (var i = 0; i < sel_resp.length; i++) {
+                    sel.push({ value: sel_resp[i].value, text: sel_resp[i].text });
+                }
+                self.data.options = sel;
+                self.loadingUsers = false;
+                $log.debug("loginCtrl GET options done, count=" +self.data.options.length);
+            }, 0);
         }, function errorCallback(error) {
             $log.error(error);
             self.error = error;
-        }).finally(function () {
             self.loadingUsers = false;
+        }).finally(function () {
+            $log.debug("loginCtrl GET options finally");
         });
 
         function loginRest() {
