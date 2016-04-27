@@ -217,6 +217,11 @@ angular.module('dashboard')
             clearAlerts();
             $log.debug("signitemCtrl.actionDoc: " + self.btnModel.doc.url);
             setBtnActive(self.btnModel.doc.id);
+
+            // Comment displayed via different element on mobile
+            if (!self.isMobile && angular.isObject(self.item) && self.item.Comment && self.item.Comment.length) {
+                self.alerts.push({ type: 'warning', resTxt: self.item.Comment });
+            }
         };
 
         self.actionAttachment = function (att) {
@@ -331,4 +336,9 @@ angular.module('dashboard')
         };
 
         initBtns(self.btnModel, self.item.Status);
+
+        // Comment displayed via different element on mobile
+        if (!self.isMobile && angular.isObject(self.item) && self.item.Comment && self.item.Comment.length) {
+            self.alerts.push({ type: 'warning', resTxt: self.item.Comment });
+        }
     });
