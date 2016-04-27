@@ -88,14 +88,14 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="col-xs-12 col-sm-2 btn-group">
+                    <div class="col-xs-12 col-sm-2 btn-group" ng-hide="sc.btnModel.acc.hideBtn">
                         <button id="sc.btnModel.acc.id" type="button" class="btn btn-success btn-block ng-class:
                         {active: sc.isActive(sc.btnModel.acc.id)}" ng-click="sc.actionSign()" ng-disabled="sc.isDisabled(sc.btnModel.acc.id)"
                             db-confirm confirm-config="sc.btnModel.acc.cConf">
                             <span translate translate-cloak>STR_SIGNING_ACCEPT</span>
                         </button>
                     </div>
-                    <div class="col-xs-12 col-sm-2 btn-group">
+                    <div class="col-xs-12 col-sm-2 btn-group" ng-hide="sc.btnModel.rej.hideBtn">
                         <button id="sc.btnModel.rej.id" type="button" class="btn btn-danger btn-block ng-class:
                         {active: sc.isActive(sc.btnModel.rej.id)}" ng-click="sc.actionReject()" ng-disabled="sc.isDisabled(sc.btnModel.rej.id)"
                             db-confirm confirm-config="sc.btnModel.rej.cConf">

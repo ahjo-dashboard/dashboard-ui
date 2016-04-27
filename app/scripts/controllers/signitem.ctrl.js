@@ -47,13 +47,13 @@ angular.module('dashboard')
         // active: true if button should displayed active
         // hide: true if content specific to the button should be hidden
         self.btnModel = {
-            doc: { id: 'doc', disabled: false, active: false, hide: true, url: null },
-            acc: { id: 'acc', disabled: false, active: false, hide: true, cConf: { title: 'STR_CNFM_TEXT', text: 'STR_CNFM_SIGN_ACC', yes: 'STR_YES', no: 'STR_NO', isOpen: false } },
-            rej: { id: 'rej', disabled: false, active: false, hide: true, cConf: { title: 'STR_CNFM_TEXT', text: 'STR_CNFM_SIGN_REJ', yes: 'STR_YES', no: 'STR_NO', isOpen: false } },
-            sta: { id: 'sta', disabled: false, active: false, hide: true, signers: null },
+            doc: { id: 'doc', disabled: false, active: false, hideBtn: false, hide: false, url: null },
+            acc: { id: 'acc', disabled: false, active: false, hideBtn: false, hide: false, cConf: { title: 'STR_CNFM_TEXT', text: 'STR_CNFM_SIGN_ACC', yes: 'STR_YES', no: 'STR_NO', isOpen: false } },
+            rej: { id: 'rej', disabled: false, active: false, hideBtn: false, hide: false, cConf: { title: 'STR_CNFM_TEXT', text: 'STR_CNFM_SIGN_REJ', yes: 'STR_YES', no: 'STR_NO', isOpen: false } },
+            sta: { id: 'sta', disabled: false, active: false, hideBtn: false, hide: false, signers: null },
             com: { id: 'com', disabled: false, active: false },
             att: {
-                id: 'att', disabled: false, active: false, hide: true, url: undefined,
+                id: 'att', disabled: false, active: false, hideBtn: false, hide: false, url: undefined,
                 isOpen: false,
                 count: self.attModel ? self.attModel.objects.length : 0,
                 toggle: function (arg) {
@@ -97,9 +97,13 @@ angular.module('dashboard')
         function initBtns(btnModel, status) {
             self.btnModel.doc.url = resolveDocUrl(self.item);
 
-            if (status !== CONST.ESIGNSTATUS.UNSIGNED.value) {
-                btnModel.acc.disabled = true;
-                btnModel.rej.disabled = true;
+            if (!angular.equals(status, CONST.ESIGNSTATUS.UNSIGNED.value)) {
+                btnModel.acc.hideBtn = true;
+
+                btnModel.rej.hideBtn = true;
+
+                btnModel.att.disabled = true;
+                btnModel.att.hide = true;
             }
             if (!self.isMobile) {
                 setBtnActive(self.btnModel.doc.id); // On desktop document is displayed by default
