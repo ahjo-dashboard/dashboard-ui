@@ -30,7 +30,7 @@
 
                 <uib-progressbar ng-show="lc.login || lc.loadingUsers" class="progress-striped active" type="info">
                     <span ng-if="lc.loadingUsers">Haetaan käyttäjätunnuksia</span>
-                    <span ng-if="lc.login">Kirjaudutaan tunnuksella '{{lc.data.selection}}'</span>
+                    <span ng-if="lc.login"><span>Kirjaudutaan tunnuksella &quot;</span><span>{{lc.data.selection}}</span><span>&quot;</span>
                 </uib-progressbar>
 
                 <uib-alert ng-if="lc.error" type="danger">
