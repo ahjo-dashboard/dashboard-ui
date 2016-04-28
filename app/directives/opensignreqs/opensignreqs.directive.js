@@ -11,9 +11,9 @@
  * # openSignreqs
  */
 angular.module('dashboard')
-    .directive('adOpenSignreqs', [function() {
+    .directive('adOpenSignreqs', [function () {
 
-        var controller = ['$log', 'SigningOpenApi', 'SigningClosedApi', '$scope', '$state', '$rootScope', 'CONST', function($log, SigningOpenApi, SigningClosedApi, $scope, $state, $rootScope, CONST) {
+        var controller = ['$log', 'SigningOpenApi', 'SigningClosedApi', '$scope', '$state', '$rootScope', 'CONST', function ($log, SigningOpenApi, SigningClosedApi, $scope, $state, $rootScope, CONST) {
             $log.log("adOpenSignreqs.CONTROLLER");
             var self = this;
 
@@ -143,16 +143,16 @@ angular.module('dashboard')
             function getOpen() {
                 $log.debug("adOpenSignreqs: SigningOpenApi.query open");
                 self.loadingOpen = true;
-                self.modelOpen = SigningOpenApi.query(function() {
+                self.modelOpen = SigningOpenApi.query(function () {
                     $log.debug("adOpenSignreqs: SigningOpenApi.query open done: " + self.modelOpen.length);
                     self.loadingOpen = false;
                     self.errOpen = null;
-                }, function(error) {
+                }, function (error) {
                     $log.error("adOpenSignreqs: SigningOpenApi.query open error: " + JSON.stringify(error));
                     self.loadingOpen = false;
                     self.errOpen = error;
                 });
-                self.modelOpen.$promise.finally(function() {
+                self.modelOpen.$promise.finally(function () {
                     $log.debug("adOpenSignreqs: SigningOpenApi.query open finally");
                     refreshModel();
                 });
@@ -170,16 +170,16 @@ angular.module('dashboard')
                 var tmp = { year: newY, prom: null };
                 arr.push(tmp);
 
-                tmp.prom = SigningClosedApi.query({ byYear: newY }, function(/*data*/) {
+                tmp.prom = SigningClosedApi.query({ byYear: newY }, function (/*data*/) {
                     var data = tmp.prom;
                     $log.debug("adOpenSignreqs.getClosed: SigningOpenApi.query closed (" + tmp.year + ") done: count: " + data.length);
                     Array.prototype.push.apply(self.modelClosed, data);
                     self.errClosed = null;
-                }, function(error) {
+                }, function (error) {
                     $log.error("adOpenSignreqs.getClosed: SigningOpenApi.query (" + tmp.year + ") error: " + JSON.stringify(error));
                     self.errClosed = error;
                 });
-                tmp.prom.$promise.finally(function() {
+                tmp.prom.$promise.finally(function () {
                     $log.debug("adOpenSignreqs.getClosed: SigningOpenApi.query finally (" + tmp.year + ")");
                     var ind = arr.indexOf(tmp); // Supported starting IE 9
                     if (ind !== -1) {
@@ -221,25 +221,25 @@ angular.module('dashboard')
 
             /* PUBLIC FUNCTIONS */
 
-            self.itemSelected = function(item) {
+            self.itemSelected = function (item) {
                 $log.debug("adOpenSignreqs.adOpenSignreqs: " + JSON.stringify(item));
                 $state.go(CONST.APPSTATE.SIGNITEM, { 'signItem': item });
             };
 
             /* Resolve display text for item status */
-            self.statusStrId = function(value) {
+            self.statusStrId = function (value) {
                 var s = $rootScope.objWithVal(CONST.ESIGNSTATUS, 'value', value);
                 return s ? s.stringId : '';
             };
 
             // Resolves l18n string id for document type display text
-            self.docTypeStrId = function(value) {
+            self.docTypeStrId = function (value) {
                 var s = $rootScope.objWithVal(CONST.ESIGNTYPE, 'value', value);
                 return s ? s.stringId : '';
             };
 
             /* Resolves if current state is loading data */
-            self.loading = function() {
+            self.loading = function () {
                 var res = false;
                 if ((self.viewState === self.VIEW_OPEN && self.loadingOpen) || (self.viewState === self.VIEW_CLOSED && self.ongoingClosed.length)) {
                     res = true;
@@ -248,12 +248,12 @@ angular.module('dashboard')
             };
 
             /* Resolve css class for signing status */
-            self.statusStyle = function(status) {
+            self.statusStyle = function (status) {
                 var s = $rootScope.objWithVal(CONST.ESIGNSTATUS, 'value', status);
                 return s ? s.badgeClass : 'label-default';
             };
 
-            self.setModelFilter = function(filter) {
+            self.setModelFilter = function (filter) {
                 if (filter instanceof DocType) {
                     $log.debug("adOpenSignreqs.setModelFilter: DocType " + filter.val + " string:" + filter.strId);
                     self.FType = filter;
@@ -268,7 +268,7 @@ angular.module('dashboard')
                 setTitle();
             };
 
-            self.docFilter = function(item) {
+            self.docFilter = function (item) {
                 var res = true;
                 if (self.FType) {
                     res = item.DocumentType === self.FType.val;
@@ -282,12 +282,12 @@ angular.module('dashboard')
                 return res;
             };
 
-            self.selected = function(item) {
+            self.selected = function (item) {
                 $log.log("adOpenSignreqs.selected");
                 $state.go(CONST.APPSTATE.SIGNITEM, { 'signItem': item });
             };
 
-            $scope.$watch('closeditems', function(newValue/*, oldValue*/) {
+            $scope.$watch('closeditems', function (newValue/*, oldValue*/) {
                 //$log.debug("adOpenSignreqs.watch closeditems: " +newValue +" old:" +oldValue);
                 if (newValue) {
                     setVwState(self.VIEW_CLOSED);
@@ -296,7 +296,7 @@ angular.module('dashboard')
                 }
             });
 
-            self.isDisabled = function(/* id */) {
+            self.isDisabled = function (/* id */) {
                 return self.viewState === self.VIEW_OPEN ? self.loadingOpen : self.loadingClosed;
             };
 

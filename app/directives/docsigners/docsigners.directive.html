@@ -2,34 +2,34 @@
 
     <div>
         <div class="col-xs-12 col-sm-3 db-nopadding">
-            <button type="button" class="btn btn-block db-btn-colhea-dummy db-btn-list-topleft-xs db-btn-list-topright-xs db-btn-list-topleft-sm disabled">
-                <span>Nimi</span>
+            <button type="button" class="btn btn-block db-btn-colhea-dummy disabled">
+                <span translate translate-cloak>STR_ROLE</span>
             </button>
         </div>
         <div class="col-xs-12 col-sm-3 db-nopadding">
-            <button type="button" class="btn btn-block db-btn-colhea-dummy disabled">
-                <span>Rooli</span>
+            <button type="button" class="btn btn-block db-btn-colhea-dummy db-btn-list-topleft-xs db-btn-list-topright-xs db-btn-list-topleft-sm disabled">
+                <span translate translate-cloak>STR_NAME</span>
             </button>
         </div>
         <div class="col-xs-6 col-sm-3 db-nopadding">
             <button type="button" class="btn btn-block db-btn-colhea-dummy disabled">
-                <span>Tila</span>
+                <span translate translate-cloak>STR_STATUS</span>
             </button>
         </div>
         <div class="col-xs-6 col-sm-3 db-nopadding">
             <button type="button" class="btn btn-block db-btn-colhea-dummy db-btn-list-topright-sm disabled">
-                <span>Aika</span>
+                <span translate translate-cloak>STR_TIME</span>
             </button>
         </div>
     </div>
 
-    <button type="button"class="list-group-item col-xs-12" ng-repeat="i in ctrl.listModel track by $index">
+    <button type="button" class="list-group-item col-xs-12" ng-repeat="i in ctrl.listModel track by $index">
         <div class="row">
             <div class="col-xs-12 col-sm-3">
-                {{i.name}}
+                <span translate translate-cloak>{{ctrl.roleStrId(i.role)}}</span>
             </div>
             <div class="col-xs-12 col-sm-3">
-                <span translate translate-cloak>{{ctrl.roleStrId(i.role)}}</span>
+                {{i.name}}
             </div>
             <div class="col-xs-6 col-sm-3">
                 <span class="ng-class: [ 'label', ctrl.statusStyle(i.status)]"translate>{{ctrl.statusStrId(i.status)}}</span>

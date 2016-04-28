@@ -51,7 +51,12 @@
             track by $index" ng-click="ctrl.selected(i)">
                 <div class="row" ng-click="ctrl.itemSelected(i)">
                     <div class="col-xs-12 col-sm-6">
-                        {{i.RequestDate | date:'yyyy-MM-dd'}} {{i.Name}}
+                        <div>
+                            {{i.RequestDate | date:'yyyy-MM-dd'}} {{i.Name}}
+                        </div>
+                        <div ng-if="i.ShortComment && i.ShortComment.length">
+                            <i>{{i.ShortComment}}</i>
+                        </div>
                     </div>
                     <div class="col-xs-12 col-sm-4">
                         <span translate translate-cloak>{{ctrl.docTypeStrId(i.DocumentType)}}</span>
