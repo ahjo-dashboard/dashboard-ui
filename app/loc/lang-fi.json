@@ -46,6 +46,7 @@
     "STR_SROLE_IREV_CONF": "Asiatarkastaja/Varmentaja",
     "STR_SROLE_IREV": "Asiatarkastaja",
     "STR_SROLE_CONF": "Varmentaja",
+    "STR_SINFO_CONF_ATT_OPENS": "Salassapidettävät liitteet avautuvat vain valikosta, eivät päätösasiakirjalta",
     "STR_RESERVED_MEETING": "Kokous varattu",
     "STR_CREATED": "Luotu",
     "STR_TECHNICALLY_OPEN": "Teknisesti avattu",
