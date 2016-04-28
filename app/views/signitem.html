@@ -14,8 +14,9 @@
             </uib-progressbar>
 
             <div class="btn-block btn-lg text-center">
-                <span ng-hide="!sc.displayStatus" style="width: 100% !important;" class="ng-class:['db-label', sc.statusStyle(sc.item.Status)]"
-                    translate>{{sc.statusStrId(sc.item.Status)}}</span>
+                <span ng-hide="!sc.displayStatus" class="ng-class:['db-label', sc.statusStyle(sc.item.Status)]" ng-disabled="sc.isDisabled(sc.btnModel.doc.id)" translate translate-cloak>
+                    {{sc.statusStrId(sc.item.Status)}}
+                </span>
             </div>
 
             <uib-alert type="warning" ng-if="sc.item.Comment && sc.item.Comment.length">
@@ -31,28 +32,33 @@
                 </div>
             </uib-alert>
 
+            <button id="sc.btnModel.acc.id" ng-hide="sc.btnModel.acc.hideBtn" type="button" class="btn btn-block btn-lg db-btn-succ ng-class: {active: sc.isActive(sc.btnModel.acc.id)}"
+                ng-click="sc.actionSign()" ng-disabled="sc.isDisabled(sc.btnModel.acc.id)" db-confirm confirm-config="sc.btnModel.acc.cConf">
+                <span translate translate-cloak>STR_SIGNING_ACCEPT</span>
+            </button>
+
+            <button id="sc.btnModel.rej.id" ng-hide="sc.btnModel.rej.hideBtn" type="button" class="btn btn-block btn-lg db-btn-dang ng-class: {active: sc.isActive(sc.btnModel.rej.id)}"
+                ng-click="sc.actionReject()" ng-disabled="sc.isDisabled(sc.btnModel.rej.id)" db-confirm confirm-config="sc.btnModel.rej.cConf">
+                <span translate translate-cloak>STR_REJECT</span>
+            </button>
+
             <db-link ng-attr-config="sc.linkConfig" ng-attr-uri="sc.btnModel.doc.url"></db-link>
             <button id="sc.btnModel.att.id" type="button" class="btn btn-block btn-lg db-btn-prim ng-class: {active: sc.isActive(sc.btnModel.att.id)}"
                 uib-dropdown-toggle ng-disabled="sc.isDisabled(sc.btnModel.att.id)" ng-click="sc.actionAttList()">
                 <span translate translate-cloak>STR_ATTACHMENTS</span>
                 <span class="badge ng-cloak">{{sc.btnModel.att.count}}</span>
             </button>
-            <button id="sc.btnModel.acc.id" ng-hide="sc.btnModel.acc.hideBtn" type="button" class="btn btn-block btn-lg btn-success ng-class: {active: sc.isActive(sc.btnModel.acc.id)}"
-                ng-click="sc.actionSign()" ng-disabled="sc.isDisabled(sc.btnModel.acc.id)" db-confirm confirm-config="sc.btnModel.acc.cConf">
-                <span translate translate-cloak>STR_SIGNING_ACCEPT</span>
-            </button>
-            <button id="sc.btnModel.rej.id" ng-hide="sc.btnModel.rej.hideBtn" type="button" class="btn btn-block btn-lg btn-danger ng-class: {active: sc.isActive(sc.btnModel.rej.id)}"
-                ng-click="sc.actionReject()" ng-disabled="sc.isDisabled(sc.btnModel.rej.id)" db-confirm confirm-config="sc.btnModel.rej.cConf">
-                <span translate translate-cloak>STR_REJECT</span>
-            </button>
+
             <button id="sc.btnModel.sta.id" type="button" class="btn btn-block btn-lg db-btn-prim ng-class: {active: sc.isActive(sc.btnModel.sta.id)}"
                 ng-click="sc.actionSignings()" ng-disabled="sc.isDisabled(sc.btnModel.sta.id)">
                 <span translate translate-cloak>STR_STATUS</span>
             </button>
+
             <button id="sc.btnModel.com.id" type="button" class="btn btn-block btn-lg db-btn-prim ng-class: {active: sc.isActive(sc.btnModel.com.id)}"
                 ng-click="sc.actionComment()" ng-disabled="sc.isDisabled(sc.btnModel.com.id)">
                 <span translate translate-cloak>STR_CREATE_COMMENT</span>
             </button>
+
         </div>
     </div>
 
@@ -85,14 +91,14 @@
                 <div class="col-xs-8 col-md-9 col-lg-8 col-lg-offset-2 db-right">
 
                     <div class="col-xs-12 col-sm-2 btn-group" ng-hide="sc.btnModel.acc.hideBtn">
-                        <button id="sc.btnModel.acc.id" type="button" class="btn btn-success btn-block ng-class:
+                        <button id="sc.btnModel.acc.id" type="button" class="btn db-btn-succ btn-block ng-class:
                         {active: sc.isActive(sc.btnModel.acc.id)}" ng-click="sc.actionSign()" ng-disabled="sc.isDisabled(sc.btnModel.acc.id)"
                             db-confirm confirm-config="sc.btnModel.acc.cConf">
                             <span translate translate-cloak>STR_SIGNING_ACCEPT</span>
                         </button>
                     </div>
                     <div class="col-xs-12 col-sm-2 btn-group" ng-hide="sc.btnModel.rej.hideBtn">
-                        <button id="sc.btnModel.rej.id" type="button" class="btn btn-danger btn-block ng-class:
+                        <button id="sc.btnModel.rej.id" type="button" class="btn db-btn-dang btn-block ng-class:
                         {active: sc.isActive(sc.btnModel.rej.id)}" ng-click="sc.actionReject()" ng-disabled="sc.isDisabled(sc.btnModel.rej.id)"
                             db-confirm confirm-config="sc.btnModel.rej.cConf">
                             <span translate translate-cloak>STR_REJECT</span>
@@ -101,8 +107,7 @@
                     <div class="col-xs-12 col-sm-2 btn-group">
                         <button id="sc.btnModel.doc.id" type="button" class="btn btn-block db-btn-prim ng-class: {active: sc.isActive(sc.btnModel.doc.id)}"
                             ng-click="sc.actionDoc()" ng-model="sc.btnModel.doc.active" ng-disabled="sc.isDisabled(sc.btnModel.doc.id)"
-                            uib-popover="{{'STR_SINFO_CONF_ATT_OPENS' | translate}}" popover-trigger="mouseenter"
-                            popover-placement="bottom">
+                            uib-popover="{{'STR_SINFO_CONF_ATT_OPENS' | translate}}" popover-trigger="mouseenter" popover-placement="bottom">
                             <span translate translate-cloak>{{sc.linkConfig.title}}</span>
                         </button>
                     </div>
@@ -147,6 +152,8 @@
 
             <div class="ad-flex-show-full">
                 <div class="ad-horiz-container">
+
+                    <!-- Comment displayed via alert array on desktop, separate alert on mobile -->
 
                     <uib-alert ng-repeat="i in sc.alerts track by $index" type="{{i.type}}" close="sc.closeAlert($index)">
                         <span ng-if="i.locId" translate translate-cloak>{{i.locId}}</span>
