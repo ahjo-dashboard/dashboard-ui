@@ -1,50 +1,39 @@
 <div class="prop-element">
 
     <div class="prop-row">
-        <div class="prop-row-child col-xs-6 col-sm-8 col-md-9">
+        <div class="prop-row-child col-xs-6 col-sm-8 col-md-10">
             <p class="prop-text-oneliner">
                 <!-- TODO: display below newprops icon dynamically -->
                 <span ng-show="c.uiProposal.isModified" class="glyphicon glyphicon-bell db-newprops" aria-hidden="true" tooltip-enable="c.isTooltips"
                     uib-dropdown-toggle uib-tooltip="{{'STR_INFO_NEW_PROPS' | translate}}" tooltip-placement="right"></span>
                 <b>{{c.typeText(c.uiProposal.proposalType)}}</b>&nbsp;&nbsp;<span ng-if="c.isCollapsed()" ng-bind-html="c.uiProposal.text"></span>
             </p>
-            <p>{{c.uiProposal.personName}}</p>
+            <p ng-if="!c.uiProposal.isOwnProposal || !c.isDraft()">{{c.uiProposal.personName}}</p>
         </div>
 
-        <div class="prop-row-child text-right col-xs-6 col-sm-4 col-md-3">
-            <button ng-if="c.lBtn" class="btn {{c.lBtn.type}} btn-md prop-label" ng-disabled="c.lBtn.disabled || c.updating" ng-click="c.act(c.lBtn.action)"
+        <div class="prop-row-child text-right col-xs-6 col-sm-4 col-md-2">
+            <button ng-if="c.eBtn" class="btn {{c.eBtn.type}} btn-sm prop-label" ng-disabled="c.eBtn.disabled || c.updating" ng-click="c.act(c.eBtn.action)"
+                db-confirm confirm-enabled="c.eBtn.active" confirm-config="c.eBtn.config" uib-tooltip="{{c.eBtn.tooltip | translate}}">
+                <span class="glyphicon {{c.eBtn.icon}}"></span>
+            </button>
+            <button ng-if="c.lBtn" class="btn {{c.lBtn.type}} btn-sm prop-label" ng-disabled="c.lBtn.disabled || c.updating" ng-click="c.act(c.lBtn.action)"
                 db-confirm confirm-enabled="c.lBtn.active" confirm-config="c.lBtn.config" uib-tooltip="{{c.lBtn.tooltip | translate}}">
                 <span class="glyphicon {{c.lBtn.icon}}"></span>
             </button>
-            <button ng-if="c.mBtn" class="btn {{c.mBtn.type}} btn-md prop-label" ng-disabled="c.mBtn.disabled || c.updating" ng-click="c.act(c.mBtn.action)"
+            <button ng-if="c.mBtn" class="btn {{c.mBtn.type}} btn-sm prop-label" ng-disabled="c.mBtn.disabled || c.updating" ng-click="c.act(c.mBtn.action)"
                 db-confirm confirm-enabled="c.mBtn.active" confirm-config="c.mBtn.config" uib-tooltip="{{c.mBtn.tooltip | translate}}">
                 <span class="glyphicon {{c.mBtn.icon}}"></span>
             </button>
-            <button ng-if="c.rBtn" class="btn {{c.rBtn.type}} btn-md prop-label" ng-disabled="c.rBtn.disabled || c.updating" ng-click="c.act(c.rBtn.action)"
+            <button ng-if="c.rBtn" class="btn {{c.rBtn.type}} btn-sm prop-label" ng-disabled="c.rBtn.disabled || c.updating" ng-click="c.act(c.rBtn.action)"
                 db-confirm confirm-enabled="c.rBtn.active" confirm-config="c.rBtn.config" uib-tooltip="{{c.rBtn.tooltip | translate}}">
                 <span class="glyphicon {{c.rBtn.icon}}"></span>
             </button>
         </div>
     </div>
 
-    <div uib-collapse="!c.isReading()">
-        <div class="row">
-            <div class="col-xs-12">
-                <div class="prop-text" ng-bind-html="c.uiProposal.text | unsafe"></div>
-            </div>
-
-        </div>
-    </div>
-
-    <div uib-collapse="!c.isEditing()" class="prop-editor">
-        <div class="row">
-            <div class="col-xs-12">
-                <wysiwyg textarea-class="form-control" textarea-height="auto" enable-bootstrap-title="true" textarea-required ng-model="c.editedText"
-                    textarea-menu="c.editor.menu">
-                </wysiwyg>
-            </div>
-
-        </div>
+    <div uib-collapse="c.isCollapsed()">
+        <div ng-if="!c.isEditing()" class="prop-text" ng-bind-html="c.uiProposal.text | unsafe"></div>
+        <div id="editor" ng-if="c.isEditing()" class="prop-text" contenteditable="true" auto-focus ng-model="c.editedText"></div>
     </div>
 
 </div>

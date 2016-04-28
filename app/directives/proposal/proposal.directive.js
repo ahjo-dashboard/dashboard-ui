@@ -14,23 +14,18 @@ angular.module('dashboard')
     .constant('PROP', {
         'MODE': {
             COLLAPSED: 'COLLAPSED',
-            OPEN: 'OPEN'
-        },
-        'STATUS': {
-            PUBLIC: 'PUBLIC',
-            PUBLISHED: 'PUBLISHED',
-            DRAFT: 'DRAFT'
+            OPEN: 'OPEN',
+            EDIT: 'EDIT'
         },
         'BTN': {
-            OPEN: { icon: 'glyphicon-plus', action: 'OPEN', type: 'db-btn-prim', tooltip: 'STR_OPEN', active: false },
-            CLOSE: { icon: 'glyphicon-minus', action: 'CLOSE', type: 'db-btn-prim', tooltip: 'STR_CLOSE', active: false },
+            OPEN: { icon: 'glyphicon-triangle-bottom', action: 'OPEN', type: 'db-btn-prim', tooltip: 'STR_OPEN', active: false },
+            CLOSE: { icon: 'glyphicon-triangle-top', action: 'CLOSE', type: 'db-btn-prim', tooltip: 'STR_CLOSE', active: false },
             EDIT: { icon: 'glyphicon-pencil', action: 'EDIT', type: 'db-btn-prim', disabled: false, tooltip: 'STR_EDIT', active: false },
             OK: { icon: 'glyphicon-ok', action: 'OK', type: 'db-btn-prim', tooltip: 'STR_SAVE', active: false },
             CANCEL: { icon: 'glyphicon-remove', action: 'CANCEL', type: 'btn-warning', tooltip: 'STR_CANCEL', active: false },
             SEND: { icon: 'glyphicon-send', action: 'SEND', type: 'btn-success', tooltip: 'STR_PUBLISH', active: true, config: { title: 'STR_CNFM_SEND_PROP', text: null, yes: 'STR_PUBLISH' } },
             DISABLEDSEND: { icon: 'glyphicon-send', action: 'SEND', type: 'btn-success', disabled: true, tooltip: 'STR_PUBLISH', active: false },
-            DELETE: { icon: 'glyphicon-trash', action: 'DELETE', type: 'btn-danger', tooltip: 'STR_DELETE', active: true, config: { title: 'STR_CNFM_DEL_PROP', text: null, yes: 'STR_DELETE' } },
-            COPY: { icon: 'glyphicon-copyright-mark', action: 'COPY', type: 'db-btn-prim', disabled: false, tooltip: 'STR_COPY', active: true, config: { title: 'STR_CNFM_COPY_PROP', text: null } }
+            DELETE: { icon: 'glyphicon-trash', action: 'DELETE', type: 'btn-danger', tooltip: 'STR_DELETE', active: true, config: { title: 'STR_CNFM_DEL_PROP', text: null, yes: 'STR_DELETE' } }
         }
     })
     .filter('unsafe', function ($sce) {
@@ -47,12 +42,12 @@ angular.module('dashboard')
             self.uiProposal = null;
 
             self.mode = null;
-            self.status = null;
             self.editedText = "";
             self.updating = false;
             var previousIsPublished = null;
             var createDisabled = false;
 
+            self.eBtn = null;
             self.lBtn = null;
             self.mBtn = null;
             self.rBtn = null;
@@ -61,24 +56,19 @@ angular.module('dashboard')
                 'menu': []
             };
 
-            function isSaved(proposal) {
-                if (angular.isObject(proposal) && (proposal.isPublished === PROPS.PUBLISHED.NO || proposal.isPublished === PROPS.PUBLISHED.YES)) {
-                    return true;
+            function refreshButtons() {
+                $log.debug("dbProposal: refreshButtons: " + createDisabled);
+                if (angular.equals(self.eBtn, PROP.BTN.EDIT)) {
+                    self.eBtn.disabled = createDisabled;
                 }
-                return false;
-            }
-
-            function refreshButtons(disabled) {
-                $log.debug("dbProposal: refreshButtons: " + disabled);
-                createDisabled = disabled;
-                if (angular.equals(self.lBtn, PROP.BTN.EDIT) || angular.equals(self.lBtn, PROP.BTN.COPY)) {
-                    self.lBtn.disabled = disabled;
+                if (angular.equals(self.lBtn, PROP.BTN.EDIT)) {
+                    self.lBtn.disabled = createDisabled;
                 }
-                if (angular.equals(self.mBtn, PROP.BTN.EDIT) || angular.equals(self.mBtn, PROP.BTN.COPY)) {
-                    self.mBtn.disabled = disabled;
+                if (angular.equals(self.mBtn, PROP.BTN.EDIT)) {
+                    self.mBtn.disabled = createDisabled;
                 }
-                if (angular.equals(self.rBtn, PROP.BTN.EDIT) || angular.equals(self.rBtn, PROP.BTN.COPY)) {
-                    self.rBtn.disabled = disabled;
+                if (angular.equals(self.rBtn, PROP.BTN.EDIT)) {
+                    self.rBtn.disabled = createDisabled;
                 }
             }
 
@@ -90,54 +80,40 @@ angular.module('dashboard')
 
                 switch (self.mode) {
                     case PROP.MODE.COLLAPSED:
-                        if (self.status === PROP.STATUS.DRAFT) {
-                            self.lBtn = PROP.BTN.EDIT;
-                            self.mBtn = (($scope.proposal instanceof Object) && $scope.proposal.text) ? PROP.BTN.SEND : PROP.BTN.DISABLEDSEND;
-                            self.rBtn = PROP.BTN.DELETE;
-                        }
-                        else {
-                            self.rBtn = PROP.BTN.OPEN;
-                        }
+                        self.rBtn = PROP.BTN.OPEN;
+                        self.mBtn = null;
+                        self.lBtn = null;
+                        self.eBtn = null;
                         break;
 
                     case PROP.MODE.OPEN:
-                        if (self.status === PROP.STATUS.DRAFT) {
-                            self.lBtn = PROP.BTN.OK;
-                            self.mBtn = PROP.BTN.CANCEL;
-                            self.rBtn = null;
+                        self.rBtn = PROP.BTN.CLOSE;
+                        self.mBtn = null;
+                        self.lBtn = null;
+                        self.eBtn = null;
+
+                        if ($scope.proposal.isOwnProposal) {
+                            if ($scope.proposal.isPublished === null || $scope.proposal.isPublished === PROPS.PUBLISHED.NO) {
+                                self.mBtn = PROP.BTN.DELETE;
+                                self.lBtn = PROP.BTN.SEND;
+                                self.eBtn = PROP.BTN.EDIT;
+                            }
+
+                            else if ($scope.proposal.isPublished === PROPS.PUBLISHED.YES) {
+                                self.mBtn = PROP.BTN.DELETE;
+                            }
+                            else {
+                                $log.error('dbProposal: setMode unsupported status');
+                            }
+                            refreshButtons();
                         }
-                        else {
-                            self.rBtn = PROP.BTN.CLOSE;
-                        }
                         break;
 
-                    default:
-                        break;
-                }
-            }
-
-            function setStatus(status) {
-                if (status === self.status) {
-                    return;
-                }
-
-                self.status = status;
-
-                switch (self.status) {
-                    case PROP.STATUS.PUBLIC:
-                        self.rBtn = PROP.BTN.OPEN;
-                        break;
-
-                    case PROP.STATUS.PUBLISHED:
-                        self.lBtn = PROP.BTN.COPY;
-                        self.mBtn = PROP.BTN.DELETE;
-                        self.rBtn = PROP.BTN.OPEN;
-                        break;
-
-                    case PROP.STATUS.DRAFT:
-                        self.lBtn = PROP.BTN.EDIT;
-                        self.mBtn = (($scope.proposal instanceof Object) && $scope.proposal.text) ? PROP.BTN.SEND : PROP.BTN.DISABLEDSEND;
-                        self.rBtn = PROP.BTN.DELETE;
+                    case PROP.MODE.EDIT:
+                        self.rBtn = PROP.BTN.CANCEL;
+                        self.mBtn = PROP.BTN.OK;
+                        self.lBtn = null;
+                        self.eBtn = null;
                         break;
 
                     default:
@@ -150,17 +126,20 @@ angular.module('dashboard')
                 if (angular.isObject(proposal)) {
                     self.uiProposal = proposal;
 
-                    if (proposal.isPublished === null) {
-                        setStatus(PROP.STATUS.DRAFT);
-                        setMode(PROP.MODE.OPEN);
-                        previousIsPublished = proposal.isPublished;
-                    }
-                    else if (proposal.isOwnProposal) {
-                        setStatus((proposal.isPublished === PROPS.PUBLISHED.YES) ? PROP.STATUS.PUBLISHED : PROP.STATUS.DRAFT);
-                        setMode(PROP.MODE.COLLAPSED);
+                    if (proposal.isOwnProposal) {
+                        if (proposal.isPublished === null) {
+                            setMode(PROP.MODE.EDIT);
+                            previousIsPublished = proposal.isPublished;
+                        }
+                        else if (proposal.isPublished === PROPS.PUBLISHED.NO) {
+                            setMode(PROP.MODE.COLLAPSED);
+                        }
+                        else {
+                            setMode(PROP.MODE.COLLAPSED);
+                        }
                     }
                     else {
-                        setStatus(PROP.STATUS.PUBLIC);
+                        setMode(PROP.MODE.COLLAPSED);
                     }
                     self.editedText = proposal.text;
                 }
@@ -182,7 +161,16 @@ angular.module('dashboard')
                     AhjoProposalsSrv.post(copy).$promise.then(function (response) {
                         $log.debug("dbProposal: post then: " + JSON.stringify(response));
                         if (angular.isObject(response) && angular.isObject(response.Data)) {
-                            angular.merge($scope.proposal, response.Data);
+                            if (copy.isPublished === PROPS.PUBLISHED.NO) {
+                                angular.merge($scope.proposal, response.Data);
+                            }
+                            else if (copy.isPublished === PROPS.PUBLISHED.YES) {
+                                angular.merge(copy, response.Data);
+                                $scope.onAdd({ data: { proposal: copy } });
+                            }
+                            else {
+                                $log.error('dbProposal: postProposal unsupported status');
+                            }
                         }
                         else {
                             $log.error('dbProposal: postProposal invalid response');
@@ -203,7 +191,7 @@ angular.module('dashboard')
             function deleteProposal(proposal) {
                 $log.debug("dbProposal: deleteProposal: " + JSON.stringify(proposal));
                 if (angular.isObject(proposal)) {
-                    if (isSaved(proposal)) {
+                    if (proposal.isPublished === PROPS.PUBLISHED.NO || proposal.isPublished === PROPS.PUBLISHED.YES) {
                         self.updating = true;
                         AhjoProposalsSrv.delete(proposal).$promise.then(function (response) {
                             $log.debug("dbProposal: delete then: " + JSON.stringify(response));
@@ -249,20 +237,19 @@ angular.module('dashboard')
                 return (obj && obj.text) ? obj.text : value;
             };
 
-            self.isEditing = function () {
-                return (self.status === PROP.STATUS.DRAFT && self.mode === PROP.MODE.OPEN);
-            };
-
-            self.isReading = function () {
-                return ((self.status === PROP.STATUS.PUBLIC || self.status === PROP.STATUS.PUBLISHED) && self.mode === PROP.MODE.OPEN);
-            };
-
             self.isCollapsed = function () {
                 return (self.mode === PROP.MODE.COLLAPSED);
             };
 
-            self.act = function (action) {
+            self.isEditing = function () {
+                return (self.mode === PROP.MODE.EDIT);
+            };
 
+            self.isDraft = function () {
+                return ($scope.proposal.isPublished === null || $scope.proposal.isPublished === PROPS.PUBLISHED.NO);
+            };
+
+            self.act = function (action) {
                 switch (action) {
                     case PROP.BTN.CLOSE.action:
                         setMode(PROP.MODE.COLLAPSED);
@@ -278,17 +265,17 @@ angular.module('dashboard')
 
                     case PROP.BTN.CANCEL.action:
                         $scope.proposal.isPublished = previousIsPublished;
-                        if (!isSaved($scope.proposal)) {
+                        if ($scope.proposal.isPublished === null) {
                             deleteProposal($scope.proposal);
                         }
-                        setMode(PROP.MODE.COLLAPSED);
+                        setMode(PROP.MODE.OPEN);
                         $rootScope.$emit(PROPS.UPDATED, { sender: $scope.proposal });
                         break;
 
                     case PROP.BTN.OK.action:
                         $scope.proposal.text = self.editedText ? self.editedText : '';
                         postProposal($scope.proposal);
-                        setMode(PROP.MODE.COLLAPSED);
+                        setMode(PROP.MODE.OPEN);
                         break;
 
                     case PROP.BTN.DELETE.action:
@@ -303,12 +290,8 @@ angular.module('dashboard')
                         self.editedText = $scope.proposal.text;
                         previousIsPublished = $scope.proposal.isPublished;
                         $scope.proposal.isPublished = null;
-                        setMode(PROP.MODE.OPEN);
+                        setMode(PROP.MODE.EDIT);
                         $rootScope.$emit(PROPS.UPDATED, { sender: $scope.proposal });
-                        break;
-
-                    case PROP.BTN.COPY.action:
-                        $scope.onCopy({ data: { proposal: $scope.proposal } });
                         break;
 
                     default:
@@ -339,7 +322,8 @@ angular.module('dashboard')
             }, function (data) {
                 if (angular.isObject(data)) {
                     if (createDisabled !== data.disableCreate) {
-                        refreshButtons(data.disableCreate);
+                        createDisabled = data.disableCreate;
+                        refreshButtons();
                     }
                 }
             }, true);
@@ -368,7 +352,7 @@ angular.module('dashboard')
                 guid: '=',
                 disableCreate: '=',
                 onRemove: '&',
-                onCopy: '&'
+                onAdd: '&'
             },
             templateUrl: 'directives/proposal/proposal.Directive.html',
             restrict: 'AE',

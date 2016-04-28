@@ -187,15 +187,19 @@ angular.module('dashboard')
 
             function getProposals(guid) {
                 $log.debug("dbProposalList: getProposals: " + guid);
-                if (typeof guid === 'string') {
+                if (angular.isString(guid)) {
+                    self.proposals = [];
                     AhjoProposalsSrv.get({ 'guid': guid }).$promise.then(function (response) {
                         $log.debug("dbProposalList: get then");
                         if (angular.isObject(response) && angular.isArray(response.objects)) {
-                            self.proposals = angular.copy(response.objects);
+                            angular.forEach(response.objects, function (p) {
+                                if (angular.isObject(p) && angular.isString(p.proposalGuid)) {
+                                    this.push(angular.copy(p));
+                                }
+                            }, self.proposals);
                         }
                         else {
                             $log.error('dbProposalList: getProposals invalid response');
-                            self.proposals = null;
                         }
                     }, function (error) {
                         $log.error("dbProposalList: get error: " + JSON.stringify(error));
@@ -239,20 +243,13 @@ angular.module('dashboard')
                 }
             };
 
-            self.copy = function (data) {
-                $log.debug("dbProposalList: copy: " + JSON.stringify(data));
-                if (angular.isObject(data)) {
-                    var draft = createDraft(data.proposal.proposalType);
-                    if (angular.isObject(draft)) {
-                        draft.text = data.proposal.text;
-                        self.proposals.splice(0, 0, draft);
-                    }
-                    else {
-                        $log.error('dbProposalList: draft invalid');
-                    }
+            self.add = function (data) {
+                $log.debug("dbProposalList: add: " + JSON.stringify(data));
+                if (angular.isObject(data) && angular.isObject(data.proposal)) {
+                    self.proposals.splice(0, 0, data.proposal);
                 }
                 else {
-                    $log.error('dbProposalList: copy parameter invalid');
+                    $log.error('dbProposalList: add proposal missing');
                 }
             };
 
