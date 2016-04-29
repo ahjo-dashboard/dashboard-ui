@@ -2,9 +2,8 @@
 
     <div class="container">
         <div class="row">
-            <ui-view name="homeLeftContent" class="ng-class: ['ad-page-left', 'col-sm-4', {'col-xs-12':menuFull(), 'col-xs-9':menuHalf(), 'col-xs-6':menuClosed()}]"></ui-view>
-
-            <ui-view name="homeRightContent" class="ng-class: ['ad-page-right', {'col-xs-6':menuFull(), 'col-sm-8':menuFull(), 'col-xs-9':menuHalf(), 'col-sm-10':menuHalf(), 'col-xs-12':menuClosed()}]"></ui-view>
+            <ui-view name="homeLeftContent" class="ad-page-left col-xs-4"></ui-view>
+            <ui-view name="homeRightContent" class="ad-page-right ng-class: [{'col-xs-8':menuFull(), 'col-xs-10':menuHalf(), 'col-xs-12':menuClosed()}]"></ui-view>
         </div>
     </div>
 
