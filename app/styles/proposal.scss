@@ -11,10 +11,17 @@ h1, h2, h3, h4, h5 {
     color: $font-color;
 }
 
+span.glyphicon {
+    font-size: 1.0em !important;
+}
+
 .prop-element {
     background-color: white;
-    margin: 2px;
-    padding: 10px;
+    margin: 0.1em;
+    padding-top: 0.2em;
+    padding-bottom: 0.2em;
+    padding-left: 1em;
+    padding-right: 1em;
     border-style: solid;
     border-width: thin;
     border-radius: 4px;
@@ -42,7 +49,7 @@ h1, h2, h3, h4, h5 {
 
 .prop-text {
     min-height: 2em;
-    margin-top: 3px;
+    margin: 0.6em;
 }
 
 .prop-text-oneliner {
@@ -69,14 +76,14 @@ h1, h2, h3, h4, h5 {
 }
 
 .prop-label {
-    margin-top: 2px;
-    margin-bottom: 2px;
-    margin-left: 1px;
-    margin-right: 1px;
-    padding-top: 8px;
-    padding-bottom: 6px;
-    padding-left: 10px;
-    padding-right: 10px;
+    // margin-top: 2px;
+    // margin-bottom: 2px;
+    // margin-left: 1px;
+    // margin-right: 1px;
+    // padding-top: 8px;
+    // padding-bottom: 6px;
+    // padding-left: 10px;
+    // padding-right: 10px;
 }
 
 .glyphicon { font-size: 20px !important; }
