@@ -341,6 +341,7 @@ body {
         left: 0;
         bottom: 0;
         overflow: auto;
+        min-width: 240px;
 
         transition: all $short-delay linear;
     }
@@ -351,6 +352,7 @@ body {
         right: 0;
         bottom: 0;
         overflow: auto;
+        min-width: 480px;
 
         transition: all $short-delay linear;
     }
