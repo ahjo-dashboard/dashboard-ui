@@ -28,12 +28,19 @@ $lower-color: #ffc44b;
 
 $default-font-size: 1.2em;
 $tablist-tabborder-width: 2px;
+
 $btn-radius: 6px;
+$btn-prim-color-bg: #4591d3;
+$btn-prim-color-active-bg: #276aa5;
+$btn-prim-height: 60px; // Height on XS resolution
+
 $header-leftmargin: 10px;
 $font-color-body: #404040;
 $font-color-header: white;
 $proposals-color: orange;
-$badge-font-color: white;
+$badge-font-color: $font-color-header;
+$db-color-success: #5cb85c;
+$db-color-danger: #d9534f;
 
 .browsehappy {
     margin: 0.2em 0;
@@ -180,15 +187,15 @@ body {
     .db-badge-yel {
         @extend .db-badge;
         background-color: #fee901;
-        color: #404040;
+        color: #404040 !important;
         h1, h2, h3, h4, h5 {
-            color: #404040;
+            color: #404040 !important;
         }
     }
 
     .db-badge-gre {
         @extend .db-badge;
-        background-color: #5cb85c;
+        background-color: $db-color-success;
     }
 
     .db-badge-dark {
@@ -198,18 +205,27 @@ body {
 
     .db-badge-red {
         @extend .db-badge;
-        background-color: #d9534f;
+        background-color: $db-color-danger;
     }
 
     .db-badge-ora {
         @extend .db-badge;
         background-color: #f0ad4e;
     }
-    // db-btn-prim
-    $btn-prim-color-bg: #4591d3;
-    $btn-prim-color-active-bg: #276aa5;
-    .db-btn-prim{
+
+    .db-btn-prim {
         @include button-variant($font-color-header, $btn-prim-color-bg, $btn-prim-color-bg);
+        height: $btn-prim-height;
+    }
+
+    .db-btn-succ {
+        @include button-variant($font-color-header, $db-color-success, $db-color-success);
+        height: $btn-prim-height;
+    }
+
+   .db-btn-dang {
+        @include button-variant($font-color-header, $db-color-danger, $db-color-danger);
+        height: $btn-prim-height;
     }
 
     $btn-colhea-color-bg: darken($btn-prim-color-bg, 10%);

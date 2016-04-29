@@ -22,7 +22,7 @@
                     <select db-selection sel-items="lc.data.options" ng-model="lc.data.selection">
                     </select>
                     <br><br>
-                    <button ng-disabled="!lc.data.selection || lc.login || lc.loadingUsers" class="btn btn-success" type="submit" ng-click="lc.select()"
+                    <button ng-disabled="!lc.data.selection || lc.login || lc.loadingUsers" class="btn db-btn-succ" type="submit" ng-click="lc.select()"
                         ng-disabled="lc.login">
                         <span translate translate-cloak>{{'STR_LOGIN'}}</span>
                     </button>
@@ -46,7 +46,7 @@
                 <div class="db-error">
                     Vaihtoehtoisesti voit kirjautua myös omalla tunnuksellasi
                     <br>
-                    <button type="button" class="btn btn-success" ng-click="goHome()" ng-disabled="lc.login">Kirjaudu omalla</button>
+                    <button type="button" class="btn db-btn-succ" ng-click="goHome()" ng-disabled="lc.login">Kirjaudu omalla</button>
                 </div>
             </div>
 
