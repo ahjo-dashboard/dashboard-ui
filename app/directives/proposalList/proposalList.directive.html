@@ -11,7 +11,7 @@
                         <button id="typeButton" type="button" ng-disabled="c.unsavedCount" class="btn btn-block btn-primary prop-button" uib-dropdown-toggle
                             translate translate-cloak>STR_CREATE_PROPOSAL</button>
                         <div uib-dropdown-menu role="menu" aria-labelledby="typeButton">
-                            <div role="menuitem" ng-repeat="type in c.tps track by $index" ng-click="c.addProposalClicked(type)">
+                            <div class="prop-dropdown-item" role="menuitem" ng-repeat="type in c.tps track by $index" ng-click="c.addProposalClicked(type)">
                                 <a>{{type.text}}</a>
                             </div>
                         </div>

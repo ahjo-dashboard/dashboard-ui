@@ -35,7 +35,7 @@ angular.module('dashboard')
     })
     .directive('dbProposal', [function () {
 
-        var controller = ['$log', '$scope', 'PROPS', 'PROP', '$rootScope', 'AhjoProposalsSrv', 'StorageSrv', 'CONST', function ($log, $scope, PROPS, PROP, $rootScope, AhjoProposalsSrv, StorageSrv, CONST) {
+        var controller = ['$log', '$scope', 'PROPS', 'PROP', '$rootScope', 'AhjoProposalsSrv', 'StorageSrv', 'CONST', '$timeout', function ($log, $scope, PROPS, PROP, $rootScope, AhjoProposalsSrv, StorageSrv, CONST, $timeout) {
             $log.debug("dbProposal: CONTROLLER");
             var self = this;
             self.isTooltips = $rootScope.isTooltips;
@@ -127,21 +127,15 @@ angular.module('dashboard')
                 $log.debug("dbProposal: setProposal");
                 if (angular.isObject(proposal)) {
                     self.uiProposal = proposal;
+                    setMode(PROP.MODE.COLLAPSED);
 
                     if (proposal.isOwnProposal) {
                         if (proposal.isPublished === null) {
-                            setMode(PROP.MODE.EDIT);
+                            $timeout(function () {
+                                setMode(PROP.MODE.EDIT);
+                            }, 0);
                             previousIsPublished = proposal.isPublished;
                         }
-                        else if (proposal.isPublished === PROPS.PUBLISHED.NO) {
-                            setMode(PROP.MODE.COLLAPSED);
-                        }
-                        else {
-                            setMode(PROP.MODE.COLLAPSED);
-                        }
-                    }
-                    else {
-                        setMode(PROP.MODE.COLLAPSED);
                     }
                 }
             }
