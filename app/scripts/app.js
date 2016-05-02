@@ -23,7 +23,7 @@ angular.module('dashboard', [
     'mp.autoFocus',
     'pascalprecht.translate'
 ])
-    .config(function ($urlRouterProvider, $stateProvider, ENV, G_APP, $logProvider, $provide, $compileProvider, $translateProvider, $httpProvider) {
+    .config(function ($urlRouterProvider, $stateProvider, ENV, G_APP, $logProvider, $provide, $compileProvider, $translateProvider, $httpProvider, $uibTooltipProvider) {
         // Startup logged always regardless of ENV config, so using console instead of $log
         console.log('dashboard.config: ver: ' + G_APP.app_version + ' env: ' + ENV.app_env + ' logging: ' + ENV.app_debuglogs);
 
@@ -67,6 +67,11 @@ angular.module('dashboard', [
         $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|mailto|blob):/);
 
         $httpProvider.defaults.withCredentials = true;
+
+        $uibTooltipProvider.options({
+            // popupCloseDelay: 500,
+            popupDelay: 700
+        });
     })
     .run(function ($rootScope, $log, $window, CONST, $state, $timeout, $translate, Utils, StorageSrv) {
         $rootScope.$on('$stateChangeStart', function (event, next/*, toParams, fromParams*/) {
