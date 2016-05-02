@@ -247,7 +247,20 @@ angular.module('dashboard')
             self.add = function (data) {
                 $log.debug("dbProposalList: add: " + JSON.stringify(data));
                 if (angular.isObject(data) && angular.isObject(data.proposal)) {
-                    self.proposals.splice(0, 0, data.proposal);
+
+                    var exists = false;
+                    for (var index = 0; !exists && index < self.proposals.length; index++) {
+                        var item = self.proposals[index];
+                        if (angular.equals(item.proposalGuid, data.proposal.proposalGuid)) {
+                            angular.merge(item, data.proposal);
+                            exists = true;
+                        }
+                    }
+                    if (!exists) {
+                        self.proposals.splice(0, 0, data.proposal);
+                    }
+
+
                 }
                 else {
                     $log.error('dbProposalList: add proposal missing');
