@@ -72,7 +72,9 @@
                 </div>
 
                 <button db-confirm confirm-enabled="msc.isEditing" confirm-config="msc.unsavedConfig" type="button" class="btn btn-default ad-button ad-topic-button db-btn-agenda ng-class:[{'active': (msc.isSelected(topic) && !msc.isMobile)}]"
-                    ng-click="msc.topicSelected(topic)">{{topic.topicTitle}}</button>
+                    ng-click="msc.topicSelected(topic)" tooltip-enable="isTooltips" uib-tooltip="{{topic.topicTitle}}" tooltip-placement="top-left">{{topic.topicTitle}}
+                </button>
+
             </div>
         </div>
 
