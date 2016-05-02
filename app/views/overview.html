@@ -1,11 +1,8 @@
 <div class="ad-page">
     <div class="ad-page-header db-center">
         <div ng-if="isMobile" class="db-center">
-            <i class="glyphicon glyphicon-menu-left" aria-hidden="true" ng-click="goBack()"></i>
-            <h3 ng-if="oc.hasMeetings" class="" translate>STR_MEETINGS</h3>
-            <h3 ng-if="oc.hasEsign" class="" translate>STR_SIGNINGS</h3>
         </div>
-        <div ng-if="!isMobile" class="db-center">
+        <div class="db-center">
             <img src="images/vaakuna.jpg">
             <h3 class="" translate translate-cloak>STR_APPNAME</h3>
         </div>
@@ -13,24 +10,26 @@
 
     <div class="ad-page-content">
 
-        <div class="ad-page-container-flex ad-page-container">
+        <div class="ad-page-container-flex ng-class:{'ad-page-container': !isMobile}">
+
+            <div ng-if="isMobile" style="width: 100%; height: 1vh; background-color: transparent;"></div>
 
             <!-- MEETINGS START -->
             <div ng-if="oc.hasMeetings" class="ad-flex-header">
                 <button type="button" class="btn db-btn-prim ad-lg db-btn-list-topleft-xs db-btn-list-topleft-sm ng-class:[{'active':oc.vblMtgs === oc.vbl.OPEN}]"
-                ng-click="oc.setMtgsVisible(oc.vbl.OPEN)">
-                    <div class="visible-xs-block" translate>STR_OPEN_PLR</div>
-                    <div class="hidden-xs" translate>STR_OPEN_MEETINGS</div>
+                    ng-click="oc.setMtgsVisible(oc.vbl.OPEN)">
+                    <div class="visible-xs-block"><h5 translate>STR_OPEN_MEETINGS</h5>
+                    </div>
+                    <div class="hidden-xs"><h3 translate>STR_OPEN_MEETINGS</h3></div>
                 </button>
-                <button type="button" class="btn db-btn-prim ad-lg db-btn-list-topright-xs ng-class:[{'active':oc.vblMtgs === oc.vbl.CLOSED}]"
-                ng-click="oc.setMtgsVisible(oc.vbl.CLOSED)">
-                    <div class="visible-xs-block" translate>STR_CLOSED_PLR</div>
-                    <div class="hidden-xs" translate>STR_CLOSED_MEETINGS</div>
+                <button type="button" class="btn db-btn-prim ad-lg ng-class:[{'active':oc.vblMtgs === oc.vbl.CLOSED}]" ng-click="oc.setMtgsVisible(oc.vbl.CLOSED)">
+                    <h5 class="visible-xs-block" translate>STR_CLOSED_MEETINGS</h5>
+                    <h3 class="hidden-xs" translate>STR_CLOSED_MEETINGS</h3>
                 </button>
                 <button type="button" class="hidden-xs btn db-btn-prim ad-xs">
                     <i class="glyphicon glyphicon-info-sign"></i>
                 </button>
-                <button type="button" class="hidden-xs btn db-btn-prim ad-xs db-btn-list-topright-sm" ng-click="oc.upperClicked()">
+                <button type="button" class="btn db-btn-prim ad-xs db-btn-list-topright-xs db-btn-list-topright-sm" ng-click="oc.upperClicked()">
                     <i class="ng-class: ['glyphicon', {'glyphicon-plus':oc.blockMode !== 1, 'glyphicon-minus':oc.blockMode === 1}]"></i>
                 </button>
             </div>
@@ -40,30 +39,32 @@
                 </ad-meetings>
             </div>
             <!-- MEETINGS END -->
-            <br ng-if="!isMobile">
+
+            <div style="width: 100%; height: 3vh; background-color: transparent;"></div>
+
             <!-- SIGNINGS START -->
             <div ng-if="oc.hasEsign" class="ad-flex-header">
                 <button type="button" class="btn db-btn-prim ad-lg db-btn-list-topleft-xs db-btn-list-topleft-sm ng-class:[{'active':!oc.closedSignReqs}]"
-                ng-click="oc.setClosedSignReqs(false)">
-                    <div class="visible-xs-block" translate>STR_OPEN_PLR</div>
-                    <div class="hidden-xs" translate>STR_OPEN_SIGNINGS</div>
+                    ng-click="oc.setClosedSignReqs(false)">
+                    <h5 class="visible-xs-block" translate>STR_OPEN_SIGNINGS</h5>
+                    <h3 class="hidden-xs" translate>STR_OPEN_SIGNINGS</h3>
                 </button>
-                <button type="button" class="btn db-btn-prim ad-lg db-btn-list-topright-xs ng-class:[{'active':oc.closedSignReqs}]" ng-click="oc.setClosedSignReqs(true)">
-                    <div class="visible-xs-block" translate>STR_CLOSED_PLR</div>
-                    <div class="hidden-xs" translate>STR_CLOSED_SIGNINGS</div>
+                <button type="button" class="btn db-btn-prim ad-lg ng-class:[{'active':oc.closedSignReqs}]" ng-click="oc.setClosedSignReqs(true)">
+                    <h5 class="visible-xs-block" translate>STR_CLOSED_SIGNINGS</h5>
+                    <h3 class="hidden-xs" translate>STR_CLOSED_SIGNINGS</h3>
                 </button>
                 <button type="button" class="hidden-xs btn db-btn-prim ad-xs">
                     <i class="glyphicon glyphicon-info-sign"></i>
                 </button>
-                <button type="button" class="hidden-xs btn db-btn-prim ad-xs db-btn-list-topright-sm" ng-click="oc.lowerClicked()">
+                <button type="button" class="btn db-btn-prim ad-xs db-btn-list-topright-xs db-btn-list-topright-sm" ng-click="oc.lowerClicked()">
                     <i class="glyphicon ng-class:[{'glyphicon-plus':oc.blockMode !== 2, 'glyphicon-minus':oc.blockMode === 2}]"></i>
                 </button>
             </div>
 
             <div ng-if="oc.hasEsign" class="ad-flex-item ng-class:[{'ad-flex-show-full':oc.blockMode === 2, 'ad-flex-show':oc.blockMode === 0, 'ad-flex-hide':oc.blockMode === 1}]">
                 <ad-open-signreqs closeditems="oc.closedSignReqs"></ad-open-signreqs>
-                <!-- SIGNINGS END -->
             </div>
+            <!-- SIGNINGS END -->
 
         </div>
 

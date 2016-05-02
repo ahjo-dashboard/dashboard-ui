@@ -27,9 +27,9 @@ angular.module('dashboard')
                     url: '/home',
                     views: {
                         'homeContent': {
-                            templateUrl: 'views/menu.html',
-                            controller: 'menuCtrl',
-                            controllerAs: 'mc'
+                            templateUrl: 'views/overview.html',
+                            controller: 'overviewCtrl',
+                            controllerAs: 'oc'
                         }
                     }
                 })
