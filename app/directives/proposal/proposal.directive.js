@@ -18,14 +18,14 @@ angular.module('dashboard')
             EDIT: 'EDIT'
         },
         'BTN': {
-            OPEN: { icon: 'glyphicon-triangle-bottom', action: 'OPEN', type: 'db-btn-prim', tooltip: 'STR_OPEN', active: false },
-            CLOSE: { icon: 'glyphicon-triangle-top', action: 'CLOSE', type: 'db-btn-prim', tooltip: 'STR_CLOSE', active: false },
-            EDIT: { icon: 'glyphicon-pencil', action: 'EDIT', type: 'db-btn-prim', disabled: false, tooltip: 'STR_EDIT', active: false },
-            OK: { icon: 'glyphicon-ok', action: 'OK', type: 'db-btn-prim', tooltip: 'STR_SAVE', active: false },
+            OPEN: { icon: 'glyphicon-triangle-bottom', action: 'OPEN', type: 'btn-primary', tooltip: 'STR_OPEN', active: false },
+            CLOSE: { icon: 'glyphicon-triangle-top', action: 'CLOSE', type: 'btn-primary', tooltip: 'STR_CLOSE', active: false },
+            EDIT: { icon: 'glyphicon-pencil', action: 'EDIT', type: 'btn-primary', disabled: false, tooltip: 'STR_EDIT', active: false },
+            OK: { icon: 'glyphicon-ok', action: 'OK', type: 'btn-primary', tooltip: 'STR_SAVE', active: false },
             CANCEL: { icon: 'glyphicon-remove', action: 'CANCEL', type: 'btn-warning', tooltip: 'STR_CANCEL', active: false },
-            SEND: { icon: 'glyphicon-send', action: 'SEND', type: 'btn-success', tooltip: 'STR_PUBLISH', active: true, config: { title: 'STR_CNFM_SEND_PROP', text: null, yes: 'STR_PUBLISH' } },
+            SEND: { icon: 'glyphicon-send', action: 'SEND', type: 'btn-success', tooltip: 'STR_PUBLISH', active: true, config: { title: 'STR_CONFIRM', text: 'STR_CNFM_SEND_PROP', yes: 'STR_PUBLISH' } },
             DISABLEDSEND: { icon: 'glyphicon-send', action: 'SEND', type: 'btn-success', disabled: true, tooltip: 'STR_PUBLISH', active: false },
-            DELETE: { icon: 'glyphicon-trash', action: 'DELETE', type: 'btn-danger', tooltip: 'STR_DELETE', active: true, config: { title: 'STR_CNFM_DEL_PROP', text: null, yes: 'STR_DELETE' } }
+            DELETE: { icon: 'glyphicon-trash', action: 'DELETE', type: 'btn-danger', tooltip: 'STR_DELETE', active: true, config: { title: 'STR_CONFIRM', text: 'STR_CNFM_DEL_PROP', yes: 'STR_DELETE' } }
         }
     })
     .filter('unsafe', function ($sce) {
@@ -42,7 +42,9 @@ angular.module('dashboard')
             self.uiProposal = null;
 
             self.mode = null;
-            self.editedText = "";
+            self.modes = PROP.MODE;
+            self.status = PROPS.PUBLISHED;
+            self.editedText = null;
             self.updating = false;
             var previousIsPublished = null;
             var createDisabled = false;
@@ -141,7 +143,6 @@ angular.module('dashboard')
                     else {
                         setMode(PROP.MODE.COLLAPSED);
                     }
-                    self.editedText = proposal.text;
                 }
             }
 
@@ -235,18 +236,6 @@ angular.module('dashboard')
             self.typeText = function (value) {
                 var obj = $rootScope.objWithVal(PROPS.TYPE, 'value', value);
                 return (obj && obj.text) ? obj.text : value;
-            };
-
-            self.isCollapsed = function () {
-                return (self.mode === PROP.MODE.COLLAPSED);
-            };
-
-            self.isEditing = function () {
-                return (self.mode === PROP.MODE.EDIT);
-            };
-
-            self.isDraft = function () {
-                return ($scope.proposal.isPublished === null || $scope.proposal.isPublished === PROPS.PUBLISHED.NO);
             };
 
             self.act = function (action) {
