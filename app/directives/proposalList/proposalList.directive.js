@@ -48,6 +48,7 @@ angular.module('dashboard')
             self.published = PROPS.PUBLISHED;
             self.isMobile = $rootScope.isMobile;
             self.isAllOpen = false;
+            self.btnText = null;
             self.unsavedCount = 0;
 
             function setTypes() {
@@ -259,6 +260,7 @@ angular.module('dashboard')
 
             self.toggleAll = function () {
                 self.isAllOpen = !self.isAllOpen;
+                self.btnText = self.isAllOpen ? 'STR_CLOSE_ALL' : 'STR_OPEN_ALL';
                 $rootScope.$emit(PROPS.TOGGLE, self.isAllOpen);
             };
 
@@ -298,6 +300,8 @@ angular.module('dashboard')
             $scope.$on('$destroy', function () {
                 $log.debug("dbProposalList: DESTROY");
             });
+
+            self.btnText = self.isAllOpen ? 'STR_CLOSE_ALL' : 'STR_OPEN_ALL';
         }];
 
         return {

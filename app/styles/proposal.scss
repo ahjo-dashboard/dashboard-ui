@@ -5,7 +5,7 @@
 
 @import "main.scss";
 
-$font-color: black;
+$font-color: white;
 
 h1, h2, h3, h4, h5 {
     color: $font-color;
@@ -15,36 +15,23 @@ span.glyphicon {
     font-size: 1.0em !important;
 }
 
-.prop-element {
-    background-color: white;
-    margin: 0.1em;
-    padding-top: 0.2em;
-    padding-bottom: 0.2em;
-    padding-left: 1em;
-    padding-right: 1em;
-    border-style: solid;
-    border-width: thin;
-    border-radius: 4px;
+.btn-sm {
+    margin: 1px;
 }
 
 .prop-header {
-    padding-left: 3px;
-    padding-right: 3px;
-    padding-top: 5px;
-    padding-bottom: 5px;
-}
-
-.prop-header-text {
-    margin-top: 5px;
-    margin-bottom: 3px;
-    min-height: 40px;
-    display: flex;
-    align-items: center;
+    background-color: #4591d3;
 }
 
 .prop-button {
     text-align: center !important;
-    min-height: 50px;
+    min-height: 40px;
+}
+
+.prop-header-text {
+    min-height: 40px;
+    display: flex;
+    align-items: center
 }
 
 .prop-text {
@@ -67,23 +54,18 @@ span.glyphicon {
     align-items: center;
 }
 
-.prop-row-child {
-    padding: 0;
+.list-group-item {
+    border-color: #4591d3;
 }
 
-.prop-editor {
-    margin-top: 5px;
+.list-group-item:first-child {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
 }
 
-.prop-label {
-    // margin-top: 2px;
-    // margin-bottom: 2px;
-    // margin-left: 1px;
-    // margin-right: 1px;
-    // padding-top: 8px;
-    // padding-bottom: 6px;
-    // padding-left: 10px;
-    // padding-right: 10px;
+.list-group-item:last-child {
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
 }
 
 .glyphicon { font-size: 20px !important; }
@@ -91,38 +73,11 @@ span.glyphicon {
 /* Small devices (tablets, 768px and up) */
 @media screen and (min-width: 768px) {
 
-    .prop-page {
-        margin-left: 10px;
-        margin-right: 10px;
-    }
-
-    .prop-element {
-        border-radius: 8px;
-    }
-
-    .prop-header-text {
-        margin-top: 10px;
-        margin-bottom: 10px;
-    }
-
     .prop-button {
         border-radius: 8px;
     }
 
     .prop-icon {
         margin-right: 5px;
-    }
-}
-
-/* Medium devices (desktops, 992px and up) */
-@media screen and (min-width: 992px) {
-    .prop-page {
-        margin-left: 15px;
-        margin-right: 15px;
-    }
-
-    .prop-label {
-        margin-left: 3px;
-        margin-right: 3px;
     }
 }
