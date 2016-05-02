@@ -164,8 +164,8 @@ angular.module('dashboard')
                             switch (event.typeName) {
                                 case CONST.MTGEVENT.REMARKPUBLISHED:
                                 case CONST.MTGEVENT.REMARKUPDATED:
-                                    if (angular.isObject(event.Proposal) && angular.equals(event.Proposal.topicGuid, topicGuid)) {
-                                        updateProposal(event.Proposal);
+                                    if (angular.isObject(event.proposal) && angular.equals(event.proposal.topicGuid, topicGuid)) {
+                                        updateProposal(event.proposal);
                                     }
                                     break;
 
