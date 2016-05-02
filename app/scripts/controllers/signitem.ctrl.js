@@ -30,10 +30,6 @@ angular.module('dashboard')
         self.ongoing = false;
         self.alerts = [];
         self.isMobile = $rootScope.isMobile;
-        self.linkConfig = {
-            title: 'STR_SIGNING_REQ',
-            class: 'btn btn-info btn-lg btn-block wrap-button-text db-btn-prim' // Used only on mobile
-        };
 
         var atts = [];
         for (var i = 0; angular.isArray(self.item.AttachmentInfos) && i < self.item.AttachmentInfos.length; i++) {
@@ -44,10 +40,24 @@ angular.module('dashboard')
 
         // MODEL OBJECTS FOR ACTIONS
         // disabled: true if button should be disabled
-        // active: true if button should displayed active
+        // active: true if button should be displayed as active
+        // hideBtn: true if button should be hidden
         // hide: true if content specific to the button should be hidden
         self.btnModel = {
-            doc: { id: 'doc', disabled: false, active: false, hideBtn: false, hide: false, url: null },
+            doc: {
+                id: 'doc', disabled: false, active: false, hideBtn: false, hide: false, url: null,
+                linkConfig: {
+                    title: 'STR_SIGNING_REQ',
+                    class: 'btn btn-info btn-lg btn-block wrap-button-text db-btn-prim' // Used only on mobile
+                }
+            },
+            doctr: {
+                id: 'doctr', disabled: false, active: false, hideBtn: true, hide: true, url: null,
+                linkConfig: {
+                    title: 'STR_TRANSLATION',
+                    class: 'btn btn-info btn-lg btn-block wrap-button-text db-btn-prim' // Used only on mobile
+                }
+             },
             acc: { id: 'acc', disabled: false, active: false, hideBtn: false, hide: false, cConf: { title: 'STR_CNFM_TEXT', text: 'STR_CNFM_SIGN_ACC', yes: 'STR_YES', no: 'STR_NO', isOpen: false } },
             rej: { id: 'rej', disabled: false, active: false, hideBtn: false, hide: false, cConf: { title: 'STR_CNFM_TEXT', text: 'STR_CNFM_SIGN_REJ', yes: 'STR_YES', no: 'STR_NO', isOpen: false } },
             sta: { id: 'sta', disabled: false, active: false, hideBtn: false, hide: false, signers: null },
@@ -96,6 +106,8 @@ angular.module('dashboard')
 
         function initBtns(btnModel, status) {
             self.btnModel.doc.url = resolveDocUrl(self.item);
+            $log.debug("signingItemCtrl.initBtns: doc=" + self.btnModel.doc.url);
+
 
             if (!angular.equals(status, CONST.ESIGNSTATUS.UNSIGNED.value)) {
                 btnModel.acc.hideBtn = true;
@@ -105,6 +117,13 @@ angular.module('dashboard')
                 btnModel.att.disabled = true;
                 btnModel.att.hide = true;
             }
+
+            if (angular.isString(self.item.TranslationGuid) && self.item.TranslationGuid.length) {
+                self.btnModel.doctr.url = ENV.SIGNAPIURL_DOC_TRANSLATED.replace(':reqId', self.item.ProcessGuid).replace(':transId', true).replace(':attId', '');
+                $log.debug("signingItemCtrl.initBtns: transition doc=" + self.btnModel.doctr.url);
+                btnModel.doctr.hideBtn = false;
+            }
+
             if (!self.isMobile) {
                 setBtnActive(self.btnModel.doc.id); // On desktop document is displayed by default
             }
@@ -221,6 +240,17 @@ angular.module('dashboard')
             clearAlerts();
             $log.debug("signitemCtrl.actionDoc: " + self.btnModel.doc.url);
             setBtnActive(self.btnModel.doc.id);
+
+            // Comment displayed via different element on mobile
+            if (!self.isMobile && angular.isObject(self.item) && self.item.Comment && self.item.Comment.length) {
+                self.alerts.push({ type: 'warning', resTxt: self.item.Comment });
+            }
+        };
+
+        self.actionDocTr = function () {
+            clearAlerts();
+            $log.debug("signitemCtrl.actionDocTr: " + self.btnModel.doc.url);
+            setBtnActive(self.btnModel.doctr.id);
 
             // Comment displayed via different element on mobile
             if (!self.isMobile && angular.isObject(self.item) && self.item.Comment && self.item.Comment.length) {
