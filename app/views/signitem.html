@@ -42,7 +42,10 @@
                 <span translate translate-cloak>STR_REJECT</span>
             </button>
 
-            <db-link ng-attr-config="sc.linkConfig" ng-attr-uri="sc.btnModel.doc.url"></db-link>
+            <db-link ng-attr-config="sc.btnModel.doc.linkConfig" ng-attr-uri="sc.btnModel.doc.url"></db-link>
+
+            <db-link ng-if="!sc.btnModel.doctr.hideBtn" ng-attr-config="sc.btnModel.doctr.linkConfig" ng-attr-uri="sc.btnModel.doctr.url"></db-link>
+
             <button id="sc.btnModel.att.id" type="button" class="btn btn-block btn-lg db-btn-prim ng-class: {active: sc.isActive(sc.btnModel.att.id)}"
                 uib-dropdown-toggle ng-disabled="sc.isDisabled(sc.btnModel.att.id)" ng-click="sc.actionAttList()">
                 <span translate translate-cloak>STR_ATTACHMENTS</span>
@@ -66,7 +69,7 @@
     <div ng-if="!isMobile" class="ad-page-header">
         <div class="col-xs-12">
             <div class="row db-center">
-                <div class="col-xs-4 col-md-3 col-lg-2 db-nopadding db-center">
+                <div class="col-xs-2 col-lg-2 db-nopadding db-center">
                     <div class="col-xs-12 db-center db-nopadding">
 
                         <button type="button" class="col-xs-3 btn db-btn-hdr glyphicon glyphicon-home center" ng-click="sc.goHome()">
@@ -88,7 +91,7 @@
 
                     </div>
                 </div>
-                <div class="col-xs-8 col-md-9 col-lg-8 col-lg-offset-2 db-right">
+                <div class="col-xs-10 col-lg-8 col-lg-offset-2">
 
                     <div class="col-xs-12 col-sm-2 btn-group" ng-hide="sc.btnModel.acc.hideBtn">
                         <button id="sc.btnModel.acc.id" type="button" class="btn db-btn-succ btn-block ng-class:
@@ -108,9 +111,18 @@
                         <button id="sc.btnModel.doc.id" type="button" class="btn btn-block db-btn-prim ng-class: {active: sc.isActive(sc.btnModel.doc.id)}"
                             ng-click="sc.actionDoc()" ng-model="sc.btnModel.doc.active" ng-disabled="sc.isDisabled(sc.btnModel.doc.id)"
                             uib-popover="{{'STR_SINFO_CONF_ATT_OPENS' | translate}}" popover-trigger="mouseenter" popover-placement="bottom">
-                            <span translate translate-cloak>{{sc.linkConfig.title}}</span>
+                            <span translate translate-cloak>{{sc.btnModel.doc.linkConfig.title}}</span>
                         </button>
                     </div>
+
+                    <div ng-if="!sc.btnModel.doctr.hideBtn" class="col-xs-2 btn-group">
+                        <button id="sc.btnModel.doctr.id" type="button" class="btn btn-block db-btn-prim ng-class: {active: sc.isActive(sc.btnModel.doctr.id)}"
+                            ng-click="sc.actionDocTr()" ng-model="sc.btnModel.doctrdoc.active" ng-disabled="sc.isDisabled(sc.btnModel.doctr.id)"
+                            uib-popover="{{'STR_SINFO_CONF_ATT_OPENS' | translate}}" popover-trigger="mouseenter" popover-placement="bottom">
+                            <span translate translate-cloak>{{sc.btnModel.doctr.linkConfig.title}}</span>
+                        </button>
+                    </div>
+
                     <div class="col-xs-12 col-sm-2 btn-group" uib-dropdown on-toggle="sc.btnModel.att.toggle(open)">
                         <button id="sc.btnModel.att.id" type="button" class="btn btn-block db-btn-prim ng-class:
                         {active: sc.isActive(sc.btnModel.att.id)}" uib-dropdown-toggle ng-disabled="sc.isDisabled(sc.btnModel.att.id)">
@@ -124,13 +136,13 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="col-xs-12 col-sm-2 btn-group">
+                    <div class="col-xs-12 col-sm-1 btn-group">
                         <button id="sc.btnModel.sta.id" type="button" class="btn btn-block db-btn-prim ng-class:
                         {active: sc.isActive(sc.btnModel.sta.id)}" ng-click="sc.actionSignings()" ng-disabled="sc.isDisabled(sc.btnModel.sta.id)">
                             <span translate translate-cloak>STR_STATUS</span>
                         </button>
                     </div>
-                    <div class="col-xs-12 col-sm-2 btn-group">
+                    <div class="col-xs-12 col-sm-1 btn-group">
                         <button id="sc.btnModel.com.id" type="button" class="btn btn-block db-btn-prim ng-class:
                         {active: sc.isActive(sc.btnModel.com.id)}" ng-click="sc.actionComment()" ng-disabled="sc.isDisabled(sc.btnModel.com.id)">
                             <span translate translate-cloak>STR_CREATE_COMMENT</span>
@@ -171,6 +183,7 @@
                 </div>
 
                 <db-pdf ng-if="sc.btnModel.doc.url" ng-hide="sc.isHidden(sc.btnModel.doc.id)" ng-attr-uri="sc.btnModel.doc.url"></db-pdf>
+                <db-pdf ng-if="sc.btnModel.doctr.url" ng-hide="sc.isHidden(sc.btnModel.doctr.id)" ng-attr-uri="sc.btnModel.doctr.url"></db-pdf>
                 <db-pdf ng-if="sc.btnModel.att.url" ng-hide="sc.isHidden(sc.btnModel.att.id)" ng-attr-uri="sc.btnModel.att.url"></db-pdf>
             </div>
         </div>

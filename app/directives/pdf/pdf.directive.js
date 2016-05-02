@@ -27,14 +27,18 @@ angular.module('dashboard')
                 var WIDTH = 'width';
                 var RESIZE = 'resize';
                 var SRC = 'src';
-                var params = "?secondary=false&amp;mixed=false#view=FitH&amp;toolbar=0&amp;statusbar=0&amp;messages=0&amp;navpanes=0";
+                var params = "secondary=false&amp;mixed=false#view=FitH&amp;toolbar=0&amp;statusbar=0&amp;messages=0&amp;navpanes=0";
                 var timer;
                 var pending = false;
                 var hidden = false;
                 var anim = false;
 
+                function paramSeparator(uri) {
+                    return -1 === uri.indexOf('?') ? '?' : '&';
+                }
+
                 if (scope.uri) {
-                    element.attr(SRC, scope.uri + params);
+                    element.attr(SRC, scope.uri + paramSeparator(scope.uri) + params);
                 }
 
                 element.css(HEIGHT, element.parent().height());
@@ -82,7 +86,7 @@ angular.module('dashboard')
                     },
                     function () {
                         var src = element.attr(SRC);
-                        var newSrc = scope.uri + params;
+                        var newSrc = scope.uri + paramSeparator(scope.uri) + params;
                         if (src !== newSrc) {
                             anim = false;
                             element.attr(SRC, newSrc);
