@@ -154,7 +154,7 @@ angular.module('dashboard')
                             }
                         }, this);
 
-                        lastEventId = 20281; // self.meeting.lastEventId; // 19734, 20281;
+                        lastEventId = self.meeting.lastEventId; // 19734, 20281;
                         $timeout.cancel(pollingTimer);
                         pollingTimer = $timeout(function () {
                             getEvents();
