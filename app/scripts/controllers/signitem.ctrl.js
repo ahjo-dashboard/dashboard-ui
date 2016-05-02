@@ -242,7 +242,7 @@ angular.module('dashboard')
             setBtnActive(self.btnModel.doc.id);
 
             // Comment displayed via different element on mobile
-            if (!self.isMobile && angular.isObject(self.item) && self.item.Comment && self.item.Comment.length) {
+            if (!self.isMobile && angular.isObject(self.item) && angular.isString(self.item.Comment) && self.item.Comment.length) {
                 self.alerts.push({ type: 'warning', resTxt: self.item.Comment });
             }
         };
@@ -253,7 +253,7 @@ angular.module('dashboard')
             setBtnActive(self.btnModel.doctr.id);
 
             // Comment displayed via different element on mobile
-            if (!self.isMobile && angular.isObject(self.item) && self.item.Comment && self.item.Comment.length) {
+            if (!self.isMobile && angular.isObject(self.item) && angular.isString(self.item.Comment) && self.item.Comment.length) {
                 self.alerts.push({ type: 'warning', resTxt: self.item.Comment });
             }
         };
