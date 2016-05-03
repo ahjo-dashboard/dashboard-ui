@@ -95,5 +95,6 @@
     "STR_CNFM_SIGN_REJ": "Haluatko varmasti <b>hylätä</b> asiakirjan?<br>Tehtyä hylkäystä ei voi peruuttaa.",
     "STR_INFO_NEW_PROPS": "Uusia lukemattomia ehdotuksia",
     "STR_WARNING_UNSAVED": "Työpöydällä on tallentamattomia tietoja. Haluatko jatkaa tallentamatta?",
-    "STR_CONTINUE": "Jatka"
+    "STR_CONTINUE": "Jatka",
+    "STR_PUBLISHED": "Julkaistu"
 }

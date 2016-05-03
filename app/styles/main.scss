@@ -101,6 +101,14 @@ body {
         }
     }
 
+    .db-published {
+        padding-left: 0 !important; // Remove loose space in meeting.status.html icon
+        color: $db-color-success !important;
+        span {
+            color: $db-color-success !important;
+        }
+    }
+
     .ad-app-bg { background-color: $appbgcolor !important; }
     .ad-upper-bg { background-color: $upper-color !important; }
     .ad-lower-bg { background-color: $lower-color !important; }
