@@ -216,7 +216,7 @@ angular.module('dashboard')
                     var found = false;
                     for (var index = events.length + CONST.NOTFOUND; index > CONST.NOTFOUND; index--) {
                         var event = events[index];
-                        if (angular.isObject(event.Proposal) && angular.equals(event.Proposal.proposalGuid, $scope.proposal.proposalGuid)) {
+                        if (angular.isObject(event.proposal) && angular.equals(event.proposal.proposalGuid, $scope.proposal.proposalGuid)) {
                             events.splice(index, 1);
                             found = true;
                         }

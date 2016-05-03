@@ -37,7 +37,7 @@ angular.module('dashboard')
         function meetingStatusChanged(event) {
             $log.debug("meetingStatusCtrl: meetingStatusChanged");
             if (angular.isObject(event) && angular.isObject(self.meeting)) {
-                self.meeting.meetingStatus = event.MeetingStateType;
+                self.meeting.meetingStatus = event.meetingStateType;
             }
         }
 
@@ -46,8 +46,8 @@ angular.module('dashboard')
             if (angular.isObject(event) && angular.isObject(self.meeting) && angular.isArray(self.meeting.topicList)) {
                 for (var i = 0; i < self.meeting.topicList.length; i++) {
                     var topic = self.meeting.topicList[i];
-                    if (angular.isObject(topic) && angular.equals(topic.topicGuid, event.TopicID)) {
-                        topic.topicStatus = event.TopicStateType;
+                    if (angular.isObject(topic) && angular.equals(topic.topicGuid, event.topicID)) {
+                        topic.topicStatus = event.topicStateType;
                     }
                 }
             }
@@ -59,8 +59,8 @@ angular.module('dashboard')
 
                 var changedTopicGuidArray = [];
                 angular.forEach(events, function (topic) {
-                    if (angular.isObject(topic) && angular.isObject(topic.Proposal) && topic.Proposal.topicGuid) {
-                        changedTopicGuidArray.push(topic.Proposal.topicGuid);
+                    if (angular.isObject(topic) && angular.isObject(topic.proposal) && angular.isString(topic.proposal.topicGuid)) {
+                        changedTopicGuidArray.push(topic.proposal.topicGuid);
                     }
                 }, changedTopicGuidArray);
 
@@ -80,9 +80,10 @@ angular.module('dashboard')
             $log.debug("meetingStatusCtrl: getEvents");
             if (lastEventId && meetingItem.meetingGuid) {
                 var proposalEvents = [];
+                var deleteEvents = [];
                 AhjoMeetingSrv.getEvents(lastEventId, meetingItem.meetingGuid).then(function (response) {
                     $log.debug("meetingStatusCtrl: getEvents then: ");
-                    if (response instanceof Array) {
+                    if (angular.isArray(response)) {
                         response.forEach(function (event) {
                             switch (event.typeName) {
                                 case CONST.MTGEVENT.LASTEVENTID:
@@ -90,8 +91,14 @@ angular.module('dashboard')
                                     break;
                                 case CONST.MTGEVENT.REMARKPUBLISHED:
                                 case CONST.MTGEVENT.REMARKUPDATED:
+                                    if (angular.isObject(event) && angular.isObject(event.proposal) && event.proposal.isOwnProposal !== true) {
+                                        proposalEvents.push(event);
+                                    }
+                                    break;
                                 case CONST.MTGEVENT.REMARKDELETED:
-                                    proposalEvents.push(event);
+                                    if (angular.isObject(event) && angular.isString(event.deletedProposal)) {
+                                        deleteEvents.push(event);
+                                    }
                                     break;
                                 case CONST.MTGEVENT.MEETINGSTATECHANGED:
                                     meetingStatusChanged(event);
@@ -122,6 +129,9 @@ angular.module('dashboard')
                             var concated = events.concat(proposalEvents);
                             StorageSrv.setKey(CONST.KEY.PROPOSAL_EVENT_ARRAY, concated);
                         }
+                    }
+                    if (deleteEvents.length) {
+                        $rootScope.$emit(CONST.PROPOSALDELETED, { deleted: deleteEvents });
                     }
                 });
             }
