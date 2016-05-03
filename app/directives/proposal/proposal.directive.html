@@ -5,7 +5,7 @@
             <p class="prop-text-oneliner">
                 <span ng-show="c.uiProposal.isModified" class="glyphicon glyphicon-bell db-newprops" aria-hidden="true" tooltip-enable="c.isTooltips"
                     uib-dropdown-toggle uib-tooltip="{{'STR_INFO_NEW_PROPS' | translate}}" tooltip-placement="right"></span>
-                <b ng-if="c.uiProposal.isPublished === c.status.YES">{{c.uiProposal.personName}}.</b>&nbsp;&nbsp;<b>{{c.typeText(c.uiProposal.proposalType)}}:</b>&nbsp;&nbsp;
+                <b>{{c.uiProposal.orderNumber}}</b>&nbsp;&nbsp;<b>{{c.typeText(c.uiProposal.proposalType)}}</b>&nbsp;&nbsp;<b ng-if="c.uiProposal.isPublished === c.status.YES">{{c.uiProposal.personName}}</b>&nbsp;&nbsp;
                 <span
                     ng-if="c.mode === c.modes.COLLAPSED" ng-bind-html="c.uiProposal.text">{{c.mode}}</span>
             </p>
