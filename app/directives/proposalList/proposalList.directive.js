@@ -119,17 +119,38 @@ angular.module('dashboard')
             }
 
             function removeProposal(guid) {
-                $log.debug("dbProposalList: removeProposal");
-                var search = angular.isArray(self.proposals);
-                for (var index = self.proposals.length + CONST.NOTFOUND; search && index > CONST.NOTFOUND; index--) {
-                    var prop = self.proposals[index];
-                    if (angular.equals(guid, prop.proposalGuid)) {
-                        self.proposals.splice(index, 1);
-                        search = false;
+                $log.debug("dbProposalList: removeProposal: " + guid);
+                if (angular.isString(guid)) {
+                    var search = angular.isArray(self.proposals);
+                    for (var index = self.proposals.length + CONST.NOTFOUND; search && index > CONST.NOTFOUND; index--) {
+                        var prop = self.proposals[index];
+                        if (angular.equals(guid, prop.proposalGuid)) {
+                            self.proposals.splice(index, 1);
+                            search = false;
+                        }
                     }
+
+                    var events = angular.copy(StorageSrv.getKey(CONST.KEY.PROPOSAL_EVENT_ARRAY));
+                    if (angular.isArray(events)) {
+                        var found = false;
+                        for (var i = events.length + CONST.NOTFOUND; !found && i > CONST.NOTFOUND; i--) {
+                            var event = events[i];
+                            if (angular.isObject(event.proposal) && angular.equals(event.proposal.proposalGuid, guid)) {
+                                events.splice(i, 1);
+                                found = true;
+                            }
+                        }
+                        if (found) {
+                            StorageSrv.setKey(CONST.KEY.PROPOSAL_EVENT_ARRAY, events);
+                        }
+                    }
+
+                    checkProposals();
+                    countProposals();
                 }
-                checkProposals();
-                countProposals();
+                else {
+                    $log.error('dbProposalList: removeProposal parameter invalid');
+                }
             }
 
             function updateProposal(proposal) {
@@ -169,13 +190,8 @@ angular.module('dashboard')
                                     }
                                     break;
 
-                                case CONST.MTGEVENT.REMARKDELETED:
-                                    if (angular.isObject(event) && angular.equals(event.TopicGuid, topicGuid)) {
-                                        removeProposal(event.DeletedProposal);
-                                    }
-                                    break;
-
                                 default:
+                                    $log.error('dbProposalList: updateEvents unsupported type');
                                     break;
                             }
                         }
@@ -308,7 +324,18 @@ angular.module('dashboard')
                 }
             });
 
+            var deleteWatcher = $rootScope.$on(CONST.PROPOSALDELETED, function (event, data) {
+                if (angular.isObject(data) && angular.isArray(data.deleted)) {
+                    angular.forEach(data.deleted, function (e) {
+                        if (angular.isObject(e) && angular.equals(e.topicGuid, topicGuid)) {
+                            removeProposal(e.deletedProposal);
+                        }
+                    }, this);
+                }
+            });
+
             $scope.$on('$destroy', proposalWatcher);
+            $scope.$on('$destroy', deleteWatcher);
 
             $scope.$on('$destroy', function () {
                 $log.debug("dbProposalList: DESTROY");

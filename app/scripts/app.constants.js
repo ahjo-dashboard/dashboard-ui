@@ -13,6 +13,7 @@ angular.module('dashboard')
         'MENUACTIVE': 'MENUACTIVE',
         'PROPOSALEVENT': 'PROPOSALEVENT',
         'PROPOSALISEDITING': 'PROPOSALISEDITING',
+        'PROPOSALDELETED': 'PROPOSALDELETED',
         'POLLINGTIMEOUT' : 10000,
         'NOTFOUND' : -1,
         'BLOCKMODE': {
