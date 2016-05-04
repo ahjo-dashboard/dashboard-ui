@@ -118,8 +118,27 @@ angular.module('dashboard')
                 }
             }
 
-            function removeProposal(guid) {
-                $log.debug("dbProposalList: removeProposal: " + guid);
+            function removeProposal(proposal) {
+                $log.debug("dbProposalList: removeProposal: " + proposal);
+                if (angular.isObject(proposal)) {
+                    var search = angular.isArray(self.proposals);
+                    for (var index = self.proposals.length + CONST.NOTFOUND; search && index > CONST.NOTFOUND; index--) {
+                        var prop = self.proposals[index];
+                        if (angular.equals(proposal, prop)) {
+                            self.proposals.splice(index, 1);
+                            search = false;
+                        }
+                    }
+                    checkProposals();
+                    countProposals();
+                }
+                else {
+                    $log.error('dbProposalList: removeProposal parameter invalid');
+                }
+            }
+
+            function removeProposalById(guid) {
+                $log.debug("dbProposalList: removeProposalById: " + guid);
                 if (angular.isString(guid)) {
                     var search = angular.isArray(self.proposals);
                     for (var index = self.proposals.length + CONST.NOTFOUND; search && index > CONST.NOTFOUND; index--) {
@@ -149,7 +168,7 @@ angular.module('dashboard')
                     countProposals();
                 }
                 else {
-                    $log.error('dbProposalList: removeProposal parameter invalid');
+                    $log.error('dbProposalList: removeProposalById parameter invalid');
                 }
             }
 
@@ -253,10 +272,10 @@ angular.module('dashboard')
             self.remove = function (data) {
                 $log.debug("dbProposalList: remove: " + JSON.stringify(data));
                 if (angular.isObject(data)) {
-                    removeProposal(data.guid);
+                    removeProposal(data.proposal);
                 }
                 else {
-                    $log.error('dbProposalList: delete parameter invalid');
+                    $log.error('dbProposalList: remove parameter invalid');
                 }
             };
 
@@ -328,7 +347,7 @@ angular.module('dashboard')
                 if (angular.isObject(data) && angular.isArray(data.deleted)) {
                     angular.forEach(data.deleted, function (e) {
                         if (angular.isObject(e) && angular.equals(e.topicGuid, topicGuid)) {
-                            removeProposal(e.deletedProposal);
+                            removeProposalById(e.deletedProposal);
                         }
                     }, this);
                 }
