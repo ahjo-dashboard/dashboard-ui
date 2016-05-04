@@ -104,9 +104,12 @@ angular.module('dashboard')
                     if (!personGuid || !topicGuid) {
                         $log.error('dbProposalList: createDraft personGuid or topicGuid missing');
                     }
+                    var dt = new Date();
+                    var tmpGuid = dt.toJSON();
                     return {
                         "personGuid": personGuid,
                         "topicGuid": topicGuid,
+                        "proposalGuid": tmpGuid,
                         "text": "",
                         "proposalType": type,
                         "isPublished": null,
