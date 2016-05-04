@@ -158,10 +158,12 @@ angular.module('dashboard')
                         if (angular.isObject(response) && angular.isObject(response.Data)) {
                             if (copy.isPublished === PROPS.PUBLISHED.NO) {
                                 angular.merge($scope.proposal, response.Data);
+                                $scope.proposal.isOwnProposal = true;
                             }
                             else if (copy.isPublished === PROPS.PUBLISHED.YES) {
                                 $scope.proposal.isPublishedIcon = PROPS.PUBLISHED.YES;
                                 angular.merge(copy, response.Data);
+                                copy.isOwnProposal = true;
                                 $scope.onAdd({ data: { proposal: copy } });
                             }
                             else {
