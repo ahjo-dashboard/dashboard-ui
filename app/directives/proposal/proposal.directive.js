@@ -148,6 +148,7 @@ angular.module('dashboard')
                     var copy = angular.copy(proposal);
                     if (copy.isPublished === null) {
                         copy.isPublished = PROPS.PUBLISHED.NO;
+                        delete copy.proposalGuid;
                     }
                     else if (copy.isPublished === PROPS.PUBLISHED.NO) {
                         copy.isPublished = PROPS.PUBLISHED.YES;
@@ -160,6 +161,7 @@ angular.module('dashboard')
                                 angular.merge($scope.proposal, response.Data);
                             }
                             else if (copy.isPublished === PROPS.PUBLISHED.YES) {
+                                $scope.proposal.isPublishedIcon = PROPS.PUBLISHED.YES;
                                 angular.merge(copy, response.Data);
                                 $scope.onAdd({ data: { proposal: copy } });
                             }
