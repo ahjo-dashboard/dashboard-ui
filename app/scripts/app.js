@@ -73,7 +73,8 @@ angular.module('dashboard', [
             popupDelay: 700
         });
     })
-    .run(function ($rootScope, $log, $window, CONST, $state, $timeout, $translate, Utils, StorageSrv) {
+    .run(function ($rootScope, $log, $window, CONST, ENV, $state, $timeout, $translate, Utils, StorageSrv) {
+
         $rootScope.$on('$stateChangeStart', function (event, next/*, toParams, fromParams*/) {
             $log.debug('app.stateChangeStart: ' + next.name);// +' toParams: ' +JSON.stringify(toParams) +' fromParams: ' +JSON.stringify(fromParams));
             if (next.name === CONST.APPSTATE.HOME) {
@@ -87,7 +88,9 @@ angular.module('dashboard', [
         // $rootScope.menu      FULL = 2, HALF = 1,  CLOSED = 0
         // $rootScope.isMobile
         // $rootScope.isTooltips
+        // rootScope.env_dev
 
+        $rootScope.env_dev = ENV.app_env !== 'prod';
 
         console.log("app.run: UA=" + $window.navigator.userAgent);
         $rootScope.isIe = Utils.isUaIe($window.navigator.userAgent);

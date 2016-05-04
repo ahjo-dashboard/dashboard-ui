@@ -12,7 +12,7 @@
  * Controller of the dashboard
  */
 angular.module('dashboard')
-    .controller('overviewCtrl', ['$scope', '$log', 'ENV', 'SigningOpenApi', '$state', '$rootScope', 'CONST', '$stateParams', 'MTGD', 'StorageSrv', function ($scope, $log, ENV, SigningOpenApi, $state, $rootScope, CONST, $stateParams, MTGD, StorageSrv) {
+    .controller('overviewCtrl', ['$scope', '$log', 'ENV', 'SigningOpenApi', '$state', '$rootScope', 'CONST', '$stateParams', 'MTGD', 'StorageSrv', '$http', function ($scope, $log, ENV, SigningOpenApi, $state, $rootScope, CONST, $stateParams, MTGD, StorageSrv, $http) {
         $log.debug("overviewCtrl: CONTROLLER, mode: ", $stateParams.state);
         var self = this;
         self.loading = 0;
@@ -91,6 +91,31 @@ angular.module('dashboard')
         self.setClosedSignReqs = function (value) {
             self.closedSignReqs = value;
             StorageSrv.setKey(CONST.KEY.SIGNING_RES, value);
+        };
+
+        function logoutRest() {
+            $log.debug("overviewCtrl.logoutRest");
+            self.logoutProm = $http({
+                method: 'GET',
+                withCredentials: true,
+                url: ENV.AHJOAPI_USERLOGOUTREST
+            }).then(function successCallback(/*response*/) {
+                $log.debug("overviewCtrl.logoutRest: done");
+                $state.go(CONST.APPSTATE.LOGIN);
+            }, function errorCallback(error) {
+                $log.error(error);
+            }).finally(function () {
+            });
+        }
+
+        self.logout = function () {
+            $log.debug("overviewCtrl.logout");
+            if (!self.logoutProm) {
+                logoutRest();
+            }
+            else {
+                $log.error("overviewCtrl.logout: ignored");
+            }
         };
 
         $scope.$on('$destroy', function () {
