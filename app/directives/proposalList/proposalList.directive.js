@@ -118,57 +118,53 @@ angular.module('dashboard')
                 }
             }
 
-            function removeProposal(proposal) {
-                $log.debug("dbProposalList: removeProposal: " + proposal);
-                if (angular.isObject(proposal)) {
+            function removeProposal(data) {
+                $log.debug("dbProposalList: removeProposal: " + JSON.stringify(data));
+                var value;
+                if (angular.isString(data)) {
+                    value = data;
+                }
+                else if (angular.isObject(data)) {
+                    if (angular.isString(data.proposalGuid)) {
+                        value = data.proposalGuid;
+                    }
+                    else {
+                        value = data;
+                    }
+                }
+
+                if (value) {
                     var search = angular.isArray(self.proposals);
                     for (var index = self.proposals.length + CONST.NOTFOUND; search && index > CONST.NOTFOUND; index--) {
                         var prop = self.proposals[index];
-                        if (angular.equals(proposal, prop)) {
+                        if (angular.equals(value, prop.proposalGuid) || angular.equals(value, prop)) {
                             self.proposals.splice(index, 1);
                             search = false;
                         }
                     }
+
+                    if (angular.isString(value)) {
+                        var events = angular.copy(StorageSrv.getKey(CONST.KEY.PROPOSAL_EVENT_ARRAY));
+                        if (angular.isArray(events)) {
+                            var found = false;
+                            for (var i = events.length + CONST.NOTFOUND; !found && i > CONST.NOTFOUND; i--) {
+                                var event = events[i];
+                                if (angular.isObject(event.proposal) && angular.equals(event.proposal.proposalGuid, value)) {
+                                    events.splice(i, 1);
+                                    found = true;
+                                }
+                            }
+                            if (found) {
+                                StorageSrv.setKey(CONST.KEY.PROPOSAL_EVENT_ARRAY, events);
+                            }
+                        }
+                    }
+
                     checkProposals();
                     countProposals();
                 }
                 else {
                     $log.error('dbProposalList: removeProposal parameter invalid');
-                }
-            }
-
-            function removeProposalById(guid) {
-                $log.debug("dbProposalList: removeProposalById: " + guid);
-                if (angular.isString(guid)) {
-                    var search = angular.isArray(self.proposals);
-                    for (var index = self.proposals.length + CONST.NOTFOUND; search && index > CONST.NOTFOUND; index--) {
-                        var prop = self.proposals[index];
-                        if (angular.equals(guid, prop.proposalGuid)) {
-                            self.proposals.splice(index, 1);
-                            search = false;
-                        }
-                    }
-
-                    var events = angular.copy(StorageSrv.getKey(CONST.KEY.PROPOSAL_EVENT_ARRAY));
-                    if (angular.isArray(events)) {
-                        var found = false;
-                        for (var i = events.length + CONST.NOTFOUND; !found && i > CONST.NOTFOUND; i--) {
-                            var event = events[i];
-                            if (angular.isObject(event.proposal) && angular.equals(event.proposal.proposalGuid, guid)) {
-                                events.splice(i, 1);
-                                found = true;
-                            }
-                        }
-                        if (found) {
-                            StorageSrv.setKey(CONST.KEY.PROPOSAL_EVENT_ARRAY, events);
-                        }
-                    }
-
-                    checkProposals();
-                    countProposals();
-                }
-                else {
-                    $log.error('dbProposalList: removeProposalById parameter invalid');
                 }
             }
 
@@ -208,7 +204,6 @@ angular.module('dashboard')
                                         updateProposal(event.proposal);
                                     }
                                     break;
-
                                 default:
                                     $log.error('dbProposalList: updateEvents unsupported type');
                                     break;
@@ -347,7 +342,7 @@ angular.module('dashboard')
                 if (angular.isObject(data) && angular.isArray(data.deleted)) {
                     angular.forEach(data.deleted, function (e) {
                         if (angular.isObject(e) && angular.equals(e.topicGuid, topicGuid)) {
-                            removeProposalById(e.deletedProposal);
+                            removeProposal(e.deletedProposal);
                         }
                     }, this);
                 }
