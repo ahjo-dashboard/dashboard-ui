@@ -160,6 +160,7 @@ angular.module('dashboard')
                                 angular.merge($scope.proposal, response.Data);
                             }
                             else if (copy.isPublished === PROPS.PUBLISHED.YES) {
+                                $scope.proposal.isPublishedIcon = PROPS.PUBLISHED.YES;
                                 angular.merge(copy, response.Data);
                                 $scope.onAdd({ data: { proposal: copy } });
                             }
@@ -191,7 +192,10 @@ angular.module('dashboard')
                         AhjoProposalsSrv.delete(proposal).$promise.then(function (response) {
                             $log.debug("dbProposal: delete then: " + JSON.stringify(response));
                             if (angular.isObject(response) && angular.isObject(response.Data)) {
-                                $scope.onRemove({ data: { guid: response.Data.proposalGuid } });
+                                $scope.onRemove({ data: { 'proposal': response.Data } });
+                            }
+                            else {
+                                $log.error('dbProposal: deleteProposal invalid response');
                             }
                         }, function (error) {
                             $log.error("dbProposal: delete error: " + JSON.stringify(error));
@@ -201,7 +205,7 @@ angular.module('dashboard')
                         });
                     }
                     else {
-                        $scope.onRemove({ data: { guid: proposal.proposalGuid } });
+                        $scope.onRemove({ data: { 'proposal': proposal } });
                     }
                 }
                 else {
