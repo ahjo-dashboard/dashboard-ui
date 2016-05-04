@@ -11,6 +11,7 @@
     <!-- build:css(.) styles/vendor.css -->
     <!-- bower:css -->
     <link rel="stylesheet" href="bower_components/angular-bootstrap-colorpicker/css/colorpicker.css" />
+    <link rel="stylesheet" href="bower_components/ngToast/dist/ngToast.css" />
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
@@ -44,6 +45,7 @@
     <script src="bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js"></script>
     <script src="bower_components/angular-translate-handler-log/angular-translate-handler-log.js"></script>
     <script src="bower_components/angular-auto-focus/angular-auto-focus.js"></script>
+    <script src="bower_components/ngToast/dist/ngToast.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -93,7 +95,7 @@
     <script src="directives/pdf/pdf.directive.js"></script>
     <script src="directives/link/link.directive.js"></script>
     <script src="directives/confirm/confirm.directive.js"></script>
-	<script src="directives/contenteditable/contenteditable.directive.js"></script>
+    <script src="directives/contenteditable/contenteditable.directive.js"></script>
     <script src="directives/selection/selection.directive.js"></script>
 
     <script src="scripts/models/attachment.model.js"></script>
@@ -105,6 +107,7 @@
 
     <!-- APP CONTENT -->
     <ui-view name="appView"></ui-view>
+    <toast></toast>
 </body>
 
 </html>
