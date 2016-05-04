@@ -21,6 +21,7 @@ angular.module('dashboard', [
     'ngSanitize',
     'wysiwyg.module',
     'mp.autoFocus',
+    'ngToast',
     'pascalprecht.translate'
 ])
     .config(function ($urlRouterProvider, $stateProvider, ENV, G_APP, $logProvider, $provide, $compileProvider, $translateProvider, $httpProvider, $uibTooltipProvider) {
