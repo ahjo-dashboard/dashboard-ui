@@ -97,5 +97,10 @@
     "STR_INFO_NEW_PROPS": "Uusia lukemattomia ehdotuksia",
     "STR_WARNING_UNSAVED": "Työpöydällä on tallentamattomia tietoja. Haluatko jatkaa tallentamatta?",
     "STR_CONTINUE": "Jatka",
-    "STR_PUBLISHED": "Julkaistu"
+    "STR_PUBLISHED": "Julkaistu",
+    "STR_SAVE_SUCCESS": "Tallennus onnistui",
+    "STR_SAVE_FAILED": "Tallennus epäonnistui",
+    "STR_PUBLISH_SUCCESS": "Julkaisu onnistui",
+    "STR_DELETE_SUCCESS": "Poisto onnistui",
+    "STR_DELETE_FAILED": "Poisto epäonnistui"
 }

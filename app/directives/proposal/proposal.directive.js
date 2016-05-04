@@ -35,7 +35,7 @@ angular.module('dashboard')
     })
     .directive('dbProposal', [function () {
 
-        var controller = ['$log', '$scope', 'PROPS', 'PROP', '$rootScope', 'AhjoProposalsSrv', 'StorageSrv', 'CONST', '$timeout', function ($log, $scope, PROPS, PROP, $rootScope, AhjoProposalsSrv, StorageSrv, CONST, $timeout) {
+        var controller = ['$log', '$scope', 'PROPS', 'PROP', '$rootScope', 'AhjoProposalsSrv', 'StorageSrv', 'CONST', '$timeout', 'ngToast', '$translate', function ($log, $scope, PROPS, PROP, $rootScope, AhjoProposalsSrv, StorageSrv, CONST, $timeout, ngToast, $translate) {
             $log.debug("dbProposal: CONTROLLER");
             var self = this;
             self.isTooltips = $rootScope.isTooltips;
@@ -57,6 +57,18 @@ angular.module('dashboard')
             self.editor = {
                 'menu': []
             };
+
+            function successInfo(info) {
+                $translate(info).then(function (translatedValue) {
+                    ngToast.success(translatedValue);
+                });
+            }
+
+            function failedInfo(info) {
+                $translate(info).then(function (translatedValue) {
+                    ngToast.danger(translatedValue);
+                });
+            }
 
             function refreshButtons() {
                 $log.debug("dbProposal: refreshButtons: " + createDisabled);
@@ -159,12 +171,14 @@ angular.module('dashboard')
                             if (copy.isPublished === PROPS.PUBLISHED.NO) {
                                 angular.merge($scope.proposal, response.Data);
                                 $scope.proposal.isOwnProposal = true;
+                                successInfo('STR_SAVE_SUCCESS');
                             }
                             else if (copy.isPublished === PROPS.PUBLISHED.YES) {
                                 $scope.proposal.isPublishedIcon = PROPS.PUBLISHED.YES;
                                 angular.merge(copy, response.Data);
                                 copy.isOwnProposal = true;
                                 $scope.onAdd({ data: { proposal: copy } });
+                                successInfo('STR_PUBLISH_SUCCESS');
                             }
                             else {
                                 $log.error('dbProposal: postProposal unsupported status');
@@ -175,6 +189,7 @@ angular.module('dashboard')
                         }
                     }, function (error) {
                         $log.error("dbProposal: post error: " + JSON.stringify(error));
+                        failedInfo('STR_SAVE_FAILED');
                     }).finally(function () {
                         $log.debug("dbProposal: post finally: ");
                         self.updating = false;
@@ -195,12 +210,14 @@ angular.module('dashboard')
                             $log.debug("dbProposal: delete then: " + JSON.stringify(response));
                             if (angular.isObject(response) && angular.isObject(response.Data)) {
                                 $scope.onRemove({ data: { 'proposal': response.Data } });
+                                successInfo('STR_DELETE_SUCCESS');
                             }
                             else {
                                 $log.error('dbProposal: deleteProposal invalid response');
                             }
                         }, function (error) {
                             $log.error("dbProposal: delete error: " + JSON.stringify(error));
+                            failedInfo('STR_DELETE_FAILED');
                         }).finally(function () {
                             $log.debug("dbProposal: delete finally: ");
                             self.updating = false;
