@@ -120,9 +120,7 @@ angular.module('dashboard')
 
             function removeProposal(data) {
                 $log.debug("dbProposalList: removeProposal: " + JSON.stringify(data));
-
                 var value;
-
                 if (angular.isString(data)) {
                     value = data;
                 }
@@ -145,18 +143,20 @@ angular.module('dashboard')
                         }
                     }
 
-                    var events = angular.copy(StorageSrv.getKey(CONST.KEY.PROPOSAL_EVENT_ARRAY));
-                    if (angular.isArray(events)) {
-                        var found = false;
-                        for (var i = events.length + CONST.NOTFOUND; !found && i > CONST.NOTFOUND; i--) {
-                            var event = events[i];
-                            if (angular.isObject(event.proposal) && angular.equals(event.proposal.proposalGuid, value)) {
-                                events.splice(i, 1);
-                                found = true;
+                    if (angular.isString(value)) {
+                        var events = angular.copy(StorageSrv.getKey(CONST.KEY.PROPOSAL_EVENT_ARRAY));
+                        if (angular.isArray(events)) {
+                            var found = false;
+                            for (var i = events.length + CONST.NOTFOUND; !found && i > CONST.NOTFOUND; i--) {
+                                var event = events[i];
+                                if (angular.isObject(event.proposal) && angular.equals(event.proposal.proposalGuid, value)) {
+                                    events.splice(i, 1);
+                                    found = true;
+                                }
                             }
-                        }
-                        if (found) {
-                            StorageSrv.setKey(CONST.KEY.PROPOSAL_EVENT_ARRAY, events);
+                            if (found) {
+                                StorageSrv.setKey(CONST.KEY.PROPOSAL_EVENT_ARRAY, events);
+                            }
                         }
                     }
 
