@@ -14,16 +14,17 @@
 angular.module('dashboard')
     .factory('AttachmentData', ['$log', 'CONST', function ($log, CONST) {
 
-        function AttachmentData(title, link, publicity, buttonType) {
+        function AttachmentData(title, link, publicity, buttonType, orderNum) {
             this.title = title;
             this.link = link;
             this.publicity = publicity ? publicity : 'true';
             this.buttonType = buttonType ? buttonType : CONST.BTNTYPE.INFO;
+            this.orderNum = orderNum;
         }
 
-        AttachmentData.create = function (title, link, publicity, buttonType) {
+        AttachmentData.create = function (title, link, publicity, buttonType, orderNum) {
             if (typeof title === 'string' && typeof link === 'string') {
-                return new AttachmentData(title, link, publicity, buttonType);
+                return new AttachmentData(title, link, publicity, buttonType, orderNum);
             }
             $log.error('AttachmentData.createAdditionalMaterialList: missing title');
 
@@ -33,4 +34,3 @@ angular.module('dashboard')
         return AttachmentData;
 
     }]);
-    

@@ -8,7 +8,7 @@
     <div class="ad-page-content">
         <div class="ad-mob-page-container">
             <ul class="list-group db-tablist">
-                <db-link ng-repeat="object in ctrl.data.objects track by $index" ng-attr-config="{ title:object.title, class:'list-group-item' }"
+                <db-link ng-repeat="object in ctrl.data.objects track by $index" ng-attr-config="{ title: object.orderNum+'&nbsp;'+object.title, class:'list-group-item' }"
                 ng-attr-uri="object.link">
                 </db-link>
             </ul>
