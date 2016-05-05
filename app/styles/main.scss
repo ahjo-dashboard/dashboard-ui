@@ -856,6 +856,10 @@ body {
     text-overflow: ellipsis;
 }
 
+.tooltip.db-topic-tooltip .tooltip-inner {
+    text-align: left;
+}
+
 @import "main.small.scss";
 @import "main.medium.scss";
 @import "main.large.scss";
