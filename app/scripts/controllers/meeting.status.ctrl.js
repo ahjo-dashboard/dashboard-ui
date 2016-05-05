@@ -223,6 +223,18 @@ angular.module('dashboard')
             return null;
         };
 
+        self.topicStatusText = function (topic) {
+            if (angular.isObject(topic) && topic.topicStatus) {
+                for (var item in CONST.TOPICSTATUS) {
+                    if (CONST.TOPICSTATUS.hasOwnProperty(item) && topic.topicStatus === CONST.TOPICSTATUS[item].value) {
+                        return CONST.TOPICSTATUS[item].stringId;
+                    }
+                }
+            }
+            return null;
+        };
+
+
         self.stringId = function (meeting) {
             for (var item in CONST.MTGSTATUS) {
                 if (CONST.MTGSTATUS.hasOwnProperty(item)) {
