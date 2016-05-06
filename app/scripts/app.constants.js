@@ -98,11 +98,11 @@ angular.module('dashboard')
             TOPICSTATECHANGED: 'TopicStateChangedEvent'
         },
         'TOPICSTATUS': {
-            NONE: { value: 0, iconPath: "", icon_conf: "", icon_props: "", icon_conf_prop: "" },
-            PENDING: { value: 1, iconPath: "images/mtg-states/mtg-ag-state-1.png" },
-            ACTIVE: { value: 2, iconPath: "images/mtg-states/mtg-ag-state-2.png" },
-            ABORTED: { value: 3, iconPath: "images/mtg-states/mtg-ag-state-3.png" },
-            READY: { value: 4, iconPath: "images/mtg-states/mtg-ag-state-4.png" }
+            NONE: { value: 0, iconPath: "", icon_conf: "", icon_props: "", icon_conf_prop: "", stringId: '' },
+            PENDING: { value: 1, iconPath: "images/mtg-states/mtg-ag-state-1.png", stringId: 'STR_TOPIC_STATUS_PENDING' },
+            ACTIVE: { value: 2, iconPath: "images/mtg-states/mtg-ag-state-2.png", stringId: 'STR_TOPIC_STATUS_ACTIVE' },
+            ABORTED: { value: 3, iconPath: "images/mtg-states/mtg-ag-state-3.png", stringId: 'STR_TOPIC_STATUS_ABORTED' },
+            READY: { value: 4, iconPath: "images/mtg-states/mtg-ag-state-4.png", stringId: 'STR_TOPIC_STATUS_READY' }
         },
         'ESIGNSTATUS': { //SignApi_DocStatuses
             UNSIGNED: { value: 1, stringId: 'STR_UNSIGNED', badgeClass: 'db-badge-ora' },

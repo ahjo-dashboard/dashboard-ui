@@ -774,6 +774,10 @@ body {
     .db-error {
         color: #555;
 
+        h1, h2, h3, h4, h5, h6 {
+            color: #555;
+        }
+
         a:link, a:visited {
             color: #FF0000;
             text-decoration: underline;
@@ -850,6 +854,10 @@ body {
     overflow: auto;
     color: $font-color-body;
     text-overflow: ellipsis;
+}
+
+.tooltip.db-topic-tooltip .tooltip-inner {
+    text-align: left;
 }
 
 @import "main.small.scss";

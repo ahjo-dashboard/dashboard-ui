@@ -51,14 +51,14 @@
                         <li class="divider"></li>
                         <li db-confirm confirm-enabled="ctrl.isEditing" confirm-config="ctrl.unsavedConfig" class="ng-class:[{'disabled': ctrl.isSecret(material)}]" role="menuitem" ng-repeat="material in ctrl.amData.objects track by $index"
                         ng-click="ctrl.additionalMaterialClicked(material)">
-                            <a class="ad-dropdown-content">{{material.title}}</a>
+                            <a class="ad-dropdown-content"><span ng-if="material.orderNum">{{material.orderNum}}&nbsp;</span>{{material.title}}</a>
                         </li>
                         <li class="divider"></li>
                         <div class="ad-dropdown-header" translate translate-cloak>STR_DECISION_HISTORY</div>
                         <li class="divider"></li>
                         <li db-confirm confirm-enabled="ctrl.isEditing" confirm-config="ctrl.unsavedConfig" class="ng-class:[{'disabled': ctrl.isSecret(decision)}]" role="menuitem" ng-repeat="decision in ctrl.dData.objects track by $index"
                         ng-click="ctrl.decisionClicked(decision)">
-                            <a class="ad-dropdown-content">{{decision.title}}</a>
+                            <a class="ad-dropdown-content"><span ng-if="decision.orderNum">{{decision.orderNum}}&nbsp;</span>{{decision.title}}</a>
                         </li>
                     </ul>
                 </div>
@@ -72,7 +72,7 @@
                     <ul uib-dropdown-menu role="menu" aria-labelledby="attachmentButton">
                         <li db-confirm confirm-enabled="ctrl.isEditing" confirm-config="ctrl.unsavedConfig" class="ng-class:[{'disabled': ctrl.isSecret(attachment)}]" role="menuitem" ng-repeat="attachment in ctrl.aData.objects track by $index"
                         ng-click="ctrl.attachmentClicked(attachment)">
-                            <a class="ad-dropdown-content">{{attachment.title}}</a>
+                            <a class="ad-dropdown-content"><span ng-if="attachment.orderNum">{{attachment.orderNum}}&nbsp;</span>{{attachment.title}}</a>
                         </li>
                     </ul>
                 </div>
