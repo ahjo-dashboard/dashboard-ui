@@ -79,9 +79,9 @@ $db-color-danger: #d9534f;
             }
         }
 
-        .db-btn-prim{
-            @include button-variant($font-color-header, $btn-prim-color-bg, $btn-prim-color-bg);
-        }
+        // .db-btn-prim{
+        //     @include button-variant($font-color-header, $btn-prim-color-bg, $btn-prim-color-bg);
+        // }
 
         .db-btn-succ {
             @include button-variant($font-color-header, $db-color-success, $db-color-success);

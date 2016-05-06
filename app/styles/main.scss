@@ -222,7 +222,8 @@ body {
     }
 
     .db-btn-prim {
-        @include button-variant($font-color-header, $btn-prim-color-bg, $btn-prim-color-bg);
+        // @include button-variant($font-color-header, $btn-prim-color-bg, $btn-prim-color-bg);
+        @extend .btn-primary;
         height: $btn-prim-height;
     }
 
