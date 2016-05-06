@@ -10,7 +10,6 @@
     "angular-resource": "^1.5.3",
     "angular-bootstrap": "^1.2.5",
     "angular-sanitize": "^1.5.3",
-    "angular-wysiwyg": "~1.2.4",
     "angular-translate": "^2.11.0",
     "angular-translate-loader-static-files": "^2.11.0",
     "angular-translate-handler-log": "^2.11.0",
