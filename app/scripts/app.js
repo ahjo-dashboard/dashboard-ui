@@ -22,6 +22,7 @@ angular.module('dashboard', [
     'wysiwyg.module',
     'mp.autoFocus',
     'ngToast',
+    'angularSpinner',
     'pascalprecht.translate'
 ])
     .config(function ($urlRouterProvider, $stateProvider, ENV, G_APP, $logProvider, $provide, $compileProvider, $translateProvider, $httpProvider, $uibTooltipProvider) {
