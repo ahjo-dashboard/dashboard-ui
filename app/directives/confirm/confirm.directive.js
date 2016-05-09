@@ -14,8 +14,6 @@ angular.module('dashboard')
     .directive('dbConfirm', ['$log', function() {
 
         var controller = ['$log', '$scope', '$uibModal', function($log, $scope, $uibModal) {
-            $log.debug("dbConfirm: CONTROLLER");
-
             var conf;
             $scope.open = function() {
                 var modalInstance = $uibModal.open({

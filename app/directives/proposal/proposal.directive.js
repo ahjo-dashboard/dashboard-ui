@@ -36,7 +36,6 @@ angular.module('dashboard')
     .directive('dbProposal', [function () {
 
         var controller = ['$log', '$scope', 'PROPS', 'PROP', '$rootScope', 'AhjoProposalsSrv', 'StorageSrv', 'CONST', '$timeout', 'ngToast', '$translate', function ($log, $scope, PROPS, PROP, $rootScope, AhjoProposalsSrv, StorageSrv, CONST, $timeout, ngToast, $translate) {
-            $log.debug("dbProposal: CONTROLLER");
             var self = this;
             self.isTooltips = $rootScope.isTooltips;
             self.uiProposal = null;
@@ -71,7 +70,6 @@ angular.module('dashboard')
             }
 
             function refreshButtons() {
-                $log.debug("dbProposal: refreshButtons: " + createDisabled);
                 if (angular.equals(self.eBtn, PROP.BTN.EDIT)) {
                     self.eBtn.disabled = createDisabled;
                 }
@@ -136,7 +134,6 @@ angular.module('dashboard')
             }
 
             function setProposal(proposal) {
-                $log.debug("dbProposal: setProposal");
                 if (angular.isObject(proposal)) {
                     self.uiProposal = proposal;
                     setMode(PROP.MODE.COLLAPSED);
