@@ -41,11 +41,11 @@
                     <i class="glyphicon glyphicon-info-sign"></i>
                 </button>
                 <button type="button" class="btn db-btn-prim ad-xs db-btn-list-topright-xs db-btn-list-topright-sm" ng-click="oc.upperClicked()">
-                    <i class="ng-class: ['glyphicon', {'glyphicon-plus':oc.blockMode !== 1, 'glyphicon-minus':oc.blockMode === 1}]"></i>
+                    <i class="ng-class: ['glyphicon', {'glyphicon-plus':oc.blockMode !== oc.bms.UPPER, 'glyphicon-minus':oc.blockMode === oc.bms.UPPER}]"></i>
                 </button>
             </div>
 
-            <div ng-if="oc.hasMeetings" class="ad-flex-item ng-class:[{'ad-flex-show-full':oc.blockMode === 1, 'ad-flex-show':oc.blockMode === 0, 'ad-flex-hide':oc.blockMode === 2}]">
+            <div ng-if="oc.hasMeetings" class="ad-flex-item ng-class:[{'ad-flex-show-full':oc.blockMode === oc.bms.UPPER, 'ad-flex-show':oc.blockMode === oc.bms.BOTH, 'ad-flex-hide':oc.blockMode === oc.bms.LOWER}]">
                 <ad-meetings visible-meetings="oc.vblMtgs" on-selected="oc.meetingItemSelected(meetingItem)">
                 </ad-meetings>
             </div>
@@ -68,11 +68,11 @@
                     <i class="glyphicon glyphicon-info-sign"></i>
                 </button>
                 <button type="button" class="btn db-btn-prim ad-xs db-btn-list-topright-xs db-btn-list-topright-sm" ng-click="oc.lowerClicked()">
-                    <i class="glyphicon ng-class:[{'glyphicon-plus':oc.blockMode !== 2, 'glyphicon-minus':oc.blockMode === 2}]"></i>
+                    <i class="glyphicon ng-class:[{'glyphicon-plus':oc.blockMode !== oc.bms.LOWER, 'glyphicon-minus':oc.blockMode === oc.bms.LOWER}]"></i>
                 </button>
             </div>
 
-            <div ng-if="oc.hasEsign" class="ad-flex-item ng-class:[{'ad-flex-show-full':oc.blockMode === 2, 'ad-flex-show':oc.blockMode === 0, 'ad-flex-hide':oc.blockMode === 1}]">
+            <div ng-if="oc.hasEsign" class="ad-flex-item ng-class:[{'ad-flex-show-full':oc.blockMode === oc.bms.LOWER, 'ad-flex-show':oc.blockMode === oc.bms.BOTH, 'ad-flex-hide':oc.blockMode === oc.bms.UPPER}]">
                 <ad-open-signreqs closeditems="oc.closedSignReqs"></ad-open-signreqs>
             </div>
             <!-- SIGNINGS END -->
