@@ -20,6 +20,7 @@ angular.module('dashboard')
         self.signErr = null;
         self.blockMode = CONST.BLOCKMODE.BOTH;
         self.vbl = MTGD.VISIBLE;
+        self.bms = CONST.BLOCKMODE;
 
         var visibleMtgs = StorageSrv.getKey(CONST.KEY.VISIBLE_MTGS);
         switch (visibleMtgs) {
