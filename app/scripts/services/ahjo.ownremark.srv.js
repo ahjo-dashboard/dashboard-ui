@@ -20,6 +20,9 @@ angular.module('dashboard')
             },
             post: {
                 method: ENV.HTTP_POST
+            },
+            delete: {
+                method: ENV.HTTP_DELETE
             }
         });
     }]);
