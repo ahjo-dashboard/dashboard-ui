@@ -28,6 +28,8 @@ angular.module('dashboard', [
         // Startup logged always regardless of ENV config, so using console instead of $log
         console.log('dashboard.config: ver: ' + G_APP.app_version + ' env: ' + ENV.app_env + ' logging: ' + ENV.app_debuglogs);
 
+        $compileProvider.debugInfoEnabled(false);
+
         /* Set application level logging. Affects $log, not console */
         var doDbg = false;
         if (ENV && ENV.app_debuglogs) {
