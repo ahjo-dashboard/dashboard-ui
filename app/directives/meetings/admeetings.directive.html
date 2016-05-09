@@ -40,13 +40,12 @@
             ng-click="selected({meetingItem:item.meeting})">
                 <div class="row">
                     <div class="col-xs-12 col-sm-4">
-                        <b>{{item.meeting.name}}</b>
-                        <br>{{item.meeting.meetingDate | date:'yyyy-MM-dd HH:mm' }}
+                        {{item.meeting.meetingDate | date:'yyyy-MM-dd HH:mm' }}&nbsp;&nbsp;&nbsp;<b>{{item.meeting.name}}</b>
                     </div>
                     <div class="col-xs-12 col-sm-3">{{item.meeting.agencyName}}</div>
                     <div class="col-xs-12 col-sm-3">{{item.role}}</div>
                     <div class="col-xs-12 col-sm-2">
-                        <span class="db-label ng-class: [ctrl.mtgStatusClass(item)]" translate translate-cloak>
+                        <span class="label ng-class: [ctrl.mtgStatusClass(item)]" translate translate-cloak>
                             {{ctrl.statusStringId(item)}}
                         </span>
                     </div>

@@ -109,7 +109,6 @@ angular.module('dashboard')
             }, function(error) {
                 $log.error("adMeetings: getMeetings error: " + JSON.stringify(error));
                 self.mtgErr = error;
-            }, function(/*notify*/) {
             }).finally(function() {
                 setData();
                 parseAgencyDropdown();
