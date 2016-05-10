@@ -30,7 +30,7 @@ $default-font-size: 1.2em;
 $tablist-tabborder-width: 2px;
 
 $btn-radius: 6px;
-$btn-prim-color-bg: #4591d3;
+$btn-prim-color-bg: rgb(51, 122, 183);
 $btn-prim-color-active-bg: #276aa5;
 $btn-prim-height: 60px; // Height on XS resolution
 
@@ -222,8 +222,7 @@ body {
     }
 
     .db-btn-prim {
-        // @include button-variant($font-color-header, $btn-prim-color-bg, $btn-prim-color-bg);
-        @extend .btn-primary;
+        @include button-variant($font-color-header, $btn-prim-color-bg, $btn-prim-color-bg);
         height: $btn-prim-height;
     }
 
