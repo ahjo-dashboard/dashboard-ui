@@ -39,6 +39,7 @@ $font-color-body: #404040;
 $font-color-header: white;
 $proposals-color: orange;
 $badge-font-color: $font-color-header;
+$badge-font-color-dark: $font-color-body;
 $db-color-success: #5cb85c;
 $db-color-danger: #d9534f;
 
@@ -176,29 +177,28 @@ body {
 
     .db-label {
         @extend .label;
-        font-size: inherit !important;
     }
 
     .db-badge {
         width: 100%;
-        color: $badge-font-color;
+        color: $badge-font-color-dark ;
         h1, h2, h3, h4, h5 {
-            color: $badge-font-color;
+            color: $badge-font-color-dark ;
         }
     }
 
     .db-badge-pur {
         @extend .db-badge;
         background-color: #9370d8;
+        color: $badge-font-color;
+        h1, h2, h3, h4, h5 {
+            color: $badge-font-color;
+        }
     }
 
     .db-badge-yel {
         @extend .db-badge;
         background-color: #fee901;
-        color: #404040 !important;
-        h1, h2, h3, h4, h5 {
-            color: #404040 !important;
-        }
     }
 
     .db-badge-gre {
@@ -209,16 +209,25 @@ body {
     .db-badge-dark {
         @extend .db-badge;
         background-color: #777777;
+        color: $badge-font-color;
+        h1, h2, h3, h4, h5 {
+            color: $badge-font-color;
+        }
     }
 
     .db-badge-red {
         @extend .db-badge;
         background-color: $db-color-danger;
+        color: $badge-font-color;
+        h1, h2, h3, h4, h5 {
+            color: $badge-font-color;
+        }
     }
 
     .db-badge-ora {
         @extend .db-badge;
         background-color: #f0ad4e;
+        color: $badge-font-color-dark !important;
     }
 
     .db-btn-prim {
