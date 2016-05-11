@@ -13,7 +13,7 @@
 angular.module('dashboard')
     .directive('dbRemark', [function () {
 
-        var controller = ['$log', '$scope', 'AhjoOwnRemarkSrv', function ($log, $scope, AhjoOwnRemarkSrv) {
+        var controller = ['$log', '$scope', 'AhjoRemarkSrv', function ($log, $scope, AhjoRemarkSrv) {
             $log.log("dbRemark: CONTROLLER");
             var self = this;
             self.editorText = null;
@@ -25,7 +25,7 @@ angular.module('dashboard')
                 $log.debug("dbRemark: getRemark: " + guid);
                 if (angular.isString(guid)) {
                     self.loading = true;
-                    AhjoOwnRemarkSrv.get({ 'guid': guid }).$promise.then(function (response) {
+                    AhjoRemarkSrv.get({ 'guid': guid }).$promise.then(function (response) {
                         $log.debug("dbRemark: get then");
                         if (angular.isObject(response) && angular.isObject(response.objects)) {
                             self.remark = response.objects;
@@ -54,7 +54,7 @@ angular.module('dashboard')
                 var copy = angular.copy(remark);
                 if (angular.isObject(copy)) {
                     self.loading = true;
-                    AhjoOwnRemarkSrv.post(remark).$promise.then(function (/*response*/) {
+                    AhjoRemarkSrv.post(remark).$promise.then(function (/*response*/) {
                         $log.debug("dbRemark: post then");
                         // todo: show success
                     }, function (error) {

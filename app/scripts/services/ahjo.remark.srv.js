@@ -6,13 +6,13 @@
 
 /**
 * @ngdoc service
-* @name dashboard.AhjoOwnRemarkSrv
+* @name dashboard.AhjoRemarkSrv
 * @description
-* # AhjoOwnRemarkSrv
+* # AhjoRemarkSrv
 * Service in the dashboard.
 */
 angular.module('dashboard')
-    .factory('AhjoOwnRemarkSrv', ['$resource', 'ENV', function ($resource, ENV) {
+    .factory('AhjoRemarkSrv', ['$resource', 'ENV', function ($resource, ENV) {
         return $resource(ENV.AhjoApi_OwnRemark, { guid: '@guid' }, {
             get: {
                 method: ENV.HTTP_GET,
