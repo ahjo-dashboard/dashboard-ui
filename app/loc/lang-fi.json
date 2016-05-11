@@ -105,5 +105,6 @@
     "STR_SAVE_FAILED": "Tallennus epäonnistui",
     "STR_PUBLISH_SUCCESS": "Julkaisu onnistui",
     "STR_DELETE_SUCCESS": "Poisto onnistui",
-    "STR_DELETE_FAILED": "Poisto epäonnistui"
+    "STR_DELETE_FAILED": "Poisto epäonnistui",
+    "STR_BIGGER_IMG": "Suurenna"
 }

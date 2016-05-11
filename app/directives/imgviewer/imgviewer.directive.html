@@ -1,0 +1,30 @@
+<div class="db-conf-att">
+
+<div class="row">
+        <uib-pagination total-items="c.pageCount" items-per-page="1" ng-model="c.currPage" ng-attr-max-size="5" class="ng-class:{ 'pagination-md':isMobile, 'pagination-md':!isMobile }"
+            boundary-link-numbers="true" boundary-links="true" direction-links="true" first-text="<<" previous-text="<" next-text=">"
+            last-text=">>" rotate="true" ng-change="c.pageChanged()">
+        </uib-pagination>
+
+        <input type="number" width="100px" ng-model="c.currPage" min="1" max="c.pageCount" required>
+
+        <button type="button" class="btn btn-primary btn-sm ng-class: {'active':c.bigger}" ng-click="c.bigger = !c.bigger">
+            <span translate="STR_BIGGER_IMG">
+            </span>
+        </button>
+</div>
+    <div class="db-conf-att-img">
+        <span us-spinner spinner-on="c.imgLoading"></span>
+        <img ng-hide="c.imgLoading" ng-class="{'bigger': c.bigger}" ng-src="{{c.pages[c.currPage - 1].url_test}}"
+            img-onload img-url="c.pages[c.currPage - 1].url_test" img-onload-arg="c.currPage" img-onload-cb="c.imgEvent(data)">
+    </div>
+
+        <!--<uib-carousel active="active" interval="0" no-wrap="true" no-transition="true">
+            <uib-slide ng-repeat="s in c.pages track by s.id" index="s.id">
+                <img ng-src="{{s.url}}" style="height:500px;width:500px;">
+                <div class="carousel-caption">
+                    <h4>Slide {{s.id}}</h4>
+                </div>
+            </uib-slide>
+        </uib-carousel>-->
+</div>
