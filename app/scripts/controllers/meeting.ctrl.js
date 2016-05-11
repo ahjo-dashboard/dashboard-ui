@@ -20,7 +20,7 @@ angular.module('dashboard')
         self.lowerUrl = null;
         self.error = null;
         self.topic = null;
-        self.blockMode = CONST.BLOCKMODE.UPPER;
+        self.blockMode = CONST.BLOCKMODE.BOTH;
         self.lbms = CONST.LOWERBLOCKMODE;
         self.lbm = CONST.LOWERBLOCKMODE.PROPOSALS;
         self.header = '';
