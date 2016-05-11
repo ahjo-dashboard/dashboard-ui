@@ -34,10 +34,13 @@ angular.module('dashboard')
                 var anim = false;
 
                 function paramSeparator(uri) {
-                    return -1 === uri.indexOf('?') ? '?' : '&';
+                    if (angular.isString(uri)) {
+                        return CONST.NOTFOUND === uri.indexOf('?') ? '?' : '&';
+                    }
+                    return true;
                 }
 
-                if (scope.uri) {
+                if (angular.isString(scope.uri)) {
                     element.attr(SRC, scope.uri + paramSeparator(scope.uri) + params);
                 }
 

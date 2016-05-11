@@ -22,7 +22,7 @@
                     </button>
                 </div>
                 <div class="col-xs-2 btn-group ad-lower-bg right">
-                    <button type="button" class="btn db-btn-prim btn-block disabled" ng-click="" translate translate-cloak>STR_OWN_NOTES</button>
+                    <button type="button" class="btn db-btn-prim btn-block" ng-click="ctrl.remarkClicked()" translate translate-cloak>STR_OWN_REMARK</button>
                 </div>
                 <div class="col-xs-2 btn-group ad-lower-bg right">
                     <button type="button" class="btn db-btn-prim btn-block ng-class:[{'active': (ctrl.isActive(ctrl.lbms.PROPOSALS) && !ctrl.isUpperMode())}]"
@@ -102,8 +102,9 @@
             <!-- LOWER START -->
             <div class="ad-flex-item-lower ng-class:[{'ad-flex-show-full': ctrl.isLowerMode(), 'ad-flex-show': ctrl.isBothMode(), 'ad-flex-hide': ctrl.isUpperMode()}]">
 
-                <db-pdf ng-if="ctrl.showEmbeddedFile(ctrl.lowerUrl)" ng-attr-uri="ctrl.lowerUrl" ng-attr-mode="ctrl.blockMode"></db-pdf>
+                <db-pdf ng-if="ctrl.isActive(ctrl.lbms.ATTACHMENTS) || ctrl.isActive(ctrl.lbms.MATERIALS)" ng-attr-uri="ctrl.lowerUrl" ng-attr-mode="ctrl.blockMode"></db-pdf>
                 <db-proposal-list ng-if="ctrl.isActive(ctrl.lbms.PROPOSALS)" topic="ctrl.topic"></db-proposal-list>
+                <db-remark ng-if="ctrl.isActive(ctrl.lbms.REMARK)"  topic="ctrl.topic"></db-remark>
 
             </div>
             <!-- LOWER END -->

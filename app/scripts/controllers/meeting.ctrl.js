@@ -44,6 +44,10 @@ angular.module('dashboard')
         var materialsDropdownOpen = false;
         var isIe = $rootScope.isIe;
 
+        function setLowerBlockMode(mode) {
+            self.lbm = mode;
+        }
+
         function setData(topic) {
             self.topic = null;
             self.aData = null;
@@ -92,7 +96,7 @@ angular.module('dashboard')
         };
 
         self.attachmentClicked = function (attachment) {
-            self.lbm = CONST.LOWERBLOCKMODE.ATTACHMENTS;
+            setLowerBlockMode(CONST.LOWERBLOCKMODE.ATTACHMENTS);
             if (isMobile) {
                 StorageSrv.setKey(CONST.KEY.SELECTION_DATA, self.aData);
                 $state.go(CONST.APPSTATE.LIST);
@@ -104,7 +108,7 @@ angular.module('dashboard')
         };
 
         self.decisionClicked = function (decision) {
-            self.lbm = CONST.LOWERBLOCKMODE.MATERIALS;
+            setLowerBlockMode(CONST.LOWERBLOCKMODE.MATERIALS);
             if (isMobile) {
                 StorageSrv.setKey(CONST.KEY.SELECTION_DATA, self.dData);
                 $state.go(CONST.APPSTATE.LIST);
@@ -116,7 +120,7 @@ angular.module('dashboard')
         };
 
         self.additionalMaterialClicked = function (material) {
-            self.lbm = CONST.LOWERBLOCKMODE.MATERIALS;
+            setLowerBlockMode(CONST.LOWERBLOCKMODE.MATERIALS);
             if (isMobile) {
                 StorageSrv.setKey(CONST.KEY.SELECTION_DATA, self.amData);
                 $state.go(CONST.APPSTATE.LIST);
@@ -128,10 +132,16 @@ angular.module('dashboard')
         };
 
         self.proposalsClicked = function () {
-            self.lbm = CONST.LOWERBLOCKMODE.PROPOSALS;
+            setLowerBlockMode(CONST.LOWERBLOCKMODE.PROPOSALS);
             if (isMobile) {
                 $state.go(CONST.APPSTATE.LISTPROPOSALS);
             }
+            checkMode();
+        };
+
+        self.remarkClicked = function () {
+            $log.debug("meetingCtrl: remarkClicked");
+            setLowerBlockMode(CONST.LOWERBLOCKMODE.REMARK);
             checkMode();
         };
 
@@ -170,7 +180,7 @@ angular.module('dashboard')
         };
 
         self.isUrlString = function (url) {
-            return (url && (typeof url === "string") && url.length) ? true : false;
+            return angular.isString(url) && url.length;
         };
 
         self.materialCount = function () {

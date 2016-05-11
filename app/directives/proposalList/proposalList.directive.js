@@ -50,6 +50,7 @@ angular.module('dashboard')
             self.isAllOpen = false;
             self.btnText = null;
             self.unsavedCount = 0;
+            self.loading = false;
 
             function setTypes() {
                 $log.debug("dbProposalList: setTypes");
@@ -219,6 +220,7 @@ angular.module('dashboard')
             function getProposals(guid) {
                 $log.debug("dbProposalList: getProposals: " + guid);
                 if (angular.isString(guid)) {
+                    self.loading = true;
                     self.proposals = [];
                     AhjoProposalsSrv.get({ 'guid': guid }).$promise.then(function (response) {
                         $log.debug("dbProposalList: get then");
@@ -234,13 +236,12 @@ angular.module('dashboard')
                         }
                     }, function (error) {
                         $log.error("dbProposalList: get error: " + JSON.stringify(error));
-                    }, function (notify) {
-                        $log.debug("dbProposalList: get notify: " + JSON.stringify(notify));
                     }).finally(function () {
                         $log.debug("dbProposalList: get finally: ");
                         var events = angular.copy(StorageSrv.getKey(CONST.KEY.PROPOSAL_EVENT_ARRAY));
                         updateEvents(events);
                         countProposals();
+                        self.loading = false;
                     });
                 }
                 else {
