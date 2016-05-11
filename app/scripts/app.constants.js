@@ -11,6 +11,7 @@ angular.module('dashboard')
             FULL: 2
         },
         'MENUACTIVE': 'MENUACTIVE',
+        'CONFIRMACTIVE': 'CONFIRMACTIVE',
         'PROPOSALEVENT': 'PROPOSALEVENT',
         'PROPOSALISEDITING': 'PROPOSALISEDITING',
         'PROPOSALDELETED': 'PROPOSALDELETED',

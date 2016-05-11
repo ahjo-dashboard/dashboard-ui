@@ -32,6 +32,7 @@ angular.module('dashboard')
                 var pending = false;
                 var hidden = false;
                 var anim = false;
+                var isIe = $rootScope.isIe;
 
                 function paramSeparator(uri) {
                     if (angular.isString(uri)) {
@@ -40,7 +41,7 @@ angular.module('dashboard')
                     return true;
                 }
 
-                if (angular.isString(scope.uri)) {
+                if (angular.isString(scope.uri) && scope.uri.length) {
                     element.attr(SRC, scope.uri + paramSeparator(scope.uri) + params);
                 }
 
@@ -124,7 +125,7 @@ angular.module('dashboard')
                         }
                         else {
                             anim = false;
-                            if (angular.isDefined(timer) ) {
+                            if (angular.isDefined(timer)) {
                                 $interval.cancel(timer);
                             }
                             timer = undefined;
@@ -140,7 +141,7 @@ angular.module('dashboard')
                     show();
                 });
 
-                var watcher = $rootScope.$on(CONST.MENUACTIVE, function (event, data) {
+                var menuWatcher = $rootScope.$on(CONST.MENUACTIVE, function (event, data) {
                     if (data) {
                         hide();
                     }
@@ -150,7 +151,19 @@ angular.module('dashboard')
                     }
                 });
 
-                scope.$on('$destroy', watcher);
+                var confirmWatcher = $rootScope.$on(CONST.CONFIRMACTIVE, function (event, data) {
+                    if (isIe && angular.isObject(data)) {
+                        if (data.open === true) {
+                            hide();
+                        }
+                        else if (data.open === false) {
+                            show();
+                        }
+                    }
+                });
+
+                scope.$on('$destroy', confirmWatcher);
+                scope.$on('$destroy', menuWatcher);
 
                 scope.$on('$destroy', function () {
                     $log.debug("pdfDirective: DESTROY");

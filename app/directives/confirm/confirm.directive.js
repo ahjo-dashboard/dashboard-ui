@@ -11,15 +11,15 @@
  * # confirmDirective
  */
 angular.module('dashboard')
-    .directive('dbConfirm', ['$log', function() {
+    .directive('dbConfirm', ['$log', function () {
 
-        var controller = ['$log', '$scope', '$uibModal', function($log, $scope, $uibModal) {
+        var controller = ['$log', '$scope', '$uibModal', '$rootScope', 'CONST', function ($log, $scope, $uibModal, $rootScope, CONST) {
             var conf;
-            $scope.open = function() {
+            $scope.open = function () {
                 var modalInstance = $uibModal.open({
                     animation: true,
                     templateUrl: 'directives/confirm/confirm.html',
-                    controller: function($scope, $uibModalInstance, config) {
+                    controller: function ($scope, $uibModalInstance, config) {
                         $scope.title = 'STR_CONFIRM';
                         $scope.text = 'STR_CNFM_TEXT';
                         $scope.yes = 'STR_CONFIRM';
@@ -32,7 +32,7 @@ angular.module('dashboard')
                             $scope.yes = config.yes === undefined ? $scope.yes : config.yes;
                             $scope.no = config.no === undefined ? $scope.no : config.no;
                         }
-                        $scope.clicked = function(ok) {
+                        $scope.clicked = function (ok) {
                             if (ok) {
                                 $uibModalInstance.close();
                             }
@@ -42,34 +42,36 @@ angular.module('dashboard')
                         };
                     },
                     resolve: {
-                        config: function() {
+                        config: function () {
                             return $scope.confirmConfig;
                         }
                     }
                 });
 
-                modalInstance.result.then(function() {
+                modalInstance.result.then(function () {
                     $scope.ngClick();
-                }, function() {
-                    $scope.onReject();
+                }, function () {
+                    $scope.confirmReject();
                 });
 
-                modalInstance.opened.then(function() {
+                modalInstance.opened.then(function () {
                     if (angular.isObject(conf)) {
                         console.log(conf);
                         conf.isOpen = true;
                     }
+                    $rootScope.$emit(CONST.CONFIRMACTIVE, { 'open': true });
                 });
 
-                modalInstance.closed.then(function() {
+                modalInstance.closed.then(function () {
                     if (angular.isObject(conf)) {
                         conf.isOpen = false;
                     }
+                    $rootScope.$emit(CONST.CONFIRMACTIVE, { 'open': false });
                 });
 
             };
 
-            $scope.$on('$destroy', function() {
+            $scope.$on('$destroy', function () {
                 //$log.debug("dbConfirm: DESTROY");
             });
         }];
@@ -79,14 +81,14 @@ angular.module('dashboard')
                 confirmEnabled: '=',
                 confirmConfig: '=',
                 ngClick: '&',
-                onReject: '&'
+                confirmReject: '&'
             },
             restrict: 'A',
             controller: controller,
             replace: 'true',
-            link: function(scope, element/*, attrs*/) {
+            link: function (scope, element/*, attrs*/) {
                 var CLK = "click";
-                element.unbind(CLK).bind(CLK, function($event) {
+                element.unbind(CLK).bind(CLK, function ($event) {
                     $event.preventDefault();
 
                     if (scope.confirmEnabled === undefined || scope.confirmEnabled) {
