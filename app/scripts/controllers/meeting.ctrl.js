@@ -20,7 +20,7 @@ angular.module('dashboard')
         self.lowerUrl = null;
         self.error = null;
         self.topic = null;
-        self.blockMode = CONST.BLOCKMODE.UPPER;
+        self.blockMode = CONST.BLOCKMODE.BOTH;
         self.lbms = CONST.LOWERBLOCKMODE;
         self.lbm = CONST.LOWERBLOCKMODE.PROPOSALS;
         self.header = '';
@@ -62,7 +62,9 @@ angular.module('dashboard')
                 if (angular.isArray(topic.esitykset)) {
                     var item = topic.esitykset[0];
                     if (angular.isObject(item)) {
-                        self.tData = AttachmentData.create((item.documentTitle ? item.documentTitle : 'STR_TOPIC'), item.link);
+                        $log.debug("meetingCtrl.setData: esitys publicity=" + item.publicity);
+                        self.tData = AttachmentData.create(
+                            ((angular.isString(item.documentTitle) && item.documentTitle.length) ? item.documentTitle : 'STR_TOPIC'), item.link, item.publicity);
                     }
                 }
 

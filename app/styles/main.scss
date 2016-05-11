@@ -60,6 +60,18 @@ iframe {
     width: 100%;
 }
 
+.db-center {
+    display: flex;
+    align-items: center;
+    -moz-box-direction: row;
+    -webkit-box-direction: row;
+    -webkit-box-orient: horizontal;
+    -webkit-flex-direction: row;
+    -ms-flexbox-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+}
+
 html { height: 100%; }
 
 body {
@@ -257,18 +269,6 @@ body {
         @extend .db-btn-colhea;
         opacity: 1.0 !important;
         outline: none !important;
-    }
-
-    .db-center {
-        display: flex;
-        align-items: center;
-        -moz-box-direction: row;
-        -webkit-box-direction: row;
-        -webkit-box-orient: horizontal;
-        -webkit-flex-direction: row;
-        -ms-flexbox-direction: row;
-        -ms-flex-direction: row;
-        flex-direction: row;
     }
 
     .overview-hdr {
@@ -867,6 +867,51 @@ body {
 
 .tooltip.db-topic-tooltip .tooltip-inner {
     text-align: left;
+}
+
+.db-conf-att {
+
+    background-color: white;
+    overflow: scroll;
+
+    .row {
+        // display: -webkit-flex !important;
+        // -webkit-justify-content: center !important;
+        // -webkit-align-items: flex-start !important;
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: center !important;
+        align-items: center !important;
+    }
+
+    .pagination {
+        margin: 5px 0px;
+    }
+    .pagination-first, .pagination-last, .pagination-prev, .pagination-next {
+        a {
+            font-weight: bold;
+        }
+    }
+
+    input[type="number"] {
+        width: 100px;
+        margin: 0 20px;
+    }
+
+    .db-conf-att-img {
+        position: relative; // Otherwise spinner is out of parent
+        min-height: 50px; // Because of spinner
+
+        .bigger {
+            width: 150vw;
+            height: auto;
+        }
+
+        img {
+            width: 100%;
+            height: auto;
+        }
+    }
 }
 
 @import "main.small.scss";
