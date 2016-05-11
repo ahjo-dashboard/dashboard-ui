@@ -19,10 +19,12 @@ angular.module('dashboard')
             self.editorText = null;
             self.remark = null;
             self.topic = null;
+            self.loading = false;
 
             function getRemark(guid) {
                 $log.debug("dbRemark: getRemark: " + guid);
                 if (angular.isString(guid)) {
+                    self.loading = true;
                     AhjoOwnRemarkSrv.get({ 'guid': guid }).$promise.then(function (response) {
                         $log.debug("dbRemark: get then");
                         if (angular.isObject(response) && angular.isObject(response.objects)) {
@@ -39,6 +41,7 @@ angular.module('dashboard')
                         if (angular.isObject(self.remark)) {
                             self.editorText = self.remark.text;
                         }
+                        self.loading = false;
                     });
                 }
                 else {
@@ -50,6 +53,7 @@ angular.module('dashboard')
                 $log.debug("dbRemark: postRemark: " + JSON.stringify(remark));
                 var copy = angular.copy(remark);
                 if (angular.isObject(copy)) {
+                    self.loading = true;
                     AhjoOwnRemarkSrv.post(remark).$promise.then(function (/*response*/) {
                         $log.debug("dbRemark: post then");
                         // todo: show success
@@ -62,6 +66,7 @@ angular.module('dashboard')
                         if (angular.isObject(self.remark)) {
                             self.editorText = self.remark.text;
                         }
+                        self.loading = false;
                     });
                 }
                 else {
