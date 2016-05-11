@@ -24,7 +24,8 @@ angular.module('dashboard')
         'LOWERBLOCKMODE': {
             PROPOSALS: 0,
             ATTACHMENTS: 1,
-            MATERIALS: 2
+            MATERIALS: 2,
+            REMARK: 3
         },
         'HOMEMODE': {
             ALL: 0,
