@@ -22,10 +22,10 @@ angular.module('dashboard')
             LOWER: 2
         },
         'LOWERBLOCKMODE': {
-            PROPOSALS: 0,
-            ATTACHMENTS: 1,
-            MATERIALS: 2,
-            REMARK: 3
+            PROPOSALS: 'PROPOSALS',
+            ATTACHMENTS: 'ATTACHMENTS',
+            MATERIALS: 'MATERIALS',
+            REMARK: 'REMARK'
         },
         'HOMEMODE': {
             ALL: 0,
