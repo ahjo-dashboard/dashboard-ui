@@ -871,6 +871,51 @@ body {
     text-align: left;
 }
 
+.db-conf-att {
+
+    background-color: white;
+    overflow: scroll;
+
+    .row {
+        // display: -webkit-flex !important;
+        // -webkit-justify-content: center !important;
+        // -webkit-align-items: flex-start !important;
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: center !important;
+        align-items: center !important;
+    }
+
+    .pagination {
+        margin: 5px 0px;
+    }
+    .pagination-first, .pagination-last, .pagination-prev, .pagination-next {
+        a {
+            font-weight: bold;
+        }
+    }
+
+    input[type="number"] {
+        width: 100px;
+        margin: 0 20px;
+    }
+
+    .db-conf-att-img {
+        position: relative; // Otherwise spinner is out of parent
+        min-height: 30vh; // Because of spinner
+
+        .bigger {
+            width: 150vw;
+            height: auto;
+        }
+
+        img {
+            width: 100%;
+            height: auto;
+        }
+    }
+}
+
 @import "main.small.scss";
 @import "main.medium.scss";
 @import "main.large.scss";

@@ -106,5 +106,6 @@
     "STR_PUBLISH_SUCCESS": "Julkaisu onnistui",
     "STR_DELETE_SUCCESS": "Poisto onnistui",
     "STR_DELETE_FAILED": "Poisto epäonnistui",
-    "STR_REMARK_FAILED": "Oman merkinnän haku epäonnistui"
+    "STR_REMARK_FAILED": "Oman merkinnän haku epäonnistui",
+    "STR_BIGGER_IMG": "Suurenna"
 }

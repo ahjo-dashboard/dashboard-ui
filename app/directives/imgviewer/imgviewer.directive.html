@@ -1,0 +1,21 @@
+<div class="db-conf-att">
+
+    <div class="row">
+        <uib-pagination total-items="c.pages.length" items-per-page="1" ng-model="c.currPage" ng-attr-max-size="5" class="ng-class:{ 'pagination-md':isMobile, 'pagination-md':!isMobile }"
+            boundary-link-numbers="true" boundary-links="true" direction-links="true" first-text="<<" previous-text="<" next-text=">"
+            last-text=">>" rotate="true" ng-change="c.pageChanged(c.currPage)">
+        </uib-pagination>
+
+        <input type="number" width="100px" ng-model="c.currPage" min="1" max="c.pageCount" ng-change="c.pageChanged(c.currPage)" required>
+
+        <button type="button" class="btn btn-primary btn-sm ng-class: {'active':c.bigger}" ng-click="c.bigger = !c.bigger">
+            <span translate="STR_BIGGER_IMG">
+            </span>
+        </button>
+    </div>
+    <div class="db-conf-att-img">
+        <span us-spinner spinner-on="c.loadingImg"></span>
+        <img ng-if="c.pageData && c.pageData.obj && c.pageData.obj.fileContents" ng-src="data:{{c.pageData.obj.contentType}};base64,{{c.pageData.obj.fileContents}}"
+            ng-class="{'bigger': c.bigger}">
+    </div>
+</div>
