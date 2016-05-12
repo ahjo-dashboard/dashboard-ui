@@ -76,7 +76,7 @@ angular.module('dashboard', [
             popupDelay: 700
         });
     })
-    .run(function ($rootScope, $log, $window, CONST, ENV, $state, $timeout, $translate, Utils, StorageSrv) {
+    .run(function ($rootScope, $log, $window, CONST, ENV, $state, $timeout, $translate, Utils, StorageSrv, ngToast) {
 
         $rootScope.$on('$stateChangeStart', function (event, next/*, toParams, fromParams*/) {
             $log.debug('app.stateChangeStart: ' + next.name);// +' toParams: ' +JSON.stringify(toParams) +' fromParams: ' +JSON.stringify(fromParams));
@@ -151,6 +151,18 @@ angular.module('dashboard', [
 
         $rootScope.menuFull = function () {
             return $rootScope.menu === CONST.MENU.FULL;
+        };
+
+        $rootScope.successInfo = function (info) {
+            $translate(info).then(function (translatedValue) {
+                ngToast.success(translatedValue);
+            });
+        };
+
+        $rootScope.failedInfo = function (info) {
+            $translate(info).then(function (translatedValue) {
+                ngToast.danger(translatedValue);
+            });
         };
 
         // Utility function for looping an object to find the first immediate child object with matching value

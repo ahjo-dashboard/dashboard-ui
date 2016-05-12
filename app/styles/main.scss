@@ -42,6 +42,7 @@ $badge-font-color: $font-color-header;
 $badge-font-color-dark: $font-color-body;
 $db-color-success: #5cb85c;
 $db-color-danger: #d9534f;
+$db-color-warning: #f0ad4e;
 
 .browsehappy {
     margin: 0.2em 0;
@@ -232,17 +233,18 @@ body {
 
     .db-btn-prim {
         @include button-variant($font-color-header, $btn-prim-color-bg, $btn-prim-color-bg);
-        height: $btn-prim-height;
     }
 
     .db-btn-succ {
         @include button-variant($font-color-header, $db-color-success, $db-color-success);
-        height: $btn-prim-height;
     }
 
    .db-btn-dang {
         @include button-variant($font-color-header, $db-color-danger, $db-color-danger);
-        height: $btn-prim-height;
+    }
+
+    .db-btn-warn {
+        @include button-variant($font-color-header, $db-color-warning, $db-color-warning);
     }
 
     $btn-colhea-color-bg: darken($btn-prim-color-bg, 10%);

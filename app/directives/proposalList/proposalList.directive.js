@@ -92,10 +92,10 @@ angular.module('dashboard')
                 });
 
                 if (!self.unsavedCount && unsaved) {
-                    $rootScope.$emit(CONST.PROPOSALISEDITING, true);
+                    $rootScope.$emit(CONST.PROPOSALSHASUNSAVED, true);
                 }
                 else if (self.unsavedCount && !unsaved) {
-                    $rootScope.$emit(CONST.PROPOSALISEDITING, false);
+                    $rootScope.$emit(CONST.PROPOSALSHASUNSAVED, false);
                 }
                 self.unsavedCount = unsaved;
             }
