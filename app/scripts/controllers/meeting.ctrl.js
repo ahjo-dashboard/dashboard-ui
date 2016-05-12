@@ -38,7 +38,8 @@ angular.module('dashboard')
             class: 'btn btn-info btn-lg btn-block wrap-button-text db-btn-prim'
         };
         self.unsavedConfig = { title: 'STR_CONFIRM', text: 'STR_WARNING_UNSAVED', yes: 'STR_CONTINUE' };
-        self.isEditing = false;
+        self.hasUnsavedProposal = false;
+        self.remarkIsUnsaved = false;
 
         var attachmentDropdownOpen = false;
         var materialsDropdownOpen = false;
@@ -104,6 +105,8 @@ angular.module('dashboard')
             else if (attachment instanceof Object) {
                 self.lowerUrl = attachment.link ? attachment.link : {};
             }
+            self.hasUnsavedProposal = false;
+            self.remarkIsUnsaved = false;
             checkMode();
         };
 
@@ -116,6 +119,8 @@ angular.module('dashboard')
             else if (decision instanceof Object) {
                 self.lowerUrl = decision.link ? decision.link : {};
             }
+            self.hasUnsavedProposal = false;
+            self.remarkIsUnsaved = false;
             checkMode();
         };
 
@@ -128,6 +133,8 @@ angular.module('dashboard')
             else if (material instanceof Object) {
                 self.lowerUrl = material.link ? material.link : {};
             }
+            self.hasUnsavedProposal = false;
+            self.remarkIsUnsaved = false;
             checkMode();
         };
 
@@ -201,11 +208,16 @@ angular.module('dashboard')
             self.propCount = (data instanceof Object) ? data.published : null;
         });
 
-        var isEditingWatcher = $rootScope.$on(CONST.PROPOSALISEDITING, function (event, isEditing) {
-            self.isEditing = isEditing;
+        var unsavedProposalWatcher = $rootScope.$on(CONST.PROPOSALSHASUNSAVED, function (event, hasUnsaved) {
+            self.hasUnsavedProposal = hasUnsaved ? true : false;
         });
 
-        $scope.$on('$destroy', isEditingWatcher);
+        var unsavedRemarkWatcher = $rootScope.$on(CONST.REMARKISUNSAVED, function (event, isUnsaved) {
+            self.remarkIsUnsaved = isUnsaved ? true : false;
+        });
+
+        $scope.$on('$destroy', unsavedRemarkWatcher);
+        $scope.$on('$destroy', unsavedProposalWatcher);
         $scope.$on('$destroy', proposalCountWatcher);
 
         $scope.$on('$destroy', function () {

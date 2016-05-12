@@ -8,9 +8,11 @@
                         <h4 class="rmk-header-text" translate translate-cloak>STR_OWN_REMARK</h4>
                     </div>
                     <div class="col-xs-3 col-sm-3 col-md-2 col-lg-1">
-                        <div class="rmk-header-button">
-                            <button class="btn btn-primary btn-sm" ng-click="c.clicked(true)" ng-disabled="c.loading" uib-tooltip=""><span class="glyphicon glyphicon-ok"></span></button>
-                            <button class="btn btn-warning btn-sm" ng-click="c.clicked(false)" ng-disabled="c.loading" uib-tooltip=""><span class="glyphicon glyphicon-remove"></span></button>
+                        <div class="rmk-header-button btn-group">
+                            <button class="btn btn-primary btn-sm" ng-click="c.clicked(true)" ng-disabled="c.loading || !c.isUnsaved" uib-tooltip="{{'STR_SAVE' | translate}}"
+                                tooltip-placement="bottom"><span class="glyphicon glyphicon-ok"></span></button>
+                            <button class="btn btn-warning btn-sm" ng-click="c.clicked(false)" ng-disabled="c.loading || !c.isUnsaved" uib-tooltip="{{'STR_CANCEL' | translate}}"
+                                tooltip-placement="bottom"><span class="glyphicon glyphicon-remove"></span></button>
                         </div>
                     </div>
                 </div>
@@ -18,7 +20,7 @@
 
             <div class="list-group-item">
                 <span us-spinner="{radius:5, width:2, length:4}" spinner-on="c.loading"></span>
-                <div class="prop-text" contenteditable="true" auto-focus ng-model="c.editorText"></div>
+                <div class="prop-text" contenteditable="true" auto-focus ng-model="c.editorText" ng-change="c.changed()"></div>
             </div>
         </ul>
     </div>

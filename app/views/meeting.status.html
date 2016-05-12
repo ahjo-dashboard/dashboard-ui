@@ -8,8 +8,8 @@
                     </button>
                 </div>
                 <div ng-if="menuFull()" class="col-sm-4">
-                    <button db-confirm confirm-enabled="msc.isEditing" confirm-config="msc.unsavedConfig" type="button" class="btn db-btn-hdr glyphicon center glyphicon-home"
-                        ng-click="msc.goHome()">
+                    <button db-confirm confirm-enabled="msc.hasUnsavedProposal || msc.remarkIsUnsaved" confirm-config="msc.unsavedConfig" type="button"
+                        class="btn db-btn-hdr glyphicon center glyphicon-home" ng-click="msc.goHome()">
                     </button>
                 </div>
                 <div ng-if="menuFull()" class="col-xs-4">
@@ -71,9 +71,10 @@
                     </button>
                 </div>
 
-                <button db-confirm confirm-enabled="msc.isEditing" confirm-config="msc.unsavedConfig" type="button" class="btn btn-default ad-button ad-topic-button db-btn-agenda ng-class:[{'active': (msc.isSelected(topic) && !msc.isMobile)}]"
-                    ng-click="msc.topicSelected(topic)" tooltip-enable="isTooltips" uib-tooltip-template="'topicTooltipTpl.html'" tooltip-class="db-topic-tooltip"
-                    tooltip-placement="top-left">
+                <button db-confirm confirm-enabled="msc.hasUnsavedProposal || msc.remarkIsUnsaved" confirm-config="msc.unsavedConfig" type="button"
+                    class="btn btn-default ad-button ad-topic-button db-btn-agenda ng-class:[{'active': (msc.isSelected(topic) && !msc.isMobile)}]"
+                    ng-click="msc.topicSelected(topic)" tooltip-enable="isTooltips" uib-tooltip-template="'topicTooltipTpl.html'"
+                    tooltip-class="db-topic-tooltip" tooltip-placement="top-left">
                     {{topic.topicreference}}
                     {{topic.topicTitle}}
                 </button>
