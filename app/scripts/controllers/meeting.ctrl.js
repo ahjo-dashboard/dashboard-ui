@@ -57,6 +57,10 @@ angular.module('dashboard')
             self.lowerUrl = null;
             self.upperUrl = null;
 
+            if (self.lbm !== CONST.LOWERBLOCKMODE.PROPOSALS && self.lbm !== CONST.LOWERBLOCKMODE.REMARK) {
+                setLowerBlockMode(CONST.LOWERBLOCKMODE.PROPOSALS);
+            }
+
             if (angular.isObject(topic)) {
                 self.topic = topic;
                 self.header = topic.topicTitle;
