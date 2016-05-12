@@ -16,15 +16,15 @@
                 <!-- UPPER HEADER END -->
 
                 <!-- LOWER HEADER START -->
-                <div class="col-md-1 btn-group ad-lower-bg right ng-class:[{'col-sm-1':menuClosed(), 'col-sm-2':!menuClosed()}]">
+                <div class="col-md-1 btn-group right ng-class:[{'col-sm-1':menuClosed(), 'col-sm-2':!menuClosed()}]">
                     <button type="button" class="btn db-btn-prim btn-block" ng-click="ctrl.lowerClicked()">
                         <i class="glyphicon center ng-class:[{'glyphicon-plus': !ctrl.isLowerMode(), 'glyphicon-minus': ctrl.isLowerMode()}]"></i>
                     </button>
                 </div>
-                <div class="col-xs-2 btn-group ad-lower-bg right">
+                <div class="col-xs-2 btn-group right">
                     <button type="button" class="btn db-btn-prim btn-block" ng-click="ctrl.remarkClicked()" translate translate-cloak>STR_OWN_REMARK</button>
                 </div>
-                <div class="col-xs-2 btn-group ad-lower-bg right">
+                <div class="col-xs-2 btn-group right">
                     <button type="button" class="btn db-btn-prim btn-block ng-class:[{'active': (ctrl.isActive(ctrl.lbms.PROPOSALS) && !ctrl.isUpperMode())}]"
                         ng-click="ctrl.proposalsClicked()">
                         <span translate translate-cloak>STR_PROPOSALS</span>
@@ -38,7 +38,7 @@
                         </span>
                     </button>
                 </div>
-                <div class="col-xs-2 btn-group ad-lower-bg right" uib-dropdown is-open="" on-toggle="ctrl.mToggled(open)">
+                <div class="col-xs-2 btn-group right" uib-dropdown is-open="" on-toggle="ctrl.mToggled(open)">
                     <button id="materialButton" type="button" data-ng-disabled="!ctrl.materialCount()" class="btn db-btn-prim btn-block ng-class:[{'active': (ctrl.isActive(ctrl.lbms.MATERIALS) && !ctrl.isUpperMode())}]"
                         uib-dropdown-toggle>
                         <span translate translate-cloak>STR_OTHER_MATERIAL</span>
@@ -61,7 +61,7 @@
                         </li>
                     </ul>
                 </div>
-                <div class="col-xs-2 btn-group ad-lower-bg right" uib-dropdown is-open="" on-toggle="ctrl.aToggled(open)">
+                <div class="col-xs-2 btn-group right" uib-dropdown is-open="" on-toggle="ctrl.aToggled(open)">
                     <button id="attachmentButton" type="button" data-ng-disabled="!ctrl.aData.objects.length" class="btn db-btn-prim btn-block ng-class:[{'active': (ctrl.isActive(ctrl.lbms.ATTACHMENTS) && !ctrl.isUpperMode())}]"
                         uib-dropdown-toggle>
                         <span translate translate-cloak>STR_ATTACHMENTS</span>
