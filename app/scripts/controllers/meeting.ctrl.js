@@ -67,9 +67,9 @@ angular.module('dashboard')
                 if (angular.isArray(topic.esitykset)) {
                     var item = topic.esitykset[0];
                     if (angular.isObject(item)) {
-                        $log.debug("meetingCtrl.setData: esitys publicity=" + item.publicity);
+                        $log.debug("meetingCtrl.setData: esitys publicity=" + item.publicity + " link=" + item.link + " pageCount=" + item.pageCount);
                         self.tData = AttachmentData.create(
-                            ((angular.isString(item.documentTitle) && item.documentTitle.length) ? item.documentTitle : 'STR_TOPIC'), item.link, item.publicity);
+                            ((angular.isString(item.documentTitle) && item.documentTitle.length) ? item.documentTitle : 'STR_TOPIC'), item.link, item.publicity, null, null, item.pageCount);
                     }
                 }
 
@@ -110,6 +110,7 @@ angular.module('dashboard')
             }
             else if (attachment instanceof Object) {
                 self.lowerUrl = attachment.link ? attachment.link : {};
+                self.lowerAtt = attachment;
             }
             self.hasUnsavedProposal = false;
             self.remarkIsUnsaved = false;
