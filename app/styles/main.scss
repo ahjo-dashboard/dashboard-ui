@@ -745,6 +745,10 @@ body {
     .ad-topic {
         display: flex;
         flex-direction: row;
+
+        border-width: 0 1px 1px 1px;
+        border-color: $btn-prim-color-active-bg;
+        border-style: solid;
     }
 
     .ad-topic-status {
