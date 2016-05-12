@@ -78,19 +78,6 @@ $db-color-danger: #d9534f;
                 font-size: $default-font-size;
             }
         }
-
-        // .db-btn-prim{
-        //     @include button-variant($font-color-header, $btn-prim-color-bg, $btn-prim-color-bg);
-        // }
-
-        .db-btn-succ {
-            @include button-variant($font-color-header, $db-color-success, $db-color-success);
-        }
-
-        .db-btn-dang {
-            @include button-variant($font-color-header, $db-color-danger, $db-color-danger);
-        }
-
     }
 
     .db-btn-list-topleft-sm { border-top-left-radius: $btn-radius !important; }
