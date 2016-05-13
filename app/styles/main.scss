@@ -385,8 +385,6 @@ body {
         bottom: 0;
         overflow: auto;
         min-width: 240px;
-
-        transition: all $short-delay linear;
     }
 
     .ad-page-right {
@@ -396,8 +394,6 @@ body {
         bottom: 0;
         overflow: auto;
         min-width: 480px;
-
-        transition: all $short-delay linear;
     }
 
     .ad-page-content {
@@ -573,8 +569,6 @@ body {
 
         overflow-x: hidden;
         overflow-y: auto;
-
-        transition: all $short-delay linear;
     }
 
     .db-item-border {
