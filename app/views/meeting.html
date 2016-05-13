@@ -99,7 +99,7 @@
             <!-- UPPER END -->
 
             <!-- LOWER START -->
-            <div ng-switch="ctrl.lbm" class="ad-flex-item-lower ng-class:[{'ad-flex-show-full': ctrl.isLowerMode(), 'ad-flex-show': ctrl.isBothMode(), 'ad-flex-hide': ctrl.isUpperMode()}]">
+            <div class="ad-flex-item-lower ng-class:[{'ad-flex-show-full': ctrl.isLowerMode(), 'ad-flex-show': ctrl.isBothMode(), 'ad-flex-hide': ctrl.isUpperMode()}]">
                 <db-pdf ng-if="ctrl.lbm === ctrl.lbms.ATTACHMENTS" ng-attr-uri="ctrl.lowerUrl" ng-attr-mode="ctrl.blockMode"></db-pdf>
                 <db-pdf ng-if="ctrl.lbm === ctrl.lbms.MATERIALS" ng-attr-uri="ctrl.lowerUrl" ng-attr-mode="ctrl.blockMode"></db-pdf>
                 <db-remark ng-if="ctrl.lbm === ctrl.lbms.REMARK" topic="ctrl.topic"></db-remark>
