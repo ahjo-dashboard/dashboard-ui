@@ -12,8 +12,8 @@
  * Controller of the dashboard
  */
 angular.module('dashboard')
-    .controller('meetingCtrl', ['$log', 'AhjoMeetingSrv', '$rootScope', '$scope', '$state', 'CONST', 'StorageSrv', 'AttachmentData', 'ListData', 'PROPS', function ($log, AhjoMeetingSrv, $rootScope, $scope, $state, CONST, StorageSrv, AttachmentData, ListData, PROPS) {
-        $log.debug("meetingCtrl: CONTROLLER");
+    .controller('meetingDetailsCtrl', ['$log', 'AhjoMeetingSrv', '$rootScope', '$scope', '$state', 'CONST', 'StorageSrv', 'AttachmentData', 'ListData', 'PROPS', 'AhjoProposalsSrv', function ($log, AhjoMeetingSrv, $rootScope, $scope, $state, CONST, StorageSrv, AttachmentData, ListData, PROPS, AhjoProposalsSrv) {
+        $log.debug("meetingDetailsCtrl: CONTROLLER");
         var self = this;
         var isMobile = $rootScope.isMobile;
         self.upperUrl = null;
@@ -45,6 +45,39 @@ angular.module('dashboard')
         var materialsDropdownOpen = false;
         var isIe = $rootScope.isIe;
 
+        function countProposals(proposals) {
+                var published = 0;
+                angular.forEach(proposals, function (prop) {
+                    if (angular.isObject(prop)) {
+                        if (prop.isPublished === PROPS.PUBLISHED.YES) {
+                            published++;
+                        }
+                    }
+                });
+                self.propCount = published;
+            }
+
+        function getProposals(guid) {
+            if (angular.isString(guid)) {
+                var proposals = null;
+                AhjoProposalsSrv.get({ 'guid': guid }).$promise.then(function (response) {
+                    if (angular.isObject(response) && angular.isArray(response.objects)) {
+                        proposals = response.objects;
+                    }
+                    else {
+                        $log.error('meetingDetailsCtrl: getProposals invalid response');
+                    }
+                }, function (error) {
+                    $log.error("meetingDetailsCtrl: get error: " + JSON.stringify(error));
+                }).finally(function () {
+                    countProposals(proposals);
+                });
+            }
+            else {
+                $log.error('meetingDetailsCtrl: getProposals parameter invalid');
+            }
+        }
+
         function setLowerBlockMode(mode) {
             self.lbm = mode;
         }
@@ -67,7 +100,7 @@ angular.module('dashboard')
                 if (angular.isArray(topic.esitykset)) {
                     var item = topic.esitykset[0];
                     if (angular.isObject(item)) {
-                        $log.debug("meetingCtrl.setData: esitys publicity=" + item.publicity + " link=" + item.link + " pageCount=" + item.pageCount);
+                        $log.debug("meetingDetailsCtrl.setData: esitys publicity=" + item.publicity + " link=" + item.link + " pageCount=" + item.pageCount);
                         self.tData = AttachmentData.create(
                             ((angular.isString(item.documentTitle) && item.documentTitle.length) ? item.documentTitle : 'STR_TOPIC'), item.link, item.publicity, null, null, item.pageCount);
                     }
@@ -78,6 +111,10 @@ angular.module('dashboard')
                 self.aData = ListData.createAttachmentList('STR_ATTACHMENTS', topic.attachment);
                 self.dData = ListData.createDecisionList('STR_DECISION_HISTORY', topic.decision);
                 self.amData = ListData.createAdditionalMaterialList('STR_ADDITIONAL_MATERIAL', topic.additionalMaterial);
+
+                if (isMobile) {
+                    getProposals(topic.topicGuid);
+                }
             }
         }
 
@@ -154,7 +191,7 @@ angular.module('dashboard')
         };
 
         self.remarkClicked = function () {
-            $log.debug("meetingCtrl: remarkClicked");
+            $log.debug("meetingDetailsCtrl: remarkClicked");
             setLowerBlockMode(CONST.LOWERBLOCKMODE.REMARK);
             if (isMobile) {
                 $state.go(CONST.APPSTATE.REMARK);
@@ -215,7 +252,10 @@ angular.module('dashboard')
         });
 
         var proposalCountWatcher = $rootScope.$on(PROPS.COUNT, function (event, data) {
-            self.propCount = (data instanceof Object) ? data.published : null;
+            self.propCount = null;
+            if (angular.isObject(data) && !angular.isUndefined(data.published)) {
+                self.propCount = data.published;
+            }
         });
 
         var unsavedProposalWatcher = $rootScope.$on(CONST.PROPOSALSHASUNSAVED, function (event, hasUnsaved) {
@@ -231,7 +271,7 @@ angular.module('dashboard')
         $scope.$on('$destroy', proposalCountWatcher);
 
         $scope.$on('$destroy', function () {
-            $log.debug("meetingCtrl: DESTROY");
+            $log.debug("meetingDetailsCtrl: DESTROY");
         });
 
         setData(StorageSrv.getKey(CONST.KEY.TOPIC));

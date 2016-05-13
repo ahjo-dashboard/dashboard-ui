@@ -85,7 +85,6 @@ angular.module('dashboard')
                     if (angular.isArray(response)) {
                         response.forEach(function (event) {
                             $log.debug("meetingStatusCtrl: getEvents then: " + event.typeName);
-                            console.log(event);
                             switch (event.typeName) {
                                 case CONST.MTGEVENT.LASTEVENTID:
                                     lastEventId = event.lastEventId;
