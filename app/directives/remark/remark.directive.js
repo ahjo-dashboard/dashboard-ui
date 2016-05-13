@@ -24,12 +24,15 @@ angular.module('dashboard')
 
             function getRemark(guid) {
                 $log.debug("dbRemark: getRemark: " + guid);
+                self.remark = null;
+                self.editorText = null;
                 if (angular.isString(guid)) {
                     self.loading = true;
                     AhjoRemarkSrv.get({ 'guid': guid }).$promise.then(function (response) {
                         $log.debug("dbRemark: get then");
                         if (angular.isObject(response) && angular.isObject(response.objects)) {
                             self.remark = response.objects;
+                            self.editorText = self.remark.text;
                         }
                         else {
                             $log.error('dbRemark: getRemark invalid response');
@@ -38,9 +41,8 @@ angular.module('dashboard')
                         $log.error("dbRemark: get error: " + JSON.stringify(error));
                     }).finally(function () {
                         $log.debug("dbRemark: get finally: ");
-                        self.editorText = null;
-                        if (angular.isObject(self.remark)) {
-                            self.editorText = self.remark.text;
+                        if (!self.remark) {
+                            $rootScope.failedInfo('STR_REMARK_FAILED');
                         }
                         self.loading = false;
                     });
@@ -55,15 +57,17 @@ angular.module('dashboard')
                 var copy = angular.copy(remark);
                 if (angular.isObject(copy)) {
                     self.loading = true;
-                    AhjoRemarkSrv.post(remark).$promise.then(function (/*response*/) {
-                        // todo: handle response when fixed on backend side
-                        $log.debug("dbRemark: post then");
+                    AhjoRemarkSrv.post(remark).$promise.then(function (response) {
+                        $log.debug("dbRemark: post then: " + JSON.stringify(response));
                         $rootScope.successInfo('STR_SAVE_SUCCESS');
                         self.isUnsaved = false;
                         $rootScope.$emit(CONST.REMARKISUNSAVED, false);
-                        self.editorText = null;
-                        if (angular.isObject(self.remark)) {
+                        if (angular.isObject(response) && angular.isObject(response.objects)) {
+                            self.remark = response.objects;
                             self.editorText = self.remark.text;
+                        }
+                        else {
+                            $log.error('dbRemark: postRemark response invalid');
                         }
                     }, function (error) {
                         $log.error("dbRemark: post error: " + JSON.stringify(error));
@@ -98,15 +102,22 @@ angular.module('dashboard')
 
             self.changed = function () {
                 $log.debug("dbRemark: changed");
-                if (!angular.equals(self.editorText, self.remark.text)) {
-                    if (self.isUnsaved !== true) {
-                        self.isUnsaved = true;
-                        $rootScope.$emit(CONST.REMARKISUNSAVED, true);
+                if (angular.isObject(self.remark)) {
+                    self.remark.text = angular.isString(self.remark.text) ? self.remark.text : '';
+                    self.editorText = angular.isString(self.editorText) ? self.editorText : '';
+                    if (!angular.equals(self.editorText, self.remark.text)) {
+                        if (self.isUnsaved !== true) {
+                            self.isUnsaved = true;
+                            $rootScope.$emit(CONST.REMARKISUNSAVED, true);
+                        }
+                    }
+                    else {
+                        self.isUnsaved = false;
+                        $rootScope.$emit(CONST.REMARKISUNSAVED, false);
                     }
                 }
                 else {
-                    self.isUnsaved = false;
-                    $rootScope.$emit(CONST.REMARKISUNSAVED, false);
+                    $log.error('dbRemark: changed remark missing');
                 }
             };
 
