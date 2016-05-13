@@ -63,7 +63,7 @@ angular.module('dashboard')
                     url: '/details',
                     views: {
                         'detailsContent': {
-                            templateUrl: 'views/meeting.html',
+                            templateUrl: 'views/meeting.details.html',
                             controller: 'meetingCtrl',
                             controllerAs: 'ctrl'
                         }
@@ -197,7 +197,7 @@ angular.module('dashboard')
                             controllerAs: 'msc'
                         },
                         'homeRightContent': {
-                            templateUrl: 'views/meeting.html',
+                            templateUrl: 'views/meeting.details.html',
                             controller: 'meetingCtrl',
                             controllerAs: 'ctrl'
                         }
