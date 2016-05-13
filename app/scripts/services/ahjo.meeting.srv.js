@@ -17,7 +17,6 @@ angular.module('dashboard')
         var self = this;
 
         self.getMeeting = function(guid) {
-            $log.debug("AhjoMeetingSrv: getMeeting " + guid);
             var deferred = $q.defer();
             $timeout(function() {
                 deferred.notify({});
@@ -26,7 +25,6 @@ angular.module('dashboard')
                     cache: false,
                     url: ENV.AhjoApi_Meeting.replace('{GUID}', guid)
                 }).then(function(response) {
-                    $log.debug("AhjoMeetingSrv: getMeeting then");
                     deferred.resolve(response.data);
                 }, function(error) {
                     $log.error("AhjoMeetingSrv: getMeeting error");
@@ -38,7 +36,6 @@ angular.module('dashboard')
         };
 
         self.getEvents = function(eventId, meetingGuid) {
-            $log.debug("AhjoMeetingSrv: getEvents " + eventId + ' - ' + meetingGuid);
             var deferred = $q.defer();
             $timeout(function() {
                 deferred.notify({});
@@ -47,7 +44,6 @@ angular.module('dashboard')
                     cache: false,
                     url: ENV.AhjoApi_Events.replace(':id', eventId).replace(':meetingGuid', meetingGuid)
                 }).then(function(response) {
-                    $log.debug("AhjoMeetingSrv: getEvents then");
                     if (response.data.objects instanceof Array) {
                         deferred.resolve(response.data.objects);
                     }

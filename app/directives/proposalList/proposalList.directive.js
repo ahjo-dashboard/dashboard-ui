@@ -250,7 +250,7 @@ angular.module('dashboard')
             }
 
             function addProposal(type) {
-                $log.debug("dbProposalList: addProposal: " + type);
+                $log.debug("dbProposalList: addProposal: " + JSON.stringify(type));
                 if (angular.isObject(type)) {
                     if (!angular.isArray(self.proposals)) {
                         self.proposals = [];

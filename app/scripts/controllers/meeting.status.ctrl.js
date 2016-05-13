@@ -78,14 +78,14 @@ angular.module('dashboard')
         }
 
         function getEvents() {
-            $log.debug("meetingStatusCtrl: getEvents");
             if (lastEventId && meetingItem.meetingGuid) {
                 var proposalEvents = [];
                 var deleteEvents = [];
                 AhjoMeetingSrv.getEvents(lastEventId, meetingItem.meetingGuid).then(function (response) {
-                    $log.debug("meetingStatusCtrl: getEvents then: ");
                     if (angular.isArray(response)) {
                         response.forEach(function (event) {
+                            $log.debug("meetingStatusCtrl: getEvents then: " + event.typeName);
+                            console.log(event);
                             switch (event.typeName) {
                                 case CONST.MTGEVENT.LASTEVENTID:
                                     lastEventId = event.lastEventId;
@@ -115,10 +115,7 @@ angular.module('dashboard')
                     }
                 }, function (error) {
                     $log.error("meetingStatusCtrl: getEvents error: " + JSON.stringify(error));
-                }, function (notify) {
-                    $log.debug("meetingStatusCtrl: getEvents notify: " + JSON.stringify(notify));
                 }).finally(function () {
-                    $log.debug("meetingStatusCtrl: getEvents finally: ");
                     $timeout.cancel(pollingTimer);
                     pollingTimer = $timeout(function () {
                         getEvents();
@@ -146,7 +143,6 @@ angular.module('dashboard')
             selectedTopicGuid = null;
             StorageSrv.deleteKey(CONST.KEY.TOPIC);
             AhjoMeetingSrv.getMeeting(meetingItem.meetingGuid).then(function (response) {
-                $log.debug("meetingStatusCtrl: getMeeting then:");
                 if (angular.isObject(response) && angular.isArray(response.objects) && response.objects.length) {
                     self.meeting = response.objects[0];
                     if (angular.isObject(self.meeting) && angular.isArray(self.meeting.topicList)) {
@@ -175,10 +171,7 @@ angular.module('dashboard')
             }, function (error) {
                 $log.error("meetingStatusCtrl: getMeeting error: " + JSON.stringify(error));
                 self.error = error;
-            }, function (notify) {
-                $log.debug("meetingStatusCtrl: getMeeting notify: " + JSON.stringify(notify));
             }).finally(function () {
-                $log.debug("meetingStatusCtrl: getMeeting finally: ");
                 self.loading = false;
             });
         }
