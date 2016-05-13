@@ -577,17 +577,17 @@ body {
         transition: all $short-delay linear;
     }
 
+    .db-item-border {
+        border-style: solid;
+        border-width: $tablist-tabborder-width;
+        border-color: $btn-prim-color-active-bg;
+        border-radius: $btn-radius;
+        margin: 1vh 1vw;
+    }
+
     $mtg-item-padding: 5px 10px 10px 10px;
     .ad-flex-item-upper {
         @extend .ad-flex-item;
-        border-style: solid;
-        border-top-width: 0;
-        border-left-width: 0;
-        border-right-width: 0;
-        border-bottom-width: 0;
-        border-right-color: $lower-color;
-        padding: $mtg-item-padding;
-        background-color: $upper-color;
     }
 
     .ad-flex-item-upper.ad-flex-show-full {
@@ -595,17 +595,16 @@ body {
     }
 
     .ad-flex-item-upper.ad-flex-hide {
-        padding: 0;
+        display: none;
     }
 
     .ad-flex-item-lower {
         @extend .ad-flex-item;
-        padding: $mtg-item-padding;
         background-color: $lower-color;
     }
 
     .ad-flex-item-lower.ad-flex-hide {
-        padding: 0;
+        display: none;
     }
 
     .ad-flex-header {
@@ -746,6 +745,10 @@ body {
     .ad-topic {
         display: flex;
         flex-direction: row;
+
+        border-width: 0 1px 1px 1px;
+        border-color: $btn-prim-color-active-bg;
+        border-style: solid;
     }
 
     .ad-topic-status {
@@ -869,6 +872,51 @@ body {
 
 .tooltip.db-topic-tooltip .tooltip-inner {
     text-align: left;
+}
+
+.db-conf-att {
+
+    background-color: white;
+    overflow: scroll;
+
+    .row {
+        // display: -webkit-flex !important;
+        // -webkit-justify-content: center !important;
+        // -webkit-align-items: flex-start !important;
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: center !important;
+        align-items: center !important;
+    }
+
+    .pagination {
+        margin: 5px 0px;
+    }
+    .pagination-first, .pagination-last, .pagination-prev, .pagination-next {
+        a {
+            font-weight: bold;
+        }
+    }
+
+    input[type="number"] {
+        width: 100px;
+        margin: 0 20px;
+    }
+
+    .db-conf-att-img {
+        position: relative; // Otherwise spinner is out of parent
+        min-height: 30vh; // Because of spinner
+
+        .bigger {
+            width: 150vw;
+            height: auto;
+        }
+
+        img {
+            width: 100%;
+            height: auto;
+        }
+    }
 }
 
 @import "main.small.scss";

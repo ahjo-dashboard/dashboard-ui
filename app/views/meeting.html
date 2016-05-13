@@ -16,15 +16,15 @@
                 <!-- UPPER HEADER END -->
 
                 <!-- LOWER HEADER START -->
-                <div class="col-md-1 btn-group ad-lower-bg right ng-class:[{'col-sm-1':menuClosed(), 'col-sm-2':!menuClosed()}]">
+                <div class="col-md-1 btn-group right ng-class:[{'col-sm-1':menuClosed(), 'col-sm-2':!menuClosed()}]">
                     <button type="button" class="btn db-btn-prim btn-block" ng-click="ctrl.lowerClicked()">
                         <i class="glyphicon center ng-class:[{'glyphicon-plus': !ctrl.isLowerMode(), 'glyphicon-minus': ctrl.isLowerMode()}]"></i>
                     </button>
                 </div>
-                <div class="col-xs-2 btn-group ad-lower-bg right">
+                <div class="col-xs-2 btn-group right">
                     <button type="button" class="btn db-btn-prim btn-block" ng-click="ctrl.remarkClicked()" translate translate-cloak>STR_OWN_REMARK</button>
                 </div>
-                <div class="col-xs-2 btn-group ad-lower-bg right">
+                <div class="col-xs-2 btn-group right">
                     <button type="button" class="btn db-btn-prim btn-block ng-class:[{'active': (ctrl.isActive(ctrl.lbms.PROPOSALS) && !ctrl.isUpperMode())}]"
                         ng-click="ctrl.proposalsClicked()">
                         <span translate translate-cloak>STR_PROPOSALS</span>
@@ -38,7 +38,7 @@
                         </span>
                     </button>
                 </div>
-                <div class="col-xs-2 btn-group ad-lower-bg right" uib-dropdown is-open="" on-toggle="ctrl.mToggled(open)">
+                <div class="col-xs-2 btn-group right" uib-dropdown is-open="" on-toggle="ctrl.mToggled(open)">
                     <button id="materialButton" type="button" data-ng-disabled="!ctrl.materialCount()" class="btn db-btn-prim btn-block ng-class:[{'active': (ctrl.isActive(ctrl.lbms.MATERIALS) && !ctrl.isUpperMode())}]"
                         uib-dropdown-toggle>
                         <span translate translate-cloak>STR_OTHER_MATERIAL</span>
@@ -61,7 +61,7 @@
                         </li>
                     </ul>
                 </div>
-                <div class="col-xs-2 btn-group ad-lower-bg right" uib-dropdown is-open="" on-toggle="ctrl.aToggled(open)">
+                <div class="col-xs-2 btn-group right" uib-dropdown is-open="" on-toggle="ctrl.aToggled(open)">
                     <button id="attachmentButton" type="button" data-ng-disabled="!ctrl.aData.objects.length" class="btn db-btn-prim btn-block ng-class:[{'active': (ctrl.isActive(ctrl.lbms.ATTACHMENTS) && !ctrl.isUpperMode())}]"
                         uib-dropdown-toggle>
                         <span translate translate-cloak>STR_ATTACHMENTS</span>
@@ -90,21 +90,28 @@
         <div class="ad-page-container-flex">
 
             <!-- UPPER START -->
-            <div class="ad-flex-item-upper ng-class:[{'ad-flex-show-full': ctrl.isUpperMode(), 'ad-flex-show': ctrl.isBothMode(), 'ad-flex-hide': ctrl.isLowerMode()}]">
-
-                <db-pdf ng-if="ctrl.isUrlString(ctrl.upperUrl)" ng-attr-uri="ctrl.upperUrl" ng-attr-mode="ctrl.blockMode" ng-attr-hide="ctrl.hide"></db-pdf>
+            <div class="ad-flex-item-upper db-item-border ng-class:[{'ad-flex-show-full': ctrl.isUpperMode(), 'ad-flex-show': ctrl.isBothMode(), 'ad-flex-hide': ctrl.isLowerMode()}]">
+                <db-pdf ng-if="!ctrl.isSecret(ctrl.tData)" ng-if="ctrl.isUrlString(ctrl.upperUrl)" ng-attr-uri="ctrl.upperUrl" ng-attr-mode="ctrl.blockMode"
+                    ng-attr-hide="ctrl.hide"></db-pdf>
+                <db-imgviewer ng-if="ctrl.isSecret(ctrl.tData)" file-conf="ctrl.tData"></db-imgviewer>
 
                 <div ng-if="ctrl.error" class="alert alert-danger" role="alert">{{ctrl.error}}</div>
             </div>
             <!-- UPPER END -->
 
             <!-- LOWER START -->
-            <div class="ad-flex-item-lower ng-class:[{'ad-flex-show-full': ctrl.isLowerMode(), 'ad-flex-show': ctrl.isBothMode(), 'ad-flex-hide': ctrl.isUpperMode()}]">
-                <db-pdf ng-if="ctrl.lbm === ctrl.lbms.ATTACHMENTS" ng-attr-uri="ctrl.lowerUrl" ng-attr-mode="ctrl.blockMode"></db-pdf>
-                <db-pdf ng-if="ctrl.lbm === ctrl.lbms.MATERIALS" ng-attr-uri="ctrl.lowerUrl" ng-attr-mode="ctrl.blockMode"></db-pdf>
+            <div class="ad-flex-item-lower db-item-border ng-class:[{'ad-flex-show-full': ctrl.isLowerMode(), 'ad-flex-show': ctrl.isBothMode(), 'ad-flex-hide': ctrl.isUpperMode()}]">
+
+                <db-pdf ng-if="(ctrl.lbm === ctrl.lbms.ATTACHMENTS || ctrl.lbm === ctrl.lbms.MATERIALS) && !ctrl.isSecret(ctrl.lowerAtt)" ng-attr-uri="ctrl.lowerUrl" ng-attr-mode="ctrl.blockMode"></db-pdf>
+
+                <db-imgviewer ng-if="(ctrl.lbm === ctrl.lbms.ATTACHMENTS || ctrl.lbm === ctrl.lbms.MATERIALS) && ctrl.isSecret(ctrl.lowerAtt)" file-conf="ctrl.lowerAtt"></db-imgviewer>
+
                 <db-remark ng-if="ctrl.lbm === ctrl.lbms.REMARK" topic="ctrl.topic"></db-remark>
+
                 <db-proposal-list ng-if="ctrl.lbm === ctrl.lbms.PROPOSALS" topic="ctrl.topic"></db-proposal-list>
             </div>
+
+
             <!-- LOWER END -->
 
         </div>
@@ -127,7 +134,7 @@
             </button>
             <button type="button" class="btn btn-info btn-lg btn-block wrap-button-text db-btn-prim" ng-click="ctrl.proposalsClicked()">
                 <span translate translate-cloak>STR_PROPOSALS</span>
-                <span class="badge">  <!-- TODO: display dynamically -->
+                <span class="badge">
                     <span class="db-center">
                         {{ctrl.propCount}}
                         <span ng-show="ctrl.topic.isModified">

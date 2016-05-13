@@ -24,7 +24,7 @@ angular.module('dashboard')
                 var array = [];
                 for (var index = 0; (attachmentArray instanceof Array) && (index < attachmentArray.length); index++) {
                     var element = attachmentArray[index];
-                    var item = AttachmentData.create(element.attachmentTitle, element.link, element.publicity, element.buttonType, element.number);
+                    var item = AttachmentData.create(element.attachmentTitle, element.link, element.publicity, element.buttonType, element.number, element.pageCount);
                     if (item) {
                         array.push(item);
                     }
@@ -41,7 +41,7 @@ angular.module('dashboard')
                 var array = [];
                 for (var index = 0; (decisionArray instanceof Array) && (index < decisionArray.length); index++) {
                     var element = decisionArray[index];
-                    var item = AttachmentData.create(element.decisionTitle, element.link, element.publicity, element.buttonType, element.number);
+                    var item = AttachmentData.create(element.decisionTitle, element.link, element.publicity, element.buttonType, element.number, element.pageCount);
                     if (item) {
                         array.push(item);
                     }
@@ -58,7 +58,7 @@ angular.module('dashboard')
                 var array = [];
                 for (var index = 0; (materialArray instanceof Array) && (index < materialArray.length); index++) {
                     var element = materialArray[index];
-                    var item = AttachmentData.create(element.additionalMaterialTitle, element.link, element.publicity, element.buttonType, element.number);
+                    var item = AttachmentData.create(element.additionalMaterialTitle, element.link, element.publicity, element.buttonType, element.number, element.pageCount);
                     if (item) {
                         array.push(item);
                     }
