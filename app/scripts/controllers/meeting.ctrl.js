@@ -156,6 +156,9 @@ angular.module('dashboard')
         self.remarkClicked = function () {
             $log.debug("meetingCtrl: remarkClicked");
             setLowerBlockMode(CONST.LOWERBLOCKMODE.REMARK);
+            if (isMobile) {
+                $state.go(CONST.APPSTATE.REMARK);
+            }
             checkMode();
         };
 

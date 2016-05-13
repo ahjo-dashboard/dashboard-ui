@@ -49,6 +49,7 @@ angular.module('dashboard')
             LIST: "app.meeting.details.list",
             LISTATTACHMENT: "app.meeting.details.list.attachment",
             LISTPROPOSALS: "app.meeting.details.list.proposals",
+            REMARK: "app.meeting.details.list.remark",
             ERROR: "error"
         },
         'MTGROLE': {
