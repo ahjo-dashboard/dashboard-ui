@@ -22,7 +22,7 @@
                     </button>
                 </div>
                 <div class="col-xs-2 btn-group right">
-                    <button type="button" class="btn db-btn-prim btn-block" ng-click="ctrl.remarkClicked()" translate translate-cloak>STR_OWN_REMARK</button>
+                    <button type="button" class="btn db-btn-prim btn-block" ng-click="ctrl.remarkClicked()" translate translate-cloak>STR_REMARK</button>
                 </div>
                 <div class="col-xs-2 btn-group right">
                     <button type="button" class="btn db-btn-prim btn-block ng-class:[{'active': (ctrl.isActive(ctrl.lbms.PROPOSALS) && !ctrl.isUpperMode())}]"
@@ -142,6 +142,10 @@
                         </span>
                     </span>
                 </span>
+            </button>
+            <button type="button" ng-disabled="false" class="btn btn-info btn-lg btn-block wrap-button-text db-btn-prim"
+                ng-click="ctrl.remarkClicked()">
+                <span translate translate-cloak>STR_REMARK</span>
             </button>
         </div>
     </div>

@@ -109,6 +109,16 @@ angular.module('dashboard')
                         }
                     }
                 })
+                .state(CONST.APPSTATE.REMARK, {
+                    url: '/remark',
+                    views: {
+                        'listContent': {
+                            templateUrl: 'views/remark.html',
+                            controller: 'remarkCtrl',
+                            controllerAs: 'ctrl'
+                        }
+                    }
+                })
                 .state(CONST.APPSTATE.SIGNITEM, {
                     url: '/signitem',
                     views: {
