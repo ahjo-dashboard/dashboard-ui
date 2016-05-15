@@ -36,19 +36,17 @@ app.directive('dbImgviewer', function () {
         }
 
         function validateScopeFile(aSf) {
-            var res = angular.isObject(aSf) && angular.isString(aSf.title) && angular.isString(aSf.link) && angular.isNumber(aSf.publicity) && angular.isNumber(aSf.pageCount);
+            var res = angular.isObject(aSf) && angular.isString(aSf.title) && angular.isString(aSf.link) && angular.isNumber(aSf.publicity) && angular.isNumber(aSf.pageCount) && (0 < aSf.pageCount);
             if (!res) {
-                $log.error("dbImgviewer.validateScopeFile: bad fileConf: ");
-                $log.error(aSf);
+                $log.error("dbImgviewer.validateScopeFile: bad fileConf: " +JSON.stringify(aSf));
             } else {
-                $log.debug("dbImgviewer.validateScopeFile: ok for:");
-                $log.debug(aSf);
+                $log.debug("dbImgviewer.validateScopeFile: ok for: " +JSON.stringify(aSf));
             }
             return res;
         }
 
         function updateModel() {
-            $log.debug("dbImgviewer.updateModel");
+            // $log.debug("dbImgviewer.updateModel");
             self.pages = [];
             self.pageData = {};
 
