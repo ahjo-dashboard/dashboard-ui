@@ -119,7 +119,7 @@
 
     <div ng-if="isMobile" class="ad-page-content">
         <div class="ad-page-container">
-            <db-link config="ctrl.linkConfig" uri="ctrl.tData.link"></db-link>
+            <db-link config="ctrl.linkConfig" uri="ctrl.tData.link" class="btn btn-block btn-lg db-btn-prim"></db-link>
             <button type="button" ng-disabled="!ctrl.aData.objects.length" class="btn btn-info btn-lg btn-block wrap-button-text db-btn-prim"
                 ng-click="ctrl.attachmentClicked()">
                 <span translate translate-cloak>STR_ATTACHMENTS</span> <span class="badge">{{ctrl.aData.objects.length}}</span>
