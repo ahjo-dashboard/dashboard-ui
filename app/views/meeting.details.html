@@ -48,16 +48,16 @@
                     <ul uib-dropdown-menu role="menu" aria-labelledby="materialButton">
                         <div class="ad-dropdown-header" translate translate-cloak>STR_ADDITIONAL_MATERIAL</div>
                         <li class="divider"></li>
-                        <li db-confirm confirm-enabled="ctrl.hasUnsavedProposal || ctrl.remarkIsUnsaved" confirm-config="ctrl.unsavedConfig" class="ng-class:[{'disabled': ctrl.isSecret(material)}]"
-                            role="menuitem" ng-repeat="material in ctrl.amData.objects track by $index" ng-click="ctrl.additionalMaterialClicked(material)">
-                            <a class="ad-dropdown-content"><span ng-if="material.orderNum">{{material.orderNum}}&nbsp;</span>{{material.title}}</a>
+                        <li db-confirm confirm-enabled="ctrl.hasUnsavedProposal || ctrl.remarkIsUnsaved" confirm-config="ctrl.unsavedConfig" class="ng-class:[{'disabled': ctrl.isDisabled(mat)}]"
+                            role="menuitem" ng-repeat="mat in ctrl.amData.objects track by $index" ng-click="!ctrl.isDisabled(mat) && ctrl.additionalMaterialClicked(mat)">
+                            <a class="ad-dropdown-content"><span ng-if="mat.orderNum">{{mat.orderNum}}&nbsp;</span>{{mat.title}}</a>
                         </li>
                         <li class="divider"></li>
                         <div class="ad-dropdown-header" translate translate-cloak>STR_DECISION_HISTORY</div>
                         <li class="divider"></li>
-                        <li db-confirm confirm-enabled="ctrl.hasUnsavedProposal || ctrl.remarkIsUnsaved" confirm-config="ctrl.unsavedConfig" class="ng-class:[{'disabled': ctrl.isSecret(decision)}]"
-                            role="menuitem" ng-repeat="decision in ctrl.dData.objects track by $index" ng-click="ctrl.decisionClicked(decision)">
-                            <a class="ad-dropdown-content"><span ng-if="decision.orderNum">{{decision.orderNum}}&nbsp;</span>{{decision.title}}</a>
+                        <li db-confirm confirm-enabled="ctrl.hasUnsavedProposal || ctrl.remarkIsUnsaved" confirm-config="ctrl.unsavedConfig" class="ng-class:[{'disabled': ctrl.isDisabled(dec)}]"
+                            role="menuitem" ng-repeat="dec in ctrl.dData.objects track by $index" ng-click="!ctrl.isDisabled(dec) && ctrl.decisionClicked(dec)">
+                            <a class="ad-dropdown-content"><span ng-if="decision.orderNum">{{dec.orderNum}}&nbsp;</span>{{dec.title}}</a>
                         </li>
                     </ul>
                 </div>
@@ -69,9 +69,9 @@
                         <span ng-if="ctrl.aData.objects.length" class="caret hidden-sm"></span>
                     </button>
                     <ul uib-dropdown-menu role="menu" aria-labelledby="attachmentButton">
-                        <li db-confirm confirm-enabled="ctrl.hasUnsavedProposal || ctrl.remarkIsUnsaved" confirm-config="ctrl.unsavedConfig" class="ng-class:[{'disabled': ctrl.isSecret(attachment)}]"
-                            role="menuitem" ng-repeat="attachment in ctrl.aData.objects track by $index" ng-click="ctrl.attachmentClicked(attachment)">
-                            <a class="ad-dropdown-content"><span ng-if="attachment.orderNum">{{attachment.orderNum}}&nbsp;</span>{{attachment.title}}</a>
+                        <li db-confirm confirm-enabled="ctrl.hasUnsavedProposal || ctrl.remarkIsUnsaved" confirm-config="ctrl.unsavedConfig" class="ng-class:[{'disabled': ctrl.isDisabled(att)}]"
+                            role="menuitem" ng-repeat="att in ctrl.aData.objects track by $index">
+                            <a class="ad-dropdown-content" ng-click="!ctrl.isDisabled(att) && ctrl.attachmentClicked(att)"><span ng-if="att.orderNum">{{att.orderNum}}&nbsp;</span>{{att.title}}</a>
                         </li>
                     </ul>
                 </div>
