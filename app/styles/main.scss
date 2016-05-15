@@ -332,6 +332,32 @@ body {
         }
     }
 
+    .db-attlist {
+        margin: 1vh 1vw;
+
+        button, a {
+            width: 100%;
+            border-style: solid;
+            border-left-width: $tablist-tabborder-width;
+            border-right-width: $tablist-tabborder-width;
+            border-bottom-width: $tablist-tabborder-width;
+            border-color: $btn-prim-color-active-bg;
+            border-radius: 0;
+        }
+
+        button:first-child, a:first-child {
+            border-top-width: $tablist-tabborder-width;
+            border-top-left-radius: $btn-radius;
+            border-top-right-radius: $btn-radius;
+            }
+
+        button:last-child, a:last-child {
+            border-bottom-left-radius: $btn-radius;
+            border-bottom-width: $tablist-tabborder-width;
+            border-bottom-right-radius: $btn-radius;
+        }
+    }
+
     .db-hidden-pdf {
         visibility: hidden;
         opacity: 0.0;
