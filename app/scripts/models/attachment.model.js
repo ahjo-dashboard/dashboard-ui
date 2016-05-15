@@ -24,12 +24,9 @@ angular.module('dashboard')
         }
 
         AttachmentData.create = function (title, link, publicity, buttonType, orderNum, pageCount) {
-            if (typeof title === 'string' && typeof link === 'string') {
-                return new AttachmentData(title, link, publicity, buttonType, orderNum, pageCount);
-            }
-            $log.error('AttachmentData.createAdditionalMaterialList: missing title');
-
-            return null;
+            var tmp = new AttachmentData(title, link, publicity, buttonType, orderNum, pageCount);
+            $log.debug("AttachmentData.create: " + JSON.stringify(tmp));
+            return tmp;
         };
 
         return AttachmentData;
