@@ -65,11 +65,11 @@ angular.module('dashboard')
                 }, self.tps);
             }
 
-            function countProposals() {
+            function countProposals(proposals) {
                 var drafts = 0;
                 var published = 0;
 
-                angular.forEach(self.proposals, function (prop) {
+                angular.forEach(proposals, function (prop) {
                     if (angular.isObject(prop)) {
                         if (prop.isPublished === PROPS.PUBLISHED.YES) {
                             published++;
@@ -83,9 +83,9 @@ angular.module('dashboard')
                 $rootScope.$emit(PROPS.COUNT, { 'drafts': drafts, 'published': published });
             }
 
-            function checkProposals() {
+            function checkProposals(proposals) {
                 var unsaved = 0;
-                angular.forEach(self.proposals, function (item) {
+                angular.forEach(proposals, function (item) {
                     if (angular.isObject(item) && item.isPublished === null) {
                         unsaved++;
                     }
@@ -161,8 +161,8 @@ angular.module('dashboard')
                         }
                     }
 
-                    checkProposals();
-                    countProposals();
+                    checkProposals(self.proposals);
+                    countProposals(self.proposals);
                 }
                 else {
                     $log.error('dbProposalList: removeProposal parameter invalid');
@@ -186,7 +186,7 @@ angular.module('dashboard')
                     if (notFound) {
                         self.proposals.splice(0, 0, proposal);
                     }
-                    countProposals();
+                    countProposals(self.proposals);
                 }
                 else {
                     $log.error('dbProposalList: updateProposal parameter invalid');
@@ -240,7 +240,7 @@ angular.module('dashboard')
                         $log.debug("dbProposalList: get finally: ");
                         var events = angular.copy(StorageSrv.getKey(CONST.KEY.PROPOSAL_EVENT_ARRAY));
                         updateEvents(events);
-                        countProposals();
+                        countProposals(self.proposals);
                         self.loading = false;
                     });
                 }
@@ -257,8 +257,8 @@ angular.module('dashboard')
                     }
                     var draft = createDraft(type.value);
                     self.proposals.splice(0, 0, draft);
-                    countProposals();
-                    checkProposals();
+                    countProposals(self.proposals);
+                    checkProposals(self.proposals);
                 }
                 else {
                     $log.error('dbProposalList: addProposal parameter invalid');
@@ -334,7 +334,7 @@ angular.module('dashboard')
             var proposalWatcher = $rootScope.$on(PROPS.UPDATED, function (event, data) {
                 if (angular.isObject(data) && angular.isObject(data.sender)) {
                     if (self.proposals.indexOf(data.sender) >= 0) {
-                        checkProposals();
+                        checkProposals(self.proposals);
                     }
                 }
             });
