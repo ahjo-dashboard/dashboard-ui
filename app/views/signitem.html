@@ -42,9 +42,9 @@
                 <span translate translate-cloak>STR_REJECT</span>
             </button>
 
-            <db-link ng-attr-config="sc.btnModel.doc.linkConfig" ng-attr-uri="sc.btnModel.doc.url"></db-link>
+            <db-link ng-attr-config="sc.btnModel.doc.linkConfig" ng-attr-uri="sc.btnModel.doc.url" class="btn btn-block btn-lg db-btn-prim"></db-link>
 
-            <db-link ng-if="!sc.btnModel.doctr.hideBtn" ng-attr-config="sc.btnModel.doctr.linkConfig" ng-attr-uri="sc.btnModel.doctr.url"></db-link>
+            <db-link ng-if="!sc.btnModel.doctr.hideBtn" ng-attr-config="sc.btnModel.doctr.linkConfig" ng-attr-uri="sc.btnModel.doctr.url" class="btn btn-block btn-lg db-btn-prim"></db-link>
 
             <button id="sc.btnModel.att.id" type="button" class="btn btn-block btn-lg db-btn-prim ng-class: {active: sc.isActive(sc.btnModel.att.id)}"
                 uib-dropdown-toggle ng-disabled="sc.isDisabled(sc.btnModel.att.id)" ng-click="sc.actionAttList()">

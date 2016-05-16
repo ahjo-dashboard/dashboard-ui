@@ -243,6 +243,16 @@ angular.module('dashboard')
             return decisionCount + additionalMaterialCount;
         };
 
+        self.isDisabled = function (att) {
+            var res = false;
+            if (!(att instanceof AttachmentData)) {
+                $log.error("meetingCtrl.isDisabled: unsupported arg type: " + JSON.stringify(att));
+            } else {
+                res = !angular.isString(att.link) || !att.link.length;
+            }
+            return res;
+        };
+
         $scope.$watch(function () {
             return StorageSrv.getKey(CONST.KEY.TOPIC);
         }, function (topic, oldTopic) {

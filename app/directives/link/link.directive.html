@@ -1,4 +1,4 @@
-<a download="document.pdf" type="button" ng-class="config.class" ng-href="{{uri}}" target="_blank">
+<a download="document.pdf" type="button" class="btn config.class ng-class:{'disabled': !uri}" ng-href="{{uri}}" target="_blank">
     <div style="display:flex;justify-content: space-between;">
         <div>
             {{config.title | translate}}
