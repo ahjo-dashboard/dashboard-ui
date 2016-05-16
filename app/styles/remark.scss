@@ -5,11 +5,9 @@
 
 @import "main.scss";
 
-$font-color: white;
-
 .remark {
     h1, h2, h3, h4, h5 {
-        color: $font-color;
+        color: $font-color-header;
     }
 
     span.glyphicon {
@@ -38,16 +36,25 @@ $font-color: white;
     }
 
     .list-group-item:first-child {
-        border-top-left-radius: 8px;
-        border-top-right-radius: 8px;
+        border-top-left-radius: $btn-radius;
+        border-top-right-radius: $btn-radius;
     }
 
     .list-group-item:last-child {
-        border-bottom-left-radius: 8px;
-        border-bottom-right-radius: 8px;
+        border-bottom-left-radius: $btn-radius;
+        border-bottom-right-radius: $btn-radius;
     }
 
     .btn-sm {
         margin: 4px !important;
+    }
+
+    .rmk-flex-parent {
+        display: flex;
+        flex: 1;
+    }
+
+    .rmk-flex {
+        flex: 1;
     }
 }
