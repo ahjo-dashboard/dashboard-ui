@@ -32,6 +32,14 @@ angular.module('dashboard')
         self.dData = null;
         self.amData = null;
 
+        self.upperId = 'mtg-upper-block';
+        self.lowerId = 'mtg-lower-block';
+        self.upperClasses = null;
+        self.lowerClasses = null;
+
+        self.upperSize = undefined;
+        self.lowerSize = undefined;
+
         self.propCount = null;
         self.linkConfig = {
             title: 'STR_TOPIC_DOWNLOAD',
@@ -44,18 +52,19 @@ angular.module('dashboard')
         var attachmentDropdownOpen = false;
         var materialsDropdownOpen = false;
         var isIe = $rootScope.isIe;
+        var isEdge = $rootScope.isEdge;
 
         function countProposals(proposals) {
-                var published = 0;
-                angular.forEach(proposals, function (prop) {
-                    if (angular.isObject(prop)) {
-                        if (prop.isPublished === PROPS.PUBLISHED.YES) {
-                            published++;
-                        }
+            var published = 0;
+            angular.forEach(proposals, function (prop) {
+                if (angular.isObject(prop)) {
+                    if (prop.isPublished === PROPS.PUBLISHED.YES) {
+                        published++;
                     }
-                });
-                self.propCount = published;
-            }
+                }
+            });
+            self.propCount = published;
+        }
 
         function getProposals(guid) {
             if (angular.isString(guid)) {
@@ -75,6 +84,31 @@ angular.module('dashboard')
             }
             else {
                 $log.error('meetingDetailsCtrl: getProposals parameter invalid');
+            }
+        }
+
+        function setBlockMode(mode) {
+            self.blockMode = mode;
+
+            switch (self.blockMode) {
+                case CONST.BLOCKMODE.UPPER:
+                    self.upperClasses = 'ad-flex-show-full';
+                    self.lowerClasses = 'ad-flex-hide';
+                    break;
+
+                case CONST.BLOCKMODE.BOTH:
+                    self.upperClasses = 'ad-flex-show';
+                    self.lowerClasses = 'ad-flex-show';
+                    break;
+
+                case CONST.BLOCKMODE.LOWER:
+                    self.upperClasses = 'ad-flex-hide';
+                    self.lowerClasses = 'ad-flex-show-full';
+                    break;
+
+                default:
+                    $log.error('meetingDetailsCtrl: setBlockMode unsupported mode');
+                    break;
             }
         }
 
@@ -120,16 +154,16 @@ angular.module('dashboard')
 
         function checkMode() {
             if (!isMobile && self.isUpperMode()) {
-                self.blockMode = CONST.BLOCKMODE.BOTH;
+                setBlockMode(CONST.BLOCKMODE.BOTH);
             }
         }
 
         self.upperClicked = function () {
-            self.blockMode = (self.blockMode === CONST.BLOCKMODE.BOTH || self.blockMode === CONST.BLOCKMODE.LOWER) ? CONST.BLOCKMODE.UPPER : CONST.BLOCKMODE.BOTH;
+            setBlockMode((self.blockMode === CONST.BLOCKMODE.BOTH || self.blockMode === CONST.BLOCKMODE.LOWER) ? CONST.BLOCKMODE.UPPER : CONST.BLOCKMODE.BOTH);
         };
 
         self.lowerClicked = function () {
-            self.blockMode = (self.blockMode === CONST.BLOCKMODE.BOTH || self.blockMode === CONST.BLOCKMODE.UPPER) ? CONST.BLOCKMODE.LOWER : CONST.BLOCKMODE.BOTH;
+            setBlockMode((self.blockMode === CONST.BLOCKMODE.BOTH || self.blockMode === CONST.BLOCKMODE.UPPER) ? CONST.BLOCKMODE.LOWER : CONST.BLOCKMODE.BOTH);
         };
 
         self.topicClicked = function () {
@@ -225,16 +259,8 @@ angular.module('dashboard')
             return (item && item.publicity) ? (item.publicity === CONST.PUBLICITY.SECRET) : false;
         };
 
-        self.showEmbeddedFile = function (url) {
-            return self.isUrlString(url) && !self.isActive(CONST.LOWERBLOCKMODE.PROPOSALS);
-        };
-
         self.isActive = function (mode) {
             return self.lbm === mode;
-        };
-
-        self.isUrlString = function (url) {
-            return angular.isString(url) && url.length;
         };
 
         self.materialCount = function () {
@@ -261,6 +287,27 @@ angular.module('dashboard')
             }
         });
 
+        function setSize(data) {
+            if (angular.isObject(data) && angular.isObject(data.element)) {
+                if (data.element.attr(CONST.ID) === self.upperId && angular.isObject(data.size)) {
+                    self.upperSize = data.size;
+                }
+                else if (data.element.attr(CONST.ID) === self.lowerId && angular.isObject(data.size)) {
+                    self.lowerSize = data.size;
+                }
+            }
+        }
+
+        if (isIe || isEdge) {
+            $scope.sizeWhenReady = function (data) {
+                setSize(data);
+            };
+
+            $scope.sizeChangedByClass = function (data) {
+                setSize(data);
+            };
+        }
+
         var proposalCountWatcher = $rootScope.$on(PROPS.COUNT, function (event, data) {
             self.propCount = null;
             if (angular.isObject(data) && !angular.isUndefined(data.published)) {
@@ -284,5 +331,6 @@ angular.module('dashboard')
             $log.debug("meetingDetailsCtrl: DESTROY");
         });
 
+        setBlockMode(CONST.BLOCKMODE.BOTH);
         setData(StorageSrv.getKey(CONST.KEY.TOPIC));
     }]);

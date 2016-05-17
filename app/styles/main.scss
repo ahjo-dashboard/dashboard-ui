@@ -57,8 +57,9 @@ $db-color-warning: #f0ad4e;
 }
 
 iframe {
-    height: 100%;
+    position: relative;
     width: 100%;
+    flex: 1;
 }
 
 html { height: 100%; }
@@ -361,24 +362,11 @@ body {
     .db-hidden-pdf {
         visibility: hidden;
         opacity: 0.0;
-        transition-property: visibility, opacity;
-        transition-duration: 0s;
-        transition-timing-function: ease-in;
-        transition-delay: 0s;
     }
 
     .db-visible-pdf {
         visibility: visible;
         opacity: 1.0;
-        transition-property: visibility, opacity;
-        transition-duration: 0s;
-        transition-timing-function: ease-in;
-        transition-delay: 0s;
-    }
-
-    .db-visible-pdf-anim {
-        @extend .db-visible-pdf;
-        transition-duration: 1s;
     }
 
     .panel-heading {
@@ -605,9 +593,9 @@ body {
         margin: 1vh 1vw;
     }
 
-    $mtg-item-padding: 5px 10px 10px 10px;
     .ad-flex-item-upper {
         @extend .ad-flex-item;
+        display: flex;
     }
 
     .ad-flex-item-upper.ad-flex-show-full {
@@ -621,6 +609,7 @@ body {
     .ad-flex-item-lower {
         @extend .ad-flex-item;
         background-color: $lower-color;
+        display: flex;
     }
 
     .ad-flex-item-lower.ad-flex-hide {
