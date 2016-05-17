@@ -61,8 +61,11 @@
 
     </div>
 
+    <div ng-show="c.loadingImg" class="db-spinner-cont">
+        <span us-spinner spinner-on="true"></span>
+    </div>
+
     <div class="db-conf-att-img db-overflow">
-        <span us-spinner spinner-on="c.loadingImg"></span>
         <img ng-if="c.pageData && c.pageData.obj && c.pageData.obj.fileContents" ng-src="data:{{c.pageData.obj.contentType}};base64,{{c.pageData.obj.fileContents}}"
             ng-attr-style="width: {{c.zoomLvl}}%">
     </div>

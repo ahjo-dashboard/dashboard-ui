@@ -911,12 +911,18 @@ body {
     }
 
     .db-conf-att-img {
-        overflow: auto;
         flex: 1;
+        overflow: auto;
        .bigger {
             width: 200vw;
         }
     }
+
+}
+
+.db-spinner-cont {
+    position: relative; // us-spinner requires this, otherwise is placed outside parent.
+    flex: 1; // Or use min-height to have spinner displayed
 }
 
 .db-hdr-l2 {
