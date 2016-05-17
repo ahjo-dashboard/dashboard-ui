@@ -578,11 +578,13 @@ body {
         flex-direction: column;
     }
 
+    .db-flex {
+        display: flex;
+    }
+
     .ad-flex-item {
         flex: 14;
-
-        overflow-x: hidden;
-        overflow-y: auto;
+        overflow: hidden;
     }
 
     .db-item-border {

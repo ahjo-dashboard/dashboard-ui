@@ -90,7 +90,7 @@
         <div class="ad-page-container-flex">
 
             <!-- UPPER START -->
-            <div id="{{ctrl.upperId}}" db-obs class="ad-flex-item-upper db-item-border {{ctrl.upperClasses}}">
+            <div id="{{ctrl.upperId}}" db-obs class="ad-flex-item-upper db-flex db-item-border {{ctrl.upperClasses}}">
 
                 <db-pdf ng-if="!ctrl.isSecret(ctrl.tData)" ng-attr-uri="ctrl.upperUrl" ng-attr-hide="ctrl.hide" ng-attr-size="ctrl.upperSize"></db-pdf>
                 <db-imgviewer ng-if="ctrl.isSecret(ctrl.tData)" file-conf="ctrl.tData"></db-imgviewer>
@@ -100,12 +100,12 @@
             <!-- UPPER END -->
 
             <!-- LOWER START -->
-            <div id="{{ctrl.lowerId}}" db-obs class="ad-flex-item-lower db-item-border {{ctrl.lowerClasses}}">
+            <div id="{{ctrl.lowerId}}" db-obs class="ad-flex-item-lower db-flex db-item-border {{ctrl.lowerClasses}}">
 
                 <db-pdf ng-if="(ctrl.lbm === ctrl.lbms.ATTACHMENTS || ctrl.lbm === ctrl.lbms.MATERIALS) && !ctrl.isSecret(ctrl.lowerAtt)" ng-attr-uri="ctrl.lowerUrl" ng-attr-size="ctrl.lowerSize"></db-pdf>
                 <db-imgviewer ng-if="(ctrl.lbm === ctrl.lbms.ATTACHMENTS || ctrl.lbm === ctrl.lbms.MATERIALS) && ctrl.isSecret(ctrl.lowerAtt)" file-conf="ctrl.lowerAtt"></db-imgviewer>
-                <db-remark ng-if="ctrl.lbm === ctrl.lbms.REMARK" topic="ctrl.topic"></db-remark>
-                <db-proposal-list ng-if="ctrl.lbm === ctrl.lbms.PROPOSALS" topic="ctrl.topic"></db-proposal-list>
+                <db-remark ng-if="ctrl.lbm === ctrl.lbms.REMARK" topic="ctrl.topic" class="db-overflow"></db-remark>
+                <db-proposal-list ng-if="ctrl.lbm === ctrl.lbms.PROPOSALS" topic="ctrl.topic" class="db-overflow"></db-proposal-list>
             </div>
 
 
