@@ -10,7 +10,6 @@ angular.module('dashboard')
             HALF: 1,
             FULL: 2
         },
-        'MENUACTIVE': 'MENUACTIVE',
         'CONFIRMACTIVE': 'CONFIRMACTIVE',
         'PROPOSALEVENT': 'PROPOSALEVENT',
         'PROPOSALSHASUNSAVED': 'PROPOSALSHASUNSAVED',
@@ -18,6 +17,7 @@ angular.module('dashboard')
         'PROPOSALDELETED': 'PROPOSALDELETED',
         'POLLINGTIMEOUT' : 10000,
         'NOTFOUND' : -1,
+        'ID': 'id',
         'BLOCKMODE': {
             BOTH: 0,
             UPPER: 1,

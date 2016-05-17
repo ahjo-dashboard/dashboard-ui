@@ -12,10 +12,10 @@
 * Service in the dashboard.
 */
 angular.module('dashboard')
-    .factory('Utils', function($log, $window) {
+    .factory('Utils', function ($log, $window) {
         var Utils = {};
 
-        Utils.isResoXs = function(argUa) {
+        Utils.isResoXs = function (argUa) {
             var ua = ua ? argUa : $window.navigator.userAgent;
             var device = document.getElementById("device");
             var res = (device && window.getComputedStyle(device, null).getPropertyValue("min-width") === '320px');
@@ -23,31 +23,37 @@ angular.module('dashboard')
             return res;
         };
 
-        Utils.isUaIe = function(argUa) {
+        Utils.isUaIe = function (argUa) {
             var ua = ua ? argUa : $window.navigator.userAgent;
             var res = ua.match(/Trident/i) || ua.match(/MSIE/i);
             return null !== res;
         };
 
-        Utils.isUaMobile = function(argUa) {
+        Utils.isUAEdge = function (argUa) {
+            var ua = ua ? argUa : $window.navigator.userAgent;
+            var res = ua.match(/Edge/i);
+            return null !== res;
+        };
+
+        Utils.isUaMobile = function (argUa) {
             var ua = ua ? argUa : $window.navigator.userAgent;
             var dev = {
-                Android: function() {
+                Android: function () {
                     return ua.match(/Android/i);
                 },
-                BlackBerry: function() {
+                BlackBerry: function () {
                     return ua.match(/BlackBerry/i);
                 },
-                iOS: function() {
+                iOS: function () {
                     return ua.match(/iPhone|iPad|iPod/i);
                 },
-                Opera: function() {
+                Opera: function () {
                     return ua.match(/Opera Mini/i);
                 },
-                Windows: function() {
+                Windows: function () {
                     return ua.match(/IEMobile/i);
                 },
-                isMobile: function() {
+                isMobile: function () {
                     return (dev.Android() || dev.BlackBerry() || dev.iOS() || dev.Opera() || dev.Windows()) !== null;
                 }
             };
@@ -56,7 +62,7 @@ angular.module('dashboard')
             return res;
         };
 
-        Utils.isClientMobile = function() {
+        Utils.isClientMobile = function () {
             var ua = $window.navigator.userAgent;
             //console.log("Utils.isClientMobile: UA=" + ua);
             var res = Utils.isUaMobile(ua) || Utils.isResoXs(ua);

@@ -97,9 +97,10 @@ angular.module('dashboard', [
 
         console.log("app.run: UA=" + $window.navigator.userAgent);
         $rootScope.isIe = Utils.isUaIe($window.navigator.userAgent);
+        $rootScope.isEdge = Utils.isUAEdge($window.navigator.userAgent);
         $rootScope.isMobile = Utils.isClientMobile();
         $rootScope.isTooltips = !$rootScope.isMobile;
-        console.log("app.run: IE=" + $rootScope.isIe + " Mobile=" + $rootScope.isMobile + " Tooltips=" + $rootScope.isTooltips);
+        console.log("app.run: IE=" + $rootScope.isIe + "  Edge=" + $rootScope.isEdge + " Mobile=" + $rootScope.isMobile + " Tooltips=" + $rootScope.isTooltips);
 
         // Confirmation for tab/browser closing
         $rootScope.txtConfirmCloseApp = '';
@@ -124,19 +125,15 @@ angular.module('dashboard', [
         };
 
         $rootScope.openMenu = function () {
-            $rootScope.$emit(CONST.MENUACTIVE, true);
             $timeout(function () {
                 $rootScope.menu = CONST.MENU.FULL;
-                $rootScope.$emit(CONST.MENUACTIVE, false);
             }, 0);
         };
 
         $rootScope.closeMenu = function () {
             if ($rootScope.menu > CONST.MENU.CLOSED) {
-                $rootScope.$emit(CONST.MENUACTIVE, true);
                 $timeout(function () {
                     $rootScope.menu = $rootScope.menu - 1;
-                    $rootScope.$emit(CONST.MENUACTIVE, false);
                 }, 0);
             }
         };
