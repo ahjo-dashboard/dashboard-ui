@@ -9,18 +9,16 @@
                     </div>
                     <div class="col-xs-3 col-sm-3 col-md-2 col-lg-1">
                         <div class="rmk-header-button btn-group">
-                            <button class="btn db-btn-prim btn-sm" ng-click="c.clicked(true)" ng-disabled="c.loading || !c.isUnsaved" uib-tooltip="{{'STR_SAVE' | translate}}"
-                                tooltip-placement="bottom"><span class="glyphicon glyphicon-ok"></span></button>
-                            <button class="btn db-btn-warn btn-sm" ng-click="c.clicked(false)" ng-disabled="c.loading || !c.isUnsaved" uib-tooltip="{{'STR_CANCEL' | translate}}"
-                                tooltip-placement="bottom"><span class="glyphicon glyphicon-remove"></span></button>
+                            <button class="btn db-btn-prim btn-sm" ng-click="c.clicked(true)" ng-disabled="c.loading || !c.isUnsaved" uib-tooltip="{{'STR_SAVE' | translate}}" tooltip-placement="bottom"><span class="glyphicon glyphicon-ok"></span></button>
+                            <button class="btn db-btn-warn btn-sm" ng-click="c.clicked(false)" ng-disabled="c.loading || !c.isUnsaved" uib-tooltip="{{'STR_CANCEL' | translate}}" tooltip-placement="bottom"><span class="glyphicon glyphicon-remove"></span></button>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="list-group-item">
+            <div class="list-group-item rmk-flex-parent">
                 <span us-spinner="{radius:5, width:2, length:4}" spinner-on="c.loading"></span>
-                <div ng-if="c.remark" class="prop-text" contenteditable="true" auto-focus ng-model="c.editorText" ng-change="c.changed()"></div>
+                <textarea autofocus class="rmk-flex" ng-model="c.editorText" ng-change="c.changed()"></textarea>
             </div>
         </ul>
     </div>
