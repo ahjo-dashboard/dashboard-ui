@@ -1,10 +1,6 @@
-<a download="document.pdf" type="button" class="btn config.class ng-class:{'disabled': !uri}" ng-href="{{uri}}" target="_blank">
-    <div style="display:flex;justify-content: space-between;">
-        <div>
-            {{config.title | translate}}
-        </div>
-        <div>
+<a download="document.pdf" type="button" class="btn btn-block btn-lg config.class ng-class:{'disabled': !uri}" ng-href="{{uri}}" target="_blank">
+    <div>
             <img ng-src="../images/pdf.png">
-        </div>
+            <span>{{config.title | translate}}</span>
     </div>
 </a>
