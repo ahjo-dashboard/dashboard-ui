@@ -47,7 +47,7 @@ angular.module('dashboard')
             MEETINGDETAILS: "app.meeting.details",
             TOPIC: "app.meeting.details.topic",
             LIST: "app.meeting.details.list",
-            LISTATTACHMENT: "app.meeting.details.list.attachment",
+            MTG_LIST_ATTACHMENT: "app.meeting.details.list.attachment",
             LISTPROPOSALS: "app.meeting.details.list.proposals",
             REMARK: "app.meeting.details.list.remark",
             ERROR: "error"
@@ -65,7 +65,7 @@ angular.module('dashboard')
         },
         'KEY': {
             TOPIC: 'topic',
-            PDF_DATA: 'pdfdata',
+            LIST_ATT: 'listattdata',
             SELECTION_DATA: 'selectiondata',
             VISIBLE_MTGS: 'visiblemeetings',
             SIGNING_RES: 'signingres',

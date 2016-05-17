@@ -23,12 +23,16 @@ $long-delay: 600ms;
 $default-delay: 400ms;
 $short-delay: 50ms;
 
+$appbgcolor: white;
+$font-color-body: #404040;
 $upper-color: #276aa5;
 $lower-color: white;
 $headingBgColor: $upper-color;
 
 $default-font-size: 1.2em;
 $tablist-tabborder-width: 2px;
+$list-bg-color: $appbgcolor;
+
 
 $btn-radius: 6px;
 $btn-prim-color-bg: rgb(51, 122, 183);
@@ -36,7 +40,6 @@ $btn-prim-color-active-bg: #276aa5;
 $btn-prim-height: 60px; // Height on XS resolution
 
 $header-leftmargin: 10px;
-$font-color-body: #404040;
 $font-color-header: white;
 $proposals-color: orange;
 $badge-font-color: $font-color-header;
@@ -69,7 +72,6 @@ body {
     $header-height: 60px; // this is for moving main content
     $button-height: 40px;
 
-    $appbgcolor: white;
     $focusedColor: #3e7ebe;
     $headingL2BgColor: $appbgcolor;
     $borderColor: $focusedColor;
@@ -315,19 +317,14 @@ body {
 
     .db-tablist {
         button, a {
-            border-left-width: $tablist-tabborder-width;
-            border-right-width: $tablist-tabborder-width;
-            border-left-color: $btn-prim-color-active-bg;
-            border-right-color: $btn-prim-color-active-bg;
-            border-left-style: solid;
-            border-right-style: solid;
+            border-width: 0 $tablist-tabborder-width;
+            border-color: $btn-prim-color-active-bg;
+            border-style: solid;
         }
 
         button:first-child, a:first-child { border-radius: 0px; }
         button:last-child, a:last-child {
-            border-bottom-color: $btn-prim-color-active-bg;
             border-bottom-width: $tablist-tabborder-width;
-            border-bottom-style: solid;
             border-bottom-left-radius: $btn-radius;
             border-bottom-right-radius: $btn-radius;
         }
@@ -336,26 +333,30 @@ body {
     .db-attlist {
         margin: 1vh 1vw;
 
-        button, a {
+        li {
             width: 100%;
             border-style: solid;
-            border-left-width: $tablist-tabborder-width;
-            border-right-width: $tablist-tabborder-width;
-            border-bottom-width: $tablist-tabborder-width;
+            border-width: $tablist-tabborder-width $tablist-tabborder-width 0 $tablist-tabborder-width;
             border-color: $btn-prim-color-active-bg;
             border-radius: 0;
+            color: $font-color-body;
+            background-color: $list-bg-color;
         }
 
-        button:first-child, a:first-child {
-            border-top-width: $tablist-tabborder-width;
+        li:first-child {
             border-top-left-radius: $btn-radius;
             border-top-right-radius: $btn-radius;
             }
 
-        button:last-child, a:last-child {
-            border-bottom-left-radius: $btn-radius;
+        li:last-child {
             border-bottom-width: $tablist-tabborder-width;
+            border-bottom-left-radius: $btn-radius;
             border-bottom-right-radius: $btn-radius;
+        }
+
+        button, a {
+            color: $font-color-body;
+            background-color: $list-bg-color;
         }
     }
 
@@ -576,10 +577,6 @@ body {
 
         display: flex;
         flex-direction: column;
-    }
-
-    .db-flex {
-        display: flex;
     }
 
     .ad-flex-item {
@@ -926,8 +923,8 @@ body {
 }
 
 .db-hdr-l2 {
-    padding: 0 $header-leftmargin;
-    min-height: 10px;
+    padding: 1vh $header-leftmargin;
+    min-height: 50px;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
@@ -959,8 +956,21 @@ body {
     align-items: center;
 }
 
+
+.db-flex {
+    display: flex;
+}
+
 .db-flex-align-item-end {
     align-self: flex-end;
+}
+
+.db-flex-nowrap {
+    flex-wrap: nowrap;
+}
+
+.db-flex-wrap {
+    flex-wrap: wrap;
 }
 
 @import "main.small.scss";
