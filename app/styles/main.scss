@@ -25,6 +25,7 @@ $short-delay: 50ms;
 
 $upper-color: #276aa5;
 $lower-color: white;
+$headingBgColor: $upper-color;
 
 $default-font-size: 1.2em;
 $tablist-tabborder-width: 2px;
@@ -70,7 +71,6 @@ body {
 
     $appbgcolor: white;
     $focusedColor: #3e7ebe;
-    $headingBgColor: $upper-color;
     $headingL2BgColor: $appbgcolor;
     $borderColor: $focusedColor;
     background-color: $appbgcolor;
@@ -883,20 +883,16 @@ body {
     text-align: left;
 }
 
+.db-overflow {
+    overflow: auto !important;
+}
+
 .db-conf-att {
-
     background-color: white;
-    overflow: scroll;
 
-    .row {
-        // display: -webkit-flex !important;
-        // -webkit-justify-content: center !important;
-        // -webkit-align-items: flex-start !important;
-        display: flex !important;
-        flex-direction: row !important;
-        justify-content: center !important;
-        align-items: center !important;
-    }
+    flex: 1;
+    display: flex;
+    flex-direction: column;
 
     .pagination {
         margin: 5px 0px;
@@ -908,24 +904,55 @@ body {
     }
 
     input[type="number"] {
-        width: 100px;
-        margin: 0 20px;
+        width: 4.5em;
+        margin: 0;
     }
 
     .db-conf-att-img {
-        position: relative; // Otherwise spinner is out of parent
-        min-height: 30vh; // Because of spinner
-
-        .bigger {
-            width: 150vw;
-            height: auto;
-        }
-
-        img {
-            width: 100%;
-            height: auto;
+        overflow: auto;
+        flex: 1;
+       .bigger {
+            width: 200vw;
         }
     }
+}
+
+.db-hdr-l2 {
+    padding: 0 $header-leftmargin;
+    min-height: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: $headingBgColor;
+    color: $font-color-header;
+    input {
+        color: black;
+    }
+}
+
+.db-hdr-l2-grp {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+
+    $hdr-l2-item-padding: 0.5vw;
+    margin: 0 2vw 0 0;
+
+    .db-hdr-l2-item { margin: 0 $hdr-l2-item-padding 0 0; }
+    .db-hdr-l2-item:last-child { margin-right: 0; }
+}
+
+.db-hdr-l2-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.db-flex-align-item-end {
+    align-self: flex-end;
 }
 
 @import "main.small.scss";

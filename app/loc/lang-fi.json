@@ -107,5 +107,6 @@
     "STR_DELETE_SUCCESS": "Poisto onnistui",
     "STR_DELETE_FAILED": "Poisto epäonnistui",
     "STR_REMARK_FAILED": "Oman merkinnän haku epäonnistui",
-    "STR_BIGGER_IMG": "Suurenna"
+    "STR_ZOOM": "Suurennos:",
+    "STR_PAGE": "Sivu:"
 }
