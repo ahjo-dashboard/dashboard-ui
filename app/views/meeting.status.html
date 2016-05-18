@@ -1,23 +1,12 @@
 <div class="ad-page">
 
     <div ng-if="!msc.isMobile" class="ad-page-header db-center">
-        <div class="col-xs-12">
-            <div class="row">
-                <div class="col-sm-4">
-                    <button type="button" class="btn db-btn-hdr glyphicon center glyphicon-menu-hamburger" ng-click="closeMenu()">
-                    </button>
-                </div>
-                <div ng-if="menuFull()" class="col-sm-4">
-                    <button db-confirm confirm-enabled="msc.hasUnsavedProposal || msc.remarkIsUnsaved" confirm-config="msc.unsavedConfig" type="button"
-                        class="btn db-btn-hdr glyphicon center glyphicon-home" ng-click="msc.goHome()">
-                    </button>
-                </div>
-                <div ng-if="menuFull()" class="col-xs-4">
-                    <button type="button" class="btn db-btn-hdr glyphicon center glyphicon-info-sign disabled" ng-click="">
-                    </button>
-                </div>
-            </div>
-        </div>
+        <button type="button" class="btn db-btn-hdr glyphicon glyphicon-menu-hamburger" ng-click="closeMenu()">
+        </button>
+        <button db-confirm confirm-enabled="msc.hasUnsavedProposal || msc.remarkIsUnsaved" confirm-config="msc.unsavedConfig" type="button" class="btn db-btn-hdr glyphicon glyphicon-home" ng-click="msc.goHome()">
+        </button>
+        <button type="button" class="btn db-btn-hdr glyphicon glyphicon-info-sign disabled" ng-click="">
+        </button>
     </div>
 
     <div ng-if="msc.isMobile" class="ad-page-header db-center">
