@@ -71,16 +71,17 @@
     <div ng-if="!isMobile" class="ad-page-header">
         <div class="col-xs-12">
             <div class="row db-center">
-                <div class="col-xs-2 col-lg-2 db-nopadding db-center">
-                    <div class="col-xs-12 db-center db-nopadding">
-
-                        <button type="button" class="col-xs-3 btn db-btn-hdr glyphicon glyphicon-home center" ng-click="sc.goHome()">
+                <div class="db-center">
+                    <div class="db-center db-nopadding">
+                        <button type="button" class="btn db-btn-hdr glyphicon glyphicon-home center" ng-click="sc.goHome()">
                         </button>
 
-                        <button type="button" class="col-xs-3  btn db-btn-hdr glyphicon glyphicon-info-sign center disabled" ng-click="">
+                        <button type="button" class="btn db-btn-hdr glyphicon glyphicon-info-sign center disabled">
                         </button>
+                    </div>
 
-                        <div class="col-xs-6">
+                    <div class="btn-group">
+                        <div class="db-sign-status">
                             <div class="row text-center">
                                 <h5 class="col-xs-12"><span translate="STR_STATUS"></span>:</h5>
                             </div>
@@ -90,26 +91,25 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
-                </div>
-                <div class="col-xs-10 col-lg-8 col-lg-offset-2">
 
-                    <div class="col-xs-12 col-sm-2 btn-group" ng-hide="sc.btnModel.acc.hideBtn">
-                        <button id="sc.btnModel.acc.id" type="button" class="btn db-btn-succ btn-block ng-class:
+                    <div class="btn-group db-btn-md" ng-hide="sc.btnModel.acc.hideBtn">
+                        <button id="sc.btnModel.acc.id" type="button" class="btn btn-block db-btn-succ ng-class:
                         {active: sc.isActive(sc.btnModel.acc.id)}" ng-click="sc.actionSign()" ng-disabled="sc.isDisabled(sc.btnModel.acc.id)"
                             db-confirm confirm-config="sc.btnModel.acc.cConf">
                             <span translate translate-cloak>STR_SIGNING_ACCEPT</span>
                         </button>
                     </div>
-                    <div class="col-xs-12 col-sm-2 btn-group" ng-hide="sc.btnModel.rej.hideBtn">
-                        <button id="sc.btnModel.rej.id" type="button" class="btn db-btn-dang btn-block ng-class:
+
+                    <div class="btn-group db-btn-md" ng-hide="sc.btnModel.rej.hideBtn">
+                        <button id="sc.btnModel.rej.id" type="button" class="btn btn-block db-btn-dang ng-class:
                         {active: sc.isActive(sc.btnModel.rej.id)}" ng-click="sc.actionReject()" ng-disabled="sc.isDisabled(sc.btnModel.rej.id)"
                             db-confirm confirm-config="sc.btnModel.rej.cConf">
                             <span translate translate-cloak>STR_REJECT</span>
                         </button>
                     </div>
-                    <div class="col-xs-12 col-sm-2 btn-group">
+
+                    <div class="btn-group db-btn-md">
                         <button id="sc.btnModel.doc.id" type="button" class="btn btn-block db-btn-prim ng-class: {active: sc.isActive(sc.btnModel.doc.id)}"
                             ng-click="sc.actionDoc()" ng-model="sc.btnModel.doc.active" ng-disabled="sc.isDisabled(sc.btnModel.doc.id)"
                             uib-popover="{{'STR_SINFO_CONF_ATT_OPENS' | translate}}" popover-trigger="mouseenter" popover-placement="bottom">
@@ -117,7 +117,7 @@
                         </button>
                     </div>
 
-                    <div ng-if="!sc.btnModel.doctr.hideBtn" class="col-xs-2 btn-group">
+                    <div ng-if="!sc.btnModel.doctr.hideBtn" class="btn-group db-btn-md">
                         <button id="sc.btnModel.doctr.id" type="button" class="btn btn-block db-btn-prim ng-class: {active: sc.isActive(sc.btnModel.doctr.id)}"
                             ng-click="sc.actionDocTr()" ng-model="sc.btnModel.doctrdoc.active" ng-disabled="sc.isDisabled(sc.btnModel.doctr.id)"
                             uib-popover="{{'STR_SINFO_CONF_ATT_OPENS' | translate}}" popover-trigger="mouseenter" popover-placement="bottom">
@@ -125,7 +125,7 @@
                         </button>
                     </div>
 
-                    <div class="col-xs-12 col-sm-2 btn-group" uib-dropdown on-toggle="sc.btnModel.att.toggle(open)">
+                    <div class="btn-group db-btn-md" uib-dropdown on-toggle="sc.btnModel.att.toggle(open)">
                         <button id="sc.btnModel.att.id" type="button" class="btn btn-block db-btn-prim ng-class:
                         {active: sc.isActive(sc.btnModel.att.id)}" uib-dropdown-toggle ng-disabled="sc.isDisabled(sc.btnModel.att.id)">
                             <span translate translate-cloak>{{sc.attModel.title}}</span>
@@ -138,13 +138,13 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="col-xs-12 col-sm-1 btn-group">
+                    <div class="btn-group db-btn-md">
                         <button id="sc.btnModel.sta.id" type="button" class="btn btn-block db-btn-prim ng-class:
                         {active: sc.isActive(sc.btnModel.sta.id)}" ng-click="sc.actionSignings()" ng-disabled="sc.isDisabled(sc.btnModel.sta.id)">
                             <span translate translate-cloak>STR_STATUS</span>
                         </button>
                     </div>
-                    <div class="col-xs-12 col-sm-1 btn-group">
+                    <div class="btn-group db-btn-md">
                         <button id="sc.btnModel.com.id" type="button" class="btn btn-block db-btn-prim ng-class:
                         {active: sc.isActive(sc.btnModel.com.id)}" ng-click="sc.actionComment()" ng-disabled="sc.isDisabled(sc.btnModel.com.id)">
                             <span translate translate-cloak>STR_CREATE_COMMENT</span>
@@ -164,8 +164,8 @@
             <uib-progressbar ng-if="sc.ongoing" class="progress-striped active" type="info">
             </uib-progressbar>
 
-            <div class="ad-flex-show-full ad-flex-item-upper">
-                <div class="ad-horiz-container">
+            <div class="ad-flex-show-full ad-flex-item-upper db-flex-col">
+                <div class="db-sign-infoarea">
 
                     <!-- Comment displayed via alert array on desktop, separate alert on mobile -->
 

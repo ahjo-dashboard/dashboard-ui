@@ -254,6 +254,11 @@ body {
         @include button-variant($font-color-header, $db-color-warning, $db-color-warning);
     }
 
+    .db-btn-md {
+        min-width: 90px;
+        width: 10vw;
+    }
+
     $btn-colhea-color-bg: darken($btn-prim-color-bg, 10%);
     $btn-colhea-color-border: $btn-colhea-color-bg;
     .db-btn-colhea {
@@ -570,9 +575,13 @@ body {
         padding-bottom: 10px;
     }
 
-    .ad-horiz-container {
-        padding-left: 10px;
-        padding-right: 10px;
+    .db-sign-infoarea {
+        width: 100%;
+        margin: 0 10px;
+    }
+
+    .db-sign-status {
+        margin: 0 15px;
     }
 
     .ad-page-container-flex {
@@ -967,6 +976,10 @@ body {
 
 .db-flex {
     display: flex;
+}
+
+.db-flex-col {
+    flex-direction: column;
 }
 
 .db-flex-align-item-end {
