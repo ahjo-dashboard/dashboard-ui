@@ -40,6 +40,11 @@ angular.module('dashboard')
         self.upperSize = undefined;
         self.lowerSize = undefined;
 
+        self.upperBtnCls = null;
+        self.lowerBtnCls = null;
+        self.upperBtnDbl = null;
+        self.lowerBtnDbl = null;
+
         self.propCount = null;
         self.linkConfig = {
             title: 'STR_TOPIC_DOWNLOAD',
@@ -94,16 +99,28 @@ angular.module('dashboard')
                 case CONST.BLOCKMODE.UPPER:
                     self.upperClasses = 'ad-flex-show-full';
                     self.lowerClasses = 'ad-flex-hide';
+                    self.upperBtnCls = 'glyphicon glyphicon-menu-up';
+                    self.lowerBtnCls = 'glyphicon glyphicon-menu-up';
+                    self.upperBtnDbl = false;
+                    self.lowerBtnDbl = true;
                     break;
 
                 case CONST.BLOCKMODE.BOTH:
                     self.upperClasses = 'ad-flex-show';
                     self.lowerClasses = 'ad-flex-show';
+                    self.upperBtnCls = 'glyphicon glyphicon-menu-down';
+                    self.lowerBtnCls = 'glyphicon glyphicon-menu-up';
+                    self.upperBtnDbl = false;
+                    self.lowerBtnDbl = false;
                     break;
 
                 case CONST.BLOCKMODE.LOWER:
                     self.upperClasses = 'ad-flex-hide';
                     self.lowerClasses = 'ad-flex-show-full';
+                    self.upperBtnCls = 'glyphicon glyphicon-menu-down';
+                    self.lowerBtnCls = 'glyphicon glyphicon-menu-down';
+                    self.upperBtnDbl = true;
+                    self.lowerBtnDbl = false;
                     break;
 
                 default:
@@ -114,6 +131,24 @@ angular.module('dashboard')
 
         function setLowerBlockMode(mode) {
             self.lbm = mode;
+
+            switch (self.lbm) {
+                case CONST.LOWERBLOCKMODE.PROPOSALS:
+                    break;
+
+                case CONST.LOWERBLOCKMODE.ATTACHMENTS:
+                    break;
+
+                case CONST.LOWERBLOCKMODE.MATERIALS:
+                    break;
+
+                case CONST.LOWERBLOCKMODE.REMARK:
+                    break;
+
+                default:
+                    $log.error('meetingDetailsCtrl: setLowerBlockMode unsupported mode');
+                    break;
+            }
         }
 
         function setData(topic) {
