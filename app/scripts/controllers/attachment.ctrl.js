@@ -2,18 +2,18 @@
 
 /**
  * @ngdoc function
- * @name dashboard.controller:attachmentCtrl
+ * @name dashboard.controller:attCtrl
  * @description
- * # attachmentCtrl
+ * # attCtrl
  * Controller of the dashboard
  */
 angular.module('dashboard')
-    .controller('attachmentCtrl', ['$log', '$scope', 'StorageSrv', 'CONST', function ($log, $scope, StorageSrv, CONST) {
-        $log.debug("attachmentCtrl: CONTROLLER");
+    .controller('attCtrl', ['$log', '$scope', 'StorageSrv', 'CONST', function ($log, $scope, StorageSrv, CONST) {
+        $log.debug("attCtrl");
         var self = this;
-        self.data = StorageSrv.getKey(CONST.KEY.LISTPDF_DATA);
+        self.att = StorageSrv.getKey(CONST.KEY.LIST_ATT);
 
         $scope.$on('$destroy', function () {
-            $log.debug("attachmentCtrl: DESTROY");
+            $log.debug("attCtrl: DESTROY");
         });
     }]);

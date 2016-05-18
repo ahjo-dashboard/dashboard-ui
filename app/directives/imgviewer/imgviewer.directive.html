@@ -1,21 +1,73 @@
 <div class="db-conf-att">
 
-    <div class="row">
-        <uib-pagination total-items="c.pages.length" items-per-page="1" ng-model="c.currPage" ng-attr-max-size="5" class="ng-class:{ 'pagination-md':isMobile, 'pagination-md':!isMobile }"
-            boundary-link-numbers="true" boundary-links="true" direction-links="true" first-text="<<" previous-text="<" next-text=">"
-            last-text=">>" rotate="true" ng-change="c.pageChanged(c.currPage)">
-        </uib-pagination>
+    <div class="db-hdr-l2">
 
-        <input type="number" width="100px" ng-model="c.currPage" min="1" max="c.pageCount" ng-change="c.pageChanged(c.currPage)" required>
+        <div class="db-hdr-l2-grp">
 
-        <button type="button" class="btn btn-primary btn-sm ng-class: {'active':c.bigger}" ng-click="c.bigger = !c.bigger">
-            <span translate="STR_BIGGER_IMG">
-            </span>
-        </button>
+            <div class="db-hdr-l2-item hidden-xs hidden-sm">
+                <span translate translate-cloak>STR_PAGE</span>
+            </div>
+
+            <div class="db-hdr-l2-item btn-group">
+                <button type="button" class="hidden-xs btn btn-primary btn-lg" ng-click="c.pageChanged(1)" ng-disabled="c.currPage === 1 || !c.pages.length">
+                    <span ng-if="c.pages.length > 1">(1)&nbsp;</span>
+                    &lt;&lt;
+                </button>
+
+                <button type="button" class="btn btn-primary btn-lg" ng-click="c.pageChanged(c.currPage - 1)" ng-disabled="c.currPage === 1 || !c.pages.length">
+                    &lt;
+                </button>
+            </div>
+
+            <div class="db-hdr-l2-item">
+                <input type="number" width="100px" ng-model="c.currPage" min="1" max="{{c.pages.length}}" ng-change="c.pageChanged(c.currPage)"
+                    required ng-disabled="!c.pages.length || c.pages.length === 1">
+            </div>
+
+            <div class="db-hdr-l2-item btn-group">
+                <button type="button" class="btn btn-primary btn-lg" ng-click="c.pageChanged(c.currPage + 1)" ng-disabled="c.currPage >= c.pages.length">
+                    &gt;
+                </button>
+
+                <button type="button" class="hidden-xs btn btn-primary btn-lg" ng-click="c.pageChanged(c.pages.length)" ng-disabled="c.currPage >= c.pages.length">
+                    &gt;&gt;&nbsp;
+                    <span ng-if="c.pages.length > 1">({{c.pages.length}})</span>
+                </button>
+            </div>
+
+        </div>
+
+        <div class="db-hdr-l2-grp">
+            <div class="db-hdr-l2-item hidden-xs">
+                <span translate translate-cloak>STR_ZOOM</span>
+            </div>
+
+            <div class="db-hdr-l2-item">
+                <button type="button" class="btn btn-primary btn-lg" ng-click="c.imgZoom(true)" ng-disabled="!c.pages.length || !c.currPage">
+                    <span class="glyphicon center glyphicon-minus"></span>
+                </button>
+            </div>
+
+            <div class="db-hdr-l2-item">
+                <input type="number" width="100px" ng-model="c.zoomLvl" min="{{c.imgZoomMin}}" max="{{c.imgZoomMax}}" required ng-disabled="!c.pages.length || !c.currPage">
+            </div>
+
+            <div class="db-hdr-l2-item">
+                <button type="button" class="btn btn-primary btn-lg" ng-click="c.imgZoom(false)" ng-disabled="!c.pages.length || !c.currPage">
+                    <span class="glyphicon center glyphicon-plus"></span>
+                </button>
+            </div>
+        </div>
+
     </div>
-    <div class="db-conf-att-img">
+
+    <div ng-show="c.loadingImg" class="db-spinner-cont">
         <span us-spinner spinner-on="c.loadingImg"></span>
-        <img ng-if="c.pageData && c.pageData.obj && c.pageData.obj.fileContents" ng-src="data:{{c.pageData.obj.contentType}};base64,{{c.pageData.obj.fileContents}}"
-            ng-class="{'bigger': c.bigger}">
     </div>
+
+    <div class="db-conf-att-img db-overflow">
+        <img ng-if="c.pageData && c.pageData.obj && c.pageData.obj.fileContents" ng-src="data:{{c.pageData.obj.contentType}};base64,{{c.pageData.obj.fileContents}}"
+            ng-attr-style="width: {{c.zoomLvl}}%">
+    </div>
+
 </div>

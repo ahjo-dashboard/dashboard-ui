@@ -166,13 +166,6 @@ angular.module('dashboard')
             setBlockMode((self.blockMode === CONST.BLOCKMODE.BOTH || self.blockMode === CONST.BLOCKMODE.UPPER) ? CONST.BLOCKMODE.LOWER : CONST.BLOCKMODE.BOTH);
         };
 
-        self.topicClicked = function () {
-            if (isMobile) {
-                StorageSrv.setKey(CONST.KEY.LISTPDF_DATA, self.tData);
-                $state.go(CONST.APPSTATE.TOPIC);
-            }
-        };
-
         self.attachmentClicked = function (attachment) {
             setLowerBlockMode(CONST.LOWERBLOCKMODE.ATTACHMENTS);
             if (isMobile) {

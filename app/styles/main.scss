@@ -23,11 +23,16 @@ $long-delay: 600ms;
 $default-delay: 400ms;
 $short-delay: 50ms;
 
+$appbgcolor: white;
+$font-color-body: #404040;
 $upper-color: #276aa5;
 $lower-color: white;
+$headingBgColor: $upper-color;
 
 $default-font-size: 1.2em;
 $tablist-tabborder-width: 2px;
+$list-bg-color: $appbgcolor;
+
 
 $btn-radius: 6px;
 $btn-prim-color-bg: rgb(51, 122, 183);
@@ -35,7 +40,6 @@ $btn-prim-color-active-bg: #276aa5;
 $btn-prim-height: 60px; // Height on XS resolution
 
 $header-leftmargin: 10px;
-$font-color-body: #404040;
 $font-color-header: white;
 $proposals-color: orange;
 $badge-font-color: $font-color-header;
@@ -68,9 +72,7 @@ body {
     $header-height: 60px; // this is for moving main content
     $button-height: 40px;
 
-    $appbgcolor: white;
     $focusedColor: #3e7ebe;
-    $headingBgColor: $upper-color;
     $headingL2BgColor: $appbgcolor;
     $borderColor: $focusedColor;
     background-color: $appbgcolor;
@@ -315,19 +317,14 @@ body {
 
     .db-tablist {
         button, a {
-            border-left-width: $tablist-tabborder-width;
-            border-right-width: $tablist-tabborder-width;
-            border-left-color: $btn-prim-color-active-bg;
-            border-right-color: $btn-prim-color-active-bg;
-            border-left-style: solid;
-            border-right-style: solid;
+            border-width: 0 $tablist-tabborder-width;
+            border-color: $btn-prim-color-active-bg;
+            border-style: solid;
         }
 
         button:first-child, a:first-child { border-radius: 0px; }
         button:last-child, a:last-child {
-            border-bottom-color: $btn-prim-color-active-bg;
             border-bottom-width: $tablist-tabborder-width;
-            border-bottom-style: solid;
             border-bottom-left-radius: $btn-radius;
             border-bottom-right-radius: $btn-radius;
         }
@@ -336,26 +333,30 @@ body {
     .db-attlist {
         margin: 1vh 1vw;
 
-        button, a {
+        li {
             width: 100%;
             border-style: solid;
-            border-left-width: $tablist-tabborder-width;
-            border-right-width: $tablist-tabborder-width;
-            border-bottom-width: $tablist-tabborder-width;
+            border-width: $tablist-tabborder-width $tablist-tabborder-width 0 $tablist-tabborder-width;
             border-color: $btn-prim-color-active-bg;
             border-radius: 0;
+            color: $font-color-body;
+            background-color: $list-bg-color;
         }
 
-        button:first-child, a:first-child {
-            border-top-width: $tablist-tabborder-width;
+        li:first-child {
             border-top-left-radius: $btn-radius;
             border-top-right-radius: $btn-radius;
             }
 
-        button:last-child, a:last-child {
-            border-bottom-left-radius: $btn-radius;
+        li:last-child {
             border-bottom-width: $tablist-tabborder-width;
+            border-bottom-left-radius: $btn-radius;
             border-bottom-right-radius: $btn-radius;
+        }
+
+        button, a {
+            color: $font-color-body;
+            background-color: $list-bg-color;
         }
     }
 
@@ -580,9 +581,7 @@ body {
 
     .ad-flex-item {
         flex: 14;
-
-        overflow-x: hidden;
-        overflow-y: auto;
+        overflow: hidden;
     }
 
     .db-item-border {
@@ -883,20 +882,16 @@ body {
     text-align: left;
 }
 
+.db-overflow {
+    overflow: auto !important;
+}
+
 .db-conf-att {
-
     background-color: white;
-    overflow: scroll;
 
-    .row {
-        // display: -webkit-flex !important;
-        // -webkit-justify-content: center !important;
-        // -webkit-align-items: flex-start !important;
-        display: flex !important;
-        flex-direction: row !important;
-        justify-content: center !important;
-        align-items: center !important;
-    }
+    flex: 1;
+    display: flex;
+    flex-direction: column;
 
     .pagination {
         margin: 5px 0px;
@@ -908,24 +903,74 @@ body {
     }
 
     input[type="number"] {
-        width: 100px;
-        margin: 0 20px;
+        width: 4.5em;
+        margin: 0;
     }
 
     .db-conf-att-img {
-        position: relative; // Otherwise spinner is out of parent
-        min-height: 30vh; // Because of spinner
-
-        .bigger {
-            width: 150vw;
-            height: auto;
-        }
-
-        img {
-            width: 100%;
-            height: auto;
+        flex: 1;
+        overflow: auto;
+       .bigger {
+            width: 200vw;
         }
     }
+
+}
+
+.db-spinner-cont {
+    position: relative; // us-spinner requires this, otherwise is placed outside parent.
+    flex: 1; // Or use min-height to have spinner displayed
+}
+
+.db-hdr-l2 {
+    padding: 1vh $header-leftmargin;
+    min-height: 50px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: $headingBgColor;
+    color: $font-color-header;
+    input {
+        color: black;
+    }
+}
+
+.db-hdr-l2-grp {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+
+    $hdr-l2-item-padding: 0.5vw;
+    margin: 0 2vw 0 0;
+
+    .db-hdr-l2-item { margin: 0 $hdr-l2-item-padding 0 0; }
+    .db-hdr-l2-item:last-child { margin-right: 0; }
+}
+
+.db-hdr-l2-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+
+.db-flex {
+    display: flex;
+}
+
+.db-flex-align-item-end {
+    align-self: flex-end;
+}
+
+.db-flex-nowrap {
+    flex-wrap: nowrap;
+}
+
+.db-flex-wrap {
+    flex-wrap: wrap;
 }
 
 @import "main.small.scss";

@@ -12,7 +12,7 @@
 * Service in the dashboard.
 */
 angular.module('dashboard')
-    .factory('Utils', function ($log, $window) {
+    .factory('Utils', function ($log, $window, CONST, AttachmentData) {
         var Utils = {};
 
         Utils.isResoXs = function (argUa) {
@@ -69,5 +69,10 @@ angular.module('dashboard')
             // $$log.debug("Utils.isClientMobile: " + res);
             return res;
         };
+
+        Utils.isAttConf = function (att) {
+            return (att instanceof AttachmentData) && att.publicity === CONST.PUBLICITY.SECRET;
+        };
+
         return Utils;
     });

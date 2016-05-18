@@ -85,17 +85,17 @@ angular.module('dashboard')
                         'childContent': {
                             templateUrl: 'views/list.html',
                             controller: 'listCtrl',
-                            controllerAs: 'ctrl'
+                            controllerAs: 'c'
                         }
                     }
                 })
-                .state(CONST.APPSTATE.LISTATTACHMENT, {
+                .state(CONST.APPSTATE.MTG_LIST_ATTACHMENT, {
                     url: '/attachment',
                     views: {
                         'listContent': {
                             templateUrl: 'views/attachment.html',
-                            controller: 'attachmentCtrl',
-                            controllerAs: 'ctrl'
+                            controller: 'attCtrl',
+                            controllerAs: 'c'
                         }
                     }
                 })
@@ -151,7 +151,7 @@ angular.module('dashboard')
                         'childContent': {
                             templateUrl: 'views/list.html',
                             controller: 'listCtrl',
-                            controllerAs: 'ctrl'
+                            controllerAs: 'c'
                         }
                     }
                 });

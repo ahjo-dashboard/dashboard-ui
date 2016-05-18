@@ -15,13 +15,15 @@ app.directive('dbImgviewer', function () {
 
     var controller = ['$log', '$q', '$http', '$scope', function ($log, $q, $http, $scope) {
         $log.debug("dbImgviewer.controller");
-
         var self = this;
-        self.bigger = false;
         self.pages = [];
         self.loadingImg = false;
         self.currPage = 0;
         self.pageData = {};
+        self.zoomLvl = 100;
+        self.imgZoomMax = 1000;
+        self.imgZoomMin = 1;
+        self.zoomStep = 10;
 
         self.imgEvent = function (data) {
             $log.debug("dbImgviewer.imgEvent: result=" + data.status);
@@ -107,11 +109,12 @@ app.directive('dbImgviewer', function () {
         self.pageChanged = function (page) {
             $log.debug("dbImgviewer.pageChanged: " + page);
 
-            if (!angular.isNumber(page) || ((page - 1) < 0 || ((page - 1) > self.pages.length))) {
+            if (!angular.isNumber(page) || (page < 1) || (page > self.pages.length)) {
                 $log.error("dbImgviewer.pageChanged: bad argument, ignored");
                 return;
             }
 
+            self.currPage = page;
             self.pageData = self.pages[page - 1];
             var p = self.pageData;
 
@@ -124,6 +127,14 @@ app.directive('dbImgviewer', function () {
                 }).finally(function () {
                     self.loadingImg = false;
                 });
+            }
+        };
+
+        // aInc: true if zoom level should be decreased i.e. zoomed in
+        self.imgZoom = function (aInc) {
+            var tmp = aInc ? self.zoomLvl - self.zoomStep : self.zoomLvl + self.zoomStep;
+            if (tmp <= self.imgZoomMax && tmp >= self.imgZoomMin) {
+                self.zoomLvl = tmp;
             }
         };
 

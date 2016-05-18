@@ -2,11 +2,11 @@
 
     <div class="ad-page-header db-center">
         <i class="glyphicon glyphicon-menu-left" aria-hidden="true" ng-click="goBack()"></i>
-        <h4 translate translate-cloak>{{ctrl.data.title}}</h4>
+        <h4 translate translate-cloak>{{c.att.title}}</h4>
     </div>
 
-    <div class="ad-page-content">
-        <db-pdf ng-attr-uri="ctrl.data.link"></db-pdf>
+    <div class="ad-page-content db-flex">
+        <db-imgviewer ng-if="c.att" file-conf="c.att"></db-imgviewer>
     </div>
 
 </div>
