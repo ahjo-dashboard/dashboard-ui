@@ -70,6 +70,10 @@
             </button>
         </div>
 
+        <div class="btn-group">
+            <button type="button" class="btn db-btn-prim db-hdr-btn-md" ng-click="ctrl.remarkClicked()" translate translate-cloak>STR_REMARK</button>
+        </div>
+
     </div>
 
     <div ng-if="isMobile" class="ad-page-header db-center">
@@ -100,8 +104,8 @@
                     ng-attr-uri="ctrl.lowerUrl" ng-attr-size="ctrl.lowerSize"></db-pdf>
                 <db-imgviewer ng-if="(ctrl.lbm === ctrl.lbms.ATTACHMENTS || ctrl.lbm === ctrl.lbms.MATERIALS) && ctrl.isSecret(ctrl.lowerAtt)"
                     file-conf="ctrl.lowerAtt"></db-imgviewer>
-                <db-remark ng-if="ctrl.lbm === ctrl.lbms.REMARK" topic="ctrl.topic"></db-remark>
-                <db-proposal-list ng-if="ctrl.lbm === ctrl.lbms.PROPOSALS" topic="ctrl.topic"></db-proposal-list>
+                <db-remark ng-if="ctrl.lbm === ctrl.lbms.REMARK" topic="ctrl.topic" class="db-overflow"></db-remark>
+                <db-proposal-list ng-if="ctrl.lbm === ctrl.lbms.PROPOSALS" topic="ctrl.topic" class="db-overflow"></db-proposal-list>
             </div>
 
 
