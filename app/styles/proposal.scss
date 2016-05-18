@@ -11,10 +11,6 @@ $btn-radius: 6px;
 .proposal-list {
     width: 100%;
 
-    h1, h2, h3, h4, h5 {
-        color: $font-color;
-    }
-
     span.glyphicon {
         font-size: 1.0em !important;
     }
@@ -25,6 +21,10 @@ $btn-radius: 6px;
 
     .prop-header {
         background-color: #4591d3;
+
+        h1, h2, h3, h4, h5 {
+            color: $font-color;
+        }
     }
 
     .prop-button {
