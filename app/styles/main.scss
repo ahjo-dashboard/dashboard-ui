@@ -179,6 +179,10 @@ body {
         }
     }
 
+    .db-no-margin {
+        margin: 0 !important;
+    }
+
     .db-label {
         @extend .label;
     }
