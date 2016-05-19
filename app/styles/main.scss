@@ -895,7 +895,8 @@ body {
     text-overflow: ellipsis;
 }
 
-.tooltip.db-topic-tooltip .tooltip-inner {
+// Tooltip class had to be defined like this, otherwise didn't take effect
+.tooltip.db-tooltip .tooltip-inner {
     text-align: left;
 }
 

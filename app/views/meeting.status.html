@@ -65,7 +65,7 @@
                 <button db-confirm confirm-enabled="msc.hasUnsavedProposal || msc.remarkIsUnsaved" confirm-config="msc.unsavedConfig" type="button"
                     class="btn btn-default ad-button ad-topic-button db-btn-agenda ng-class:[{'active': (msc.isSelected(topic) && !msc.isMobile)}]"
                     ng-click="msc.topicSelected(topic)" tooltip-enable="isTooltips" uib-tooltip-template="'topicTooltipTpl.html'"
-                    tooltip-class="db-topic-tooltip" tooltip-placement="top-left">
+                    tooltip-class="db-tooltip" tooltip-placement="top-left">
                     {{topic.topicreference}}
                     {{topic.topicTitle}}
                 </button>
