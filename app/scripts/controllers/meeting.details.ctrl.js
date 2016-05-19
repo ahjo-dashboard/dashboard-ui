@@ -26,6 +26,7 @@ angular.module('dashboard')
         self.header = '';
         $rootScope.menu = CONST.MENU.FULL;
         self.hide = false;
+        self.noContent = 'no.content.html';
 
         self.tData = null;
         self.aData = null;

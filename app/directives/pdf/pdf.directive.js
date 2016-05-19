@@ -16,7 +16,8 @@ angular.module('dashboard')
             scope: {
                 uri: '=',
                 hide: '=',
-                size: '='
+                size: '=',
+                noContent: '='
             },
             templateUrl: 'directives/pdf/pdf.Directive.html',
             restrict: 'AE',
@@ -47,12 +48,14 @@ angular.module('dashboard')
                     function () {
                         return { uri: scope.uri };
                     },
-                    function () {
+                    function (data) {
+                        var newSrc = (scope.noContent ? scope.noContent : null);
                         var src = element.attr(SRC);
-                        var newSrc = null;
-                        if (angular.isString(scope.uri) && scope.uri.length) {
+
+                        if (angular.isObject(data) && angular.isString(data.uri) && data.uri.length) {
                             newSrc = scope.uri + paramSeparator(scope.uri) + params;
                         }
+
                         if (src !== newSrc) {
                             element.attr(SRC, newSrc);
                             show();
@@ -80,7 +83,7 @@ angular.module('dashboard')
 
                 scope.$watch(
                     function () {
-                        return  scope.size;
+                        return scope.size;
                     },
                     function (size) {
                         if (angular.isObject(size)) {
