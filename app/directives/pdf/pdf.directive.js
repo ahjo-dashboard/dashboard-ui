@@ -11,21 +11,28 @@
  * # pdfDirective
  */
 angular.module('dashboard')
-    .directive('dbPdf', ['$rootScope', 'CONST', '$log', function ($rootScope, CONST, $log) {
+    .directive('dbPdf', ['$rootScope', 'CONST', '$log', '$timeout', function ($rootScope, CONST, $log, $timeout) {
         return {
             scope: {
                 uri: '=',
                 hide: '=',
-                size: '=',
-                noContent: '='
+                size: '='
             },
-            templateUrl: 'directives/pdf/pdf.Directive.html',
+            template: '<iframe></iframe>',
             restrict: 'AE',
             replace: 'true',
             link: function (scope, element/*, attrs*/) {
+
+                var doc = (element[0].contentWindow || element[0].contentDocument);
+                if (doc.document) {
+                    doc = doc.document;
+                }
+
                 var SRC = 'src';
                 var params = "secondary=false&amp;mixed=false#view=FitH&amp;toolbar=0&amp;statusbar=0&amp;messages=0&amp;navpanes=0";
                 var isIe = $rootScope.isIe;
+                var noContentUri = 'no.content.html';
+                var loadingUri = 'loading.html';
 
                 function paramSeparator(uri) {
                     if (angular.isString(uri)) {
@@ -49,16 +56,21 @@ angular.module('dashboard')
                         return { uri: scope.uri };
                     },
                     function (data) {
-                        var newSrc = (scope.noContent ? scope.noContent : null);
-                        var src = element.attr(SRC);
+
+                        var body = angular.element(doc.body);
+                        body.empty();
+
+                        element.attr(SRC, loadingUri);
+                        show();
 
                         if (angular.isObject(data) && angular.isString(data.uri) && data.uri.length) {
-                            newSrc = scope.uri + paramSeparator(scope.uri) + params;
+                            $timeout(function () {
+                                var newSrc = scope.uri + paramSeparator(scope.uri) + params;
+                                element.attr(SRC, newSrc);
+                            }, 500);
                         }
-
-                        if (src !== newSrc) {
-                            element.attr(SRC, newSrc);
-                            show();
+                        else {
+                            element.attr(SRC, noContentUri);
                         }
                     },
                     true

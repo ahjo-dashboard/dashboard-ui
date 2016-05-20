@@ -66,6 +66,17 @@ iframe {
     flex: 1;
 }
 
+.loading {
+    background: url('../images/loading.gif') no-repeat 50% 50%;
+}
+
+.no-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
 html { height: 100%; }
 
 body {
