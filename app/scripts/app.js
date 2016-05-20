@@ -72,8 +72,8 @@ angular.module('dashboard', [
         $httpProvider.defaults.withCredentials = true;
 
         $uibTooltipProvider.options({
-            // popupCloseDelay: 500,
-            popupDelay: 700
+            popupDelay: 1700,
+            appendToBody: true // Otherwise tooltip is under some elements
         });
     })
     .run(function ($rootScope, $log, $window, CONST, ENV, $state, $timeout, $translate, Utils, StorageSrv, ngToast) {
