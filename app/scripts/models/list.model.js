@@ -12,69 +12,55 @@
 * Model in the dashboard.
 */
 angular.module('dashboard')
-    .factory('ListData', ['AttachmentData', '$log', 'ENV', function(AttachmentData, $log, ENV) {
+    .factory('ListData', ['AttachmentData', '$log', 'ENV', function (AttachmentData, $log, ENV) {
 
         function ListData(title, objects) {
             this.title = title;
             this.objects = objects;
         }
 
-        ListData.createAttachmentList = function(title, attachmentArray) {
-            if (typeof title === 'string') {
-                var array = [];
-                for (var index = 0; (attachmentArray instanceof Array) && (index < attachmentArray.length); index++) {
-                    var element = attachmentArray[index];
-                    var item = AttachmentData.create(element.attachmentTitle, element.link, element.publicity, element.buttonType, element.number, element.pageCount);
-                    if (item) {
-                        array.push(item);
-                    }
+        ListData.createAttachmentList = function (title, attachmentArray) {
+            var array = [];
+            angular.forEach(attachmentArray, function (element) {
+                var item = AttachmentData.create(element.attachmentTitle, element.link, element.publicity, element.buttonType, element.number, element.pageCount);
+                if (angular.isObject(item)) {
+                    this.push(item);
                 }
-                return new ListData(title, array);
-            }
-            $log.error('ListData.createAttachmentList: missing title');
+            }, array);
 
-            return null;
+            return new ListData(title, array);
+
         };
 
-        ListData.createDecisionList = function(title, decisionArray) {
-            if (typeof title === 'string') {
-                var array = [];
-                for (var index = 0; (decisionArray instanceof Array) && (index < decisionArray.length); index++) {
-                    var element = decisionArray[index];
-                    var item = AttachmentData.create(element.decisionTitle, element.link, element.publicity, element.buttonType, element.number, element.pageCount);
-                    if (item) {
-                        array.push(item);
-                    }
+        ListData.createDecisionList = function (title, decisionArray) {
+            var array = [];
+            angular.forEach(decisionArray, function (element) {
+                var item = AttachmentData.create(element.decisionTitle, element.link, element.publicity, element.buttonType, element.number, element.pageCount);
+                if (angular.isObject(item)) {
+                    this.push(item);
                 }
-                return new ListData(title, array);
-            }
-            $log.error('ListData.createDecisionList: missing title');
+            }, array);
 
-            return null;
+            return new ListData(title, array);
         };
 
-        ListData.createAdditionalMaterialList = function(title, materialArray) {
-            if (typeof title === 'string') {
-                var array = [];
-                for (var index = 0; (materialArray instanceof Array) && (index < materialArray.length); index++) {
-                    var element = materialArray[index];
-                    var item = AttachmentData.create(element.additionalMaterialTitle, element.link, element.publicity, element.buttonType, element.number, element.pageCount);
-                    if (item) {
-                        array.push(item);
-                    }
+        ListData.createAdditionalMaterialList = function (title, materialArray) {
+            var array = [];
+            angular.forEach(materialArray, function (element) {
+                var item = AttachmentData.create(element.additionalMaterialTitle, element.link, element.publicity, element.buttonType, element.number, element.pageCount);
+                if (angular.isObject(item)) {
+                    this.push(item);
                 }
-                return new ListData(title, array);
-            }
-            $log.error('ListData.createAdditionalMaterialList: missing title');
+            }, array);
 
-            return null;
+            return new ListData(title, array);
         };
 
         function resolveAttUrl(item, att) {
             return angular.isObject(item) && angular.isObject(att) ? ENV.SIGNAPIURL_ATT.replace(":reqGuid", item.ProcessGuid).replace(":attGuid", att.Id) : undefined;
         }
 
-        ListData.createEsignAttachmentList = function(title, argArr, signItem) {
+        ListData.createEsignAttachmentList = function (title, argArr, signItem) {
             var array = [];
             if (angular.isString(title) && angular.isArray(argArr)) {
                 for (var i = 0; (i < argArr.length); i++) {
