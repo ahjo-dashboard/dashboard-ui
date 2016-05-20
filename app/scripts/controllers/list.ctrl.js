@@ -12,7 +12,18 @@ angular.module('dashboard')
         $log.debug("listCtrl: CONTROLLER");
         var self = this;
         self.data = StorageSrv.getKey(CONST.KEY.SELECTION_DATA);
+        self.topicTitle = null;
         self.isAttConf = Utils.isAttConf;
+
+        if (angular.isObject(self.data)) {
+            angular.forEach(self.data.objects, function (value) {
+                if (angular.isObject(value)) {
+                    if (angular.isString(value.topicTitle)) {
+                        self.topicTitle = value.topicTitle;
+                    }
+                }
+            }, this);
+        }
 
         // att: AttachmentData
         self.goToFile = function (att) {

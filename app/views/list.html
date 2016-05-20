@@ -8,10 +8,11 @@
     </div>
 
     <div class="ad-page-content">
+        <h5 class="db-title" ng-cloak>{{c.topicTitle}}</h5>
         <div class="ad-mob-page-container">
             <ul class="list-group db-attlist">
 
-                <li ng-repeat="i in c.data.objects track by $index">
+                <li ng-if="!i.topicTitle" ng-repeat="i in c.data.objects track by $index">
                     <db-link ng-if="!c.isAttConf(i)" ng-attr-config="{ title: i.orderNum + '&nbsp;' + i.title, class:'list-group-item' }" ng-attr-uri="i.link">
                     </db-link>
 

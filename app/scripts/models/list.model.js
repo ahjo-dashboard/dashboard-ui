@@ -12,23 +12,30 @@
 * Model in the dashboard.
 */
 angular.module('dashboard')
-    .factory('ListData', ['AttachmentData', '$log', 'ENV', function(AttachmentData, $log, ENV) {
+    .factory('ListData', ['AttachmentData', '$log', 'ENV', function (AttachmentData, $log, ENV) {
 
         function ListData(title, objects) {
             this.title = title;
             this.objects = objects;
         }
 
-        ListData.createAttachmentList = function(title, attachmentArray) {
-            if (typeof title === 'string') {
+        ListData.createAttachmentList = function (title, attachmentArray) {
+            if (angular.isString(title)) {
                 var array = [];
-                for (var index = 0; (attachmentArray instanceof Array) && (index < attachmentArray.length); index++) {
-                    var element = attachmentArray[index];
-                    var item = AttachmentData.create(element.attachmentTitle, element.link, element.publicity, element.buttonType, element.number, element.pageCount);
-                    if (item) {
-                        array.push(item);
+                angular.forEach(attachmentArray, function (element) {
+                    if (angular.isObject(element)) {
+                        if (angular.isString(element.topicTitle)) {
+                            this.push(element);
+                        }
+                        else if (angular.isString(element.attachmentGuid)) {
+                            var item = AttachmentData.create(element.attachmentTitle, element.link, element.publicity, element.buttonType, element.number, element.pageCount);
+                            if (angular.isObject(item)) {
+                                this.push(item);
+                            }
+                        }
                     }
-                }
+                }, array);
+
                 return new ListData(title, array);
             }
             $log.error('ListData.createAttachmentList: missing title');
@@ -36,7 +43,7 @@ angular.module('dashboard')
             return null;
         };
 
-        ListData.createDecisionList = function(title, decisionArray) {
+        ListData.createDecisionList = function (title, decisionArray) {
             if (typeof title === 'string') {
                 var array = [];
                 for (var index = 0; (decisionArray instanceof Array) && (index < decisionArray.length); index++) {
@@ -53,7 +60,7 @@ angular.module('dashboard')
             return null;
         };
 
-        ListData.createAdditionalMaterialList = function(title, materialArray) {
+        ListData.createAdditionalMaterialList = function (title, materialArray) {
             if (typeof title === 'string') {
                 var array = [];
                 for (var index = 0; (materialArray instanceof Array) && (index < materialArray.length); index++) {
@@ -74,7 +81,7 @@ angular.module('dashboard')
             return angular.isObject(item) && angular.isObject(att) ? ENV.SIGNAPIURL_ATT.replace(":reqGuid", item.ProcessGuid).replace(":attGuid", att.Id) : undefined;
         }
 
-        ListData.createEsignAttachmentList = function(title, argArr, signItem) {
+        ListData.createEsignAttachmentList = function (title, argArr, signItem) {
             var array = [];
             if (angular.isString(title) && angular.isArray(argArr)) {
                 for (var i = 0; (i < argArr.length); i++) {

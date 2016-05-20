@@ -178,6 +178,10 @@ angular.module('dashboard')
 
                 self.upperUrl = (self.tData && self.tData.link) ? self.tData.link : {};
 
+                if (angular.isArray(topic.attachment) && topic.attachment.length) {
+                    topic.attachment.push({ 'topicTitle': topic.topicTitle });
+                }
+
                 self.aData = ListData.createAttachmentList('STR_ATTACHMENTS', topic.attachment);
                 self.dData = ListData.createDecisionList('STR_DECISION_HISTORY', topic.decision);
                 self.amData = ListData.createAdditionalMaterialList('STR_ADDITIONAL_MATERIAL', topic.additionalMaterial);
