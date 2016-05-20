@@ -105,8 +105,8 @@
                     ng-attr-uri="ctrl.lowerUrl" ng-attr-size="ctrl.lowerSize" ng-attr-no-content="ctrl.noContent"></db-pdf>
                 <db-imgviewer ng-if="(ctrl.lbm === ctrl.lbms.ATTACHMENTS || ctrl.lbm === ctrl.lbms.MATERIALS) && ctrl.isSecret(ctrl.lowerAtt)"
                     file-conf="ctrl.lowerAtt"></db-imgviewer>
-                <db-remark ng-if="ctrl.lbm === ctrl.lbms.REMARK" topic="ctrl.topic" class="db-overflow"></db-remark>
-                <db-proposal-list ng-if="ctrl.lbm === ctrl.lbms.PROPOSALS" topic="ctrl.topic" class="db-overflow"></db-proposal-list>
+                <db-remark ng-if="ctrl.lbm === ctrl.lbms.REMARK" topic="ctrl.topic"></db-remark>
+                <db-proposal-list ng-if="ctrl.lbm === ctrl.lbms.PROPOSALS" topic="ctrl.topic"></db-proposal-list>
             </div>
 
 
