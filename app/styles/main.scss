@@ -66,6 +66,20 @@ iframe {
     flex: 1;
 }
 
+.no-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.db-dir {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
 html { height: 100%; }
 
 body {
@@ -612,6 +626,7 @@ body {
     .ad-flex-item-upper {
         @extend .ad-flex-item;
         display: flex;
+        flex-direction: column;
     }
 
     .ad-flex-item-upper.ad-flex-show-full {

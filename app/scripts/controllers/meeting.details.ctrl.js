@@ -26,7 +26,6 @@ angular.module('dashboard')
         self.header = '';
         $rootScope.menu = CONST.MENU.FULL;
         self.hide = false;
-        self.noContent = 'no.content.html';
 
         self.tData = null;
         self.aData = null;
@@ -37,9 +36,6 @@ angular.module('dashboard')
         self.lowerId = 'mtg-lower-block';
         self.upperClasses = null;
         self.lowerClasses = null;
-
-        self.upperSize = undefined;
-        self.lowerSize = undefined;
 
         self.upperBtnCls = null;
         self.lowerBtnCls = null;
@@ -58,7 +54,6 @@ angular.module('dashboard')
         var attachmentDropdownOpen = false;
         var materialsDropdownOpen = false;
         var isIe = $rootScope.isIe;
-        var isEdge = $rootScope.isEdge;
 
         function countProposals(proposals) {
             var published = 0;
@@ -315,27 +310,6 @@ angular.module('dashboard')
                 setData(topic);
             }
         });
-
-        function setSize(data) {
-            if (angular.isObject(data) && angular.isObject(data.element)) {
-                if (data.element.attr(CONST.ID) === self.upperId && angular.isObject(data.size)) {
-                    self.upperSize = data.size;
-                }
-                else if (data.element.attr(CONST.ID) === self.lowerId && angular.isObject(data.size)) {
-                    self.lowerSize = data.size;
-                }
-            }
-        }
-
-        if (isIe || isEdge) {
-            $scope.sizeWhenReady = function (data) {
-                setSize(data);
-            };
-
-            $scope.sizeChangedByClass = function (data) {
-                setSize(data);
-            };
-        }
 
         var proposalCountWatcher = $rootScope.$on(PROPS.COUNT, function (event, data) {
             self.propCount = null;
