@@ -178,9 +178,9 @@ angular.module('dashboard')
 
                 self.upperUrl = (self.tData && self.tData.link) ? self.tData.link : {};
 
-                self.aData = ListData.createAttachmentList('STR_ATTACHMENTS', topic.attachment);
-                self.dData = ListData.createDecisionList('STR_DECISION_HISTORY', topic.decision);
-                self.amData = ListData.createAdditionalMaterialList('STR_ADDITIONAL_MATERIAL', topic.additionalMaterial);
+                self.aData = ListData.createAttachmentList({ 'header': 'STR_ATTACHMENTS', 'title': topic.topicTitle }, topic.attachment);
+                self.dData = ListData.createDecisionList({ 'header': 'STR_DECISION_HISTORY', 'title': topic.topicTitle }, topic.decision);
+                self.amData = ListData.createAdditionalMaterialList({ 'header': 'STR_ADDITIONAL_MATERIAL', 'title': topic.topicTitle }, topic.additionalMaterial);
 
                 if (isMobile) {
                     getProposals(topic.topicGuid);
