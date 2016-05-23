@@ -28,10 +28,7 @@ angular.module('dashboard')
                 element.addClass('db-dir');
 
                 function paramSeparator(uri) {
-                    if (angular.isString(uri)) {
-                        return CONST.NOTFOUND === uri.indexOf('?') ? '?' : '&';
-                    }
-                    return true;
+                    return angular.isString(uri) && (CONST.NOTFOUND !== uri.indexOf('?')) ? '&' : '?';
                 }
 
                 function hide() {
