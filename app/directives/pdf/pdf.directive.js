@@ -11,21 +11,21 @@
  * # pdfDirective
  */
 angular.module('dashboard')
-    .directive('dbPdf', ['$rootScope', 'CONST', '$log', function ($rootScope, CONST, $log) {
+    .directive('dbPdf', ['$rootScope', 'CONST', '$log', '$compile', function ($rootScope, CONST, $log, $compile) {
         return {
             scope: {
                 uri: '=',
-                hide: '=',
-                size: '=',
-                noContent: '='
+                hide: '='
             },
-            templateUrl: 'directives/pdf/pdf.Directive.html',
+            template: '<div></div>',
             restrict: 'AE',
             replace: 'true',
             link: function (scope, element/*, attrs*/) {
-                var SRC = 'src';
+
                 var params = "secondary=false&amp;mixed=false#view=FitH&amp;toolbar=0&amp;statusbar=0&amp;messages=0&amp;navpanes=0";
                 var isIe = $rootScope.isIe;
+                var noContentUri = 'no.content.html';
+                element.addClass('db-dir');
 
                 function paramSeparator(uri) {
                     if (angular.isString(uri)) {
@@ -49,17 +49,13 @@ angular.module('dashboard')
                         return { uri: scope.uri };
                     },
                     function (data) {
-                        var newSrc = (scope.noContent ? scope.noContent : null);
-                        var src = element.attr(SRC);
-
+                        element.empty();
+                        var content = '<iframe src="' + noContentUri + '"></iframe>';
                         if (angular.isObject(data) && angular.isString(data.uri) && data.uri.length) {
-                            newSrc = scope.uri + paramSeparator(scope.uri) + params;
+                            content = '<iframe src="' + data.uri + paramSeparator(data.uri) + params + '"></iframe>';
                         }
-
-                        if (src !== newSrc) {
-                            element.attr(SRC, newSrc);
-                            show();
-                        }
+                        element.append($compile(content)(scope));
+                        show();
                     },
                     true
                 );
@@ -76,20 +72,6 @@ angular.module('dashboard')
                             else {
                                 show();
                             }
-                        }
-                    },
-                    true
-                );
-
-                scope.$watch(
-                    function () {
-                        return scope.size;
-                    },
-                    function (size) {
-                        if (angular.isObject(size)) {
-                            element.css('height', size.height);
-                            element.css('width', size.width);
-                            $log.log('dbPdf size changed: height = ' + size.height + ', width = ' + size.width);
                         }
                     },
                     true
