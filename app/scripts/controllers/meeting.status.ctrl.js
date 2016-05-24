@@ -17,6 +17,7 @@ angular.module('dashboard')
         var self = this;
         $rootScope.menu = $stateParams.menu;
         self.title = 'MOBILE TITLE';
+        self.uiName = null;
         self.meeting = null;
         self.chairman = false;
         self.loading = true;
@@ -138,6 +139,7 @@ angular.module('dashboard')
         }
 
         if (meetingItem) {
+            self.uiName = meetingItem.agencyName + ' ' + meetingItem.name;
             self.meeting = null;
             selectedTopicGuid = null;
             StorageSrv.deleteKey(CONST.KEY.TOPIC);
@@ -160,11 +162,13 @@ angular.module('dashboard')
                             }
                         }, this);
 
-                        lastEventId = self.meeting.lastEventId; // 19734, 20281;
+                        lastEventId = self.meeting.lastEventId;
                         $timeout.cancel(pollingTimer);
                         pollingTimer = $timeout(function () {
                             getEvents();
                         }, CONST.POLLINGTIMEOUT);
+
+                        self.uiName = self.meeting.meetingTitle;
                     }
                 }
             }, function (error) {

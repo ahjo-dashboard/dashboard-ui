@@ -18,8 +18,8 @@
 
     <div class="ad-page-content">
 
-        <button ng-if="!msc.isMobile" type="button" class="btn db-btn-prim btn-lg disabled ad-dummy-button">{{msc.meeting.meetingTitle}}</button>
-        <h5 ng-if="msc.isMobile" class="db-title" ng-cloak>{{msc.meeting.meetingTitle}}</h5>
+        <button ng-if="!msc.isMobile" type="button" class="btn db-btn-prim btn-lg disabled ad-dummy-button">{{msc.uiName}}</button>
+        <h5 ng-if="msc.isMobile" class="db-title" ng-cloak>{{msc.uiName}}</h5>
 
         <button id="statusButton" type="button" class="db-nopadding btn db-btn-prim btn-lg ad-button text-center ng-class:[{'disabled': !msc.chairman},{'ad-dummy-button': !msc.chairman}]"
             uib-dropdown-toggle>
