@@ -1,28 +1,23 @@
-<div class="remark db-overflow">
+<div class="remark db-dir">
+    <div class="rmk-header">
+        <h4 class="rmk-header-text" translate translate-cloak>STR_REMARK</h4>
+    </div>
 
-    <div class="col-xs-12 db-nopadding">
-        <ul class="list-group">
-            <div class="list-group-item rmk-header">
-                <div class="row">
-                    <div class="col-xs-9 col-sm-9 col-md-10 col-lg-11">
-                        <h4 class="rmk-header-text" translate translate-cloak>STR_REMARK</h4>
-                    </div>
-                    <div class="col-xs-3 col-sm-3 col-md-2 col-lg-1">
-                        <div class="rmk-header-button btn-group">
-                            <button class="btn db-btn-prim btn-sm" ng-click="c.clicked(true)" ng-disabled="c.loading || !c.isUnsaved" uib-tooltip="{{'STR_SAVE' | translate}}"
-                                tooltip-placement="bottom"><span class="glyphicon glyphicon-ok"></span></button>
-                            <button class="btn db-btn-warn btn-sm" ng-click="c.clicked(false)" ng-disabled="c.loading || !c.isUnsaved" uib-tooltip="{{'STR_CANCEL' | translate}}"
-                                tooltip-placement="bottom"><span class="glyphicon glyphicon-remove"></span></button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <div ng-if="c.remark" class="rmk-text" contenteditable="true" auto-focus ng-model="c.editorText" ng-change="c.changed()"></div>
 
-            <div class="list-group-item">
-                <span us-spinner="{radius:5, width:2, length:4}" spinner-on="c.loading"></span>
-                <div ng-if="c.remark" class="prop-text" contenteditable="true" auto-focus ng-model="c.editorText" ng-change="c.changed()"></div>
-            </div>
-        </ul>
+    <div ng-if="!c.remark" class="rmk-text" style="display: flex; flex-direction: column">
+        <div class="rmk-spinner">
+            <span us-spinner="{radius:6, width:2, length:4}" spinner-on="true"></span>
+        </div>
+    </div>
+
+    <div class="rmk-footer">
+        <button class="btn db-btn-prim rmk-footer-button" ng-click="c.clicked(true)" ng-disabled="c.loading || !c.isUnsaved">
+            <span translate translate-cloak>STR_SAVE</span>
+        </button>
+        <button class="btn db-btn-warn rmk-footer-button" ng-click="c.clicked(false)" ng-disabled="c.loading || !c.isUnsaved">
+            <span translate translate-cloak>STR_CANCEL</span>
+        </button>
     </div>
 
 </div>
