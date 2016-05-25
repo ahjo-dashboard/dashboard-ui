@@ -9,6 +9,7 @@ $font-color: white;
 
 .remark {
     flex: 1;
+    background-color: lightblue;
 
     span.glyphicon {
         font-size: 1.0em !important;
@@ -26,30 +27,35 @@ $font-color: white;
         min-height: 40px;
         display: flex;
         align-items: center;
+        padding: 10px;
     }
 
-    .rmk-header-button {
+    .rmk-text {
+        overflow-x: hidden;
+        overflow-y: auto;
+        min-height: 2em;
+        margin: 4px;
+        padding: 4px;
+        flex: 1;
+        background-color: white;
+    }
+
+    .rmk-footer {
         min-height: 40px;
         display: flex;
-        align-items: center;
-        float: right;
+        justify-content: flex-end;
+        padding: 2px 4px 4px 4px;
     }
 
-    .list-group-item {
-        border-color: #4591d3;
+    .rmk-footer-button {
+        @extend .db-hdr-btn-md;
+        text-align: center !important;
+        margin: 2px;
     }
 
-    .list-group-item:first-child {
-        border-top-left-radius: 8px;
-        border-top-right-radius: 8px;
-    }
-
-    .list-group-item:last-child {
-        border-bottom-left-radius: 8px;
-        border-bottom-right-radius: 8px;
-    }
-
-    .btn-sm {
-        margin: 4px !important;
+    .rmk-spinner {
+        position: relative;
+        width: 100%;
+        flex: 1;
     }
 }
