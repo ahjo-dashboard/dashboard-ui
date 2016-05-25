@@ -238,6 +238,15 @@ angular.module('dashboard')
                 return (obj && obj.text) ? obj.text : value;
             };
 
+            self.itemClicked = function () {
+                if (self.mode === PROP.MODE.COLLAPSED) {
+                    setMode(PROP.MODE.OPEN);
+                }
+                else if (self.mode === PROP.MODE.OPEN) {
+                    setMode(PROP.MODE.COLLAPSED);
+                }
+            };
+
             self.act = function (action) {
                 switch (action) {
                     case PROP.BTN.CLOSE.action:
