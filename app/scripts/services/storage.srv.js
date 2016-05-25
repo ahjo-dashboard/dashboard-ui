@@ -57,8 +57,18 @@ angular.module('dashboard')
                     $log.error("StorageSrv: deleteKey invalid parameter");
                 }
             },
-            reset: function () {
-                data = {};
+            reset: function (excl) {
+                var newData = {};
+
+                for (var i = 0; angular.isArray(excl) && (i < excl.length); i++) {
+                    var tmpVal = data[excl[i]];
+                    if (angular.isDefined(tmpVal)) {
+                        newData[excl[i]] = tmpVal;
+                    }
+                }
+
+                data = newData;
+                // $log.debug("StorageSrv.reset: excl=" + JSON.stringify(excl) + " result: " + JSON.stringify(data));
             }
         };
     });

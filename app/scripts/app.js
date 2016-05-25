@@ -81,7 +81,7 @@ angular.module('dashboard', [
         $rootScope.$on('$stateChangeStart', function (event, next/*, toParams, fromParams*/) {
             $log.debug('app.stateChangeStart: ' + next.name);// +' toParams: ' +JSON.stringify(toParams) +' fromParams: ' +JSON.stringify(fromParams));
             if (next.name === CONST.APPSTATE.HOME) {
-                StorageSrv.reset();
+                StorageSrv.reset([CONST.KEY.SIGNING_RES, CONST.KEY.VISIBLE_MTGS]);
             }
         });
 
