@@ -816,8 +816,15 @@ body {
     }
 
     .ad-dropdown-content {
-        white-space: normal !important;
-        min-width: 25vw !important; // Value selected subjectively to not to squeeze long items to too many rows
+        white-space: nowrap;
+    }
+
+    .db-drop {
+        max-height: 70vh;
+        max-width: 45vw;
+        min-width: 25vw; // Min width needed to allow respDropd directive to calculate size in link phase
+        overflow-y: auto;
+        overflow-x: hidden;
     }
 
     .ad-btn-group-vertical {

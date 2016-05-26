@@ -133,8 +133,9 @@
                             <span class="badge ng-cloak">{{sc.attModel.objects.length}}</span>
                             <span class="caret"></span>
                         </button>
-                        <ul uib-dropdown-menu role="menu" aria-labelledby="btnAtt">
-                            <li role="menuitem" ng-repeat="a in sc.attModel.objects" ng-click="sc.actionAttachment(a)">
+                        <ul uib-dropdown-menu role="menu" aria-labelledby="btnAtt" class="db-drop" resp-dropd>
+                            <li role="menuitem" ng-repeat="a in sc.attModel.objects" ng-click="sc.actionAttachment(a)"
+                            uib-tooltip="{{a.title}}" tooltip-class="db-tooltip" tooltip-placement="top-left">
                                 <a class="ad-dropdown-content">{{a.title}}</a>
                             </li>
                         </ul>
