@@ -17,10 +17,18 @@ angular.module('dashboard')
             $log.log("dbRemark: CONTROLLER");
             var self = this;
             self.editorText = null;
+            var previousText = null;
             self.remark = null;
             self.topic = null;
             self.loading = false;
             self.isUnsaved = false;
+
+            function setUnsaved(unsaved) {
+                if (unsaved !== self.isUnsaved) {
+                    self.isUnsaved = unsaved;
+                    $rootScope.$emit(CONST.REMARKISUNSAVED, self.isUnsaved);
+                }
+            }
 
             function getRemark(guid) {
                 $log.debug("dbRemark: getRemark: " + guid);
@@ -60,8 +68,7 @@ angular.module('dashboard')
                     AhjoRemarkSrv.post(remark).$promise.then(function (response) {
                         $log.debug("dbRemark: post then: " + JSON.stringify(response));
                         $rootScope.successInfo('STR_SAVE_SUCCESS');
-                        self.isUnsaved = false;
-                        $rootScope.$emit(CONST.REMARKISUNSAVED, false);
+                        setUnsaved(false);
                         if (angular.isObject(response) && angular.isObject(response.objects)) {
                             self.remark = response.objects;
                             self.editorText = self.remark.text;
@@ -91,8 +98,7 @@ angular.module('dashboard')
                     }
                     else {
                         self.editorText = self.remark.text;
-                        self.isUnsaved = false;
-                        $rootScope.$emit(CONST.REMARKISUNSAVED, false);
+                        setUnsaved(false);
                     }
                 }
                 else {
@@ -103,17 +109,14 @@ angular.module('dashboard')
             self.changed = function () {
                 $log.debug("dbRemark: changed");
                 if (angular.isObject(self.remark)) {
-                    self.remark.text = angular.isString(self.remark.text) ? self.remark.text : '';
+                    previousText = angular.isString(previousText) ? previousText : '';
                     self.editorText = angular.isString(self.editorText) ? self.editorText : '';
-                    if (!angular.equals(self.editorText, self.remark.text)) {
-                        if (self.isUnsaved !== true) {
-                            self.isUnsaved = true;
-                            $rootScope.$emit(CONST.REMARKISUNSAVED, true);
-                        }
+                    if (previousText.length !== self.editorText.length) {
+                        previousText = self.editorText;
+                        setUnsaved(true);
                     }
                     else {
-                        self.isUnsaved = false;
-                        $rootScope.$emit(CONST.REMARKISUNSAVED, false);
+                        setUnsaved(false);
                     }
                 }
                 else {
@@ -128,6 +131,8 @@ angular.module('dashboard')
             }, function (data) {
                 if (angular.isObject(data) && angular.isObject(data.topic) && !angular.equals(data.topic, self.topic)) {
                     self.topic = data.topic;
+                    previousText = null;
+                    setUnsaved(false);
                     getRemark(data.topic.topicGuid);
                 }
             }, true);
