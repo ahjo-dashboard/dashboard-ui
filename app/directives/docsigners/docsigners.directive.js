@@ -38,6 +38,11 @@ angular.module('dashboard')
                 return s ? s.stringId : '';
             };
 
+            self.initiatorRoleStrId = function (docType) {
+                // Special case for request status list roles, initiator role doesn't have a role code
+                return docType && docType === CONST.ESIGNTYPE.OFFICIAL.value ? 'STR_SROLE_PREP' : CONST.ESIGNROLE.SEC.stringId;
+            };
+
             /* Resolve css class for signing status */
             self.statusStyle = function (status) {
                 var s = $rootScope.objWithVal(CONST.ESIGNSTATUS, 'value', status);

@@ -42,6 +42,7 @@
     "STR_CREATE_COMMENT": "Kommentoi",
     "STR_SIGNING_COMMENT_INFO": "Lähetä kommenttisi tähän sähköpostiosoitteeseen (kopioi osoite tarvittaessa):",
     "STR_SIGNING_NO_EMAIL": "Järjestelmään ei valitettavasti ole määritelty vastaanottajan sähköpostiosoitetta. Voit ilmoittaa ongelmasta ylläpitäjälle.",
+    "STR_SROLE_PREP" : "Valmistelija",
     "STR_SIGNERS": "Allekirjoitukset",
     "STR_SROLE_CM": "Puheenjohtaja",
     "STR_SROLE_SEC": "Pöytäkirjanpitäjä",
