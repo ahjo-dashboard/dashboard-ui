@@ -23,7 +23,23 @@
         </div>
     </div>
 
-    <button type="button" class="list-group-item col-xs-12" ng-repeat="i in c.listModel track by $index">
+    <button type="button" class="list-group-item col-xs-12">
+        <div class="row">
+            <div class="col-xs-12 col-sm-3">
+                <span translate translate-cloak>{{c.roleStrId(c.listModel.Role)}}</span>
+            </div>
+            <div class="col-xs-12 col-sm-3">
+                {{c.listModel.RequestorName}}
+            </div>
+            <div class="col-xs-6 col-sm-3">
+                <span class="ng-class: [ 'label', c.statusStyle(c.listModel.Status)]" translate>{{c.statusStrId(c.listModel.Status)}}</span>
+            </div>
+            <div class="col-xs-6 col-sm-3">
+                <span>{{c.listModel.RequestDate | date:'yyyy-MM-dd HH:mm'}}</span>
+            </div>
+        </div>
+    </button>
+    <button type="button" class="list-group-item col-xs-12" ng-repeat="i in c.listModel.Signers track by $index">
         <div class="row">
             <div class="col-xs-12 col-sm-3">
                 <span translate translate-cloak>{{c.roleStrId(i.role)}}</span>
@@ -32,7 +48,7 @@
                 {{i.name}}
             </div>
             <div class="col-xs-6 col-sm-3">
-                <span class="ng-class: [ 'label', c.statusStyle(i.status)]"translate>{{c.statusStrId(i.status)}}</span>
+                <span class="ng-class: [ 'label', c.statusStyle(i.status)]" translate>{{c.statusStrId(i.status)}}</span>
             </div>
             <div class="col-xs-6 col-sm-3">
                 <span>{{i.statusChangedTime | date:'yyyy-MM-dd HH:mm'}}</span>

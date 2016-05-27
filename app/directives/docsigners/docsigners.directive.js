@@ -17,7 +17,6 @@ angular.module('dashboard')
             $log.log("docSigners.CONTROLLER");
 
             var self = this;
-            self.isMobile = $rootScope.isMobile;
             self.listModel = $scope.listmodel;
             self.isMobile = $scope.ismobile;
 
