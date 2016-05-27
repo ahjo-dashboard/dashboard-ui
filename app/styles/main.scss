@@ -32,7 +32,7 @@ $headingBgColor: $upper-color;
 $default-font-size: 1.2em;
 $tablist-tabborder-width: 2px;
 $list-bg-color: $appbgcolor;
-
+$db-page-margin: 10px;
 
 $btn-radius: 6px;
 $btn-prim-color-bg: rgb(51, 122, 183);
@@ -567,19 +567,23 @@ body {
     }
 
     .ad-page-container {
-        padding: 10px;
+        padding: $db-page-margin;
     }
 
     .ad-mob-page-container {
         padding-top: 0;
-        padding-left: 10px;
-        padding-right: 10px;
-        padding-bottom: 10px;
+        padding-left: $db-page-margin;
+        padding-right: $db-page-margin;
+        padding-bottom: $db-page-margin;
     }
 
     .db-sign-infoarea {
         width: 100%;
-        margin: 0 10px;
+        margin: 0 $db-page-margin;
+    }
+
+    .db-view-item-margin {
+        margin-top: $db-page-margin;
     }
 
     .db-sign-status {
@@ -899,7 +903,7 @@ body {
     background: transparent url(../images/pdf.png) no-repeat 0px 0px;
     display: block;
     padding: 7px 20px 7px 40px;
-    margin: 10px 10px;
+    margin: $db-page-margin $db-page-margin;
     overflow: auto;
     color: $font-color-body;
     text-overflow: ellipsis;
