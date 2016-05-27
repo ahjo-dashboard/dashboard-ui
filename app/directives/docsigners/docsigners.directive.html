@@ -23,16 +23,16 @@
         </div>
     </div>
 
-    <button type="button" class="list-group-item col-xs-12" ng-repeat="i in ctrl.listModel track by $index">
+    <button type="button" class="list-group-item col-xs-12" ng-repeat="i in c.listModel track by $index">
         <div class="row">
             <div class="col-xs-12 col-sm-3">
-                <span translate translate-cloak>{{ctrl.roleStrId(i.role)}}</span>
+                <span translate translate-cloak>{{c.roleStrId(i.role)}}</span>
             </div>
             <div class="col-xs-12 col-sm-3">
                 {{i.name}}
             </div>
             <div class="col-xs-6 col-sm-3">
-                <span class="ng-class: [ 'label', ctrl.statusStyle(i.status)]"translate>{{ctrl.statusStrId(i.status)}}</span>
+                <span class="ng-class: [ 'label', c.statusStyle(i.status)]"translate>{{c.statusStrId(i.status)}}</span>
             </div>
             <div class="col-xs-6 col-sm-3">
                 <span>{{i.statusChangedTime | date:'yyyy-MM-dd HH:mm'}}</span>

@@ -16,7 +16,7 @@ angular.module('dashboard')
                         'appView': {
                             templateUrl: 'views/home.html',
                             controller: 'homeCtrl',
-                            controllerAs: 'ctrl'
+                            controllerAs: 'c'
                         }
                     },
                     params: {
@@ -65,7 +65,7 @@ angular.module('dashboard')
                         'detailsContent': {
                             templateUrl: 'views/meeting.details.html',
                             controller: 'meetingDetailsCtrl',
-                            controllerAs: 'ctrl'
+                            controllerAs: 'c'
                         }
                     }
                 })
@@ -75,7 +75,7 @@ angular.module('dashboard')
                         'childContent': {
                             templateUrl: 'views/attachment.html',
                             controller: 'attachmentCtrl',
-                            controllerAs: 'ctrl'
+                            controllerAs: 'c'
                         }
                     }
                 })
@@ -105,7 +105,7 @@ angular.module('dashboard')
                         'listContent': {
                             templateUrl: 'views/proposals.html',
                             controller: 'proposalsCtrl',
-                            controllerAs: 'ctrl'
+                            controllerAs: 'c'
                         }
                     }
                 })
@@ -115,7 +115,7 @@ angular.module('dashboard')
                         'listContent': {
                             templateUrl: 'views/remark.html',
                             controller: 'remarkCtrl',
-                            controllerAs: 'ctrl'
+                            controllerAs: 'c'
                         }
                     }
                 })
@@ -138,7 +138,7 @@ angular.module('dashboard')
                         'childContent': {
                             templateUrl: 'views/docsigners.html',
                             controller: 'docSignersCtrl',
-                            controllerAs: 'ctrl'
+                            controllerAs: 'c'
                         }
                     },
                     params: {
@@ -166,7 +166,7 @@ angular.module('dashboard')
                         'appView': {
                             templateUrl: 'views/home.html',
                             controller: 'homeCtrl',
-                            controllerAs: 'ctrl'
+                            controllerAs: 'c'
                         }
                     },
                     params: {
@@ -199,7 +199,7 @@ angular.module('dashboard')
                         'homeRightContent': {
                             templateUrl: 'views/meeting.details.html',
                             controller: 'meetingDetailsCtrl',
-                            controllerAs: 'ctrl'
+                            controllerAs: 'c'
                         }
                     },
                     params: {

@@ -183,7 +183,7 @@ angular.module('dashboard')
             templateUrl: 'directives/meetings/adMeetings.Directive.html',
             restrict: 'AE',
             controller: controller,
-            controllerAs: 'ctrl',
+            controllerAs: 'c',
             replace: 'true'
         };
     }]);

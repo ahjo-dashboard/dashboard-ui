@@ -305,7 +305,7 @@ angular.module('dashboard')
 
         return {
             controller: controller,
-            controllerAs: 'ctrl',
+            controllerAs: 'c',
             templateUrl: 'directives/opensignreqs/opensignreqs.directive.html',
             restrict: 'E',
             replace: 'true',

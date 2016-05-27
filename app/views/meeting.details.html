@@ -5,65 +5,65 @@
         <button ng-show="menuClosed()" type="button" class="btn db-btn-hdr glyphicon glyphicon-menu-hamburger" ng-click="openMenu()"></button>
 
         <div class="btn-group">
-            <button type="button" class="btn db-btn-prim" ng-disabled="ctrl.upperBtnDbl" ng-click="ctrl.upperClicked()">
-                <span class="{{ctrl.upperBtnCls}}"></span>
+            <button type="button" class="btn db-btn-prim" ng-disabled="c.upperBtnDbl" ng-click="c.upperClicked()">
+                <span class="{{c.upperBtnCls}}"></span>
             </button>
         </div>
 
         <div class="btn-group">
-            <button type="button" class="btn db-btn-prim" ng-disabled="ctrl.lowerBtnDbl" ng-click="ctrl.lowerClicked()">
-                <span class="{{ctrl.lowerBtnCls}}"></span>
+            <button type="button" class="btn db-btn-prim" ng-disabled="c.lowerBtnDbl" ng-click="c.lowerClicked()">
+                <span class="{{c.lowerBtnCls}}"></span>
             </button>
         </div>
 
-        <div class="btn-group" uib-dropdown is-open="" on-toggle="ctrl.aToggled(open)">
-            <button id="attachmentButton" type="button" data-ng-disabled="!ctrl.aData.objects.length" class="btn db-btn-prim db-hdr-btn-md ng-class:[{'active': (ctrl.isActive(ctrl.lbms.ATTACHMENTS) && !ctrl.isUpperMode())}]"
+        <div class="btn-group" uib-dropdown is-open="" on-toggle="c.aToggled(open)">
+            <button id="attachmentButton" type="button" data-ng-disabled="!c.aData.objects.length" class="btn db-btn-prim db-hdr-btn-md ng-class:[{'active': (c.isActive(c.lbms.ATTACHMENTS) && !c.isUpperMode())}]"
                 uib-dropdown-toggle>
                 <span translate translate-cloak>STR_ATTACHMENTS</span>
-                <span ng-if="ctrl.aData.objects.length" class="badge ng-cloak hidden-sm">{{ctrl.aData.objects.length}}</span>
-                <span ng-if="ctrl.aData.objects.length" class="caret hidden-sm"></span>
+                <span ng-if="c.aData.objects.length" class="badge ng-cloak hidden-sm">{{c.aData.objects.length}}</span>
+                <span ng-if="c.aData.objects.length" class="caret hidden-sm"></span>
             </button>
             <ul id="dropd-att" uib-dropdown-menu role="menu" aria-labelledby="attachmentButton" class="dropdown-menu db-drop" resp-dropd>
-                <li db-confirm confirm-enabled="ctrl.hasUnsavedProposal || ctrl.remarkIsUnsaved" confirm-config="ctrl.unsavedConfig" class="ng-class:[{'disabled': ctrl.isDisabled(att)}]"
-                    role="menuitem" ng-repeat="att in ctrl.aData.objects track by $index" tooltip-enable="isTooltips" uib-tooltip="{{att.title}}"
+                <li db-confirm confirm-enabled="c.hasUnsavedProposal || c.remarkIsUnsaved" confirm-config="c.unsavedConfig" class="ng-class:[{'disabled': c.isDisabled(att)}]"
+                    role="menuitem" ng-repeat="att in c.aData.objects track by $index" tooltip-enable="isTooltips" uib-tooltip="{{att.title}}"
                     tooltip-class="db-tooltip" tooltip-placement="top-left">
-                    <a class="ad-dropdown-content" ng-click="!ctrl.isDisabled(att) && ctrl.attachmentClicked(att)"><span ng-if="att.orderNum">{{att.orderNum}}&nbsp;</span>{{att.title}}</a>
+                    <a class="ad-dropdown-content" ng-click="!c.isDisabled(att) && c.attachmentClicked(att)"><span ng-if="att.orderNum">{{att.orderNum}}&nbsp;</span>{{att.title}}</a>
                 </li>
             </ul>
         </div>
 
-        <div class=" btn-group" uib-dropdown is-open="" on-toggle="ctrl.mToggled(open)">
-            <button id="materialButton" type="button" data-ng-disabled="!ctrl.materialCount()" class="btn db-btn-prim db-hdr-btn-md ng-class:[{'active': (ctrl.isActive(ctrl.lbms.MATERIALS) && !ctrl.isUpperMode())}]"
+        <div class=" btn-group" uib-dropdown is-open="" on-toggle="c.mToggled(open)">
+            <button id="materialButton" type="button" data-ng-disabled="!c.materialCount()" class="btn db-btn-prim db-hdr-btn-md ng-class:[{'active': (c.isActive(c.lbms.MATERIALS) && !c.isUpperMode())}]"
                 uib-dropdown-toggle>
                 <span translate translate-cloak>STR_OTHER_MATERIAL</span>
-                <span ng-if="ctrl.materialCount()" class="badge ng-cloak hidden-sm">{{ctrl.materialCount()}}</span>
-                <span ng-if="ctrl.materialCount()" class="caret hidden-sm"></span>
+                <span ng-if="c.materialCount()" class="badge ng-cloak hidden-sm">{{c.materialCount()}}</span>
+                <span ng-if="c.materialCount()" class="caret hidden-sm"></span>
             </button>
             <ul id="dropd-mat" uib-dropdown-menu role="menu" aria-labelledby="materialButton" class="dropdown-menu db-drop" resp-dropd>
                 <div class="ad-dropdown-header" translate translate-cloak>STR_ADDITIONAL_MATERIAL</div>
                 <li class="divider"></li>
-                <li db-confirm confirm-enabled="ctrl.hasUnsavedProposal || ctrl.remarkIsUnsaved" confirm-config="ctrl.unsavedConfig" class="ng-class:[{'disabled': ctrl.isDisabled(mat)}]"
-                    role="menuitem" ng-repeat="mat in ctrl.amData.objects track by $index" ng-click="!ctrl.isDisabled(mat) && ctrl.additionalMaterialClicked(mat)">
+                <li db-confirm confirm-enabled="c.hasUnsavedProposal || c.remarkIsUnsaved" confirm-config="c.unsavedConfig" class="ng-class:[{'disabled': c.isDisabled(mat)}]"
+                    role="menuitem" ng-repeat="mat in c.amData.objects track by $index" ng-click="!c.isDisabled(mat) && c.additionalMaterialClicked(mat)">
                     <a class="ad-dropdown-content"><span ng-if="mat.orderNum">{{mat.orderNum}}&nbsp;</span>{{mat.title}}</a>
                 </li>
                 <li class="divider"></li>
                 <div class="ad-dropdown-header" translate translate-cloak>STR_DECISION_HISTORY</div>
                 <li class="divider"></li>
-                <li db-confirm confirm-enabled="ctrl.hasUnsavedProposal || ctrl.remarkIsUnsaved" confirm-config="ctrl.unsavedConfig" class="ng-class:[{'disabled': ctrl.isDisabled(dec)}]"
-                    role="menuitem" ng-repeat="dec in ctrl.dData.objects track by $index" ng-click="!ctrl.isDisabled(dec) && ctrl.decisionClicked(dec)">
+                <li db-confirm confirm-enabled="c.hasUnsavedProposal || c.remarkIsUnsaved" confirm-config="c.unsavedConfig" class="ng-class:[{'disabled': c.isDisabled(dec)}]"
+                    role="menuitem" ng-repeat="dec in c.dData.objects track by $index" ng-click="!c.isDisabled(dec) && c.decisionClicked(dec)">
                     <a class="ad-dropdown-content"><span ng-if="decision.orderNum">{{dec.orderNum}}&nbsp;</span>{{dec.title}}</a>
                 </li>
             </ul>
         </div>
 
         <div class="btn-group">
-            <button type="button" class="btn db-btn-prim db-hdr-btn-md ng-class:[{'active': (ctrl.isActive(ctrl.lbms.PROPOSALS) && !ctrl.isUpperMode())}]"
-                ng-click="ctrl.proposalsClicked()">
+            <button type="button" class="btn db-btn-prim db-hdr-btn-md ng-class:[{'active': (c.isActive(c.lbms.PROPOSALS) && !c.isUpperMode())}]"
+                ng-click="c.proposalsClicked()">
                 <span translate translate-cloak>STR_PROPOSALS</span>
                 <span ng-if="true" class="badge ng-cloak hidden-sm">
                     <span class="db-center">
-                        {{ctrl.propCount}}
-                        <span ng-show="ctrl.topic.isModified">&nbsp;
+                        {{c.propCount}}
+                        <span ng-show="c.topic.isModified">&nbsp;
                             <span class="glyphicon glyphicon-bell db-newprops" aria-hidden="true"></span>
                         </span>
                     </span>
@@ -72,7 +72,7 @@
         </div>
 
         <div class="btn-group">
-            <button type="button" class="btn db-btn-prim db-hdr-btn-md" ng-click="ctrl.remarkClicked()" translate translate-cloak>STR_REMARK</button>
+            <button type="button" class="btn db-btn-prim db-hdr-btn-md" ng-click="c.remarkClicked()" translate translate-cloak>STR_REMARK</button>
         </div>
 
     </div>
@@ -89,24 +89,24 @@
         <div class="ad-page-container-flex">
 
             <!-- UPPER START -->
-            <div id="{{ctrl.upperId}}" db-obs class="ad-flex-item-upper db-item-border {{ctrl.upperClasses}}">
+            <div id="{{c.upperId}}" db-obs class="ad-flex-item-upper db-item-border {{c.upperClasses}}">
 
-                <db-pdf ng-if="!ctrl.isSecret(ctrl.tData)" ng-attr-uri="ctrl.upperUrl" ng-attr-hide="ctrl.hide"></db-pdf>
-                <db-imgviewer ng-if="ctrl.isSecret(ctrl.tData)" file-conf="ctrl.tData"></db-imgviewer>
+                <db-pdf ng-if="!c.isSecret(c.tData)" ng-attr-uri="c.upperUrl" ng-attr-hide="c.hide"></db-pdf>
+                <db-imgviewer ng-if="c.isSecret(c.tData)" file-conf="c.tData"></db-imgviewer>
 
-                <div ng-if="ctrl.error" class="alert alert-danger" role="alert">{{ctrl.error}}</div>
+                <div ng-if="c.error" class="alert alert-danger" role="alert">{{c.error}}</div>
             </div>
             <!-- UPPER END -->
 
             <!-- LOWER START -->
-            <div id="{{ctrl.lowerId}}" db-obs class="ad-flex-item-lower db-item-border {{ctrl.lowerClasses}}">
+            <div id="{{c.lowerId}}" db-obs class="ad-flex-item-lower db-item-border {{c.lowerClasses}}">
 
-                <db-pdf ng-if="(ctrl.lbm === ctrl.lbms.ATTACHMENTS || ctrl.lbm === ctrl.lbms.MATERIALS) && !ctrl.isSecret(ctrl.lowerAtt)"
-                    ng-attr-uri="ctrl.lowerUrl"></db-pdf>
-                <db-imgviewer ng-if="(ctrl.lbm === ctrl.lbms.ATTACHMENTS || ctrl.lbm === ctrl.lbms.MATERIALS) && ctrl.isSecret(ctrl.lowerAtt)"
-                    file-conf="ctrl.lowerAtt"></db-imgviewer>
-                <db-remark ng-if="ctrl.lbm === ctrl.lbms.REMARK" topic="ctrl.topic"></db-remark>
-                <db-proposal-list ng-if="ctrl.lbm === ctrl.lbms.PROPOSALS" topic="ctrl.topic"></db-proposal-list>
+                <db-pdf ng-if="(c.lbm === c.lbms.ATTACHMENTS || c.lbm === c.lbms.MATERIALS) && !c.isSecret(c.lowerAtt)"
+                    ng-attr-uri="c.lowerUrl"></db-pdf>
+                <db-imgviewer ng-if="(c.lbm === c.lbms.ATTACHMENTS || c.lbm === c.lbms.MATERIALS) && c.isSecret(c.lowerAtt)"
+                    file-conf="c.lowerAtt"></db-imgviewer>
+                <db-remark ng-if="c.lbm === c.lbms.REMARK" topic="c.topic"></db-remark>
+                <db-proposal-list ng-if="c.lbm === c.lbms.PROPOSALS" topic="c.topic"></db-proposal-list>
             </div>
 
         </div>
@@ -116,33 +116,33 @@
 </div>
 
 <div ng-if="isMobile" class="ad-page-content">
-    <h5 class="db-title" ng-cloak>{{ctrl.header}}</h5>
+    <h5 class="db-title" ng-cloak>{{c.header}}</h5>
     <div class="ad-page-container">
-        <db-link config="ctrl.linkConfig" uri="ctrl.tData.link" class="btn btn-block btn-lg db-btn-prim"></db-link>
-        <button type="button" ng-disabled="!ctrl.aData.objects.length" class="btn btn-info btn-lg btn-block wrap-button-text db-btn-prim"
-            ng-click="ctrl.attachmentClicked()">
-                <span translate translate-cloak>STR_ATTACHMENTS</span> <span class="badge">{{ctrl.aData.objects.length}}</span>
+        <db-link config="c.linkConfig" uri="c.tData.link" class="btn btn-block btn-lg db-btn-prim"></db-link>
+        <button type="button" ng-disabled="!c.aData.objects.length" class="btn btn-info btn-lg btn-block wrap-button-text db-btn-prim"
+            ng-click="c.attachmentClicked()">
+                <span translate translate-cloak>STR_ATTACHMENTS</span> <span class="badge">{{c.aData.objects.length}}</span>
             </button>
-        <button type="button" ng-disabled="!ctrl.amData.objects.length" class="btn btn-info btn-lg btn-block wrap-button-text db-btn-prim ng-class:[{'disabled': !ctrl.amData.objects.length}]"
-            ng-click="ctrl.additionalMaterialClicked()">
-                <span translate translate-cloak>STR_ADDITIONAL_MATERIAL</span> <span class="badge">{{ctrl.amData.objects.length}}</span>
+        <button type="button" ng-disabled="!c.amData.objects.length" class="btn btn-info btn-lg btn-block wrap-button-text db-btn-prim ng-class:[{'disabled': !c.amData.objects.length}]"
+            ng-click="c.additionalMaterialClicked()">
+                <span translate translate-cloak>STR_ADDITIONAL_MATERIAL</span> <span class="badge">{{c.amData.objects.length}}</span>
             </button>
-        <button type="button" ng-disabled="!ctrl.dData.objects.length" class="btn btn-info btn-lg btn-block wrap-button-text db-btn-prim"
-            ng-click="ctrl.decisionClicked()">
-                <span translate translate-cloak>STR_DECISION_HISTORY</span> <span class="badge">{{ctrl.dData.objects.length}}</span>
+        <button type="button" ng-disabled="!c.dData.objects.length" class="btn btn-info btn-lg btn-block wrap-button-text db-btn-prim"
+            ng-click="c.decisionClicked()">
+                <span translate translate-cloak>STR_DECISION_HISTORY</span> <span class="badge">{{c.dData.objects.length}}</span>
             </button>
-        <button type="button" class="btn btn-info btn-lg btn-block wrap-button-text db-btn-prim" ng-click="ctrl.proposalsClicked()">
+        <button type="button" class="btn btn-info btn-lg btn-block wrap-button-text db-btn-prim" ng-click="c.proposalsClicked()">
                 <span translate translate-cloak>STR_PROPOSALS</span>
-                <span ng-if="ctrl.propCount !== null" class="badge">
+                <span ng-if="c.propCount !== null" class="badge">
                     <span class="db-center">
-                        {{ctrl.propCount}}
-                        <span ng-show="ctrl.topic.isModified">
+                        {{c.propCount}}
+                        <span ng-show="c.topic.isModified">
                             &nbsp;<span class="glyphicon glyphicon-bell db-newprops" aria-hidden="true"></span>
                         </span>
                     </span>
                 </span>
             </button>
-        <button type="button" ng-disabled="false" class="btn btn-info btn-lg btn-block wrap-button-text db-btn-prim" ng-click="ctrl.remarkClicked()">
+        <button type="button" ng-disabled="false" class="btn btn-info btn-lg btn-block wrap-button-text db-btn-prim" ng-click="c.remarkClicked()">
                 <span translate translate-cloak>STR_REMARK</span>
             </button>
     </div>
