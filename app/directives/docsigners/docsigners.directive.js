@@ -49,7 +49,7 @@ angular.module('dashboard')
 
         return {
             controller: controller,
-            controllerAs: 'ctrl',
+            controllerAs: 'c',
             templateUrl: 'directives/docsigners/docsigners.directive.html',
             restrict: 'E',
             replace: 'true',

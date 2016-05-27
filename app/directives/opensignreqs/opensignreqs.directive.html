@@ -2,39 +2,39 @@
     <div class="row">
 
         <div class="hidden-xs col-xs-12 col-sm-6 db-nopadding">
-            <button type="button" class="btn btn-block disabled ng-class:{'db-btn-colhea': ctrl.isDisabled(), 'db-btn-colhea-dummy': !ctrl.isDisabled()}">
+            <button type="button" class="btn btn-block disabled ng-class:{'db-btn-colhea': c.isDisabled(), 'db-btn-colhea-dummy': !c.isDisabled()}">
                 <span translate translate-cloak>STR_SIGNING_REQ</span>
             </button>
         </div>
 
         <div class="col-xs-6 col-sm-4 btn-group db-nopadding" uib-dropdown is-open="">
-            <button id="docTypeButton" type="button" class="btn btn-block db-btn-colhea" ng-disabled="ctrl.isDisabled()" uib-dropdown-toggle>
-                <span translate translate-cloak>{{ctrl.docTypeTitle}}</span>
+            <button id="docTypeButton" type="button" class="btn btn-block db-btn-colhea" ng-disabled="c.isDisabled()" uib-dropdown-toggle>
+                <span translate translate-cloak>{{c.docTypeTitle}}</span>
                 <span class="caret"></span>
             </button>
             <ul uib-dropdown-menu role="menu" aria-labelledby="docTypeButton">
-                <li role="menuitem" ng-repeat="i in ctrl.docTypes track by $index">
-                    <a ng-click="ctrl.setModelFilter(i)"><span translate translate-cloak>{{i.strId}}</span></a>
+                <li role="menuitem" ng-repeat="i in c.docTypes track by $index">
+                    <a ng-click="c.setModelFilter(i)"><span translate translate-cloak>{{i.strId}}</span></a>
                 </li>
                 <li class="divider"></li>
                 <li role="menuitem">
-                    <a ng-click="ctrl.setModelFilter(null)">
+                    <a ng-click="c.setModelFilter(null)">
                         <span translate translate-cloak>STR_CLEAR_SELECTION</span></a>
                 </li>
             </ul>
         </div>
 
         <div class="col-xs-6 col-sm-2 db-nopadding btn-group" uib-dropdown is-open="">
-            <button id="docStatusButton" type="button" class="btn btn-block db-btn-colhea" ng-disabled="ctrl.isDisabled()" uib-dropdown-toggle>
-                <span translate translate-cloak>{{ctrl.docStatusTitle}}</span>
+            <button id="docStatusButton" type="button" class="btn btn-block db-btn-colhea" ng-disabled="c.isDisabled()" uib-dropdown-toggle>
+                <span translate translate-cloak>{{c.docStatusTitle}}</span>
                 <span class="caret"></span>
             </button>
             <ul uib-dropdown-menu role="menu" aria-labelledby="docStatusButton">
-                <li role="menuitem" ng-repeat="i in ctrl.docStatuses track by $index">
-                    <a ng-click="ctrl.setModelFilter(i)"><span translate translate-cloak>{{i.strId}}</span></a>
+                <li role="menuitem" ng-repeat="i in c.docStatuses track by $index">
+                    <a ng-click="c.setModelFilter(i)"><span translate translate-cloak>{{i.strId}}</span></a>
                 </li>
                 <li class="divider"></li>
-                <li role="menuitem"><a ng-click="ctrl.setModelFilter(null)"><span translate translate-cloak>STR_CLEAR_SELECTION</span></a></li>
+                <li role="menuitem"><a ng-click="c.setModelFilter(null)"><span translate translate-cloak>STR_CLEAR_SELECTION</span></a></li>
             </ul>
         </div>
 
@@ -42,14 +42,14 @@
 
     <div class="row">
 
-        <uib-progressbar ng-if="ctrl.loading()" class="progress-striped active" type="info">
+        <uib-progressbar ng-if="c.loading()" class="progress-striped active" type="info">
             <i><span translate translate-cloak>STR_LOADING</span></i>
         </uib-progressbar>
 
-        <ul ng-if="!ctrl.reqErr" class="list-group db-tablist">
-            <button type="button" class="list-group-item col-xs-12" ng-repeat="i in ctrl.model | filter: ctrl.docFilter | orderBy:'RequestDate': reverse
-            track by $index" ng-click="ctrl.selected(i)">
-                <div class="row" ng-click="ctrl.itemSelected(i)">
+        <ul ng-if="!c.reqErr" class="list-group db-tablist">
+            <button type="button" class="list-group-item col-xs-12" ng-repeat="i in c.model | filter: c.docFilter | orderBy:'RequestDate': reverse
+            track by $index" ng-click="c.selected(i)">
+                <div class="row" ng-click="c.itemSelected(i)">
                     <div class="col-xs-12 col-sm-6">
                         <div>
                             {{i.RequestDate | date:'yyyy-MM-dd'}}&nbsp;&nbsp;&nbsp;<b>{{i.Name}}</b>
@@ -59,18 +59,18 @@
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-4">
-                        <span translate translate-cloak>{{ctrl.docTypeStrId(i.DocumentType)}}</span>
+                        <span translate translate-cloak>{{c.docTypeStrId(i.DocumentType)}}</span>
                     </div>
                     <div class="col-xs-12 col-sm-2">
-                        <span class="ng-class: [ 'label', ctrl.statusStyle(i.Status)]" translate translate-cloak>{{ctrl.statusStrId(i.Status)}}</span>
+                        <span class="ng-class: [ 'label', c.statusStyle(i.Status)]" translate translate-cloak>{{c.statusStrId(i.Status)}}</span>
                     </div>
                 </div>
             </button>
         </ul>
 
-        <div ng-if="ctrl.error" class="alert alert-danger" role="alert">
+        <div ng-if="c.error" class="alert alert-danger" role="alert">
             <span translate translate-cloak>STR_FAIL_LOADING</span>&nbsp;<span translate translate-cloak>STR_TRY_LATER</span>
-            <br>{{ctrl.error.status}} {{ctrl.error.statusText}}
+            <br>{{c.error.status}} {{c.error.statusText}}
         </div>
 
     </div>
