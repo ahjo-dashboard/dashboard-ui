@@ -26,6 +26,7 @@ angular.module('dashboard')
         self.header = '';
         $rootScope.menu = CONST.MENU.FULL;
         self.hide = false;
+        self.selData = null;
 
         self.tData = null;
         self.aData = null;
@@ -154,6 +155,7 @@ angular.module('dashboard')
             self.dData = null;
             self.lowerUrl = null;
             self.upperUrl = null;
+            self.selData = null;
 
             if (self.lbm !== CONST.LOWERBLOCKMODE.PROPOSALS && self.lbm !== CONST.LOWERBLOCKMODE.REMARK) {
                 setLowerBlockMode(CONST.LOWERBLOCKMODE.PROPOSALS);
@@ -195,6 +197,29 @@ angular.module('dashboard')
 
         self.lowerClicked = function () {
             setBlockMode((self.blockMode === CONST.BLOCKMODE.BOTH || self.blockMode === CONST.BLOCKMODE.UPPER) ? CONST.BLOCKMODE.LOWER : CONST.BLOCKMODE.BOTH);
+        };
+
+        self.attClicked = function () {
+            var data = [self.aData];
+            self.selData = angular.equals(self.selData, data) ? null : data;
+        };
+
+        self.matClicked = function () {
+            var data = [self.amData, self.dData];
+            self.selData = angular.equals(self.selData, data) ? null : data;
+        };
+
+        self.selClicked = function (data) {
+            if (self.aData.objects.indexOf(data) > CONST.NOTFOUND) {
+                self.attachmentClicked(data);
+            }
+            else if (self.amData.objects.indexOf(data) > CONST.NOTFOUND) {
+                self.additionalMaterialClicked(data);
+            }
+            else if (self.dData.objects.indexOf(data) > CONST.NOTFOUND) {
+                self.decisionClicked(data);
+            }
+            self.selData = null;
         };
 
         self.attachmentClicked = function (attachment) {
@@ -335,5 +360,6 @@ angular.module('dashboard')
         });
 
         setBlockMode(CONST.BLOCKMODE.BOTH);
+        setLowerBlockMode(CONST.LOWERBLOCKMODE.PROPOSALS);
         setData(StorageSrv.getKey(CONST.KEY.TOPIC));
     }]);
