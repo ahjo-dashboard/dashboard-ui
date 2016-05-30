@@ -17,7 +17,7 @@
             </uib-progressbar>
 
             <div class="btn-block btn-lg text-center">
-                <span ng-hide="!sc.displayStatus" class="ng-class:['db-label', sc.statusStyle(sc.item.Status)]" ng-disabled="sc.isDisabled(sc.btnModel.doc.id)" translate translate-cloak>
+                <span ng-hide="!sc.displayStatus" class="ng-class:['label', sc.statusStyle(sc.item.Status)]" ng-disabled="sc.isDisabled(sc.btnModel.doc.id)" translate translate-cloak>
                     {{sc.statusStrId(sc.item.Status)}}
                 </span>
             </div>
@@ -87,8 +87,10 @@
                                 <h5 class="col-xs-12"><span translate="STR_STATUS"></span>:</h5>
                             </div>
                             <div class="row db-center">
-                                <div ng-hide="!sc.displayStatus" class="col-xs-12 db-label ng-class:[sc.statusStyle(sc.item.Status)]">
-                                    <span translate translate-cloak>{{sc.statusStrId(sc.item.Status)}}</span>
+                                <div ng-hide="!sc.displayStatus" class="col-xs-12">
+                                    <span class="label ng-class:[sc.statusStyle(sc.item.Status)]" translate translate-cloak>
+                                    {{sc.statusStrId(sc.item.Status)}}
+                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -171,7 +173,7 @@
 
                     <!-- Comment displayed via alert array on desktop, separate alert on mobile -->
 
-                    <uib-alert ng-repeat="i in sc.alerts track by $index" type="{{i.type}}" close="sc.closeAlert($index)">
+                    <uib-alert class="db-view-item-margin" ng-repeat="i in sc.alerts track by $index" type="{{i.type}}" close="sc.closeAlert($index)">
                         <span ng-if="i.locId" translate translate-cloak>{{i.locId}}</span>
                         <div>
                             <span ng-if="i.resCode">{{i.resCode}}&nbsp;</span>
@@ -180,7 +182,7 @@
                         </div>
                     </uib-alert>
 
-                    <doc-signers ng-if="sc.btnModel.sta.signers" ng-hide="sc.isHidden(sc.btnModel.sta.id)" listmodel="sc.btnModel.sta.signers"
+                    <doc-signers ng-if="sc.btnModel.sta.signers" class="db-view-item-margin" ng-hide="sc.isHidden(sc.btnModel.sta.id)" listmodel="sc.btnModel.sta.signers"
                         ismobile="isMobile">
                     </doc-signers>
 

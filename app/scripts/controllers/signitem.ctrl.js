@@ -198,7 +198,7 @@ angular.module('dashboard')
                 return;
             }
             $log.debug("signItemCtrl.displaySignings: " + sgn.Signers.length);
-            self.btnModel.sta.signers = sgn.Signers;
+            self.btnModel.sta.signers = sgn;
             if ($rootScope.isMobile) {
                 $state.go(CONST.APPSTATE.DOCSIGNERS, { 'signers': self.btnModel.sta.signers });
             }
