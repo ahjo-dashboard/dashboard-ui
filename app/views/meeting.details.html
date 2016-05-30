@@ -16,44 +16,20 @@
             </button>
         </div>
 
-        <div class="btn-group" uib-dropdown is-open="" on-toggle="c.aToggled(open)">
-            <button id="attachmentButton" type="button" data-ng-disabled="!c.aData.objects.length" class="btn db-btn-prim db-hdr-btn-md ng-class:[{'active': (c.isActive(c.lbms.ATTACHMENTS) && !c.isUpperMode())}]"
-                uib-dropdown-toggle>
+        <div class="btn-group">
+            <button type="button" data-ng-disabled="!c.aData.objects.length" class="btn db-btn-prim db-hdr-btn-md ng-class:[{'active': (c.isActive(c.lbms.ATTACHMENTS) && !c.isUpperMode())}]"
+                db-confirm confirm-enabled="c.hasUnsavedProposal || c.remarkIsUnsaved" confirm-config="c.unsavedConfig" ng-click="c.attClicked()">
                 <span translate translate-cloak>STR_ATTACHMENTS</span>
                 <span ng-if="c.aData.objects.length" class="badge ng-cloak hidden-sm">{{c.aData.objects.length}}</span>
-                <span ng-if="c.aData.objects.length" class="caret hidden-sm"></span>
             </button>
-            <ul id="dropd-att" uib-dropdown-menu role="menu" aria-labelledby="attachmentButton" class="dropdown-menu db-drop" resp-dropd>
-                <li db-confirm confirm-enabled="c.hasUnsavedProposal || c.remarkIsUnsaved" confirm-config="c.unsavedConfig" class="ng-class:[{'disabled': c.isDisabled(att)}]"
-                    role="menuitem" ng-repeat="att in c.aData.objects track by $index" tooltip-enable="isTooltips" uib-tooltip="{{att.title}}"
-                    tooltip-class="db-tooltip" tooltip-placement="top-left">
-                    <a class="ad-dropdown-content" ng-click="!c.isDisabled(att) && c.attachmentClicked(att)"><span ng-if="att.orderNum">{{att.orderNum}}&nbsp;</span>{{att.title}}</a>
-                </li>
-            </ul>
         </div>
 
-        <div class=" btn-group" uib-dropdown is-open="" on-toggle="c.mToggled(open)">
-            <button id="materialButton" type="button" data-ng-disabled="!c.materialCount()" class="btn db-btn-prim db-hdr-btn-md ng-class:[{'active': (c.isActive(c.lbms.MATERIALS) && !c.isUpperMode())}]"
-                uib-dropdown-toggle>
+        <div class=" btn-group">
+            <button type="button" data-ng-disabled="!c.materialCount()" class="btn db-btn-prim db-hdr-btn-md ng-class:[{'active': (c.isActive(c.lbms.MATERIALS) && !c.isUpperMode())}]"
+                db-confirm confirm-enabled="c.hasUnsavedProposal || c.remarkIsUnsaved" confirm-config="c.unsavedConfig" ng-click="c.matClicked()">
                 <span translate translate-cloak>STR_OTHER_MATERIAL</span>
                 <span ng-if="c.materialCount()" class="badge ng-cloak hidden-sm">{{c.materialCount()}}</span>
-                <span ng-if="c.materialCount()" class="caret hidden-sm"></span>
             </button>
-            <ul id="dropd-mat" uib-dropdown-menu role="menu" aria-labelledby="materialButton" class="dropdown-menu db-drop" resp-dropd>
-                <div class="ad-dropdown-header" translate translate-cloak>STR_ADDITIONAL_MATERIAL</div>
-                <li class="divider"></li>
-                <li db-confirm confirm-enabled="c.hasUnsavedProposal || c.remarkIsUnsaved" confirm-config="c.unsavedConfig" class="ng-class:[{'disabled': c.isDisabled(mat)}]"
-                    role="menuitem" ng-repeat="mat in c.amData.objects track by $index" ng-click="!c.isDisabled(mat) && c.additionalMaterialClicked(mat)">
-                    <a class="ad-dropdown-content"><span ng-if="mat.orderNum">{{mat.orderNum}}&nbsp;</span>{{mat.title}}</a>
-                </li>
-                <li class="divider"></li>
-                <div class="ad-dropdown-header" translate translate-cloak>STR_DECISION_HISTORY</div>
-                <li class="divider"></li>
-                <li db-confirm confirm-enabled="c.hasUnsavedProposal || c.remarkIsUnsaved" confirm-config="c.unsavedConfig" class="ng-class:[{'disabled': c.isDisabled(dec)}]"
-                    role="menuitem" ng-repeat="dec in c.dData.objects track by $index" ng-click="!c.isDisabled(dec) && c.decisionClicked(dec)">
-                    <a class="ad-dropdown-content"><span ng-if="decision.orderNum">{{dec.orderNum}}&nbsp;</span>{{dec.title}}</a>
-                </li>
-            </ul>
         </div>
 
         <div class="btn-group">
@@ -99,14 +75,15 @@
             <!-- UPPER END -->
 
             <!-- LOWER START -->
-            <div id="{{c.lowerId}}" db-obs class="ad-flex-item-lower db-item-border {{c.lowerClasses}}">
+            <div ng-hide="c.selData" id="{{c.lowerId}}" db-obs class="ad-flex-item-lower db-item-border {{c.lowerClasses}}">
 
-                <db-pdf ng-if="(c.lbm === c.lbms.ATTACHMENTS || c.lbm === c.lbms.MATERIALS) && !c.isSecret(c.lowerAtt)"
-                    ng-attr-uri="c.lowerUrl"></db-pdf>
-                <db-imgviewer ng-if="(c.lbm === c.lbms.ATTACHMENTS || c.lbm === c.lbms.MATERIALS) && c.isSecret(c.lowerAtt)"
-                    file-conf="c.lowerAtt"></db-imgviewer>
+                <db-pdf ng-if="(c.lbm === c.lbms.ATTACHMENTS || c.lbm === c.lbms.MATERIALS) && !c.isSecret(c.lowerAtt)" ng-attr-uri="c.lowerUrl"></db-pdf>
+                <db-imgviewer ng-if="(c.lbm === c.lbms.ATTACHMENTS || c.lbm === c.lbms.MATERIALS) && c.isSecret(c.lowerAtt)" file-conf="c.lowerAtt"></db-imgviewer>
                 <db-remark ng-if="c.lbm === c.lbms.REMARK" topic="c.topic"></db-remark>
                 <db-proposal-list ng-if="c.lbm === c.lbms.PROPOSALS" topic="c.topic"></db-proposal-list>
+            </div>
+            <div ng-hide="!c.selData" class="ad-flex-item-lower db-item-border {{c.lowerClasses}}">
+                <db-selection-list ng-attr-sel-data="c.selData" ng-attr-on-select="c.selClicked(data)"></db-selection-list>
             </div>
 
         </div>
