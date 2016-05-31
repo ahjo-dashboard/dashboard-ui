@@ -25,7 +25,7 @@ angular.module('dashboard')
                 var params = "secondary=false&amp;mixed=false#view=FitH&amp;toolbar=0&amp;statusbar=0&amp;messages=0&amp;navpanes=0";
                 var isIe = $rootScope.isIe;
                 var noContentUri = 'no.content.html';
-                element.addClass('db-dir');
+                element.addClass('db-directive');
 
                 function paramSeparator(uri) {
                     return angular.isString(uri) && (CONST.NOTFOUND !== uri.indexOf('?')) ? '&' : '?';

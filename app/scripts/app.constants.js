@@ -19,9 +19,9 @@ angular.module('dashboard')
         'NOTFOUND' : -1,
         'ID': 'id',
         'BLOCKMODE': {
-            BOTH: 0,
-            UPPER: 1,
-            LOWER: 2
+            DEFAULT: 0,
+            PRIMARY: 1,
+            SECONDARY: 2
         },
         'LOWERBLOCKMODE': {
             PROPOSALS: 'PROPOSALS',

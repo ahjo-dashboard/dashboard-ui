@@ -254,6 +254,10 @@ angular.module('dashboard')
             return 'db-badge-red';
         };
 
+        self.toggleParallelMode = function () {
+            $rootScope.parallelMode = $rootScope.parallelMode ? false : true;
+        };
+
         $scope.$watch(function () {
             return StorageSrv.getKey(CONST.KEY.PROPOSAL_EVENT_ARRAY);
         }, function (events, oldEvents) {

@@ -1,16 +1,16 @@
-<div class="proposal-list db-overflow">
+<div class="proposal-list db-directive">
 
-    <div class="col-xs-12 db-nopadding">
+    <div class="db-min-width-320">
         <ul class="list-group">
             <div class="list-group-item prop-header">
                 <span us-spinner="{radius:6, width:2, length:4}" spinner-on="c.loading"></span>
-                <div class="row">
+                <div class="prop-row">
                     <div class="col-xs-12 col-sm-6 col-md-9 col-lg-10">
-                        <h4 class="prop-header-text" translate translate-cloak>STR_PRIVATE_PROPOSALS</h4>
+                        <h4 ng-if="c.isMobile" class="prop-header-text" translate translate-cloak>STR_PRIVATE_PROPOSALS</h4>
+                        <h5 ng-if="!c.isMobile" class="prop-header-text" translate translate-cloak>STR_PRIVATE_PROPOSALS</h5>
                     </div>
                     <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2 btn-group" uib-dropdown is-open="">
-                        <button id="typeButton" type="button" ng-disabled="c.unsavedCount" class="btn btn-block btn-primary prop-button" uib-dropdown-toggle
-                            translate translate-cloak>STR_CREATE_PROPOSAL</button>
+                        <button id="typeButton" type="button" ng-disabled="c.unsavedCount" class="btn btn-block btn-primary prop-button" uib-dropdown-toggle translate translate-cloak>STR_CREATE_PROPOSAL</button>
                         <div uib-dropdown-menu role="menu" aria-labelledby="typeButton">
                             <div class="prop-dropdown-item" role="menuitem" ng-repeat="type in c.tps track by $index" ng-click="c.addProposalClicked(type)">
                                 <a>{{type.text}}</a>
@@ -19,27 +19,24 @@
                     </div>
                 </div>
             </div>
-            <db-proposal ng-if="(p.isPublished === c.published.NO || p.isPublished === null)" class="list-group-item" proposal="p" guid="guid"
-                disable-create="c.unsavedCount" on-remove="c.remove(data)" on-add="c.add(data)" ng-repeat="p in c.proposals track by p.proposalGuid">
+            <db-proposal ng-if="(p.isPublished === c.published.NO || p.isPublished === null)" class="list-group-item" proposal="p" guid="guid" disable-create="c.unsavedCount" on-remove="c.remove(data)" on-add="c.add(data)" ng-repeat="p in c.proposals track by p.proposalGuid">
             </db-proposal>
         </ul>
-    </div>
 
-    <div class="col-xs-12 db-nopadding">
         <ul class="list-group">
             <div class="list-group-item prop-header">
                 <span us-spinner="{radius:6, width:2, length:4}" spinner-on="c.loading"></span>
                 <div class="row">
                     <div class="col-xs-12 col-sm-6 col-md-9 col-lg-10">
-                        <h4 class="prop-header-text" translate translate-cloak>STR_PUBLIC_PROPOSALS</h4>
+                        <h4 ng-if="c.isMobile" class="prop-header-text" translate translate-cloak>STR_PUBLIC_PROPOSALS</h4>
+                        <h5 ng-if="!c.isMobile" class="prop-header-text" translate translate-cloak>STR_PUBLIC_PROPOSALS</h5>
                     </div>
                     <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2 btn-group">
                         <button id="typeButton" type="button" class="btn btn-block btn-primary prop-button" ng-click="c.toggleAll()"><div translate translate-cloak>{{c.btnText}}</div></button>
                     </div>
                 </div>
             </div>
-            <db-proposal ng-if="(p.isPublished === c.published.YES)" class="list-group-item" proposal="p" guid="guid" disable-create="c.unsavedCount"
-                on-remove="c.remove(data)" on-add="c.add(data)" ng-repeat="p in c.proposals | orderBy:'insertDateTime': true track by p.proposalGuid">
+            <db-proposal ng-if="(p.isPublished === c.published.YES)" class="list-group-item" proposal="p" guid="guid" disable-create="c.unsavedCount" on-remove="c.remove(data)" on-add="c.add(data)" ng-repeat="p in c.proposals | orderBy:'insertDateTime': true track by p.proposalGuid">
             </db-proposal>
         </ul>
     </div>

@@ -18,7 +18,7 @@ angular.module('dashboard')
         self.loading = 0;
         self.signReqsHeader = 'Avoimet allekirjoituspyynnöt';
         self.signErr = null;
-        self.blockMode = CONST.BLOCKMODE.BOTH;
+        self.blockMode = CONST.BLOCKMODE.DEFAULT;
         self.vbl = MTGD.VISIBLE;
         self.bms = CONST.BLOCKMODE;
 
@@ -77,11 +77,11 @@ angular.module('dashboard')
         };
 
         self.upperClicked = function () {
-            self.blockMode = (self.blockMode === CONST.BLOCKMODE.BOTH || self.blockMode === CONST.BLOCKMODE.LOWER) ? CONST.BLOCKMODE.UPPER : CONST.BLOCKMODE.BOTH;
+            self.blockMode = (self.blockMode === CONST.BLOCKMODE.DEFAULT || self.blockMode === CONST.BLOCKMODE.SECONDARY) ? CONST.BLOCKMODE.PRIMARY : CONST.BLOCKMODE.DEFAULT;
         };
 
         self.lowerClicked = function () {
-            self.blockMode = (self.blockMode === CONST.BLOCKMODE.BOTH || self.blockMode === CONST.BLOCKMODE.UPPER) ? CONST.BLOCKMODE.LOWER : CONST.BLOCKMODE.BOTH;
+            self.blockMode = (self.blockMode === CONST.BLOCKMODE.DEFAULT || self.blockMode === CONST.BLOCKMODE.PRIMARY) ? CONST.BLOCKMODE.SECONDARY : CONST.BLOCKMODE.DEFAULT;
         };
 
         self.setMtgsVisible = function (mtgs) {

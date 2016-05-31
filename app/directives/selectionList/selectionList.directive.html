@@ -1,5 +1,5 @@
-<div class="db-overflow db-margin-1">
-    <section ng-repeat="data in c.data track by $index">
+<div class="db-directive">
+    <section class="db-margin-15" ng-repeat="data in c.data track by $index">
         <header ng-if="data.title.header" translate translate-cloak>{{data.title.header}}</header>
         <ul role="menu">
             <li role="menuitem" class="ng-class:[{'db-opacity-05':c.isDisabled(att)}]" ng-repeat="att in data.objects track by $index">

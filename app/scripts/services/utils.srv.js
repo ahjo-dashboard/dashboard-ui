@@ -65,7 +65,8 @@ angular.module('dashboard')
         Utils.isClientMobile = function () {
             var ua = $window.navigator.userAgent;
             //console.log("Utils.isClientMobile: UA=" + ua);
-            var res = Utils.isUaMobile(ua) || Utils.isResoXs(ua);
+            // var res = Utils.isUaMobile(ua) || Utils.isResoXs(ua);
+            var res = Utils.isResoXs(ua);
             // $$log.debug("Utils.isClientMobile: " + res);
             return res;
         };
