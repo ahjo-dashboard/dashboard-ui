@@ -3,9 +3,12 @@
     <div ng-if="!msc.isMobile" class="ad-page-header db-center">
         <button type="button" class="btn db-btn-hdr glyphicon glyphicon-menu-hamburger" ng-click="closeMenu()">
         </button>
-        <button db-confirm confirm-enabled="msc.hasUnsavedProposal || msc.remarkIsUnsaved" confirm-config="msc.unsavedConfig" type="button" class="btn db-btn-hdr glyphicon glyphicon-home" ng-click="msc.goHome()">
+        <button db-confirm confirm-enabled="msc.hasUnsavedProposal || msc.remarkIsUnsaved" confirm-config="msc.unsavedConfig" type="button"
+            class="btn db-btn-hdr glyphicon glyphicon-home" ng-click="msc.goHome()">
         </button>
         <button type="button" class="btn db-btn-hdr glyphicon glyphicon-info-sign disabled" ng-click="">
+        </button>
+        <button type="button" class="btn db-btn-hdr glyphicon ng-class:[{'glyphicon-resize-vertical':parallelMode},{'glyphicon-resize-horizontal':!parallelMode}]" ng-click="msc.toggleParallelMode()">
         </button>
     </div>
 

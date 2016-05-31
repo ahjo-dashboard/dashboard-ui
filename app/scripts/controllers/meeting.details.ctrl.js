@@ -16,32 +16,23 @@ angular.module('dashboard')
         $log.debug("meetingDetailsCtrl: CONTROLLER");
         var self = this;
         var isMobile = $rootScope.isMobile;
-        self.upperUrl = null;
-        self.lowerUrl = null;
+        self.primaryUrl = null;
+        self.secondaryUrl = null;
         self.error = null;
         self.topic = null;
-        self.blockMode = CONST.BLOCKMODE.BOTH;
+        self.bms = CONST.BLOCKMODE;
+        self.bm = CONST.BLOCKMODE.DEFAULT;
         self.lbms = CONST.LOWERBLOCKMODE;
         self.lbm = CONST.LOWERBLOCKMODE.PROPOSALS;
         self.header = '';
         $rootScope.menu = CONST.MENU.FULL;
-        self.hide = false;
+        self.hidePdf = false;
         self.selData = null;
 
         self.tData = null;
         self.aData = null;
         self.dData = null;
         self.amData = null;
-
-        self.upperId = 'mtg-upper-block';
-        self.lowerId = 'mtg-lower-block';
-        self.upperClasses = null;
-        self.lowerClasses = null;
-
-        self.upperBtnCls = null;
-        self.lowerBtnCls = null;
-        self.upperBtnDbl = null;
-        self.lowerBtnDbl = null;
 
         self.propCount = null;
         self.linkConfig = {
@@ -51,10 +42,6 @@ angular.module('dashboard')
         self.unsavedConfig = { title: 'STR_CONFIRM', text: 'STR_WARNING_UNSAVED', yes: 'STR_CONTINUE' };
         self.hasUnsavedProposal = false;
         self.remarkIsUnsaved = false;
-
-        var attachmentDropdownOpen = false;
-        var materialsDropdownOpen = false;
-        var isIe = $rootScope.isIe;
 
         function countProposals(proposals) {
             var published = 0;
@@ -90,62 +77,11 @@ angular.module('dashboard')
         }
 
         function setBlockMode(mode) {
-            self.blockMode = mode;
-
-            switch (self.blockMode) {
-                case CONST.BLOCKMODE.UPPER:
-                    self.upperClasses = 'ad-flex-show-full';
-                    self.lowerClasses = 'ad-flex-hide';
-                    self.upperBtnCls = 'glyphicon glyphicon-menu-up';
-                    self.lowerBtnCls = 'glyphicon glyphicon-menu-up';
-                    self.upperBtnDbl = false;
-                    self.lowerBtnDbl = true;
-                    break;
-
-                case CONST.BLOCKMODE.BOTH:
-                    self.upperClasses = 'ad-flex-show';
-                    self.lowerClasses = 'ad-flex-show';
-                    self.upperBtnCls = 'glyphicon glyphicon-menu-down';
-                    self.lowerBtnCls = 'glyphicon glyphicon-menu-up';
-                    self.upperBtnDbl = false;
-                    self.lowerBtnDbl = false;
-                    break;
-
-                case CONST.BLOCKMODE.LOWER:
-                    self.upperClasses = 'ad-flex-hide';
-                    self.lowerClasses = 'ad-flex-show-full';
-                    self.upperBtnCls = 'glyphicon glyphicon-menu-down';
-                    self.lowerBtnCls = 'glyphicon glyphicon-menu-down';
-                    self.upperBtnDbl = true;
-                    self.lowerBtnDbl = false;
-                    break;
-
-                default:
-                    $log.error('meetingDetailsCtrl: setBlockMode unsupported mode');
-                    break;
-            }
+            self.bm = mode;
         }
 
         function setLowerBlockMode(mode) {
             self.lbm = mode;
-
-            switch (self.lbm) {
-                case CONST.LOWERBLOCKMODE.PROPOSALS:
-                    break;
-
-                case CONST.LOWERBLOCKMODE.ATTACHMENTS:
-                    break;
-
-                case CONST.LOWERBLOCKMODE.MATERIALS:
-                    break;
-
-                case CONST.LOWERBLOCKMODE.REMARK:
-                    break;
-
-                default:
-                    $log.error('meetingDetailsCtrl: setLowerBlockMode unsupported mode');
-                    break;
-            }
         }
 
         function setData(topic) {
@@ -153,8 +89,8 @@ angular.module('dashboard')
             self.aData = null;
             self.tData = null;
             self.dData = null;
-            self.lowerUrl = null;
-            self.upperUrl = null;
+            self.secondaryUrl = null;
+            self.primaryUrl = null;
             self.selData = null;
 
             if (self.lbm !== CONST.LOWERBLOCKMODE.PROPOSALS && self.lbm !== CONST.LOWERBLOCKMODE.REMARK) {
@@ -173,7 +109,7 @@ angular.module('dashboard')
                     }
                 }
 
-                self.upperUrl = (self.tData && self.tData.link) ? self.tData.link : {};
+                self.primaryUrl = (self.tData && self.tData.link) ? self.tData.link : {};
 
                 self.aData = ListData.createAttachmentList({ 'header': 'STR_ATTACHMENTS', 'title': topic.topicTitle }, topic.attachment);
                 self.dData = ListData.createDecisionList({ 'header': 'STR_DECISION_HISTORY', 'title': topic.topicTitle }, topic.decision);
@@ -187,16 +123,39 @@ angular.module('dashboard')
 
         function checkMode() {
             if (!isMobile && self.isUpperMode()) {
-                setBlockMode(CONST.BLOCKMODE.BOTH);
+                setBlockMode(CONST.BLOCKMODE.DEFAULT);
             }
         }
 
-        self.upperClicked = function () {
-            setBlockMode((self.blockMode === CONST.BLOCKMODE.BOTH || self.blockMode === CONST.BLOCKMODE.LOWER) ? CONST.BLOCKMODE.UPPER : CONST.BLOCKMODE.BOTH);
+        self.primaryClicked = function () {
+            setBlockMode((self.bm === CONST.BLOCKMODE.PRIMARY || self.bm === CONST.BLOCKMODE.SECONDARY) ? CONST.BLOCKMODE.DEFAULT : CONST.BLOCKMODE.PRIMARY);
         };
 
-        self.lowerClicked = function () {
-            setBlockMode((self.blockMode === CONST.BLOCKMODE.BOTH || self.blockMode === CONST.BLOCKMODE.UPPER) ? CONST.BLOCKMODE.LOWER : CONST.BLOCKMODE.BOTH);
+        self.secondaryClicked = function () {
+            setBlockMode((self.bm === CONST.BLOCKMODE.PRIMARY || self.bm === CONST.BLOCKMODE.SECONDARY) ? CONST.BLOCKMODE.DEFAULT : CONST.BLOCKMODE.SECONDARY);
+        };
+
+        self.attClicked = function () {
+            var data = [self.aData];
+            self.selData = angular.equals(self.selData, data) ? null : data;
+        };
+
+        self.matClicked = function () {
+            var data = [self.amData, self.dData];
+            self.selData = angular.equals(self.selData, data) ? null : data;
+        };
+
+        self.selClicked = function (data) {
+            if (self.aData.objects.indexOf(data) > CONST.NOTFOUND) {
+                self.attachmentClicked(data);
+            }
+            else if (self.amData.objects.indexOf(data) > CONST.NOTFOUND) {
+                self.additionalMaterialClicked(data);
+            }
+            else if (self.dData.objects.indexOf(data) > CONST.NOTFOUND) {
+                self.decisionClicked(data);
+            }
+            self.selData = null;
         };
 
         self.attClicked = function () {
@@ -229,8 +188,8 @@ angular.module('dashboard')
                 $state.go(CONST.APPSTATE.LIST);
             }
             else if (attachment instanceof Object) {
-                self.lowerUrl = attachment.link ? attachment.link : {};
-                self.lowerAtt = attachment;
+                self.secondaryUrl = attachment.link ? attachment.link : {};
+                self.secondaryAtt = attachment;
             }
             self.hasUnsavedProposal = false;
             self.remarkIsUnsaved = false;
@@ -244,7 +203,7 @@ angular.module('dashboard')
                 $state.go(CONST.APPSTATE.LIST);
             }
             else if (decision instanceof Object) {
-                self.lowerUrl = decision.link ? decision.link : {};
+                self.secondaryUrl = decision.link ? decision.link : {};
             }
             self.hasUnsavedProposal = false;
             self.remarkIsUnsaved = false;
@@ -258,7 +217,7 @@ angular.module('dashboard')
                 $state.go(CONST.APPSTATE.LIST);
             }
             else if (material instanceof Object) {
-                self.lowerUrl = material.link ? material.link : {};
+                self.secondaryUrl = material.link ? material.link : {};
             }
             self.hasUnsavedProposal = false;
             self.remarkIsUnsaved = false;
@@ -266,6 +225,7 @@ angular.module('dashboard')
         };
 
         self.proposalsClicked = function () {
+            self.selData = null;
             setLowerBlockMode(CONST.LOWERBLOCKMODE.PROPOSALS);
             if (isMobile) {
                 $state.go(CONST.APPSTATE.LISTPROPOSALS);
@@ -274,7 +234,7 @@ angular.module('dashboard')
         };
 
         self.remarkClicked = function () {
-            $log.debug("meetingDetailsCtrl: remarkClicked");
+            self.selData = null;
             setLowerBlockMode(CONST.LOWERBLOCKMODE.REMARK);
             if (isMobile) {
                 $state.go(CONST.APPSTATE.REMARK);
@@ -282,26 +242,16 @@ angular.module('dashboard')
             checkMode();
         };
 
-        self.aToggled = function (open) {
-            attachmentDropdownOpen = open;
-            self.hide = (attachmentDropdownOpen || materialsDropdownOpen) && isIe;
-        };
-
-        self.mToggled = function (open) {
-            materialsDropdownOpen = open;
-            self.hide = (attachmentDropdownOpen || materialsDropdownOpen) && isIe;
-        };
-
         self.isBothMode = function () {
-            return self.blockMode === CONST.BLOCKMODE.BOTH;
+            return self.bm === CONST.BLOCKMODE.DEFAULT;
         };
 
         self.isUpperMode = function () {
-            return self.blockMode === CONST.BLOCKMODE.UPPER;
+            return self.bm === CONST.BLOCKMODE.PRIMARY;
         };
 
         self.isLowerMode = function () {
-            return self.blockMode === CONST.BLOCKMODE.LOWER;
+            return self.bm === CONST.BLOCKMODE.SECONDARY;
         };
 
         self.isSecret = function (item) {
@@ -328,11 +278,24 @@ angular.module('dashboard')
             return res;
         };
 
+        self.toggleParallelMode = function () {
+            $rootScope.parallelMode = $rootScope.parallelMode ? false : true;
+            setBlockMode(CONST.BLOCKMODE.DEFAULT);
+        };
+
         $scope.$watch(function () {
             return StorageSrv.getKey(CONST.KEY.TOPIC);
         }, function (topic, oldTopic) {
             if (!angular.equals(topic, oldTopic)) {
                 setData(topic);
+            }
+        });
+
+        $scope.$watch(function () {
+            return $rootScope.parallelMode;
+        }, function (parallel) {
+            if (parallel) {
+                setBlockMode(CONST.BLOCKMODE.DEFAULT);
             }
         });
 
@@ -359,7 +322,7 @@ angular.module('dashboard')
             $log.debug("meetingDetailsCtrl: DESTROY");
         });
 
-        setBlockMode(CONST.BLOCKMODE.BOTH);
+        setBlockMode(CONST.BLOCKMODE.DEFAULT);
         setLowerBlockMode(CONST.LOWERBLOCKMODE.PROPOSALS);
         setData(StorageSrv.getKey(CONST.KEY.TOPIC));
     }]);

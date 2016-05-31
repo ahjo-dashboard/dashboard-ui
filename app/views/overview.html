@@ -41,11 +41,11 @@
                     <span class="glyphicon glyphicon-info-sign"></span>
                 </button>
                 <button type="button" class="btn db-btn-prim ad-xs db-btn-list-topright-xs db-btn-list-topright-sm" ng-click="oc.upperClicked()">
-                    <span class="ng-class: ['glyphicon', {'glyphicon-plus':oc.blockMode !== oc.bms.UPPER, 'glyphicon-minus':oc.blockMode === oc.bms.UPPER}]"></span>
+                    <span class="ng-class: ['glyphicon', {'glyphicon-plus':oc.blockMode !== oc.bms.PRIMARY, 'glyphicon-minus':oc.blockMode === oc.bms.PRIMARY}]"></span>
                 </button>
             </div>
 
-            <div ng-if="oc.hasMeetings" class="ad-flex-item db-overflow ng-class:[{'ad-flex-show-full':oc.blockMode === oc.bms.UPPER, 'ad-flex-show':oc.blockMode === oc.bms.BOTH, 'ad-flex-hide':oc.blockMode === oc.bms.LOWER}]">
+            <div ng-if="oc.hasMeetings" class="ad-flex-item db-overflow ng-class:[{'ad-flex-show-full':oc.blockMode === oc.bms.PRIMARY, 'ad-flex-show':oc.blockMode === oc.bms.DEFAULT, 'ad-flex-hide':oc.blockMode === oc.bms.SECONDARY}]">
                 <ad-meetings visible-meetings="oc.vblMtgs" on-selected="oc.meetingItemSelected(meetingItem)">
                 </ad-meetings>
             </div>
@@ -68,11 +68,11 @@
                     <span class="glyphicon glyphicon-info-sign"></span>
                 </button>
                 <button type="button" class="btn db-btn-prim ad-xs db-btn-list-topright-xs db-btn-list-topright-sm" ng-click="oc.lowerClicked()">
-                    <span class="glyphicon ng-class:[{'glyphicon-plus':oc.blockMode !== oc.bms.LOWER, 'glyphicon-minus':oc.blockMode === oc.bms.LOWER}]"></span>
+                    <span class="glyphicon ng-class:[{'glyphicon-plus':oc.blockMode !== oc.bms.SECONDARY, 'glyphicon-minus':oc.blockMode === oc.bms.SECONDARY}]"></span>
                 </button>
             </div>
 
-            <div ng-if="oc.hasEsign" class="ad-flex-item db-overflow ng-class:[{'ad-flex-show-full':oc.blockMode === oc.bms.LOWER, 'ad-flex-show':oc.blockMode === oc.bms.BOTH, 'ad-flex-hide':oc.blockMode === oc.bms.UPPER}]">
+            <div ng-if="oc.hasEsign" class="ad-flex-item db-overflow ng-class:[{'ad-flex-show-full':oc.blockMode === oc.bms.SECONDARY, 'ad-flex-show':oc.blockMode === oc.bms.DEFAULT, 'ad-flex-hide':oc.blockMode === oc.bms.PRIMARY}]">
                 <ad-open-signreqs closeditems="oc.closedSignReqs"></ad-open-signreqs>
             </div>
             <!-- SIGNINGS END -->
