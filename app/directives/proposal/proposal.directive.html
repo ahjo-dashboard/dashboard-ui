@@ -1,43 +1,43 @@
-<div class="proposal db-directive">
+<div class="proposal db-directive db-padding-10" ng-click="(c.mode !== c.modes.EDIT) && c.toggleCollapse()">
 
-    <div class="prop-row">
-        <div class="db-nopadding ng-class:{'col-xs-6 col-sm-8 col-md-9 col-lg-9': c.mode !== c.modes.COLLAPSED, 'col-xs-10 col-sm-11 col-md-11 col-lg-11': c.mode === c.modes.COLLAPSED}"
-            ng-click="c.itemClicked()">
-            <p class="prop-text-oneliner">
-                <span ng-show="c.uiProposal.isPublishedIcon" class="glyphicon glyphicon-send db-published" aria-hidden="true" tooltip-enable="c.isTooltips"
-                    uib-tooltip="{{'STR_PUBLISHED' | translate}}" tooltip-placement="right"></span>
-                <span ng-show="c.uiProposal.isModified" class="glyphicon glyphicon-bell db-newprops" aria-hidden="true" tooltip-enable="c.isTooltips"
-                    uib-tooltip="{{'STR_INFO_NEW_PROPS' | translate}}" tooltip-placement="right"></span>
-                <b>{{c.uiProposal.orderNumber}}</b>&nbsp;&nbsp;<b>{{c.typeText(c.uiProposal.proposalType)}}</b>&nbsp;&nbsp;
-                <b ng-if="c.uiProposal.isPublished === c.status.YES">{{c.uiProposal.personName}}</b>&nbsp;&nbsp;
-                <span ng-if="c.mode === c.modes.COLLAPSED" ng-bind-html="c.uiProposal.text">{{c.mode}}</span>
-            </p>
-        </div>
+    <div class="db-flex db-center-v">
 
-        <div class="db-nopadding text-right ng-class:{'col-xs-6 col-sm-4 col-md-3 col-lg-3': c.mode !== c.modes.COLLAPSED, 'col-xs-2 col-sm-1 col-md-1 col-lg-1': c.mode === c.modes.COLLAPSED}">
-            <span us-spinner="{left:'0%', radius:6, width:2, length:4}" spinner-on="c.updating"></span>
-            <button ng-if="c.eBtn" class="btn {{c.eBtn.type}} btn-sm" ng-disabled="c.eBtn.disabled || c.updating" ng-click="c.act(c.eBtn.action)"
-                db-confirm confirm-enabled="c.eBtn.active" confirm-config="c.eBtn.config" uib-tooltip="{{c.eBtn.tooltip | translate}}">
-                <span class="glyphicon {{c.eBtn.icon}}"></span>
-            </button>
-            <button ng-if="c.lBtn" class="btn {{c.lBtn.type}} btn-sm" ng-disabled="c.lBtn.disabled || c.updating" ng-click="c.act(c.lBtn.action)"
-                db-confirm confirm-enabled="c.lBtn.active" confirm-config="c.lBtn.config" uib-tooltip="{{c.lBtn.tooltip | translate}}">
-                <span class="glyphicon {{c.lBtn.icon}}"></span>
-            </button>
-            <button ng-if="c.mBtn" class="btn {{c.mBtn.type}} btn-sm" ng-disabled="c.mBtn.disabled || c.updating" ng-click="c.act(c.mBtn.action)"
-                db-confirm confirm-enabled="c.mBtn.active" confirm-config="c.mBtn.config" uib-tooltip="{{c.mBtn.tooltip | translate}}">
-                <span class="glyphicon {{c.mBtn.icon}}"></span>
-            </button>
-            <button ng-if="c.rBtn" class="btn {{c.rBtn.type}} btn-sm" ng-disabled="c.rBtn.disabled || c.updating" ng-click="c.act(c.rBtn.action)"
-                db-confirm confirm-enabled="c.rBtn.active" confirm-config="c.rBtn.config" uib-tooltip="{{c.rBtn.tooltip | translate}}">
-                <span class="glyphicon {{c.rBtn.icon}}"></span>
-            </button>
-        </div>
+        <span class="db-margin-10-right glyphicon glyph-fs-14 ng-class:{'glyphicon-minus': c.mode !== c.modes.COLLAPSED, 'glyphicon-plus': c.mode === c.modes.COLLAPSED}"
+            aria-hidden="true"></span>
+
+        <span ng-show="c.uiProposal.isPublishedIcon" class="db-margin-10-right glyphicon glyph-fs-14 glyphicon-send db-published"
+            aria-hidden="true" tooltip-enable="c.isTooltips" uib-tooltip="{{'STR_PUBLISHED' | translate}}" tooltip-placement="right"></span>
+
+        <span ng-show="c.uiProposal.isModified" class=" db-margin-10-right glyphicon glyph-fs-14 glyphicon-bell db-newprops" aria-hidden="true"
+            tooltip-enable="c.isTooltips" uib-tooltip="{{'STR_INFO_NEW_PROPS' | translate}}" tooltip-placement="right"></span>
+
+        <b class="db-margin-10-right">{{c.uiProposal.orderNumber}}</b><b class="db-margin-10-right">{{c.typeText(c.uiProposal.proposalType)}}</b>
+        <b class="db-margin-10-right db-oneliner" ng-if="c.uiProposal.isPublished === c.status.YES">{{c.uiProposal.personName}}</b>
+        <span class="db-flex-area db-oneliner" ng-bind-html="c.mode === c.modes.COLLAPSED ? c.uiProposal.text : null"></span>
+
     </div>
 
-    <div uib-collapse="c.mode === c.modes.COLLAPSED">
-        <div ng-if="c.mode === c.modes.OPEN" class="prop-text" ng-bind-html="c.uiProposal.text | unsafe"></div>
-        <div ng-if="c.mode === c.modes.EDIT" class="prop-text" contenteditable="true" auto-focus ng-model="c.editedText"></div>
-    </div>
+    <div class="db-flex">
 
+        <div class="db-flex-area" uib-collapse="c.mode === c.modes.COLLAPSED">
+            <div ng-if="c.mode === c.modes.OPEN" ng-bind-html="c.uiProposal.text | unsafe"></div>
+            <div class="db-margin-10" ng-if="c.mode === c.modes.EDIT" contenteditable="true" auto-focus ng-model="c.editedText"></div>
+
+
+            <div ng-if="c.mode !== c.modes.COLLAPSED" class="db-flex-right db-flex-area">
+                <button ng-if="c.uiProposal.isOwnProposal && (c.mode !== c.modes.EDIT)" class="btn btn-danger db-btn-big db-margin-2" ng-disabled="false"
+                    ng-click="c.remove()"><span>Poista</span></button>
+                <button ng-if="c.uiProposal.isOwnProposal && !c.uiProposal.isPublished && (c.mode !== c.modes.EDIT)" class="btn btn-success db-btn-big db-margin-2" ng-disabled="false"
+                    ng-click="c.send()"><span>Lähetä</span></button>
+                <button ng-if="c.uiProposal.isOwnProposal && !c.uiProposal.isPublished && (c.mode !== c.modes.EDIT)" class="btn btn-primary db-btn-big db-margin-2" ng-disabled="false"
+                    ng-click="c.edit()"><span>Editoi</span></button>
+                <button ng-if="c.uiProposal.isOwnProposal && (c.mode === c.modes.EDIT)" class="btn btn-primary db-btn-big db-margin-2" ng-disabled="false"
+                    ng-click="c.cancel()"><span>Peruuta</span></button>
+                <button ng-if="c.uiProposal.isOwnProposal && (c.mode === c.modes.EDIT)" class="btn btn-success db-btn-big db-margin-2" ng-disabled="false"
+                    ng-click="c.accept()"><span>Hyväksy</span></button>
+            </div>
+
+        </div>
+
+    </div>
 </div>

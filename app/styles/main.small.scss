@@ -16,6 +16,18 @@ $font-color-header: white;
 $db-color-success: #5cb85c;
 $db-color-danger: #d9534f;
 
+// GENERIC DECLARATION START
+.db-btn-small {
+    min-width: 80px;
+    max-width: 80px;
+}
+
+.db-btn-big {
+    min-width: 160px;
+    max-width: 160px;
+}
+// GENERIC DECLARATION END
+
     #device {
         min-width: 768px;
         display: none;

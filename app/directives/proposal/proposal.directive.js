@@ -16,16 +16,6 @@ angular.module('dashboard')
             COLLAPSED: 'COLLAPSED',
             OPEN: 'OPEN',
             EDIT: 'EDIT'
-        },
-        'BTN': {
-            OPEN: { icon: 'glyphicon-triangle-bottom', action: 'OPEN', type: 'btn-primary', tooltip: 'STR_OPEN', active: false },
-            CLOSE: { icon: 'glyphicon-triangle-top', action: 'CLOSE', type: 'btn-primary', tooltip: 'STR_CLOSE', active: false },
-            EDIT: { icon: 'glyphicon-pencil', action: 'EDIT', type: 'btn-primary', disabled: false, tooltip: 'STR_EDIT', active: false },
-            OK: { icon: 'glyphicon-ok', action: 'OK', type: 'btn-primary', tooltip: 'STR_SAVE', active: false },
-            CANCEL: { icon: 'glyphicon-remove', action: 'CANCEL', type: 'btn-warning', tooltip: 'STR_CANCEL', active: false },
-            SEND: { icon: 'glyphicon-send', action: 'SEND', type: 'btn-success', tooltip: 'STR_PUBLISH', active: true, config: { title: 'STR_CONFIRM', text: 'STR_CNFM_SEND_PROP', yes: 'STR_PUBLISH' } },
-            DISABLEDSEND: { icon: 'glyphicon-send', action: 'SEND', type: 'btn-success', disabled: true, tooltip: 'STR_PUBLISH', active: false },
-            DELETE: { icon: 'glyphicon-trash', action: 'DELETE', type: 'btn-danger', tooltip: 'STR_DELETE', active: true, config: { title: 'STR_CONFIRM', text: 'STR_CNFM_DEL_PROP', yes: 'STR_DELETE' } }
         }
     })
     .filter('unsafe', function ($sce) {
@@ -48,77 +38,12 @@ angular.module('dashboard')
             var previousIsPublished = null;
             var createDisabled = false;
 
-            self.eBtn = null;
-            self.lBtn = null;
-            self.mBtn = null;
-            self.rBtn = null;
-
             self.editor = {
                 'menu': []
             };
 
-            function refreshButtons() {
-                if (angular.equals(self.eBtn, PROP.BTN.EDIT)) {
-                    self.eBtn.disabled = createDisabled;
-                }
-                if (angular.equals(self.lBtn, PROP.BTN.EDIT)) {
-                    self.lBtn.disabled = createDisabled;
-                }
-                if (angular.equals(self.mBtn, PROP.BTN.EDIT)) {
-                    self.mBtn.disabled = createDisabled;
-                }
-                if (angular.equals(self.rBtn, PROP.BTN.EDIT)) {
-                    self.rBtn.disabled = createDisabled;
-                }
-            }
-
             function setMode(mode) {
-                if (mode === self.mode) {
-                    return;
-                }
                 self.mode = mode;
-
-                switch (self.mode) {
-                    case PROP.MODE.COLLAPSED:
-                        self.rBtn = PROP.BTN.OPEN;
-                        self.mBtn = null;
-                        self.lBtn = null;
-                        self.eBtn = null;
-                        break;
-
-                    case PROP.MODE.OPEN:
-                        self.rBtn = PROP.BTN.CLOSE;
-                        self.mBtn = null;
-                        self.lBtn = null;
-                        self.eBtn = null;
-
-                        if ($scope.proposal.isOwnProposal) {
-                            if ($scope.proposal.isPublished === null || $scope.proposal.isPublished === PROPS.PUBLISHED.NO) {
-                                self.mBtn = PROP.BTN.DELETE;
-                                self.lBtn = PROP.BTN.SEND;
-                                self.eBtn = PROP.BTN.EDIT;
-                            }
-
-                            else if ($scope.proposal.isPublished === PROPS.PUBLISHED.YES) {
-                                self.mBtn = PROP.BTN.DELETE;
-                            }
-                            else {
-                                $log.error('dbProposal: setMode unsupported status');
-                            }
-                            refreshButtons();
-                        }
-                        break;
-
-                    case PROP.MODE.EDIT:
-                        self.rBtn = PROP.BTN.CANCEL;
-                        self.mBtn = PROP.BTN.OK;
-                        self.lBtn = null;
-                        self.eBtn = null;
-                        break;
-
-                    default:
-                        break;
-                }
             }
 
             function setProposal(proposal) {
@@ -247,55 +172,48 @@ angular.module('dashboard')
                 }
             };
 
-            self.act = function (action) {
-                switch (action) {
-                    case PROP.BTN.CLOSE.action:
-                        setMode(PROP.MODE.COLLAPSED);
-                        break;
-
-                    case PROP.BTN.OPEN.action:
-                        setMode(PROP.MODE.OPEN);
-                        if (self.uiProposal.isModified) {
-                            updatePolledEvents();
-                            $scope.proposal.isModified = false;
-                        }
-                        break;
-
-                    case PROP.BTN.CANCEL.action:
-                        $scope.proposal.isPublished = previousIsPublished;
-                        if ($scope.proposal.isPublished === null) {
-                            deleteProposal($scope.proposal);
-                        }
-                        setMode(PROP.MODE.OPEN);
-                        $rootScope.$emit(PROPS.UPDATED, { sender: $scope.proposal });
-                        break;
-
-                    case PROP.BTN.OK.action:
-                        $scope.proposal.text = self.editedText ? self.editedText : '';
-                        postProposal($scope.proposal);
-                        setMode(PROP.MODE.OPEN);
-                        break;
-
-                    case PROP.BTN.DELETE.action:
-                        deleteProposal($scope.proposal);
-                        break;
-
-                    case PROP.BTN.SEND.action:
-                        postProposal($scope.proposal);
-                        break;
-
-                    case PROP.BTN.EDIT.action:
-                        self.editedText = $scope.proposal.text;
-                        previousIsPublished = $scope.proposal.isPublished;
-                        $scope.proposal.isPublished = null;
-                        setMode(PROP.MODE.EDIT);
-                        $rootScope.$emit(PROPS.UPDATED, { sender: $scope.proposal });
-                        break;
-
-                    default:
-                        $log.error("dbProposal: unsupported action");
-                        break;
+            self.toggleCollapse = function () {
+                if (self.mode === PROP.MODE.COLLAPSED) {
+                    setMode(PROP.MODE.OPEN);
+                    if (self.uiProposal.isModified) {
+                        updatePolledEvents();
+                        $scope.proposal.isModified = false;
+                    }
                 }
+                else {
+                    setMode(PROP.MODE.COLLAPSED);
+                }
+            };
+
+            self.edit = function () {
+                self.editedText = $scope.proposal.text;
+                previousIsPublished = $scope.proposal.isPublished;
+                $scope.proposal.isPublished = null;
+                setMode(PROP.MODE.EDIT);
+                $rootScope.$emit(PROPS.UPDATED, { sender: $scope.proposal });
+            };
+
+            self.remove = function () {
+                deleteProposal($scope.proposal);
+            };
+
+            self.accept = function () {
+                $scope.proposal.text = self.editedText ? self.editedText : '';
+                postProposal($scope.proposal);
+                setMode(PROP.MODE.OPEN);
+            };
+
+            self.cancel = function () {
+                $scope.proposal.isPublished = previousIsPublished;
+                if ($scope.proposal.isPublished === null) {
+                    deleteProposal($scope.proposal);
+                }
+                setMode(PROP.MODE.OPEN);
+                $rootScope.$emit(PROPS.UPDATED, { sender: $scope.proposal });
+            };
+
+            self.send = function () {
+                postProposal($scope.proposal);
             };
 
             setProposal($scope.proposal);
@@ -321,7 +239,6 @@ angular.module('dashboard')
                 if (angular.isObject(data)) {
                     if (createDisabled !== data.disableCreate) {
                         createDisabled = data.disableCreate;
-                        refreshButtons();
                     }
                 }
             }, true);

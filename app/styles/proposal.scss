@@ -11,31 +11,26 @@ $btn-radius: 6px;
 .proposal-list {
     flex: 1;
 
-    span.glyphicon {
-        font-size: 1.0em !important;
-    }
-
     .btn-sm {
         margin: 1px;
     }
 
-    .prop-header {
+    .db-prop-hdr {
         background-color: #4591d3;
-
-        h1, h2, h3, h4, h5 {
-            color: $font-color;
-        }
+        color: $font-color;
+        display: flex;
+        flex-direction: column;
+        padding: 0.5vh 1.0vh;
+        border-top-left-radius: $btn-radius;
+        border-top-right-radius: $btn-radius;
+        position: relative;
     }
 
-    .prop-button {
-        text-align: center !important;
-        min-height: 30px;
-    }
-
-    .prop-header-text {
-        min-height: 30px;
+    .db-prop-hdr-text {
         display: flex;
         align-items: center;
+        flex: 1;
+        padding: 1.5vh;
     }
 
     .prop-text {
@@ -51,25 +46,22 @@ $btn-radius: 6px;
         height: 1.6em;
     }
 
-    .prop-row {
-        @extend .row;
-        margin: 0;
-        display: flex;
-        align-items: center;
-    }
-
     .list-group-item {
         border-color: #4591d3;
     }
 
     .list-group-item:first-child {
-        border-top-left-radius: $btn-radius;
-        border-top-right-radius: $btn-radius;
+        border-top-left-radius: 0 !important;
+        border-top-right-radius: 0 !important;
+        border-bottom-left-radius: 0 !important;
+        border-bottom-right-radius: 0 !important;
     }
 
     .list-group-item:last-child {
-        border-bottom-left-radius: $btn-radius;
-        border-bottom-right-radius: $btn-radius;
+        border-top-left-radius: 0 !important;
+        border-top-right-radius: 0 !important;
+        border-bottom-left-radius: $btn-radius !important;
+        border-bottom-right-radius: $btn-radius !important;
     }
 
     .prop-dropdown-item {
@@ -84,6 +76,16 @@ $btn-radius: 6px;
 
     /* Small devices (tablets, 768px and up) */
     @media screen and (min-width: 768px) {
+
+        .db-prop-hdr {
+            flex-direction: row;
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+        }
+
+        .db-prop-hdr-text {
+            padding: 1.0vh;
+        }
 
         .prop-button {
             border-radius: $btn-radius;

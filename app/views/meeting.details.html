@@ -9,11 +9,11 @@
             <!-- PRIMARY BLOCK HEADER -->
             <div class="btn-group db-block-hdr db-prim-bg db-brd-top db-padding-2">
 
-                <button ng-if="menuClosed()" type="button" class="btn db-btn-prim db-block-hdr-item-sm db-brd db-margin-2" ng-click="openMenu()"><span class="glyphicon glyphicon-menu-hamburger"></span></button>
-                <button ng-if="menuClosed()" type="button" class="btn db-btn-prim db-block-hdr-item-sm db-brd db-margin-2" ng-click="c.toggleParallelMode()">
+                <button ng-if="menuClosed()" type="button" class="btn db-btn-prim db-btn-small db-brd db-margin-2" ng-click="openMenu()"><span class="glyphicon glyphicon-menu-hamburger"></span></button>
+                <button ng-if="menuClosed()" type="button" class="btn db-btn-prim db-btn-small db-brd db-margin-2" ng-click="c.toggleParallelMode()">
                     <span class="glyphicon ng-class:[{'glyphicon-resize-vertical':parallelMode},{'glyphicon-resize-horizontal':!parallelMode}]"></span>
                 </button>
-                <button type="button" class="btn db-btn-prim db-block-hdr-item-sm db-brd db-margin-2" ng-disabled="parallelMode" ng-click="c.primaryClicked()">
+                <button type="button" class="btn db-btn-prim db-btn-small db-brd db-margin-2" ng-disabled="parallelMode" ng-click="c.primaryClicked()">
                     <span class="glyphicon ng-class:[{'glyphicon-minus':c.bm === c.bms.PRIMARY},{'glyphicon-plus':c.bm !== c.bms.PRIMARY}]"></span>
                 </button>
 
@@ -37,25 +37,25 @@
             <!-- SECONDARY  BLOCK HEADER -->
             <div class="btn-group db-block-hdr db-prim-bg db-brd-top db-padding-2">
 
-                <button type="button" class="btn db-btn-prim db-block-hdr-item-sm db-brd db-margin-2" ng-disabled="parallelMode" ng-click="c.secondaryClicked()">
+                <button type="button" class="btn db-btn-prim db-btn-small db-brd db-margin-2" ng-disabled="parallelMode" ng-click="c.secondaryClicked()">
                     <span class="glyphicon ng-class:[{'glyphicon-minus':c.bm === c.bms.SECONDARY},{'glyphicon-plus':c.bm !== c.bms.SECONDARY}]""></span>
                 </button>
 
-                <button type="button" class="btn db-btn-prim db-block-hdr-item-md db-brd db-margin-2 ng-class:[{'active':c.lbm === c.lbms.ATTACHMENTS}]"
+                <button type="button" class="btn db-btn-prim db-btn-big db-brd db-margin-2 ng-class:[{'active':c.lbm === c.lbms.ATTACHMENTS}]"
                     db-confirm confirm-enabled="c.hasUnsavedProposal || c.remarkIsUnsaved" confirm-config="c.unsavedConfig" ng-click="c.attClicked()">
                     <span translate translate-cloak>STR_ATTACHMENTS</span>
                     <span ng-if="c.aData.objects.length" class="badge ng-cloak">{{c.aData.objects.length}}</span>
                 </button>
-                <button type="button" class="btn db-btn-prim db-block-hdr-item-md db-brd db-margin-2 ng-class:[{'active':c.lbm === c.lbms.MATERIALS}]"
+                <button type="button" class="btn db-btn-prim db-btn-big db-brd db-margin-2 ng-class:[{'active':c.lbm === c.lbms.MATERIALS}]"
                     db-confirm confirm-enabled="c.hasUnsavedProposal || c.remarkIsUnsaved" confirm-config="c.unsavedConfig" ng-click="c.matClicked()">
                     <span translate translate-cloak>STR_OTHER_MATERIAL</span>
                     <span ng-if="c.materialCount()" class="badge ng-cloak">{{c.materialCount()}}</span>
                 </button>
-                <button type="button" class="btn db-btn-prim db-block-hdr-item-md btn-block db-brd db-margin-2 ng-class:[{'active':c.lbm === c.lbms.PROPOSALS}]"
+                <button type="button" class="btn db-btn-prim db-btn-big btn-block db-brd db-margin-2 ng-class:[{'active':c.lbm === c.lbms.PROPOSALS}]"
                     db-confirm confirm-enabled="c.hasUnsavedProposal || c.remarkIsUnsaved" confirm-config="c.unsavedConfig" ng-click="c.proposalsClicked()">
                     <span translate translate-cloak>STR_PROPOSALS</span>
                 </button>
-                <button type="button" class="btn db-btn-prim db-block-hdr-item-md db-brd db-margin-2 ng-class:[{'active':c.lbm === c.lbms.REMARK}]"
+                <button type="button" class="btn db-btn-prim db-btn-big db-brd db-margin-2 ng-class:[{'active':c.lbm === c.lbms.REMARK}]"
                     ng-click="c.remarkClicked()">
                     <span translate translate-cloak>STR_REMARK</span>
                 </button>
@@ -81,7 +81,7 @@
     <!-- DESKTOP END -->
 
     <!-- MOBILE START -->
-    <div ng-if="isMobile" class="ad-page-header db-center">
+    <div ng-if="isMobile" class="ad-page-header db-center-v">
         <button type="button" class="btn db-btn-hdr db-no-margin" ng-click="goBack()">
             <span class="glyphicon glyphicon-menu-left"></span>
         </button>
@@ -110,7 +110,7 @@
             <button type="button" class="btn btn-info btn-lg btn-block wrap-button-text db-btn-prim" ng-click="c.proposalsClicked()">
                 <span translate translate-cloak>STR_PROPOSALS</span>
                 <span ng-if="c.propCount !== null" class="badge">
-                    <span class="db-center">
+                    <span class="db-center-v">
                         {{c.propCount}}
                         <span ng-show="c.topic.isModified">
                             &nbsp;<span class="glyphicon glyphicon-bell db-newprops" aria-hidden="true"></span>

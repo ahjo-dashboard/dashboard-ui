@@ -1,6 +1,6 @@
 <div class="ad-page">
 
-    <div ng-if="!msc.isMobile" class="ad-page-header db-center">
+    <div ng-if="!msc.isMobile" class="ad-page-header db-center-v">
         <button type="button" class="btn db-btn-hdr glyphicon glyphicon-menu-hamburger" ng-click="closeMenu()">
         </button>
         <button db-confirm confirm-enabled="msc.hasUnsavedProposal || msc.remarkIsUnsaved" confirm-config="msc.unsavedConfig" type="button"
@@ -12,7 +12,7 @@
         </button>
     </div>
 
-    <div ng-if="msc.isMobile" class="ad-page-header db-center">
+    <div ng-if="msc.isMobile" class="ad-page-header db-center-v">
         <button type="button" class="btn db-btn-hdr db-no-margin" ng-click="goHome()">
             <span class="glyphicon glyphicon-menu-left"></span>
         </button>
