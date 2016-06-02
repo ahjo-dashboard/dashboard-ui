@@ -1,0 +1,72 @@
+<div class="ad-page">
+
+    <div class="ng-class:[{'ad-page-container-flex-row':parallelMode},{'ad-page-container-flex':!parallelMode}]">
+
+        <!-- PRIMARY BLOCK START-->
+        <div class="db-block db-margin-05 ng-class:[{'db-block-close':c.bm === c.bms.SECONDARY},{'db-block-open':c.bm !== c.bms.SECONDARY}]">
+
+            <!-- PRIMARY BLOCK HEADER -->
+            <div class="btn-group db-block-hdr db-prim-bg db-brd-top db-padding-2">
+                <button ng-if="menuClosed()" type="button" class="btn db-btn-prim db-btn-small db-brd db-margin-2" ng-click="openMenu()"><span class="glyphicon glyphicon-menu-hamburger"></span></button>
+                <button ng-if="menuClosed()" type="button" class="btn db-btn-prim db-btn-small db-brd db-margin-2" ng-click="c.toggleParallelMode()">
+                    <span class="glyphicon ng-class:[{'glyphicon-resize-vertical':parallelMode},{'glyphicon-resize-horizontal':!parallelMode}]"></span>
+                </button>
+                <button type="button" class="btn db-btn-prim db-btn-small db-brd db-margin-2" ng-disabled="parallelMode" ng-click="c.primaryClicked()">
+                    <span class="glyphicon ng-class:[{'glyphicon-minus':c.bm === c.bms.PRIMARY},{'glyphicon-plus':c.bm !== c.bms.PRIMARY}]"></span>
+                </button>
+
+                <button type="button" class="btn db-btn-prim db-block-hdr-item-md db-brd db-margin-2 ng-class:{'active' : c.isActive('doc') }"
+                    ng-click="c.actionDoc()" ng-disabled="false">
+                    <span translate translate-cloak>STR_SIGNING_REQ</span>
+                </button>
+                <button type="button" class="btn db-btn-prim db-block-hdr-item-md db-brd db-margin-2 ng-class:{'active' : c.isActive('doctr') }"
+                    ng-click="c.actionDocTr()" ng-disabled="c.btnModel.doctr.disabled">
+                    <span translate translate-cloak>STR_TRANSLATION</span>
+                </button>
+            </div>
+
+            <!-- PRIMARY BLOCK CONTENT -->
+            <div class="db-block-content db-block-border db-brd-bottom">
+
+                <div db-obs class="ad-flex-item-upper db-item-border">
+                    <db-pdf ng-attr-uri="c.docUrl"></db-pdf>
+                </div>
+
+            </div>
+
+        </div>
+        <!-- PRIMARY BLOCK END -->
+
+        <!-- SECONDARY  BLOCK START -->
+        <div class="db-block db-margin-05 ng-class:[{'db-block-close':c.bm === c.bms.PRIMARY},{'db-block-open':c.bm !== c.bms.PRIMARY}]">
+
+            <!-- SECONDARY BLOCK HEADER -->
+            <div class="btn-group db-block-hdr db-prim-bg db-brd-top db-padding-2">
+
+                <button type="button" class="btn db-btn-prim db-btn-small db-brd db-margin-2" ng-disabled="parallelMode" ng-click="c.secondaryClicked()">
+                    <span class="glyphicon ng-class:[{'glyphicon-minus':c.bm === c.bms.SECONDARY},{'glyphicon-plus':c.bm !== c.bms.SECONDARY}]""></span>
+                </button>
+
+                <button type="button" class="btn db-btn-prim db-block-hdr-item-md db-brd db-margin-2 ng-class:[{ 'active' : c.btnModel.att.active }]"
+                    ng-disabled="c.btnModel.att.disabled" ng-click="c.actionAtt(c.btnModel.att)">
+                    <span translate translate-cloak>{{c.btnModel.att.selData.title.header}}</span>
+                    <span class="badge ng-cloak">{{c.btnModel.att.selData.objects.length}}</span>
+                </button>
+
+            </div>
+
+            <!-- SECONDARY BLOCK CONTENT -->
+            <div ng-hide="c.selData" class="db-block-content db-block-border db-brd-bottom">
+                <db-pdf ng-hide="c.selData" ng-attr-uri="c.secondaryUrl"></db-pdf>
+            </div>
+            <div ng-hide="!c.selData" class="db-block-content db-block-border db-brd-bottom">
+                <db-selection-list ng-attr-sel-data="c.selData" ng-attr-on-select="c.selAtt(data)"></db-selection-list>
+            </div>
+
+
+            <!-- SECONDARY BLOCK END -->
+        </div>
+        <!-- SECONDARY BLOCK END -->
+
+    </div>
+</div>

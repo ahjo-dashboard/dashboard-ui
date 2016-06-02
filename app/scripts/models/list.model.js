@@ -62,7 +62,7 @@ angular.module('dashboard')
 
         ListData.createEsignAttachmentList = function (title, argArr, signItem) {
             var array = [];
-            if (angular.isString(title) && angular.isArray(argArr)) {
+            if (angular.isObject(title) && angular.isArray(argArr)) {
                 for (var i = 0; (i < argArr.length); i++) {
                     var e = argArr[i];
                     var listItem = AttachmentData.create(e.Title, resolveAttUrl(signItem, e), null, null);

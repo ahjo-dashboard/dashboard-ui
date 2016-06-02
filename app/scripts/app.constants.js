@@ -41,6 +41,7 @@ angular.module('dashboard')
             HOME: "app.home",
             OVERVIEW: "app.overview",
             MEETING: "app.meeting",
+            SIGN: "app.sign",
             SIGNITEM: "app.signitem",
             DOCSIGNERS: 'app.signitem.docsigners',
             SIGNLISTATT: 'app.signitem.signattlist',
@@ -71,6 +72,7 @@ angular.module('dashboard')
             SIGNING_RES: 'signingres',
             MEETING_ITEM: 'meetingitem',
             PROPOSAL_EVENT_ARRAY: 'proposaleventarray',
+            SIGN_ITEM: 'signitem',
             VALUE: 'value'
         },
         'BTNTYPE': {

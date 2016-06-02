@@ -206,16 +206,22 @@ angular.module('dashboard')
                         menu: CONST.MENU.FULL
                     }
                 })
-                .state(CONST.APPSTATE.SIGNITEM, {
-                    url: '/signitem',
+                .state(CONST.APPSTATE.SIGN, {
+                    url: '/sign',
                     views: {
-                        'homeContent': {
-                            templateUrl: 'views/signitem.html',
-                            controller: 'signitemCtrl',
-                            controllerAs: 'sc'
+                        'homeLeftContent': {
+                            templateUrl: 'views/sign.status.html',
+                            controller: 'signStatusCtrl',
+                            controllerAs: 'c'
+                        },
+                        'homeRightContent': {
+                            templateUrl: 'views/sign.details.html',
+                            controller: 'signDetailsCtrl',
+                            controllerAs: 'c'
                         }
                     },
                     params: {
+                        menu: CONST.MENU.FULL,
                         signItem: null
                     }
                 });
