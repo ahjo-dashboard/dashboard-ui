@@ -1,7 +1,7 @@
 <div class="ad-page">
 
     <!-- MOBILE header -->
-    <div ng-if="isMobile" class="ad-page-header db-center">
+    <div ng-if="isMobile" class="ad-page-header db-center-v">
         <button type="button" class="btn db-btn-hdr db-no-margin" ng-click="goHome()">
             <span class="glyphicon glyphicon-menu-left"></span>
         </button>
@@ -71,9 +71,9 @@
     <!-- DESKTOP header -->
     <div ng-if="!isMobile" class="ad-page-header">
         <div class="col-xs-12">
-            <div class="row db-center">
-                <div class="db-center">
-                    <div class="db-center db-nopadding">
+            <div class="row db-center-v">
+                <div class="db-center-v">
+                    <div class="db-center-v db-nopadding">
                         <button type="button" class="btn db-btn-hdr glyphicon glyphicon-home center" ng-click="sc.goHome()">
                         </button>
 
@@ -86,7 +86,7 @@
                             <div class="row text-center">
                                 <h5 class="col-xs-12"><span translate="STR_STATUS"></span>:</h5>
                             </div>
-                            <div class="row db-center">
+                            <div class="row db-center-v">
                                 <div ng-hide="!sc.displayStatus" class="col-xs-12">
                                     <span class="label ng-class:[sc.statusStyle(sc.item.Status)]" translate translate-cloak>
                                     {{sc.statusStrId(sc.item.Status)}}

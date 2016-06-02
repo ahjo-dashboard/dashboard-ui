@@ -97,6 +97,15 @@ iframe {
     margin: 0.5vh;
 }
 
+.db-margin-10-right {
+    margin-right: 1.0vh;
+}
+
+.db-margin-05-hor {
+    margin-left: 0.5vh;
+    margin-right: 0.5vh;
+}
+
 .db-margin-10 {
     margin: 1.0vh;
 }
@@ -105,12 +114,72 @@ iframe {
     margin: 1.5vh;
 }
 
+.db-padding-05 {
+    padding: 0.5vh !important;
+}
+
+.db-padding-10 {
+    padding: 1.0vh !important;
+}
+
 .db-padding-2 {
     padding: 2px !important;
 }
 
 .db-opacity-05 {
     opacity: 0.5;
+}
+
+.db-flex {
+    display: flex;
+}
+
+.db-flex-right {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.db-flex-col {
+    flex-direction: column;
+}
+
+.db-flex-align-item-end {
+    align-self: flex-end;
+}
+
+.db-flex-nowrap {
+    flex-wrap: nowrap;
+}
+
+.db-flex-wrap {
+    flex-wrap: wrap;
+}
+
+.db-flex-area {
+    flex: 1;
+}
+
+.db-oneliner {
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    max-width: 100%;
+}
+
+.db-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.db-center-v {
+    display: flex;
+    align-items: center;
+}
+
+.db-center-h {
+    display: flex;
+    justify-content: center;
 }
 
 .db-brd-middle {
@@ -154,6 +223,24 @@ iframe {
     border-bottom-left-radius: $btn-radius !important;
     border-bottom-right-radius: $btn-radius !important;
 }
+
+.glyphicon.glyph-fs-14 {
+    font-size: 1.4em;
+}
+
+.db-btn-small {
+    @extend .btn-block;
+    min-height: 30px;
+    max-height: 40px;
+    overflow: hidden;
+}
+
+.db-btn-big {
+    @extend .btn-block;
+    min-height: 30px;
+    max-height: 40px;
+    overflow: hidden;
+}
 // GENERIC DECLARATION END
 
 // BLOCK DECLARATION START
@@ -169,13 +256,8 @@ $blockOpenFlex: 9;
         flex-wrap: wrap;
     }
 
-    .db-block-hdr-item-sm {
-        width: 65px;
-        overflow: hidden;
-    }
-
      .db-block-hdr-item-md {
-        width: 155px;
+        width: 160px;
         overflow: hidden;
     }
 
@@ -248,6 +330,14 @@ body {
     }
 
     .db-published {
+        padding-left: 0 !important; // Remove loose space in meeting.status.html icon
+        color: $db-color-success !important;
+        span {
+            color: $db-color-success !important;
+        }
+    }
+
+    .db-collapsed {
         padding-left: 0 !important; // Remove loose space in meeting.status.html icon
         color: $db-color-success !important;
         span {
@@ -397,18 +487,6 @@ body {
         @extend .db-btn-colhea;
         opacity: 1.0 !important;
         outline: none !important;
-    }
-
-    .db-center {
-        display: flex;
-        align-items: center;
-        -moz-box-direction: row;
-        -webkit-box-direction: row;
-        -webkit-box-orient: horizontal;
-        -webkit-flex-direction: row;
-        -ms-flexbox-direction: row;
-        -ms-flex-direction: row;
-        flex-direction: row;
     }
 
     .overview-hdr {
@@ -1120,27 +1198,6 @@ body {
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
-}
-
-
-.db-flex {
-    display: flex;
-}
-
-.db-flex-col {
-    flex-direction: column;
-}
-
-.db-flex-align-item-end {
-    align-self: flex-end;
-}
-
-.db-flex-nowrap {
-    flex-wrap: nowrap;
-}
-
-.db-flex-wrap {
-    flex-wrap: wrap;
 }
 
 @import "main.small.scss";
