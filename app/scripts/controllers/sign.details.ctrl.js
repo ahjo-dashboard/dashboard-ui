@@ -16,6 +16,7 @@ app.controller('signDetailsCtrl', function ($log, $state, $rootScope, ENV, CONST
     $rootScope.menu = CONST.MENU.FULL;
 
     var self = this;
+    self.isMobile = $rootScope.isMobile;
     self.bms = CONST.BLOCKMODE;
     self.bm = CONST.BLOCKMODE.DEFAULT;
     self.lbms = CONST.LOWERBLOCKMODE;

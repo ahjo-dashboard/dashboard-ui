@@ -39,9 +39,9 @@
                 {{c.item.Comment}}
             </uib-alert>
 
-            <db-link ng-if="c.isMobile" cng-attr-config="c.btnModel.doc.linkConfig" ng-attr-uri="c.btnModel.doc.url" class="btn btn-block btn-lg db-btn-prim"></db-link>
+            <db-link ng-if="c.isMobile" ng-attr-config="c.btnModel.doc.linkConfig" ng-attr-uri="c.btnModel.doc.url" class="btn btn-block btn-lg db-btn-prim"></db-link>
 
-            <db-link ng-if="c.isMobile && !c.btnModel.doctr.hideBtn" ng-attr-config="c.btnModel.doctr.linkConfig" ng-attr-uri="c.btnModel.doctr.url" class="btn btn-block btn-lg db-btn-prim"></db-link>
+            <db-link ng-if="c.isMobile && c.btnModel.doctr.url" ng-attr-config="c.btnModel.doctr.linkConfig" ng-attr-uri="c.btnModel.doctr.url" class="btn btn-block btn-lg db-btn-prim"></db-link>
 
             <button id="c.btnModel.acc.id" ng-hide="c.btnModel.acc.hideBtn" type="button" class="btn btn-block btn-lg db-btn-succ ng-class: {active: c.isActive(c.btnModel.acc.id)}"
                 ng-click="c.actionSign()" ng-disabled="c.isDisabled(c.btnModel.acc.id)" db-confirm confirm-config="c.btnModel.acc.cConf">

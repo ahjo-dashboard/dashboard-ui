@@ -15,6 +15,7 @@ var app = angular.module('dashboard');
 app.controller('signStatusCtrl', function ($log, $scope, $state, SigningAttApi, $sce, $timeout, $uibModal, ENV, SigningOpenApi, SigningPersonInfoApi, CONST, $rootScope, SigningDocSignaturesApi, ListData, $stateParams, StorageSrv) {
 
     var self = this;
+    self.isMobile = $rootScope.isMobile;
     self.item = null;
     self.ongoing = true;
     self.personInfo = null;
@@ -301,5 +302,7 @@ app.controller('signStatusCtrl', function ($log, $scope, $state, SigningAttApi, 
     };
 
     self.ongoing = false;
+    initBtns(self.btnModel, self.item.Status);
+
 
 });
