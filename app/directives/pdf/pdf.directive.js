@@ -41,19 +41,21 @@ angular.module('dashboard')
                     element.addClass('db-visible-pdf');
                 }
 
+                function composeContent(data) {
+                    element.empty();
+                    var content = '<iframe src="' + noContentUri + '"></iframe>';
+                    if (angular.isObject(data) && angular.isString(data.uri) && data.uri.length) {
+                        content = '<iframe src="' + data.uri + paramSeparator(data.uri) + params + '"></iframe>';
+                    }
+                    element.append($compile(content)(scope));
+                    show();
+                }
+
                 scope.$watch(
                     function () {
                         return { uri: scope.uri };
                     },
-                    function (data) {
-                        element.empty();
-                        var content = '<iframe src="' + noContentUri + '"></iframe>';
-                        if (angular.isObject(data) && angular.isString(data.uri) && data.uri.length) {
-                            content = '<iframe src="' + data.uri + paramSeparator(data.uri) + params + '"></iframe>';
-                        }
-                        element.append($compile(content)(scope));
-                        show();
-                    },
+                    composeContent,
                     true
                 );
 
@@ -90,7 +92,12 @@ angular.module('dashboard')
                     $log.debug("pdfDirective: DESTROY");
                 });
 
-                hide();
+                if (angular.isString(scope.uri) && scope.uri.length) {
+                    composeContent({ uri: scope.uri });
+                }
+                else {
+                    hide();
+                }
             }
         };
     }]);
