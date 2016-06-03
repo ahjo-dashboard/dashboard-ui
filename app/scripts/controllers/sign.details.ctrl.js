@@ -65,7 +65,9 @@ app.controller('signDetailsCtrl', function ($log, $state, $rootScope, ENV, CONST
 
     }
 
-    function initBtns(btnModel, item, status) {
+
+
+    function initCtrl(btnModel, item, status) {
         self.selData = null;
         self.secondaryUrl = null;
 
@@ -75,10 +77,13 @@ app.controller('signDetailsCtrl', function ($log, $state, $rootScope, ENV, CONST
             btnModel.doctr.disabled = true;
         }
 
-        $log.debug("signingItemCtrl.initBtns: doc=" + btnModel.doc.url);
+        $log.debug("signingItemCtrl.initCtrl: doc=" + btnModel.doc.url);
 
-        btnModel.att.selData = ListData.createEsignAttachmentList({ 'header': 'STR_ATTACHMENTS', 'title': self.item.Name }, parseAtts(item), item);
-        btnModel.att.disabled = (0 < btnModel.att.selData.length);
+        var atts = parseAtts(item);
+        btnModel.att.selData = ListData.createEsignAttachmentList({ 'header': 'STR_ATTACHMENTS', 'title': self.item.Name }, atts, item);
+
+        btnModel.att.count = atts.length;
+        btnModel.att.disabled = (1 > btnModel.att.count);
         self.selData = btnModel.att.selData;
 
         if (!angular.equals(status, CONST.ESIGNSTATUS.UNSIGNED.value)) {
@@ -125,18 +130,15 @@ app.controller('signDetailsCtrl', function ($log, $state, $rootScope, ENV, CONST
     };
 
     self.actionAtt = function () {
-        var data = [self.btnModel.att.selData];
-        self.selData = angular.equals(self.selData, data) ? null : data;
+        if (self.secondaryUrl) {
+            var data = [self.btnModel.att.selData];
+            self.selData = angular.equals(self.selData, data) ? null : data;
+        }
     };
 
     self.selAtt = function (data) {
         self.selData = null;
         self.secondaryUrl = data.link;
-    };
-
-    self.getCount = function (arg) {
-        var res = arg.length;
-        return res;
     };
 
     self.toggleParallelMode = function () {
@@ -152,7 +154,7 @@ app.controller('signDetailsCtrl', function ($log, $state, $rootScope, ENV, CONST
         setBlockMode((self.bm === CONST.BLOCKMODE.PRIMARY || self.bm === CONST.BLOCKMODE.SECONDARY) ? CONST.BLOCKMODE.DEFAULT : CONST.BLOCKMODE.SECONDARY);
     };
 
-    initBtns(self.btnModel, self.item, self.item.Status);
+    initCtrl(self.btnModel, self.item, self.item.Status);
     setBlockMode(CONST.BLOCKMODE.DEFAULT);
     setLowerBlockMode(CONST.LOWERBLOCKMODE.ATTACHMENTS);
     self.actionDoc();

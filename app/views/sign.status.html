@@ -9,7 +9,8 @@
         </button>
         <button type="button" class="btn db-btn-hdr glyphicon glyphicon-info-sign disabled" ng-click="">
         </button>
-        <button type="button" class="btn db-btn-hdr glyphicon ng-class:[{'glyphicon-resize-vertical':parallelMode},{'glyphicon-resize-horizontal':!parallelMode}]" ng-click="c.toggleParallelMode()">
+        <button type="button" class="btn db-btn-hdr glyphicon ng-class:[{'glyphicon-resize-vertical':parallelMode},{'glyphicon-resize-horizontal':!parallelMode}]"
+            ng-click="c.toggleParallelMode()">
         </button>
     </div>
 
@@ -25,23 +26,28 @@
     <!-- CONTENT -->
 
     <div class="ad-page-content">
+
+        <uib-alert ng-hide="hideAlert" type="info" close="hideAlert = true" tooltip-enable="isTooltips" uib-tooltip="{{'STR_SINFO_CONF_ATT_OPENS' | translate}}" tooltip-placement="bottom-left">
+            {{'STR_SINFO_CONF_ATT_OPENS' | translate}}
+        </uib-alert>
+
         <h5 class="db-title" ng-cloak>{{c.item.Name}}</h5>
+
         <div class="ad-page-container">
 
             <div class="btn-lg db-badge ng-class:[c.statusStyle(c.item.Status)]" translate translate-cloak>
-
-                <!--<span ng-hide="!c.displayStatus" class="label db-badge ng-class:[c.statusStyle(c.item.Status)]" translate translate-cloak>-->
-                    <h3>{{c.statusStrId(c.item.Status)}}</h3>
-                <!--</span>-->
+                <h3>{{c.statusStrId(c.item.Status)}}</h3>
             </div>
 
-            <uib-alert type="warning" ng-if="c.item.Comment && c.item.Comment.length" tooltip-enable="isTooltips" uib-tooltip="{{c.item.Comment}}" tooltip-placement="bottom-left">
+            <uib-alert type="warning" ng-if="c.item.Comment && c.item.Comment.length" tooltip-enable="isTooltips" uib-tooltip="{{c.item.Comment}}"
+                tooltip-placement="bottom-left">
                 {{c.item.Comment}}
             </uib-alert>
 
             <db-link ng-if="c.isMobile" ng-attr-config="c.btnModel.doc.linkConfig" ng-attr-uri="c.btnModel.doc.url" class="btn btn-block btn-lg db-btn-prim"></db-link>
 
-            <db-link ng-if="c.isMobile && c.btnModel.doctr.url" ng-attr-config="c.btnModel.doctr.linkConfig" ng-attr-uri="c.btnModel.doctr.url" class="btn btn-block btn-lg db-btn-prim"></db-link>
+            <db-link ng-if="c.isMobile && c.btnModel.doctr.url" ng-attr-config="c.btnModel.doctr.linkConfig" ng-attr-uri="c.btnModel.doctr.url"
+                class="btn btn-block btn-lg db-btn-prim"></db-link>
 
             <button id="c.btnModel.acc.id" ng-hide="c.btnModel.acc.hideBtn" type="button" class="btn btn-block btn-lg db-btn-succ ng-class: {active: c.isActive(c.btnModel.acc.id)}"
                 ng-click="c.actionSign()" ng-disabled="c.isDisabled(c.btnModel.acc.id)" db-confirm confirm-config="c.btnModel.acc.cConf">
@@ -53,7 +59,8 @@
                 <span translate translate-cloak>STR_REJECT</span>
             </button>
 
-            <button ng-if="c.isMobile" id="c.btnModel.att.id" type="button" class="btn btn-block btn-lg db-btn-prim ng-class: {active: c.isActive(c.btnModel.att.id)}" ng-disabled="c.isDisabled(c.btnModel.att.id)" ng-click="c.actionAttList()">
+            <button ng-if="c.isMobile" id="c.btnModel.att.id" type="button" class="btn btn-block btn-lg db-btn-prim ng-class: {active: c.isActive(c.btnModel.att.id)}"
+                ng-disabled="c.isDisabled(c.btnModel.att.id)" ng-click="c.actionAttList()">
                 <span translate translate-cloak>STR_ATTACHMENTS</span>
                 <span class="badge ng-cloak">{{c.btnModel.att.count}}</span>
             </button>
@@ -67,10 +74,6 @@
                 ng-click="c.actionComment()" ng-disabled="c.isDisabled(c.abtnModel.com.id)">
                 <span translate translate-cloak>STR_CREATE_COMMENT</span>
             </button>
-
-            <uib-alert type="info" tooltip-enable="isTooltips" uib-tooltip="{{'STR_SINFO_CONF_ATT_OPENS' | translate}}" tooltip-placement="bottom-left">
-                {{'STR_SINFO_CONF_ATT_OPENS' | translate}}
-            </uib-alert>
 
         </div>
     </div>
