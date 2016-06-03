@@ -131,7 +131,7 @@ app.controller('signStatusCtrl', function ($log, $scope, $state, SigningAttApi, 
     }
 
     function displayRequestor(person) {
-        if (person && "email" in person) {
+        if (person && angular.isString(person.email) && person.email.length) {
             self.requestorEmail = person.email;
             // self.alerts.push({ type: 'info', locId: 'STR_SIGNING_COMMENT_INFO', linkMailto: person.email });
             //TODO: display modal
