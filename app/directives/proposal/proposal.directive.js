@@ -25,7 +25,7 @@ angular.module('dashboard')
     })
     .directive('dbProposal', [function () {
 
-        var controller = ['$log', '$scope', 'PROPS', 'PROP', '$rootScope', 'AhjoProposalsSrv', 'StorageSrv', 'CONST', '$timeout', function ($log, $scope, PROPS, PROP, $rootScope, AhjoProposalsSrv, StorageSrv, CONST, $timeout) {
+        var controller = ['$log', '$scope', 'PROPS', 'PROP', '$rootScope', 'AhjoProposalsSrv', 'StorageSrv', 'CONST', '$timeout', 'Utils', function ($log, $scope, PROPS, PROP, $rootScope, AhjoProposalsSrv, StorageSrv, CONST, $timeout, Utils) {
             var self = this;
             self.isTooltips = $rootScope.isTooltips;
             self.uiProposal = null;
@@ -159,7 +159,7 @@ angular.module('dashboard')
             }
 
             self.typeText = function (value) {
-                var obj = $rootScope.objWithVal(PROPS.TYPE, 'value', value);
+                var obj = Utils.objWithVal(PROPS.TYPE, 'value', value);
                 return (obj && obj.text) ? obj.text : value;
             };
 

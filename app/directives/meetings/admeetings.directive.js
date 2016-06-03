@@ -19,7 +19,7 @@ angular.module('dashboard')
     })
     .directive('adMeetings', [function() {
 
-        var controller = ['$log', '$scope', 'ENV', 'AhjoMeetingsSrv', '$translate', '$rootScope', 'MTGD', 'CONST', function($log, $scope, ENV, AhjoMeetingsSrv, $translate, $rootScope, MTGD, CONST) {
+        var controller = ['$log', '$scope', 'ENV', 'AhjoMeetingsSrv', '$translate', '$rootScope', 'MTGD', 'CONST', 'Utils', function($log, $scope, ENV, AhjoMeetingsSrv, $translate, $rootScope, MTGD, CONST, Utils) {
             $log.log("adMeetings: CONTROLLER");
             var self = this;
             self.mtgErr = null;
@@ -166,7 +166,7 @@ angular.module('dashboard')
 
             self.mtgStatusClass = function (arg) {
                 if (angular.isObject(arg) && angular.isDefined(arg.meeting.state) && angular.isDefined(arg.meeting.state)) {
-                    var s = $rootScope.objWithVal(CONST.MTGSTATUS, 'value', arg.meeting.state);
+                    var s = Utils.objWithVal(CONST.MTGSTATUS, 'value', arg.meeting.state);
                     return s ? s.badgeClass : 'db-badge-red';
                 }
                 return 'db-badge-red';

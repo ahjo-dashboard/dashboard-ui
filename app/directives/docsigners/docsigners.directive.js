@@ -13,7 +13,7 @@
 angular.module('dashboard')
     .directive('docSigners', [function () {
 
-        var controller = ['$log', '$scope', '$rootScope', 'CONST', function ($log, $scope, $rootScope, CONST) {
+        var controller = ['$log', '$scope', '$rootScope', 'CONST', function ($log, $scope, $rootScope, CONST, Utils) {
             $log.log("docSigners.CONTROLLER");
 
             var self = this;
@@ -29,12 +29,12 @@ angular.module('dashboard')
 
             /* Resolve display text for item status */
             self.statusStrId = function (value) {
-                var s = $rootScope.objWithVal(CONST.ESIGNSTATUS, 'value', value);
+                var s = Utils.objWithVal(CONST.ESIGNSTATUS, 'value', value);
                 return s ? s.stringId : '';
             };
 
             self.roleStrId = function (value) {
-                var s = $rootScope.objWithVal(CONST.ESIGNROLE, 'value', value);
+                var s = Utils.objWithVal(CONST.ESIGNROLE, 'value', value);
                 return s ? s.stringId : '';
             };
 
@@ -45,7 +45,7 @@ angular.module('dashboard')
 
             /* Resolve css class for signing status */
             self.statusStyle = function (status) {
-                var s = $rootScope.objWithVal(CONST.ESIGNSTATUS, 'value', status);
+                var s = Utils.objWithVal(CONST.ESIGNSTATUS, 'value', status);
                 return s ? s.badgeClass : 'label-default';
             };
 

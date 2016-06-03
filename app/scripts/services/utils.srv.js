@@ -75,5 +75,26 @@ angular.module('dashboard')
             return (att instanceof AttachmentData) && att.publicity === CONST.PUBLICITY.SECRET;
         };
 
+        // Utility function for looping an object to find the first immediate child object with matching value
+        // Returns the matching object on success, null on bad arguments or if no match.
+        // Example: find an object from 'arr' whose property 'prop' has value 'val'
+        Utils.objWithVal = function (arr, prop, val) {
+            var res = null;
+            if (!arr || !angular.isObject(arr) || !prop) {
+                $log.error("Utils.objWithVal: bad arguments: arr:" + arr + " prop:" + prop + " val:" + val);
+                return res;
+            }
+
+            var tmp;
+            for (var p in arr) {
+                tmp = arr[p];
+                if (tmp && prop in tmp && angular.equals(tmp[prop], val)) {
+                    res = tmp;
+                    break;
+                }
+            }
+            return res;
+        };
+
         return Utils;
     });

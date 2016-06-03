@@ -12,7 +12,7 @@
  * Controller of the dashboard
  */
 angular.module('dashboard')
-    .controller('signitemCtrl', function ($log, $scope, $state, $stateParams, SigningAttApi, $sce, $timeout, $uibModal, ENV, SigningOpenApi, SigningPersonInfoApi, CONST, $rootScope, SigningDocSignaturesApi, ListData, StorageSrv) {
+    .controller('signitemCtrl', function ($log, $scope, $state, $stateParams, SigningAttApi, $sce, $timeout, $uibModal, ENV, SigningOpenApi, SigningPersonInfoApi, CONST, $rootScope, SigningDocSignaturesApi, ListData, StorageSrv, Utils) {
         $log.debug("signitemCtrl.config");
 
         var self = this;
@@ -354,13 +354,13 @@ angular.module('dashboard')
 
         /* Resolve css class for signing status */
         self.statusStyle = function (status) {
-            var s = $rootScope.objWithVal(CONST.ESIGNSTATUS, 'value', status);
+            var s = Utils.objWithVal(CONST.ESIGNSTATUS, 'value', status);
             return s ? s.badgeClass : 'label-default';
         };
 
         /* Resolve display text for item status */
         self.statusStrId = function (value) {
-            var s = $rootScope.objWithVal(CONST.ESIGNSTATUS, 'value', value);
+            var s = Utils.objWithVal(CONST.ESIGNSTATUS, 'value', value);
             return s ? s.stringId : '';
         };
 
