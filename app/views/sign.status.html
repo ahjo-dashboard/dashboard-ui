@@ -27,7 +27,8 @@
 
     <div class="ad-page-content">
 
-        <uib-alert ng-hide="hideAlert" type="info" close="hideAlert = true" tooltip-enable="isTooltips" uib-tooltip="{{'STR_SINFO_CONF_ATT_OPENS' | translate}}" tooltip-placement="bottom-left">
+        <uib-alert ng-hide="hideAlert" type="info" close="hideAlert = true" tooltip-enable="isTooltips" uib-tooltip="{{'STR_SINFO_CONF_ATT_OPENS' | translate}}"
+            tooltip-placement="bottom-left">
             {{'STR_SINFO_CONF_ATT_OPENS' | translate}}
         </uib-alert>
 
@@ -65,15 +66,24 @@
                 <span class="badge ng-cloak">{{c.btnModel.att.count}}</span>
             </button>
 
-            <button id="c.btnModel.sta.id" type="button" class="btn btn-block btn-lg db-btn-prim ng-class: {active: c.isActive(c.btnModel.sta.id)}"
+            <!--<button id="c.btnModel.sta.id" type="button" class="btn btn-block btn-lg db-btn-prim ng-class: {active: c.isActive(c.btnModel.sta.id)}"
                 ng-click="c.actionSignings()" ng-disabled="c.isDisabled(c.btnModel.sta.id)">
                 <span translate translate-cloak>STR_STATUS</span>
-            </button>
+            </button>-->
 
-            <button id="c.btnModel.com.id" type="button" class="btn btn-block btn-lg db-btn-prim ng-class: {active: c.isActive(c.btnModel.com.id)}"
+            <!--<button id="c.btnModel.com.id" type="button" class="btn btn-block btn-lg db-btn-prim ng-class: {active: c.isActive(c.btnModel.com.id)}"
                 ng-click="c.actionComment()" ng-disabled="c.isDisabled(c.abtnModel.com.id)">
                 <span translate translate-cloak>STR_CREATE_COMMENT</span>
-            </button>
+            </button>-->
+
+            <uib-alert type="warning" ng-if="c.item">
+                <div ng-if="c.item.Email && c.item.Email.length">
+                    <div translate translate-cloak>STR_SIGNING_COMMENT_INFO</div>
+                    <div><a href="mailto:{{c.item.Email}}">{{c.item.Email}}</a></div>
+                </div>
+                <div ng-if="!c.item.Email || !c.item.Email.length" translate translate-cloak>STR_SIGNING_NO_EMAIL</div>
+            </uib-alert>
+
 
         </div>
     </div>
