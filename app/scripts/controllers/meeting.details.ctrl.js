@@ -136,34 +136,13 @@ angular.module('dashboard')
         };
 
         self.attClicked = function () {
+            setLowerBlockMode(CONST.LOWERBLOCKMODE.ATTACHMENTS);
             var data = [self.aData];
             self.selData = angular.equals(self.selData, data) ? null : data;
         };
 
         self.matClicked = function () {
-            var data = [self.amData, self.dData];
-            self.selData = angular.equals(self.selData, data) ? null : data;
-        };
-
-        self.selClicked = function (data) {
-            if (self.aData.objects.indexOf(data) > CONST.NOTFOUND) {
-                self.attachmentClicked(data);
-            }
-            else if (self.amData.objects.indexOf(data) > CONST.NOTFOUND) {
-                self.additionalMaterialClicked(data);
-            }
-            else if (self.dData.objects.indexOf(data) > CONST.NOTFOUND) {
-                self.decisionClicked(data);
-            }
-            self.selData = null;
-        };
-
-        self.attClicked = function () {
-            var data = [self.aData];
-            self.selData = angular.equals(self.selData, data) ? null : data;
-        };
-
-        self.matClicked = function () {
+            setLowerBlockMode(CONST.LOWERBLOCKMODE.MATERIALS);
             var data = [self.amData, self.dData];
             self.selData = angular.equals(self.selData, data) ? null : data;
         };

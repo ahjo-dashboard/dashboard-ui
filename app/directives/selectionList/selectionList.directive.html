@@ -1,11 +1,17 @@
-<div class="db-directive">
-    <section class="db-margin-15" ng-repeat="data in c.data track by $index">
-        <header ng-if="data.title.header" translate translate-cloak>{{data.title.header}}</header>
-        <ul role="menu">
-            <li role="menuitem" class="ng-class:[{'db-opacity-05':c.isDisabled(att)}]" ng-repeat="att in data.objects track by $index">
-                <a class="" ng-click="!c.isDisabled(att) && c.selected(att)"><span ng-if="att.orderNum">{{att.orderNum}}&nbsp;</span>{{att.title}}</a>
+<div class="db-directive" ng-init="isCollapsed = false">
+
+    <ul class="list-group db-margin-10-bottom" ng-repeat="data in c.data track by $index" ng-click="isCollapsed = !isCollapsed">
+        <div class="list-group-item db-prim-bg">
+            <div class="db-flex db-center-v">
+                <span class="db-margin-10-right glyphicon ng-class:{'glyphicon-minus': !isCollapsed, 'glyphicon-plus': isCollapsed}" aria-hidden="true"></span>
+                <h5 ng-if="data.title.header" translate translate-cloak>{{data.title.header}}</h5>
+            </div>
+        </div>
+        <div uib-collapse="isCollapsed">
+            <li class="list-group-item ng-class:[{'db-opacity-05':c.isDisabled(att)}]" ng-repeat="att in data.objects track by $index">
+                <a ng-click="!c.isDisabled(att) && c.selected(att)"><span ng-if="att.orderNum">{{att.orderNum}}&nbsp;</span>{{att.title}}</a>
             </li>
-        </ul>
-    </section>
+        </div>
+    </ul>
 
 </div>
