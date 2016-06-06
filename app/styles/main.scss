@@ -89,6 +89,10 @@ iframe {
     background-color: $btn-prim-color-bg;
 }
 
+.db-transparent {
+    background-color: transparent;
+}
+
 .db-margin-2 {
     margin: 2px !important;
 }
@@ -104,6 +108,10 @@ iframe {
 .db-margin-05-hor {
     margin-left: 0.5vh;
     margin-right: 0.5vh;
+}
+
+.db-margin-05-top {
+    margin-top: 0.5vh;
 }
 
 .db-margin-10 {
@@ -160,10 +168,14 @@ iframe {
 }
 
 .db-oneliner {
-    white-space: nowrap !important;
-    overflow: hidden !important;
+    display: block;
     text-overflow: ellipsis !important;
-    max-width: 100%;
+    word-wrap: break-word !important;
+    overflow: hidden !important;
+    white-space: nowrap !important;
+    max-height: 1.8em !important;
+    line-height: 1.8em !important;
+    max-width: 100% !important;
 }
 
 .db-center {
