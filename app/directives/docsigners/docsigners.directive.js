@@ -13,7 +13,7 @@
 angular.module('dashboard')
     .directive('docSigners', [function () {
 
-        var controller = ['$log', '$scope', '$rootScope', 'CONST', function ($log, $scope, $rootScope, CONST, Utils) {
+        var controller = ['$log', '$scope', '$rootScope', 'CONST', 'Utils', function ($log, $scope, $rootScope, CONST, Utils) {
             $log.log("docSigners.CONTROLLER");
 
             var self = this;
