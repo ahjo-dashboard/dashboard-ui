@@ -32,7 +32,6 @@ module.exports = function(config) {
       'bower_components/angular-translate/angular-translate.js',
       'bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js',
       'bower_components/angular-translate-handler-log/angular-translate-handler-log.js',
-      'bower_components/angular-auto-focus/angular-auto-focus.js',
       'bower_components/ngToast/dist/ngToast.js',
       'bower_components/spin.js/spin.js',
       'bower_components/angular-spinner/angular-spinner.js',

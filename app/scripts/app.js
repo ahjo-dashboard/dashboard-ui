@@ -19,7 +19,6 @@ angular.module('dashboard', [
     'AhjoSigningService',
     'ui.bootstrap',
     'ngSanitize',
-    'mp.autoFocus',
     'ngToast',
     'angularSpinner',
     'pascalprecht.translate'

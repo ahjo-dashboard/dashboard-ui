@@ -20,8 +20,8 @@
     <div class="db-flex">
 
         <div class="db-flex-area" uib-collapse="c.mode === c.modes.COLLAPSED">
-            <div ng-if="c.mode === c.modes.OPEN" ng-bind-html="c.uiProposal.text | unsafe"></div>
-            <div class="db-margin-10" ng-if="c.mode === c.modes.EDIT" contenteditable="true" auto-focus ng-model="c.editedText"></div>
+            <pre class="db-margin-05-top db-transparent" ng-if="c.mode === c.modes.OPEN" ng-bind-html="c.uiProposal.text | unsafe"></pre>
+            <pre id="editor" class="db-margin-05-top" ng-if="c.mode === c.modes.EDIT" contenteditable="true" ng-model="c.editedText"></pre>
 
 
             <div ng-if="c.mode !== c.modes.COLLAPSED" class="db-flex-right db-flex-area">
