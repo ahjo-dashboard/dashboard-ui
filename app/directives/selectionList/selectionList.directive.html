@@ -1,7 +1,7 @@
 <div class="db-directive" ng-init="isCollapsed = false">
 
-    <ul class="list-group db-margin-10-bottom" ng-repeat="data in c.data track by $index" ng-click="isCollapsed = !isCollapsed">
-        <div class="list-group-item db-prim-bg">
+    <ul class="list-group db-margin-10-bottom" ng-repeat="data in c.data track by $index">
+        <div class="list-group-item db-prim-bg" ng-click="isCollapsed = !isCollapsed">
             <div class="db-flex db-center-v">
                 <span class="db-margin-10-right glyphicon ng-class:{'glyphicon-minus': !isCollapsed, 'glyphicon-plus': isCollapsed}" aria-hidden="true"></span>
                 <h5 ng-if="data.title.header" translate translate-cloak>{{data.title.header}}</h5>
