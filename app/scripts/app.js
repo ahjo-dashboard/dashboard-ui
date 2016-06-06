@@ -162,26 +162,6 @@ angular.module('dashboard', [
                 ngToast.danger(translatedValue);
             });
         };
-
-        // Utility function for looping an object to find the first immediate child object with matching value
-        // Returns null on bad arguments or if no match.
-        $rootScope.objWithVal = function (arr, prop, val) {
-            var res = null;
-            if (!arr || typeof arr !== 'object' || !prop) {
-                $log.error("app.objWithVal: bad arguments: arr:" + arr + " prop:" + prop + " val:" + val);
-                return res;
-            }
-
-            var tmp;
-            for (var p in arr) {
-                tmp = arr[p];
-                if (tmp && prop in tmp && tmp[prop] === val) {
-                    res = tmp;
-                    break;
-                }
-            }
-            return res;
-        };
     });
 
 angular.module('dashboard')

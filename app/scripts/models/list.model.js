@@ -12,7 +12,7 @@
 * Model in the dashboard.
 */
 angular.module('dashboard')
-    .factory('ListData', ['AttachmentData', '$log', 'ENV', function (AttachmentData, $log, ENV) {
+    .factory('ListData', ['AttachmentData', '$log', 'ENV', 'Utils', function (AttachmentData, $log, ENV, Utils) {
 
         function ListData(title, objects) {
             this.title = title;
@@ -60,20 +60,27 @@ angular.module('dashboard')
             return angular.isObject(item) && angular.isObject(att) ? ENV.SIGNAPIURL_ATT.replace(":reqGuid", item.ProcessGuid).replace(":attGuid", att.Id) : undefined;
         }
 
+        // Returns an array of ListData objects, one ListData per attachment's ParentTitle, objects contains AttachmentData items for the ParentTitle
         ListData.createEsignAttachmentList = function (title, argArr, signItem) {
-            var array = [];
-            if (angular.isString(title) && angular.isArray(argArr)) {
+            var attsByTopic = [];
+            if (angular.isObject(title) && angular.isArray(argArr)) {
                 for (var i = 0; (i < argArr.length); i++) {
                     var e = argArr[i];
-                    var listItem = AttachmentData.create(e.Title, resolveAttUrl(signItem, e), null, null);
+                    var listItem = AttachmentData.create(e.Title, resolveAttUrl(signItem, e));
                     if (listItem) {
-                        array.push(listItem);
+                        var parentDetails = { 'header': e.ParentTitle, 'title': e.ParentTitle };
+                        var topic = Utils.objWithVal(attsByTopic, 'title', parentDetails);
+                        if (topic) {
+                            topic.objects.push(listItem);
+                        } else {
+                            attsByTopic.push(new ListData(parentDetails, [listItem]));
+                        }
                     }
                 }
             } else {
                 $log.error('ListData.createEsignAttachmentList: bad args');
             }
-            return new ListData(title, array);
+            return attsByTopic;
         };
 
         return ListData;

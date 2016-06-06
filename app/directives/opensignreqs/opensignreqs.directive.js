@@ -13,7 +13,7 @@
 angular.module('dashboard')
     .directive('adOpenSignreqs', [function () {
 
-        var controller = ['$log', 'SigningOpenApi', 'SigningClosedApi', '$scope', '$state', '$rootScope', 'CONST', function ($log, SigningOpenApi, SigningClosedApi, $scope, $state, $rootScope, CONST) {
+        var controller = ['$log', 'SigningOpenApi', 'SigningClosedApi', '$scope', '$state', '$rootScope', 'CONST', 'StorageSrv', 'Utils', function ($log, SigningOpenApi, SigningClosedApi, $scope, $state, $rootScope, CONST, StorageSrv, Utils) {
             $log.log("adOpenSignreqs.CONTROLLER");
             var self = this;
 
@@ -221,20 +221,15 @@ angular.module('dashboard')
 
             /* PUBLIC FUNCTIONS */
 
-            self.itemSelected = function (item) {
-                $log.debug("adOpenSignreqs.adOpenSignreqs: " + JSON.stringify(item));
-                $state.go(CONST.APPSTATE.SIGNITEM, { 'signItem': item });
-            };
-
             /* Resolve display text for item status */
             self.statusStrId = function (value) {
-                var s = $rootScope.objWithVal(CONST.ESIGNSTATUS, 'value', value);
+                var s = Utils.objWithVal(CONST.ESIGNSTATUS, 'value', value);
                 return s ? s.stringId : '';
             };
 
             // Resolves l18n string id for document type display text
             self.docTypeStrId = function (value) {
-                var s = $rootScope.objWithVal(CONST.ESIGNTYPE, 'value', value);
+                var s = Utils.objWithVal(CONST.ESIGNTYPE, 'value', value);
                 return s ? s.stringId : '';
             };
 
@@ -249,7 +244,7 @@ angular.module('dashboard')
 
             /* Resolve css class for signing status */
             self.statusStyle = function (status) {
-                var s = $rootScope.objWithVal(CONST.ESIGNSTATUS, 'value', status);
+                var s = Utils.objWithVal(CONST.ESIGNSTATUS, 'value', status);
                 return s ? s.badgeClass : 'label-default';
             };
 
@@ -284,7 +279,8 @@ angular.module('dashboard')
 
             self.selected = function (item) {
                 $log.log("adOpenSignreqs.selected");
-                $state.go(CONST.APPSTATE.SIGNITEM, { 'signItem': item });
+                StorageSrv.setKey(CONST.KEY.SIGN_ITEM, item);
+                $state.go(CONST.APPSTATE.SIGN, { 'signItem': item });
             };
 
             $scope.$watch('closeditems', function (newValue/*, oldValue*/) {
