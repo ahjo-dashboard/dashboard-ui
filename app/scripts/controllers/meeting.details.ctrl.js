@@ -138,13 +138,17 @@ angular.module('dashboard')
         self.attClicked = function () {
             setLowerBlockMode(CONST.LOWERBLOCKMODE.ATTACHMENTS);
             var data = [self.aData];
-            self.selData = angular.equals(self.selData, data) ? null : data;
+            if (!angular.equals(self.selData, data)) {
+                self.selData = data;
+            }
         };
 
         self.matClicked = function () {
             setLowerBlockMode(CONST.LOWERBLOCKMODE.MATERIALS);
             var data = [self.amData, self.dData];
-            self.selData = angular.equals(self.selData, data) ? null : data;
+            if (!angular.equals(self.selData, data)) {
+                self.selData = data;
+            }
         };
 
         self.selClicked = function (data) {
