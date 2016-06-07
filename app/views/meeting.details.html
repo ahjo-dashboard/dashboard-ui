@@ -22,7 +22,7 @@
             <!-- PRIMARY BLOCK CONTENT -->
             <div class="db-block-content db-block-border db-brd-bottom">
 
-                <db-pdf ng-if="!c.isSecret(c.tData)" ng-attr-uri="c.primaryUrl" ng-attr-hide="c.hidePdf"></db-pdf>
+                <db-pdf ng-if="!c.isSecret(c.tData)" ng-attr-uri="c.primaryUrl"></db-pdf>
                 <db-imgviewer ng-if="c.isSecret(c.tData)" file-conf="c.tData"></db-imgviewer>
                 <div ng-if="c.error" class="alert alert-danger" role="alert">{{c.error}}</div>
 

@@ -26,7 +26,6 @@ angular.module('dashboard')
         self.lbm = CONST.LOWERBLOCKMODE.PROPOSALS;
         self.header = '';
         $rootScope.menu = CONST.MENU.FULL;
-        self.hidePdf = false;
         self.selData = null;
 
         self.tData = null;
