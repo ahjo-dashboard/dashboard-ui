@@ -26,7 +26,6 @@ angular.module('dashboard')
         self.lbm = CONST.LOWERBLOCKMODE.PROPOSALS;
         self.header = '';
         $rootScope.menu = CONST.MENU.FULL;
-        self.hidePdf = false;
         self.selData = null;
 
         self.tData = null;
@@ -122,7 +121,7 @@ angular.module('dashboard')
         }
 
         function checkMode() {
-            if (!isMobile && self.isUpperMode()) {
+            if (!isMobile && self.bm === CONST.BLOCKMODE.PRIMARY) {
                 setBlockMode(CONST.BLOCKMODE.DEFAULT);
             }
         }
@@ -138,13 +137,19 @@ angular.module('dashboard')
         self.attClicked = function () {
             setLowerBlockMode(CONST.LOWERBLOCKMODE.ATTACHMENTS);
             var data = [self.aData];
-            self.selData = angular.equals(self.selData, data) ? null : data;
+            if (!angular.equals(self.selData, data)) {
+                self.selData = data;
+            }
+            checkMode();
         };
 
         self.matClicked = function () {
             setLowerBlockMode(CONST.LOWERBLOCKMODE.MATERIALS);
             var data = [self.amData, self.dData];
-            self.selData = angular.equals(self.selData, data) ? null : data;
+            if (!angular.equals(self.selData, data)) {
+                self.selData = data;
+            }
+            checkMode();
         };
 
         self.selClicked = function (data) {
@@ -221,40 +226,14 @@ angular.module('dashboard')
             checkMode();
         };
 
-        self.isBothMode = function () {
-            return self.bm === CONST.BLOCKMODE.DEFAULT;
-        };
-
-        self.isUpperMode = function () {
-            return self.bm === CONST.BLOCKMODE.PRIMARY;
-        };
-
-        self.isLowerMode = function () {
-            return self.bm === CONST.BLOCKMODE.SECONDARY;
-        };
-
         self.isSecret = function (item) {
             return (item && item.publicity) ? (item.publicity === CONST.PUBLICITY.SECRET) : false;
-        };
-
-        self.isActive = function (mode) {
-            return self.lbm === mode;
         };
 
         self.materialCount = function () {
             var decisionCount = ((self.dData instanceof Object) && (self.dData.objects instanceof Array)) ? self.dData.objects.length : 0;
             var additionalMaterialCount = ((self.amData instanceof Object) && (self.amData.objects instanceof Array)) ? self.amData.objects.length : 0;
             return decisionCount + additionalMaterialCount;
-        };
-
-        self.isDisabled = function (att) {
-            var res = false;
-            if (!(att instanceof AttachmentData)) {
-                $log.error("meetingCtrl.isDisabled: unsupported arg type: " + JSON.stringify(att));
-            } else {
-                res = !angular.isString(att.link) || !att.link.length;
-            }
-            return res;
         };
 
         self.toggleParallelMode = function () {

@@ -207,7 +207,9 @@ app.controller('signDetailsCtrl', function ($log, $state, $rootScope, ENV, CONST
 
     self.actionAtt = function () {
         var data = [self.btnModel.att.selData];
-        self.selData = angular.equals(self.selData, data) ? null : data;
+        if (!angular.equals(self.selData, data)) {
+            self.selData = data;
+        }
         setBlockContent(self.btnModel.att);
     };
 
