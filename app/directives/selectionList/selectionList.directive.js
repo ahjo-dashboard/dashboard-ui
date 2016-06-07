@@ -23,10 +23,19 @@ angular.module('dashboard')
                 $scope.onSelect({ data: item });
             };
 
+            self.newTab = function (link) {
+                if (angular.isString(link) && link.length) {
+                    window.open(link, '_blank');
+                }
+                else {
+                    $log.error("dbSelectionList: newTab: invalid link");
+                }
+            };
+
             self.isDisabled = function (att) {
                 var res = false;
                 if (!(att instanceof AttachmentData)) {
-                    $log.error("meetingCtrl.isDisabled: unsupported arg type: " + JSON.stringify(att));
+                    $log.error("dbSelectionList: isDisabled: unsupported arg type: " + JSON.stringify(att));
                 } else {
                     res = !angular.isString(att.link) || !att.link.length;
                 }
