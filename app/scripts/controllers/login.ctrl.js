@@ -30,12 +30,13 @@ angular.module('dashboard')
 
                 var sel = [];
                 // Collect only relevant properties
-                for (var i = 0; i < sel_resp.length; i++) {
-                    sel.push({ value: sel_resp[i].value, text: sel_resp[i].text });
-                }
+                angular.forEach(sel_resp, function (value) {
+                    this.push(value);
+                }, sel);
+
                 self.data.options = sel;
                 self.loadingUsers = false;
-                $log.debug("loginCtrl GET options done, count=" +self.data.options.length);
+                $log.debug("loginCtrl GET options done, count=" + self.data.options.length);
             }, 0);
         }, function errorCallback(error) {
             $log.error(error);

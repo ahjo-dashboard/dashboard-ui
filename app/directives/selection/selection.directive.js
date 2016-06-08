@@ -28,13 +28,11 @@ angular.module('dashboard')
                     }
                     $log.debug("dbSelection.setChildren: options count=" + arr.length);
 
-                    var tmp = '';
-                    for (var i = 0; i < arr.length; i++) {
-                        tmp = tmp + '<option value="' + arr[i].value + '">' + arr[i].text + '</option>';
-                    }
-
                     el.empty();
-                    el.append($compile(tmp)(scope));
+
+                    angular.forEach(arr, function (value) {
+                        el.append(value);
+                    }, scope);
                 }
 
                 if (scope.selItems && angular.isArray(scope.selItems)) {
