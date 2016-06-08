@@ -9,7 +9,6 @@ $font-color: white;
 
 .remark {
     flex: 1;
-    background-color: lightblue;
 
     span.glyphicon {
         font-size: 1.0em !important;
@@ -17,6 +16,7 @@ $font-color: white;
 
     .rmk-header {
         background-color: #4591d3;
+        position: relative;
 
         h1, h2, h3, h4, h5 {
             color: $font-color;
@@ -37,7 +37,6 @@ $font-color: white;
         margin: 4px;
         padding: 4px;
         flex: 1;
-        background-color: white;
     }
 
     .rmk-footer {
