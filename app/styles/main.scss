@@ -4,7 +4,6 @@
 */
 
 $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/bootstrap/";
-$fa-font-path: "../bower_components/font-awesome/fonts";
 // bower:scss
 @import "bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
 // endbower
@@ -20,13 +19,10 @@ $fa-font-path: "../bower_components/font-awesome/fonts";
 /* No media query since this is the default in Bootstrap */
 
 $long-delay: 600ms;
-$default-delay: 400ms;
-$short-delay: 50ms;
 
 $appbgcolor: white;
 $font-color-body: #404040;
 $upper-color: #276aa5;
-$lower-color: white;
 $headingBgColor: $upper-color;
 
 $default-font-size: 1.2em;
@@ -37,7 +33,6 @@ $db-page-margin: 10px;
 $btn-radius: 6px;
 $btn-prim-color-bg: rgb(51, 122, 183);
 $btn-prim-color-active-bg: #276aa5;
-$btn-prim-height: 60px; // Height on XS resolution
 
 $header-leftmargin: 10px;
 $font-color-header: white;
@@ -354,26 +349,6 @@ body {
         }
     }
 
-    .db-collapsed {
-        padding-left: 0 !important; // Remove loose space in meeting.status.html icon
-        color: $db-color-success !important;
-        span {
-            color: $db-color-success !important;
-        }
-    }
-
-    .ad-app-bg { background-color: $appbgcolor !important; }
-    .ad-upper-bg { background-color: $upper-color !important; }
-    .ad-lower-bg { background-color: $lower-color !important; }
-
-    .full-width {
-        width: 100%;
-    }
-
-    .ad-heigh-full {
-        height: 100%;
-    }
-
     .text-align-left {
         text-align: left;
     }
@@ -382,27 +357,8 @@ body {
         white-space: normal;
     }
 
-    .medium-modal {
-        width:100%;
-        height: auto;
-        position: absolute;
-        top:0; bottom: 0; left: 0; right: 0;
-        margin: auto;
-    }
-
     .ad-container-fluid {
         background-color: $headingBgColor;
-        border-style: solid;
-        border-width: 0px;
-        color: $font-color-header;
-        padding-left: 10px;
-        padding-right: 10px;
-        padding-top: 5px;
-        padding-bottom: 5px;
-    }
-
-    .ad-sub-container-fluid {
-        background-color: $headingL2BgColor;
         border-style: solid;
         border-width: 0px;
         color: $font-color-header;
@@ -529,7 +485,7 @@ body {
         }
     }
 
-    .db-btn-hdr{
+    .db-btn-hdr {
         @include button-variant($font-color-header, $headingBgColor, $headingBgColor);
     }
 
@@ -661,16 +617,6 @@ body {
             max-lines: 2;
             word-wrap: break-word;
         }
-    }
-
-    .ad-full-page-content {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        overflow: auto;
-        background-color: $appbgcolor;
     }
 
     .glyphicon.center:before {
@@ -861,16 +807,6 @@ body {
         display: none;
     }
 
-    .ad-flex-item-lower {
-        @extend .ad-flex-item;
-        background-color: $lower-color;
-        display: flex;
-    }
-
-    .ad-flex-item-lower.ad-flex-hide {
-        display: none;
-    }
-
     .ad-flex-header {
         display: flex;
         flex-direction: row;
@@ -911,10 +847,6 @@ body {
         flex-grow: 30;
     }
 
-    .ad-flex-show-header {
-        flex-grow: 2;
-    }
-
     .ad-flex-hide {
         flex-grow: 0;
     }
@@ -941,56 +873,6 @@ body {
 
     .db-nopadding {
         padding: 0 !important;
-    }
-
-    .ad-btn-group-left {
-        @extend .btn-group;
-        padding-left: 0 !important;
-        padding-right: 0 !important;
-        .btn {
-            border-top-left-radius: $btn-radius !important;
-            border-bottom-left-radius: 0 !important;
-            border-top-right-radius: $btn-radius !important;
-            border-bottom-right-radius: 0 !important;
-            min-height: $header-height;
-            font-size: $default-font-size;
-        }
-    }
-
-    .ad-btn-group-middle {
-        @extend .btn-group;
-        padding-left: 0 !important;
-        padding-right: 0 !important;
-        .btn {
-            border-top-left-radius: 0 !important;
-            border-bottom-left-radius: 0 !important;
-            border-top-right-radius: 0 !important;
-            border-bottom-right-radius: 0 !important;
-            min-height: $header-height;
-            font-size: $default-font-size;
-        }
-    }
-
-    .ad-btn-group-right {
-        @extend .btn-group;
-        padding-left: 0 !important;
-        padding-right: 0 !important;
-        .btn {
-            border-top-left-radius: 0 !important;
-            border-bottom-left-radius: $btn-radius !important;
-            border-top-right-radius: 0 !important;
-            border-bottom-right-radius: $btn-radius !important;
-            min-height: $header-height;
-            font-size: $default-font-size;
-        }
-    }
-
-    .ad-center {
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
     }
 
     .ad-progress-bar {
@@ -1029,12 +911,6 @@ body {
         min-height: 2.5em;
     }
 
-    .ad-dropdown-header {
-        padding-left: 15px;
-        padding-right: 15px;
-        text-transform: uppercase;
-    }
-
     .ad-dropdown-content {
         white-space: nowrap;
     }
@@ -1045,11 +921,6 @@ body {
         min-width: 25vw; // Min width needed to allow respDropd directive to calculate size in link phase
         overflow-y: auto;
         overflow-x: hidden;
-    }
-
-    .ad-btn-group-vertical {
-        @extend .btn-group-vertical;
-        display: block;
     }
 
     .db-no-border {
@@ -1077,20 +948,6 @@ body {
 .ad-no-scrollbars { -ms-overflow-style: none; }
 .ad-no-scrollbars::-webkit-scrollbar { width:0px; }
 
-.scrolling-content {
-    @extend .ad-no-scrollbars;
-    overflow-y: scroll;
-    overflow-x: hidden;
-    width: 100%;
-    height: 100%;
-}
-
-.scrolling-content-xy {
-    @extend .scrolling-content;
-    overflow-x: scroll;
-    max-height: 100%;
-}
-
 .scrollable-menu {
     @extend .ad-no-scrollbars;
     height: auto;
@@ -1100,36 +957,12 @@ body {
 
 .ad-size-full { height: 100%; width: 100%; }
 
-.db-large-modal {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top:0; bottom: 0; left: 0; right: 0;
-    margin: 0;
-    display: block;
-    overflow: hidden;
-
-    .modal-dialog { // Not referenced directly, but needed to make modal fullscreen
-        width: 100%;
-        height: 100%;
-        margin: 0;
-        }
-
-    .modal-content { // Not referenced directly, but needed to make modal fullscreen
-        height: 100%;
-        width: 100%;
-        border: 0;
-        }
-}
-
 .ad-embedded-pdf {
     width: 100%;
     height: 100%;
     border: none;
     animation: EMBEDDED-SHOW $long-delay linear;
 }
-
-.ad-btn-margin { margin: 2px; }
 
 .ad-pdfLink {
     background: transparent url(../images/pdf.png) no-repeat 0px 0px;
