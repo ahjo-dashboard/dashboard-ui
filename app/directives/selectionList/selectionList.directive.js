@@ -13,7 +13,7 @@
 angular.module('dashboard')
     .directive('dbSelectionList', [function () {
 
-        var controller = ['$log', '$scope', 'AttachmentData', function ($log, $scope, AttachmentData) {
+        var controller = ['$log', '$scope', 'AttachmentData', 'CONST', function ($log, $scope, AttachmentData, CONST) {
             $log.log("dbSelectionList: CONTROLLER");
             var self = this;
             self.data = null;
@@ -37,7 +37,7 @@ angular.module('dashboard')
                 if (!(att instanceof AttachmentData)) {
                     $log.error("dbSelectionList: isDisabled: unsupported arg type: " + JSON.stringify(att));
                 } else {
-                    res = !angular.isString(att.link) || !att.link.length;
+                    res = (att.publicity === CONST.PUBLICITY.SECRET) || !angular.isString(att.link) || !att.link.length;
                 }
                 return res;
             };
