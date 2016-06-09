@@ -1100,25 +1100,6 @@ body {
     overflow-x: hidden;
 }
 
-.ad-size-full { height: 100%; width: 100%; }
-
-.ad-embedded-pdf {
-    width: 100%;
-    height: 100%;
-    border: none;
-    animation: EMBEDDED-SHOW $long-delay linear;
-}
-
-.ad-pdfLink {
-    background: transparent url(../images/pdf.png) no-repeat 0px 0px;
-    display: block;
-    padding: 7px 20px 7px 40px;
-    margin: $db-page-margin $db-page-margin;
-    overflow: auto;
-    color: $font-color-body;
-    text-overflow: ellipsis;
-}
-
 // Tooltip class had to be defined like this, otherwise didn't take effect
 .tooltip.db-tooltip .tooltip-inner {
     text-align: left;
