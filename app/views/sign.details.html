@@ -16,7 +16,7 @@
                 </button>
 
                 <button type="button" class="btn db-btn-prim db-block-hdr-item-md db-brd db-margin-2 ng-class:{'active' : c.isActive(c.btnModel.doc.id) }"
-                    ng-click="c.actionDoc()" ng-disabled="false">
+                    ng-click="c.actionDoc()">
                     <span translate translate-cloak>STR_SIGNING_REQ</span>
                 </button>
                 <button type="button" class="btn db-btn-prim db-block-hdr-item-md db-brd db-margin-2 ng-class:{'active' : c.isActive(c.btnModel.doctr.id) }"
@@ -83,13 +83,13 @@
                     <db-selection-list ng-attr-sel-data="c.btnModel.att.selData" ng-attr-on-select="c.selAtt(data)"></db-selection-list>
                 </div>
 
-                 <!--Requestees and statuses of the document to be signed-->
+                <!--Requestees and statuses of the document to be signed-->
                 <doc-signers ng-if="c.btnModel.sta.signers" ng-show="c.isDisplayed(c.btnModel.sta.id)" class="db-view-item-margin" listmodel="c.btnModel.sta.signers"
                     ismobile="c.isMobile">
                 </doc-signers>
 
                 <!-- Requestor email address for user to send comments -->
-                <uib-alert ng-show="c.isDisplayed(c.btnModel.com.id, true)" type="warning" >
+                <uib-alert ng-show="c.isDisplayed(c.btnModel.com.id, true)" type="warning">
                     <div ng-if="c.btnModel.com.content && c.btnModel.com.content.email && c.btnModel.com.content.email.length">
                         <div translate translate-cloak>STR_SIGNING_COMMENT_INFO</div>
                         <div><a href="mailto:{{c.btnModel.com.content.email}}">{{c.btnModel.com.content.email}}</a></div>
