@@ -32,13 +32,23 @@ angular.module('dashboard')
                 }
             };
 
-            self.isDisabled = function (att) {
+            self.isLinkDisabled = function (att) {
                 var res = false;
-                if (!(att instanceof AttachmentData)) {
-                    $log.error("dbSelectionList: isDisabled: unsupported arg type: " + JSON.stringify(att));
+                if (att instanceof AttachmentData) {
+                    res = !angular.isString(att.link) || !att.link.length;
                 } else {
+                    $log.error("dbSelectionList: isLinkDisabled: unsupported arg type: " + JSON.stringify(att));
+                }
+                return res;
+            };
+
+            self.isOpenWindowDisabled = function (att) {
+                var res = false;
+                if (att instanceof AttachmentData) {
                     // disabled for secret docs because currently no easy way to popup them
                     res = (att.publicity === CONST.PUBLICITY.SECRET) || !angular.isString(att.link) || !att.link.length;
+                } else {
+                    $log.error("dbSelectionList: isOpenWindowDisabled: unsupported arg type: " + JSON.stringify(att));
                 }
                 return res;
             };
