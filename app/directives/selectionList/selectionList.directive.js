@@ -37,6 +37,7 @@ angular.module('dashboard')
                 if (!(att instanceof AttachmentData)) {
                     $log.error("dbSelectionList: isDisabled: unsupported arg type: " + JSON.stringify(att));
                 } else {
+                    // disabled for secret docs because currently no easy way to popup them
                     res = (att.publicity === CONST.PUBLICITY.SECRET) || !angular.isString(att.link) || !att.link.length;
                 }
                 return res;
