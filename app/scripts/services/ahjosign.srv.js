@@ -39,7 +39,7 @@ angular.module('AhjoSigningService', [
         return $resource(ENV.SIGNAPIURL_PERSONINFO, {}, {
             get: {
                 method: "GET",
-                cache: false
+                cache: true
             }
         });
     })
@@ -47,7 +47,7 @@ angular.module('AhjoSigningService', [
         return $resource(ENV.SIGNAPIURL_DOCSIGNATURES, {}, {
             get: {
                 method: "GET",
-                cache: false
+                cache: true
             }
         });
     })
@@ -76,4 +76,19 @@ angular.module('AhjoSigningService', [
                     }
                 }
             });
-    });
+    })
+    .service('SigningUtil', ['$log', function ($log) {
+        $log.debug("SigningUtil");
+        var self = this;
+
+        // Takes an document from signing api and returns an array of attachment info objects parsed from string arrray
+        self.parseAtts = function (item) {
+            var res = [];
+            for (var i = 0; angular.isArray(item.AttachmentInfos) && i < item.AttachmentInfos.length; i++) {
+                res.push(JSON.parse(item.AttachmentInfos[i])); // API returns items as JSON strings so parse into object
+                // Example attachment info item: {"Id":"123456789", "ParentTitle":"abc", "Title":"xyz.pdf"}
+            }
+            $log.debug("SigningUtil.parseAtts: " + res.length);
+            return res;
+        };
+    }]);
