@@ -13,10 +13,11 @@
 angular.module('dashboard')
     .directive('dbSelectionList', [function () {
 
-        var controller = ['$log', '$scope', 'AttachmentData', 'CONST', function ($log, $scope, AttachmentData, CONST) {
+        var controller = ['$log', '$scope', 'AttachmentData', 'CONST', '$rootScope', function ($log, $scope, AttachmentData, CONST, $rootScope) {
             $log.log("dbSelectionList: CONTROLLER");
             var self = this;
             self.data = null;
+            self.isMobile = $rootScope.isMobile;
 
             self.selected = function (item) {
                 $log.log("dbSelectionList: selected: " + JSON.stringify(item));
