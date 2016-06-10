@@ -12,7 +12,7 @@
  * Controller of the dashboard
  */
 var app = angular.module('dashboard');
-app.controller('signDetailsCtrl', function ($log, $state, $rootScope, ENV, CONST, StorageSrv, ListData, SigningDocSignaturesApi, SigningPersonInfoApi) {
+app.controller('signDetailsCtrl', function ($log, $state, $rootScope, ENV, CONST, StorageSrv, ListData, SigningUtil) {
     $rootScope.menu = CONST.MENU.FULL;
 
     var self = this;
@@ -50,27 +50,12 @@ app.controller('signDetailsCtrl', function ($log, $state, $rootScope, ENV, CONST
         att: {
             id: 'att', block: 2, busy: false, disabled: false, active: false, hideBtn: false, hideCont: false, url: undefined, selData: null
         },
-        sta: { id: 'sta', block: 2, busy: false, disabled: false, active: false, hideBtn: false, hideCont: false, signers: null },
-        com: { id: 'com', block: 2, busy: false, disabled: false, active: false, hideCont: false, result: null }
+        sta: { id: 'sta', block: 2, busy: false, disabled: false, active: false, hideBtn: false, hideCont: false, signers: null }
     };
-
-    function parseAtts(item) {
-        var res = [];
-        for (var i = 0; angular.isArray(item.AttachmentInfos) && i < item.AttachmentInfos.length; i++) {
-            res.push(JSON.parse(item.AttachmentInfos[i])); // API returns items as JSON strings so parse into object
-            // Example attachment info item: {"Id":"123456789", "ParentTitle":"abc", "Title":"xyz.pdf"}
-        }
-        $log.debug("signDetailsCtrl.parseAtts: " + res.length);
-        return res;
-
-    }
-
 
     function initCtrl(btnModel, item, status) {
         self.secondaryUrl = null;
         self.lbm = self.btnModel.att.id;
-
-        btnModel.com.requestorId = item.RequestorId ? item.RequestorId : null;
 
         btnModel.doc.url = item.ProcessGuid ? ENV.SignApiUrl_GetAttachment.replace(":reqId", self.item.ProcessGuid) : null;
         btnModel.doctr.url = angular.isString(item.TranslationGuid) && item.TranslationGuid.length ? ENV.SIGNAPIURL_DOC_TRANSLATED.replace(':reqId', item.ProcessGuid).replace(':transId', true).replace(':attId', '') : null;
@@ -80,7 +65,7 @@ app.controller('signDetailsCtrl', function ($log, $state, $rootScope, ENV, CONST
 
         $log.debug("signDetailsCtrl.initCtrl: doc=" + btnModel.doc.url);
 
-        var atts = parseAtts(item);
+        var atts = SigningUtil.parseAtts(item);
         btnModel.att.selData = ListData.createEsignAttachmentList({ 'header': 'STR_ATTACHMENTS', 'title': self.item.Name }, atts, item);
 
         btnModel.att.count = atts.length;
@@ -88,8 +73,6 @@ app.controller('signDetailsCtrl', function ($log, $state, $rootScope, ENV, CONST
         self.selData = btnModel.att.selData;
 
         if (!angular.equals(status, CONST.ESIGNSTATUS.UNSIGNED.value)) {
-            // btnModel.acc.hideBtn = true;
-            // btnModel.rej.hideBtn = true;
             btnModel.att.disabled = true;
             btnModel.att.hideCont = true;
         }
@@ -126,68 +109,13 @@ app.controller('signDetailsCtrl', function ($log, $state, $rootScope, ENV, CONST
         setBtnActive(btnItem, btnItem.block);
     }
 
-    function displaySignings(sgn) {
-        if (!sgn || !("Signers" in sgn)) {
-            $log.error("signItemCtrl.displaySignings: bad args");
-            return;
-        }
-
-        if (self.isMobile) {
-            $state.go(CONST.APPSTATE.DOCSIGNERS, { 'signers': sgn });
-        }
-        // else: nothing to do on desktop, view displays results when operation is done
-    }
-
-    function getReqStatuses(item) {
-        $log.debug("signDetailsCtrl.getReqStatuses");
-
-        if (!item || !("Guid" in item) || !item.Guid) {
-            $log.error("signDetailsCtrl.getReqStatuses: bad args");
-            return;
-        }
-
-        if (self.btnModel.sta.signers && self.btnModel.sta.busy) {
-            $log.debug("signDetailsCtrl.getReqStatuses: already busy, ignoring");
-        } else if (self.btnModel.sta.signers && !self.btnModel.sta.busy) {
-            displaySignings(self.btnModel.sta.signers);
-        } else {
-            self.btnModel.sta.busy = true;
-            self.btnModel.sta.signers = SigningDocSignaturesApi.get({ reqId: item.ProcessGuid }, function (/*data*/) {
-                $log.debug("signDetailsCtrl.getReqStatuses: api query done ");
-                displaySignings(self.btnModel.sta.signers);
-            }, function (error) {
-                $log.error("signDetailsCtrl.getReqStatuses: api query error: " + JSON.stringify(error));
-                //TODO: display error
-            });
-            self.btnModel.sta.signers.$promise.finally(function () {
-                self.btnModel.sta.busy = false;
-            });
-        }
-    }
     function isModalOpen() {//TODO:
-        return self.btnModel.acc.cConf.isOpen || self.btnModel.rej.cConf.isOpen;
+        return false;
     }
 
     // Workaround on IE to hide <object> pdf because IE displays it topmost covering modals and dropdowns.
     function hidePdfOnIe() {//TODO fix
         return $rootScope.isIe && (self.btnModel.att.isOpen || isModalOpen());
-    }
-
-    function getPersonInfo(aBtnItem) {
-        $log.debug("signStatusCtrl.personInfo");
-
-        if (!aBtnItem.content && aBtnItem.requestorId) {
-            aBtnItem.busy = true;
-            aBtnItem.content = SigningPersonInfoApi.get({ userId: aBtnItem.requestorId }, function (/*data*/) {
-                $log.debug("signStatusCtrl.personInfo: api query done");
-            }, function (error) {
-                $log.error("signStatusCtrl.personInfo: api query error: " + JSON.stringify(error));
-                //TODO: display error
-            });
-            aBtnItem.content.$promise.finally(function () {
-                aBtnItem.busy = false;
-            });
-        }
     }
 
     self.isActive = function (id) {
@@ -215,12 +143,6 @@ app.controller('signDetailsCtrl', function ($log, $state, $rootScope, ENV, CONST
 
     self.actionReqStatuses = function () {
         setBlockContent(self.btnModel.sta);
-        getReqStatuses(self.item);
-    };
-
-    self.actionComment = function () {
-        setBlockContent(self.btnModel.com);
-        getPersonInfo(self.btnModel.com);
     };
 
     self.selAtt = function (data) {
@@ -265,9 +187,6 @@ app.controller('signDetailsCtrl', function ($log, $state, $rootScope, ENV, CONST
 
     self.isLoadingSec = function () {
         var res = false;
-        // for (var i = 0; !res && (i < self.btnModel.length); i++) {
-        //     res = self.btnModel[i].busy;
-        // }
         angular.forEach(self.btnModel, function (item) {
             if (!res && (item.id === self.lbm) && item.busy) {
                 res = item.busy;
