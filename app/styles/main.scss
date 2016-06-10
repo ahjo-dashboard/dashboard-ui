@@ -20,12 +20,22 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 
 $long-delay: 600ms;
 
+$db-color-303F9F: #303F9F;
+$db-color-303F9F-lighten: lighten($db-color-303F9F, 10%);
+$db-color-3F51B5: #3F51B5;
+$db-color-C5CAE9: #C5CAE9;
+$db-color-FFFFFF: #FFFFFF;
+$db-color-448AFF: #448AFF;
+$db-color-212121: #212121;
+$db-color-727272: #727272;
+$db-color-B6B6B6: #B6B6B6;
+
 $appbgcolor: white;
 $font-color-body: #404040;
-$upper-color: #276aa5;
-$headingBgColor: $upper-color;
+$headingBgColor: $db-color-303F9F;
 
 $default-font-size: 1.2em;
+$opt-font-weight: 500;
 $tablist-tabborder-width: 2px;
 $list-bg-color: $appbgcolor;
 $db-page-margin: 10px;
@@ -81,8 +91,8 @@ iframe {
 }
 
 .db-prim-bg {
-    background-color: $btn-prim-color-bg !important;
-    color: $font-color-header;
+    background-color: $db-color-448AFF !important;
+    color: $db-color-FFFFFF;
 }
 
 .db-transparent {
@@ -102,8 +112,8 @@ iframe {
 }
 
 .db-margin-05-hor {
-    margin-left: 0.5vh;
-    margin-right: 0.5vh;
+    margin-left: 0.5vh !important;
+    margin-right: 0.5vh !important;
 }
 
 .db-margin-10-bottom {
@@ -283,7 +293,7 @@ $blockOpenFlex: 9;
     .db-block-border {
         border-style: solid;
         border-width: $tablist-tabborder-width;
-        border-color: $btn-prim-color-active-bg;
+        border-color: $db-color-448AFF;
     }
 }
 
@@ -306,8 +316,8 @@ $blockOpenFlex: 9;
     }
 
     .db-prop-hdr {
-        background-color: #4591d3;
-        color: $font-color-header;
+        background-color: $db-color-448AFF;
+        color: $db-color-FFFFFF;
         display: flex;
         flex-direction: column;
         padding: 0.5vh 1.0vh;
@@ -337,7 +347,7 @@ $blockOpenFlex: 9;
     }
 
     .list-group-item {
-        border-color: #4591d3;
+        border-color: $db-color-B6B6B6;
     }
 
     .list-group-item:first-child {
@@ -397,7 +407,7 @@ $blockOpenFlex: 9;
     }
 
     .rmk-header {
-        background-color: #4591d3;
+        background-color: $db-color-448AFF;
         position: relative;
 
         h1, h2, h3, h4, h5 {
@@ -446,20 +456,21 @@ html { height: 100%; }
 
 body {
     $header-height: 60px; // this is for moving main content
-    $button-height: 40px;
 
     $focusedColor: #3e7ebe;
-    $headingL2BgColor: $appbgcolor;
+    $headingL2BgColor: $db-color-448AFF;
     $borderColor: $focusedColor;
-    background-color: $appbgcolor;
 
     padding: 0;
 
-    font-family: "Trebuchet MS", Helvetica, sans-serif;
+    font-family: "Open Sans", "Trebuchet MS", Helvetica, sans-serif !important;
+
+    .btn {
+        font-weight: $opt-font-weight;
+    }
 
     h1, h2, h3, h4, h5 {
-        font-family: Avant Garde,Avantgarde,Century Gothic,CenturyGothic,AppleGothic,sans-serif;
-        font-weight: 900;
+        font-weight: $opt-font-weight;
     }
 
     .db-title {
@@ -503,7 +514,6 @@ body {
     }
 
     .ad-container-fluid {
-        background-color: $headingBgColor;
         border-style: solid;
         border-width: 0px;
         color: $font-color-header;
@@ -516,16 +526,6 @@ body {
     h1, h2, h3, h4, h5 {
         margin-top: 0px;
         margin-bottom: 0px;
-    }
-
-    .btn {
-        border-width: 0px;
-        overflow: hidden;
-        font-size: $default-font-size;
-
-        div {
-            padding: 0;
-        }
     }
 
     .db-no-margin {
@@ -547,6 +547,11 @@ body {
 
     .db-badge {
         width: 100%;
+    }
+
+    .db-no-border {
+        border-radius: 0;
+        border-style: none !important;
     }
 
     .db-badge-pur {
@@ -574,7 +579,31 @@ body {
     }
 
     .db-btn-prim {
-        @include button-variant($font-color-header, $btn-prim-color-bg, $btn-prim-color-bg);
+        @include button-variant($font-color-header, $db-color-448AFF, $db-color-448AFF);
+        color: $db-color-FFFFFF;
+    }
+
+    .db-btn-prim.active {
+        @include button-variant($font-color-header, $db-color-303F9F-lighten, $db-color-303F9F-lighten);
+    }
+
+    .db-btn-opt {
+        @include button-variant($font-color-header, $db-color-303F9F, $db-color-303F9F);
+    }
+
+    .db-btn-opt-dummy {
+        @extend .db-btn-opt;
+        opacity: 1.0 !important;
+        outline: none !important;
+    }
+
+    .db-btn-sel {
+        @include button-variant($font-color-header, $db-color-C5CAE9, $db-color-C5CAE9);
+        color: $db-color-212121;
+    }
+
+    .db-btn-sel.active {
+        @include button-variant($font-color-header, $db-color-303F9F-lighten, $db-color-303F9F-lighten);
     }
 
     .db-btn-succ {
@@ -611,27 +640,12 @@ body {
     .overview-hdr {
         width:100%;
         display: flex;
-        -moz-box-direction: row;
-        -webkit-box-direction: row;
-        -webkit-box-orient: horizontal;
-        -webkit-flex-direction: row;
-        -ms-flexbox-direction: row;
-        -ms-flex-direction: row;
         flex-direction: row;
         align-items: center;
-        justify-content: flex-start;
-
-        .left {
-            margin-right: auto;
-        }
-
-        .right {
-            margin-left: auto;
-        }
     }
 
     .db-btn-hdr {
-        @include button-variant($font-color-header, $headingBgColor, $headingBgColor);
+        @include button-variant($font-color-header, $db-color-448AFF, $db-color-448AFF);
     }
 
     .db-btn-sm {
@@ -646,15 +660,19 @@ body {
     // db-btn-agenda
     .db-btn-agenda:active,
     .db-btn-agenda.active {
-        background-color: $upper-color !important;
-        border-color: $upper-color;
-        color: $font-color-header;
+        background-color: $db-color-303F9F !important;
+        border-color: $db-color-303F9F;
+        color: $db-color-FFFFFF;
+    }
+
+    .db-btn-agenda.active:hover {
+        color: $db-color-FFFFFF;
     }
 
     .db-tablist {
         button, a {
             border-width: 0 $tablist-tabborder-width;
-            border-color: $btn-prim-color-active-bg;
+            border-color: $db-color-B6B6B6;
             border-style: solid;
         }
 
@@ -673,7 +691,7 @@ body {
             width: 100%;
             border-style: solid;
             border-width: $tablist-tabborder-width $tablist-tabborder-width 0 $tablist-tabborder-width;
-            border-color: $btn-prim-color-active-bg;
+            border-color: $db-color-B6B6B6;
             border-radius: 0;
             color: $font-color-body;
             background-color: $list-bg-color;
@@ -721,7 +739,7 @@ body {
         right: 0;
         bottom: 0;
         overflow: hidden;
-        background-color: $appbgcolor;
+        background-color: $db-color-FFFFFF;
 
         .info {
             color: $font-color-header;
@@ -754,7 +772,7 @@ body {
         right: 0;
         bottom: 0;
         overflow: auto;
-        background-color: $appbgcolor;
+        // background-color: $appbgcolor;
 
         .btn {
             text-align: left;
@@ -777,7 +795,7 @@ body {
         padding-right: $header-leftmargin;
 
         border: 0;
-        background-color: $headingBgColor;
+        background-color: $db-color-448AFF;
         height: $header-height;
 
         // Not set for all element types because that would mix desktop layout which uses cols while mobile doesn't.
@@ -820,21 +838,6 @@ body {
 
         .right {
             float: right;
-        }
-
-        .btn {
-            height: $button-height;
-            margin: ($header-height - $button-height) * 0.5;
-            white-space: normal;
-            max-lines: 2;
-            word-wrap: break-word;
-            border-radius: $btn-radius;
-            max-height: 100%;
-            max-width: 100%;
-            div {
-                text-overflow: ellipsis;
-                overflow: hidden;
-            }
         }
     }
 
@@ -933,7 +936,7 @@ body {
     .db-item-border {
         border-style: solid;
         border-width: $tablist-tabborder-width;
-        border-color: $btn-prim-color-active-bg;
+        border-color: $db-color-B6B6B6;
         border-radius: $btn-radius;
         margin: 1vh 1vw;
     }
@@ -1038,7 +1041,7 @@ body {
         flex-direction: row;
 
         border-width: 0 1px 1px 1px;
-        border-color: $btn-prim-color-active-bg;
+        border-color: $db-color-B6B6B6;
         border-style: solid;
     }
 

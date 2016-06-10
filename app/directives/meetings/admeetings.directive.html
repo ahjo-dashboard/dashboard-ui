@@ -2,13 +2,14 @@
     <div class="row">
 
         <div class="hidden-xs col-xs-12 col-sm-4 db-nopadding">
-            <button type="button" class="btn btn-block disabled ng-class:{'db-btn-colhea': c.loading, 'db-btn-colhea-dummy': !c.loading}">
+            <button type="button" class="btn btn-block disabled db-no-border ng-class:{'db-btn-opt': c.loading, 'db-btn-opt-dummy': !c.loading}">
                 <span translate translate-cloak>STR_MEETING</span>
             </button>
         </div>
 
         <div class="col-xs-12 col-sm-3 btn-group db-nopadding" uib-dropdown is-open="agencyIsOpen">
-            <button id="agencyButton" type="button" class="btn btn-block db-btn-colhea" uib-dropdown-toggle ng-disabled="c.loading">
+            <button id="agencyButton" type="button" class="btn btn-block db-btn-opt db-no-border" uib-dropdown-toggle
+                ng-disabled="c.loading">
                 <span class="ng-cloak">{{c.agencyTitle}}</span>
                 <span class="caret"></span>
             </button>
@@ -20,12 +21,13 @@
         </div>
 
         <div class="hidden-xs col-xs-12 col-sm-3 db-nopadding">
-            <button id="roleButton" type="button" class="btn btn-block disabled ng-class:{'db-btn-colhea': c.loading, 'db-btn-colhea-dummy': !c.loading}"
-            translate>STR_ROLE</button>
+            <button id="roleButton" type="button" class="btn btn-block disabled db-no-border ng-class:{'db-btn-opt': c.loading, 'db-btn-opt-dummy': !c.loading}"
+                translate>STR_ROLE</button>
         </div>
 
         <div class="hidden-xs col-xs-12 col-sm-2 db-nopadding">
-            <button id="roleButton" type="button" class="btn btn-block disabled ng-class:{'db-btn-colhea': c.loading, 'db-btn-colhea-dummy': !c.loading}" translate translate-cloak>
+            <button id="roleButton" type="button" class="btn btn-block disabled db-no-border ng-class:{'db-btn-opt': c.loading, 'db-btn-opt-dummy': !c.loading}"
+                translate translate-cloak>
                 STR_STATUS
             </button>
         </div>
@@ -37,7 +39,7 @@
 
         <ul ng-if="!c.mtgErr" class="list-group db-tablist">
             <button ng-if="item.visible" type="button" class="list-group-item" ng-repeat="item in c.data | orderBy:'meeting.meetingDate': reverse track by $index"
-            ng-click="selected({meetingItem:item.meeting})">
+                ng-click="selected({meetingItem:item.meeting})">
                 <div class="row">
                     <div class="col-xs-12 col-sm-4">
                         {{item.meeting.meetingDate | date:'yyyy-MM-dd HH:mm' }}&nbsp;&nbsp;&nbsp;<b>{{item.meeting.name}}</b>
