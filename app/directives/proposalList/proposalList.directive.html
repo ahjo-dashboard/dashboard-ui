@@ -9,7 +9,7 @@
             <h5 ng-if="!c.isMobile" class="db-prop-hdr-text" translate translate-cloak>STR_PRIVATE_PROPOSALS</h5>
 
             <div class="btn-broup" uib-dropdown is-open="">
-                <button id="typeButton" type="button" ng-disabled="c.unsavedCount" class="btn btn-block btn-primary db-btn-big" uib-dropdown-toggle
+                <button id="typeButton" type="button" ng-disabled="c.unsavedCount" class="btn btn-block db-btn-sel db-btn-big" uib-dropdown-toggle
                     translate translate-cloak>STR_CREATE_PROPOSAL</button>
                 <div uib-dropdown-menu role="menu" aria-labelledby="typeButton" class="dropdown-menu-right">
                     <div class="prop-dropdown-item" role="menuitem" ng-repeat="type in c.tps track by $index" ng-click="c.addProposalClicked(type)">
@@ -32,7 +32,7 @@
             <h4 ng-if="c.isMobile" class="db-prop-hdr-text" translate translate-cloak>STR_PUBLIC_PROPOSALS</h4>
             <h5 ng-if="!c.isMobile" class="db-prop-hdr-text" translate translate-cloak>STR_PUBLIC_PROPOSALS</h5>
 
-            <button type="button" class="btn btn-block btn-primary db-btn-big" ng-click="c.toggleAll()"><span translate translate-cloak>{{c.btnText}}</span></button>
+            <button type="button" class="btn btn-block db-btn-sel db-btn-big" ng-click="c.toggleAll()"><span translate translate-cloak>{{c.btnText}}</span></button>
 
         </div>
 

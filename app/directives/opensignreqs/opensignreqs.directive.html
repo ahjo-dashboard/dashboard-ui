@@ -2,13 +2,14 @@
     <div class="row">
 
         <div class="hidden-xs col-xs-12 col-sm-6 db-nopadding">
-            <button type="button" class="btn btn-block disabled ng-class:{'db-btn-colhea': c.isDisabled(), 'db-btn-colhea-dummy': !c.isDisabled()}">
+            <button type="button" class="btn btn-block disabled db-no-border ng-class:{'db-btn-opt': c.isDisabled(), 'db-btn-opt-dummy': !c.isDisabled()}">
                 <span translate translate-cloak>STR_SIGNING_REQ</span>
             </button>
         </div>
 
         <div class="col-xs-6 col-sm-4 btn-group db-nopadding" uib-dropdown is-open="">
-            <button id="docTypeButton" type="button" class="btn btn-block db-btn-colhea" ng-disabled="c.isDisabled()" uib-dropdown-toggle>
+            <button id="docTypeButton" type="button" class="btn btn-block db-btn-opt db-no-border" ng-disabled="c.isDisabled()"
+                uib-dropdown-toggle>
                 <span translate translate-cloak>{{c.docTypeTitle}}</span>
                 <span class="caret"></span>
             </button>
@@ -25,7 +26,7 @@
         </div>
 
         <div class="col-xs-6 col-sm-2 db-nopadding btn-group" uib-dropdown is-open="">
-            <button id="docStatusButton" type="button" class="btn btn-block db-btn-colhea" ng-disabled="c.isDisabled()" uib-dropdown-toggle>
+            <button id="docStatusButton" type="button" class="btn btn-block db-btn-opt db-no-border" ng-disabled="c.isDisabled()" uib-dropdown-toggle>
                 <span translate translate-cloak>{{c.docStatusTitle}}</span>
                 <span class="caret"></span>
             </button>

@@ -7,19 +7,19 @@
 
             <!-- PRIMARY BLOCK HEADER -->
             <div class="btn-group db-block-hdr db-prim-bg db-brd-top db-padding-2">
-                <button ng-if="menuClosed()" type="button" class="btn db-btn-prim db-btn-small db-brd db-margin-2" ng-click="openMenu()"><span class="glyphicon glyphicon-menu-hamburger"></span></button>
-                <button ng-if="menuClosed()" type="button" class="btn db-btn-prim db-btn-small db-brd db-margin-2" ng-click="c.toggleParallelMode()">
+                <button ng-if="menuClosed()" type="button" class="btn db-btn-sel db-btn-small db-brd db-margin-2" ng-click="openMenu()"><span class="glyphicon glyphicon-menu-hamburger"></span></button>
+                <button ng-if="menuClosed()" type="button" class="btn db-btn-sel db-btn-small db-brd db-margin-2" ng-click="c.toggleParallelMode()">
                     <span class="glyphicon ng-class:[{'glyphicon-resize-vertical':parallelMode},{'glyphicon-resize-horizontal':!parallelMode}]"></span>
                 </button>
-                <button type="button" class="btn db-btn-prim db-btn-small db-brd db-margin-2" ng-disabled="parallelMode" ng-click="c.primaryClicked()">
+                <button type="button" class="btn db-btn-sel db-btn-small db-brd db-margin-2" ng-disabled="parallelMode" ng-click="c.primaryClicked()">
                     <span class="glyphicon ng-class:[{'glyphicon-minus':c.bm === c.bms.PRIMARY},{'glyphicon-plus':c.bm !== c.bms.PRIMARY}]"></span>
                 </button>
 
-                <button type="button" class="btn db-btn-prim db-block-hdr-item-md db-brd db-margin-2 ng-class:{'active' : c.isActive(c.btnModel.doc.id) }"
+                <button type="button" class="btn db-btn-sel db-block-hdr-item-md db-brd db-margin-2 ng-class:{'active' : c.isActive(c.btnModel.doc.id) }"
                     ng-click="c.actionDoc()">
                     <span translate translate-cloak>STR_SIGNING_REQ</span>
                 </button>
-                <button type="button" class="btn db-btn-prim db-block-hdr-item-md db-brd db-margin-2 ng-class:{'active' : c.isActive(c.btnModel.doctr.id) }"
+                <button type="button" class="btn db-btn-sel db-block-hdr-item-md db-brd db-margin-2 ng-class:{'active' : c.isActive(c.btnModel.doctr.id) }"
                     ng-click="c.actionDocTr()" ng-disabled="c.btnModel.doctr.disabled">
                     <span translate translate-cloak>STR_TRANSLATION</span>
                 </button>
@@ -43,22 +43,22 @@
             <!-- SECONDARY BLOCK HEADER -->
             <div class="btn-group db-block-hdr db-prim-bg db-brd-top db-padding-2">
 
-                <button type="button" class="btn db-btn-prim db-btn-small db-brd db-margin-2" ng-disabled="parallelMode" ng-click="c.secondaryClicked()">
+                <button type="button" class="btn db-btn-sel db-btn-small db-brd db-margin-2" ng-disabled="parallelMode" ng-click="c.secondaryClicked()">
                     <span class="glyphicon ng-class:[{'glyphicon-minus':c.bm === c.bms.SECONDARY},{'glyphicon-plus':c.bm !== c.bms.SECONDARY}]""></span>
                 </button>
 
-                <button type="button" class="btn db-btn-prim db-block-hdr-item-md db-brd db-margin-2 ng-class:[{ 'active' : c.isActive(c.btnModel.att.id) }]"
+                <button type="button" class="btn db-btn-sel db-block-hdr-item-md db-brd db-margin-2 ng-class:[{ 'active' : c.isActive(c.btnModel.att.id) }]"
                     ng-disabled="c.btnModel.att.disabled" ng-click="c.actionAtt()">
                     <span translate translate-cloak>STR_ATTACHMENTS</span>
                     <span class="badge ng-cloak">{{c.btnModel.att.count}}</span>
                 </button>
 
-                <button type="button" class="btn db-btn-prim db-block-hdr-item-md db-brd db-margin-2 ng-class:[{ 'active' : c.isActive(c.btnModel.sta.id) }]"
+                <button type="button" class="btn db-btn-sel db-block-hdr-item-md db-brd db-margin-2 ng-class:[{ 'active' : c.isActive(c.btnModel.sta.id) }]"
                     ng-disabled="c.btnModel.sta.disabled" ng-click="c.actionReqStatuses()">
                     <span translate translate-cloak>STR_STATUS</span>
                 </button>
 
-                <button type="button" class="btn db-btn-prim db-block-hdr-item-md db-brd db-margin-2 ng-class:[{ 'active' : c.isActive(c.btnModel.com.id) }]"
+                <button type="button" class="btn db-btn-sel db-block-hdr-item-md db-brd db-margin-2 ng-class:[{ 'active' : c.isActive(c.btnModel.com.id) }]"
                     ng-disabled="c.btnModel.com.disabled" ng-click="c.actionComment()">
                     <span translate translate-cloak>STR_CREATE_COMMENT</span>
                 </button>

@@ -4,16 +4,10 @@
         <div class="overview-hdr">
 
             <img src="images/vaakuna.jpg" style="width: 40px;">
-            <h4 class="visible-xs-block left" translate>STR_APPNAME</h4>
-            <h3 class="hidden-xs left" translate>STR_APPNAME</h3>
-
-            <div class="right">
-                <button ng-if="env_dev" type="button" class="btn btn-xs db-btn-prim db-btn-sm" ng-click="oc.logout()">
-                    <span translate="STR_LOGOUT"></span>
-                </button>
-                <button type="button" class="hidden-xs btn btn-sm db-btn-hdr glyphicon center glyphicon-info-sign" ng-click="oc.showInfo()">
-                </button>
-            </div>
+            <h4 class="hidden-sm hidden-md hidden-lg db-flex-area" translate>STR_APPNAME</h4>
+            <h3 class="hidden-xs db-flex-area" translate>STR_APPNAME</h3>
+            <button ng-if="env_dev" type="button" class="btn db-btn-prim" ng-click="oc.logout()"><span translate="STR_LOGOUT"></span></button>
+            <button type="button" class="hidden-xs btn btn-sm db-btn-hdr glyphicon glyphicon-info-sign" ng-click="oc.showInfo()"></button>
 
         </div>
     </div>
