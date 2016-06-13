@@ -3,19 +3,19 @@
     <!-- HEADERS -->
 
     <div ng-if="!c.isMobile" class="ad-page-header db-center-v">
-        <button type="button" class="btn db-btn-hdr glyphicon glyphicon-menu-hamburger" ng-click="closeMenu()">
+        <button type="button" class="btn db-btn-prim glyphicon glyphicon-menu-hamburger" ng-click="closeMenu()">
         </button>
-        <button type="button" class="btn db-btn-hdr glyphicon glyphicon-home" ng-click="c.goHome()">
+        <button type="button" class="btn db-btn-prim glyphicon glyphicon-home" ng-click="c.goHome()">
         </button>
-        <button type="button" class="btn db-btn-hdr glyphicon glyphicon-info-sign disabled" ng-click="">
+        <button type="button" class="btn db-btn-prim glyphicon glyphicon-info-sign disabled" ng-click="">
         </button>
-        <button type="button" class="btn db-btn-hdr glyphicon ng-class:[{'glyphicon-resize-vertical':parallelMode},{'glyphicon-resize-horizontal':!parallelMode}]"
+        <button type="button" class="btn db-btn-prim glyphicon ng-class:[{'glyphicon-resize-vertical':parallelMode},{'glyphicon-resize-horizontal':!parallelMode}]"
             ng-click="c.toggleParallelMode()">
         </button>
     </div>
 
     <div ng-if="c.isMobile" class="ad-page-header db-center-v">
-        <button type="button" class="btn db-btn-hdr db-no-margin" ng-click="c.goHome()">
+        <button type="button" class="btn db-btn-prim db-no-margin" ng-click="c.goHome()">
             <span class="glyphicon glyphicon-menu-left"></span>
         </button>
         <h4 translate translate-cloak>STR_SIGNINGS</h4>

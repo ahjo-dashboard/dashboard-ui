@@ -654,10 +654,6 @@ body {
         align-items: center;
     }
 
-    .db-btn-hdr {
-        @include button-variant($font-color-header, $db-color-448AFF, $db-color-448AFF);
-    }
-
     .db-btn-sm {
         font-size: x-small !important;
         line-height: 1.0 !important;
