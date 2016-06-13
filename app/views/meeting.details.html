@@ -13,7 +13,7 @@
                 <button ng-if="menuClosed()" type="button" class="btn db-btn-sel db-btn-small db-brd db-margin-2" ng-click="c.toggleParallelMode()">
                     <span class="glyphicon ng-class:[{'glyphicon-resize-vertical':parallelMode},{'glyphicon-resize-horizontal':!parallelMode}]"></span>
                 </button>
-                <button type="button" class="btn db-btn-sel db-btn-small db-brd db-margin-2" ng-disabled="parallelMode" ng-click="c.primaryClicked()">
+                <button type="button" class="btn db-btn-prim db-btn-small db-brd db-margin-2" ng-disabled="parallelMode" ng-click="c.primaryClicked()">
                     <span class="glyphicon ng-class:[{'glyphicon-minus':c.bm === c.bms.PRIMARY},{'glyphicon-plus':c.bm !== c.bms.PRIMARY}]"></span>
                 </button>
 
@@ -37,7 +37,7 @@
             <!-- SECONDARY  BLOCK HEADER -->
             <div class="btn-group db-block-hdr db-prim-bg db-brd-top db-padding-2">
 
-                <button type="button" class="btn db-btn-sel db-btn-small db-brd db-margin-2" ng-disabled="parallelMode" ng-click="c.secondaryClicked()">
+                <button type="button" class="btn db-btn-prim db-btn-small db-brd db-margin-2" ng-disabled="parallelMode" ng-click="c.secondaryClicked()">
                     <span class="glyphicon ng-class:[{'glyphicon-minus':c.bm === c.bms.SECONDARY},{'glyphicon-plus':c.bm !== c.bms.SECONDARY}]"></span>
                 </button>
 
