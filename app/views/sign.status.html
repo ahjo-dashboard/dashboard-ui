@@ -27,65 +27,94 @@
 
     <div class="ad-page-content">
 
-        <uib-alert ng-hide="hideAlert" type="info" close="hideAlert = true" tooltip-enable="isTooltips" uib-tooltip="{{'STR_SINFO_CONF_ATT_OPENS' | translate}}"
-            tooltip-placement="bottom-left">
-            {{'STR_SINFO_CONF_ATT_OPENS' | translate}}
-        </uib-alert>
+        <div class="db-block-hdr db-prim-bg">
+            <h4 class="db-title" ng-cloak>{{c.item.Name}}</h4>
+        </div>
 
-        <h5 class="db-title" ng-cloak>{{c.item.Name}}</h5>
+        <div class="db-badge ng-class:[c.statusStyle(c.item.Status)]">
+            <b translate translate-cloak>{{c.statusStrId(c.item.Status)}}</b>
+        </div>
 
         <div class="ad-page-container">
 
-            <div class="btn-lg db-badge ng-class:[c.statusStyle(c.item.Status)]" translate translate-cloak>
-                <h3>{{c.statusStrId(c.item.Status)}}</h3>
+            <div class="db-spinner-cont btn-block">
+                <div ng-hide="c.op && c.op.error">
+                    <button id="c.btnModel.acc.id" ng-hide="c.btnModel.acc.hideBtn" type="button" class="btn btn-block btn-lg db-btn-x-big db-btn-succ ng-class: {active: c.isActive(c.btnModel.acc.id)}"
+                        ng-click="c.actionSign()" ng-disabled="c.isDisabled(c.btnModel.acc.id)" db-confirm confirm-config="c.btnModel.acc.cConf">
+                        <span translate translate-cloak>STR_SIGNING_ACCEPT</span>
+                    </button>
+
+                    <button id="c.btnModel.rej.id" ng-hide="c.btnModel.rej.hideBtn" type="button" class="btn btn-block btn-lg db-btn-x-big db-btn-dang ng-class: {active: c.isActive(c.btnModel.rej.id)}"
+                        ng-click="c.actionReject()" ng-disabled="c.isDisabled(c.btnModel.rej.id)" db-confirm confirm-config="c.btnModel.rej.cConf">
+                        <span translate translate-cloak>STR_REJECT</span>
+                    </button>
+                </div>
+
+                <div ng-show="c.op.busy" us-spinner spinner-on="c.op.busy">
+                </div>
+
+                <div ng-show="c.op.error && !c.op.busy">
+                    <!-- Error message for operation -->
+                    <uib-alert ng-show="c.op.error" type="danger" close="c.op.error = null">
+                        <i class="glyphicon glyphicon-alert"></i>&nbsp;
+                        <span ng-if="c.op.error.locId" translate translate-cloak>{{c.op.error.locId}}</span>
+                        <div>
+                            <span ng-if="c.op.error.statusCode">{{c.op.error.statusCode}}&nbsp;</span>
+                            <span ng-if="c.op.error.statusTxt">{{c.op.error.statusTxt}}</span>
+                        </div>
+                    </uib-alert>
+                </div>
             </div>
 
-            <uib-alert type="warning" ng-if="c.item.Comment && c.item.Comment.length" tooltip-enable="isTooltips" uib-tooltip="{{c.item.Comment}}"
-                tooltip-placement="bottom-left">
-                {{c.item.Comment}}
-            </uib-alert>
-
-            <db-link ng-if="c.isMobile" ng-attr-config="c.btnModel.doc.linkConfig" ng-attr-uri="c.btnModel.doc.url" class="btn btn-block btn-lg db-btn-prim"></db-link>
+            <db-link ng-if="c.isMobile" ng-attr-config="c.btnModel.doc.linkConfig" ng-attr-uri="c.btnModel.doc.url" class="db-btn-x-big  db-btn-prim btn-block"></db-link>
 
             <db-link ng-if="c.isMobile && c.btnModel.doctr.url" ng-attr-config="c.btnModel.doctr.linkConfig" ng-attr-uri="c.btnModel.doctr.url"
-                class="btn btn-block btn-lg db-btn-prim"></db-link>
+                class="db-btn-x-big db-btn-prim"></db-link>
 
-            <button id="c.btnModel.acc.id" ng-hide="c.btnModel.acc.hideBtn" type="button" class="btn btn-block btn-lg db-btn-succ ng-class: {active: c.isActive(c.btnModel.acc.id)}"
-                ng-click="c.actionSign()" ng-disabled="c.isDisabled(c.btnModel.acc.id)" db-confirm confirm-config="c.btnModel.acc.cConf">
-                <span translate translate-cloak>STR_SIGNING_ACCEPT</span>
-            </button>
-
-            <button id="c.btnModel.rej.id" ng-hide="c.btnModel.rej.hideBtn" type="button" class="btn btn-block btn-lg db-btn-dang ng-class: {active: c.isActive(c.btnModel.rej.id)}"
-                ng-click="c.actionReject()" ng-disabled="c.isDisabled(c.btnModel.rej.id)" db-confirm confirm-config="c.btnModel.rej.cConf">
-                <span translate translate-cloak>STR_REJECT</span>
-            </button>
-
-            <button ng-if="c.isMobile" id="c.btnModel.att.id" type="button" class="btn btn-block btn-lg db-btn-prim ng-class: {active: c.isActive(c.btnModel.att.id)}"
+            <button ng-if="c.isMobile" id="c.btnModel.att.id" type="button" class="btn btn-block btn-lg db-btn-x-big db-btn-prim ng-class: {active: c.isActive(c.btnModel.att.id)}"
                 ng-disabled="c.isDisabled(c.btnModel.att.id)" ng-click="c.actionAttList()">
                 <span translate translate-cloak>STR_ATTACHMENTS</span>
                 <span class="badge ng-cloak">{{c.btnModel.att.count}}</span>
             </button>
 
-            <!--<button id="c.btnModel.sta.id" type="button" class="btn btn-block btn-lg db-btn-prim ng-class: {active: c.isActive(c.btnModel.sta.id)}"
+            <button ng-if="c.isMobile" id="c.btnModel.sta.id" type="button" class="btn btn-block btn-lg db-btn-x-big db-btn-prim ng-class: {active: c.isActive(c.btnModel.sta.id)}"
                 ng-click="c.actionSignings()" ng-disabled="c.isDisabled(c.btnModel.sta.id)">
-                <span translate translate-cloak>STR_STATUS</span>
-            </button>-->
+                <span translate translate-cloak>STR_SIGNEES_STATUSES</span>
+            </button>
 
-            <!--<button id="c.btnModel.com.id" type="button" class="btn btn-block btn-lg db-btn-prim ng-class: {active: c.isActive(c.btnModel.com.id)}"
-                ng-click="c.actionComment()" ng-disabled="c.isDisabled(c.abtnModel.com.id)">
-                <span translate translate-cloak>STR_CREATE_COMMENT</span>
-            </button>-->
+            <br>
 
-            <!--<uib-alert type="warning" ng-if="c.item">
-                <div ng-if="c.item.Email && c.item.Email.length">
-                    <div translate translate-cloak>STR_SIGNING_COMMENT_INFO</div>
-                    <div><a href="mailto:{{c.item.Email}}">{{c.item.Email}}</a></div>
+            <uib-alert type="warning" tooltip-enable="isTooltips" uib-tooltip="{{c.item.Comment}}"
+                tooltip-placement="bottom-left">
+                <h5>
+                    <span translate translate-cloak>STR_SENDER_COMMENT</span>
+                </h5>
+                <div>{{c.item.Comment}}</div>
+            </uib-alert>
+
+            <uib-alert type="warning" ng-if="c.item" class="db-spinner-cont">
+                <h5><span translate translate-cloak>STR_SENDER_EMAIL</span></h5>
+
+                <div ng-show="c.requestorInfo.busy" us-spinner spinner-on="c.requestorInfo.busy">
                 </div>
-                <div ng-if="!c.item.Email || !c.item.Email.length" translate translate-cloak>STR_SIGNING_NO_EMAIL</div>
-            </uib-alert>-->
+                <div ng-hide="c.requestorInfo.busy">
+                    <div ng-if="c.requestorInfo.email && c.requestorInfo.email.length">
+                        <span translate translate-cloak>STR_SIGNING_COMMENT_INFO</span>
+                        <a href="mailto:{{c.item.Email}}">{{c.requestorInfo.email}}</a>
+                    </div>
+                    <div ng-if="!c.requestorInfo.email || !c.requestorInfo.email.length" translate translate-cloak>STR_SIGNING_NO_EMAIL</div>
+                </div>
 
+            </uib-alert>
+
+            <uib-alert type="info" tooltip-enable="isTooltips" uib-tooltip="{{'STR_SINFO_CONF_ATT_OPENS' | translate}}" tooltip-placement="bottom-left">
+                <i class="glyphicon glyphicon-info-sign"></i>&nbsp;
+                <span translate translate-cloak>{{'STR_SINFO_CONF_ATT_OPENS'}}</span>
+            </uib-alert>
 
         </div>
-    </div>
 
-    <!--<ui-view ng-if="c.isMobile" name="childContent"></ui-view>-->
+    </div>
+</div>
+
+<ui-view ng-if="c.isMobile" name="childContent"></ui-view>

@@ -119,19 +119,6 @@ angular.module('dashboard')
                         }
                     }
                 })
-                // .state(CONST.APPSTATE.SIGNITEM, {
-                //     url: '/signitem',
-                //     views: {
-                //         'homeContent': {
-                //             templateUrl: 'views/signitem.html',
-                //             controller: 'signitemCtrl',
-                //             controllerAs: 'sc'
-                //         }
-                //     },
-                //     params: {
-                //         signItem: null
-                //     }
-                // })
                 .state(CONST.APPSTATE.SIGN, {
                     url: '/sign',
                     views: {
@@ -153,9 +140,6 @@ angular.module('dashboard')
                             controller: 'docSignersCtrl',
                             controllerAs: 'c'
                         }
-                    },
-                    params: {
-                        signers: null
                     }
                 })
                 .state(CONST.APPSTATE.SIGNLISTATT, {

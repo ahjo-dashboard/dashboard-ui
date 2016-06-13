@@ -13,10 +13,11 @@
 angular.module('dashboard')
     .directive('dbSelectionList', [function () {
 
-        var controller = ['$log', '$scope', 'AttachmentData', 'CONST', function ($log, $scope, AttachmentData, CONST) {
+        var controller = ['$log', '$scope', 'AttachmentData', 'CONST', '$rootScope', function ($log, $scope, AttachmentData, CONST, $rootScope) {
             $log.log("dbSelectionList: CONTROLLER");
             var self = this;
             self.data = null;
+            self.isMobile = $rootScope.isMobile;
 
             self.selected = function (item) {
                 $log.log("dbSelectionList: selected: " + JSON.stringify(item));
@@ -32,13 +33,23 @@ angular.module('dashboard')
                 }
             };
 
-            self.isDisabled = function (att) {
+            self.isLinkDisabled = function (att) {
                 var res = false;
-                if (!(att instanceof AttachmentData)) {
-                    $log.error("dbSelectionList: isDisabled: unsupported arg type: " + JSON.stringify(att));
+                if (att instanceof AttachmentData) {
+                    res = !angular.isString(att.link) || !att.link.length;
                 } else {
+                    $log.error("dbSelectionList: isLinkDisabled: unsupported arg type: " + JSON.stringify(att));
+                }
+                return res;
+            };
+
+            self.isOpenWindowDisabled = function (att) {
+                var res = false;
+                if (att instanceof AttachmentData) {
                     // disabled for secret docs because currently no easy way to popup them
                     res = (att.publicity === CONST.PUBLICITY.SECRET) || !angular.isString(att.link) || !att.link.length;
+                } else {
+                    $log.error("dbSelectionList: isOpenWindowDisabled: unsupported arg type: " + JSON.stringify(att));
                 }
                 return res;
             };

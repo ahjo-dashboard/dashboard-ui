@@ -12,13 +12,13 @@
  * Controller of the dashboard
  */
 var app = angular.module('dashboard');
-app.controller('signStatusCtrl', function ($log, $scope, $state, SigningAttApi, $sce, $timeout, $uibModal, ENV, SigningOpenApi, SigningPersonInfoApi, CONST, $rootScope, SigningDocSignaturesApi, ListData, $stateParams, StorageSrv, Utils) {
+app.controller('signStatusCtrl', function ($log, $scope, $state, SigningAttApi, $sce, $timeout, $uibModal, ENV, SigningOpenApi, SigningPersonInfoApi, CONST, $rootScope, SigningDocSignaturesApi, ListData, $stateParams, StorageSrv, Utils, SigningUtil) {
 
     var self = this;
     self.isMobile = $rootScope.isMobile;
     self.item = null;
     self.ongoing = true;
-    self.personInfo = null;
+    self.requestorInfo = { busy: false, email: null };
 
     $rootScope.menu = $stateParams.menu;
 
@@ -33,7 +33,7 @@ app.controller('signStatusCtrl', function ($log, $scope, $state, SigningAttApi, 
     self.item = tmp;
     $log.debug("signStatusCtrl: name: " + self.item.Name);
 
-    self.item.Comment = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."; //TODO: REMOVE THIS TEST CODE
+    // self.item.Comment = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."; //TODO: REMOVE THIS TEST CODE
 
     self.displayStatus = true;
     self.btnModel = {
@@ -53,18 +53,43 @@ app.controller('signStatusCtrl', function ($log, $scope, $state, SigningAttApi, 
         },
         acc: { id: 'acc', disabled: false, active: false, hideBtn: false, hide: false, cConf: { title: 'STR_CNFM_TEXT', text: 'STR_CNFM_SIGN_ACC', yes: 'STR_YES', no: 'STR_NO', isOpen: false } },
         rej: { id: 'rej', disabled: false, active: false, hideBtn: false, hide: false, cConf: { title: 'STR_CNFM_TEXT', text: 'STR_CNFM_SIGN_REJ', yes: 'STR_YES', no: 'STR_NO', isOpen: false } },
-        sta: { id: 'sta', busy: false, disabled: false, active: false, hideBtn: false, hide: false, signers: null },
-        com: { id: 'com', disabled: false, active: false },
+        // com: { id: 'com', disabled: false, active: false },
         att: {
             id: 'att', disabled: false, active: false, hideBtn: false, hide: false, url: undefined,
             isOpen: false,
-            count: self.attModel ? self.attModel.objects.length : 0,
+            count: 0,
             toggle: function (arg) {
                 //$log.debug("signStatusCtrl: dropdown att toggled: " + arg + ", active: " + this.active);
                 self.btnModel.att.isOpen = arg;
             },
-        }
+        },
+        sta: { id: 'sta', busy: false, disabled: false, active: false, hideBtn: false, hideCont: false, signers: null }
+
     };
+
+    // PRIVATE OBJECTS
+
+    function ErrorMsg(aLocId, aErrCode, aTxt) {
+        var self = this;
+        self.locId = aLocId ? aLocId : null;
+        self.statusCode = angular.isDefined(aErrCode) ? aErrCode : 0;
+        self.statusTxt = aTxt ? aTxt : null;
+        return self;
+    }
+
+    function SignOperation(aItem, aNewStatus) {
+        var self = this;
+        if (!aItem) {
+            throw new Error("SignOperation: bad item \n " + JSON.stringify(aItem));
+        }
+        self.item = angular.copy(aItem);
+        self.newStatus = aNewStatus;
+        self.oldStatus = self.item.Status;
+        self.item.Status = aNewStatus;
+        self.busy = false;
+        self.errorMsg = null; // ErrorMsg type object
+        return self;
+    }
 
     // PRIVATE FUNCTIONS
 
@@ -72,139 +97,86 @@ app.controller('signStatusCtrl', function ($log, $scope, $state, SigningAttApi, 
         // self.alerts.length = 0;
     }
 
-    function isModalOpen() {
-        return self.btnModel.acc.cConf.isOpen || self.btnModel.rej.cConf.isOpen;
-    }
-
-    function initBtns(btnModel, status) {
-        self.btnModel.doc.url = self.item ? ENV.SignApiUrl_GetAttachment.replace(":reqId", self.item.ProcessGuid) : null;
+    function initBtns(btnModel, status, item) {
+        self.btnModel.doc.url = item ? ENV.SignApiUrl_GetAttachment.replace(":reqId", item.ProcessGuid) : null;
         $log.debug("signStatusCtrl.initBtns: doc=" + self.btnModel.doc.url);
 
         if (!angular.equals(status, CONST.ESIGNSTATUS.UNSIGNED.value)) {
-            btnModel.acc.hideBtn = true;
-            btnModel.rej.hideBtn = true;
+            btnModel.acc.disabled = true;
+            btnModel.rej.disabled = true;
             btnModel.att.disabled = true;
-            btnModel.att.hide = true;
         }
 
-        if (angular.isString(self.item.TranslationGuid) && self.item.TranslationGuid.length) {
-            self.btnModel.doctr.url = ENV.SIGNAPIURL_DOC_TRANSLATED.replace(':reqId', self.item.ProcessGuid).replace(':transId', true).replace(':attId', '');
+        if (angular.isString(item.TranslationGuid) && item.TranslationGuid.length) {
+            self.btnModel.doctr.url = ENV.SIGNAPIURL_DOC_TRANSLATED.replace(':reqId', item.ProcessGuid).replace(':transId', true).replace(':attId', '');
             $log.debug("signStatusCtrl.initBtns: transition doc=" + self.btnModel.doctr.url);
             btnModel.doctr.hideBtn = false;
         }
 
-        if (!self.isMobile) {
-            // setBtnActive(self.btnModel.doc.id); // On desktop document is displayed by default
-        }
+        var atts = SigningUtil.parseAtts(item);
+        btnModel.att.count = atts.length;
+        self.selData = ListData.createEsignAttachmentList({ 'header': 'STR_ATTACHMENTS', 'title': item.Name }, atts, item);
     }
 
-    function saveStatus(item, status) {
-        if (!item || !(item instanceof Object) || !("Status" in item)) {
-            $log.debug(item);
+    function saveStatusCb() {
+        initBtns(self.btnModel, self.item.Status, self.item);
+    }
+
+    function saveStatus(op, cb) {
+        $log.log("signStatusCtrl.saveStatus");
+        $log.debug(op);
+
+        if (!(op instanceof SignOperation)) {
+            $log.error(op);
             throw new Error("signStatusCtrl.saveStatus: bad arguments");
         }
 
-        $log.log("signStatusCtrl.saveStatus: " + item.Name + ", current status: " + item.Status);
-
         clearAlerts();
 
-        self.ongoing = true;
+        op.busy = true;
 
-        self.displayStatus = false;
-        var oldStatus = item.Status;
-        item.Status = status; // This must be reverted if status change op fails
-        self.responseOpen = SigningOpenApi.save(item, function (value) {
-            $log.debug("signStatusCtrl.saveStatus: done. New object: ");
-            $log.debug(value);
-            self.item = value;
+        var resp = SigningOpenApi.save(op.item, function (value) {
+            $log.debug("signStatusCtrl.saveStatus: done \n" + JSON.stringify(value));
+            self.item.Status = op.item.Status;
+            op.item = null; // Free up reference to allow cleanup
+            if (angular.isFunction(cb)) {
+                cb();
+            }
         }, function (error) {
             $log.error("signStatusCtrl.saveStatus: \n" + JSON.stringify(error));
-            self.alerts.push({ type: 'danger', locId: 'STR_FAIL_OP', resCode: error.status, resTxt: error.statusText });
-            item.Status = oldStatus;
+            op.error = new ErrorMsg('STR_FAIL_OP', error.status, error.statusText);
         });
-        self.responseOpen.$promise.finally(function () {
+        resp.$promise.finally(function () {
             $log.debug("signStatusCtrl.saveStatus: finally");
-            self.ongoing = null;
-            self.displayStatus = true;
-            initBtns(self.btnModel, self.item.Status);
+            op.busy = false;
         });
     }
 
-    function displayRequestor(person) {
-        if (person && angular.isString(person.email) && person.email.length) {
-            self.requestorEmail = person.email;
-            // self.alerts.push({ type: 'info', locId: 'STR_SIGNING_COMMENT_INFO', linkMailto: person.email });
-            //TODO: display modal
-        } else {
-            $log.error("signStatusCtrl.displayRequestor: bad args");
-            self.alerts.push({ type: 'warning', locId: 'STR_SIGNING_NO_EMAIL' });//TODO: display modal
-        }
-    }
+    function getRequestorInfo(reqInfo, item) {
+        $log.debug("signStatusCtrl.getRequestorInfo");
 
-    function personInfo(busyCont) {
-        $log.debug("signStatusCtrl.personInfo");
-
-        if (!self.personInfo) {
-            busyCont.busy = true;
-            self.personInfo = SigningPersonInfoApi.get({ userId: self.requestorId }, function (/*data*/) {
-                $log.debug("signStatusCtrl.personInfo: api query done");
-                displayRequestor(self.personInfo);
+        if (reqInfo && angular.isString(item.RequestorId) && item.RequestorId.length) {
+            reqInfo.busy = true;
+            var response = SigningPersonInfoApi.get({ userId: item.RequestorId }, function (/*data*/) {
+                $log.debug("signStatusCtrl.getRequestorInfo: success ");
+                reqInfo.email = response.email;
             }, function (error) {
-                $log.error("signStatusCtrl.personInfo: api query error: " + JSON.stringify(error));
-                self.alerts.push({ type: 'danger', locId: 'STR_FAIL_OP', resCode: error.status, resTxt: error.statusText });//TODO: display modal
+                $log.error("signStatusCtrl.getRequestorInfo: api query error: " + JSON.stringify(error));
             });
-            self.personInfo.$promise.finally(function () {
-                busyCont.busy = false;
+            response.$promise.finally(function () {
+                reqInfo.busy = false;
+                $log.debug("signStatusCtrl.getRequestorInfo: " + JSON.stringify(reqInfo));
             });
         } else {
-            displayRequestor(self.personInfo);
+            $log.error("signStatusCtrl.getRequestorInfo: bad args");
         }
-    }
-
-    // Workaround on IE to hide <object> pdf because IE displays it topmost covering modals and dropdowns.
-    function hidePdfOnIe() {
-        return $rootScope.isIe && (self.btnModel.att.isOpen || isModalOpen());
-    }
-
-    function displaySignings(sgn) {
-        if (!sgn || !("Signers" in sgn)) {
-            $log.error("signStatusCtrl.displaySignings: bad args");
-            return;
-        }
-        $log.debug("signStatusCtrl.displaySignings: " + sgn.Signers.length);
-        self.btnModel.sta.signers = sgn;
-        // if ($rootScope.isMobile) {
-        //     $state.go(CONST.APPSTATE.DOCSIGNERS, { 'signers': self.btnModel.sta.signers });
-        // }
-        //TODO: display modal
-    }
-
-    function docSignings(item, busyCont) {
-        $log.debug("signStatusCtrl.docSignings");
-        // self.btnModel.sta.hide = true;
-        if (!item || !("Guid" in item) || !item.Guid || self.ongoing) {
-            $log.error("signStatusCtrl.docSignings: bad args");
-            return;
-        }
-
-        busyCont.busy = true;
-        self.docSignings = SigningDocSignaturesApi.get({ reqId: item.ProcessGuid }, function (/*data*/) {
-            $log.debug("signStatusCtrl.docSignings: api query done");
-            displaySignings(self.docSignings);
-        }, function (error) {
-            $log.error("signStatusCtrl.docSignings: api query error: " + JSON.stringify(error));
-            self.alerts.push({ type: 'danger', locId: 'STR_FAIL_OP', resCode: error.status, resTxt: error.statusText });
-        });
-        self.docSignings.$promise.finally(function () {
-            busyCont.busy = false;
-        });
     }
 
     // PUBLIC FUNCTIONS
 
     self.actionAttList = function () {
         if (self.isMobile) {
-            StorageSrv.setKey(CONST.KEY.SELECTION_DATA, self.attModel);
+            StorageSrv.setKey(CONST.KEY.SELECTION_DATA, self.selData);
             $state.go(CONST.APPSTATE.SIGNLISTATT);
         } else {
             $log.error("signStatusCtrl.actionAttList: bad state");
@@ -213,71 +185,44 @@ app.controller('signStatusCtrl', function ($log, $scope, $state, SigningAttApi, 
 
     self.actionSign = function () {
         clearAlerts();
-        saveStatus(self.item, CONST.ESIGNSTATUS.SIGNED.value);
+        self.op = new SignOperation(self.item, CONST.ESIGNSTATUS.SIGNED.value);
+        saveStatus(self.op, saveStatusCb);
     };
 
     self.actionReject = function () {
         clearAlerts();
-        saveStatus(self.item, CONST.ESIGNSTATUS.REJECTED.value);
-    };
-
-    self.actionComment = function () {
-        clearAlerts();
-        personInfo();
-        // setBtnActive(self.btnModel.com.id);
+        self.op = new SignOperation(self.item, CONST.ESIGNSTATUS.REJECTED.value);
+        saveStatus(self.op, saveStatusCb);
     };
 
     self.actionSignings = function () {
-        clearAlerts();
-        docSignings(self.item, self.btnModel.sta);
-        // setBtnActive(self.btnModel.sta.id);
+        if (self.isMobile) {
+            $state.go(CONST.APPSTATE.DOCSIGNERS);
+        }
     };
 
-    self.isDisabled = function () {
+    self.isDisabled = function (id) {
         // $log.debug("signStatusCtrl.isDisabled: " + id);
         var res = false;
-        // if (self.ongoing) {
-        //     res = true;
-        // }
-        // else {
-        //     switch (id) {
-        //         case self.btnModel.att.id:
-        //             res = self.btnModel.att.disabled || !self.btnModel.att.count;
-        //             break;
-        //         default:
-        //             res = self.btnModel[id].disabled;
-        //             break;
-        //     }
-        // }
-        return res;
-    };
-
-    // Checks if an element should be hidden dynamically or not.
-    self.isHidden = function (id) {
-        // $log.debug("signStatusCtrl.isHidden: " + id);
-        var res = false;
-        if (self.ongoing) {
+        if (self.op && self.op.busy) {
             res = true;
         }
         else {
             switch (id) {
-                case self.btnModel.doc.id:
-                    res = self.btnModel.doc.hide || hidePdfOnIe();
-                    break;
                 case self.btnModel.att.id:
-                    res = self.btnModel.att.hide || hidePdfOnIe();
+                    res = self.btnModel.att.disabled || !self.btnModel.att.count;
                     break;
                 default:
-                    res = self.btnModel[id].hide;
+                    res = self.btnModel[id].disabled;
                     break;
             }
         }
         return res;
     };
 
-    self.isActive = function (id) {
+    self.isActive = function () {
         //$log.debug("signStatusCtrl.isActive: " + id + "=" +self.btnModel[id].active);
-        return !self.isMobile && self.btnModel[id].active;
+        return false;
     };
 
     /* Resolve css class for signing status */
@@ -302,7 +247,9 @@ app.controller('signStatusCtrl', function ($log, $scope, $state, SigningAttApi, 
     };
 
     self.ongoing = false;
-    initBtns(self.btnModel, self.item.Status);
 
+    initBtns(self.btnModel, self.item.Status, self.item);
+
+    getRequestorInfo(self.requestorInfo, self.item);
 
 });

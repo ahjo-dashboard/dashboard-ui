@@ -8,10 +8,10 @@
             </div>
         </div>
         <div uib-collapse="isCollapsed">
-            <li class="list-group-item ng-class:[{'db-opacity-05':c.isDisabled(att)}]" ng-repeat="att in data.objects track by $index">
+            <li class="list-group-item ng-class:[{'db-opacity-05':c.isLinkDisabled(att)}]" ng-repeat="att in data.objects track by $index">
                 <div class="db-flex">
-                    <a class="db-flex-area" ng-click="!c.isDisabled(att) && c.selected(att)"><span ng-if="att.orderNum">{{att.orderNum}}&nbsp;</span>{{att.title}}</a>
-                    <span class="glyphicon glyphicon-new-window" ng-click="!c.isDisabled(att) && c.newTab(att.link)" aria-hidden="true"></span>
+                    <a class="db-flex-area" ng-click="!c.isLinkDisabled(att) && c.selected(att)"><span ng-if="att.orderNum">{{att.orderNum}}&nbsp;</span>{{att.title}}</a>
+                    <span ng-if="!c.isMobile" class="glyphicon glyphicon-new-window ng-class:[{'db-opacity-05':c.isOpenWindowDisabled(att)}]" ng-click="!c.isOpenWindowDisabled(att) && c.newTab(att.link)" aria-hidden="true"></span>
                 </div>
 
             </li>

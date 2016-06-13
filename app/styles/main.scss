@@ -263,6 +263,14 @@ iframe {
     max-height: 40px;
     overflow: hidden;
 }
+
+.db-btn-x-big {
+    @extend .btn-block;
+    min-height: 60px;
+    max-height: 80px;
+    overflow: hidden;
+}
+
 // GENERIC DECLARATION END
 
 // BLOCK DECLARATION START
@@ -288,6 +296,8 @@ $blockOpenFlex: 9;
         overflow: hidden;
         display: flex;
         flex-direction: column;
+
+        padding: 1px;
     }
 
     .db-block-border {
@@ -1144,6 +1154,7 @@ body {
 .db-spinner-cont {
     position: relative; // us-spinner requires this, otherwise is placed outside parent.
     flex: 1; // Or use min-height to have spinner displayed
+    min-height: 50px;
 }
 
 .db-hdr-l2 {
