@@ -7,9 +7,15 @@
             </button>
         </div>
 
+        <div class="hidden-xs col-xs-12 col-sm-2 db-nopadding">
+            <button id="roleButton" type="button" class="btn btn-block disabled db-no-border ng-class:{'db-btn-opt': c.loading, 'db-btn-opt-dummy': !c.loading}"
+                translate translate-cloak>
+                STR_STATUS
+            </button>
+        </div>
+
         <div class="col-xs-12 col-sm-3 btn-group db-nopadding" uib-dropdown is-open="agencyIsOpen">
-            <button id="agencyButton" type="button" class="btn btn-block db-btn-opt db-no-border" uib-dropdown-toggle
-                ng-disabled="c.loading">
+            <button id="agencyButton" type="button" class="btn btn-block db-btn-opt db-no-border" uib-dropdown-toggle ng-disabled="c.loading">
                 <span class="ng-cloak ng-class:{'db-underline': c.aF}">{{c.agencyTitle}}</span>
                 <span class="caret"></span>
             </button>
@@ -25,34 +31,29 @@
                 translate>STR_ROLE</button>
         </div>
 
-        <div class="hidden-xs col-xs-12 col-sm-2 db-nopadding">
-            <button id="roleButton" type="button" class="btn btn-block disabled db-no-border ng-class:{'db-btn-opt': c.loading, 'db-btn-opt-dummy': !c.loading}"
-                translate translate-cloak>
-                STR_STATUS
-            </button>
-        </div>
     </div>
 
     <div class="row">
 
         <uib-progressbar ng-if="c.loading" class="progress-striped active" type="info"><i>Haetaan...</i></uib-progressbar>
 
-        <ul ng-if="!c.mtgErr" class="list-group db-tablist">
-            <button ng-if="item.visible" type="button" class="list-group-item" ng-repeat="item in c.data | orderBy:'meeting.meetingDate': reverse track by $index"
-                ng-click="selected({meetingItem:item.meeting})">
+        <ul ng-if="!c.mtgErr" class="list-group">
+            <li ng-if="item.visible" type="button" class="list-group-item" ng-repeat="item in c.data | orderBy:'meeting.meetingDate': reverse track by $index">
                 <div class="row">
                     <div class="col-xs-12 col-sm-4">
                         {{item.meeting.meetingDate | date:'yyyy-MM-dd HH:mm' }}&nbsp;&nbsp;&nbsp;<b>{{item.meeting.name}}</b>
                     </div>
-                    <div class="col-xs-12 col-sm-3">{{item.meeting.agencyName}}</div>
-                    <div class="col-xs-12 col-sm-3">{{item.role}}</div>
                     <div class="col-xs-12 col-sm-2">
                         <span class="label ng-class: [c.mtgStatusClass(item)]" translate translate-cloak>
                             {{c.statusStringId(item)}}
                         </span>
                     </div>
+                    <div class="col-xs-12 col-sm-3">{{item.meeting.agencyName}}</div>
+                    <div class="col-xs-12 col-sm-3">
+                        <button type="button" class="btn db-btn-sel ng-class:[{'db-btn-x-big':c.isMobile}]" ng-click="selected({meetingItem:item.meeting})"><span translate translate-cloak>{{item.role}}</span></button>
+                    </div>
                 </div>
-            </button>
+            </li>
         </ul>
 
         <div ng-if="c.mtgErr" class="alert alert-danger" role="alert">
