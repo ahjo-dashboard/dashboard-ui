@@ -1,15 +1,28 @@
 <div class="container-fluid">
-    <div class="row">
+    <div class="row db-opt-bg"">
 
-        <div class="hidden-xs col-xs-12 col-sm-6 db-nopadding">
+        <div class="hidden-xs col-xs-12 col-sm-4 db-nopadding">
             <button type="button" class="btn btn-block disabled db-no-border ng-class:{'db-btn-opt': c.isDisabled(), 'db-btn-opt-dummy': !c.isDisabled()}">
                 <span translate translate-cloak>STR_SIGNING_REQ</span>
             </button>
         </div>
 
-        <div class="col-xs-6 col-sm-4 btn-group db-nopadding" uib-dropdown is-open="">
-            <button id="docTypeButton" type="button" class="btn btn-block db-btn-opt db-no-border" ng-disabled="c.isDisabled()"
-                uib-dropdown-toggle>
+        <div class="col-xs-6 col-sm-2 db-nopadding btn-group" uib-dropdown is-open="">
+            <button id="docStatusButton" type="button" class="btn btn-block db-btn-opt db-no-border" ng-disabled="c.isDisabled()" uib-dropdown-toggle>
+                <span class="ng-class:{'db-underline': c.FStatus}" translate translate-cloak>{{c.docStatusTitle}}</span>
+                <span class="caret"></span>
+            </button>
+            <ul uib-dropdown-menu role="menu" aria-labelledby="docStatusButton">
+                <li role="menuitem" ng-repeat="i in c.docStatuses track by $index">
+                    <a ng-click="c.setModelFilter(i)"><span translate translate-cloak>{{i.strId}}</span></a>
+                </li>
+                <li class="divider"></li>
+                <li role="menuitem"><a ng-click="c.setModelFilter(null)"><span translate translate-cloak>STR_CLEAR_SELECTION</span></a></li>
+            </ul>
+        </div>
+
+        <div class="col-xs-6 col-sm-3 btn-group db-nopadding" uib-dropdown is-open="">
+            <button id="docTypeButton" type="button" class="btn btn-block db-btn-opt db-no-border" ng-disabled="c.isDisabled()" uib-dropdown-toggle>
                 <span class="ng-class:{'db-underline': c.FType}" translate translate-cloak>{{c.docTypeTitle}}</span>
                 <span class="caret"></span>
             </button>
@@ -25,20 +38,6 @@
             </ul>
         </div>
 
-        <div class="col-xs-6 col-sm-2 db-nopadding btn-group" uib-dropdown is-open="">
-            <button id="docStatusButton" type="button" class="btn btn-block db-btn-opt db-no-border" ng-disabled="c.isDisabled()" uib-dropdown-toggle>
-                <span translate translate-cloak>{{c.docStatusTitle}}</span>
-                <span class="caret"></span>
-            </button>
-            <ul uib-dropdown-menu role="menu" aria-labelledby="docStatusButton">
-                <li role="menuitem" ng-repeat="i in c.docStatuses track by $index">
-                    <a ng-click="c.setModelFilter(i)"><span translate translate-cloak>{{i.strId}}</span></a>
-                </li>
-                <li class="divider"></li>
-                <li role="menuitem"><a ng-click="c.setModelFilter(null)"><span translate translate-cloak>STR_CLEAR_SELECTION</span></a></li>
-            </ul>
-        </div>
-
     </div>
 
     <div class="row">
@@ -47,11 +46,11 @@
             <i><span translate translate-cloak>STR_LOADING</span></i>
         </uib-progressbar>
 
-        <ul ng-if="!c.reqErr" class="list-group db-tablist">
-            <button type="button" class="list-group-item col-xs-12" ng-repeat="i in c.model | filter: c.docFilter | orderBy:'RequestDate': reverse
-            track by $index" ng-click="c.selected(i)">
-                <div class="row" ng-click="c.itemSelected(i)">
-                    <div class="col-xs-12 col-sm-6">
+        <ul ng-if="!c.reqErr" class="list-group">
+            <li type="button" class="list-group-item col-xs-12" ng-repeat="i in c.model | filter: c.docFilter | orderBy:'RequestDate': reverse
+            track by $index">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-4">
                         <div>
                             {{i.RequestDate | date:'yyyy-MM-dd'}}&nbsp;&nbsp;&nbsp;<b>{{i.Name}}</b>
                         </div>
@@ -59,14 +58,17 @@
                             <i>{{i.ShortComment}}</i>
                         </div>
                     </div>
-                    <div class="col-xs-12 col-sm-4">
-                        <span translate translate-cloak>{{c.docTypeStrId(i.DocumentType)}}</span>
-                    </div>
                     <div class="col-xs-12 col-sm-2">
                         <span class="ng-class: [ 'label', c.statusStyle(i.Status)]" translate translate-cloak>{{c.statusStrId(i.Status)}}</span>
                     </div>
+                    <div class="col-xs-12 col-sm-3">
+                        <span translate translate-cloak>{{c.docTypeStrId(i.DocumentType)}}</span>
+                    </div>
+                    <div class="col-xs-12 col-sm-3">
+                        <button type="button" class="btn db-btn-sel ng-class:[{'db-btn-x-big db-fs-13':c.isMobile}]" ng-click="c.selected(i)"><span translate translate-cloak>STR_OPEN</span></button>
+                    </div>
                 </div>
-            </button>
+            </li>
         </ul>
 
         <div ng-if="c.error" class="alert alert-danger" role="alert">

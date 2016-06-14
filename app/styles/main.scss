@@ -35,7 +35,7 @@ $font-color-body: #404040;
 $headingBgColor: $db-color-303F9F;
 
 $default-font-size: 1.2em;
-$opt-font-weight: 500;
+$heavy-font-weight: 600;
 $tablist-tabborder-width: 2px;
 $list-bg-color: $appbgcolor;
 $db-page-margin: 10px;
@@ -96,6 +96,11 @@ iframe {
 
 .db-prim-bg {
     background-color: $db-color-448AFF !important;
+    color: $db-color-FFFFFF;
+}
+
+.db-opt-bg {
+    background-color: $db-color-303F9F !important;
     color: $db-color-FFFFFF;
 }
 
@@ -250,10 +255,6 @@ iframe {
     border-bottom-right-radius: $btn-radius !important;
 }
 
-.glyphicon.glyph-fs-14 {
-    font-size: 1.4em;
-}
-
 .db-btn-small {
     @extend .btn-block;
     min-height: 30px;
@@ -273,6 +274,10 @@ iframe {
     min-height: 60px;
     max-height: 80px;
     overflow: hidden;
+}
+
+.db-fs-13 {
+    font-size: 1.2em !important;
 }
 
 // GENERIC DECLARATION END
@@ -480,11 +485,11 @@ body {
     font-family: "Open Sans", "Trebuchet MS", Helvetica, sans-serif !important;
 
     .btn {
-        font-weight: $opt-font-weight;
+        font-weight: $heavy-font-weight;
     }
 
     h1, h2, h3, h4, h5 {
-        font-weight: $opt-font-weight;
+        font-weight: $heavy-font-weight;
     }
 
     .db-title {
