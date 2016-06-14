@@ -5,15 +5,17 @@
             <div class="db-flex db-center-v">
                 <span class="db-margin-10-right glyphicon ng-class:{'glyphicon-minus': !isCollapsed, 'glyphicon-plus': isCollapsed}" aria-hidden="true"></span>
                 <h5 ng-if="data.title.header" translate translate-cloak>{{data.title.header}}</h5>
+                &nbsp;&nbsp;
+                <span class="badge db-badge-hdr ng-cloak">{{data.objects.length}}</span>
             </div>
         </div>
         <div uib-collapse="isCollapsed">
             <li class="list-group-item ng-class:[{'db-opacity-05':c.isLinkDisabled(att)}]" ng-repeat="att in data.objects track by $index">
                 <div class="db-flex">
                     <a class="db-flex-area" ng-click="!c.isLinkDisabled(att) && c.selected(att)"><span ng-if="att.orderNum">{{att.orderNum}}&nbsp;</span>{{att.title}}</a>
-                    <span ng-if="!c.isMobile" class="glyphicon glyphicon-new-window ng-class:[{'db-opacity-05':c.isOpenWindowDisabled(att)}]" ng-click="!c.isOpenWindowDisabled(att) && c.newTab(att.link)" aria-hidden="true"></span>
+                    <span ng-if="!c.isMobile" class="glyphicon glyphicon-new-window ng-class:[{'db-opacity-05':c.isOpenWindowDisabled(att)}]"
+                        ng-click="!c.isOpenWindowDisabled(att) && c.newTab(att.link)" aria-hidden="true"></span>
                 </div>
-
             </li>
         </div>
     </ul>
