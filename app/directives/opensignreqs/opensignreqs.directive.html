@@ -58,14 +58,14 @@
                             <i>{{i.ShortComment}}</i>
                         </div>
                     </div>
-                    <div class="col-xs-12 col-sm-2">
+                    <div class="col-xs-12 col-sm-2 ng-class:[{'db-padding-05-ver db-fs-11':c.isMobile}]">
                         <span class="ng-class: [ 'label', c.statusStyle(i.Status)]" translate translate-cloak>{{c.statusStrId(i.Status)}}</span>
                     </div>
-                    <div class="col-xs-12 col-sm-3">
+                    <div class="col-xs-12 col-sm-3 ng-class:[{'db-padding-05-ver db-fs-11':c.isMobile}]">
                         <span translate translate-cloak>{{c.docTypeStrId(i.DocumentType)}}</span>
                     </div>
                     <div class="col-xs-12 col-sm-3">
-                        <button type="button" class="btn db-btn-sel ng-class:[{'db-btn-x-big db-fs-13':c.isMobile}]" ng-click="c.selected(i)"><span translate translate-cloak>STR_OPEN</span></button>
+                        <button type="button" class="btn db-btn-sel ng-class:[{'btn-block db-fs-12':c.isMobile}]" ng-click="c.selected(i)"><span translate translate-cloak>STR_OPEN</span></button>
                     </div>
                 </div>
             </li>
