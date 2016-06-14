@@ -41,12 +41,12 @@
                     <span class="glyphicon ng-class:[{'glyphicon-minus':c.bm === c.bms.SECONDARY},{'glyphicon-plus':c.bm !== c.bms.SECONDARY}]"></span>
                 </button>
 
-                <button type="button" class="btn db-btn-sel db-btn-big db-brd db-margin-2 ng-class:[{'active':c.lbm === c.lbms.ATTACHMENTS}]"
+                <button type="button" class="btn db-btn-sel db-btn-big db-brd db-margin-2 ng-class:[{'active':c.lbm === c.lbms.ATTACHMENTS}]" ng-disabled="!c.aData.objects.length"
                     db-confirm confirm-enabled="c.hasUnsavedProposal || c.remarkIsUnsaved" confirm-config="c.unsavedConfig" ng-click="c.attClicked()">
                     <span translate translate-cloak>STR_ATTACHMENTS</span>
                     <span ng-if="c.aData.objects.length" class="badge ng-cloak">{{c.aData.objects.length}}</span>
                 </button>
-                <button type="button" class="btn db-btn-sel db-btn-big db-brd db-margin-2 ng-class:[{'active':c.lbm === c.lbms.MATERIALS}]"
+                <button type="button" class="btn db-btn-sel db-btn-big db-brd db-margin-2 ng-class:[{'active':c.lbm === c.lbms.MATERIALS}]" ng-disabled="!c.materialCount()"
                     db-confirm confirm-enabled="c.hasUnsavedProposal || c.remarkIsUnsaved" confirm-config="c.unsavedConfig" ng-click="c.matClicked()">
                     <span translate translate-cloak>STR_OTHER_MATERIAL</span>
                     <span ng-if="c.materialCount()" class="badge ng-cloak">{{c.materialCount()}}</span>
