@@ -35,7 +35,8 @@ $font-color-body: #404040;
 $headingBgColor: $db-color-303F9F;
 
 $default-font-size: 1.2em;
-$heavy-font-weight: 600;
+$font-weight-600: 600;
+$font-weight-700: 700;
 $tablist-tabborder-width: 2px;
 $list-bg-color: $appbgcolor;
 $db-page-margin: 10px;
@@ -125,6 +126,11 @@ iframe {
     margin-right: 0.5vh !important;
 }
 
+.db-margin-10-hor {
+    margin-left: 1.0vh !important;
+    margin-right: 1.0vh !important;
+}
+
 .db-margin-10-bottom {
     margin-bottom: 1.0vh !important;
 }
@@ -147,6 +153,11 @@ iframe {
 
 .db-padding-10 {
     padding: 1.0vh !important;
+}
+
+.db-padding-05-ver {
+    padding-top: 0.5vh !important;
+    padding-bottom: 0.5vh !important;
 }
 
 .db-padding-2 {
@@ -276,7 +287,11 @@ iframe {
     overflow: hidden;
 }
 
-.db-fs-13 {
+.db-fs-11 {
+    font-size: 1.1em !important;
+}
+
+.db-fs-12 {
     font-size: 1.2em !important;
 }
 
@@ -485,11 +500,15 @@ body {
     font-family: "Open Sans", "Trebuchet MS", Helvetica, sans-serif !important;
 
     .btn {
-        font-weight: $heavy-font-weight;
+        font-weight: $font-weight-600;
     }
 
     h1, h2, h3, h4, h5 {
-        font-weight: $heavy-font-weight;
+        font-weight: $font-weight-600;
+    }
+
+    .db-fw-700 {
+        font-weight: $font-weight-700;
     }
 
     .db-title {
