@@ -158,6 +158,11 @@ angular.module('dashboard')
                 });
             }
 
+            // Filter out Viranhaltijapäätös which are rejected/returned
+            function filterOfficialTypes(aItem) {
+                return ("DocumentType" in aItem) && ("Status" in aItem) && !((aItem.DocumentType === CONST.ESIGNTYPE.OFFICIAL.value) && ((aItem.Status === CONST.ESIGNSTATUS.RETURNED.value) || (aItem.Status === CONST.ESIGNSTATUS.REJECTED.value)));
+            }
+
             /* Fetch signing documents by year */
             function getClosed(newY, arr) {
                 $log.debug("adOpenSignreqs.getClosed: SigningOpenApi.query closed: " + newY);
@@ -171,9 +176,13 @@ angular.module('dashboard')
                 arr.push(tmp);
 
                 tmp.prom = SigningClosedApi.query({ byYear: newY }, function (/*data*/) {
-                    var data = tmp.prom;
-                    $log.debug("adOpenSignreqs.getClosed: SigningOpenApi.query closed (" + tmp.year + ") done: count: " + data.length);
-                    Array.prototype.push.apply(self.modelClosed, data);
+                    if (angular.isArray(tmp.prom)) {
+                        var data = tmp.prom.filter(filterOfficialTypes); // Alternatively fitlering could also be done on view template level
+                        Array.prototype.push.apply(self.modelClosed, data);
+                        $log.debug("adOpenSignreqs.getClosed: SigningOpenApi.query closed (" + tmp.year + ") done, filtered count: " + data.length +", unfiltered count: " +tmp.prom.length);
+                    } else {
+                        $log.error("adOpenSignreqs.getClosed: bad response, ignored");
+                    }
                     self.errClosed = null;
                 }, function (error) {
                     $log.error("adOpenSignreqs.getClosed: SigningOpenApi.query (" + tmp.year + ") error: " + JSON.stringify(error));
