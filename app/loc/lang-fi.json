@@ -41,6 +41,7 @@
     "STR_SIGNING_DOC_OFFICIAL": "Viranhaltijapäätös",
     "STR_SIGNING_ACCEPT": "Allekirjoita",
     "STR_REJECT": "Hylkää",
+    "STR_RETURN": "Palauta",
     "STR_CREATE_COMMENT": "Kommentoi",
     "STR_SIGNING_COMMENT_INFO": "Kommentit voit lähettää osoitteeseen (kopioi osoite tarvittaessa):",
     "STR_SIGNING_NO_EMAIL": "Sähköpostiosoitetta ei löytynyt.",

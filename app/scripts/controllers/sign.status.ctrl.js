@@ -52,7 +52,7 @@ app.controller('signStatusCtrl', function ($log, $scope, $state, SigningAttApi, 
             }
         },
         acc: { id: 'acc', disabled: false, active: false, hideBtn: false, hide: false, cConf: { title: 'STR_CNFM_TEXT', text: 'STR_CNFM_SIGN_ACC', yes: 'STR_YES', no: 'STR_NO', isOpen: false } },
-        rej: { id: 'rej', disabled: false, active: false, hideBtn: false, hide: false, cConf: { title: 'STR_CNFM_TEXT', text: 'STR_CNFM_SIGN_REJ', yes: 'STR_YES', no: 'STR_NO', isOpen: false } },
+        rej: { id: 'rej', disabled: false, active: false, hideBtn: false, hide: false, strId: '', cConf: { title: 'STR_CNFM_TEXT', text: 'STR_CNFM_SIGN_REJ', yes: 'STR_YES', no: 'STR_NO', isOpen: false } },
         // com: { id: 'com', disabled: false, active: false },
         att: {
             id: 'att', disabled: false, active: false, hideBtn: false, hide: false, url: undefined,
@@ -97,9 +97,9 @@ app.controller('signStatusCtrl', function ($log, $scope, $state, SigningAttApi, 
         // self.alerts.length = 0;
     }
 
-    function initBtns(btnModel, status, item) {
-        self.btnModel.doc.url = item ? ENV.SignApiUrl_GetAttachment.replace(":reqId", item.ProcessGuid) : null;
-        $log.debug("signStatusCtrl.initBtns: doc=" + self.btnModel.doc.url);
+    function initCtrl(btnModel, status, aItem) {
+        self.btnModel.doc.url = angular.isObject(aItem) ? ENV.SignApiUrl_GetAttachment.replace(":reqId", aItem.ProcessGuid) : null;
+        $log.debug("signStatusCtrl.initCtrl: doc=" + self.btnModel.doc.url);
 
         if (!angular.equals(status, CONST.ESIGNSTATUS.UNSIGNED.value)) {
             btnModel.acc.disabled = true;
@@ -107,19 +107,21 @@ app.controller('signStatusCtrl', function ($log, $scope, $state, SigningAttApi, 
             btnModel.att.disabled = true;
         }
 
-        if (angular.isString(item.TranslationGuid) && item.TranslationGuid.length) {
-            self.btnModel.doctr.url = ENV.SIGNAPIURL_DOC_TRANSLATED.replace(':reqId', item.ProcessGuid).replace(':transId', true).replace(':attId', '');
-            $log.debug("signStatusCtrl.initBtns: transition doc=" + self.btnModel.doctr.url);
+        btnModel.rej.strId = ("DocumentType" in aItem) && (aItem.DocumentType === CONST.ESIGNTYPE.OFFICIAL.value) ? 'STR_RETURN' : 'STR_REJECT';
+
+        if (angular.isString(aItem.TranslationGuid) && aItem.TranslationGuid.length) {
+            self.btnModel.doctr.url = ENV.SIGNAPIURL_DOC_TRANSLATED.replace(':reqId', aItem.ProcessGuid).replace(':transId', true).replace(':attId', '');
+            $log.debug("signStatusCtrl.initCtrl: transition doc=" + self.btnModel.doctr.url);
             btnModel.doctr.hideBtn = false;
         }
 
-        var atts = SigningUtil.parseAtts(item);
+        var atts = SigningUtil.parseAtts(aItem);
         btnModel.att.count = atts.length;
-        self.selData = ListData.createEsignAttachmentList({ 'header': 'STR_ATTACHMENTS', 'title': item.Name }, atts, item);
+        self.selData = ListData.createEsignAttachmentList({ 'header': 'STR_ATTACHMENTS', 'title': aItem.Name }, atts, aItem);
     }
 
     function saveStatusCb() {
-        initBtns(self.btnModel, self.item.Status, self.item);
+        initCtrl(self.btnModel, self.item.Status, self.item);
     }
 
     function saveStatus(op, cb) {
@@ -248,7 +250,7 @@ app.controller('signStatusCtrl', function ($log, $scope, $state, SigningAttApi, 
 
     self.ongoing = false;
 
-    initBtns(self.btnModel, self.item.Status, self.item);
+    initCtrl(self.btnModel, self.item.Status, self.item);
 
     getRequestorInfo(self.requestorInfo, self.item);
 
