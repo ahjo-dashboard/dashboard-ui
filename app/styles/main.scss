@@ -644,6 +644,13 @@ body {
         @include button-variant($font-color-header, $db-color-303F9F-lighten, $db-color-303F9F-lighten);
     }
 
+    .db-btn-sel[disabled],
+    .db-btn-sel[disabled]:hover,
+    .db-btn-sel[disabled]:focus,
+    .db-btn-sel[disabled]:active {
+        color: $font-color-header; // Disable hover effect for disabled button
+    }
+
     .db-btn-succ {
         @include button-variant($font-color-header, $db-color-success, $db-color-success);
     }
