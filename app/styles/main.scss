@@ -32,7 +32,7 @@ $db-color-B6B6B6: #B6B6B6;
 
 $appbgcolor: white;
 $font-color-body: #404040;
-$headingBgColor: $db-color-303F9F;
+$headingBgColor: $db-color-448AFF;
 
 $default-font-size: 1.2em;
 $font-weight-600: 600;
@@ -614,6 +614,10 @@ body {
 
     .db-badge-ora {
         @include db-badge-mix(#f0ad4e, $badge-font-color-dark, $badge-font-color-dark);
+    }
+
+    .db-badge-hdr {
+        @include db-badge-mix($font-color-header, $headingBgColor, $headingBgColor);
     }
 
     .db-btn-prim {
