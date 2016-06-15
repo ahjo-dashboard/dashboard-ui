@@ -3,12 +3,13 @@
     <div ng-if="!msc.isMobile" class="ad-page-header db-center-v">
         <button type="button" class="btn db-btn-prim glyphicon glyphicon-menu-hamburger" ng-click="closeMenu()">
         </button>
-        <button db-confirm confirm-enabled="msc.hasUnsavedData" confirm-config="msc.unsavedConfig" type="button"
-            class="btn db-btn-prim glyphicon glyphicon-home" ng-click="msc.goHome()">
+        <button db-confirm confirm-enabled="msc.hasUnsavedData" confirm-config="msc.unsavedConfig" type="button" class="btn db-btn-prim glyphicon glyphicon-home"
+            ng-click="msc.goHome()">
         </button>
         <button type="button" class="btn db-btn-prim glyphicon glyphicon-info-sign disabled" ng-click="">
         </button>
-        <button type="button" class="btn db-btn-prim glyphicon ng-class:[{'glyphicon-resize-vertical':parallelMode},{'glyphicon-resize-horizontal':!parallelMode}]" ng-click="msc.toggleParallelMode()">
+        <button type="button" class="btn db-btn-prim glyphicon ng-class:[{'glyphicon-resize-vertical':parallelMode},{'glyphicon-resize-horizontal':!parallelMode}]"
+            ng-click="msc.toggleParallelMode()">
         </button>
     </div>
 
@@ -20,63 +21,41 @@
     </div>
 
     <div class="ad-page-content">
+        <ul class="list-group">
 
-        <button ng-if="!msc.isMobile" type="button" class="btn db-btn-prim btn-lg disabled ad-dummy-button">{{msc.uiName}}</button>
-        <h5 ng-if="msc.isMobile" class="db-title" ng-cloak>{{msc.uiName}}</h5>
+            <li class="list-group-item db-prim-bg">
+                <h4 class="db-margin-10-bottom">{{msc.uiName}}</h4>
+                <h5> {{msc.uiRole}}</h5>
+            </li>
 
-        <button id="statusButton" type="button" class="db-nopadding btn db-btn-prim btn-lg ad-button text-center ng-class:[{'disabled': !msc.chairman},{'ad-dummy-button': !msc.chairman}]"
-            uib-dropdown-toggle>
-
+            <li class="list-group-item db-nopadding">
                 <uib-progressbar ng-if='msc.loading' class="col-xs-12 progress-striped active" type="info">
                     <span translate translate-cloak>STR_LOADING_DATA</span>
                 </uib-progressbar>
-
-                <span ng-if='!msc.loading' class="db-label db-badge ng-class: [msc.mtgStatusClass(msc.meeting)]">
+                <div ng-if='!msc.loading' class="db-badge ng-class: [msc.mtgStatusClass(msc.meeting)]">
                     <h3 translate translate-cloak>{{msc.stringId(msc.meeting)}}</h3>
-                </span>
+                </div>
+            </li>
 
-            </button>
-
-        <div>
-            <div class="ad-topic" ng-repeat="topic in msc.meeting.topicList track by $index">
-
-                <div class="btn-group ad-topic-status" uib-dropdown is-open="">
-                    <button id="topicButton" type="button" class="btn btn-default btn-lg ad-button ng-class:[{'disabled': !msc.chairman},{'ad-dummy-button': !msc.chairman}]"
-                        uib-dropdown-toggle>
+            <li class="list-group-item ng-class:[{'active': (msc.isSelected(topic) && !msc.isMobile)}]" ng-repeat="topic in msc.meeting.topicList track by $index">
+                <div class="db-flex" db-confirm confirm-enabled="msc.hasUnsavedData" confirm-config="msc.unsavedConfig" ng-click="msc.topicSelected(topic)">
+                    <div class="db-min-width-22">
                         <div class="db-iconwrapper">
                             <img ng-src="{{msc.statusIcon(topic)}}">
                             <img ng-show="topic.includePublishedRemark" ng-src="images/mtg-states/prop-indicator.png">
                             <img ng-show="{{!msc.isTopicPublic(topic)}}" ng-src="images/mtg-states/conf-indicator.png">
                         </div>
-                        <span ng-if="msc.chairman" class="caret"></span>
-                    </button>
-                    <ul uib-dropdown-menu role="menu" aria-labelledby="topicButton">
-                        <li role="menuitem" ng-click=""><a>1</a></li>
-                        <li role="menuitem" ng-click=""><a>2</a></li>
-                        <li role="menuitem" ng-click=""><a>3</a></li>
-                        <li role="menuitem" ng-click=""><a>4</a></li>
-                    </ul>
+                    </div>
+                    <div ng-show="topic.isModified" class="db-min-width-22 db-center">
+                        <span class="glyphicon glyphicon-bell db-newprops db-fs-12" aria-hidden="true"></span>
+                    </div>
+                    <h5 class="db-flex-area db-margin-10-hor db-center-v" tooltip-enable="isTooltips" uib-tooltip-template="'topicTooltipTpl.html'"
+                        tooltip-class="db-tooltip" tooltip-placement="top-left">
+                        {{topic.topicreference}} {{topic.topicTitle}}
+                    </h5>
                 </div>
-
-                <div ng-show="topic.isModified" class="btn-group ad-topic-status">
-                    <!-- TODO: display dynamically -->
-                    <button id="topicButton" type="button" class="btn btn-default btn-lg disabled ad-dummy-button db-newprops" uib-dropdown-toggle
-                        tooltip-enable="isTooltips" uib-tooltip="{{'STR_INFO_NEW_PROPS' | translate}}" tooltip-placement="right">
-                        <span class="glyphicon glyphicon-bell" aria-hidden="true"></span>
-                    </button>
-                </div>
-
-                <button db-confirm confirm-enabled="msc.hasUnsavedData" confirm-config="msc.unsavedConfig" type="button"
-                    class="btn btn-default ad-button ad-topic-button db-btn-agenda ng-class:[{'active': (msc.isSelected(topic) && !msc.isMobile)}]"
-                    ng-click="msc.topicSelected(topic)" tooltip-enable="isTooltips" uib-tooltip-template="'topicTooltipTpl.html'"
-                    tooltip-class="db-tooltip" tooltip-placement="top-left">
-                    {{topic.topicreference}}
-                    {{topic.topicTitle}}
-                </button>
-
-            </div>
-        </div>
-
+            </li>
+        </ul>
     </div>
 
 </div>

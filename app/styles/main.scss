@@ -95,6 +95,10 @@ iframe {
     min-width: 320px;
 }
 
+.db-min-width-22 {
+    min-width: 22px;
+}
+
 .db-prim-bg {
     background-color: $db-color-448AFF !important;
     color: $db-color-FFFFFF;
@@ -516,13 +520,9 @@ body {
     }
 
     .db-iconwrapper {
-        position: relative;
-        width: 24px; //TODO: explicit w/h from icon dimensions. Check for better approaches.
-        height: 22px;
-
+        min-height: 22px;
         img {
             position: absolute;
-
         }
     }
 
