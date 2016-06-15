@@ -1,4 +1,4 @@
-<div class="db-directive">
+<div class="db-directive db-conf-att">
 
     <div class="db-hdr-l2">
 
@@ -12,13 +12,13 @@
                 <span translate translate-cloak>STR_PAGE</span>
             </div>
 
-            <div class="db-hdr-l2-item btn-group">
-                <button type="button" class="hidden-xs btn btn-primary btn-lg" ng-click="c.pageChanged(1)" ng-disabled="c.currPage === 1 || !c.pages.length">
+            <div class="db-hdr-l2-item">
+                <button type="button" class="hidden-xs btn db-btn-prim btn-md" ng-click="c.pageChanged(1)" ng-disabled="c.currPage === 1 || !c.pages.length">
                     <span ng-if="c.pages.length > 1">(1)&nbsp;</span>
                     &lt;&lt;
                 </button>
 
-                <button type="button" class="btn btn-primary btn-lg" ng-click="c.pageChanged(c.currPage - 1)" ng-disabled="c.currPage === 1 || !c.pages.length">
+                <button type="button" class="btn db-btn-prim btn-md" ng-click="c.pageChanged(c.currPage - 1)" ng-disabled="c.currPage === 1 || !c.pages.length">
                     &lt;
                 </button>
             </div>
@@ -28,12 +28,12 @@
                     required ng-disabled="!c.pages.length || c.pages.length === 1">
             </div>
 
-            <div class="db-hdr-l2-item btn-group">
-                <button type="button" class="btn btn-primary btn-lg" ng-click="c.pageChanged(c.currPage + 1)" ng-disabled="c.currPage >= c.pages.length">
+            <div class="db-hdr-l2-item">
+                <button type="button" class="btn db-btn-prim btn-md" ng-click="c.pageChanged(c.currPage + 1)" ng-disabled="c.currPage >= c.pages.length">
                     &gt;
                 </button>
 
-                <button type="button" class="hidden-xs btn btn-primary btn-lg" ng-click="c.pageChanged(c.pages.length)" ng-disabled="c.currPage >= c.pages.length">
+                <button type="button" class="hidden-xs btn db-btn-prim btn-md" ng-click="c.pageChanged(c.pages.length)" ng-disabled="c.currPage >= c.pages.length">
                     &gt;&gt;&nbsp;
                     <span ng-if="c.pages.length > 1">({{c.pages.length}})</span>
                 </button>
@@ -42,12 +42,12 @@
         </div>
 
         <div class="db-hdr-l2-grp">
-            <div class="db-hdr-l2-item hidden-xs hidden-sm">
+            <div class="db-hdr-l2-item hidden-xs hidden-md">
                 <span translate translate-cloak>STR_ZOOM</span>
             </div>
 
             <div class="db-hdr-l2-item">
-                <button type="button" class="btn btn-primary btn-lg" ng-click="c.imgZoom(true)" ng-disabled="!c.pages.length || !c.currPage">
+                <button type="button" class="btn db-btn-prim btn-md" ng-click="c.imgZoom(true)" ng-disabled="!c.pages.length || !c.currPage">
                     <span class="glyphicon center glyphicon-minus"></span>
                 </button>
             </div>
@@ -57,7 +57,7 @@
             </div>
 
             <div class="db-hdr-l2-item">
-                <button type="button" class="btn btn-primary btn-lg" ng-click="c.imgZoom(false)" ng-disabled="!c.pages.length || !c.currPage">
+                <button type="button" class="btn db-btn-prim btnmd" ng-click="c.imgZoom(false)" ng-disabled="!c.pages.length || !c.currPage">
                     <span class="glyphicon center glyphicon-plus"></span>
                 </button>
             </div>

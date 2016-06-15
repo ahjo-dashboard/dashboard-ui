@@ -32,7 +32,7 @@ $db-color-B6B6B6: #B6B6B6;
 
 $appbgcolor: white;
 $font-color-body: #404040;
-$headingBgColor: $db-color-303F9F;
+$headingBgColor: $db-color-448AFF;
 
 $default-font-size: 1.2em;
 $font-weight-600: 600;
@@ -616,14 +616,22 @@ body {
         @include db-badge-mix(#f0ad4e, $badge-font-color-dark, $badge-font-color-dark);
     }
 
+    .db-badge-hdr {
+        @include db-badge-mix($font-color-header, $headingBgColor, $headingBgColor);
+    }
+
     .db-btn-prim {
         @include button-variant($font-color-header, $db-color-448AFF, $db-color-448AFF);
         color: $db-color-FFFFFF;
+
+
     }
 
     .db-btn-prim.active {
         @include button-variant($font-color-header, $db-color-303F9F-lighten, $db-color-303F9F-lighten);
     }
+
+
 
     .db-btn-opt {
         @include button-variant($font-color-header, $db-color-303F9F, $db-color-303F9F);
@@ -642,6 +650,13 @@ body {
 
     .db-btn-sel.active {
         @include button-variant($font-color-header, $db-color-303F9F-lighten, $db-color-303F9F-lighten);
+    }
+
+    .db-btn-sel[disabled],
+    .db-btn-sel[disabled]:hover,
+    .db-btn-sel[disabled]:focus,
+    .db-btn-sel[disabled]:active {
+        color: $font-color-header; // Disable hover effect for disabled button
     }
 
     .db-btn-succ {
@@ -1147,32 +1162,10 @@ body {
 }
 
 .db-conf-att {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    background-color: white;
-    .pagination {
-        margin: 5px 0px;
-    }
-    .pagination-first, .pagination-last, .pagination-prev, .pagination-next {
-        a {
-            font-weight: bold;
-        }
-    }
-
     input[type="number"] {
-        width: 4.5em;
+        width: 4em;
         margin: 0;
     }
-
-    .db-conf-att-img {
-        flex: 1;
-        overflow: auto;
-       .bigger {
-            width: 200vw;
-        }
-    }
-
 }
 
 .db-spinner-cont {

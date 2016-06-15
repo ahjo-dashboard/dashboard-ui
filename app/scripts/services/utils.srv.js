@@ -96,5 +96,14 @@ angular.module('dashboard')
             return res;
         };
 
+        Utils.openNewWin = function (aUrl) {
+            if (angular.isString(aUrl) && aUrl.length) {
+                $window.open(aUrl, '_blank');
+            }
+            else {
+                $log.error("Utils.openNewWin: ignored due to bad url " + aUrl);
+            }
+        };
+
         return Utils;
     });

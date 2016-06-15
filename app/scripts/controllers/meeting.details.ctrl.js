@@ -168,7 +168,7 @@ angular.module('dashboard')
         self.attachmentClicked = function (attachment) {
             setLowerBlockMode(CONST.LOWERBLOCKMODE.ATTACHMENTS);
             if (isMobile) {
-                StorageSrv.setKey(CONST.KEY.SELECTION_DATA, self.aData);
+                StorageSrv.setKey(CONST.KEY.SELECTION_DATA, [self.aData]);
                 $state.go(CONST.APPSTATE.LIST);
             }
             else if (attachment instanceof Object) {
@@ -183,7 +183,7 @@ angular.module('dashboard')
         self.decisionClicked = function (decision) {
             setLowerBlockMode(CONST.LOWERBLOCKMODE.MATERIALS);
             if (isMobile) {
-                StorageSrv.setKey(CONST.KEY.SELECTION_DATA, self.dData);
+                StorageSrv.setKey(CONST.KEY.SELECTION_DATA, [self.dData]);
                 $state.go(CONST.APPSTATE.LIST);
             }
             else if (decision instanceof Object) {
@@ -197,7 +197,7 @@ angular.module('dashboard')
         self.additionalMaterialClicked = function (material) {
             setLowerBlockMode(CONST.LOWERBLOCKMODE.MATERIALS);
             if (isMobile) {
-                StorageSrv.setKey(CONST.KEY.SELECTION_DATA, self.amData);
+                StorageSrv.setKey(CONST.KEY.SELECTION_DATA, [self.amData]);
                 $state.go(CONST.APPSTATE.LIST);
             }
             else if (material instanceof Object) {

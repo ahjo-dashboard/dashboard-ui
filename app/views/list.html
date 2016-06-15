@@ -8,26 +8,7 @@
     </div>
 
     <div class="ad-page-content">
-
-    <!-- TODO: take db-selection list into use and implement mobile support. Signing atts would already be displayed
-        <db-selection-list ng-attr-sel-data="c.data" ng-attr-on-select="c.selAtt(data)"></db-selection-list>-->
-
-        <h5 class="db-title" ng-cloak>{{c.data.title.title}}</h5>
-        <div class="ad-mob-page-container">
-            <ul class="list-group db-attlist">
-
-                <li ng-repeat="i in c.data.objects track by $index">
-                    <db-link ng-if="!c.isAttConf(i)" ng-attr-config="{ title: i.orderNum + '&nbsp;' + i.title, class:'list-group-item' }" ng-attr-uri="i.link">
-                    </db-link>
-
-                    <button ng-if="c.isAttConf(i)" class="btn btn-block btn-lg" ng-click="c.goToFile(i)">
-                        <img ng-src="../images/conf-lock.png">
-                        <span>{{i.orderNum}}&nbsp;{{i.title}}</span>
-                    </button>
-                </li>
-
-            </ul>
-        </div>
+        <db-selection-list ng-attr-sel-data="c.data" ng-attr-on-select="c.selAtt(data)"></db-selection-list>
     </div>
 
 </div>
