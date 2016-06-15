@@ -13,7 +13,7 @@
 angular.module('dashboard')
     .directive('dbSelectionList', [function () {
 
-        var controller = ['$log', '$scope', 'AttachmentData', 'CONST', '$rootScope', function ($log, $scope, AttachmentData, CONST, $rootScope) {
+        var controller = ['$log', '$scope', 'AttachmentData', 'CONST', '$rootScope', 'Utils', function ($log, $scope, AttachmentData, CONST, $rootScope, Utils) {
             $log.log("dbSelectionList: CONTROLLER");
             var self = this;
             self.data = null;
@@ -25,12 +25,7 @@ angular.module('dashboard')
             };
 
             self.newTab = function (link) {
-                if (angular.isString(link) && link.length) {
-                    window.open(link, '_blank');
-                }
-                else {
-                    $log.error("dbSelectionList: newTab: invalid link");
-                }
+                Utils.openNewWin(link);
             };
 
             self.isLinkDisabled = function (att) {
