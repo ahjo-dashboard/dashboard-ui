@@ -18,6 +18,7 @@ angular.module('dashboard')
         $rootScope.menu = $stateParams.menu;
         self.title = 'MOBILE TITLE';
         self.uiName = null;
+        self.uiRole = 'Päätösvaltainen osallistuja'; // todo: update dynamically
         self.meeting = null;
         self.chairman = false;
         self.loading = true;
