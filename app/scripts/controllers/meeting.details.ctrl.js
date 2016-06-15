@@ -126,6 +126,12 @@ angular.module('dashboard')
             }
         }
 
+        function resetUnsaved() {
+            self.hasUnsavedProposal = false;
+            self.remarkIsUnsaved = false;
+            $rootScope.$emit(CONST.UNSAVEMEETINGDDATA, false);
+        }
+
         self.primaryClicked = function () {
             setBlockMode((self.bm === CONST.BLOCKMODE.PRIMARY || self.bm === CONST.BLOCKMODE.SECONDARY) ? CONST.BLOCKMODE.DEFAULT : CONST.BLOCKMODE.PRIMARY);
         };
@@ -140,6 +146,7 @@ angular.module('dashboard')
             if (!angular.equals(self.selData, data)) {
                 self.selData = data;
             }
+            resetUnsaved();
             checkMode();
         };
 
@@ -149,6 +156,7 @@ angular.module('dashboard')
             if (!angular.equals(self.selData, data)) {
                 self.selData = data;
             }
+            resetUnsaved();
             checkMode();
         };
 
@@ -175,8 +183,7 @@ angular.module('dashboard')
                 self.secondaryUrl = attachment.link ? attachment.link : {};
                 self.secondaryAtt = attachment;
             }
-            self.hasUnsavedProposal = false;
-            self.remarkIsUnsaved = false;
+            resetUnsaved();
             checkMode();
         };
 
@@ -189,8 +196,7 @@ angular.module('dashboard')
             else if (decision instanceof Object) {
                 self.secondaryUrl = decision.link ? decision.link : {};
             }
-            self.hasUnsavedProposal = false;
-            self.remarkIsUnsaved = false;
+            resetUnsaved();
             checkMode();
         };
 
@@ -203,8 +209,7 @@ angular.module('dashboard')
             else if (material instanceof Object) {
                 self.secondaryUrl = material.link ? material.link : {};
             }
-            self.hasUnsavedProposal = false;
-            self.remarkIsUnsaved = false;
+            resetUnsaved();
             checkMode();
         };
 
@@ -214,6 +219,7 @@ angular.module('dashboard')
             if (isMobile) {
                 $state.go(CONST.APPSTATE.LISTPROPOSALS);
             }
+            resetUnsaved();
             checkMode();
         };
 
@@ -223,6 +229,7 @@ angular.module('dashboard')
             if (isMobile) {
                 $state.go(CONST.APPSTATE.REMARK);
             }
+            resetUnsaved();
             checkMode();
         };
 
@@ -266,10 +273,12 @@ angular.module('dashboard')
 
         var unsavedProposalWatcher = $rootScope.$on(CONST.PROPOSALSHASUNSAVED, function (event, hasUnsaved) {
             self.hasUnsavedProposal = hasUnsaved ? true : false;
+            $rootScope.$emit(CONST.UNSAVEMEETINGDDATA, (self.hasUnsavedProposal || self.remarkIsUnsaved));
         });
 
         var unsavedRemarkWatcher = $rootScope.$on(CONST.REMARKISUNSAVED, function (event, isUnsaved) {
             self.remarkIsUnsaved = isUnsaved ? true : false;
+            $rootScope.$emit(CONST.UNSAVEMEETINGDDATA, (self.hasUnsavedProposal || self.remarkIsUnsaved));
         });
 
         $scope.$on('$destroy', unsavedRemarkWatcher);

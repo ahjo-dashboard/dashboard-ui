@@ -3,7 +3,7 @@
     <div ng-if="!msc.isMobile" class="ad-page-header db-center-v">
         <button type="button" class="btn db-btn-prim glyphicon glyphicon-menu-hamburger" ng-click="closeMenu()">
         </button>
-        <button db-confirm confirm-enabled="msc.hasUnsavedProposal || msc.remarkIsUnsaved" confirm-config="msc.unsavedConfig" type="button"
+        <button db-confirm confirm-enabled="msc.hasUnsavedData" confirm-config="msc.unsavedConfig" type="button"
             class="btn db-btn-prim glyphicon glyphicon-home" ng-click="msc.goHome()">
         </button>
         <button type="button" class="btn db-btn-prim glyphicon glyphicon-info-sign disabled" ng-click="">
@@ -66,7 +66,7 @@
                     </button>
                 </div>
 
-                <button db-confirm confirm-enabled="msc.hasUnsavedProposal || msc.remarkIsUnsaved" confirm-config="msc.unsavedConfig" type="button"
+                <button db-confirm confirm-enabled="msc.hasUnsavedData" confirm-config="msc.unsavedConfig" type="button"
                     class="btn btn-default ad-button ad-topic-button db-btn-agenda ng-class:[{'active': (msc.isSelected(topic) && !msc.isMobile)}]"
                     ng-click="msc.topicSelected(topic)" tooltip-enable="isTooltips" uib-tooltip-template="'topicTooltipTpl.html'"
                     tooltip-class="db-tooltip" tooltip-placement="top-left">
