@@ -21,8 +21,7 @@ angular.module('dashboard')
         self.meeting = null;
         self.chairman = false;
         self.loading = true;
-        self.hasUnsavedProposal = false;
-        self.remarkIsUnsaved = false;
+        self.hasUnsavedData = false;
         self.unsavedConfig = { title: 'STR_CONFIRM', text: 'STR_WARNING_UNSAVED', yes: 'STR_CONTINUE' };
         var meetingItem = StorageSrv.getKey(CONST.KEY.MEETING_ITEM);
         self.isMobile = $rootScope.isMobile;
@@ -196,8 +195,7 @@ angular.module('dashboard')
                 if (self.isMobile) {
                     $state.go(CONST.APPSTATE.MEETINGDETAILS, {});
                 }
-                self.hasUnsavedProposal = false;
-                self.remarkIsUnsaved = false;
+                self.hasUnsavedData = false;
             }
             else {
                 $log.error("meetingStatusCtrl: topicSelected: invalid parameter");
@@ -266,16 +264,11 @@ angular.module('dashboard')
             }
         });
 
-        var unsavedProposalWatcher = $rootScope.$on(CONST.PROPOSALSHASUNSAVED, function (event, hasUnsaved) {
-            self.hasUnsavedProposal = hasUnsaved ? true : false;
+        var unsavedWatcher = $rootScope.$on(CONST.UNSAVEMEETINGDDATA, function (event, hasUnsaved) {
+            self.hasUnsavedData = hasUnsaved ? true : false;
         });
 
-        var unsavedRemarkWatcher = $rootScope.$on(CONST.REMARKISUNSAVED, function (event, isUnsaved) {
-            self.remarkIsUnsaved = isUnsaved ? true : false;
-        });
-
-        $scope.$on('$destroy', unsavedRemarkWatcher);
-        $scope.$on('$destroy', unsavedProposalWatcher);
+        $scope.$on('$destroy', unsavedWatcher);
 
         $scope.$on('$destroy', function () {
             $log.debug("meetingStatusCtrl: DESTROY");

@@ -58,7 +58,7 @@
                     <span ng-show="c.topic.isModified" class="glyphicon glyphicon-bell db-newprops" aria-hidden="true"></span>
                 </button>
                 <button type="button" class="btn db-btn-sel db-btn-big db-brd db-margin-2 ng-class:[{'active':c.lbm === c.lbms.REMARK}]"
-                    ng-click="c.remarkClicked()">
+                    db-confirm confirm-enabled="c.hasUnsavedProposal || c.remarkIsUnsaved" confirm-config="c.unsavedConfig" ng-click="c.remarkClicked()">
                     <span translate translate-cloak>STR_REMARK</span>
                 </button>
 
