@@ -8,13 +8,6 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 @import "bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
 // endbower
 
-@keyframes EMBEDDED-SHOW {
-    0%   { opacity: 0; visibility: hidden; }
-    1%   { opacity: 0; visibility: visible; }
-    80%  { opacity: 0; visibility: visible; }
-    100% { opacity: 1; visibility: visible; }
-}
-
 /* Extra small devices (phones, less than 768px) */
 /* No media query since this is the default in Bootstrap */
 
@@ -24,14 +17,14 @@ $db-color-303F9F: #303F9F;
 $db-color-303F9F-lighten: lighten($db-color-303F9F, 10%);
 $db-color-3F51B5: #3F51B5;
 $db-color-C5CAE9: #C5CAE9;
-$db-color-FFFFFF: #FFFFFF;
+$db-color-white: #FFFFFF;
 $db-color-448AFF: #448AFF;
-$db-color-212121: #212121;
+$db-color-dark: #212121;
 $db-color-727272: #727272;
 $db-color-B6B6B6: #B6B6B6;
 
-$appbgcolor: white;
-$font-color-body: #404040;
+$appbgcolor: $db-color-white;
+$font-color-body: $db-color-dark;
 $headingBgColor: $db-color-448AFF;
 
 $default-font-size: 1.2em;
@@ -42,11 +35,8 @@ $list-bg-color: $appbgcolor;
 $db-page-margin: 10px;
 
 $btn-radius: 6px;
-$btn-prim-color-bg: rgb(51, 122, 183);
-$btn-prim-color-active-bg: #276aa5;
-
 $header-leftmargin: 10px;
-$font-color-header: white;
+$font-color-header: $db-color-white;
 $proposals-color: orange;
 $badge-font-color-dark: $font-color-body;
 $db-color-success: #5cb85c;
@@ -100,7 +90,7 @@ iframe {
 }
 
 .db-font-clr {
-    color: $db-color-212121 !important;
+    color: $db-color-dark !important;
 }
 
 .db-opt-clr {
@@ -109,12 +99,12 @@ iframe {
 
 .db-prim-bg {
     background-color: $db-color-448AFF !important;
-    color: $db-color-FFFFFF;
+    color: $db-color-white;
 }
 
 .db-opt-bg {
     background-color: $db-color-303F9F !important;
-    color: $db-color-FFFFFF;
+    color: $db-color-white;
 }
 
 .db-transparent {
@@ -363,7 +353,7 @@ $blockOpenFlex: 9;
 
     .db-prop-hdr {
         background-color: $db-color-448AFF;
-        color: $db-color-FFFFFF;
+        color: $db-color-white;
         display: flex;
         flex-direction: column;
         padding: 0.5vh 1.0vh;
@@ -559,16 +549,6 @@ body {
         white-space: normal;
     }
 
-    .ad-container-fluid {
-        border-style: solid;
-        border-width: 0px;
-        color: $font-color-header;
-        padding-left: 10px;
-        padding-right: 10px;
-        padding-top: 5px;
-        padding-bottom: 5px;
-    }
-
     h1, h2, h3, h4, h5 {
         margin-top: 0px;
         margin-bottom: 0px;
@@ -576,10 +556,6 @@ body {
 
     .db-no-margin {
         margin: 0 !important;
-    }
-
-    .db-label {
-        @extend .label;
     }
 
     @mixin db-badge-mix($bgcolor, $bodycolor : white, $headingcolor : white) {
@@ -630,16 +606,12 @@ body {
 
     .db-btn-prim {
         @include button-variant($font-color-header, $db-color-448AFF, $db-color-448AFF);
-        color: $db-color-FFFFFF;
-
-
+        color: $db-color-white;
     }
 
     .db-btn-prim.active {
         @include button-variant($font-color-header, $db-color-303F9F-lighten, $db-color-303F9F-lighten);
     }
-
-
 
     .db-btn-opt {
         @include button-variant($font-color-header, $db-color-303F9F, $db-color-303F9F);
@@ -653,7 +625,7 @@ body {
 
     .db-btn-sel {
         @include button-variant($font-color-header, $db-color-C5CAE9, $db-color-C5CAE9);
-        color: $db-color-212121;
+        color: $db-color-dark;
     }
 
     .db-btn-sel.active {
@@ -684,7 +656,7 @@ body {
         width: 10vw;
     }
 
-    $btn-colhea-color-bg: darken($btn-prim-color-bg, 10%);
+    $btn-colhea-color-bg: darken($db-color-448AFF, 10%);
     $btn-colhea-color-border: $btn-colhea-color-bg;
     .db-btn-colhea {
         @include button-variant($font-color-header, $btn-colhea-color-bg, $btn-colhea-color-border);
@@ -714,63 +686,6 @@ body {
         width: 120px;
     }
 
-    // db-btn-agenda
-    .db-btn-agenda:active,
-    .db-btn-agenda.active {
-        background-color: $db-color-303F9F !important;
-        border-color: $db-color-303F9F;
-        color: $db-color-FFFFFF;
-    }
-
-    .db-btn-agenda.active:hover {
-        color: $db-color-FFFFFF;
-    }
-
-    .db-tablist {
-        button, a {
-            border-width: 0 $tablist-tabborder-width;
-            border-color: $db-color-B6B6B6;
-            border-style: solid;
-        }
-
-        button:first-child, a:first-child { border-radius: 0px; }
-        button:last-child, a:last-child {
-            border-bottom-width: $tablist-tabborder-width;
-            border-bottom-left-radius: $btn-radius;
-            border-bottom-right-radius: $btn-radius;
-        }
-    }
-
-    .db-attlist {
-        margin: 1vh 1vw;
-
-        li {
-            width: 100%;
-            border-style: solid;
-            border-width: $tablist-tabborder-width $tablist-tabborder-width 0 $tablist-tabborder-width;
-            border-color: $db-color-B6B6B6;
-            border-radius: 0;
-            color: $font-color-body;
-            background-color: $list-bg-color;
-        }
-
-        li:first-child {
-            border-top-left-radius: $btn-radius;
-            border-top-right-radius: $btn-radius;
-            }
-
-        li:last-child {
-            border-bottom-width: $tablist-tabborder-width;
-            border-bottom-left-radius: $btn-radius;
-            border-bottom-right-radius: $btn-radius;
-        }
-
-        button, a {
-            color: $font-color-body;
-            background-color: $list-bg-color;
-        }
-    }
-
     .db-hidden-pdf {
         visibility: hidden;
         opacity: 0.0;
@@ -781,13 +696,6 @@ body {
         opacity: 1.0;
     }
 
-    .panel-heading {
-        background-color: $headingBgColor;
-        border-style: solid;
-        border-width: 0px;
-        color: $font-color-header;
-    }
-
     // AD-PAGE
     .ad-page {
         position: absolute;
@@ -796,7 +704,7 @@ body {
         right: 0;
         bottom: 0;
         overflow: hidden;
-        background-color: $db-color-FFFFFF;
+        background-color: $db-color-white;
 
         .info {
             color: $font-color-header;
@@ -829,7 +737,6 @@ body {
         right: 0;
         bottom: 0;
         overflow: auto;
-        // background-color: $appbgcolor;
 
         .btn {
             text-align: left;
@@ -941,13 +848,6 @@ body {
         padding: $db-page-margin;
     }
 
-    .ad-mob-page-container {
-        padding-top: 0;
-        padding-left: $db-page-margin;
-        padding-right: $db-page-margin;
-        padding-bottom: $db-page-margin;
-    }
-
     .db-sign-infoarea {
         width: 100%;
         margin: 0 $db-page-margin;
@@ -1056,21 +956,6 @@ body {
         flex-grow: 0;
     }
 
-    .ad-button {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        border-width: 0;
-        border-radius: 0;
-        width: 100%;
-    }
-
-    .ad-dummy-button {
-        @extend .ad-button;
-        opacity: 1.0 !important;
-        outline: none !important;
-    }
-
     @media screen and (max-width: 767px) {
         .db-btn-list-topleft-xs { border-top-left-radius: $btn-radius !important; }
         .db-btn-list-topright-xs { border-top-right-radius: $btn-radius !important; }
@@ -1091,29 +976,6 @@ body {
         flex-direction: column;
         justify-content: center;
         min-height: $default-font-size;
-    }
-
-    .ad-topic {
-        display: flex;
-        flex-direction: row;
-
-        border-width: 0 1px 1px 1px;
-        border-color: $db-color-B6B6B6;
-        border-style: solid;
-    }
-
-    .ad-topic-status {
-        flex: 1 1 auto;
-        display: flex;
-        .btn {
-            flex: 1 1 auto;
-            padding: 5px;
-        }
-    }
-
-    .ad-topic-button {
-        flex: 4 4 auto;
-        min-height: 2.5em;
     }
 
     .ad-dropdown-content {
