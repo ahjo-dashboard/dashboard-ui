@@ -44,17 +44,17 @@
                 <button type="button" class="btn db-btn-sel db-btn-big db-brd db-margin-2 ng-class:[{'active':c.lbm === c.lbms.ATTACHMENTS}]" ng-disabled="!c.aData.objects.length"
                     db-confirm confirm-enabled="c.hasUnsavedProposal || c.remarkIsUnsaved" confirm-config="c.unsavedConfig" ng-click="c.attClicked()">
                     <span translate translate-cloak>STR_ATTACHMENTS</span>
-                    <span ng-if="c.aData.objects.length" class="badge ng-cloak">{{c.aData.objects.length}}</span>
+                    <span ng-if="c.aData.objects.length" class="badge ng-cloak db-opt-clr">{{c.aData.objects.length}}</span>
                 </button>
                 <button type="button" class="btn db-btn-sel db-btn-big db-brd db-margin-2 ng-class:[{'active':c.lbm === c.lbms.MATERIALS}]" ng-disabled="!c.materialCount()"
                     db-confirm confirm-enabled="c.hasUnsavedProposal || c.remarkIsUnsaved" confirm-config="c.unsavedConfig" ng-click="c.matClicked()">
                     <span translate translate-cloak>STR_OTHER_MATERIAL</span>
-                    <span ng-if="c.materialCount()" class="badge ng-cloak">{{c.materialCount()}}</span>
+                    <span ng-if="c.materialCount()" class="badge ng-cloak db-opt-clr">{{c.materialCount()}}</span>
                 </button>
                 <button type="button" class="btn db-btn-sel db-btn-big btn-block db-brd db-margin-2 ng-class:[{'active':c.lbm === c.lbms.PROPOSALS}]"
                     db-confirm confirm-enabled="c.hasUnsavedProposal || c.remarkIsUnsaved" confirm-config="c.unsavedConfig" ng-click="c.proposalsClicked()">
                     <span translate translate-cloak>STR_PROPOSALS</span>
-                    <span ng-if="c.propCount" class="badge ng-cloak">{{c.propCount}}</span>
+                    <span ng-if="c.propCount" class="badge ng-cloak db-opt-clr">{{c.propCount}}</span>
                     <span ng-show="c.topic.isModified" class="glyphicon glyphicon-bell db-newprops" aria-hidden="true"></span>
                 </button>
                 <button type="button" class="btn db-btn-sel db-btn-big db-brd db-margin-2 ng-class:[{'active':c.lbm === c.lbms.REMARK}]"
@@ -97,22 +97,22 @@
             <button type="button" ng-disabled="!c.aData.objects.length" class="btn btn-info btn-lg btn-block wrap-button-text db-btn-sel"
                 ng-click="c.attachmentClicked()">
                 <span translate translate-cloak>STR_ATTACHMENTS</span>
-                <span class="badge">{{c.aData.objects.length}}</span>
+                <span class="badge ng-class:[{'db-font-clr': c.aData.objects.length}]">{{c.aData.objects.length}}</span>
             </button>
             <button type="button" ng-disabled="!c.amData.objects.length" class="btn btn-info btn-lg btn-block wrap-button-text db-btn-sel ng-class:[{'disabled': !c.amData.objects.length}]"
                 ng-click="c.additionalMaterialClicked()">
                 <span translate translate-cloak>STR_ADDITIONAL_MATERIAL</span>
-                <span class="badge">{{c.amData.objects.length}}</span>
+                <span class="badge ng-class:[{'db-font-clr': c.amData.objects.length}]">{{c.amData.objects.length}}</span>
             </button>
             <button type="button" ng-disabled="!c.dData.objects.length" class="btn btn-info btn-lg btn-block wrap-button-text db-btn-sel"
                 ng-click="c.decisionClicked()">
                 <span translate translate-cloak>STR_DECISION_HISTORY</span>
-                <span class="badge">{{c.dData.objects.length}}</span>
+                <span class="badge ng-class:[{'db-font-clr': c.dData.objects.length}]">{{c.dData.objects.length}}</span>
             </button>
             <button type="button" class="btn btn-info btn-lg btn-block wrap-button-text db-btn-sel" ng-click="c.proposalsClicked()">
                 <span translate translate-cloak>STR_PROPOSALS</span>
                 <span ng-if="c.propCount !== null" class="badge">
-                    <span class="db-center-v">
+                    <span class="db-center-v db-font-clr">
                         {{c.propCount}}
                         <span ng-show="c.topic.isModified">
                             &nbsp;<span class="glyphicon glyphicon-bell db-newprops" aria-hidden="true"></span>
