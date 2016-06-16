@@ -132,6 +132,34 @@ angular.module('dashboard')
             $rootScope.$emit(CONST.UNSAVEMEETINGDDATA, false);
         }
 
+        function attachmentSelected(attachment) {
+            setLowerBlockMode(CONST.LOWERBLOCKMODE.ATTACHMENTS);
+            if (angular.isObject(attachment)) {
+                self.secondaryUrl = attachment.link ? attachment.link : {};
+                self.secondaryAtt = attachment;
+            }
+            resetUnsaved();
+            checkMode();
+        }
+
+        function additionalMaterialSelected(material) {
+            setLowerBlockMode(CONST.LOWERBLOCKMODE.MATERIALS);
+            if (angular.isObject(material)) {
+                self.secondaryUrl = material.link ? material.link : {};
+            }
+            resetUnsaved();
+            checkMode();
+        }
+
+        function decisionSelected(decision) {
+            setLowerBlockMode(CONST.LOWERBLOCKMODE.MATERIALS);
+            if (angular.isObject(decision)) {
+                self.secondaryUrl = decision.link ? decision.link : {};
+            }
+            resetUnsaved();
+            checkMode();
+        }
+
         self.primaryClicked = function () {
             setBlockMode((self.bm === CONST.BLOCKMODE.PRIMARY || self.bm === CONST.BLOCKMODE.SECONDARY) ? CONST.BLOCKMODE.DEFAULT : CONST.BLOCKMODE.PRIMARY);
         };
@@ -140,77 +168,34 @@ angular.module('dashboard')
             setBlockMode((self.bm === CONST.BLOCKMODE.PRIMARY || self.bm === CONST.BLOCKMODE.SECONDARY) ? CONST.BLOCKMODE.DEFAULT : CONST.BLOCKMODE.SECONDARY);
         };
 
-        self.attClicked = function () {
+        self.attachmentClicked = function () {
             setLowerBlockMode(CONST.LOWERBLOCKMODE.ATTACHMENTS);
-            var data = [self.aData];
-            if (!angular.equals(self.selData, data)) {
-                self.selData = data;
+
+            if (isMobile) {
+                StorageSrv.setKey(CONST.KEY.SELECTION_DATA, [self.aData, self.amData, self.dData]);
+                $state.go(CONST.APPSTATE.LIST);
+            }
+            else {
+                var data = [self.aData, self.amData, self.dData];
+                if (!angular.equals(self.selData, data)) {
+                    self.selData = data;
+                }
             }
             resetUnsaved();
             checkMode();
         };
 
-        self.matClicked = function () {
-            setLowerBlockMode(CONST.LOWERBLOCKMODE.MATERIALS);
-            var data = [self.amData, self.dData];
-            if (!angular.equals(self.selData, data)) {
-                self.selData = data;
-            }
-            resetUnsaved();
-            checkMode();
-        };
-
-        self.selClicked = function (data) {
+        self.selectionClicked = function (data) {
             if (self.aData.objects.indexOf(data) > CONST.NOTFOUND) {
-                self.attachmentClicked(data);
+                attachmentSelected(data);
             }
             else if (self.amData.objects.indexOf(data) > CONST.NOTFOUND) {
-                self.additionalMaterialClicked(data);
+                additionalMaterialSelected(data);
             }
             else if (self.dData.objects.indexOf(data) > CONST.NOTFOUND) {
-                self.decisionClicked(data);
+                decisionSelected(data);
             }
             self.selData = null;
-        };
-
-        self.attachmentClicked = function (attachment) {
-            setLowerBlockMode(CONST.LOWERBLOCKMODE.ATTACHMENTS);
-            if (isMobile) {
-                StorageSrv.setKey(CONST.KEY.SELECTION_DATA, [self.aData]);
-                $state.go(CONST.APPSTATE.LIST);
-            }
-            else if (attachment instanceof Object) {
-                self.secondaryUrl = attachment.link ? attachment.link : {};
-                self.secondaryAtt = attachment;
-            }
-            resetUnsaved();
-            checkMode();
-        };
-
-        self.decisionClicked = function (decision) {
-            setLowerBlockMode(CONST.LOWERBLOCKMODE.MATERIALS);
-            if (isMobile) {
-                StorageSrv.setKey(CONST.KEY.SELECTION_DATA, [self.dData]);
-                $state.go(CONST.APPSTATE.LIST);
-            }
-            else if (decision instanceof Object) {
-                self.secondaryUrl = decision.link ? decision.link : {};
-            }
-            resetUnsaved();
-            checkMode();
-        };
-
-        self.additionalMaterialClicked = function (material) {
-            setLowerBlockMode(CONST.LOWERBLOCKMODE.MATERIALS);
-            if (isMobile) {
-                StorageSrv.setKey(CONST.KEY.SELECTION_DATA, [self.amData]);
-                $state.go(CONST.APPSTATE.LIST);
-            }
-            else if (material instanceof Object) {
-                self.secondaryUrl = material.link ? material.link : {};
-            }
-            resetUnsaved();
-            checkMode();
         };
 
         self.proposalsClicked = function () {
@@ -238,9 +223,10 @@ angular.module('dashboard')
         };
 
         self.materialCount = function () {
+            var attachmentCount = ((self.aData instanceof Object) && (self.aData.objects instanceof Array)) ? self.aData.objects.length : 0;
             var decisionCount = ((self.dData instanceof Object) && (self.dData.objects instanceof Array)) ? self.dData.objects.length : 0;
             var additionalMaterialCount = ((self.amData instanceof Object) && (self.amData.objects instanceof Array)) ? self.amData.objects.length : 0;
-            return decisionCount + additionalMaterialCount;
+            return attachmentCount + decisionCount + additionalMaterialCount;
         };
 
         self.toggleParallelMode = function () {
