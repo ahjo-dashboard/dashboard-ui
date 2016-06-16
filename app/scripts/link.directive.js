@@ -18,7 +18,7 @@ angular.module('dashboard')
                 config: '=',
                 uri: '='
             },
-            templateUrl: 'directives/link/link.Directive.html',
+            templateUrl: 'views/link.directive.html',
             restrict: 'AE',
             replace: 'true',
             link: function(scope/*, element, attrs */) {

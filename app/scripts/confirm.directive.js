@@ -18,7 +18,7 @@ angular.module('dashboard')
             $scope.open = function () {
                 var modalInstance = $uibModal.open({
                     animation: true,
-                    templateUrl: 'directives/confirm/confirm.html',
+                    templateUrl: 'views/confirm.directive.html',
                     controller: function ($scope, $uibModalInstance, config) {
                         $scope.title = 'STR_CONFIRM';
                         $scope.text = 'STR_CNFM_TEXT';

@@ -17,7 +17,7 @@ angular.module('dashboard')
                 header: '=header',
                 content: '=content'
             },
-            templateUrl: 'directives/content/adContent.Directive.html',
+            templateUrl: 'views/adcontent.directive.html',
             restrict: 'AE',
             replace: 'true'
         };

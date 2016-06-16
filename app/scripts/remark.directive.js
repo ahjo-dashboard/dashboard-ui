@@ -146,7 +146,7 @@ angular.module('dashboard')
             scope: {
                 topic: '='
             },
-            templateUrl: 'directives/remark/remark.Directive.html',
+            templateUrl: 'views/remark.directive.html',
             restrict: 'AE',
             controller: controller,
             controllerAs: 'c',

@@ -73,7 +73,7 @@ angular.module('dashboard')
                 selData: '=',
                 onSelect: '&'
             },
-            templateUrl: 'directives/selectionList/selectionList.Directive.html',
+            templateUrl: 'views/selectionList.directive.html',
             restrict: 'AE',
             controller: controller,
             controllerAs: 'c',

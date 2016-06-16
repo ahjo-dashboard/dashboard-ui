@@ -363,7 +363,7 @@ angular.module('dashboard')
             scope: {
                 topic: '='
             },
-            templateUrl: 'directives/proposalList/proposalList.Directive.html',
+            templateUrl: 'views/proposalList.directive.html',
             restrict: 'AE',
             controller: controller,
             controllerAs: 'c',

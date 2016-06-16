@@ -180,7 +180,7 @@ angular.module('dashboard')
                 visibleMeetings: '=',
                 selected: '&onSelected'
             },
-            templateUrl: 'directives/meetings/adMeetings.Directive.html',
+            templateUrl: 'views/admeetings.directive.html',
             restrict: 'AE',
             controller: controller,
             controllerAs: 'c',
