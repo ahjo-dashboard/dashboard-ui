@@ -13,6 +13,7 @@ angular.module('dashboard')
         var self = this;
 
         self.data = StorageSrv.getKey(CONST.KEY.SELECTION_DATA); // Expects an array if ListData items
+        self.title = 'STR_ATTACHMENTS';
 
         self.selAtt = function (aArg) {
             if (!(aArg instanceof AttachmentData)){
