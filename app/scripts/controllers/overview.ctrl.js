@@ -77,11 +77,11 @@ angular.module('dashboard')
         };
 
         self.upperClicked = function () {
-            self.blockMode = (self.blockMode === CONST.BLOCKMODE.DEFAULT || self.blockMode === CONST.BLOCKMODE.SECONDARY) ? CONST.BLOCKMODE.PRIMARY : CONST.BLOCKMODE.DEFAULT;
+            self.blockMode = (self.blockMode === CONST.BLOCKMODE.PRIMARY || self.blockMode === CONST.BLOCKMODE.SECONDARY) ? CONST.BLOCKMODE.DEFAULT : CONST.BLOCKMODE.PRIMARY;
         };
 
         self.lowerClicked = function () {
-            self.blockMode = (self.blockMode === CONST.BLOCKMODE.DEFAULT || self.blockMode === CONST.BLOCKMODE.PRIMARY) ? CONST.BLOCKMODE.SECONDARY : CONST.BLOCKMODE.DEFAULT;
+            self.blockMode = (self.blockMode === CONST.BLOCKMODE.SECONDARY || self.blockMode === CONST.BLOCKMODE.PRIMARY) ? CONST.BLOCKMODE.DEFAULT : CONST.BLOCKMODE.SECONDARY;
         };
 
         self.setMtgsVisible = function (mtgs) {
