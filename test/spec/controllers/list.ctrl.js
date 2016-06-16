@@ -4,7 +4,7 @@
  */
 'use strict';
 
-describe('Controller: SignitemCtrl', function () {
+describe('Controller: listCtrl', function () {
 
   // load the controller's module
   beforeEach(module('dashboard'));
@@ -15,7 +15,7 @@ describe('Controller: SignitemCtrl', function () {
   // Initialize the controller and a mock scope
   beforeEach(inject(function ($controller, $rootScope) {
     scope = $rootScope.$new();
-    test = $controller('signitemCtrl', {
+    test = $controller('listCtrl', {
       $scope: scope
       // place here mocked dependencies
     });
