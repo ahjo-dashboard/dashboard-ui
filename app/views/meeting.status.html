@@ -37,9 +37,9 @@
                 </div>
             </li>
 
-            <li class="list-group-item ng-class:[{'active': (msc.isSelected(topic) && !msc.isMobile)}]" ng-repeat="topic in msc.meeting.topicList track by $index">
+            <li class="list-group-item ng-class:[{'db-opt-bg': (msc.isSelected(topic) && !msc.isMobile)}]" style="overflow: hidden;" ng-repeat="topic in msc.meeting.topicList track by $index">
                 <div class="db-flex" db-confirm confirm-enabled="msc.hasUnsavedData" confirm-config="msc.unsavedConfig" ng-click="msc.topicSelected(topic)">
-                    <div class="db-min-width-22">
+                    <div class="db-min-width-22 db-center-v">
                         <div class="db-iconwrapper">
                             <img ng-src="{{msc.statusIcon(topic)}}">
                             <img ng-show="topic.includePublishedRemark" ng-src="images/mtg-states/prop-indicator.png">
