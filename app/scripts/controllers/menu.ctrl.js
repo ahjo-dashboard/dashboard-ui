@@ -13,7 +13,7 @@
 */
 angular.module('dashboard')
     .controller('menuCtrl', ['$log', '$state', '$rootScope', 'AhjoMeetingsSrv', 'SigningOpenApi', 'CONST', function ($log, $state, $rootScope, AhjoMeetingsSrv, SigningOpenApi, CONST) {
-        $log.log("menuCtrl: CONTROLLER");
+        $log.debug("menuCtrl: CONTROLLER");
         var self = this;
         self.mtgCount = null;
         self.sgnCount = null;
