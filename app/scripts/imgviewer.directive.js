@@ -166,7 +166,7 @@ app.directive('dbImgviewer', function () {
         },
         controller: controller,
         controllerAs: "c",
-        templateUrl: 'directives/imgviewer/imgviewer.directive.html',
+        templateUrl: 'views/imgviewer.directive.html',
         restrict: 'E',
         replace: 'true'
     };

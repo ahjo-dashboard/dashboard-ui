@@ -311,7 +311,7 @@ angular.module('dashboard')
         return {
             controller: controller,
             controllerAs: 'c',
-            templateUrl: 'directives/opensignreqs/opensignreqs.directive.html',
+            templateUrl: 'views/opensignreqs.directive.html',
             restrict: 'E',
             replace: 'true',
             scope: {

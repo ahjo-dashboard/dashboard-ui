@@ -55,13 +55,6 @@ module.exports = function (grunt) {
                     livereload: '<%= connect.options.livereload %>'
                 }
             },
-            directives: {
-                files: ['<%= yeoman.app %>/directives/{,*/}*.*'],
-                tasks: ['newer:jshint:all'],
-                options: {
-                    livereload: '<%= connect.options.livereload %>'
-                }
-            },
             jsTest: {
                 files: ['test/spec/{,*/}*.js'],
                 tasks: ['newer:jshint:test', 'karma']
@@ -146,8 +139,7 @@ module.exports = function (grunt) {
             all: {
                 src: [
                     'Gruntfile.js',
-                    '<%= yeoman.app %>/scripts/{,*/}*.js',
-                    '<%= yeoman.app %>/directives/{,*/}*.js'
+                    '<%= yeoman.app %>/scripts/{,*/}*.js'
                 ]
             },
             test: {
@@ -290,13 +282,11 @@ module.exports = function (grunt) {
         // Performs rewrites based on filerev and the useminPrepare configuration
         usemin: {
             html: [
-                '<%= yeoman.dist %>/{,*/}*.html',
-                '<%= yeoman.dist %>/directives/{,*/}*.html'
+                '<%= yeoman.dist %>/{,*/}*.html'
             ],
             css: ['<%= yeoman.dist %>/styles/{,*/}*.css'],
             js: [
-                '<%= yeoman.dist %>/scripts/{,*/}*.js',
-                '<%= yeoman.dist %>/directives/{,*/}*.js'
+                '<%= yeoman.dist %>/scripts/{,*/}*.js'
             ],
             options: {
                 assetsDirs: [
@@ -423,11 +413,6 @@ module.exports = function (grunt) {
                         'images/{,*/}*.{webp}',
                         'styles/fonts/{,*/}*.*'
                     ]
-                },{ // Copy only directive templates to dist, .js already concatenated to main.js
-                    expand: true,
-                    cwd: '<%= yeoman.app %>/directives',
-                    src: '**/*.html',
-                    dest: '<%= yeoman.dist %>/directives'
                 },{
                     expand: true,
                     cwd: '<%= yeoman.app %>/loc',

@@ -271,7 +271,7 @@ angular.module('dashboard')
                 onRemove: '&',
                 onAdd: '&'
             },
-            templateUrl: 'directives/proposal/proposal.Directive.html',
+            templateUrl: 'views/proposal.directive.html',
             restrict: 'AE',
             controller: controller,
             controllerAs: 'c',

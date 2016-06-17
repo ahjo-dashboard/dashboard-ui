@@ -86,7 +86,7 @@ app.directive('docSigners', [function () {
     return {
         controller: ctrl,
         controllerAs: 'c',
-        templateUrl: 'directives/docsigners/docsigners.directive.html',
+        templateUrl: 'views/docsigners.directive.html',
         restrict: 'E',
         replace: 'true',
         scope: {

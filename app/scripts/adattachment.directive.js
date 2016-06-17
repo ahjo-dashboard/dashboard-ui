@@ -18,7 +18,7 @@ angular.module('dashboard')
                 list: "=list",
                 selected: '&onSelected'
             },
-            templateUrl: 'directives/attachment/adAttachment.Directive.html',
+            templateUrl: 'views/adattachment.directive.html',
             restrict: 'AE',
             replace: 'true'
         };
