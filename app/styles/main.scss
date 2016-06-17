@@ -488,6 +488,14 @@ $blockOpenFlex: 9;
 }
 // REMARK DECLARATION END
 
+
+.db-item-disabled {
+    opacity: 0.5;
+    pointer-events: none; // IE 11 and above
+    cursor: default;
+    text-decoration: none !important; // Just in case 'pointer-events: none' won't work. Removes underlining but leaves other focus effects, if any.
+}
+
 html { height: 100%; }
 
 body {
