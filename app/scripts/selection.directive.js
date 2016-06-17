@@ -33,6 +33,7 @@ angular.module('dashboard')
                     angular.forEach(arr, function (value) {
                         el.append(value);
                     }, scope);
+                    el[0].selectedIndex = '0';
                 }
 
                 if (scope.selItems && angular.isArray(scope.selItems)) {
