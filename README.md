@@ -1,11 +1,17 @@
-# Ahjo dashboard-ui
+### Ahjo dashboard-ui
 
 Responsive web front-end for accessing certain representative IT services of the City of Helsinki.
-Implemented using Javascript, Angular and Bootstrap.
+Implemented using Javascript, Angular 1 and Bootstrap 3.
 
-## Building & development
+#### Building & development
 
-Installing
+##### Preconditions
+
+* Install node.js: <https://nodejs.org>
+* Install bower: `npm i -g bower`
+* Install grunt cli: `npm i -g grunt-cli`
+
+##### Configure project
 
 * Clone the repository
 * Run `npm install` for installing node modules. Calls also `bower install`.
@@ -16,20 +22,29 @@ Installing
   * `custom/conf/app.env.test2.json`
   * `custom/conf/app.env.prod.json`
 
-Building
+##### Building
 
-* `grunt` for building for default configuration
+* `grunt` for building for default target
 * `grunt build:dev|test1|test2|prod` for building for a specific configuration
 * `grunt preparedeploy` after building for preparing build output for deployment, if necessary. Calls a postbuild script in `custom/tools`
 
-Running on localhost
+##### Running on localhost
 
 * `grunt serve` for preview of the development content
 * `grunt serve:dist` for preview of the distribution content
 
-## Testing
+##### Testing
 
-Running `grunt test` will run the unit tests with karma.
+* `grunt test` will run the unit tests using karma.
 
-## Additional notes
-* For grunt toolchain issues: on access rights you may have to use node version < 5.7
+#### Known issues
+
+* If a local `grunt` is not found in project folder run `npm i grunt` there (`npm i` should have done it)
+* If `compass` is not found
+  * Install `ruby` <http://rubyinstaller.org/downloads/>, and be sure to check "Add ruby executables to your PATH" !
+  * install compass: `gem install compass`
+* If on `grunt` run an indirect npm dependency is missing install it, e.g. "npm i serve-static --save-dev", and be sure to commit the `package.json` update
+* For `grunt` toolchain issues: on access rights you may have to use node version < 5.7
+* Development on Windows environment
+  * ruby/compass not installed by default, install separately
+  * If using a "git command prompt" check where it installs packages. It's better to do all the package and grunt operations in an "Administrator command prompt".
