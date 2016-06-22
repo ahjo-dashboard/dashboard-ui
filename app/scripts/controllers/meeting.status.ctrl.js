@@ -177,12 +177,15 @@ angular.module('dashboard')
             }
         }
 
-        if (meetingItem) {
+        function getMeeting(meetingItem) {
+            $log.debug("meetingStatusCtrl.getMeeting");
             self.uiName = meetingItem.agencyName + ' ' + meetingItem.name;
-            self.meeting = null;
             selectedTopicGuid = null;
             StorageSrv.deleteKey(CONST.KEY.TOPIC);
+            $timeout.cancel(pollingTimer);
+            pollingTimer = null;
             AhjoMeetingSrv.getMeeting(meetingItem.meetingGuid).then(function (response) {
+                $log.debug("meetingStatusCtrl.getMeeting: done");
                 if (angular.isObject(response) && angular.isArray(response.objects) && response.objects.length) {
                     self.meeting = response.objects[0];
                     if (angular.isObject(self.meeting) && angular.isArray(self.meeting.topicList)) {
@@ -216,9 +219,6 @@ angular.module('dashboard')
             }).finally(function () {
                 self.loading = false;
             });
-        }
-        else {
-            $state.go(CONST.APPSTATE.HOME, { menu: CONST.MENU.CLOSED });
         }
 
         self.goHome = function () {
@@ -314,5 +314,12 @@ angular.module('dashboard')
             $log.debug("meetingStatusCtrl: DESTROY");
             $timeout.cancel(pollingTimer);
         });
+
+        if (meetingItem) {
+            getMeeting(meetingItem);
+        }
+        else {
+            $state.go(CONST.APPSTATE.HOME, { menu: CONST.MENU.CLOSED });
+        }
 
     }]);
