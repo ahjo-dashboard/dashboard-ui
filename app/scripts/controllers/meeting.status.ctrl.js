@@ -78,6 +78,42 @@ angular.module('dashboard')
             }
         }
 
+        function topicEdited(event, mtgGuid, mtg) {
+            if (!angular.isObject(event) || !angular.isObject(event.topic) || !angular.isObject(mtg) || !mtgGuid || !angular.isArray(mtg.topicList)) {
+                $log.error("meetingStatusCtrl.topicEdited: ignored, bad args");
+                return;
+            }
+
+            if (!angular.equals(event.meetingID, mtgGuid)) {
+                $log.debug("meetingStatusCtrl.topicEdited: ignored, not this meeting, event.meetingID=" + event.meetingID + " meeting=" + mtg.meetingGuid);
+                return;
+            }
+
+            var eTopic = event.topic;
+            $log.debug("meetingStatusCtrl: topicEdited, topicGuid=" + eTopic.topicGuid + " sequencenumber=" + eTopic.sequencenumber + " mtgGuid=" + mtgGuid);
+
+            var matchInd;
+            for (var i = 0; !angular.isDefined(matchInd) && i < mtg.topicList.length; i++) {
+                if (angular.equals(eTopic.topicGuid, mtg.topicList[i].topicGuid)) {
+                    matchInd = i;
+                    $log.debug("meetingStatusCtrl: merging, topicGuid exists at matchInd=" + matchInd);
+                    angular.merge(mtg.topicList[matchInd], eTopic);
+                }
+            }
+
+            if (!angular.isDefined(matchInd)) {
+                $log.debug("meetingStatusCtrl: adding a new topic sequenceNumber=" + eTopic.sequencenumber + " topicList.length=" + mtg.topicList.length);
+                var ind = eTopic.sequencenumber - 1;
+                if ((ind >= 0) && (ind < mtg.topicList.length)) {
+                    mtg.topicList.splice(ind, 0, eTopic);
+                } else {
+                    $log.error("meetingStatusCtrl: ignored, bad sequencenumber");
+                }
+            }
+
+
+        }
+
         function getEvents() {
             if (lastEventId && meetingItem.meetingGuid) {
                 var proposalEvents = [];
@@ -106,6 +142,9 @@ angular.module('dashboard')
                                     break;
                                 case CONST.MTGEVENT.TOPICSTATECHANGED:
                                     topicStatusChanged(event);
+                                    break;
+                                case CONST.MTGEVENT.TOPICEDITED:
+                                    topicEdited(event, meetingItem.meetingGuid, self.meeting);
                                     break;
                                 default:
                                     $log.error("meetingStatusCtrl: unsupported typeName: " + event.typeName);
