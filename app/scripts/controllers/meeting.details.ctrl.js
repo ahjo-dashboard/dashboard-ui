@@ -12,19 +12,22 @@
  * Controller of the dashboard
  */
 angular.module('dashboard')
-    .controller('meetingDetailsCtrl', ['$log', 'AhjoMeetingSrv', '$rootScope', '$scope', '$state', 'CONST', 'StorageSrv', 'AttachmentData', 'ListData', 'PROPS', 'AhjoProposalsSrv', function ($log, AhjoMeetingSrv, $rootScope, $scope, $state, CONST, StorageSrv, AttachmentData, ListData, PROPS, AhjoProposalsSrv) {
+    .controller('meetingDetailsCtrl', ['$log', 'AhjoMeetingSrv', '$rootScope', '$scope', '$state', 'CONST', 'StorageSrv', 'AttachmentData', 'ListData', 'PROPS', 'Utils', function ($log, AhjoMeetingSrv, $rootScope, $scope, $state, CONST, StorageSrv, AttachmentData, ListData, PROPS, Utils) {
         $log.debug("meetingDetailsCtrl: CONTROLLER");
         var self = this;
         var isMobile = $rootScope.isMobile;
+        var isTablet = $rootScope.isTablet;
         self.primaryUrl = null;
         self.secondaryUrl = null;
         self.error = null;
         self.topic = null;
         self.bms = CONST.BLOCKMODE;
         self.bm = CONST.BLOCKMODE.DEFAULT;
-        self.lbms = CONST.LOWERBLOCKMODE;
-        self.lbm = CONST.LOWERBLOCKMODE.PROPOSALS;
-        self.header = '';
+        self.pms = CONST.PRIMARYMODE;
+        self.pm = CONST.PRIMARYMODE.DEFAULT;
+        self.sms = CONST.SECONDARYMODE;
+        self.sm = CONST.SECONDARYMODE.PROPOSALS;
+        self.header = null;
         $rootScope.menu = CONST.MENU.FULL;
         self.selData = null;
 
@@ -34,53 +37,45 @@ angular.module('dashboard')
         self.amData = null;
 
         self.propCount = null;
-        self.linkConfig = {
-            title: 'STR_TOPIC_DOWNLOAD',
-            class: 'btn btn-info btn-lg btn-block wrap-button-text db-btn-prim'
-        };
         self.unsavedConfig = { title: 'STR_CONFIRM', text: 'STR_WARNING_UNSAVED', yes: 'STR_CONTINUE' };
         self.hasUnsavedProposal = false;
         self.remarkIsUnsaved = false;
 
-        function countProposals(proposals) {
-            var published = 0;
-            angular.forEach(proposals, function (prop) {
-                if (angular.isObject(prop)) {
-                    if (prop.isPublished === PROPS.PUBLISHED.YES) {
-                        published++;
-                    }
-                }
-            });
-            self.propCount = published;
+        function setBlockMode(mode) {
+            self.bm = isMobile ? CONST.BLOCKMODE.SECONDARY : mode;
         }
 
-        function getProposals(guid) {
-            if (angular.isString(guid)) {
-                var proposals = null;
-                AhjoProposalsSrv.get({ 'guid': guid }).$promise.then(function (response) {
-                    if (angular.isObject(response) && angular.isArray(response.objects)) {
-                        proposals = response.objects;
-                    }
-                    else {
-                        $log.error('meetingDetailsCtrl: getProposals invalid response');
-                    }
-                }, function (error) {
-                    $log.error("meetingDetailsCtrl: get error: " + JSON.stringify(error));
-                }).finally(function () {
-                    countProposals(proposals);
-                });
+        function setPrimaryMode() {
+            var secret = self.isSecret(self.tData);
+            if (isMobile) {
+                self.pm = CONST.PRIMARYMODE.HIDDEN;
+            }
+            else if (isTablet) {
+                if (secret) {
+                    self.pm = CONST.PRIMARYMODE.SECRET;
+                }
+                else {
+                    self.pm = CONST.PRIMARYMODE.HIDDEN;
+                }
+            }
+            else if (secret) {
+                self.pm = CONST.PRIMARYMODE.SECRET;
             }
             else {
-                $log.error('meetingDetailsCtrl: getProposals parameter invalid');
+                self.pm = CONST.PRIMARYMODE.DEFAULT;
             }
+            $rootScope.$emit(CONST.MEETINGPARALLELMODE, self.pm !== CONST.PRIMARYMODE.HIDDEN);
         }
 
-        function setBlockMode(mode) {
-            self.bm = mode;
+        function setSecondaryMode(mode) {
+            self.sm = mode;
         }
 
-        function setLowerBlockMode(mode) {
-            self.lbm = mode;
+        function checkMode() {
+            if (self.bm === CONST.BLOCKMODE.PRIMARY) {
+                setBlockMode(CONST.BLOCKMODE.DEFAULT);
+            }
+            setPrimaryMode();
         }
 
         function setData(topic) {
@@ -91,9 +86,10 @@ angular.module('dashboard')
             self.secondaryUrl = null;
             self.primaryUrl = null;
             self.selData = null;
+            self.header = null;
 
-            if (self.lbm !== CONST.LOWERBLOCKMODE.PROPOSALS && self.lbm !== CONST.LOWERBLOCKMODE.REMARK) {
-                setLowerBlockMode(CONST.LOWERBLOCKMODE.PROPOSALS);
+            if (self.sm !== CONST.SECONDARYMODE.PROPOSALS && self.sm !== CONST.SECONDARYMODE.REMARK) {
+                setSecondaryMode(CONST.SECONDARYMODE.PROPOSALS);
             }
 
             if (angular.isObject(topic)) {
@@ -114,15 +110,7 @@ angular.module('dashboard')
                 self.dData = ListData.createDecisionList({ 'header': 'STR_DECISION_HISTORY', 'title': topic.topicTitle }, topic.decision);
                 self.amData = ListData.createAdditionalMaterialList({ 'header': 'STR_ADDITIONAL_MATERIAL', 'title': topic.topicTitle }, topic.additionalMaterial);
 
-                if (isMobile) {
-                    getProposals(topic.topicGuid);
-                }
-            }
-        }
-
-        function checkMode() {
-            if (!isMobile && self.bm === CONST.BLOCKMODE.PRIMARY) {
-                setBlockMode(CONST.BLOCKMODE.DEFAULT);
+                checkMode();
             }
         }
 
@@ -133,9 +121,14 @@ angular.module('dashboard')
         }
 
         function attachmentSelected(attachment) {
-            setLowerBlockMode(CONST.LOWERBLOCKMODE.ATTACHMENTS);
+            setSecondaryMode(CONST.SECONDARYMODE.ATTACHMENTS);
             if (angular.isObject(attachment)) {
-                self.secondaryUrl = attachment.link ? attachment.link : {};
+                if (!Utils.isAttConf(attachment) && isMobile) {
+                    Utils.openNewWin(attachment.link);
+                }
+                else {
+                    self.secondaryUrl = attachment.link;
+                }
                 self.secondaryAtt = attachment;
             }
             resetUnsaved();
@@ -143,18 +136,29 @@ angular.module('dashboard')
         }
 
         function additionalMaterialSelected(material) {
-            setLowerBlockMode(CONST.LOWERBLOCKMODE.MATERIALS);
+            setSecondaryMode(CONST.SECONDARYMODE.MATERIALS);
             if (angular.isObject(material)) {
-                self.secondaryUrl = material.link ? material.link : {};
+                if (!Utils.isAttConf(material) && isMobile) {
+                    Utils.openNewWin(material.link);
+                }
+                else {
+                    self.secondaryUrl = material.link;
+                }
             }
             resetUnsaved();
             checkMode();
         }
 
         function decisionSelected(decision) {
-            setLowerBlockMode(CONST.LOWERBLOCKMODE.MATERIALS);
+            setSecondaryMode(CONST.SECONDARYMODE.MATERIALS);
             if (angular.isObject(decision)) {
-                self.secondaryUrl = decision.link ? decision.link : {};
+
+                if (!Utils.isAttConf(decision) && isMobile) {
+                    Utils.openNewWin(decision.link);
+                }
+                else {
+                    self.secondaryUrl = decision.link;
+                }
             }
             resetUnsaved();
             checkMode();
@@ -168,18 +172,22 @@ angular.module('dashboard')
             setBlockMode((self.bm === CONST.BLOCKMODE.PRIMARY || self.bm === CONST.BLOCKMODE.SECONDARY) ? CONST.BLOCKMODE.DEFAULT : CONST.BLOCKMODE.SECONDARY);
         };
 
-        self.attachmentClicked = function () {
-            setLowerBlockMode(CONST.LOWERBLOCKMODE.ATTACHMENTS);
-
-            if (isMobile) {
-                StorageSrv.setKey(CONST.KEY.SELECTION_DATA, [self.aData, self.amData, self.dData]);
-                $state.go(CONST.APPSTATE.LIST);
+        self.presentationClicked = function (data) {
+            self.selData = null;
+            if (self.isSecret(data)) {
+                setSecondaryMode(CONST.SECONDARYMODE.SECRET);
             }
             else {
-                var data = [self.aData, self.amData, self.dData];
-                if (!angular.equals(self.selData, data)) {
-                    self.selData = data;
-                }
+                Utils.openNewWin(data.link);
+            }
+        };
+
+        self.attachmentClicked = function () {
+            setSecondaryMode(CONST.SECONDARYMODE.ATTACHMENTS);
+
+            var data = [self.aData, self.amData, self.dData];
+            if (!angular.equals(self.selData, data)) {
+                self.selData = data;
             }
             resetUnsaved();
             checkMode();
@@ -200,20 +208,14 @@ angular.module('dashboard')
 
         self.proposalsClicked = function () {
             self.selData = null;
-            setLowerBlockMode(CONST.LOWERBLOCKMODE.PROPOSALS);
-            if (isMobile) {
-                $state.go(CONST.APPSTATE.LISTPROPOSALS);
-            }
+            setSecondaryMode(CONST.SECONDARYMODE.PROPOSALS);
             resetUnsaved();
             checkMode();
         };
 
         self.remarkClicked = function () {
             self.selData = null;
-            setLowerBlockMode(CONST.LOWERBLOCKMODE.REMARK);
-            if (isMobile) {
-                $state.go(CONST.APPSTATE.REMARK);
-            }
+            setSecondaryMode(CONST.SECONDARYMODE.REMARK);
             resetUnsaved();
             checkMode();
         };
@@ -276,6 +278,7 @@ angular.module('dashboard')
         });
 
         setBlockMode(CONST.BLOCKMODE.DEFAULT);
-        setLowerBlockMode(CONST.LOWERBLOCKMODE.PROPOSALS);
+        setPrimaryMode();
+        setSecondaryMode(CONST.SECONDARYMODE.PROPOSALS);
         setData(StorageSrv.getKey(CONST.KEY.TOPIC));
     }]);

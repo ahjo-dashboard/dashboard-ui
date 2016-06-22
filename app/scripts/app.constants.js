@@ -16,6 +16,7 @@ angular.module('dashboard')
         'REMARKISUNSAVED': 'REMARKISUNSAVED',
         'PROPOSALDELETED': 'PROPOSALDELETED',
         'UNSAVEMEETINGDDATA': 'UNSAVEMEETINGDDATA',
+        'MEETINGPARALLELMODE': 'MEETINGPARALLELMODE',
         'POLLINGTIMEOUT' : 10000,
         'NOTFOUND' : -1,
         'ID': 'id',
@@ -24,11 +25,17 @@ angular.module('dashboard')
             PRIMARY: 1,
             SECONDARY: 2
         },
-        'LOWERBLOCKMODE': {
+        'PRIMARYMODE': {
+            DEFAULT: 'DEFAULT',
+            SECRET: 'SECRET',
+            HIDDEN: 'HIDDEN'
+        },
+        'SECONDARYMODE': {
             PROPOSALS: 'PROPOSALS',
             ATTACHMENTS: 'ATTACHMENTS',
             MATERIALS: 'MATERIALS',
-            REMARK: 'REMARK'
+            REMARK: 'REMARK',
+            SECRET: 'SECRET'
         },
         'HOMEMODE': {
             ALL: 0,

@@ -23,6 +23,7 @@ angular.module('dashboard')
         self.chairman = false;
         self.loading = true;
         self.hasUnsavedData = false;
+        self.parallelModeActive = false;
         self.unsavedConfig = { title: 'STR_CONFIRM', text: 'STR_WARNING_UNSAVED', yes: 'STR_CONTINUE' };
         var meetingItem = StorageSrv.getKey(CONST.KEY.MEETING_ITEM);
         self.isMobile = $rootScope.isMobile;
@@ -269,7 +270,12 @@ angular.module('dashboard')
             self.hasUnsavedData = hasUnsaved ? true : false;
         });
 
+        var modeWatcher = $rootScope.$on(CONST.MEETINGPARALLELMODE, function (event, active) {
+            self.parallelModeActive = active ? true : false;
+        });
+
         $scope.$on('$destroy', unsavedWatcher);
+        $scope.$on('$destroy', modeWatcher);
 
         $scope.$on('$destroy', function () {
             $log.debug("meetingStatusCtrl: DESTROY");
