@@ -173,8 +173,8 @@ angular.module('dashboard')
         };
 
         self.presentationClicked = function (data) {
-            self.selData = null;
             if (self.isSecret(data)) {
+                self.selData = null;
                 setSecondaryMode(CONST.SECONDARYMODE.SECRET);
             }
             else {
