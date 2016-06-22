@@ -34,7 +34,7 @@
             </div>
             <h4 ng-if='!msc.loading' class="list-group-item ng-class:[msc.mtgStatusClass(msc.meeting)]" translate translate-cloak>{{msc.stringId(msc.meeting)}}</h4>
 
-            <div class="db-list-group-item ng-class:[{'active': (msc.isSelected(topic) && !msc.isMobile)}]" style="overflow: hidden;"
+            <div class="list-group-item ng-class:[{'db-opt-bg db-font-clr-white': (msc.isSelected(topic) && !msc.isMobile)}]" style="overflow: hidden;"
                 ng-repeat="topic in msc.meeting.topicList track by $index">
                 <div class="db-flex" db-confirm confirm-enabled="msc.hasUnsavedData" confirm-config="msc.unsavedConfig" ng-click="msc.topicSelected(topic)">
                     <div class="db-min-width-22 db-center-v">
