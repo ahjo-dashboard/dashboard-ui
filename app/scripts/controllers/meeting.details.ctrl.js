@@ -12,7 +12,7 @@
  * Controller of the dashboard
  */
 angular.module('dashboard')
-    .controller('meetingDetailsCtrl', ['$log', 'AhjoMeetingSrv', '$rootScope', '$scope', '$state', 'CONST', 'StorageSrv', 'AttachmentData', 'ListData', 'PROPS', 'Utils', function ($log, AhjoMeetingSrv, $rootScope, $scope, $state, CONST, StorageSrv, AttachmentData, ListData, PROPS, Utils) {
+    .controller('meetingDetailsCtrl', ['$log', 'AhjoMeetingSrv', '$rootScope', '$scope', '$state', 'CONST', 'StorageSrv', 'AttachmentData', 'ListData', 'PROPS', 'Utils', '$timeout', function ($log, AhjoMeetingSrv, $rootScope, $scope, $state, CONST, StorageSrv, AttachmentData, ListData, PROPS, Utils, $timeout) {
         $log.debug("meetingDetailsCtrl: CONTROLLER");
         var self = this;
         var isMobile = $rootScope.isMobile;
@@ -68,7 +68,9 @@ angular.module('dashboard')
         }
 
         function setSecondaryMode(mode) {
-            self.sm = mode;
+            $timeout(function () {
+                self.sm = mode;
+            }, 0);
         }
 
         function checkMode() {
@@ -121,12 +123,13 @@ angular.module('dashboard')
         }
 
         function attachmentSelected(attachment) {
-            setSecondaryMode(CONST.SECONDARYMODE.ATTACHMENTS);
             if (angular.isObject(attachment)) {
-                if (!Utils.isAttConf(attachment) && isMobile) {
+                if (!Utils.isAttConf(attachment) && (isMobile || isTablet)) {
                     Utils.openNewWin(attachment.link);
                 }
                 else {
+                    setSecondaryMode(CONST.SECONDARYMODE.ATTACHMENTS);
+                    self.selData = null;
                     self.secondaryUrl = attachment.link;
                 }
                 self.secondaryAtt = attachment;
@@ -136,12 +139,13 @@ angular.module('dashboard')
         }
 
         function additionalMaterialSelected(material) {
-            setSecondaryMode(CONST.SECONDARYMODE.MATERIALS);
             if (angular.isObject(material)) {
-                if (!Utils.isAttConf(material) && isMobile) {
+                if (!Utils.isAttConf(material) && (isMobile || isTablet)) {
                     Utils.openNewWin(material.link);
                 }
                 else {
+                    setSecondaryMode(CONST.SECONDARYMODE.MATERIALS);
+                    self.selData = null;
                     self.secondaryUrl = material.link;
                 }
             }
@@ -150,13 +154,14 @@ angular.module('dashboard')
         }
 
         function decisionSelected(decision) {
-            setSecondaryMode(CONST.SECONDARYMODE.MATERIALS);
             if (angular.isObject(decision)) {
 
-                if (!Utils.isAttConf(decision) && isMobile) {
+                if (!Utils.isAttConf(decision) && (isMobile || isTablet)) {
                     Utils.openNewWin(decision.link);
                 }
                 else {
+                    setSecondaryMode(CONST.SECONDARYMODE.MATERIALS);
+                    self.selData = null;
                     self.secondaryUrl = decision.link;
                 }
             }
@@ -203,7 +208,6 @@ angular.module('dashboard')
             else if (self.dData.objects.indexOf(data) > CONST.NOTFOUND) {
                 decisionSelected(data);
             }
-            self.selData = null;
         };
 
         self.proposalsClicked = function () {
