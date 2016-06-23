@@ -162,11 +162,23 @@ angular.module('dashboard')
                     }, CONST.POLLINGTIMEOUT);
 
                     if (proposalEvents.length) {
+                        var concated = proposalEvents;
+
+                        if (angular.isObject(self.meeting) && angular.isArray(self.meeting.topicList)) {
+                            angular.forEach(concated, function (e) {
+                                angular.forEach(self.meeting.topicList, function (t) {
+                                    if (angular.isObject(e) && angular.isObject(t) && angular.equals(e.proposal.topicGuid, t.topicGuid)) {
+                                        t.includePublishedRemark = true;
+                                    }
+                                }, this);
+                            }, this);
+                        }
+
                         var events = angular.copy(StorageSrv.getKey(CONST.KEY.PROPOSAL_EVENT_ARRAY));
                         if (angular.isArray(events)) {
-                            var concated = events.concat(proposalEvents);
-                            StorageSrv.setKey(CONST.KEY.PROPOSAL_EVENT_ARRAY, concated);
+                            concated = events.concat(proposalEvents);
                         }
+                        StorageSrv.setKey(CONST.KEY.PROPOSAL_EVENT_ARRAY, concated);
                     }
                     if (deleteEvents.length) {
                         $rootScope.$emit(CONST.PROPOSALDELETED, { deleted: deleteEvents });
