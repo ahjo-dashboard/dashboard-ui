@@ -98,10 +98,10 @@ angular.module('dashboard', [
         $rootScope.isIe = Utils.isUaIe($window.navigator.userAgent);
         $rootScope.isEdge = Utils.isUAEdge($window.navigator.userAgent);
         $rootScope.isMobile = Utils.isClientMobile();
-        $rootScope.isTooltips = !$rootScope.isMobile;
+        $rootScope.isTablet = Utils.isUaMobile();
+        $rootScope.isTooltips = !$rootScope.isMobile && !$rootScope.isTablet;
         console.log("app.run: IE=" + $rootScope.isIe + "  Edge=" + $rootScope.isEdge + " Mobile=" + $rootScope.isMobile + " Tooltips=" + $rootScope.isTooltips);
         $rootScope.parallelMode = false;
-        $rootScope.isTablet = Utils.isUaMobile();
 
         // Confirmation for tab/browser closing
         $rootScope.txtConfirmCloseApp = '';

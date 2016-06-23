@@ -15,7 +15,7 @@ angular.module('dashboard')
     .controller('meetingDetailsCtrl', ['$log', 'AhjoMeetingSrv', '$rootScope', '$scope', '$state', 'CONST', 'StorageSrv', 'AttachmentData', 'ListData', 'PROPS', 'Utils', '$timeout', function ($log, AhjoMeetingSrv, $rootScope, $scope, $state, CONST, StorageSrv, AttachmentData, ListData, PROPS, Utils, $timeout) {
         $log.debug("meetingDetailsCtrl: CONTROLLER");
         var self = this;
-        var isMobile = $rootScope.isMobile;
+        self.isMobile = $rootScope.isMobile;
         var isTablet = $rootScope.isTablet;
         self.primaryUrl = null;
         self.secondaryUrl = null;
@@ -42,12 +42,12 @@ angular.module('dashboard')
         self.remarkIsUnsaved = false;
 
         function setBlockMode(mode) {
-            self.bm = isMobile ? CONST.BLOCKMODE.SECONDARY : mode;
+            self.bm = self.isMobile ? CONST.BLOCKMODE.SECONDARY : mode;
         }
 
         function setPrimaryMode() {
             var secret = self.isSecret(self.tData);
-            if (isMobile) {
+            if (self.isMobile) {
                 self.pm = CONST.PRIMARYMODE.HIDDEN;
             }
             else if (isTablet) {
@@ -124,7 +124,7 @@ angular.module('dashboard')
 
         function attachmentSelected(attachment) {
             if (angular.isObject(attachment)) {
-                if (!Utils.isAttConf(attachment) && (isMobile || isTablet)) {
+                if (!Utils.isAttConf(attachment) && (self.isMobile || isTablet)) {
                     Utils.openNewWin(attachment.link);
                 }
                 else {
@@ -140,7 +140,7 @@ angular.module('dashboard')
 
         function additionalMaterialSelected(material) {
             if (angular.isObject(material)) {
-                if (!Utils.isAttConf(material) && (isMobile || isTablet)) {
+                if (!Utils.isAttConf(material) && (self.isMobile || isTablet)) {
                     Utils.openNewWin(material.link);
                 }
                 else {
@@ -156,7 +156,7 @@ angular.module('dashboard')
         function decisionSelected(decision) {
             if (angular.isObject(decision)) {
 
-                if (!Utils.isAttConf(decision) && (isMobile || isTablet)) {
+                if (!Utils.isAttConf(decision) && (self.isMobile || isTablet)) {
                     Utils.openNewWin(decision.link);
                 }
                 else {
