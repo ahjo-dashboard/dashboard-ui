@@ -9,7 +9,7 @@
         <button type="button" class="btn db-btn-prim glyphicon glyphicon-info-sign disabled" ng-click="">
         </button>
         <button type="button" class="btn db-btn-prim glyphicon ng-class:[{'glyphicon-resize-vertical':parallelMode},{'glyphicon-resize-horizontal':!parallelMode}]"
-            ng-click="msc.toggleParallelMode()">
+            ng-click="msc.toggleParallelMode()" ng-disabled="!msc.parallelModeActive">
         </button>
     </div>
 
@@ -23,21 +23,19 @@
     <div class="ad-page-content">
         <ul class="list-group">
 
-            <li class="list-group-item db-prim-bg">
+            <div class="db-list-group-item-prim">
                 <h4 class="db-margin-10-bottom">{{msc.uiName}}</h4>
                 <h5> {{msc.uiRole}}</h5>
-            </li>
-
-            <li class="list-group-item db-nopadding">
-                <uib-progressbar ng-if='msc.loading' class="col-xs-12 progress-striped active" type="info">
+            </div>
+            <div ng-if='msc.loading' class="list-group-item">
+                <uib-progressbar class="progress-striped active db-no-margin" type="info">
                     <span translate translate-cloak>STR_LOADING_DATA</span>
                 </uib-progressbar>
-                <div ng-if='!msc.loading' class="db-badge ng-class: [msc.mtgStatusClass(msc.meeting)]">
-                    <h3 translate translate-cloak>{{msc.stringId(msc.meeting)}}</h3>
-                </div>
-            </li>
+            </div>
+            <h4 ng-if='!msc.loading' class="list-group-item ng-class:[msc.mtgStatusClass(msc.meeting)]" translate translate-cloak>{{msc.stringId(msc.meeting)}}</h4>
 
-            <li class="list-group-item ng-class:[{'db-opt-bg': (msc.isSelected(topic) && !msc.isMobile)}]" style="overflow: hidden;" ng-repeat="topic in msc.meeting.topicList track by $index">
+            <div class="list-group-item ng-class:[{'db-opt-bg db-font-clr-white': (msc.isSelected(topic) && !msc.isMobile)}]" style="overflow: hidden;"
+                ng-repeat="topic in msc.meeting.topicList track by $index">
                 <div class="db-flex" db-confirm confirm-enabled="msc.hasUnsavedData" confirm-config="msc.unsavedConfig" ng-click="msc.topicSelected(topic)">
                     <div class="db-min-width-22 db-center-v">
                         <div class="db-iconwrapper">
@@ -54,7 +52,7 @@
                         {{topic.topicreference}} {{topic.topicTitle}}
                     </h5>
                 </div>
-            </li>
+            </div>
         </ul>
     </div>
 

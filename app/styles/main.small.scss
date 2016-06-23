@@ -18,15 +18,23 @@ $db-color-danger: #d9534f;
 
 // GENERIC DECLARATION START
 .db-btn-small {
-    min-width: 80px;
-    max-width: 80px;
+    width: 80px !important;
+    font-size: 1.0em !important;
 }
 
 .db-btn-big {
-    min-width: 160px;
-    max-width: 160px;
+    width: 160px !important;
+    font-size: 1.0em !important;
 }
 // GENERIC DECLARATION END
+
+// BLOCK DECLARATION START
+.db-block {
+    .db-block-content {
+        padding: 1px;
+    }
+}
+// BLOCK DECLARATION END
 
     #device {
         min-width: 768px;

@@ -27,12 +27,9 @@
 
     <div class="ad-page-content">
 
-        <div class="db-block-hdr db-prim-bg">
-            <h4 class="db-title" ng-cloak>{{c.item.Name}}</h4>
-        </div>
-
-        <div class="db-badge ng-class:[c.statusStyle(c.item.Status)]">
-            <b translate translate-cloak>{{c.statusStrId(c.item.Status)}}</b>
+        <div class="list-group db-margin-1-btm">
+            <h4 class="db-list-group-item-prim" ng-cloak>{{c.item.Name}}</h4>
+            <h4 class="list-group-item ng-class:[c.statusStyle(c.item.Status)]" translate translate-cloak>{{c.statusStrId(c.item.Status)}}</h4>
         </div>
 
         <div class="ad-page-container">
@@ -84,8 +81,7 @@
 
             <br>
 
-            <uib-alert type="warning" tooltip-enable="isTooltips" uib-tooltip="{{c.item.Comment}}"
-                tooltip-placement="bottom-left">
+            <uib-alert type="warning" tooltip-enable="isTooltips" uib-tooltip="{{c.item.Comment}}" tooltip-placement="bottom-left">
                 <h5>
                     <span translate translate-cloak>STR_SENDER_COMMENT</span>
                 </h5>

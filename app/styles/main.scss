@@ -11,27 +11,24 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 /* Extra small devices (phones, less than 768px) */
 /* No media query since this is the default in Bootstrap */
 
-$long-delay: 600ms;
-
-$db-color-303F9F: #303F9F;
-$db-color-303F9F-lighten: lighten($db-color-303F9F, 10%);
+$db-color-opt: #303F9F;
+$db-color-opt-lighten: lighten($db-color-opt, 10%);
 $db-color-3F51B5: #3F51B5;
-$db-color-C5CAE9: #C5CAE9;
+$db-color-sel: #C5CAE9;
 $db-color-white: #FFFFFF;
-$db-color-448AFF: #448AFF;
+$db-color-prim: #448AFF;
 $db-color-dark: #212121;
-$db-color-727272: #727272;
-$db-color-B6B6B6: #B6B6B6;
+$db-color-grey: #727272;
+$db-color-light-gray: #B6B6B6;
 
 $appbgcolor: $db-color-white;
 $font-color-body: $db-color-dark;
-$headingBgColor: $db-color-448AFF;
+$headingBgColor: $db-color-prim;
 
 $default-font-size: 1.2em;
 $font-weight-600: 600;
 $font-weight-700: 700;
 $tablist-tabborder-width: 2px;
-$list-bg-color: $appbgcolor;
 $db-page-margin: 10px;
 
 $btn-radius: 6px;
@@ -89,22 +86,32 @@ iframe {
     min-width: 22px;
 }
 
-.db-font-clr {
+.db-font-clr-white {
+    color: $db-color-white !important;
+}
+
+.db-font-clr-dark {
     color: $db-color-dark !important;
 }
 
 .db-opt-clr {
-    color: $db-color-303F9F !important;
+    color: $db-color-opt !important;
 }
 
 .db-prim-bg {
-    background-color: $db-color-448AFF !important;
-    color: $db-color-white;
+    background-color: $db-color-prim !important;
+}
+
+.db-prim-brd {
+    border-color: $db-color-prim !important;
 }
 
 .db-opt-bg {
-    background-color: $db-color-303F9F !important;
-    color: $db-color-white;
+    background-color: $db-color-opt !important;
+}
+
+.db-opt-brd {
+    border-color: $db-color-opt !important;
 }
 
 .db-transparent {
@@ -116,11 +123,11 @@ iframe {
 }
 
 .db-margin-05 {
-    margin: 0.5vh;
+    margin: 0.5vh !important;
 }
 
 .db-margin-10-right {
-    margin-right: 1.0vh;
+    margin-right: 1.0vh !important;
 }
 
 .db-margin-05-hor {
@@ -133,8 +140,8 @@ iframe {
     margin-right: 1.0vh !important;
 }
 
-.db-margin-10-bottom {
-    margin-bottom: 1.0vh !important;
+.db-margin-1-btm {
+    margin-bottom: 1px !important;
 }
 
 .db-margin-05-top {
@@ -155,6 +162,15 @@ iframe {
 
 .db-padding-10 {
     padding: 1.0vh !important;
+}
+
+.db-padding-15 {
+    padding: 1.5vh !important;
+}
+
+.db-padding-15-hor {
+    padding-left: 1.5vh !important;
+    padding-right: 1.5vh !important;
 }
 
 .db-padding-05-ver {
@@ -195,6 +211,12 @@ iframe {
     flex-wrap: wrap;
 }
 
+.db-truncate {
+    text-overflow: ellipsis !important;
+    overflow: hidden !important;
+    white-space: nowrap !important;
+}
+
 .db-flex-area {
     flex: 1;
 }
@@ -226,27 +248,6 @@ iframe {
     justify-content: center;
 }
 
-.db-brd-middle {
-    border-top-left-radius: 0 !important;
-    border-bottom-left-radius: 0 !important;
-    border-top-right-radius: 0 !important;
-    border-bottom-right-radius: 0 !important;
-}
-
-.db-brd-top-left {
-    border-top-left-radius: $btn-radius !important;
-    border-bottom-left-radius: 0 !important;
-    border-top-right-radius: 0 !important;
-    border-bottom-right-radius: 0 !important;
-}
-
-.db-brd-top-right {
-    border-top-right-radius: $btn-radius !important;
-    border-top-left-radius: 0 !important;
-    border-bottom-left-radius: 0 !important;
-    border-bottom-right-radius: 0 !important;
-}
-
 .db-brd-bottom {
     border-top-right-radius: 0 !important;
     border-top-left-radius: 0 !important;
@@ -261,7 +262,7 @@ iframe {
     border-bottom-right-radius: 0 !important;
 }
 
-.db-brd {
+.db-brd-all {
     border-top-right-radius: $btn-radius !important;
     border-top-left-radius: $btn-radius !important;
     border-bottom-left-radius: $btn-radius !important;
@@ -269,24 +270,37 @@ iframe {
 }
 
 .db-btn-small {
-    @extend .btn-block;
-    min-height: 30px;
-    max-height: 40px;
+    height: 36px;
     overflow: hidden;
+    font-size: $default-font-size !important;
 }
 
 .db-btn-big {
-    @extend .btn-block;
-    min-height: 30px;
-    max-height: 40px;
+    height: 36px;
     overflow: hidden;
+    font-size: $default-font-size !important;
 }
 
 .db-btn-x-big {
-    @extend .btn-block;
     min-height: 60px;
     max-height: 80px;
     overflow: hidden;
+    font-size: $default-font-size !important;
+    border-width: 0 !important;
+}
+
+.db-list-group-item-prim {
+    @extend .list-group-item;
+    color: $db-color-white;
+    background-color: $db-color-prim !important;
+}
+
+.db-list-group-item {
+    @extend .list-group-item;
+}
+
+.db-list-group-item.active {
+    background-color: $db-color-opt !important;
 }
 
 .db-fs-11 {
@@ -296,7 +310,6 @@ iframe {
 .db-fs-12 {
     font-size: 1.2em !important;
 }
-
 // GENERIC DECLARATION END
 
 // BLOCK DECLARATION START
@@ -308,38 +321,28 @@ $blockOpenFlex: 9;
     flex: 1;
     overflow: hidden;
 
-    .db-block-hdr {
-        flex-wrap: wrap;
-    }
-
-     .db-block-hdr-item-md {
-        width: 160px;
-        overflow: hidden;
-    }
-
     .db-block-content {
         flex: 1;
         overflow: hidden;
         display: flex;
         flex-direction: column;
-
-        padding: 1px;
     }
 
     .db-block-border {
         border-style: solid;
-        border-width: $tablist-tabborder-width;
-        border-color: $db-color-448AFF;
+        border-width: thin;
+        border-color: $db-color-prim;
     }
 }
 
 .db-block-open {
-    flex: 17;
+    flex: 1 1;
 }
 
 .db-block-close {
-    flex: 1;
-    min-height: 42px !important;
+    flex: 0 0;
+    min-height: 50px !important;
+    background-color: $db-color-prim;
 }
 // BLOCK DECLARATION END
 
@@ -352,11 +355,11 @@ $blockOpenFlex: 9;
     }
 
     .db-prop-hdr {
-        background-color: $db-color-448AFF;
+        background-color: $db-color-prim;
         color: $db-color-white;
         display: flex;
         flex-direction: column;
-        padding: 0.5vh 1.0vh;
+        padding: 0.5vh;
         border-top-left-radius: $btn-radius;
         border-top-right-radius: $btn-radius;
         position: relative;
@@ -383,7 +386,7 @@ $blockOpenFlex: 9;
     }
 
     .list-group-item {
-        border-color: $db-color-B6B6B6;
+        border-color: $db-color-light-gray;
     }
 
     .list-group-item:first-child {
@@ -443,7 +446,7 @@ $blockOpenFlex: 9;
     }
 
     .rmk-header {
-        background-color: $db-color-448AFF;
+        background-color: $db-color-prim;
         position: relative;
 
         h1, h2, h3, h4, h5 {
@@ -502,7 +505,7 @@ body {
     $header-height: 60px; // this is for moving main content
 
     $focusedColor: #3e7ebe;
-    $headingL2BgColor: $db-color-448AFF;
+    $headingL2BgColor: $db-color-prim;
     $borderColor: $focusedColor;
 
     padding: 0;
@@ -613,16 +616,15 @@ body {
     }
 
     .db-btn-prim {
-        @include button-variant($font-color-header, $db-color-448AFF, $db-color-448AFF);
-        color: $db-color-white;
+        @include button-variant($db-color-white, $db-color-prim, $db-color-prim);
     }
 
     .db-btn-prim.active {
-        @include button-variant($font-color-header, $db-color-303F9F-lighten, $db-color-303F9F-lighten);
+        @include button-variant($db-color-white, $db-color-opt-lighten, $db-color-opt-lighten);
     }
 
     .db-btn-opt {
-        @include button-variant($font-color-header, $db-color-303F9F, $db-color-303F9F);
+        @include button-variant($db-color-white, $db-color-opt, $db-color-opt);
     }
 
     .db-btn-opt-dummy {
@@ -632,31 +634,31 @@ body {
     }
 
     .db-btn-sel {
-        @include button-variant($font-color-header, $db-color-C5CAE9, $db-color-C5CAE9);
+        @include button-variant($db-color-white, $db-color-sel, $db-color-sel);
         color: $db-color-dark;
     }
 
     .db-btn-sel.active {
-        @include button-variant($font-color-header, $db-color-303F9F-lighten, $db-color-303F9F-lighten);
+        @include button-variant($db-color-white, $db-color-opt-lighten, $db-color-opt-lighten);
     }
 
     .db-btn-sel[disabled],
     .db-btn-sel[disabled]:hover,
     .db-btn-sel[disabled]:focus,
     .db-btn-sel[disabled]:active {
-        color: $font-color-header; // Disable hover effect for disabled button
+        color: $db-color-white; // Disable hover effect for disabled button
     }
 
     .db-btn-succ {
-        @include button-variant($font-color-header, $db-color-success, $db-color-success);
+        @include button-variant($db-color-white, $db-color-success, $db-color-success);
     }
 
    .db-btn-dang {
-        @include button-variant($font-color-header, $db-color-danger, $db-color-danger);
+        @include button-variant($db-color-white, $db-color-danger, $db-color-danger);
     }
 
     .db-btn-warn {
-        @include button-variant($font-color-header, $db-color-warning, $db-color-warning);
+        @include button-variant($db-color-white, $db-color-warning, $db-color-warning);
     }
 
     .db-btn-md {
@@ -664,10 +666,10 @@ body {
         width: 10vw;
     }
 
-    $btn-colhea-color-bg: darken($db-color-448AFF, 10%);
+    $btn-colhea-color-bg: darken($db-color-prim, 10%);
     $btn-colhea-color-border: $btn-colhea-color-bg;
     .db-btn-colhea {
-        @include button-variant($font-color-header, $btn-colhea-color-bg, $btn-colhea-color-border);
+        @include button-variant($db-color-white, $btn-colhea-color-bg, $btn-colhea-color-border);
         border-radius: 0;
         border-style: none !important;
     }
@@ -767,7 +769,7 @@ body {
         padding-right: $header-leftmargin;
 
         border: 0;
-        background-color: $db-color-448AFF;
+        background-color: $db-color-prim;
         height: $header-height;
 
         // Not set for all element types because that would mix desktop layout which uses cols while mobile doesn't.
@@ -901,7 +903,7 @@ body {
     .db-item-border {
         border-style: solid;
         border-width: $tablist-tabborder-width;
-        border-color: $db-color-B6B6B6;
+        border-color: $db-color-light-gray;
         border-radius: $btn-radius;
         margin: 1vh 1vw;
     }
