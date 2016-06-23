@@ -108,7 +108,8 @@ angular.module('dashboard')
             REMARKUPDATED: 'PublishRemarkUpdateEvent',
             REMARKDELETED: 'RemarkDeletedEvent',
             MEETINGSTATECHANGED: 'MeetingStateChangedEvent',
-            TOPICSTATECHANGED: 'TopicStateChangedEvent'
+            TOPICSTATECHANGED: 'TopicStateChangedEvent',
+            TOPICEDITED: 'TopicEditedEvent'
         },
         'TOPICSTATUS': {
             NONE: { value: 0, iconPath: "", icon_conf: "", icon_props: "", icon_conf_prop: "", stringId: '' },

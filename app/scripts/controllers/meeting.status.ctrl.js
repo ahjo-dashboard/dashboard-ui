@@ -79,6 +79,42 @@ angular.module('dashboard')
             }
         }
 
+        function topicEdited(event, mtgGuid, mtg) {
+            if (!angular.isObject(event) || !angular.isObject(event.topic) || !angular.isObject(mtg) || !mtgGuid || !angular.isArray(mtg.topicList)) {
+                $log.error("meetingStatusCtrl.topicEdited: ignored, bad args");
+                return;
+            }
+
+            if (!angular.equals(event.meetingID, mtgGuid)) {
+                $log.debug("meetingStatusCtrl.topicEdited: ignored, not this meeting, event.meetingID=" + event.meetingID + " meeting=" + mtg.meetingGuid);
+                return;
+            }
+
+            var eTopic = event.topic;
+            $log.debug("meetingStatusCtrl: topicEdited, topicGuid=" + eTopic.topicGuid + " sequencenumber=" + eTopic.sequencenumber + " mtgGuid=" + mtgGuid);
+
+            var matchInd;
+            for (var i = 0; !angular.isDefined(matchInd) && i < mtg.topicList.length; i++) {
+                if (angular.equals(eTopic.topicGuid, mtg.topicList[i].topicGuid)) {
+                    matchInd = i;
+                    $log.debug("meetingStatusCtrl: merging, topicGuid exists at matchInd=" + matchInd);
+                    angular.merge(mtg.topicList[matchInd], eTopic);
+                }
+            }
+
+            if (!angular.isDefined(matchInd)) {
+                $log.debug("meetingStatusCtrl: adding a new topic sequenceNumber=" + eTopic.sequencenumber + " topicList.length=" + mtg.topicList.length);
+                var ind = eTopic.sequencenumber - 1;
+                if ((ind >= 0) && (ind < mtg.topicList.length)) {
+                    mtg.topicList.splice(ind, 0, eTopic);
+                } else {
+                    $log.error("meetingStatusCtrl: ignored, bad sequencenumber");
+                }
+            }
+
+
+        }
+
         function getEvents() {
             if (lastEventId && meetingItem.meetingGuid) {
                 var proposalEvents = [];
@@ -107,6 +143,9 @@ angular.module('dashboard')
                                     break;
                                 case CONST.MTGEVENT.TOPICSTATECHANGED:
                                     topicStatusChanged(event);
+                                    break;
+                                case CONST.MTGEVENT.TOPICEDITED:
+                                    topicEdited(event, meetingItem.meetingGuid, self.meeting);
                                     break;
                                 default:
                                     $log.error("meetingStatusCtrl: unsupported typeName: " + event.typeName);
@@ -139,12 +178,15 @@ angular.module('dashboard')
             }
         }
 
-        if (meetingItem) {
+        function getMeeting(meetingItem) {
+            $log.debug("meetingStatusCtrl.getMeeting");
             self.uiName = meetingItem.agencyName + ' ' + meetingItem.name;
-            self.meeting = null;
             selectedTopicGuid = null;
             StorageSrv.deleteKey(CONST.KEY.TOPIC);
+            $timeout.cancel(pollingTimer);
+            pollingTimer = null;
             AhjoMeetingSrv.getMeeting(meetingItem.meetingGuid).then(function (response) {
+                $log.debug("meetingStatusCtrl.getMeeting: done");
                 if (angular.isObject(response) && angular.isArray(response.objects) && response.objects.length) {
                     self.meeting = response.objects[0];
                     if (angular.isObject(self.meeting) && angular.isArray(self.meeting.topicList)) {
@@ -178,9 +220,6 @@ angular.module('dashboard')
             }).finally(function () {
                 self.loading = false;
             });
-        }
-        else {
-            $state.go(CONST.APPSTATE.HOME, { menu: CONST.MENU.CLOSED });
         }
 
         self.goHome = function () {
@@ -281,5 +320,12 @@ angular.module('dashboard')
             $log.debug("meetingStatusCtrl: DESTROY");
             $timeout.cancel(pollingTimer);
         });
+
+        if (meetingItem) {
+            getMeeting(meetingItem);
+        }
+        else {
+            $state.go(CONST.APPSTATE.HOME, { menu: CONST.MENU.CLOSED });
+        }
 
     }]);
