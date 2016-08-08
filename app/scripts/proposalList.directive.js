@@ -48,9 +48,10 @@ angular.module('dashboard')
             self.published = PROPS.PUBLISHED;
             self.isMobile = $rootScope.isMobile;
             self.isAllOpen = false;
-            self.btnText = null;
+            self.btnText = 'STR_OPEN_ALL';
             self.unsavedCount = 0;
             self.loading = false;
+            self.publishedCount = 0;
 
             function setTypes() {
                 $log.debug("dbProposalList: setTypes");
@@ -67,12 +68,12 @@ angular.module('dashboard')
 
             function countProposals(proposals) {
                 var drafts = 0;
-                var published = 0;
+                self.publishedCount = 0;
 
                 angular.forEach(proposals, function (prop) {
                     if (angular.isObject(prop)) {
                         if (prop.isPublished === PROPS.PUBLISHED.YES) {
-                            published++;
+                            self.publishedCount++;
                         }
                         else if (prop.isPublished === PROPS.PUBLISHED.NO) {
                             drafts++;
@@ -80,7 +81,7 @@ angular.module('dashboard')
                     }
                 });
 
-                $rootScope.$emit(PROPS.COUNT, { 'drafts': drafts, 'published': published });
+                $rootScope.$emit(PROPS.COUNT, { 'drafts': drafts, 'published': self.publishedCount });
             }
 
             function checkProposals(proposals) {
@@ -319,6 +320,8 @@ angular.module('dashboard')
                     isCityCouncil = data.topic.isCityCouncil;
                     getProposals(topicGuid);
                     setTypes();
+                    self.isAllOpen = false;
+                    self.btnText = 'STR_OPEN_ALL';
                 }
 
             }, true);
@@ -355,8 +358,6 @@ angular.module('dashboard')
             $scope.$on('$destroy', function () {
                 $log.debug("dbProposalList: DESTROY");
             });
-
-            self.btnText = self.isAllOpen ? 'STR_CLOSE_ALL' : 'STR_OPEN_ALL';
         }];
 
         return {

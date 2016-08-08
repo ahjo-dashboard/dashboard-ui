@@ -32,7 +32,7 @@
             <h4 ng-if="c.isMobile" class="db-prop-hdr-text" translate translate-cloak>STR_PUBLIC_PROPOSALS</h4>
             <h5 ng-if="!c.isMobile" class="db-prop-hdr-text" translate translate-cloak>STR_PUBLIC_PROPOSALS</h5>
 
-            <button type="button" class="btn btn-block db-btn-sel db-btn-big" ng-click="c.toggleAll()"><span translate translate-cloak>{{c.btnText}}</span></button>
+            <button type="button" class="btn btn-block db-btn-sel db-btn-big" ng-disabled="!c.publishedCount" ng-click="c.toggleAll()"><span translate translate-cloak>{{c.btnText}}</span></button>
 
         </div>
 
