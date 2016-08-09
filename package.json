@@ -6,6 +6,7 @@
     "autoprefixer": "^6.3.5",
     "compass": "^0.1.1",
     "grunt": "^1.0.1",
+    "grunt-angular-architecture-graph": "^0.2.6",
     "grunt-angular-templates": "^1.0.4",
     "grunt-autoprefixer": "^3.0.3",
     "grunt-concurrent": "^2.1.0",
