@@ -61,6 +61,14 @@ angular.module('dashboard')
                             previousIsPublished = proposal.isPublished;
                         }
                     }
+
+                    // missing person name will be replaced by last name and first name
+                    if (!self.uiProposal.personName) {
+                        var lastName = self.uiProposal.lastName ? self.uiProposal.lastName : '';
+                        var space = lastName ? ' ' : '';
+                        var firstName = self.uiProposal.firstName ? self.uiProposal.firstName : '';
+                        self.uiProposal.personName = lastName + space + firstName;
+                    }
                 }
             }
 

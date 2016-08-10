@@ -39,6 +39,7 @@ $badge-font-color-dark: $font-color-body;
 $db-color-success: #5cb85c;
 $db-color-danger: #d9534f;
 $db-color-warning: #f0ad4e;
+$db-color-info: #5BC0DE;
 
 // GENERIC DECLARATION START
 .browsehappy {
@@ -549,6 +550,14 @@ body {
         color: $db-color-success !important;
         span {
             color: $db-color-success !important;
+        }
+    }
+
+    .db-duplicate {
+        padding-left: 0 !important;
+        color: $db-color-info !important;
+        span {
+            color: $db-color-info !important;
         }
     }
 
