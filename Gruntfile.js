@@ -33,6 +33,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-postcss');
     grunt.loadNpmTasks('grunt-exec');
     grunt.loadNpmTasks('grunt-contrib-compress');
+    grunt.loadNpmTasks('grunt-angular-architecture-graph');
 
     // Define the configuration for all the tasks
     grunt.initConfig({
@@ -540,6 +541,16 @@ module.exports = function (grunt) {
               {cwd: appConfig.dist, src: ['**/*'], expand: true, dest: '', dot: 'true'}
             ]
           }
+        },
+        angular_architecture_graph: {
+            diagram: {
+                files: {
+                    // "PATH/TO/OUTPUT/FILES": ["PATH/TO/YOUR/FILES/*.js"]
+                    "architecture": [
+                        "<%= yeoman.app %>/scripts/{,*/}*.js"
+                    ]
+                }
+            }
         }
 
     });

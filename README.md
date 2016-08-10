@@ -37,6 +37,10 @@ Implemented using Javascript, Angular 1 and Bootstrap 3.
 
 * `grunt test` will run the unit tests using karma.
 
+##### Generating documentation
+
+* `grunt build_architecture_graph` Generates dependency diagrams using graphviz. For issues on installing the grap generator tool see https://github.com/carlo-colombo/angular-modules-graph
+
 #### Known issues
 
 * If a local `grunt` is not found in project folder run `npm i grunt` there (`npm i` should have done it)
