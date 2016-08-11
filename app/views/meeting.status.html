@@ -1,7 +1,7 @@
 <div class="ad-page">
 
     <div ng-if="!msc.isMobile" class="ad-page-header db-center-v">
-        <button type="button" class="btn db-btn-prim glyphicon glyphicon-th-list" ng-click="closeMenu()">
+        <button type="button" class="btn db-btn-prim glyphicon glyphicon-th-list" ng-click="closeMenu()" tooltip-enable="isTooltips" uib-tooltip="{{'STR_INFO_MENUBTN' | translate}}" tooltip-placement="right">
         </button>
         <button db-confirm confirm-enabled="msc.hasUnsavedData" confirm-config="msc.unsavedConfig" type="button" class="btn db-btn-prim glyphicon glyphicon-home"
             ng-click="msc.goHome()">
