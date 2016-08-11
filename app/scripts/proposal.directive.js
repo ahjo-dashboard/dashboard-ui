@@ -18,11 +18,6 @@ angular.module('dashboard')
             EDIT: 'EDIT'
         }
     })
-    .filter('unsafe', function ($sce) {
-        return function (val) {
-            return $sce.trustAsHtml(val);
-        };
-    })
     .directive('dbProposal', [function () {
 
         var controller = ['$log', '$scope', 'PROPS', 'PROP', '$rootScope', 'AhjoProposalsSrv', 'StorageSrv', 'CONST', '$timeout', 'Utils', function ($log, $scope, PROPS, PROP, $rootScope, AhjoProposalsSrv, StorageSrv, CONST, $timeout, Utils) {
