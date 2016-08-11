@@ -60,6 +60,19 @@ iframe {
     flex: 1;
 }
 
+// Globally center modal dialogs
+.modal-dialog {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.modal-content {
+    margin: 0 auto;
+}
+// End of globally center modal dialogs
+
 .no-content {
     display: flex;
     align-items: center;
