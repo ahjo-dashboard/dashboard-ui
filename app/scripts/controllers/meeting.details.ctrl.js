@@ -22,11 +22,11 @@ angular.module('dashboard')
         self.error = null;
         self.topic = null;
         self.bms = CONST.BLOCKMODE;
-        self.bm = CONST.BLOCKMODE.DEFAULT;
+        self.bm = CONST.BLOCKMODE.DEFAULT; // State of view, which block(s) displayed
         self.pms = CONST.PRIMARYMODE;
-        self.pm = CONST.PRIMARYMODE.DEFAULT;
+        self.pm = CONST.PRIMARYMODE.DEFAULT; // State of primary view block
         self.sms = CONST.SECONDARYMODE;
-        self.sm = CONST.SECONDARYMODE.PROPOSALS;
+        self.sm = CONST.SECONDARYMODE.PROPOSALS; // State of secondary view block
         self.header = null;
         $rootScope.menu = CONST.MENU.FULL;
         self.selData = null;

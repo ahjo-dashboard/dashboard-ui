@@ -73,6 +73,7 @@
     "STR_TOPIC_ABORTED": "Käsittely keskeytetty",
     "STR_TOPIC_CLOSED": "Käsitelty",
     "STR_TOPIC_UNKNOWN": "Tilatieto puuttuu",
+    "STR_INFO_MENUBTN": "Muuta sivuvalikon kokoa",
     "STR_PRESENTATION": "Esitys",
     "STR_TOPIC_DOWNLOAD": "Lataa esitys",
     "STR_PROPOSALS": "Ehdotukset",
