@@ -75,6 +75,11 @@ iframe {
     overflow: auto;
 }
 
+.db-textarea {
+    resize: none;
+    width: 100%;
+}
+
 .db-underline {
     text-decoration: underline;
 }
