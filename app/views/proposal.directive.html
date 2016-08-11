@@ -30,7 +30,7 @@
 
             <div ng-if="c.mode !== c.modes.COLLAPSED" class="db-flex-right db-flex-area">
                 <button ng-if="c.uiProposal.isOwnProposal && (c.mode !== c.modes.EDIT)" class="btn btn-danger db-btn-big db-margin-2" db-confirm
-                    confirm-config="c.deleteConfig" ng-click="c.remove()"><span translate translate-cloak>STR_DELETE</span></button>
+                    confirm-config="c.uiProposal.isPublished ? c.deletePublicConfic : c.deleteConfig" ng-click="c.remove()"><span translate translate-cloak>STR_DELETE</span></button>
                 <button ng-if="c.uiProposal.isOwnProposal && !c.uiProposal.isPublished && (c.mode !== c.modes.EDIT)" class="btn btn-success db-btn-big db-margin-2"
                     db-confirm confirm-config="c.publishConfig" ng-click="c.send()"><span translate translate-cloak>STR_PUBLISH</span></button>
                 <button ng-if="c.uiProposal.isOwnProposal && !c.uiProposal.isPublished && (c.mode !== c.modes.EDIT)" class="btn btn-primary db-btn-big db-margin-2"

@@ -32,6 +32,7 @@ angular.module('dashboard')
             self.updating = false;
             self.publishConfig = { title: 'STR_CONFIRM', text: 'STR_CNFM_SEND_PROP', yes: 'STR_PUBLISH' };
             self.deleteConfig = { title: 'STR_CONFIRM', text: 'STR_CNFM_DEL_PROP', yes: 'STR_DELETE' };
+            self.deletePublicConfic = { title: 'STR_CONFIRM', text: 'STR_CNFM_DEL_PUBLIC_PROP', yes: 'STR_DELETE' };
             var previousIsPublished = null;
             var createDisabled = false;
 
