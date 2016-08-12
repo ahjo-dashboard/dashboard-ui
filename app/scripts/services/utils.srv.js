@@ -98,6 +98,7 @@ angular.module('dashboard')
 
         Utils.openNewWin = function (aUrl) {
             if (angular.isString(aUrl) && aUrl.length) {
+                $log.debug("Utils.openNewWin: " + aUrl);
                 $window.open(aUrl, '_blank');
             }
             else {

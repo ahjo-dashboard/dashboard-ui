@@ -12,11 +12,12 @@
  * Controller of the dashboard
  */
 var app = angular.module('dashboard');
-app.controller('signDetailsCtrl', function ($log, $state, $rootScope, ENV, CONST, StorageSrv, ListData, SigningUtil) {
+app.controller('signDetailsCtrl', function ($log, $state, $rootScope, ENV, CONST, StorageSrv, ListData, SigningUtil, Utils) {
     $rootScope.menu = CONST.MENU.FULL;
 
     var self = this;
     self.isMobile = $rootScope.isMobile;
+    self.isTablet = $rootScope.isTablet;
     self.bms = CONST.BLOCKMODE;
     self.bm = CONST.BLOCKMODE.DEFAULT;
 
@@ -194,6 +195,10 @@ app.controller('signDetailsCtrl', function ($log, $state, $rootScope, ENV, CONST
         });
         // $log.debug("signDetailsCtrl.isLoadingSec: " + res);
         return res;
+    };
+
+    self.openDoc = function (btnModelItem) {
+        Utils.openNewWin(btnModelItem.url);
     };
 
     initCtrl(self.btnModel, self.item, self.item.Status);
