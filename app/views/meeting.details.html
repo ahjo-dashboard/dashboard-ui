@@ -17,7 +17,7 @@
                 <button ng-if="menuClosed()" type="button" class="btn db-btn-prim db-btn-small db-brd-all db-margin-2" ng-click="openMenu()" tooltip-enable="isTooltips" uib-tooltip="{{'STR_INFO_MENUBTN' | translate}}" tooltip-placement="right">
                     <span class="glyphicon glyphicon-th-list"></span>
                 </button>
-                <button ng-if="menuClosed()" type="button" class="btn db-btn-prim db-btn-small db-brd-all db-margin-2" ng-click="c.toggleParallelMode()">
+                <button ng-if="menuClosed()" type="button" class="btn db-btn-prim db-btn-small db-brd-all db-margin-2" ng-click="c.toggleParallelMode()" tooltip-enable="isTooltips" uib-tooltip="{{parallelMode ? 'STR_INFO_VIEW_VERT' : 'STR_INFO_VIEW_HORIZ' | translate}}" tooltip-placement="right">
                     <span class="glyphicon ng-class:[{'glyphicon-resize-vertical':parallelMode},{'glyphicon-resize-horizontal':!parallelMode}]"></span>
                 </button>
                 <button type="button" class="btn db-btn-prim db-btn-small db-brd-all db-margin-2" ng-disabled="parallelMode" ng-click="c.primaryClicked()">

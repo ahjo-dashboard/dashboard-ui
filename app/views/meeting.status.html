@@ -4,12 +4,12 @@
         <button type="button" class="btn db-btn-prim glyphicon glyphicon-th-list" ng-click="closeMenu()" tooltip-enable="isTooltips" uib-tooltip="{{'STR_INFO_MENUBTN' | translate}}" tooltip-placement="right">
         </button>
         <button db-confirm confirm-enabled="msc.hasUnsavedData" confirm-config="msc.unsavedConfig" type="button" class="btn db-btn-prim glyphicon glyphicon-home"
-            ng-click="msc.goHome()">
+            ng-click="msc.goHome()" tooltip-enable="isTooltips" uib-tooltip="{{'STR_INFO_HOMEBTN' | translate}}" tooltip-placement="right">
         </button>
         <button type="button" class="btn db-btn-prim glyphicon glyphicon-info-sign disabled" ng-click="">
         </button>
         <button type="button" class="btn db-btn-prim glyphicon ng-class:[{'glyphicon-resize-vertical':parallelMode},{'glyphicon-resize-horizontal':!parallelMode}]"
-            ng-click="msc.toggleParallelMode()" ng-disabled="!msc.parallelModeActive">
+            ng-click="msc.toggleParallelMode()" ng-disabled="!msc.parallelModeActive" tooltip-enable="isTooltips" uib-tooltip="{{parallelMode ? 'STR_INFO_VIEW_VERT' : 'STR_INFO_VIEW_HORIZ' | translate}}" tooltip-placement="right">
         </button>
     </div>
 
