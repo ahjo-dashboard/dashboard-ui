@@ -1,10 +1,13 @@
 <div class="source-list-modal">
     <div class="db-no-border modal-header db-confirm-header">
-        <h3 ng-if="title" class="modal-title" translate translate-cloak>{{title}}</h3>
+        <h3 ng-if="title" class="modal-title">{{title | translate}}</h3>
     </div>
-    <div ng-if="text" class="modal-body" translate translate-cloak>{{text}}</div>
+    <div ng-if="text" class="modal-body">{{text | translate}}</div>
+    <div ng-if="option.text" class="checkbox modal-body">
+        <label><input type="checkbox" ng-model="option.value">{{option.text | translate}}</label>
+    </div>
     <div class="db-no-border modal-footer">
-        <button class="btn btn-success" type="button" ng-click="clicked(true)" translate translate-cloak>{{yes}}</button>
-        <button class="btn btn-danger" type="button" ng-click="clicked(false)" translate translate-cloak>{{no}}</button>
+        <button class="btn btn-success db-min-width-120" type="button" ng-click="clicked(true)">{{yes | translate}}</button>
+        <button class="btn btn-danger db-min-width-120" type="button" ng-click="clicked(false)">{{no | translate}}</button>
     </div>
 </div>

@@ -103,6 +103,7 @@
     "STR_NO": "Ei",
     "STR_COPY": "Kopioi julkaisemattomaksi",
     "STR_CNFM_DEL_PROP": "Haluatko poistaa julkaisemattoman ehdotuksen?",
+    "STR_CNFM_DEL_PROP_OPT": "Poista myös julkaistu ehdotus",
     "STR_CNFM_DEL_PUBLIC_PROP": "Haluatko poistaa julkaistun ehdotuksen?",
     "STR_CNFM_SEND_PROP": "Haluatko julkaista ehdotuksen?",
     "STR_CNFM_COPY_PROP": "Luo ehdotuksesta uusi julkaisematon kopio?",

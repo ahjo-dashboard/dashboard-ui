@@ -24,17 +24,20 @@ angular.module('dashboard')
                         $scope.text = 'STR_CNFM_TEXT';
                         $scope.yes = 'STR_CONFIRM';
                         $scope.no = 'STR_CANCEL';
+                        $scope.option = { text: null, value: false };
 
-                        if (config instanceof Object) {
+                        if (angular.isObject(config)) {
                             conf = config; // Directive sets config.isOpen true/false when modal is open/closed
                             $scope.title = config.title === undefined ? $scope.title : config.title;
                             $scope.text = config.text === undefined ? $scope.text : config.text;
                             $scope.yes = config.yes === undefined ? $scope.yes : config.yes;
                             $scope.no = config.no === undefined ? $scope.no : config.no;
+                            $scope.option.text = config.optionText === undefined ? null : config.optionText;
+                            $scope.option.value = config.optionValue === true ? true : false;
                         }
                         $scope.clicked = function (ok) {
                             if (ok) {
-                                $uibModalInstance.close();
+                                $uibModalInstance.close($scope.option);
                             }
                             else {
                                 $uibModalInstance.dismiss();
@@ -48,15 +51,14 @@ angular.module('dashboard')
                     }
                 });
 
-                modalInstance.result.then(function () {
-                    $scope.ngClick();
+                modalInstance.result.then(function (val) {
+                    $scope.ngClick({ data: val });
                 }, function () {
                     $scope.confirmReject();
                 });
 
                 modalInstance.opened.then(function () {
                     if (angular.isObject(conf)) {
-                        console.log(conf);
                         conf.isOpen = true;
                     }
                     $rootScope.$emit(CONST.CONFIRMACTIVE, { 'open': true });

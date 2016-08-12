@@ -30,9 +30,8 @@ angular.module('dashboard')
             self.status = PROPS.PUBLISHED;
             self.editedText = null;
             self.updating = false;
-            self.publishConfig = { title: 'STR_CONFIRM', text: 'STR_CNFM_SEND_PROP', yes: 'STR_PUBLISH' };
-            self.deleteConfig = { title: 'STR_CONFIRM', text: 'STR_CNFM_DEL_PROP', yes: 'STR_DELETE' };
-            self.deletePublicConfic = { title: 'STR_CONFIRM', text: 'STR_CNFM_DEL_PUBLIC_PROP', yes: 'STR_DELETE' };
+            self.publishConfig = { title: 'STR_CONFIRM', text: 'STR_CNFM_SEND_PROP', yes: 'STR_YES' };
+            self.deleteConfig = { title: 'STR_CONFIRM', text: 'STR_CNFM_DEL_PROP', yes: 'STR_YES' };
             var previousIsPublished = null;
             var createDisabled = false;
 
@@ -65,6 +64,17 @@ angular.module('dashboard')
                         var firstName = self.uiProposal.firstName ? self.uiProposal.firstName : '';
                         self.uiProposal.personName = lastName + space + firstName;
                     }
+
+                    // delete confirm dialog setup
+                    if (self.uiProposal.isPublished) {
+                        self.deleteConfig = { title: 'STR_CONFIRM', text: 'STR_CNFM_DEL_PUBLIC_PROP', yes: 'STR_YES' };
+                    }
+                    else if (self.uiProposal.isPublishedIcon) {
+                        self.deleteConfig = { title: 'STR_CONFIRM', text: 'STR_CNFM_DEL_PROP', yes: 'STR_YES', optionText: 'STR_CNFM_DEL_PROP_OPT' };
+                    }
+                    else {
+                        self.deleteConfig = { title: 'STR_CONFIRM', text: 'STR_CNFM_DEL_PROP', yes: 'STR_YES' };
+                    }
                 }
             }
 
@@ -91,6 +101,9 @@ angular.module('dashboard')
                             else if (copy.isPublished === PROPS.PUBLISHED.YES) {
                                 $scope.proposal.isPublishedIcon = PROPS.PUBLISHED.YES;
                                 angular.merge(copy, response.Data);
+                                // proposal guid copy needs to be copied her
+                                // otherwise  puhblished version deletion is not working
+                                $scope.proposal.proposalGuidCopy = copy.proposalGuid;
                                 $scope.onAdd({ data: { proposal: copy } });
                                 $rootScope.successInfo('STR_PUBLISH_SUCCESS');
                             }
@@ -199,8 +212,11 @@ angular.module('dashboard')
                 $rootScope.$emit(PROPS.UPDATED, { sender: $scope.proposal });
             };
 
-            self.remove = function () {
+            self.remove = function (data) {
                 deleteProposal($scope.proposal);
+                if (angular.isObject(data) && data.value === true) {
+                    $rootScope.$emit(PROPS.REMOVE, { guid: $scope.proposal.proposalGuidCopy });
+                }
             };
 
             self.accept = function () {
@@ -260,7 +276,19 @@ angular.module('dashboard')
                 }
             });
 
+            var removeWatcher = $rootScope.$on(PROPS.REMOVE, function (event, data) {
+                if (angular.isObject(data)) {
+                    if (angular.equals(data.guid, $scope.proposal.proposalGuid)) {
+                        deleteProposal($scope.proposal);
+                    }
+                }
+                else {
+                    $log.error('dbProposal: removeWatcher missing data');
+                }
+            });
+
             $scope.$on('$destroy', watcher);
+            $scope.$on('$destroy', removeWatcher);
 
             $scope.$on('$destroy', function () {
                 $log.debug("dbProposal: DESTROY");

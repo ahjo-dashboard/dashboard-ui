@@ -31,7 +31,8 @@ angular.module('dashboard')
             ],
             'TOGGLE': 'PROPS.TOGGLE',
             'COUNT': 'PROPS.COUNT',
-            'UPDATED': 'PROPS.UPDATED'
+            'UPDATED': 'PROPS.UPDATED',
+            'REMOVE': 'PROPS.REMOVE'
         };
     })
     .directive('dbProposalList', [function () {
