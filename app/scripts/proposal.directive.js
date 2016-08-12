@@ -101,8 +101,8 @@ angular.module('dashboard')
                             else if (copy.isPublished === PROPS.PUBLISHED.YES) {
                                 $scope.proposal.isPublishedIcon = PROPS.PUBLISHED.YES;
                                 angular.merge(copy, response.Data);
-                                // proposal guid copy needs to be copied her
-                                // otherwise  puhblished version deletion is not working
+                                // proposal guid copy needs to be copied
+                                // otherwise published version deletion is not working
                                 $scope.proposal.proposalGuidCopy = copy.proposalGuid;
                                 $scope.onAdd({ data: { proposal: copy } });
                                 $rootScope.successInfo('STR_PUBLISH_SUCCESS');
