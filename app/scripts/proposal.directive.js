@@ -120,7 +120,9 @@ angular.module('dashboard')
                 if (angular.isObject(proposal)) {
                     if (proposal.isPublished === PROPS.PUBLISHED.NO || proposal.isPublished === PROPS.PUBLISHED.YES) {
                         self.updating = true;
-                        AhjoProposalsSrv.delete(proposal).$promise.then(function (response) {
+                        var copy = angular.copy(proposal);
+                        copy.text = null;
+                        AhjoProposalsSrv.delete(copy).$promise.then(function (response) {
                             $log.debug("dbProposal: delete then: " + JSON.stringify(response));
                             if (angular.isObject(response) && angular.isObject(response.Data)) {
                                 $scope.onRemove({ data: { 'proposal': response.Data } });
