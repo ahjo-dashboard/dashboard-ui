@@ -335,6 +335,13 @@ angular.module('dashboard')
                 }
             });
 
+            $scope.$watch(function () {
+                return StorageSrv.getKey(CONST.KEY.TOPIC);
+            }, function () {
+                // reset unsaved count when topic is changed
+                self.unsavedCount = 0;
+            });
+
             var proposalWatcher = $rootScope.$on(PROPS.UPDATED, function (event, data) {
                 if (angular.isObject(data) && angular.isObject(data.sender)) {
                     if (self.proposals.indexOf(data.sender) >= 0) {
