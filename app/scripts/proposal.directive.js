@@ -66,7 +66,7 @@ angular.module('dashboard')
                     }
 
                     // delete confirm dialog setup
-                    if (self.uiProposal.isPublished) {
+                    if (self.uiProposal.isPublished === PROPS.PUBLISHED.YES) {
                         self.deleteConfig = { title: 'STR_CONFIRM', text: 'STR_CNFM_DEL_PUBLIC_PROP', yes: 'STR_YES' };
                     }
                     else if (self.uiProposal.isPublishedIcon) {
@@ -83,28 +83,27 @@ angular.module('dashboard')
                 if (angular.isObject(proposal)) {
                     self.updating = true;
 
-                    var copy = angular.copy(proposal);
-                    if (copy.isPublished === null) {
-                        copy.isPublished = PROPS.PUBLISHED.NO;
+                    if (proposal.isPublished === null) {
+                        proposal.isPublished = PROPS.PUBLISHED.NO;
                     }
-                    else if (copy.isPublished === PROPS.PUBLISHED.NO) {
-                        copy.isPublished = PROPS.PUBLISHED.YES;
+                    else if (proposal.isPublished === PROPS.PUBLISHED.NO) {
+                        proposal.isPublished = PROPS.PUBLISHED.YES;
                     }
 
-                    AhjoProposalsSrv.post(copy).$promise.then(function (response) {
+                    AhjoProposalsSrv.post(proposal).$promise.then(function (response) {
                         $log.debug("dbProposal: post then: " + JSON.stringify(response));
                         if (angular.isObject(response) && angular.isObject(response.Data)) {
-                            if (copy.isPublished === PROPS.PUBLISHED.NO) {
+                            if (proposal.isPublished === PROPS.PUBLISHED.NO) {
                                 angular.merge($scope.proposal, response.Data);
                                 $rootScope.successInfo('STR_SAVE_SUCCESS');
                             }
-                            else if (copy.isPublished === PROPS.PUBLISHED.YES) {
+                            else if (proposal.isPublished === PROPS.PUBLISHED.YES) {
                                 $scope.proposal.isPublishedIcon = PROPS.PUBLISHED.YES;
-                                angular.merge(copy, response.Data);
+                                angular.merge(proposal, response.Data);
                                 // proposal guid copy needs to be copied
                                 // otherwise published version deletion is not working
-                                $scope.proposal.proposalGuidCopy = copy.proposalGuid;
-                                $scope.onAdd({ data: { proposal: copy } });
+                                $scope.proposal.proposalGuidCopy = proposal.proposalGuid;
+                                $scope.onAdd({ data: { proposal: proposal } });
                                 $rootScope.successInfo('STR_PUBLISH_SUCCESS');
                             }
                             else {
@@ -116,9 +115,14 @@ angular.module('dashboard')
                         }
                     }, function (error) {
                         $log.error("dbProposal: post error: " + JSON.stringify(error));
+                        proposal.saveAndPublish = false;
                         $rootScope.failedInfo('STR_SAVE_FAILED');
                     }).finally(function () {
                         $log.debug("dbProposal: post finally: ");
+                        if (proposal.saveAndPublish) {
+                            proposal.saveAndPublish = false;
+                            self.saveOrPublishProposal();
+                        }
                         self.updating = false;
                         $rootScope.$emit(PROPS.UPDATED, { sender: $scope.proposal });
                     });
@@ -177,6 +181,19 @@ angular.module('dashboard')
                 }
             }
 
+            self.saveOrPublishProposal = function() {
+                var copy = angular.copy($scope.proposal);
+                postProposal(copy);
+            };
+
+            self.saveAndPublishProposal = function () {
+                $scope.proposal.text = self.editedText ? self.editedText : '';
+                var copy = angular.copy($scope.proposal);
+                copy.saveAndPublish = true;
+                postProposal(copy);
+                setMode(PROP.MODE.OPEN);
+            };
+
             self.typeText = function (value) {
                 var obj = Utils.objWithVal(PROPS.TYPE, 'value', value);
                 return (obj && obj.text) ? obj.text : value;
@@ -221,7 +238,7 @@ angular.module('dashboard')
 
             self.accept = function () {
                 $scope.proposal.text = self.editedText ? self.editedText : '';
-                postProposal($scope.proposal);
+                self.saveOrPublishProposal();
                 setMode(PROP.MODE.OPEN);
             };
 
@@ -235,7 +252,12 @@ angular.module('dashboard')
             };
 
             self.send = function () {
-                postProposal($scope.proposal);
+                if ($scope.proposal.isPublished === null) {
+                    self.saveAndPublishProposal();
+                }
+                else {
+                    self.saveOrPublishProposal();
+                }
             };
 
             setProposal($scope.proposal);
