@@ -22,6 +22,7 @@ angular.module('dashboard')
             self.topic = null;
             self.loading = false;
             self.isUnsaved = false;
+            self.isMobile = $rootScope.isMobile;
 
             function setUnsaved(unsaved) {
                 if (unsaved !== self.isUnsaved) {
