@@ -17,7 +17,7 @@ angular.module('dashboard')
             restrict: 'A',
             replace: 'true',
             link: function (scope, element/*, attrs*/) {
-                scope.initialHeight = scope.initialHeight || element[0].style.height;
+
                 var resize = function resize() {
                     element.css('height', element[0].scrollHeight + "px");
                 };
