@@ -323,6 +323,8 @@ angular.module('dashboard')
                     setTypes();
                     self.isAllOpen = false;
                     self.btnText = 'STR_OPEN_ALL';
+                    // reset unsaved count when topic is changed
+                    self.unsavedCount = 0;
                 }
 
             }, true);
@@ -333,13 +335,6 @@ angular.module('dashboard')
                 if (!angular.equals(events, oldEvents)) {
                     updateEvents(events);
                 }
-            });
-
-            $scope.$watch(function () {
-                return StorageSrv.getKey(CONST.KEY.TOPIC);
-            }, function () {
-                // reset unsaved count when topic is changed
-                self.unsavedCount = 0;
             });
 
             var proposalWatcher = $rootScope.$on(PROPS.UPDATED, function (event, data) {
