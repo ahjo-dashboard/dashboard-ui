@@ -1,19 +1,18 @@
-<div class="remark db-directive">
-    <div class="db-min-width-300">
-        <div class="rmk-header">
-            <span us-spinner="{radius:6, width:2, length:4}" spinner-on="c.loading"></span>
-            <h5 class="rmk-header-text" translate translate-cloak>STR_REMARK</h5>
-        </div>
+<div class="remark db-directive db-min-width-300">
+    <div class="rmk-header">
+        <span us-spinner="{radius:6, width:2, length:4}" spinner-on="c.loading"></span>
+        <h5 class="rmk-header-text" translate translate-cloak>STR_REMARK</h5>
+    </div>
 
-        <pre class="rmk-text" contenteditable="true" auto-focus ng-model="c.editorText" ng-change="c.changed()"></pre>
+    <textarea ng-if="c.isMobile" db-textarea class="db-textarea-flex db-padding-05" ng-model="c.editorText" autofocus ng-change="c.changed()"></textarea>
+    <textarea ng-if="!c.isMobile" class="db-textarea-flex db-padding-05" ng-model="c.editorText" autofocus ng-change="c.changed()"></textarea>
 
-        <div class="rmk-footer">
-            <button class="btn db-btn-prim rmk-footer-button" ng-click="c.clicked(true)" ng-disabled="c.loading || !c.isUnsaved">
+    <div class="rmk-footer">
+        <button class="btn db-btn-prim rmk-footer-button" ng-click="c.clicked(true)" ng-disabled="c.loading || !c.isUnsaved">
             <span translate translate-cloak>STR_SAVE</span>
         </button>
-            <button class="btn db-btn-warn rmk-footer-button" ng-click="c.clicked(false)" ng-disabled="c.loading || !c.isUnsaved">
+        <button class="btn db-btn-warn rmk-footer-button" ng-click="c.clicked(false)" ng-disabled="c.loading || !c.isUnsaved">
             <span translate translate-cloak>STR_CANCEL</span>
         </button>
-        </div>
     </div>
 </div>

@@ -25,10 +25,11 @@
 
         <div class="db-flex-area" uib-collapse="c.mode === c.modes.COLLAPSED">
             <!--textarea for showing updated/stored text-->
-            <textarea ng-if="c.mode === c.modes.OPEN" class="db-textarea db-margin-05-top db-padding-05" rows="10" ng-readonly="true"
-                ng-model="c.uiProposal.text"></textarea>
-                <!--textarea for editing text. changed to updated/stored when accepted-->
-            <textarea ng-if="c.mode === c.modes.EDIT" class="db-textarea db-margin-05-top db-padding-05" rows="10" ng-model="c.editedText"></textarea>
+            <textarea ng-if="c.mode === c.modes.OPEN" class="db-textarea db-margin-10-top db-padding-05" db-textarea ng-readonly="true"
+                ng-model="c.uiProposal.text" ng-click="$event.stopPropagation()"></textarea>
+            <!--textarea for editing text. changed to updated/stored when accepted-->
+            <textarea ng-if="c.mode === c.modes.EDIT" class="db-textarea db-margin-10-top db-padding-05" db-textarea ng-model="c.editedText"
+                autofocus></textarea>
 
             <div ng-if="c.mode !== c.modes.COLLAPSED" class="db-flex-right db-flex-area">
                 <button ng-if="c.uiProposal.isOwnProposal && (c.mode !== c.modes.EDIT)" class="btn btn-danger db-btn-big db-margin-2" db-confirm

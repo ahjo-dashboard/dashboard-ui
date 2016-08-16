@@ -91,6 +91,19 @@ iframe {
 .db-textarea {
     resize: none;
     width: 100%;
+    height: auto;
+    max-height: 50vh;
+}
+
+.db-textarea-flex {
+    resize: none;
+    width: 100%;
+    height: auto;
+    flex: 1;
+}
+
+.db-textarea[readonly] {
+    outline: none;
 }
 
 .db-underline {
@@ -167,8 +180,8 @@ iframe {
     margin-bottom: 1px !important;
 }
 
-.db-margin-05-top {
-    margin-top: 0.5vh;
+.db-margin-10-top {
+    margin-top: 1.0vh;
 }
 
 .db-margin-10 {
