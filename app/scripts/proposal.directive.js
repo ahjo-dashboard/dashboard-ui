@@ -28,7 +28,7 @@ angular.module('dashboard')
             self.mode = null;
             self.modes = PROP.MODE;
             self.status = PROPS.PUBLISHED;
-            self.editedText = null;
+            self.editorText = null;
             self.updating = false;
             self.publishConfig = { title: 'STR_CONFIRM', text: 'STR_CNFM_SEND_PROP', yes: 'STR_YES' };
             self.deleteConfig = { title: 'STR_CONFIRM', text: 'STR_CNFM_DEL_PROP', yes: 'STR_YES' };
@@ -41,6 +41,14 @@ angular.module('dashboard')
 
             function setMode(mode) {
                 self.mode = mode;
+                if (self.mode === PROP.MODE.OPEN) {
+                    self.editorText = self.uiProposal.text;
+                }
+                else if (self.mode === PROP.MODE.EDIT) {
+                    self.editorText = self.uiProposal.text;
+                    previousIsPublished = $scope.proposal.isPublished;
+                    $scope.proposal.isPublished = null;
+                }
             }
 
             function setProposal(proposal) {
@@ -53,7 +61,6 @@ angular.module('dashboard')
                             $timeout(function () {
                                 setMode(PROP.MODE.EDIT);
                             }, 0);
-                            previousIsPublished = proposal.isPublished;
                         }
                     }
 
@@ -125,6 +132,7 @@ angular.module('dashboard')
                         }
                         self.updating = false;
                         $rootScope.$emit(PROPS.UPDATED, { sender: $scope.proposal });
+                        setMode(PROP.MODE.COLLAPSED);
                     });
                 }
                 else {
@@ -183,13 +191,13 @@ angular.module('dashboard')
                 }
             }
 
-            self.saveOrPublishProposal = function() {
+            self.saveOrPublishProposal = function () {
                 var copy = angular.copy($scope.proposal);
                 postProposal(copy);
             };
 
             self.saveAndPublishProposal = function () {
-                $scope.proposal.text = self.editedText ? self.editedText : '';
+                $scope.proposal.text = self.editorText ? self.editorText : '';
                 var copy = angular.copy($scope.proposal);
                 copy.saveAndPublish = true;
                 postProposal(copy);
@@ -224,9 +232,6 @@ angular.module('dashboard')
             };
 
             self.edit = function () {
-                self.editedText = $scope.proposal.text;
-                previousIsPublished = $scope.proposal.isPublished;
-                $scope.proposal.isPublished = null;
                 setMode(PROP.MODE.EDIT);
                 $rootScope.$emit(PROPS.UPDATED, { sender: $scope.proposal });
             };
@@ -239,7 +244,7 @@ angular.module('dashboard')
             };
 
             self.accept = function () {
-                $scope.proposal.text = self.editedText ? self.editedText : '';
+                $scope.proposal.text = self.editorText ? self.editorText : '';
                 self.saveOrPublishProposal();
                 setMode(PROP.MODE.OPEN);
             };
