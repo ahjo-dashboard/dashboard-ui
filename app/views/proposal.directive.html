@@ -24,8 +24,8 @@
     <div class="db-flex">
 
         <div class="db-flex-area" uib-collapse="c.mode === c.modes.COLLAPSED">
-            <textarea class="db-textarea db-margin-10-top db-padding-05" msd-elastic autofocus ng-readonly="c.mode !== c.modes.EDIT"
-                ng-model="c.editorText" ng-click="c.mode !== c.modes.EDIT && $event.stopPropagation()"></textarea>
+            <textarea class="db-textarea db-margin-10-top db-padding-05" msd-elastic ng-readonly="c.mode !== c.modes.EDIT"
+                ng-model="c.editorText" focus-if="c.mode === c.modes.EDIT" ng-click="c.mode !== c.modes.EDIT && $event.stopPropagation()"></textarea>
 
             <div ng-if="c.mode !== c.modes.COLLAPSED" class="db-flex-right db-flex-area">
                 <button ng-if="c.uiProposal.isOwnProposal && (c.mode !== c.modes.EDIT)" class="btn btn-danger db-btn-big db-margin-2" db-confirm
