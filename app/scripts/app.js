@@ -21,6 +21,8 @@ angular.module('dashboard', [
     'ngSanitize',
     'ngToast',
     'angularSpinner',
+    'monospaced.elastic',
+    'focus-if',
     'pascalprecht.translate'
 ])
     .config(function ($urlRouterProvider, $stateProvider, ENV, G_APP, $logProvider, $provide, $compileProvider, $translateProvider, $httpProvider, $uibTooltipProvider) {
