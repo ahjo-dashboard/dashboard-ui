@@ -24,15 +24,15 @@
     <div class="db-flex">
 
         <div class="db-flex-area" uib-collapse="c.mode === c.modes.COLLAPSED">
-            <textarea class="db-textarea db-margin-10-top db-padding-05" msd-elastic ng-readonly="c.mode !== c.modes.EDIT"
+            <textarea class="db-textarea db-margin-10-top db-padding-05" msd-elastic autofocus ng-readonly="c.mode !== c.modes.EDIT"
                 ng-model="c.editorText" ng-click="c.mode !== c.modes.EDIT && $event.stopPropagation()"></textarea>
 
             <div ng-if="c.mode !== c.modes.COLLAPSED" class="db-flex-right db-flex-area">
                 <button ng-if="c.uiProposal.isOwnProposal && (c.mode !== c.modes.EDIT)" class="btn btn-danger db-btn-big db-margin-2" db-confirm
                     confirm-config="c.deleteConfig" ng-click="c.remove(data)"><span translate translate-cloak>STR_DELETE</span></button>
                 <button ng-if="c.uiProposal.isOwnProposal && (c.mode === c.modes.EDIT)" class="btn btn-danger db-btn-big db-margin-2" ng-click="c.cancel()"><span translate translate-cloak>STR_CANCEL</span></button>
-                <button ng-if="c.uiProposal.isOwnProposal && !c.uiProposal.isPublished" class="btn btn-success db-btn-big db-margin-2"
-                    db-confirm confirm-config="c.publishConfig" ng-click="c.send()"><span translate translate-cloak>STR_PUBLISH</span></button>
+                <button ng-if="c.uiProposal.isOwnProposal && !c.uiProposal.isPublished" class="btn btn-success db-btn-big db-margin-2" db-confirm
+                    confirm-config="c.publishConfig" ng-click="c.send()"><span translate translate-cloak>STR_PUBLISH</span></button>
                 <button ng-if="c.uiProposal.isOwnProposal && !c.uiProposal.isPublished && (c.mode !== c.modes.EDIT)" class="btn btn-primary db-btn-big db-margin-2"
                     ng-click="c.edit()"><span translate translate-cloak>STR_EDIT</span></button>
                 <button ng-if="c.uiProposal.isOwnProposal && (c.mode === c.modes.EDIT)" class="btn btn-primary db-btn-big db-margin-2" ng-click="c.accept()"><span translate translate-cloak>STR_SAVE</span></button>
