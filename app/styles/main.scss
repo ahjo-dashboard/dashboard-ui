@@ -693,18 +693,6 @@ body {
         color: $db-color-white; // Disable hover effect for disabled button
     }
 
-    .db-btn-succ {
-        @include button-variant($db-color-white, $db-color-success, $db-color-success);
-    }
-
-   .db-btn-dang {
-        @include button-variant($db-color-white, $db-color-danger, $db-color-danger);
-    }
-
-    .db-btn-warn {
-        @include button-variant($db-color-white, $db-color-warning, $db-color-warning);
-    }
-
     .db-btn-md {
         min-width: 90px;
         width: 10vw;
