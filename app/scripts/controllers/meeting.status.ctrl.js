@@ -239,7 +239,7 @@ angular.module('dashboard')
         };
 
         self.topicSelected = function (topic) {
-            if (angular.isObject(topic)) {
+            if (angular.isObject(topic) && !self.isSelected(topic)) {
                 $log.debug("meetingStatusCtrl.topicSelected: publicity=" + topic.publicity);
                 topic.userPersonGuid = self.meeting.userPersonGuid;
                 topic.isCityCouncil = self.meeting.isCityCouncil;
