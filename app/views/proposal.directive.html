@@ -1,7 +1,7 @@
-<div class="proposal db-directive db-padding-10" ng-click="(c.mode !== c.modes.EDIT) && c.toggleCollapse()">
+<div class="proposal db-directive db-padding-10">
     <span us-spinner="{radius:6, width:2, length:4}" spinner-on="c.updating"></span>
 
-    <div class="db-flex db-center-v">
+    <div class="db-flex db-center-v" ng-click="(c.mode !== c.modes.EDIT) && c.toggleCollapse()">
 
         <span class="db-margin-10-right glyphicon ng-class:{'glyphicon-minus': c.mode !== c.modes.COLLAPSED, 'glyphicon-plus': c.mode === c.modes.COLLAPSED}"
             aria-hidden="true"></span>
@@ -25,7 +25,7 @@
 
         <div class="db-flex-area" uib-collapse="c.mode === c.modes.COLLAPSED">
             <textarea class="db-textarea db-margin-10-top db-padding-05" msd-elastic ng-readonly="c.mode !== c.modes.EDIT"
-                ng-model="c.editorText" focus-if="c.mode === c.modes.EDIT" ng-click="c.mode !== c.modes.EDIT && $event.stopPropagation()"></textarea>
+                ng-model="c.editorText" focus-if="c.mode === c.modes.EDIT"></textarea>
 
             <div ng-if="c.mode !== c.modes.COLLAPSED" class="db-flex-right db-flex-area">
                 <button ng-if="c.uiProposal.isOwnProposal && (c.mode !== c.modes.EDIT)" class="btn btn-danger db-btn-big db-margin-2" db-confirm
