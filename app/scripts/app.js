@@ -83,6 +83,7 @@ angular.module('dashboard', [
             $log.debug('app.stateChangeStart: ' + next.name);// +' toParams: ' +JSON.stringify(toParams) +' fromParams: ' +JSON.stringify(fromParams));
             if (next.name === CONST.APPSTATE.HOME) {
                 StorageSrv.reset([CONST.KEY.SIGNING_RES, CONST.KEY.VISIBLE_MTGS]);
+                StorageSrv.deleteKey(CONST.KEY.TOPIC, true);
             }
         });
 

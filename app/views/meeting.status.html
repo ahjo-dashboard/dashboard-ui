@@ -1,7 +1,8 @@
 <div class="ad-page">
 
     <div ng-if="!msc.isMobile" class="ad-page-header db-center-v">
-        <button type="button" class="btn db-btn-prim glyphicon glyphicon-th-list" ng-click="closeMenu()" tooltip-enable="isTooltips" uib-tooltip="{{'STR_INFO_MENUBTN' | translate}}" tooltip-placement="right">
+        <button type="button" class="btn db-btn-prim glyphicon glyphicon-th-list" ng-click="closeMenu()" tooltip-enable="isTooltips"
+            uib-tooltip="{{'STR_INFO_MENUBTN' | translate}}" tooltip-placement="right">
         </button>
         <button db-confirm confirm-enabled="msc.hasUnsavedData" confirm-config="msc.unsavedConfig" type="button" class="btn db-btn-prim glyphicon glyphicon-home"
             ng-click="msc.goHome()" tooltip-enable="isTooltips" uib-tooltip="{{'STR_INFO_HOMEBTN' | translate}}" tooltip-placement="right">
@@ -9,7 +10,8 @@
         <button type="button" class="btn db-btn-prim glyphicon glyphicon-info-sign disabled" ng-click="">
         </button>
         <button type="button" class="btn db-btn-prim glyphicon ng-class:[{'glyphicon-resize-vertical':parallelMode},{'glyphicon-resize-horizontal':!parallelMode}]"
-            ng-click="msc.toggleParallelMode()" ng-disabled="!msc.parallelModeActive" tooltip-enable="isTooltips" uib-tooltip="{{parallelMode ? 'STR_INFO_VIEW_VERT' : 'STR_INFO_VIEW_HORIZ' | translate}}" tooltip-placement="right">
+            ng-click="msc.toggleParallelMode()" ng-disabled="!msc.parallelModeActive" tooltip-enable="isTooltips" uib-tooltip="{{parallelMode ? 'STR_INFO_VIEW_VERT' : 'STR_INFO_VIEW_HORIZ' | translate}}"
+            tooltip-placement="right">
         </button>
     </div>
 
@@ -34,9 +36,10 @@
             </div>
             <h4 ng-if='!msc.loading' class="list-group-item ng-class:[msc.mtgStatusClass(msc.meeting)]" translate translate-cloak>{{msc.stringId(msc.meeting)}}</h4>
 
-            <div class="list-group-item ng-class:[{'db-opt-bg db-font-clr-white': (msc.isSelected(topic) && !msc.isMobile)}]" style="overflow: hidden;"
-                ng-repeat="topic in msc.meeting.topicList track by $index">
-                <div class="db-flex" db-confirm confirm-enabled="msc.hasUnsavedData && !msc.isSelected(topic)" confirm-config="msc.unsavedConfig" ng-click="msc.topicSelected(topic)">
+            <div class="list-group-item ng-class:[{'db-opt-bg db-font-clr-white': (msc.isSelected(topic) && !msc.isMobile), 'db-item-disabled': !msc.canAccess(topic)}]"
+                style="overflow: hidden;" ng-repeat="topic in msc.meeting.topicList track by $index">
+                <div class="db-flex" db-confirm confirm-enabled="msc.hasUnsavedData && !msc.isSelected(topic)" confirm-config="msc.unsavedConfig"
+                    ng-click="msc.topicSelected(topic)">
                     <div class="db-min-width-22 db-center-v">
                         <div class="db-iconwrapper">
                             <img ng-src="{{msc.statusIcon(topic)}}">

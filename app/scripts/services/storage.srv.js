@@ -49,9 +49,12 @@ angular.module('dashboard')
                 }
                 return null;
             },
-            deleteKey: function (key) {
+            deleteKey: function (key, fully) {
                 if (typeof key === "string") {
                     delete data[key];
+                    if (fully) {
+                        sessionStorage.removeItem(key);
+                    }
                 }
                 else {
                     $log.error("StorageSrv: deleteKey invalid parameter");
