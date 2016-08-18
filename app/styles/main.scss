@@ -580,14 +580,6 @@ body {
         }
     }
 
-    .db-published {
-        padding-left: 0 !important; // Remove loose space in meeting.status.html icon
-        color: $db-color-success !important;
-        span {
-            color: $db-color-success !important;
-        }
-    }
-
     .db-duplicate {
         padding-left: 0 !important;
         color: $db-color-info !important;
@@ -691,18 +683,6 @@ body {
     .db-btn-sel[disabled]:focus,
     .db-btn-sel[disabled]:active {
         color: $db-color-white; // Disable hover effect for disabled button
-    }
-
-    .db-btn-succ {
-        @include button-variant($db-color-white, $db-color-success, $db-color-success);
-    }
-
-   .db-btn-dang {
-        @include button-variant($db-color-white, $db-color-danger, $db-color-danger);
-    }
-
-    .db-btn-warn {
-        @include button-variant($db-color-white, $db-color-warning, $db-color-warning);
     }
 
     .db-btn-md {
