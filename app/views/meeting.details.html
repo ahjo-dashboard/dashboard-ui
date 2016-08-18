@@ -14,10 +14,13 @@
 
             <!-- PRIMARY BLOCK HEADER -->
             <div class="btn-group db-flex-wrap db-prim-bg db-brd-top db-padding-2">
-                <button ng-if="menuClosed()" type="button" class="btn db-btn-prim db-btn-small db-brd-all db-margin-2" ng-click="openMenu()" tooltip-enable="isTooltips" uib-tooltip="{{'STR_INFO_MENUBTN' | translate}}" tooltip-placement="right">
+                <button ng-if="menuClosed()" type="button" class="btn db-btn-prim db-btn-small db-brd-all db-margin-2" ng-click="openMenu()"
+                    tooltip-enable="isTooltips" uib-tooltip="{{'STR_INFO_MENUBTN' | translate}}" tooltip-placement="right">
                     <span class="glyphicon glyphicon-th-list"></span>
                 </button>
-                <button ng-if="menuClosed()" type="button" class="btn db-btn-prim db-btn-small db-brd-all db-margin-2" ng-click="c.toggleParallelMode()" tooltip-enable="isTooltips" uib-tooltip="{{parallelMode ? 'STR_INFO_VIEW_VERT' : 'STR_INFO_VIEW_HORIZ' | translate}}" tooltip-placement="right">
+                <button ng-if="menuClosed()" type="button" class="btn db-btn-prim db-btn-small db-brd-all db-margin-2" ng-click="c.toggleParallelMode()"
+                    tooltip-enable="isTooltips" uib-tooltip="{{parallelMode ? 'STR_INFO_VIEW_VERT' : 'STR_INFO_VIEW_HORIZ' | translate}}"
+                    tooltip-placement="right">
                     <span class="glyphicon ng-class:[{'glyphicon-resize-vertical':parallelMode},{'glyphicon-resize-horizontal':!parallelMode}]"></span>
                 </button>
                 <button type="button" class="btn db-btn-prim db-btn-small db-brd-all db-margin-2" ng-disabled="parallelMode" ng-click="c.primaryClicked()">
@@ -47,28 +50,37 @@
 
             <!-- SECONDARY BLOCK HEADER -->
             <div class="db-prim-bg ng-class:[{'list-group db-no-margin db-padding-10 db-brd-all':c.isMobile},{'btn-group db-flex-wrap db-brd-top db-padding-2':!c.isMobile}]">
-                <button ng-if="menuClosed() && c.pm === c.pms.HIDDEN" type="button" class="btn db-btn-prim db-btn-small db-brd-all db-margin-2" ng-click="openMenu()" tooltip-enable="isTooltips" uib-tooltip="{{'STR_INFO_MENUBTN' | translate}}" tooltip-placement="right">
+                <button ng-if="menuClosed() && c.pm === c.pms.HIDDEN" type="button" class="btn db-btn-prim db-btn-small db-brd-all db-margin-2"
+                    ng-click="openMenu()" tooltip-enable="isTooltips" uib-tooltip="{{'STR_INFO_MENUBTN' | translate}}" tooltip-placement="right">
                     <span class="glyphicon glyphicon-th-list"></span>
                 </button>
-                <button ng-if="c.pm !== c.pms.HIDDEN" type="button" class="btn btn-block db-btn-prim db-btn-small db-brd-all ng-class:[{'db-margin-2':!c.isMobile}]" ng-disabled="parallelMode" ng-click="c.secondaryClicked()">
+                <button ng-if="c.pm !== c.pms.HIDDEN" type="button" class="btn btn-block db-btn-prim db-btn-small db-brd-all ng-class:[{'db-margin-2':!c.isMobile}]"
+                    ng-disabled="parallelMode" ng-click="c.secondaryClicked()">
                     <span class="glyphicon ng-class:[{'glyphicon-minus':c.bm === c.bms.SECONDARY},{'glyphicon-plus':c.bm !== c.bms.SECONDARY}]"></span>
                 </button>
-                <button ng-if="c.pm === c.pms.HIDDEN" type="button" class="btn btn-block db-btn-sel db-btn-big db-brd-all ng-class:[{'db-margin-2':!c.isMobile},{'active':c.sm === c.sms.SECRET}]" ng-disabled="!c.tData.link" ng-click="c.presentationClicked(c.tData)">
+                <button ng-if="c.pm === c.pms.HIDDEN" type="button" class="btn btn-block db-btn-sel db-btn-big db-brd-all ng-class:[{'db-margin-2':!c.isMobile},{'active':c.sm === c.sms.SECRET}]"
+                    ng-disabled="!c.tData.link" ng-click="c.presentationClicked(c.tData)">
                     <span translate translate-cloak>STR_PRESENTATION</span>
                 </button>
-                <button type="button" class="btn btn-block db-btn-sel db-btn-big db-brd-all ng-class:[{'active':c.sm === c.sms.ATTACHMENTS},{'db-margin-2':!c.isMobile}]" ng-disabled="!c.materialCount()" db-confirm confirm-enabled="c.hasUnsavedProposal || c.remarkIsUnsaved"
-                    confirm-config="c.unsavedConfig" ng-click="c.attachmentClicked()">
-                    <span translate translate-cloak>STR_ATTACHMENTS</span>
-                    <span class="badge ng-cloak ng-class:[{'db-font-clr-dark': c.materialCount()}]">{{c.materialCount()}}</span>
+                <button type="button" class="btn btn-block db-btn-sel db-btn-big db-brd-all ng-class:[{'active':c.sm === c.sms.ATTACHMENTS},{'db-margin-2':!c.isMobile}]"
+                    ng-disabled="!c.materialCount()" db-confirm confirm-enabled="c.hasUnsavedProposal || c.remarkIsUnsaved" confirm-config="c.unsavedConfig"
+                    ng-click="c.attachmentClicked()">
+                    <span translate translate-cloak>STR_OTHER_MATERIAL</span>
+                    <span class="badge ng-cloak ng-class:[{'db-font-clr-dark': c.materialCount()}]" tooltip-enable="isTooltips" uib-tooltip="{{'STR_ALL_ATT_COUNT' | translate}}" tooltip-placement="bottom">
+                        {{c.materialCount()}}
+                        </span>
                 </button>
-                <button type="button" class="btn btn-block db-btn-sel db-btn-big db-brd-all ng-class:[{'active':c.sm === c.sms.PROPOSALS},{'db-margin-2':!c.isMobile}]" db-confirm confirm-enabled="c.hasUnsavedProposal || c.remarkIsUnsaved" confirm-config="c.unsavedConfig"
-                    ng-click="c.proposalsClicked()">
+                <button type="button" class="btn btn-block db-btn-sel db-btn-big db-brd-all ng-class:[{'active':c.sm === c.sms.PROPOSALS},{'db-margin-2':!c.isMobile}]"
+                    db-confirm confirm-enabled="c.hasUnsavedProposal || c.remarkIsUnsaved" confirm-config="c.unsavedConfig" ng-click="c.proposalsClicked()">
                     <span translate translate-cloak>STR_PROPOSALS</span>
-                    <span ng-if="c.propCount" class="badge ng-cloak ng-class:[{'db-font-clr-dark': c.propCount}]">{{c.propCount}}</span>
+                    <span ng-if="c.propCount" class="badge ng-cloak ng-class:[{'db-font-clr-dark': c.propCount}]" tooltip-enable="isTooltips"
+                    uib-tooltip="{{'STR_PROP_PUB_COUNT' | translate}}" tooltip-placement="bottom">
+                        {{c.propCount}}
+                    </span>
                     <span ng-show="c.topic.isModified" class="glyphicon glyphicon-bell db-newprops" aria-hidden="true"></span>
                 </button>
-                <button type="button" class="btn btn-block db-btn-sel db-btn-big db-brd-all ng-class:[{'active':c.sm === c.sms.REMARK},{'db-margin-2':!c.isMobile}]" db-confirm confirm-enabled="c.hasUnsavedProposal || c.remarkIsUnsaved" confirm-config="c.unsavedConfig"
-                    ng-click="c.remarkClicked()">
+                <button type="button" class="btn btn-block db-btn-sel db-btn-big db-brd-all ng-class:[{'active':c.sm === c.sms.REMARK},{'db-margin-2':!c.isMobile}]"
+                    db-confirm confirm-enabled="c.hasUnsavedProposal || c.remarkIsUnsaved" confirm-config="c.unsavedConfig" ng-click="c.remarkClicked()">
                     <span translate translate-cloak>STR_REMARK</span>
                 </button>
             </div>
