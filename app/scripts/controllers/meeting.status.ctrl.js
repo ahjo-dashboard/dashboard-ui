@@ -217,7 +217,7 @@ angular.module('dashboard')
                             if (angular.isObject(t)) {
                                 t.userPersonGuid = self.meeting.userPersonGuid;
                                 t.isCityCouncil = self.meeting.isCityCouncil;
-                                t.canReadClassifiedDocuments = self.meeting.canReadClassifiedDocuments;
+                                t.showClassifiedDocs = self.meeting.showClassifiedDocs;
                             }
                         }, this);
 
@@ -228,7 +228,7 @@ angular.module('dashboard')
                             }
                             else {
                                 self.meeting.topicList.forEach(function (topic) {
-                                    if (!selectedTopicGuid && topic.canReadClassifiedDocuments !== false) {
+                                    if (!selectedTopicGuid && topic.showClassifiedDocs !== false) {
                                         storeTopic(topic);
                                     }
                                 }, this);
@@ -282,7 +282,7 @@ angular.module('dashboard')
 
         self.canAccess = function (topic) {
             if (angular.isObject(topic)) {
-                return (self.isTopicPublic(topic) || topic.canReadClassifiedDocuments === true);
+                return (self.isTopicPublic(topic) || topic.showClassifiedDocs === true);
             }
             return false;
         };
