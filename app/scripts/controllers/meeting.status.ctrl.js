@@ -72,7 +72,7 @@ angular.module('dashboard')
 
                 var changedTopicGuidArray = [];
                 angular.forEach(events, function (topic) {
-                    if (angular.isObject(topic) && angular.isObject(topic.proposal) && angular.isString(topic.proposal.topicGuid)) {
+                    if (angular.isObject(topic) && angular.isObject(topic.proposal) && angular.isString(topic.proposal.topicGuid) && !topic.proposal.isOwnProposal) {
                         changedTopicGuidArray.push(topic.proposal.topicGuid);
                     }
                 }, changedTopicGuidArray);
@@ -146,6 +146,11 @@ angular.module('dashboard')
                                 case CONST.MTGEVENT.REMARKDELETED:
                                     if (angular.isObject(event) && angular.isString(event.deletedProposal)) {
                                         deleteEvents.push(event);
+                                    }
+                                    break;
+                                case CONST.MTGEVENT.REMARKUNPUBLISHED:
+                                    if (angular.isObject(event) && angular.isObject(event.proposal)) {
+                                        proposalEvents.push(event);
                                     }
                                     break;
                                 case CONST.MTGEVENT.MEETINGSTATECHANGED:
