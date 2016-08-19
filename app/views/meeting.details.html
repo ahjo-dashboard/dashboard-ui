@@ -13,21 +13,28 @@
         <div ng-if="c.pm === c.pms.DEFAULT || c.pm === c.pms.SECRET" class="db-block ng-class:[{'db-block-close db-brd-all':c.bm === c.bms.SECONDARY},{'db-block-open':c.bm !== c.bms.SECONDARY},{'db-margin-05':!c.isMobile}]">
 
             <!-- PRIMARY BLOCK HEADER -->
-            <div class="btn-group db-flex-wrap db-prim-bg db-brd-top db-padding-2">
-                <button ng-if="menuClosed()" type="button" class="btn db-btn-prim db-btn-small db-brd-all db-margin-2" ng-click="openMenu()"
-                    tooltip-enable="isTooltips" uib-tooltip="{{'STR_INFO_MENUBTN' | translate}}" tooltip-placement="right">
-                    <span class="glyphicon glyphicon-th-list"></span>
-                </button>
-                <button ng-if="menuClosed()" type="button" class="btn db-btn-prim db-btn-small db-brd-all db-margin-2" ng-click="c.toggleParallelMode()"
-                    tooltip-enable="isTooltips" uib-tooltip="{{parallelMode ? 'STR_INFO_VIEW_VERT' : 'STR_INFO_VIEW_HORIZ' | translate}}"
-                    tooltip-placement="right">
-                    <span class="glyphicon ng-class:[{'glyphicon-resize-vertical':parallelMode},{'glyphicon-resize-horizontal':!parallelMode}]"></span>
-                </button>
-                <button type="button" class="btn db-btn-prim db-btn-small db-brd-all db-margin-2" ng-disabled="parallelMode" ng-click="c.primaryClicked()">
-                    <span class="glyphicon ng-class:[{'glyphicon-minus':c.bm === c.bms.PRIMARY},{'glyphicon-plus':c.bm !== c.bms.PRIMARY}]"></span>
-                </button>
-                <button type="button" class="btn db-btn-sel db-btn-big db-brd-all db-margin-2 active">
-                    <span translate translate-cloak>STR_PRESENTATION</span>
+            <div class="db-flex db-flex-wrap db-prim-bg db-brd-top db-padding-2">
+                <div class="btn-group db-flex-area">
+                    <button ng-if="menuClosed()" type="button" class="btn db-btn-prim db-btn-small db-brd-all db-margin-2" ng-click="openMenu()"
+                        tooltip-enable="isTooltips" uib-tooltip="{{'STR_INFO_MENUBTN' | translate}}" tooltip-placement="right">
+                        <span class="glyphicon glyphicon-th-list"></span>
+                    </button>
+                    <button ng-if="menuClosed()" type="button" class="btn db-btn-prim db-btn-small db-brd-all db-margin-2" ng-click="c.toggleParallelMode()"
+                        tooltip-enable="isTooltips" uib-tooltip="{{parallelMode ? 'STR_INFO_VIEW_VERT' : 'STR_INFO_VIEW_HORIZ' | translate}}"
+                        tooltip-placement="right">
+                        <span class="glyphicon ng-class:[{'glyphicon-resize-vertical':parallelMode},{'glyphicon-resize-horizontal':!parallelMode}]"></span>
+                    </button>
+                    <button type="button" class="btn db-btn-prim db-btn-small db-brd-all db-margin-2" ng-disabled="parallelMode" ng-click="c.primaryClicked()">
+                        <span class="glyphicon ng-class:[{'glyphicon-minus':c.bm === c.bms.PRIMARY},{'glyphicon-plus':c.bm !== c.bms.PRIMARY}]"></span>
+                    </button>
+                    <button type="button" class="btn db-btn-sel db-btn-big db-brd-all db-margin-2 active">
+                        <span translate translate-cloak>STR_PRESENTATION</span>
+                    </button>
+                </div>
+                <button ng-if="c.pm !== c.pms.SECRET" type="button" class="btn db-btn-prim db-btn-small db-brd-all db-margin-2 db-flex-right"
+                    ng-click="c.newTab(c.tData.link)" ng-disabled="!c.tData || !c.tData.link" tooltip-enable="isTooltips" uib-tooltip="{{'STR_OPEN_NEW_TAB' | translate}}"
+                    tooltip-placement="bottom">
+                    <span class="glyphicon glyphicon-new-window"></span>
                 </button>
             </div>
 
