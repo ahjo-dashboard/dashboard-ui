@@ -105,6 +105,7 @@ angular.module('dashboard')
         'MTGEVENT': {
             LASTEVENTID: 'LastEventId',
             REMARKPUBLISHED: 'RemarkPublishedEvent',
+            REMARKUNPUBLISHED: 'RemarkUnPublishedEvent',
             REMARKUPDATED: 'PublishRemarkUpdateEvent',
             REMARKDELETED: 'RemarkDeletedEvent',
             MEETINGSTATECHANGED: 'MeetingStateChangedEvent',

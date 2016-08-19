@@ -32,6 +32,7 @@ angular.module('dashboard')
             self.updating = false;
             self.publishConfig = { title: 'STR_CONFIRM', text: 'STR_CNFM_SEND_PROP', yes: 'STR_YES' };
             self.deleteConfig = { title: 'STR_CONFIRM', text: 'STR_CNFM_DEL_PROP', yes: 'STR_YES' };
+            self.deleteConfigPub = { title: 'STR_CONFIRM', text: 'STR_CNFM_DEL_PROP', yes: 'STR_YES', optionText: 'STR_CNFM_DEL_PROP_OPT' };
             var previousIsPublished = null;
             var createDisabled = false;
 
@@ -71,17 +72,6 @@ angular.module('dashboard')
                         var firstName = self.uiProposal.firstName ? self.uiProposal.firstName : '';
                         self.uiProposal.personName = lastName + space + firstName;
                     }
-
-                    // delete confirm dialog setup
-                    if (self.uiProposal.isPublished === PROPS.PUBLISHED.YES) {
-                        self.deleteConfig = { title: 'STR_CONFIRM', text: 'STR_CNFM_DEL_PUBLIC_PROP', yes: 'STR_YES' };
-                    }
-                    else if (self.uiProposal.isPublishedIcon) {
-                        self.deleteConfig = { title: 'STR_CONFIRM', text: 'STR_CNFM_DEL_PROP', yes: 'STR_YES', optionText: 'STR_CNFM_DEL_PROP_OPT' };
-                    }
-                    else {
-                        self.deleteConfig = { title: 'STR_CONFIRM', text: 'STR_CNFM_DEL_PROP', yes: 'STR_YES' };
-                    }
                 }
             }
 
@@ -105,7 +95,7 @@ angular.module('dashboard')
                                 $rootScope.successInfo('STR_SAVE_SUCCESS');
                             }
                             else if (proposal.isPublished === PROPS.PUBLISHED.YES) {
-                                $scope.proposal.isPublishedIcon = PROPS.PUBLISHED.YES;
+                                $scope.proposal.isPublishedIcon = PROPS.PUBLISHED.YES; // todo: this should be removed when backend returns correct value
                                 angular.merge(proposal, response.Data);
                                 // proposal guid copy needs to be copied
                                 // otherwise published version deletion is not working

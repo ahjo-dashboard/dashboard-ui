@@ -195,6 +195,35 @@ angular.module('dashboard')
                 }
             }
 
+            function proposalUnpublished(proposal) {
+                $log.debug("dbProposalList: proposalUnpublished");
+                if (angular.isObject(proposal)) {
+                    self.proposals.forEach(function (prop) {
+                        if (angular.equals(proposal.proposalGuid, prop.proposalGuid)) {
+                            angular.merge(prop, proposal);
+                        }
+                    });
+
+                    var events = angular.copy(StorageSrv.getKey(CONST.KEY.PROPOSAL_EVENT_ARRAY));
+                    if (angular.isArray(events)) {
+                        var found = false;
+                        for (var i = events.length + CONST.NOTFOUND; !found && i > CONST.NOTFOUND; i--) {
+                            var event = events[i];
+                            if (angular.isObject(event.proposal) && angular.equals(event.proposal.proposalGuid, proposal.proposalGuid)) {
+                                events.splice(i, 1);
+                                found = true;
+                            }
+                        }
+                        if (found) {
+                            StorageSrv.setKey(CONST.KEY.PROPOSAL_EVENT_ARRAY, events);
+                        }
+                    }
+                }
+                else {
+                    $log.error('dbProposalList: proposalUnpublished parameter invalid');
+                }
+            }
+
             function updateEvents(events) {
                 $log.debug("dbProposalList: updateEvents");
                 if (angular.isArray(events)) {
@@ -205,6 +234,11 @@ angular.module('dashboard')
                                 case CONST.MTGEVENT.REMARKUPDATED:
                                     if (angular.isObject(event.proposal) && angular.equals(event.proposal.topicGuid, topicGuid)) {
                                         updateProposal(event.proposal);
+                                    }
+                                    break;
+                                case CONST.MTGEVENT.REMARKUNPUBLISHED:
+                                    if (angular.isObject(event.proposal) && angular.equals(event.proposal.topicGuid, topicGuid)) {
+                                        proposalUnpublished(event.proposal);
                                     }
                                     break;
                                 default:
