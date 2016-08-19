@@ -233,7 +233,7 @@ angular.module('dashboard')
                             }
                             else {
                                 self.meeting.topicList.forEach(function (topic) {
-                                    if (!selectedTopicGuid && topic.showClassifiedDocs !== false) {
+                                    if (!selectedTopicGuid && self.canAccess(topic)) {
                                         storeTopic(topic);
                                     }
                                 }, this);
