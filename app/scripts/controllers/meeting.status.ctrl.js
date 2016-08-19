@@ -37,6 +37,16 @@ angular.module('dashboard')
             }
         }
 
+        function storeTopic(topic) {
+            if (angular.isObject(topic)) {
+                selectedTopicGuid = topic.topicGuid;
+                StorageSrv.setKey(CONST.KEY.TOPIC, angular.copy(topic));
+            }
+            else {
+                $log.error("meetingStatusCtrl: storeTopic invalid parameter:");
+            }
+        }
+
         function meetingStatusChanged(event) {
             $log.debug("meetingStatusCtrl: meetingStatusChanged");
             if (angular.isObject(event) && angular.isObject(self.meeting)) {
@@ -72,7 +82,7 @@ angular.module('dashboard')
                     if (angular.isObject(topic)) {
                         topic.isModified = (changedTopicGuidArray.indexOf(topic.topicGuid) > CONST.NOTFOUND);
                         if (!self.isMobile && angular.equals(topic.topicGuid, selectedTopicGuid)) {
-                            StorageSrv.setKey(CONST.KEY.TOPIC, angular.copy(topic));
+                            storeTopic(topic);
                         }
                     }
                 }
@@ -203,19 +213,27 @@ angular.module('dashboard')
                     self.meeting = response.objects[0];
                     if (angular.isObject(self.meeting) && angular.isArray(self.meeting.topicList)) {
 
-                        angular.forEach(self.meeting.topicList, function (topic) {
-                            if (angular.isObject(topic)) {
-                                topic.userPersonGuid = self.meeting.userPersonGuid;
-                                topic.isCityCouncil = self.meeting.isCityCouncil;
-
-                                if (!selectedTopicGuid && topic.topicGuid) {
-                                    selectedTopicGuid = topic.topicGuid;
-                                    if (!self.isMobile) {
-                                        StorageSrv.setKey(CONST.KEY.TOPIC, topic);
-                                    }
-                                }
+                        angular.forEach(self.meeting.topicList, function (t) {
+                            if (angular.isObject(t)) {
+                                t.userPersonGuid = self.meeting.userPersonGuid;
+                                t.isCityCouncil = self.meeting.isCityCouncil;
+                                t.canReadClassifiedDocuments = self.meeting.canReadClassifiedDocuments;
                             }
                         }, this);
+
+                        if (!self.isMobile) {
+                            var storedTopic = StorageSrv.getKey(CONST.KEY.TOPIC);
+                            if (angular.isObject(storedTopic)) {
+                                selectedTopicGuid = storedTopic.topicGuid;
+                            }
+                            else {
+                                self.meeting.topicList.forEach(function (topic) {
+                                    if (!selectedTopicGuid && topic.canReadClassifiedDocuments !== false) {
+                                        storeTopic(topic);
+                                    }
+                                }, this);
+                            }
+                        }
 
                         lastEventId = self.meeting.lastEventId;
                         $timeout.cancel(pollingTimer);
@@ -243,8 +261,7 @@ angular.module('dashboard')
                 $log.debug("meetingStatusCtrl.topicSelected: publicity=" + topic.publicity);
                 topic.userPersonGuid = self.meeting.userPersonGuid;
                 topic.isCityCouncil = self.meeting.isCityCouncil;
-                selectedTopicGuid = topic.topicGuid;
-                StorageSrv.setKey(CONST.KEY.TOPIC, angular.copy(topic));
+                storeTopic(topic);
                 if (self.isMobile) {
                     $state.go(CONST.APPSTATE.MEETINGDETAILS, {});
                 }
@@ -261,6 +278,13 @@ angular.module('dashboard')
 
         self.isTopicPublic = function (topic) {
             return (angular.isObject(topic) && topic.publicity === CONST.PUBLICITY.PUBLIC);
+        };
+
+        self.canAccess = function (topic) {
+            if (angular.isObject(topic)) {
+                return (self.isTopicPublic(topic) || topic.canReadClassifiedDocuments === true);
+            }
+            return false;
         };
 
         self.statusIcon = function (topic) {
