@@ -95,12 +95,12 @@ angular.module('dashboard')
                                 $rootScope.successInfo('STR_SAVE_SUCCESS');
                             }
                             else if (proposal.isPublished === PROPS.PUBLISHED.YES) {
-                                $scope.proposal.isPublishedIcon = PROPS.PUBLISHED.YES; // todo: this should be removed when backend returns correct value
+                                $scope.proposal.isPublishedIcon = PROPS.PUBLISHED.YES;
                                 angular.merge(proposal, response.Data);
                                 // proposal guid copy needs to be copied
                                 // otherwise published version deletion is not working
                                 $scope.proposal.proposalGuidCopy = proposal.proposalGuid;
-                                $scope.onAdd({ data: { proposal: proposal } });
+                                $scope.onAdd({ data: { 'proposal': proposal } });
                                 $rootScope.successInfo('STR_PUBLISH_SUCCESS');
                             }
                             else {

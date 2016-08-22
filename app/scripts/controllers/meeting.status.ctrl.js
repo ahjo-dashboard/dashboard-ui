@@ -139,7 +139,7 @@ angular.module('dashboard')
                                     break;
                                 case CONST.MTGEVENT.REMARKPUBLISHED:
                                 case CONST.MTGEVENT.REMARKUPDATED:
-                                    if (angular.isObject(event) && angular.isObject(event.proposal) && event.proposal.isOwnProposal !== true) {
+                                    if (angular.isObject(event) && angular.isObject(event.proposal)) {
                                         proposalEvents.push(event);
                                     }
                                     break;
