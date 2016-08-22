@@ -3,6 +3,7 @@
     "STR_APPNAME": "Luottamushenkilön työpöytä",
     "STR_LOGIN": "Kirjaudu",
     "STR_LOGOUT": "Kirjaudu ulos",
+    "STR_MTG_LOGIN_PROGRESS": "Kirjaudutaan kokoukseen",
     "STR_INSTRUCTION": "Ohje",
     "STR_MEETINGS": "Kokoukset",
     "STR_SIGNINGS": "Allekirjoitukset",
