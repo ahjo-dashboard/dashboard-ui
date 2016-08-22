@@ -240,6 +240,10 @@ angular.module('dashboard')
             setBlockMode(CONST.BLOCKMODE.DEFAULT);
         };
 
+        self.newTab = function (link) {
+            Utils.openNewWin(link);
+        };
+
         $scope.$watch(function () {
             return StorageSrv.getKey(CONST.KEY.TOPIC);
         }, function (topic, oldTopic) {
