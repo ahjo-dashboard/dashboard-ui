@@ -28,7 +28,7 @@
 
         <div class="hidden-xs col-xs-12 col-sm-3 db-nopadding">
             <button id="roleButton" type="button" class="btn btn-block disabled db-no-border ng-class:{'db-btn-opt': c.loading, 'db-btn-opt-dummy': !c.loading}"
-                translate>STR_ROLE</button>
+                translate>STR_MTG_LOGIN</button>
         </div>
 
     </div>
@@ -48,7 +48,11 @@
                     </div>
                     <div class="col-xs-12 col-sm-3 ng-class:[{'db-padding-05-ver db-fs-11':c.isMobile}]">{{item.meeting.agencyName}}</div>
                     <div class="col-xs-12 col-sm-3">
-                        <button type="button" class="btn db-btn-sel ng-class:[{'btn-block db-fs-12':c.isMobile}]" ng-click="selected({meetingItem:item.meeting})"><span>{{item.role}}</span></button>
+                        <button type="button" class="btn db-btn-sel ng-class:[{'btn-block db-fs-12':c.isMobile}]" ng-click="selected({meetingItem:item.meeting})"
+                            tooltip-enable="c.isTooltips" tooltip-placement="left" uib-tooltip="{{'STR_MTG_LOGIN' | translate}}">
+                            <span>{{item.role}}</span>&nbsp;
+                            <span class="glyphicon glyphicon-log-in"></span>
+                        </button>
                     </div>
                 </div>
             </li>
