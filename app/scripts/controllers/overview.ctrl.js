@@ -12,7 +12,7 @@
  * Controller of the dashboard
  */
 angular.module('dashboard')
-    .controller('overviewCtrl', ['$scope', '$log', 'ENV', 'SigningOpenApi', '$state', '$rootScope', 'CONST', '$stateParams', 'MTGD', 'StorageSrv', '$http', function ($scope, $log, ENV, SigningOpenApi, $state, $rootScope, CONST, $stateParams, MTGD, StorageSrv, $http) {
+    .controller('overviewCtrl', ['$scope', '$log', 'ENV', 'SigningOpenApi', '$state', '$rootScope', 'CONST', '$stateParams', 'MTGD', 'StorageSrv', '$http', 'DialogUtils', function ($scope, $log, ENV, SigningOpenApi, $state, $rootScope, CONST, $stateParams, MTGD, StorageSrv, $http, DialogUtils) {
         $log.debug("overviewCtrl: CONTROLLER, mode: ", $stateParams.state);
         var self = this;
         self.loading = 0;
@@ -68,6 +68,9 @@ angular.module('dashboard')
 
         self.meetingItemSelected = function (meetingItem) {
             $log.debug("overviewCtrl.meetingItemSelected");
+
+            DialogUtils.openProgress(null, 'STR_MTG_LOGIN_PROGRESS', 'STR_MTG_LOGIN_PROGRESS');
+
             StorageSrv.setKey(CONST.KEY.MEETING_ITEM, meetingItem);
             $state.go(CONST.APPSTATE.MEETING, { 'menu': CONST.MENU.FULL });
         };

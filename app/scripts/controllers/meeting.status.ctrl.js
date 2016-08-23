@@ -12,7 +12,7 @@
 * Controller of the dashboard
 */
 angular.module('dashboard')
-    .controller('meetingStatusCtrl', ['$log', '$scope', '$rootScope', '$stateParams', '$state', 'CONST', 'StorageSrv', 'ENV', 'AhjoMeetingSrv', '$timeout', 'Utils', function ($log, $scope, $rootScope, $stateParams, $state, CONST, StorageSrv, ENV, AhjoMeetingSrv, $timeout, Utils) {
+    .controller('meetingStatusCtrl', ['$log', '$scope', '$rootScope', '$stateParams', '$state', 'CONST', 'StorageSrv', 'ENV', 'AhjoMeetingSrv', '$timeout', 'Utils', 'DialogUtils', function ($log, $scope, $rootScope, $stateParams, $state, CONST, StorageSrv, ENV, AhjoMeetingSrv, $timeout, Utils, DialogUtils) {
         $log.debug("meetingStatusCtrl: CONTROLLER");
         var self = this;
         $rootScope.menu = $stateParams.menu;
@@ -361,6 +361,8 @@ angular.module('dashboard')
             $log.debug("meetingStatusCtrl: DESTROY");
             $timeout.cancel(pollingTimer);
         });
+
+        DialogUtils.closeProgress();
 
         if (meetingItem) {
             getMeeting(meetingItem);

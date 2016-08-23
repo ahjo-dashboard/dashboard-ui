@@ -27,6 +27,7 @@ angular.module('dashboard')
             self.responseData = {};
             self.data = [];
             self.isMobile = $rootScope.isMobile;
+            self.isTooltips = $rootScope.isTooltips;
 
             self.agencyData = [];
             self.roleData = [];
