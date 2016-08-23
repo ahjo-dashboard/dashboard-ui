@@ -59,62 +59,43 @@ angular.module('dashboard')
             return deferred.promise;
         };
 
-        self.login = function (meetingGuid, role) {
+        self.meetingLogin = function (meetingGuid, meetingRole) {
             var deferred = $q.defer();
-
-            // length check is for testing and will be removed when backend is ready
-            if (ENV.AhjoApi_MeetingLogin && ENV.AhjoApi_MeetingLogin.length) {
-                $http({
-                    method: 'GET',
-                    cache: false,
-                    url: ENV.AhjoApi_MeetingLogin.replace(':meetingGuid', meetingGuid).replace(':role', role)
-                }).then(function () {
-                    deferred.resolve();
-                }, function (error) {
-                    $log.error("AhjoMeetingSrv: login error");
-                    deferred.reject(error);
-                });
-            }
-            else {
-                $timeout(function () {
-                    if (meetingGuid && role) {
-                        deferred.resolve();
-                    }
-                    else {
-                        deferred.reject();
-                    }
-                }, 1000);
-            }
+            $http({
+                method: 'GET',
+                data: {
+                    'meetingGuid': meetingGuid,
+                    'meetingRole': meetingRole
+                },
+                cache: false,
+                url: ENV.AhjoApi_MeetingLogin
+            }).then(function () {
+                // todo: some response needed
+                deferred.resolve();
+            }, function (error) {
+                $log.error("AhjoMeetingSrv: login error");
+                deferred.reject(error);
+            });
 
             return deferred.promise;
         };
 
-        self.logout = function (meetingGuid) {
+        self.meetingLogout = function (meetingGuid) {
             var deferred = $q.defer();
-
-            // length check is for testing and will be removed when backend is ready
-            if (ENV.AhjoApi_MeetingLogout && ENV.AhjoApi_MeetingLogout.length) {
-                $http({
-                    method: 'GET',
-                    cache: false,
-                    url: ENV.AhjoApi_MeetingLogout.replace(':meetingGuid', meetingGuid)
-                }).then(function () {
-                    deferred.resolve();
-                }, function (error) {
-                    $log.error("AhjoMeetingSrv: logout error");
-                    deferred.reject(error);
-                });
-            }
-            else {
-                $timeout(function () {
-                    if (meetingGuid) {
-                        deferred.resolve();
-                    }
-                    else {
-                        deferred.reject();
-                    }
-                }, 1000);
-            }
+            $http({
+                method: 'GET',
+                data: {
+                    'meetingGuid': meetingGuid
+                },
+                cache: false,
+                url: ENV.AhjoApi_MeetingLogout.replace(':meetingGuid', meetingGuid)
+            }).then(function () {
+                // todo: some response needed
+                deferred.resolve();
+            }, function (error) {
+                $log.error("AhjoMeetingSrv: logout error");
+                deferred.reject(error);
+            });
 
             return deferred.promise;
         };
