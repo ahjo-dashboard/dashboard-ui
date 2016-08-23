@@ -62,7 +62,7 @@ angular.module('dashboard')
         self.meetingLogin = function (meetingGuid, meetingRole) {
             var deferred = $q.defer();
             $http({
-                method: 'GET',
+                method: 'POST',
                 data: {
                     'meetingGuid': meetingGuid,
                     'meetingRole': meetingRole
