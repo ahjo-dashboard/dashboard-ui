@@ -99,7 +99,9 @@
                 <div ng-hide="c.requestorInfo.busy">
                     <div ng-if="c.requestorInfo.email && c.requestorInfo.email.length">
                         <span translate translate-cloak>STR_SIGNING_COMMENT_INFO</span>
-                        <a href="mailto:{{c.item.Email}}">{{c.requestorInfo.email}}</a>
+                        <div class="db-breakall">
+                            <a href="mailto:{{c.item.Email}}">{{c.requestorInfo.email}}</a>
+                        </div>
                     </div>
                     <div ng-if="!c.requestorInfo.email || !c.requestorInfo.email.length" translate translate-cloak>STR_SIGNING_NO_EMAIL</div>
                 </div>
