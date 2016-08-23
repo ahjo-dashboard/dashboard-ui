@@ -34,10 +34,10 @@
                     <span ng-if="lc.login"><span>Kirjaudutaan tunnuksella &quot;</span><span>{{lc.data.selection}}</span><span>&quot;</span>
                 </uib-progressbar>
 
-                <uib-alert ng-if="lc.error" type="danger">
+                <div uib-alert ng-if="lc.error" ng-class="'alert-danger'">
                     <span translate-cloak translate>STR_FAIL_LOADING</span>&nbsp;<span translate>STR_TRY_LATER</span>
                     <br>{{lc.error.status}}&nbsp;{{lc.error.statusText}}
-                </uib-alert>
+                </div>
 
             </div>
 
