@@ -12,85 +12,100 @@
 * Service in the dashboard.
 */
 angular.module('dashboard')
-    .factory('DialogUtils', function ($log, $q, $uibModal, $timeout) {
-        var self = this;
-        self.progrInst = null; // Progress dialog singleton instance
+    .factory('DialogUtils', function ($log, $q, $uibModal, $timeout, $rootScope) {
 
-        function resetProgress() {
-            $log.debug("DialogUtils.resetProgress");
-            self.progrInst = null;
-            self.promiseArr = null;
+        // VARIABLES
+
+        var self = this;
+        self.progrDlg = null; // Progress dialog singleton instance
+        $rootScope.x_progrDlgConfig = { titleStrId: null }; // Config object for progress dialog
+
+        // FUNCTIONS
+
+        function clearProgrCancel() {
+            if (self.cancelTimer) {
+                $timeout.cancel(self.cancelTimer);
+                self.cancelTimer = null;
+            }
+        }
+
+        function closeProgressNow() {
+            $log.debug("DialogUtils.closeProgressNow: dialog=" + self.progrDlg + " timer=" + self.cancelTimer);
+            if (!angular.equals(self.progrDlg, null)) {
+                clearProgrCancel();
+                self.progrDlg.close();
+                self.progrDlg = null;
+                $rootScope.x_progrDlgConfig = { titleStrId: null }; // Frees any old param references received in openProgress
+            }
         }
 
         /*
          * @name dashboard.dialogutils.openProgress
-         * @description Displays a modal progress dialog. Dismissed explicitly or via a promise array.
-         * @param {Array} a1 Array of promises which to follow
-         * @param {string} a2 String id for title
-         * @returns {boolean} True if request was accepted, false if busy.
+         * @description Displays a modal progress dialog. Parallel calls clear pending cancel requests and update the existing dialog.
+         * @param {string} a1 String id for title.
+         * @returns {boolean} True if request was accepted, false if not.
          */
-        self.openProgress = function (aPromiseArr, aTitleStrId) {
-            $log.debug("DialogUtils.openProgress");
-            if (!angular.equals(self.progrInst, null)) {
-                $log.error("DialogUtils.openProgress: busy");
-                return false;
+        self.openProgress = function openProgressFn(aTitleStrId) {
+            $log.debug("DialogUtils.openProgress: " + aTitleStrId);
+
+            // Clear pending cancel timers because those were for the previous request, issuing a new one next
+            clearProgrCancel();
+
+            $rootScope.x_progrDlgConfig.titleStrId = aTitleStrId;
+            if (self.progrDlg) {
+                $log.debug("DialogUtils.openProgress: already exists, updating");
+                return;
             }
 
-            self.promiseArr = angular.isArray(aPromiseArr) && aPromiseArr.length ? aPromiseArr : null;
-            if (self.promiseArr) {
-                $log.debug("DialogUtils.openProgress: will close via promises, count=" + self.promiseArr.length);
-                var promAll = $q.all(self.promiseArr);
-                promAll.finally(function () {
-                    $log.debug("DialogUtils.openProgress: all promises completed, dismiss component");
-                    self.closeProgress();
-                });
-            }
-
-
-            self.progrInst = $uibModal.open({
-                animation: false,// $scope.animationsEnabled,
+            self.progrDlg = $uibModal.open({
+                animation: false,
                 ariaLabelledBy: 'modal-title',
                 ariaDescribedBy: 'modal-body',
                 backdrop: 'static',
                 templateUrl: 'views/progress.html',
                 controller: 'progressCtrl',
                 controllerAs: 'c',
-                // bindToController: true, // Couldn't get this working
-                // size: 'sm', // "Optional suffix of modal window class. The value used is appended to the modal- class, i.e. a value of sm gives modal-sm."
-                resolve: {
-                    titleStrId: function () {
-                        return aTitleStrId;
-                    }
-                }
+                bindToController: true
+                // Title etc. parameters passed via scope object (bindToController)
             });
-            self.progrInst.result.then(function (/*selection*/) {
+            self.progrDlg.result.then(function (/*selection*/) {
                 // $log.debug("DialogUtils.openProgress: progress then");
             }, function () {
                 // $log.debug("DialogUtils.openProgress: progress dismissed");
             });
-            self.progrInst.result.finally(function (/*selection*/) {
+            self.progrDlg.result.finally(function (/*selection*/) {
                 $log.debug("DialogUtils.openProgress: progress dialog finally closing");
-                resetProgress();
             });
-
-            return true;
         };
 
-        self.closeProgress = function () {
+        /*
+         * @name dashboard.dialogutils.closeProgress
+         * @description Closes the singleton progress dialog after a delay
+         */
+        self.closeProgress = function closeProgressFn() {
             $log.debug("DialogUtils.closeProgress");
-            // Instance null check just in case to avoid unnecessary timers in case there are multiple calls to close
-            if (!angular.equals(self.progrInst, null)) {
-                $timeout(function () {
-                    $log.debug("DialogUtils.closeProgress timeout");
-                    if (!angular.equals(self.progrInst, null)) {
-                        self.progrInst.close();
-                    } else {
-                        $log.error("DialogUtils.resetProgress: no component to close");
-                    }
-                }, 400); // Arbitrary timeout to avoid flickering and sync problems with async displaying and closing of the dialog. A fast call to close after open may leave the dialog open.
+            if (!angular.equals(self.progrDlg, null)) {
+                if (!self.cancelTimer) {
+                    self.cancelTimer = $timeout(function () {
+                        $log.debug("DialogUtils.closeProgress timeout");
+                        closeProgressNow();
+                    }, 400); // Arbitrary timeout to avoid flickering and sync problems with async displaying and closing of the dialog. A fast call to close after could leave the dialog open.
+                } else {
+                    $log.debug("DialogUtils.closeProgress: cancel timer already exists");
+                }
+            } else {
+                $log.debug("DialogUtils.closeProgress: no dialog to close");
             }
         };
 
+        /*
+         * @name dashboard.dialogutils.clearAll
+         * @description Clears all notifications owned by this factory
+         */
+        self.clearAll = function clearAllFn() {
+            $log.debug("DialogUtils.clearAll");
+            closeProgressNow();
+        };
 
         return self;
     });
