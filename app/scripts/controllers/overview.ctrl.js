@@ -75,7 +75,7 @@ angular.module('dashboard')
 
         self.loginMeeting = function (meetingItem, meetingRole) {
             $log.debug("overviewCtrl.loginMeeting");
-            DialogUtils.openProgress(null, 'STR_MTG_LOGIN_PROGRESS');
+            DialogUtils.openProgress('STR_MTG_LOGIN_PROGRESS');
             AhjoMeetingSrv.meetingLogin(meetingItem.meetingGuid, meetingRole.RoleID).then(function () {
                 goToMeeting(meetingItem, meetingRole);
             }, function (error) {
@@ -136,4 +136,6 @@ angular.module('dashboard')
         $scope.$on('$destroy', function () {
             $log.debug("overviewCtrl: DESTROY");
         });
+
+        DialogUtils.clearAll(); // Clear all in case user navigates back from deeper views where a progress dialog etc. are displayed
     }]);
