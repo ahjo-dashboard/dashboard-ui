@@ -38,12 +38,7 @@ angular.module('dashboard')
             $log.error("meetingStatusCtrl: no role found, defaulting to " + self.meetingRole);
         } else {
             $log.debug("meetingStatusCtrl: role=" + self.meetingRole);
-        }
-
-        for (var i = 0; i < ENV.SupportedRoles.length; i++) {
-            if (ENV.SupportedRoles[i].RoleID === CONST.MTGROLE.CHAIRMAN) {
-                self.chairman = true;
-            }
+            self.chairman = (self.meetingRole.RoleID === CONST.MTGROLE.CHAIRMAN);
         }
 
         function storeTopic(topic) {
@@ -345,6 +340,11 @@ angular.module('dashboard')
 
         self.toggleParallelMode = function () {
             $rootScope.parallelMode = $rootScope.parallelMode ? false : true;
+        };
+
+        self.changeMeetingStatus = function () {
+            $log.debug("meetingStatusCtrl.changeMeetingStatus");
+            // todo: launch modal selection view
         };
 
         $scope.$watch(function () {

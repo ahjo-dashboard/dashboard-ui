@@ -1,13 +1,13 @@
 <div class="container-fluid">
     <div class="row db-opt-bg">
 
-        <div class="hidden-xs col-xs-12 col-sm-4 db-nopadding">
+        <div class="hidden-xs col-xs-12 col-sm-4 db-no-padding">
             <button type="button" class="btn btn-block disabled db-no-border ng-class:{'db-btn-opt': c.isDisabled(), 'db-btn-opt-dummy': !c.isDisabled()}">
                 <span translate translate-cloak>STR_SIGNING_REQ</span>
             </button>
         </div>
 
-        <div class="col-xs-6 col-sm-2 db-nopadding btn-group" uib-dropdown is-open="">
+        <div class="col-xs-6 col-sm-2 db-no-padding btn-group" uib-dropdown is-open="">
             <button id="docStatusButton" type="button" class="btn btn-block db-btn-opt db-no-border" ng-disabled="c.isDisabled()" uib-dropdown-toggle>
                 <span class="ng-class:{'db-underline': c.FStatus}" translate translate-cloak>{{c.docStatusTitle}}</span>
                 <span class="caret"></span>
@@ -21,7 +21,7 @@
             </ul>
         </div>
 
-        <div class="col-xs-6 col-sm-3 btn-group db-nopadding" uib-dropdown is-open="">
+        <div class="col-xs-6 col-sm-3 btn-group db-no-padding" uib-dropdown is-open="">
             <button id="docTypeButton" type="button" class="btn btn-block db-btn-opt db-no-border" ng-disabled="c.isDisabled()" uib-dropdown-toggle>
                 <span class="ng-class:{'db-underline': c.FType}" translate translate-cloak>{{c.docTypeTitle}}</span>
                 <span class="caret"></span>
