@@ -77,7 +77,7 @@ angular.module('dashboard', [
             appendToBody: true // Otherwise tooltip is under some elements
         });
     })
-    .run(function ($rootScope, $log, $window, CONST, ENV, $state, $timeout, $translate, Utils, StorageSrv, ngToast) {
+    .run(function ($rootScope, $log, $window, CONST, ENV, $state, $timeout, $translate, Utils, StorageSrv, ngToast, DialogUtils) {
 
         $rootScope.$on('$stateChangeStart', function (event, next/*, toParams, fromParams*/) {
             $log.debug('app.stateChangeStart: ' + next.name);// +' toParams: ' +JSON.stringify(toParams) +' fromParams: ' +JSON.stringify(fromParams));
@@ -126,6 +126,7 @@ angular.module('dashboard', [
         };
 
         $rootScope.goErrorLanding = function () {
+            DialogUtils.clearAll(); // Dialogs cleared here because error state has no controller and exception decorator causes a circular dependency
             $state.go(CONST.APPSTATE.ERROR);
         };
 
