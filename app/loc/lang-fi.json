@@ -6,6 +6,7 @@
     "STR_MTG_LOGIN": "Kirjaudu kokoukseen",
     "STR_MTG_LOGIN_PROGRESS": "Kirjaudutaan kokoukseen",
     "STR_MTG_LOGOUT": "Kirjaudu ulos kokouksesta",
+    "STR_LOGIN_FAILED": "Kirjautuminen ei onnistunut",
     "STR_INSTRUCTION": "Ohje",
     "STR_MEETINGS": "Kokoukset",
     "STR_SIGNINGS": "Allekirjoitukset",

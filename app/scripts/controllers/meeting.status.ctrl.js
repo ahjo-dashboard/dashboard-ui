@@ -12,10 +12,11 @@
 * Controller of the dashboard
 */
 angular.module('dashboard')
-    .controller('meetingStatusCtrl', ['$log', '$scope', '$rootScope', '$stateParams', '$state', 'CONST', 'StorageSrv', 'ENV', 'AhjoMeetingSrv', '$timeout', 'Utils', 'DialogUtils', function ($log, $scope, $rootScope, $stateParams, $state, CONST, StorageSrv, ENV, AhjoMeetingSrv, $timeout, Utils, DialogUtils) {
+    .controller('meetingStatusCtrl', ['$log', '$scope', '$rootScope', '$stateParams', '$state', 'CONST', 'StorageSrv', 'ENV', 'AhjoMeetingSrv', '$timeout', 'Utils', function ($log, $scope, $rootScope, $stateParams, $state, CONST, StorageSrv, ENV, AhjoMeetingSrv, $timeout, Utils) {
         $log.debug("meetingStatusCtrl: CONTROLLER");
         var self = this;
         $rootScope.menu = $stateParams.menu;
+        self.isMobile = $rootScope.isMobile;
         self.title = 'MOBILE TITLE';
         self.uiName = null;
         self.uiRole = 'Päätösvaltainen osallistuja'; // todo: update dynamically
@@ -25,11 +26,19 @@ angular.module('dashboard')
         self.hasUnsavedData = false;
         self.parallelModeActive = false;
         self.unsavedConfig = { title: 'STR_CONFIRM', text: 'STR_WARNING_UNSAVED', yes: 'STR_CONTINUE' };
+        self.meetingRole = StorageSrv.getKey(CONST.KEY.MEETING_ROLE);
+
         var meetingItem = StorageSrv.getKey(CONST.KEY.MEETING_ITEM);
-        self.isMobile = $rootScope.isMobile;
         var pollingTimer = null;
         var lastEventId = null;
         var selectedTopicGuid = null;
+
+        if (!self.meetingRole) {
+            self.meetingRole = CONST.MTGROLE.PARTICIPANT_FULL;
+            $log.error("meetingStatusCtrl: no role found, defaulting to " + self.meetingRole);
+        } else {
+            $log.debug("meetingStatusCtrl: role=" + self.meetingRole);
+        }
 
         for (var i = 0; i < ENV.SupportedRoles.length; i++) {
             if (ENV.SupportedRoles[i].RoleID === CONST.MTGROLE.CHAIRMAN) {
@@ -361,8 +370,6 @@ angular.module('dashboard')
             $log.debug("meetingStatusCtrl: DESTROY");
             $timeout.cancel(pollingTimer);
         });
-
-        DialogUtils.closeProgress();
 
         if (meetingItem) {
             getMeeting(meetingItem);

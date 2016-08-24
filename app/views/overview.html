@@ -41,7 +41,7 @@
             </div>
 
             <div ng-if="oc.hasMeetings" class="ad-flex-item db-overflow ng-class:[{'ad-flex-show-full':oc.blockMode === oc.bms.PRIMARY, 'ad-flex-show':oc.blockMode === oc.bms.DEFAULT, 'ad-flex-hide':oc.blockMode === oc.bms.SECONDARY}]">
-                <ad-meetings visible-meetings="oc.vblMtgs" on-selected="oc.meetingItemSelected(meetingItem)">
+                <ad-meetings visible-meetings="oc.vblMtgs" on-selected="oc.loginMeeting(meetingItem, role)">
                 </ad-meetings>
             </div>
             <!-- MEETINGS END -->

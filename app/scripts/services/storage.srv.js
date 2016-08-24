@@ -14,7 +14,7 @@
 angular.module('dashboard')
     .factory('StorageSrv', function (CONST, $log) {
         var data = {};
-        var sessionStorageKeys = [CONST.KEY.MEETING_ITEM, CONST.KEY.TOPIC];
+        var sessionStorageKeys = [CONST.KEY.MEETING_ITEM, CONST.KEY.MEETING_ROLE, CONST.KEY.TOPIC];
         var arrays = [CONST.KEY.PROPOSAL_EVENT_ARRAY];
 
         return {

@@ -12,7 +12,7 @@
  * Controller of the dashboard
  */
 angular.module('dashboard')
-    .controller('overviewCtrl', ['$scope', '$log', 'ENV', 'SigningOpenApi', '$state', '$rootScope', 'CONST', '$stateParams', 'MTGD', 'StorageSrv', '$http', 'DialogUtils', function ($scope, $log, ENV, SigningOpenApi, $state, $rootScope, CONST, $stateParams, MTGD, StorageSrv, $http, DialogUtils) {
+    .controller('overviewCtrl', ['$scope', '$log', 'ENV', 'SigningOpenApi', '$state', '$rootScope', 'CONST', '$stateParams', 'MTGD', 'StorageSrv', '$http', 'DialogUtils', 'AhjoMeetingSrv', function ($scope, $log, ENV, SigningOpenApi, $state, $rootScope, CONST, $stateParams, MTGD, StorageSrv, $http, DialogUtils, AhjoMeetingSrv) {
         $log.debug("overviewCtrl: CONTROLLER, mode: ", $stateParams.state);
         var self = this;
         self.loading = 0;
@@ -66,13 +66,24 @@ angular.module('dashboard')
 
         localStorage.overviewState = mode;
 
-        self.meetingItemSelected = function (meetingItem) {
-            $log.debug("overviewCtrl.meetingItemSelected");
-
-            DialogUtils.openProgress(null, 'STR_MTG_LOGIN_PROGRESS', 'STR_MTG_LOGIN_PROGRESS');
-
+        function goToMeeting(meetingItem, role) {
+            $log.debug("overviewCtrl.goToMeeting");
             StorageSrv.setKey(CONST.KEY.MEETING_ITEM, meetingItem);
+            StorageSrv.setKey(CONST.KEY.MEETING_ROLE, role);
             $state.go(CONST.APPSTATE.MEETING, { 'menu': CONST.MENU.FULL });
+        }
+
+        self.loginMeeting = function (meetingItem, role) {
+            $log.debug("overviewCtrl.loginMeeting");
+            DialogUtils.openProgress(null, 'STR_MTG_LOGIN_PROGRESS');
+            AhjoMeetingSrv.meetingLogin(meetingItem.meetingGuid, role).then(function () {
+                goToMeeting(meetingItem, role);
+            }, function (error) {
+                $log.error("overviewCtrl.loginMeeting: " + JSON.stringify(error));
+                $rootScope.failedInfo('STR_LOGIN_FAILED');
+            }).finally(function () {
+                DialogUtils.closeProgress();
+            });
         };
 
         self.showInfo = function () {
