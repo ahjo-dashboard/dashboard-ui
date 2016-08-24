@@ -223,7 +223,7 @@ iframe {
 }
 
 .db-flex {
-    display: flex;
+    display: flex !important;
 }
 
 .db-flex-right {
@@ -531,6 +531,9 @@ $blockOpenFlex: 9;
 }
 // REMARK DECLARATION END
 
+.db-no-pointer-events {
+    pointer-events: none;
+}
 
 .db-item-disabled {
     opacity: 0.5;
@@ -609,12 +612,16 @@ body {
         margin: 0 !important;
     }
 
+    .db-no-padding {
+        padding: 0 !important;
+    }
+
     @mixin db-badge-mix($bgcolor, $bodycolor : white, $headingcolor : white) {
-        background-color: $bgcolor;
-        color: $bodycolor;
+        background-color: $bgcolor !important;
+        color: $bodycolor !important;
         text-align: center;
         h1, h2, h3, h4, h5 {
-            color: $headingcolor;
+            color: $headingcolor !important;
         }
     }
 
@@ -996,10 +1003,6 @@ body {
     @media screen and (max-width: 767px) {
         .db-btn-list-topleft-xs { border-top-left-radius: $btn-radius !important; }
         .db-btn-list-topright-xs { border-top-right-radius: $btn-radius !important; }
-    }
-
-    .db-nopadding {
-        padding: 0 !important;
     }
 
     .ad-progress-bar {
