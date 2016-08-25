@@ -12,9 +12,16 @@
 * Controller of the dashboard
 */
 angular.module('dashboard')
-    .controller('meetingStatusCtrl', ['$log', '$scope', '$rootScope', '$stateParams', '$state', 'CONST', 'StorageSrv', 'ENV', 'AhjoMeetingSrv', '$timeout', 'Utils', function ($log, $scope, $rootScope, $stateParams, $state, CONST, StorageSrv, ENV, AhjoMeetingSrv, $timeout, Utils) {
+    .controller('meetingStatusCtrl', ['$log', '$scope', '$rootScope', '$stateParams', '$state', 'CONST', 'StorageSrv', 'ENV', 'AhjoMeetingSrv', '$timeout', 'Utils', 'DialogUtils', function ($log, $scope, $rootScope, $stateParams, $state, CONST, StorageSrv, ENV, AhjoMeetingSrv, $timeout, Utils, DialogUtils) {
         $log.debug("meetingStatusCtrl: CONTROLLER");
+
+        // VARIABLES
+
         var self = this;
+        var pollingTimer = null;
+        var lastEventId = null;
+        var selectedTopicGuid = null;
+
         $rootScope.menu = $stateParams.menu;
         self.isMobile = $rootScope.isMobile;
         self.title = 'MOBILE TITLE';
@@ -27,19 +34,26 @@ angular.module('dashboard')
         self.parallelModeActive = false;
         self.unsavedConfig = { title: 'STR_CONFIRM', text: 'STR_WARNING_UNSAVED', yes: 'STR_CONTINUE' };
         self.meetingRole = StorageSrv.getKey(CONST.KEY.MEETING_ROLE);
+        self.meetingItem = StorageSrv.getKey(CONST.KEY.MEETING_ITEM);
 
-        var meetingItem = StorageSrv.getKey(CONST.KEY.MEETING_ITEM);
-        var pollingTimer = null;
-        var lastEventId = null;
-        var selectedTopicGuid = null;
+        // FUNTIONS
 
-        if (!self.meetingRole) {
-            self.meetingRole = CONST.MTGROLE.PARTICIPANT_FULL;
-            $log.error("meetingStatusCtrl: no role found, defaulting to " + self.meetingRole);
-        } else {
-            $log.debug("meetingStatusCtrl: role=" + self.meetingRole);
-            self.chairman = (self.meetingRole.RoleID === CONST.MTGROLE.CHAIRMAN);
-        }
+        self.logOut = function logOutFn(meetingItem, meetingRole) {
+            $log.debug("meetingStatusCtrl.logOut");
+            if (angular.isObject(meetingItem) && angular.isObject(meetingRole)) {
+                DialogUtils.openProgress('STR_MTG_EXIT_PROGRESS');
+                AhjoMeetingSrv.meetingLogout(meetingItem.meetingGuid, meetingRole.RoleID).then(function () {
+                }, function (error) {
+                    $log.error("meetingStatusCtrl.logOut: " + JSON.stringify(error));
+                }).finally(function () {
+                    $state.go(CONST.APPSTATE.HOME, { menu: CONST.MENU.CLOSED });
+                    DialogUtils.closeProgress();
+                });
+            } else {
+                $log.error("meetingStatusCtrl.logOut: bad args: \n" + JSON.stringify(meetingItem) + "\n" + JSON.stringify(meetingRole));
+                $state.go(CONST.APPSTATE.HOME, { menu: CONST.MENU.CLOSED });
+            }
+        };
 
         function storeTopic(topic) {
             if (angular.isObject(topic)) {
@@ -130,10 +144,10 @@ angular.module('dashboard')
         }
 
         function getEvents() {
-            if (lastEventId && meetingItem.meetingGuid) {
+            if (lastEventId && self.meetingItem.meetingGuid) {
                 var proposalEvents = [];
                 var deleteEvents = [];
-                AhjoMeetingSrv.getEvents(lastEventId, meetingItem.meetingGuid).then(function (response) {
+                AhjoMeetingSrv.getEvents(lastEventId, self.meetingItem.meetingGuid).then(function (response) {
                     if (angular.isArray(response)) {
                         response.forEach(function (event) {
                             $log.debug("meetingStatusCtrl: getEvents then: " + event.typeName);
@@ -164,7 +178,7 @@ angular.module('dashboard')
                                     topicStatusChanged(event);
                                     break;
                                 case CONST.MTGEVENT.TOPICEDITED:
-                                    topicEdited(event, meetingItem.meetingGuid, self.meeting);
+                                    topicEdited(event, self.meetingItem.meetingGuid, self.meeting);
                                     break;
                                 default:
                                     $log.error("meetingStatusCtrl: unsupported typeName: " + event.typeName);
@@ -261,10 +275,6 @@ angular.module('dashboard')
             });
         }
 
-        self.goHome = function () {
-            $state.go(CONST.APPSTATE.HOME, { menu: CONST.MENU.CLOSED });
-        };
-
         self.topicSelected = function (topic) {
             if (angular.isObject(topic) && !self.isSelected(topic)) {
                 $log.debug("meetingStatusCtrl.topicSelected: publicity=" + topic.publicity);
@@ -347,6 +357,15 @@ angular.module('dashboard')
             // todo: launch modal selection view
         };
 
+        // CONSTRUCTION
+        if (!self.meetingItem || !self.meetingRole) {
+            $log.error("meetingStatusCtrl: bad meeting or role: \n " + JSON.stringify(self.meetingItem) + '\n' + JSON.stringify(self.meetingRole));
+            self.logOut(self.meetingItem, self.meetingRole);
+            return;
+        } else {
+            getMeeting(self.meetingItem);
+        }
+
         $scope.$watch(function () {
             return StorageSrv.getKey(CONST.KEY.PROPOSAL_EVENT_ARRAY);
         }, function (events, oldEvents) {
@@ -370,12 +389,5 @@ angular.module('dashboard')
             $log.debug("meetingStatusCtrl: DESTROY");
             $timeout.cancel(pollingTimer);
         });
-
-        if (meetingItem) {
-            getMeeting(meetingItem);
-        }
-        else {
-            $state.go(CONST.APPSTATE.HOME, { menu: CONST.MENU.CLOSED });
-        }
 
     }]);

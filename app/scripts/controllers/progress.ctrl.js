@@ -12,14 +12,5 @@
  * Controller of the dashboard
  */
 angular.module('dashboard')
-    .controller('progressCtrl', function ($log, $sce, $scope, titleStrId) {
-        // $log.debug('progressCtrl');
-
-        var self = this;
-        self.titleStrId = titleStrId;
-
-        $scope.$on('$destroy', function () {
-            // $log.debug("progressCtrl: $destroy");
-        });
-
+    .controller('progressCtrl', function () {
     });
