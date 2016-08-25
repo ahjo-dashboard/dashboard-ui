@@ -146,7 +146,6 @@ angular.module('dashboard')
         function getEvents() {
             if (lastEventId && mtgItem.meetingGuid) {
                 var proposalEvents = [];
-                var deleteEvents = [];
                 AhjoMeetingSrv.getEvents(lastEventId, mtgItem.meetingGuid).then(function (response) {
                     if (angular.isArray(response)) {
                         response.forEach(function (event) {
@@ -157,19 +156,16 @@ angular.module('dashboard')
                                     break;
                                 case CONST.MTGEVENT.REMARKPUBLISHED:
                                 case CONST.MTGEVENT.REMARKUPDATED:
-                                    if (angular.isObject(event) && angular.isObject(event.proposal)) {
+                                    if (angular.isObject(event) && angular.isObject(event.proposal) && !event.proposal.isOwnProposal) {
                                         proposalEvents.push(event);
                                     }
                                     break;
                                 case CONST.MTGEVENT.REMARKDELETED:
-                                    if (angular.isObject(event) && angular.isString(event.deletedProposal)) {
-                                        deleteEvents.push(event);
+                                    if (angular.isObject(event) && angular.isObject(event.proposal) && !event.proposal.isOwnProposal) {
+                                        $rootScope.$emit(CONST.PROPOSALDELETED, event);
                                     }
                                     break;
                                 case CONST.MTGEVENT.REMARKUNPUBLISHED:
-                                    if (angular.isObject(event) && angular.isObject(event.proposal)) {
-                                        proposalEvents.push(event);
-                                    }
                                     break;
                                 case CONST.MTGEVENT.MEETINGSTATECHANGED:
                                     meetingStatusChanged(event);
@@ -212,9 +208,6 @@ angular.module('dashboard')
                             concated = events.concat(proposalEvents);
                         }
                         StorageSrv.setKey(CONST.KEY.PROPOSAL_EVENT_ARRAY, concated);
-                    }
-                    if (deleteEvents.length) {
-                        $rootScope.$emit(CONST.PROPOSALDELETED, { deleted: deleteEvents });
                     }
                 });
             }
