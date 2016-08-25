@@ -16,6 +16,8 @@ app.controller('signStatusCtrl', function ($log, $scope, $state, SigningAttApi, 
 
     var self = this;
     self.isMobile = $rootScope.isMobile;
+        self.isTablet = $rootScope.isTablet;
+
     self.item = null;
     self.ongoing = true;
     self.requestorInfo = { busy: false, email: null };

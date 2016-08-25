@@ -46,6 +46,11 @@
             <!-- SECONDARY BLOCK HEADER -->
             <div class="btn-group db-flex-wrap db-prim-bg db-brd-top db-padding-2">
 
+                <button ng-if="c.isTablet && menuClosed()" type="button" class="btn db-btn-prim db-btn-small db-brd-all db-margin-2"
+                    ng-click="openMenu()" tooltip-enable="isTooltips" uib-tooltip="{{'STR_INFO_MENUBTN' | translate}}" tooltip-placement="right">
+                    <span class="glyphicon glyphicon-th-list"></span>
+                </button>
+
                 <button ng-if="!c.isTablet" type="button" class="btn db-btn-prim db-btn-small db-brd-all db-margin-2" ng-disabled="parallelMode"
                     ng-click="c.secondaryClicked()">
                     <span class="glyphicon ng-class:[{'glyphicon-minus':c.bm === c.bms.SECONDARY},{'glyphicon-plus':c.bm !== c.bms.SECONDARY}]""></span>
