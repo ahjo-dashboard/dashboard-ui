@@ -34,7 +34,7 @@ angular.module('dashboard')
         self.parallelModeActive = false;
         self.unsavedConfig = { title: 'STR_CONFIRM', text: 'STR_WARNING_UNSAVED', yes: 'STR_CONTINUE' };
         self.meetingRole = StorageSrv.getKey(CONST.KEY.MEETING_ROLE);
-        self.meetingItem = StorageSrv.getKey(CONST.KEY.MEETING_ITEM);
+        var mtgItem = StorageSrv.getKey(CONST.KEY.MEETING_ITEM);
 
         // FUNTIONS
 
@@ -144,10 +144,10 @@ angular.module('dashboard')
         }
 
         function getEvents() {
-            if (lastEventId && self.meetingItem.meetingGuid) {
+            if (lastEventId && mtgItem.meetingGuid) {
                 var proposalEvents = [];
                 var deleteEvents = [];
-                AhjoMeetingSrv.getEvents(lastEventId, self.meetingItem.meetingGuid).then(function (response) {
+                AhjoMeetingSrv.getEvents(lastEventId, mtgItem.meetingGuid).then(function (response) {
                     if (angular.isArray(response)) {
                         response.forEach(function (event) {
                             $log.debug("meetingStatusCtrl: getEvents then: " + event.typeName);
@@ -178,7 +178,7 @@ angular.module('dashboard')
                                     topicStatusChanged(event);
                                     break;
                                 case CONST.MTGEVENT.TOPICEDITED:
-                                    topicEdited(event, self.meetingItem.meetingGuid, self.meeting);
+                                    topicEdited(event, mtgItem.meetingGuid, self.meeting);
                                     break;
                                 default:
                                     $log.error("meetingStatusCtrl: unsupported typeName: " + event.typeName);
@@ -358,12 +358,12 @@ angular.module('dashboard')
         };
 
         // CONSTRUCTION
-        if (!self.meetingItem || !self.meetingRole) {
-            $log.error("meetingStatusCtrl: bad meeting or role: \n " + JSON.stringify(self.meetingItem) + '\n' + JSON.stringify(self.meetingRole));
-            self.logOut(self.meetingItem, self.meetingRole);
+        if (!mtgItem || !self.meetingRole) {
+            $log.error("meetingStatusCtrl: bad meeting or role: \n " + JSON.stringify(mtgItem) + '\n' + JSON.stringify(self.meetingRole));
+            self.logOut(mtgItem, self.meetingRole);
             return;
         } else {
-            getMeeting(self.meetingItem);
+            getMeeting(mtgItem);
         }
 
         $scope.$watch(function () {
