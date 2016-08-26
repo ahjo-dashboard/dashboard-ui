@@ -398,6 +398,8 @@ angular.module('dashboard')
             angular.forEach(CONST.MEETINGSTATUSACTIONS, function (status) {
                 if (angular.isObject(status) && angular.isObject(self.meeting)) {
                     // todo: active status needs to be updated to app constants
+                    console.log('TOPIC STATUS');
+                    console.log(self.meeting.meetingStatus);
                     status.disabled = status.active.indexOf(self.meeting.meetingStatus) <= CONST.NOTFOUND;
                     this.push(status);
                 }
@@ -415,6 +417,8 @@ angular.module('dashboard')
                 angular.forEach(CONST.TOPICSTATUSACTIONS, function (status) {
                     if (angular.isObject(status) && angular.isObject(topic)) {
                         // todo: active status needs to be updated to app constants
+                        console.log('TOPIC STATUS');
+                        console.log(topic.topicStatus);
                         status.disabled = status.active.indexOf(topic.topicStatus) <= CONST.NOTFOUND;
                         this.push(status);
                     }
