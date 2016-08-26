@@ -33,16 +33,17 @@ angular.module('dashboard')
         self.hasUnsavedData = false;
         self.parallelModeActive = false;
         self.unsavedConfig = { title: 'STR_CONFIRM', text: 'STR_WARNING_UNSAVED', yes: 'STR_CONTINUE' };
-        self.meetingRole = StorageSrv.getKey(CONST.KEY.MEETING_ROLE);
+        var mtgRole = StorageSrv.getKey(CONST.KEY.MEETING_ROLE);
+        var mtgPersonGuid = null;
         var mtgItem = StorageSrv.getKey(CONST.KEY.MEETING_ITEM);
 
         // FUNTIONS
 
-        self.logOut = function logOutFn(meetingItem, meetingRole) {
-            $log.debug("meetingStatusCtrl.logOut: \n - meeting:\n" +JSON.stringify(meetingItem) +"\n - role: " +JSON.stringify(meetingRole));
-            if (angular.isObject(meetingItem) && angular.isObject(meetingRole)) {
+        self.logOut = function logOutFn() {
+            $log.debug("meetingStatusCtrl.logOut: \n - meeting:\n" + JSON.stringify(mtgItem) + "\n - role: " + JSON.stringify(mtgRole) + "\n - mtgPersonGuid: " + mtgPersonGuid);
+            if (angular.isObject(mtgItem) && angular.isObject(mtgRole) && mtgPersonGuid) {
                 DialogUtils.openProgress('STR_MTG_EXIT_PROGRESS');
-                AhjoMeetingSrv.meetingLogout(meetingItem.meetingGuid, meetingRole.RoleID).then(function () {
+                AhjoMeetingSrv.meetingLogout(mtgItem.meetingGuid, mtgRole.RoleID, mtgPersonGuid).then(function () {
                 }, function (error) {
                     $log.error("meetingStatusCtrl.logOut: " + JSON.stringify(error));
                 }).finally(function () {
@@ -50,7 +51,7 @@ angular.module('dashboard')
                     DialogUtils.closeProgress();
                 });
             } else {
-                $log.error("meetingStatusCtrl.logOut: bad args: \n" + JSON.stringify(meetingItem) + "\n" + JSON.stringify(meetingRole));
+                $log.error("meetingStatusCtrl.logOut: bad args \n - meeting:\n" + JSON.stringify(mtgItem) + "\n - role: " + JSON.stringify(mtgRole) + "\n - mtgPersonGuid: " + mtgPersonGuid);
                 $state.go(CONST.APPSTATE.HOME, { menu: CONST.MENU.CLOSED });
             }
         };
@@ -257,17 +258,18 @@ angular.module('dashboard')
             }
         }
 
-        function getMeeting(meetingItem) {
+        function getMeeting(mtgItem) {
             $log.debug("meetingStatusCtrl.getMeeting");
-            self.uiName = meetingItem.agencyName + ' ' + meetingItem.name;
+            self.uiName = mtgItem.agencyName + ' ' + mtgItem.name;
             selectedTopicGuid = null;
             StorageSrv.deleteKey(CONST.KEY.TOPIC);
             $timeout.cancel(pollingTimer);
             pollingTimer = null;
-            AhjoMeetingSrv.getMeeting(meetingItem.meetingGuid).then(function (response) {
+            AhjoMeetingSrv.getMeeting(mtgItem.meetingGuid).then(function (response) {
                 $log.debug("meetingStatusCtrl.getMeeting: done");
                 if (angular.isObject(response) && angular.isArray(response.objects) && response.objects.length) {
                     self.meeting = response.objects[0];
+                    mtgPersonGuid = self.meeting.userPersonGuid;
                     if (angular.isObject(self.meeting) && angular.isArray(self.meeting.topicList)) {
 
                         angular.forEach(self.meeting.topicList, function (t) {
@@ -430,16 +432,16 @@ angular.module('dashboard')
         };
 
         // CONSTRUCTION
-        if (!mtgItem || !self.meetingRole) {
-            $log.error("meetingStatusCtrl: bad meeting or role: \n " + JSON.stringify(mtgItem) + '\n' + JSON.stringify(self.meetingRole));
-            self.logOut(mtgItem, self.meetingRole);
+        if (!mtgItem || !mtgRole) {
+            $log.error("meetingStatusCtrl: bad meeting or role: \n " + JSON.stringify(mtgItem) + '\n' + JSON.stringify(mtgRole));
+            self.logOut();
             return;
         } else {
             getMeeting(mtgItem);
         }
 
-        if (angular.isObject(self.meetingRole)) {
-            self.chairman = (self.meetingRole.RoleID === CONST.MTGROLE.CHAIRMAN);
+        if (angular.isObject(mtgRole)) {
+            self.chairman = (mtgRole.RoleID === CONST.MTGROLE.CHAIRMAN);
         }
 
         $scope.$watch(function () {
