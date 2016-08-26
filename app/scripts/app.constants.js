@@ -79,6 +79,7 @@ angular.module('dashboard')
             SIGNING_RES: 'signingres',
             MEETING_ITEM: 'meetingitem',
             MEETING_ROLE: 'meetingrole',
+            MEETING_PERSONGUID: 'personguid',
             PROPOSAL_EVENT_ARRAY: 'proposaleventarray',
             SIGN_ITEM: 'signitem',
             VALUE: 'value'

@@ -34,7 +34,7 @@ angular.module('dashboard')
         self.parallelModeActive = false;
         self.unsavedConfig = { title: 'STR_CONFIRM', text: 'STR_WARNING_UNSAVED', yes: 'STR_CONTINUE' };
         var mtgRole = StorageSrv.getKey(CONST.KEY.MEETING_ROLE);
-        var mtgPersonGuid = null;
+        var mtgPersonGuid = StorageSrv.getKey(CONST.KEY.MEETING_PERSONGUID);
         var mtgItem = StorageSrv.getKey(CONST.KEY.MEETING_ITEM);
 
         // FUNTIONS
@@ -269,7 +269,6 @@ angular.module('dashboard')
                 $log.debug("meetingStatusCtrl.getMeeting: done");
                 if (angular.isObject(response) && angular.isArray(response.objects) && response.objects.length) {
                     self.meeting = response.objects[0];
-                    mtgPersonGuid = self.meeting.userPersonGuid;
                     if (angular.isObject(self.meeting) && angular.isArray(self.meeting.topicList)) {
 
                         angular.forEach(self.meeting.topicList, function (t) {

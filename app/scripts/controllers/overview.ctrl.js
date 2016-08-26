@@ -66,10 +66,11 @@ angular.module('dashboard')
 
         localStorage.overviewState = mode;
 
-        function goToMeeting(meetingItem, meetingRole) {
+        function goToMeeting(meetingItem, meetingRole, personGuid) {
             $log.debug("overviewCtrl.goToMeeting");
             StorageSrv.setKey(CONST.KEY.MEETING_ITEM, meetingItem);
             StorageSrv.setKey(CONST.KEY.MEETING_ROLE, meetingRole);
+            StorageSrv.setKey(CONST.KEY.MEETING_PERSONGUID, personGuid);
             $state.go(CONST.APPSTATE.MEETING, { 'menu': CONST.MENU.FULL });
         }
 
@@ -77,7 +78,7 @@ angular.module('dashboard')
             $log.debug("overviewCtrl.loginMeeting: \n - meeting:\n" +JSON.stringify(meetingItem) +"\n - role: " +JSON.stringify(meetingRole) + "\n - personGuid: " +personGuid);
             DialogUtils.openProgress('STR_MTG_LOGIN_PROGRESS');
             AhjoMeetingSrv.meetingLogin(meetingItem.meetingGuid, meetingRole.RoleID, personGuid).then(function () {
-                goToMeeting(meetingItem, meetingRole);
+                goToMeeting(meetingItem, meetingRole, personGuid);
             }, function (error) {
                 $log.error("overviewCtrl.loginMeeting: " + JSON.stringify(error));
                 $rootScope.failedInfo('STR_LOGIN_FAILED');
