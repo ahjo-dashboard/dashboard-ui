@@ -88,6 +88,10 @@ iframe {
     overflow: auto;
 }
 
+.db-font-12 {
+    font-size: 1.2em !important;
+}
+
 .db-textarea {
     resize: none;
     width: 100%;
@@ -108,6 +112,10 @@ iframe {
 
 .db-underline {
     text-decoration: underline;
+}
+
+.db-overflow-hidden {
+    overflow: hidden !important;
 }
 
 .db-min-width-300 {
