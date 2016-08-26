@@ -39,7 +39,7 @@ angular.module('dashboard')
         // FUNTIONS
 
         self.logOut = function logOutFn(meetingItem, meetingRole) {
-            $log.debug("meetingStatusCtrl.logOut");
+            $log.debug("meetingStatusCtrl.logOut: \n - meeting:\n" +JSON.stringify(meetingItem) +"\n - role: " +JSON.stringify(meetingRole));
             if (angular.isObject(meetingItem) && angular.isObject(meetingRole)) {
                 DialogUtils.openProgress('STR_MTG_EXIT_PROGRESS');
                 AhjoMeetingSrv.meetingLogout(meetingItem.meetingGuid, meetingRole.RoleID).then(function () {

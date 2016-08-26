@@ -74,7 +74,7 @@ angular.module('dashboard')
         }
 
         self.loginMeeting = function (meetingItem, meetingRole) {
-            $log.debug("overviewCtrl.loginMeeting");
+            $log.debug("overviewCtrl.loginMeeting: \n - meeting:\n" +JSON.stringify(meetingItem) +"\n - role: " +JSON.stringify(meetingRole));
             DialogUtils.openProgress('STR_MTG_LOGIN_PROGRESS');
             AhjoMeetingSrv.meetingLogin(meetingItem.meetingGuid, meetingRole.RoleID).then(function () {
                 goToMeeting(meetingItem, meetingRole);
