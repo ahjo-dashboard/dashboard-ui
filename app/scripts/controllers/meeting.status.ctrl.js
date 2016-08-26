@@ -397,7 +397,7 @@ angular.module('dashboard')
                     this.push(status);
                 }
             }, items);
-            openStatusChangeView('STR_MEETING', items, function (result) {
+            openStatusChangeView('STR_CHANGE_MEETING_STATUS', items, function (result) {
                 $log.debug("meetingStatusCtrl.changeMeetingStatus: selected: " + JSON.stringify(result));
                 // todo: update selected status to backend
             });
@@ -416,7 +416,7 @@ angular.module('dashboard')
                         this.push(status);
                     }
                 }, items);
-                openStatusChangeView('STR_TOPIC', items, function (result) {
+                openStatusChangeView('STR_CHANGE_TOPIC_STATUS', items, function (result) {
                     $log.debug("meetingStatusCtrl.changeTopicStatus: selected: " + JSON.stringify(result));
                     // todo: update selected status to backend
                 });
