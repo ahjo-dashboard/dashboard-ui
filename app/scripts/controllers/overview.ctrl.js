@@ -73,10 +73,10 @@ angular.module('dashboard')
             $state.go(CONST.APPSTATE.MEETING, { 'menu': CONST.MENU.FULL });
         }
 
-        self.loginMeeting = function (meetingItem, meetingRole) {
-            $log.debug("overviewCtrl.loginMeeting: \n - meeting:\n" +JSON.stringify(meetingItem) +"\n - role: " +JSON.stringify(meetingRole));
+        self.loginMeeting = function (meetingItem, meetingRole, personGuid) {
+            $log.debug("overviewCtrl.loginMeeting: \n - meeting:\n" +JSON.stringify(meetingItem) +"\n - role: " +JSON.stringify(meetingRole) + "\n - personGuid: " +personGuid);
             DialogUtils.openProgress('STR_MTG_LOGIN_PROGRESS');
-            AhjoMeetingSrv.meetingLogin(meetingItem.meetingGuid, meetingRole.RoleID).then(function () {
+            AhjoMeetingSrv.meetingLogin(meetingItem.meetingGuid, meetingRole.RoleID, personGuid).then(function () {
                 goToMeeting(meetingItem, meetingRole);
             }, function (error) {
                 $log.error("overviewCtrl.loginMeeting: " + JSON.stringify(error));
