@@ -411,21 +411,18 @@ angular.module('dashboard')
         self.changeTopicStatus = function (topic) {
             if (angular.isObject(topic)) {
                 $log.debug("meetingStatusCtrl.changeTopicStatus");
-                self.topicSelected(topic);
-                if (self.chairman) {
-                    var items = [];
-                    angular.forEach(CONST.TOPICSTATUSACTIONS, function (status) {
-                        if (angular.isObject(status) && angular.isObject(topic)) {
-                            // todo: active status needs to be updated to app constants
-                            status.disabled = status.active.indexOf(topic.topicStatus) <= CONST.NOTFOUND;
-                            this.push(status);
-                        }
-                    }, items);
-                    openStatusChangeView('STR_TOPIC', items, function (result) {
-                        $log.debug("meetingStatusCtrl.changeTopicStatus: selected: " + JSON.stringify(result));
-                        // todo: update selected status to backend
-                    });
-                }
+                var items = [];
+                angular.forEach(CONST.TOPICSTATUSACTIONS, function (status) {
+                    if (angular.isObject(status) && angular.isObject(topic)) {
+                        // todo: active status needs to be updated to app constants
+                        status.disabled = status.active.indexOf(topic.topicStatus) <= CONST.NOTFOUND;
+                        this.push(status);
+                    }
+                }, items);
+                openStatusChangeView('STR_TOPIC', items, function (result) {
+                    $log.debug("meetingStatusCtrl.changeTopicStatus: selected: " + JSON.stringify(result));
+                    // todo: update selected status to backend
+                });
             }
             else {
                 $log.error("meetingStatusCtrl: changeTopicStatus invalid parameter:");

@@ -37,8 +37,8 @@
             </div>
 
             <div class="list-group-item db-flex db-padding-05-ver ng-class:[{'db-opt-bg db-font-clr-white': (msc.isSelected(topic) && !msc.isMobile), 'db-item-disabled': !msc.canAccess(topic), 'db-padding-0-hor':!msc.chairman, 'db-padding-10-hor':msc.chairman}]"
-                style="overflow: hidden;" ng-repeat="topic in msc.meeting.topicList track by $index">
-                <button class="btn db-btn-tiny ng-class:[{'db-btn-sel':msc.chairman},{'db-btn-transparent':!msc.chairman}]" ng-click="msc.changeTopicStatus(topic)">
+                style="overflow: hidden;" ng-repeat="topic in msc.meeting.topicList track by $index" db-confirm confirm-enabled="msc.hasUnsavedData && !msc.isSelected(topic)" confirm-config="msc.unsavedConfig" ng-click="msc.topicSelected(topic)">
+                <button class="btn db-btn-tiny ng-class:[{'db-btn-sel':msc.chairman},{'db-btn-transparent db-no-pointer-events':!msc.chairman}]" ng-click="msc.changeTopicStatus(topic)">
                     <div class="db-iconwrapper">
                         <img ng-src="{{msc.statusIcon(topic)}}">
                         <img ng-show="topic.includePublishedRemark" ng-src="images/mtg-states/prop-indicator.png">
@@ -48,8 +48,7 @@
                 <div ng-show="topic.isModified" class="db-min-width-22 db-center">
                     <span class="glyphicon glyphicon-bell db-newprops db-fs-12" aria-hidden="true"></span>
                 </div>
-                <h5 class="db-flex-area db-margin-10-hor db-center-v" tooltip-enable="isTooltips" uib-tooltip-template="'topicTooltipTpl.html'" tooltip-class="db-tooltip" tooltip-placement="top-left" db-confirm confirm-enabled="msc.hasUnsavedData && !msc.isSelected(topic)"
-                    confirm-config="msc.unsavedConfig" ng-click="msc.topicSelected(topic)">
+                <h5 class="db-flex-area db-margin-10-hor db-center-v" tooltip-enable="isTooltips" uib-tooltip-template="'topicTooltipTpl.html'" tooltip-class="db-tooltip" tooltip-placement="top-left">
                     {{topic.topicreference}} {{topic.topicTitle}}
                 </h5>
             </div>
