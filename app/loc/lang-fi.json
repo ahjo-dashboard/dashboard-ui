@@ -126,6 +126,8 @@
     "STR_TOPIC_LIST": "Asialista",
     "STR_TOPIC": "Asia",
     "STR_CONTINUE": "Jatka",
+    "STR_ABORT": "Keskeytä",
+    "STR_READY": "Päätä",
     "STR_PUBLISHED": "Julkaistu",
     "STR_SAVE_SUCCESS": "Tallennus onnistui",
     "STR_SAVE_FAILED": "Tallennus epäonnistui",
