@@ -31,14 +31,15 @@
                 </uib-progressbar>
             </div>
             <div ng-if='!msc.loading' class="list-group-item db-prim-bg db-padding-05">
-                <button type="button" class="btn btn-block db-brd-all db-flex ng-class:[{'db-btn-sel':msc.chairman},{'db-no-pointer-events db-btn-prim':!msc.chairman}]" ng-click="msc.changeMeetingStatus()">
+                <button type="button" class="btn btn-block db-brd-all db-flex ng-class:[{'db-btn-sel':msc.chairman},{'db-no-pointer-events db-btn-prim':!msc.chairman}]" tooltip-enable="isTooltips" uib-tooltip="{{'STR_CHANGE_MEETING_STATUS' | translate}}"
+                    ng-click="msc.changeMeetingStatus()">
                     <span class="badge db-flex-area ng-class:[msc.mtgStatusClass(msc.meeting)]" style="font-size:1.2em;" translate translate-cloak>{{msc.stringId(msc.meeting)}}</span>
                 </button>
             </div>
 
             <div class="list-group-item db-flex db-padding-05-ver ng-class:[{'db-opt-bg db-font-clr-white': (msc.isSelected(topic) && !msc.isMobile), 'db-item-disabled': !msc.canAccess(topic), 'db-padding-0-hor':!msc.chairman, 'db-padding-10-hor':msc.chairman}]"
                 style="overflow: hidden;" ng-repeat="topic in msc.meeting.topicList track by $index" db-confirm confirm-enabled="msc.hasUnsavedData && !msc.isSelected(topic)" confirm-config="msc.unsavedConfig" ng-click="msc.topicSelected(topic)">
-                <button class="btn db-btn-tiny ng-class:[{'db-btn-sel':msc.chairman},{'db-btn-transparent db-no-pointer-events':!msc.chairman}]" ng-click="msc.changeTopicStatus(topic)">
+                <button class="btn db-btn-tiny ng-class:[{'db-btn-sel':msc.chairman},{'db-btn-transparent db-no-pointer-events':!msc.chairman}]" tooltip-enable="isTooltips" tooltip-placement="right" uib-tooltip="{{'STR_CHANGE_TOPIC_STATUS' | translate}}" ng-click="msc.changeTopicStatus(topic)">
                     <div class="db-iconwrapper">
                         <img ng-src="{{msc.statusIcon(topic)}}">
                         <img ng-show="topic.includePublishedRemark" ng-src="images/mtg-states/prop-indicator.png">
