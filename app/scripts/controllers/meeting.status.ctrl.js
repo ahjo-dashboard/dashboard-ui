@@ -200,7 +200,10 @@ angular.module('dashboard')
                                     break;
                                 case CONST.MTGEVENT.REMARKDELETED:
                                     if (angular.isObject(event) && angular.isObject(event.proposal) && !event.proposal.isOwnProposal) {
-                                        $rootScope.$emit(CONST.PROPOSALDELETED, event);
+                                        // spare some extra time to handle other events before deletion
+                                        $timeout(function () {
+                                            $rootScope.$emit(CONST.PROPOSALDELETED, event);
+                                        }, 1000);
                                     }
                                     break;
                                 case CONST.MTGEVENT.REMARKUNPUBLISHED:
