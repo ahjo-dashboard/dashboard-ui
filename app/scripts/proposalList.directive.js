@@ -121,39 +121,41 @@ angular.module('dashboard')
                 }
             }
 
-            function removeProposal(data) {
-                $log.debug("dbProposalList: removeProposal: " + JSON.stringify(data));
-                var value;
-                if (angular.isString(data)) {
-                    value = data;
-                }
-                else if (angular.isObject(data)) {
-                    if (angular.isString(data.proposalGuid)) {
-                        value = data.proposalGuid;
-                    }
-                    else {
-                        value = data;
-                    }
-                }
+            function removeProposal(proposal) {
+                $log.debug("dbProposalList: removeProposal:");
 
-                if (value) {
+                // remove proposal
+                if (angular.isObject(proposal)) {
                     var search = angular.isArray(self.proposals);
-                    for (var index = self.proposals.length + CONST.NOTFOUND; search && index > CONST.NOTFOUND; index--) {
-                        var prop = self.proposals[index];
-                        if (angular.equals(value, prop.proposalGuid) || angular.equals(value, prop)) {
-                            self.proposals.splice(index, 1);
+                    for (var i = self.proposals.length + CONST.NOTFOUND; search && i > CONST.NOTFOUND; i--) {
+                        var prop = self.proposals[i];
+                        if (angular.isObject(prop) && angular.equals(proposal.proposalGuid, prop.proposalGuid)) {
+                            self.proposals.splice(i, 1);
                             search = false;
                         }
                     }
 
-                    if (angular.isString(value)) {
+                    // update is published icon
+                    if (proposal.isPublished === PROPS.PUBLISHED.YES && proposal.isOwnProposal) {
+                        var anotherSearch = angular.isArray(self.proposals);
+                        for (var j = 0; anotherSearch && j < self.proposals.length; j++) {
+                            var p = self.proposals[j];
+                            if (angular.isObject(p) && angular.equals(proposal.proposalGuidCopy, p.proposalGuid)) {
+                                p.isPublishedIcon = PROPS.PUBLISHED.NO;
+                                anotherSearch = false;
+                            }
+                        }
+                    }
+
+                    // remove pending event
+                    if (!proposal.isOwnProposal) {
                         var events = angular.copy(StorageSrv.getKey(CONST.KEY.PROPOSAL_EVENT_ARRAY));
                         if (angular.isArray(events)) {
                             var found = false;
-                            for (var i = events.length + CONST.NOTFOUND; !found && i > CONST.NOTFOUND; i--) {
-                                var event = events[i];
-                                if (angular.isObject(event.proposal) && angular.equals(event.proposal.proposalGuid, value)) {
-                                    events.splice(i, 1);
+                            for (var index = events.length + CONST.NOTFOUND; index > CONST.NOTFOUND; index--) {
+                                var event = events[index];
+                                if (angular.isObject(event.proposal) && angular.equals(event.proposal.proposalGuid, proposal.proposalGuid)) {
+                                    events.splice(index, 1);
                                     found = true;
                                 }
                             }
@@ -195,35 +197,6 @@ angular.module('dashboard')
                 }
             }
 
-            function proposalUnpublished(proposal) {
-                $log.debug("dbProposalList: proposalUnpublished");
-                if (angular.isObject(proposal)) {
-                    self.proposals.forEach(function (prop) {
-                        if (angular.equals(proposal.proposalGuid, prop.proposalGuid)) {
-                            angular.merge(prop, proposal);
-                        }
-                    });
-
-                    var events = angular.copy(StorageSrv.getKey(CONST.KEY.PROPOSAL_EVENT_ARRAY));
-                    if (angular.isArray(events)) {
-                        var found = false;
-                        for (var i = events.length + CONST.NOTFOUND; !found && i > CONST.NOTFOUND; i--) {
-                            var event = events[i];
-                            if (angular.isObject(event.proposal) && angular.equals(event.proposal.proposalGuid, proposal.proposalGuid)) {
-                                events.splice(i, 1);
-                                found = true;
-                            }
-                        }
-                        if (found) {
-                            StorageSrv.setKey(CONST.KEY.PROPOSAL_EVENT_ARRAY, events);
-                        }
-                    }
-                }
-                else {
-                    $log.error('dbProposalList: proposalUnpublished parameter invalid');
-                }
-            }
-
             function updateEvents(events) {
                 $log.debug("dbProposalList: updateEvents");
                 if (angular.isArray(events)) {
@@ -233,13 +206,11 @@ angular.module('dashboard')
                                 case CONST.MTGEVENT.REMARKPUBLISHED:
                                 case CONST.MTGEVENT.REMARKUPDATED:
                                     if (angular.isObject(event.proposal) && angular.equals(event.proposal.topicGuid, topicGuid)) {
+                                        event.proposal.isModified = true;
                                         updateProposal(event.proposal);
                                     }
                                     break;
                                 case CONST.MTGEVENT.REMARKUNPUBLISHED:
-                                    if (angular.isObject(event.proposal) && angular.equals(event.proposal.topicGuid, topicGuid)) {
-                                        proposalUnpublished(event.proposal);
-                                    }
                                     break;
                                 default:
                                     $log.error('dbProposalList: updateEvents unsupported type');
@@ -326,8 +297,6 @@ angular.module('dashboard')
                     if (!exists) {
                         self.proposals.splice(0, 0, data.proposal);
                     }
-
-
                 }
                 else {
                     $log.error('dbProposalList: add proposal missing');
@@ -380,12 +349,8 @@ angular.module('dashboard')
             });
 
             var deleteWatcher = $rootScope.$on(CONST.PROPOSALDELETED, function (event, data) {
-                if (angular.isObject(data) && angular.isArray(data.deleted)) {
-                    angular.forEach(data.deleted, function (e) {
-                        if (angular.isObject(e) && angular.equals(e.topicGuid, topicGuid)) {
-                            removeProposal(e.deletedProposal);
-                        }
-                    }, this);
+                if (angular.isObject(data)) {
+                    removeProposal(data.proposal);
                 }
             });
 

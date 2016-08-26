@@ -270,6 +270,10 @@ angular.module('dashboard')
                 if (!angular.equals(data.proposal, self.uiProposal)) {
                     setProposal(data.proposal);
                 }
+                else if (self.mode === PROP.MODE.OPEN) {
+                    // update open textarea text
+                    self.editorText = data.proposal.text;
+                }
             }, true);
 
             $scope.$watch(function () {
