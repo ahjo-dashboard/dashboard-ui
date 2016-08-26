@@ -12,7 +12,7 @@
 * Controller of the dashboard
 */
 angular.module('dashboard')
-    .controller('meetingStatusCtrl', ['$log', '$scope', '$rootScope', '$stateParams', '$state', 'CONST', 'StorageSrv', 'ENV', 'AhjoMeetingSrv', '$timeout', 'Utils', 'DialogUtils', function ($log, $scope, $rootScope, $stateParams, $state, CONST, StorageSrv, ENV, AhjoMeetingSrv, $timeout, Utils, DialogUtils) {
+    .controller('meetingStatusCtrl', ['$log', '$scope', '$rootScope', '$stateParams', '$state', 'CONST', 'StorageSrv', 'ENV', 'AhjoMeetingSrv', '$timeout', 'Utils', 'DialogUtils', '$uibModal', function ($log, $scope, $rootScope, $stateParams, $state, CONST, StorageSrv, ENV, AhjoMeetingSrv, $timeout, Utils, DialogUtils, $uibModal) {
         $log.debug("meetingStatusCtrl: CONTROLLER");
 
         // VARIABLES
@@ -54,6 +54,44 @@ angular.module('dashboard')
                 $state.go(CONST.APPSTATE.HOME, { menu: CONST.MENU.CLOSED });
             }
         };
+
+        function openStatusChangeView(title, items, callback) {
+            if (angular.isString(title) && angular.isArray(items) && angular.isFunction(callback)) {
+                var modalInstance = $uibModal.open({
+                    animation: false,
+                    templateUrl: 'views/selection.modal.html',
+                    controller: ['$scope', '$uibModalInstance', function ($scope, $uibModalInstance) {
+                        $scope.title = title;
+                        $scope.items = items;
+                        $scope.selected = null;
+
+                        $scope.isSelected = function (item) {
+                            return angular.equals(item, $scope.selected);
+                        };
+
+                        $scope.clicked = function (ok) {
+                            if (ok) {
+                                $uibModalInstance.close($scope.selected);
+                            }
+                            else {
+                                $uibModalInstance.dismiss();
+                            }
+                        };
+
+                        $scope.itemSelected = function (selectedItem) {
+                            $scope.selected = selectedItem;
+                        };
+                    }]
+                });
+
+                modalInstance.result.then(function (selectedItem) {
+                    callback(selectedItem);
+                });
+            }
+            else {
+                $log.error("meetingStatusCtrl: openStatusChangeView invalid parameter:");
+            }
+        }
 
         function storeTopic(topic) {
             if (angular.isObject(topic)) {
@@ -269,15 +307,17 @@ angular.module('dashboard')
         }
 
         self.topicSelected = function (topic) {
-            if (angular.isObject(topic) && !self.isSelected(topic)) {
+            if (angular.isObject(topic)) {
                 $log.debug("meetingStatusCtrl.topicSelected: publicity=" + topic.publicity);
-                topic.userPersonGuid = self.meeting.userPersonGuid;
-                topic.isCityCouncil = self.meeting.isCityCouncil;
-                storeTopic(topic);
-                if (self.isMobile) {
-                    $state.go(CONST.APPSTATE.MEETINGDETAILS, {});
+                if (!self.isSelected(topic)) {
+                    topic.userPersonGuid = self.meeting.userPersonGuid;
+                    topic.isCityCouncil = self.meeting.isCityCouncil;
+                    storeTopic(topic);
+                    if (self.isMobile) {
+                        $state.go(CONST.APPSTATE.MEETINGDETAILS, {});
+                    }
+                    self.hasUnsavedData = false;
                 }
-                self.hasUnsavedData = false;
             }
             else {
                 $log.error("meetingStatusCtrl: topicSelected: invalid parameter");
@@ -347,7 +387,43 @@ angular.module('dashboard')
 
         self.changeMeetingStatus = function () {
             $log.debug("meetingStatusCtrl.changeMeetingStatus");
-            // todo: launch modal selection view
+            var items = [];
+            angular.forEach(CONST.MEETINGSTATUSACTIONS, function (status) {
+                if (angular.isObject(status) && angular.isObject(self.meeting)) {
+                    // todo: active status needs to be updated to app constants
+                    console.log('TOPIC STATUS');
+                    console.log(self.meeting.meetingStatus);
+                    status.disabled = status.active.indexOf(self.meeting.meetingStatus) <= CONST.NOTFOUND;
+                    this.push(status);
+                }
+            }, items);
+            openStatusChangeView('STR_MEETING', items, function (result) {
+                $log.debug("meetingStatusCtrl.changeMeetingStatus: selected: " + JSON.stringify(result));
+                // todo: update selected status to backend
+            });
+        };
+
+        self.changeTopicStatus = function (topic) {
+            if (angular.isObject(topic)) {
+                $log.debug("meetingStatusCtrl.changeTopicStatus");
+                var items = [];
+                angular.forEach(CONST.TOPICSTATUSACTIONS, function (status) {
+                    if (angular.isObject(status) && angular.isObject(topic)) {
+                        // todo: active status needs to be updated to app constants
+                        console.log('TOPIC STATUS');
+                        console.log(topic.topicStatus);
+                        status.disabled = status.active.indexOf(topic.topicStatus) <= CONST.NOTFOUND;
+                        this.push(status);
+                    }
+                }, items);
+                openStatusChangeView('STR_TOPIC', items, function (result) {
+                    $log.debug("meetingStatusCtrl.changeTopicStatus: selected: " + JSON.stringify(result));
+                    // todo: update selected status to backend
+                });
+            }
+            else {
+                $log.error("meetingStatusCtrl: changeTopicStatus invalid parameter:");
+            }
         };
 
         // CONSTRUCTION
@@ -357,6 +433,10 @@ angular.module('dashboard')
             return;
         } else {
             getMeeting(mtgItem);
+        }
+
+        if (angular.isObject(self.meetingRole)) {
+            self.chairman = (self.meetingRole.RoleID === CONST.MTGROLE.CHAIRMAN);
         }
 
         $scope.$watch(function () {

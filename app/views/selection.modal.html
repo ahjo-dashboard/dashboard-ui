@@ -1,0 +1,14 @@
+<div class="source-list-modal">
+    <div class="modal-header db-confirm-header">
+        <h3 ng-if="title" class="modal-title" translate translate-cloak>{{title}}</h3>
+    </div>
+    <div class="modal-body db-no-padding">
+        <ul class="list-group db-no-margin">
+            <li class="list-group-item ng-class:[{'active':isSelected(item)},{'disabled':item.disabled}]" ng-repeat="item in items track by $index" ng-click="!item.disabled && itemSelected(item)" translate translate-cloak>{{item.stringId}}</li>
+        </ul>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-success db-min-width-120" type="button" ng-disabled="!selected" ng-click="clicked(true)" translate translate-cloak>STR_SAVE</button>
+        <button class="btn btn-danger db-min-width-120" type="button" ng-click="clicked(false)" translate translate-cloak>STR_CANCEL</button>
+    </div>
+</div>

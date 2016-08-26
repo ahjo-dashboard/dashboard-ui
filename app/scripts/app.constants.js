@@ -17,8 +17,8 @@ angular.module('dashboard')
         'PROPOSALDELETED': 'PROPOSALDELETED',
         'UNSAVEMEETINGDDATA': 'UNSAVEMEETINGDDATA',
         'MEETINGPARALLELMODE': 'MEETINGPARALLELMODE',
-        'POLLINGTIMEOUT' : 10000,
-        'NOTFOUND' : -1,
+        'POLLINGTIMEOUT': 10000,
+        'NOTFOUND': -1,
         'ID': 'id',
         'BLOCKMODE': {
             DEFAULT: 0,
@@ -103,6 +103,12 @@ angular.module('dashboard')
             RECORDS_MOVED: { value: 6, stringId: 'STR_RECORDS_MOVED', badgeClass: 'db-badge-gre' },
             TECHNICALLY_CLOSED: { value: 7, stringId: 'STR_TECNICALLY_CLOSED', badgeClass: 'db-badge-gre' },
         },
+        'MEETINGSTATUSACTIONS': {
+            OPEN: { value: 1, stringId: 'STR_OPEN', active: [1, 2] },
+            CLOSE: { value: 2, stringId: 'STR_READY', active: [3] },
+            ABORT: { value: 3, stringId: 'STR_ABORT', active: [3] },
+            CONTINUE: { value: 4, stringId: 'STR_CONTINUE', active: [4] }
+        },
         'MTGEVENT': {
             LASTEVENTID: 'LastEventId',
             REMARKPUBLISHED: 'RemarkPublishedEvent',
@@ -119,6 +125,12 @@ angular.module('dashboard')
             ACTIVE: { value: 2, iconPath: "images/mtg-states/mtg-ag-state-2.png", stringId: 'STR_TOPIC_STATUS_ACTIVE' },
             ABORTED: { value: 3, iconPath: "images/mtg-states/mtg-ag-state-3.png", stringId: 'STR_TOPIC_STATUS_ABORTED' },
             READY: { value: 4, iconPath: "images/mtg-states/mtg-ag-state-4.png", stringId: 'STR_TOPIC_STATUS_READY' }
+        },
+        'TOPICSTATUSACTIONS': {
+            OPEN: { value: 1, stringId: 'STR_OPEN', active: [1] },
+            CLOSE: { value: 2, stringId: 'STR_READY', active: [2] },
+            ABORT: { value: 3, stringId: 'STR_ABORT', active: [2] },
+            CONTINUE: { value: 4, stringId: 'STR_CONTINUE', active: [3] }
         },
         'ESIGNSTATUS': { //SignApi_DocStatuses
             UNSIGNED: { value: 1, stringId: 'STR_UNSIGNED', badgeClass: 'db-badge-ora' },

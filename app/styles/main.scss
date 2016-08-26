@@ -204,6 +204,16 @@ iframe {
     padding: 1.5vh !important;
 }
 
+.db-padding-0-hor {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+.db-padding-10-hor {
+    padding-left: 1.0vh !important;
+    padding-right: 1.0vh !important;
+}
+
 .db-padding-15-hor {
     padding-left: 1.5vh !important;
     padding-right: 1.5vh !important;
@@ -307,6 +317,12 @@ iframe {
     border-top-left-radius: $btn-radius !important;
     border-bottom-left-radius: $btn-radius !important;
     border-bottom-right-radius: $btn-radius !important;
+}
+
+.db-btn-tiny {
+    height: 34px;
+    overflow: hidden;
+    font-size: $default-font-size !important;
 }
 
 .db-btn-small {
@@ -572,7 +588,8 @@ body {
     }
 
     .db-iconwrapper {
-        min-height: 22px;
+        min-height: 20px;
+        min-width: 20px;
         img {
             position: absolute;
         }
@@ -660,6 +677,10 @@ body {
 
     .db-badge-hdr {
         @include db-badge-mix($font-color-header, $headingBgColor, $headingBgColor);
+    }
+
+    .db-btn-transparent {
+        @include button-variant(transparent, transparent, transparent);
     }
 
     .db-btn-prim {
