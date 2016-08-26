@@ -48,9 +48,9 @@
                 <div ng-show="topic.isModified" class="db-min-width-22 db-center">
                     <span class="glyphicon glyphicon-bell db-newprops db-fs-12" aria-hidden="true"></span>
                 </div>
-                <h5 class="db-flex-area db-margin-10-hor db-center-v" tooltip-enable="isTooltips" uib-tooltip-template="'topicTooltipTpl.html'" tooltip-class="db-tooltip" tooltip-placement="top-left">
-                    {{topic.topicreference}} {{topic.topicTitle}}
-                </h5>
+                <div class="db-center-v db-flex-area db-margin-10-hor">
+                    <h5 class="ng-class:[{'db-twoliner-12':!msc.isMobile}]" tooltip-enable="isTooltips" uib-tooltip-template="'topicTooltipTpl.html'" tooltip-class="db-tooltip" tooltip-placement="top-left">{{topic.topicreference}} {{topic.topicTitle}}</h5>
+                </div>
             </div>
     </div>
     </ul>
