@@ -68,10 +68,15 @@ angular.module('dashboard')
 
         function goToMeeting(meetingItem, meetingRole, personGuid) {
             $log.debug("overviewCtrl.goToMeeting");
-            StorageSrv.setKey(CONST.KEY.MEETING_ITEM, meetingItem);
-            StorageSrv.setKey(CONST.KEY.MEETING_ROLE, meetingRole);
-            StorageSrv.setKey(CONST.KEY.MEETING_PERSONGUID, personGuid);
-            $state.go(CONST.APPSTATE.MEETING, { 'menu': CONST.MENU.FULL });
+            if (meetingItem && meetingRole && personGuid) {
+                StorageSrv.setKey(CONST.KEY.MEETING_ITEM, meetingItem);
+                StorageSrv.setKey(CONST.KEY.MEETING_ROLE, meetingRole);
+                StorageSrv.setKey(CONST.KEY.MEETING_PERSONGUID, personGuid);
+                $state.go(CONST.APPSTATE.MEETING, { 'menu': CONST.MENU.FULL });
+            } else {
+                $log.error("overviewCtrl.goToMeeting: bad args \n meeting=" + JSON.stringify(meetingItem) + "\n  role=" + JSON.stringify(meetingRole) + "\n person=" + JSON.stringify(personGuid));
+                $rootScope.failedInfo('STR_LOGIN_FAILED');
+            }
         }
 
         self.loginMeeting = function (meetingItem, meetingRole, personGuid) {
