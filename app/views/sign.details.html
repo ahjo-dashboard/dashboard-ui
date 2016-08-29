@@ -56,11 +56,11 @@
                     <span class="glyphicon ng-class:[{'glyphicon-minus':c.bm === c.bms.SECONDARY},{'glyphicon-plus':c.bm !== c.bms.SECONDARY}]""></span>
                 </button>
 
-                <button type="button" class="btn db-btn-sel db-btn-big db-brd-all db-margin-2" ng-click="c.openDoc(c.btnModel.doc)">
+                <button ng-if="c.isTablet" type="button" class="btn db-btn-sel db-btn-big db-brd-all db-margin-2" ng-click="c.openDoc(c.btnModel.doc)">
                     <span translate translate-cloak>STR_SIGNING_REQ</span>
                 </button>
 
-                <button type="button" class="btn db-btn-sel db-btn-big db-brd-all db-margin-2" ng-click="c.openDoc(c.btnModel.doctr)" ng-disabled="c.btnModel.doctr.disabled">
+                <button ng-if="c.isTablet" ng-hide="c.btnModel.doctr.disabled" type="button" class="btn db-btn-sel db-btn-big db-brd-all db-margin-2" ng-click="c.openDoc(c.btnModel.doctr)" ng-disabled="c.btnModel.doctr.disabled">
                     <span translate translate-cloak>STR_TRANSLATION</span>
                 </button>
 
