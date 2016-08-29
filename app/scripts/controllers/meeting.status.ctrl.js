@@ -17,44 +17,24 @@ angular.module('dashboard')
 
         // VARIABLES
 
-        var self = this;
+        $rootScope.menu = $stateParams.menu;
         var pollingTimer = null;
         var lastEventId = null;
         var selectedTopicGuid = null;
-
-        $rootScope.menu = $stateParams.menu;
+        var mtgRole = StorageSrv.getKey(CONST.KEY.MEETING_ROLE);
+        var mtgPersonGuid = StorageSrv.getKey(CONST.KEY.MEETING_PERSONGUID);
+        var mtgItem = StorageSrv.getKey(CONST.KEY.MEETING_ITEM);
+        var self = this;
         self.isMobile = $rootScope.isMobile;
-        self.title = 'MOBILE TITLE';
         self.uiName = null;
-        self.uiRole = 'Päätösvaltainen osallistuja'; // todo: update dynamically
         self.meeting = null;
         self.chairman = false;
         self.loading = true;
         self.hasUnsavedData = false;
         self.parallelModeActive = false;
         self.unsavedConfig = { title: 'STR_CONFIRM', text: 'STR_WARNING_UNSAVED', yes: 'STR_CONTINUE' };
-        var mtgRole = StorageSrv.getKey(CONST.KEY.MEETING_ROLE);
-        var mtgPersonGuid = StorageSrv.getKey(CONST.KEY.MEETING_PERSONGUID);
-        var mtgItem = StorageSrv.getKey(CONST.KEY.MEETING_ITEM);
 
         // FUNTIONS
-
-        self.logOut = function logOutFn() {
-            $log.debug("meetingStatusCtrl.logOut: \n - meeting:\n" + JSON.stringify(mtgItem) + "\n - role: " + JSON.stringify(mtgRole) + "\n - mtgPersonGuid: " + mtgPersonGuid);
-            if (angular.isObject(mtgItem) && angular.isObject(mtgRole) && mtgPersonGuid) {
-                DialogUtils.openProgress('STR_MTG_EXIT_PROGRESS');
-                AhjoMeetingSrv.meetingLogout(mtgItem.meetingGuid, mtgRole.RoleID, mtgPersonGuid).then(function () {
-                }, function (error) {
-                    $log.error("meetingStatusCtrl.logOut: " + JSON.stringify(error));
-                }).finally(function () {
-                    $state.go(CONST.APPSTATE.HOME, { menu: CONST.MENU.CLOSED });
-                    DialogUtils.closeProgress();
-                });
-            } else {
-                $log.error("meetingStatusCtrl.logOut: bad args \n - meeting:\n" + JSON.stringify(mtgItem) + "\n - role: " + JSON.stringify(mtgRole) + "\n - mtgPersonGuid: " + mtgPersonGuid);
-                $state.go(CONST.APPSTATE.HOME, { menu: CONST.MENU.CLOSED });
-            }
-        };
 
         function openStatusChangeView(title, items, callback) {
             if (angular.isString(title) && angular.isArray(items) && angular.isFunction(callback)) {
@@ -427,6 +407,23 @@ angular.module('dashboard')
             }
             else {
                 $log.error("meetingStatusCtrl: changeTopicStatus invalid parameter:");
+            }
+        };
+
+        self.logOut = function logOutFn() {
+            $log.debug("meetingStatusCtrl.logOut: \n - meeting:\n" + JSON.stringify(mtgItem) + "\n - role: " + JSON.stringify(mtgRole) + "\n - mtgPersonGuid: " + mtgPersonGuid);
+            if (angular.isObject(mtgItem) && angular.isObject(mtgRole) && mtgPersonGuid) {
+                DialogUtils.openProgress('STR_MTG_EXIT_PROGRESS');
+                AhjoMeetingSrv.meetingLogout(mtgItem.meetingGuid, mtgRole.RoleID, mtgPersonGuid).then(function () {
+                }, function (error) {
+                    $log.error("meetingStatusCtrl.logOut: " + JSON.stringify(error));
+                }).finally(function () {
+                    $state.go(CONST.APPSTATE.HOME, { menu: CONST.MENU.CLOSED });
+                    DialogUtils.closeProgress();
+                });
+            } else {
+                $log.error("meetingStatusCtrl.logOut: bad args \n - meeting:\n" + JSON.stringify(mtgItem) + "\n - role: " + JSON.stringify(mtgRole) + "\n - mtgPersonGuid: " + mtgPersonGuid);
+                $state.go(CONST.APPSTATE.HOME, { menu: CONST.MENU.CLOSED });
             }
         };
 
