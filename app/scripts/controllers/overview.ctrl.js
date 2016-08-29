@@ -66,18 +66,24 @@ angular.module('dashboard')
 
         localStorage.overviewState = mode;
 
-        function goToMeeting(meetingItem, meetingRole) {
+        function goToMeeting(meetingItem, meetingRole, personGuid) {
             $log.debug("overviewCtrl.goToMeeting");
-            StorageSrv.setKey(CONST.KEY.MEETING_ITEM, meetingItem);
-            StorageSrv.setKey(CONST.KEY.MEETING_ROLE, meetingRole);
-            $state.go(CONST.APPSTATE.MEETING, { 'menu': CONST.MENU.FULL });
+            if (meetingItem && meetingRole && personGuid) {
+                StorageSrv.setKey(CONST.KEY.MEETING_ITEM, meetingItem);
+                StorageSrv.setKey(CONST.KEY.MEETING_ROLE, meetingRole);
+                StorageSrv.setKey(CONST.KEY.MEETING_PERSONGUID, personGuid);
+                $state.go(CONST.APPSTATE.MEETING, { 'menu': CONST.MENU.FULL });
+            } else {
+                $log.error("overviewCtrl.goToMeeting: bad args \n meeting=" + JSON.stringify(meetingItem) + "\n  role=" + JSON.stringify(meetingRole) + "\n person=" + JSON.stringify(personGuid));
+                $rootScope.failedInfo('STR_LOGIN_FAILED');
+            }
         }
 
-        self.loginMeeting = function (meetingItem, meetingRole) {
-            $log.debug("overviewCtrl.loginMeeting");
+        self.loginMeeting = function (meetingItem, meetingRole, personGuid) {
+            $log.debug("overviewCtrl.loginMeeting: \n - meeting:\n" +JSON.stringify(meetingItem) +"\n - role: " +JSON.stringify(meetingRole) + "\n - personGuid: " +personGuid);
             DialogUtils.openProgress('STR_MTG_LOGIN_PROGRESS');
-            AhjoMeetingSrv.meetingLogin(meetingItem.meetingGuid, meetingRole.RoleID).then(function () {
-                goToMeeting(meetingItem, meetingRole);
+            AhjoMeetingSrv.meetingLogin(meetingItem.meetingGuid, meetingRole.RoleID, personGuid).then(function () {
+                goToMeeting(meetingItem, meetingRole, personGuid);
             }, function (error) {
                 $log.error("overviewCtrl.loginMeeting: " + JSON.stringify(error));
                 $rootScope.failedInfo('STR_LOGIN_FAILED');

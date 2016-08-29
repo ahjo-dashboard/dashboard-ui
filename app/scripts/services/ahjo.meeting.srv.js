@@ -59,41 +59,42 @@ angular.module('dashboard')
             return deferred.promise;
         };
 
-        self.meetingLogin = function (meetingGuid, meetingRole) {
+        self.meetingLogin = function (meetingGuid, meetingRole, personGuid) {
             var deferred = $q.defer();
             $http({
                 method: 'POST',
                 data: {
                     'meetingGuid': meetingGuid,
-                    'meetingRole': meetingRole
+                    'meetingRole': meetingRole,
+                    'personGuid': personGuid
                 },
                 cache: false,
                 url: ENV.AhjoApi_MeetingLogin
             }).then(function () {
-                // todo: some response needed
                 deferred.resolve();
             }, function (error) {
-                $log.error("AhjoMeetingSrv: login error");
+                $log.error("AhjoMeetingSrv: login");
                 deferred.reject(error);
             });
 
             return deferred.promise;
         };
 
-        self.meetingLogout = function (meetingGuid) {
+        self.meetingLogout = function (meetingGuid, meetingRole, personGuid) {
             var deferred = $q.defer();
             $http({
-                method: 'GET',
+                method: 'POST',
                 data: {
-                    'meetingGuid': meetingGuid
+                    'meetingGuid': meetingGuid,
+                    'meetingRole': meetingRole,
+                    'personGuid': personGuid
                 },
                 cache: false,
-                url: ENV.AhjoApi_MeetingLogout.replace(':meetingGuid', meetingGuid)
+                url: ENV.AhjoApi_MeetingLogout
             }).then(function () {
-                // todo: some response needed
                 deferred.resolve();
             }, function (error) {
-                $log.error("AhjoMeetingSrv: logout error");
+                $log.error("AhjoMeetingSrv: logout");
                 deferred.reject(error);
             });
 
