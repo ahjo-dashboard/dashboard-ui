@@ -65,6 +65,14 @@ angular.module('dashboard')
                     }]
                 });
 
+                modalInstance.opened.then(function () {
+                    $rootScope.$emit(CONST.CONFIRMACTIVE, { 'open': true });
+                });
+
+                modalInstance.closed.then(function () {
+                    $rootScope.$emit(CONST.CONFIRMACTIVE, { 'open': false });
+                });
+
                 modalInstance.result.then(function (selectedItem) {
                     callback(selectedItem);
                 });
