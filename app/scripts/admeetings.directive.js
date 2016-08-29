@@ -166,6 +166,10 @@ angular.module('dashboard')
                 return 'db-badge-red';
             };
 
+            self.isRoleSupported = function isRoleSupportedFn(role) {
+                return angular.isObject(role) && (CONST.MTGROLE.CHAIRMAN === role.RoleID || CONST.MTGROLE.PARTICIPANT_FULL === role.RoleID); // Roles supported by this interface
+            };
+
             setTitle();
         }];
 
