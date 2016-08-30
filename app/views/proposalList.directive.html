@@ -1,10 +1,10 @@
-<div class="proposal-list db-directive">
+<div class="proposal-list db-directive db-spinner-cont">
+    <span us-spinner spinner-on="c.loading"></span>
 
     <div class="db-min-width-300">
 
         <div class="db-prop-hdr">
 
-            <span us-spinner="{radius:6, width:2, length:4}" spinner-on="c.loading"></span>
             <h4 ng-if="c.isMobile" class="db-prop-hdr-text" translate translate-cloak>STR_PRIVATE_PROPOSALS</h4>
             <h5 ng-if="!c.isMobile" class="db-prop-hdr-text" translate translate-cloak>STR_PRIVATE_PROPOSALS</h5>
 
@@ -28,7 +28,6 @@
 
         <div class="db-prop-hdr">
 
-            <span us-spinner="{radius:6, width:2, length:4}" spinner-on="c.loading"></span>
             <h4 ng-if="c.isMobile" class="db-prop-hdr-text" translate translate-cloak>STR_PUBLIC_PROPOSALS</h4>
             <h5 ng-if="!c.isMobile" class="db-prop-hdr-text" translate translate-cloak>STR_PUBLIC_PROPOSALS</h5>
 
