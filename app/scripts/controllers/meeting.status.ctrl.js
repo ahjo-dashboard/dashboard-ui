@@ -30,6 +30,7 @@ angular.module('dashboard')
         self.meeting = null;
         self.chairman = false;
         self.loading = true;
+        self.updatingStatus = false;
         self.hasUnsavedData = false;
         self.parallelModeActive = false;
         self.unsavedConfig = { title: 'STR_CONFIRM', text: 'STR_WARNING_UNSAVED', yes: 'STR_CONTINUE' };
@@ -383,15 +384,21 @@ angular.module('dashboard')
             angular.forEach(CONST.MEETINGSTATUSACTIONS, function (status) {
                 if (angular.isObject(status) && angular.isObject(self.meeting)) {
                     // todo: active status needs to be updated to app constants
-                    console.log('TOPIC STATUS');
-                    console.log(self.meeting.meetingStatus);
                     status.disabled = status.active.indexOf(self.meeting.meetingStatus) <= CONST.NOTFOUND;
                     this.push(status);
                 }
             }, items);
-            openStatusChangeView('STR_CHANGE_MEETING_STATUS', items, function (result) {
-                $log.debug("meetingStatusCtrl.changeMeetingStatus: selected: " + JSON.stringify(result));
-                // todo: update selected status to backend
+            openStatusChangeView('STR_CHANGE_MEETING_STATUS', items, function (status) {
+                $log.debug("meetingStatusCtrl.changeMeetingStatus: selected: " + JSON.stringify(status));
+                AhjoMeetingSrv.setMeetingStatus(status).then(function (result) {
+                    $log.debug("meetingStatusCtrl.setMeetingStatus: " + JSON.stringify(result));
+                }, function (error) {
+                    $log.error("meetingStatusCtrl.setMeetingStatus: " + JSON.stringify(error));
+                }, function (/*notification*/) {
+                    self.updatingStatus = true;
+                }).finally(function () {
+                    self.updatingStatus = false;
+                });
             });
         };
 
@@ -402,15 +409,21 @@ angular.module('dashboard')
                 angular.forEach(CONST.TOPICSTATUSACTIONS, function (status) {
                     if (angular.isObject(status) && angular.isObject(topic)) {
                         // todo: active status needs to be updated to app constants
-                        console.log('TOPIC STATUS');
-                        console.log(topic.topicStatus);
                         status.disabled = status.active.indexOf(topic.topicStatus) <= CONST.NOTFOUND;
                         this.push(status);
                     }
                 }, items);
-                openStatusChangeView('STR_CHANGE_TOPIC_STATUS', items, function (result) {
-                    $log.debug("meetingStatusCtrl.changeTopicStatus: selected: " + JSON.stringify(result));
-                    // todo: update selected status to backend
+                openStatusChangeView('STR_CHANGE_TOPIC_STATUS', items, function (status) {
+                    $log.debug("meetingStatusCtrl.changeTopicStatus: selected: " + JSON.stringify(status));
+                    AhjoMeetingSrv.setTopicStatus(status).then(function (result) {
+                        $log.debug("meetingStatusCtrl.setTopicStatus: " + JSON.stringify(result));
+                    }, function (error) {
+                        $log.error("meetingStatusCtrl.setTopicStatus: " + JSON.stringify(error));
+                    }, function (/*notification*/) {
+                        topic.updatingStatus = true;
+                    }).finally(function () {
+                        topic.updatingStatus = false;
+                    });
                 });
             }
             else {

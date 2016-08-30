@@ -31,21 +31,25 @@
                 </uib-progressbar>
             </div>
             <div ng-if='!msc.loading' class="list-group-item db-prim-bg db-padding-05">
-                <button type="button" class="btn btn-block db-brd-all db-flex ng-class:[{'db-btn-sel':msc.chairman},{'db-no-pointer-events db-btn-prim':!msc.chairman}]" tooltip-enable="isTooltips" uib-tooltip="{{'STR_CHANGE_MEETING_STATUS' | translate}}" ng-click="msc.changeMeetingStatus()">
-                    <span class="badge db-flex-area db-font-12 ng-class:[msc.mtgStatusClass(msc.meeting)]" translate translate-cloak>{{msc.stringId(msc.meeting)}}</span>
+                <button type="button" class="btn btn-block db-brd-all db-flex ng-class:[{'db-btn-sel':msc.chairman},{'db-no-pointer-events db-btn-prim':!msc.chairman}]" ng-disabled="msc.updatingStatus" tooltip-enable="isTooltips" uib-tooltip="{{'STR_CHANGE_MEETING_STATUS' | translate}}" ng-click="msc.changeMeetingStatus()">
+                    <span ng-if="!msc.updatingStatus" class="badge db-flex-area db-font-12 ng-class:[msc.mtgStatusClass(msc.meeting)]" translate translate-cloak>{{msc.stringId(msc.meeting)}}</span>
+                    <span class="db-min-height-24" us-spinner="{radius:4, width:2, length:4}" spinner-on="msc.updatingStatus"></span>
                 </button>
             </div>
 
             <div class="list-group-item db-flex db-padding-05-ver db-overflow-hidden ng-class:[{'db-opt-bg db-font-clr-white': (msc.isSelected(topic) && !msc.isMobile), 'db-item-disabled': !msc.canAccess(topic), 'db-padding-0-hor':!msc.chairman, 'db-padding-10-hor':msc.chairman}]"
                 ng-repeat="topic in msc.meeting.topicList track by $index" db-confirm confirm-enabled="msc.hasUnsavedData && !msc.isSelected(topic)" confirm-config="msc.unsavedConfig" ng-click="msc.topicSelected(topic)">
-                <button class="btn db-btn-tiny ng-class:[{'db-btn-sel':msc.chairman},{'db-btn-transparent db-no-pointer-events':!msc.chairman}]" tooltip-enable="isTooltips" tooltip-placement="right" uib-tooltip="{{'STR_CHANGE_TOPIC_STATUS' | translate}}" ng-click="msc.changeTopicStatus(topic); msc.isMobile && $event.stopPropagation();">
-                    <div class="db-iconwrapper">
+                <button class="btn db-btn-tiny ng-class:[{'db-btn-sel':msc.chairman},{'db-btn-transparent db-no-pointer-events':!msc.chairman}]" ng-disabled="msc.updatingStatus" tooltip-enable="isTooltips" tooltip-placement="right" uib-tooltip="{{'STR_CHANGE_TOPIC_STATUS' | translate}}" ng-click="msc.changeTopicStatus(topic); msc.isMobile && $event.stopPropagation();">
+                    <div ng-if="!topic.updatingStatus" class="db-iconwrapper">
                         <img ng-src="{{msc.statusIcon(topic)}}">
                         <img ng-show="topic.includePublishedRemark" ng-src="images/mtg-states/prop-indicator.png">
                         <img ng-show="{{!msc.isTopicPublic(topic)}}" ng-src="images/mtg-states/conf-indicator.png">
                     </div>
+                    <div ng-if="topic.updatingStatus" class="db-transparent db-no-padding list-group-item db-min-width-20">
+                        <span us-spinner="{radius:4, width:2, length:4}" spinner-on="true"></span>
+                    </div>
                 </button>
-                <div ng-show="topic.isModified" class="db-min-width-22 db-center">
+                <div ng-show="topic.isModified" class="db-min-width-20 db-center">
                     <span class="glyphicon glyphicon-bell db-newprops db-fs-12" aria-hidden="true"></span>
                 </div>
                 <div class="db-center-v db-flex-area db-margin-10-hor">

@@ -101,4 +101,58 @@ angular.module('dashboard')
             return deferred.promise;
         };
 
+        self.setTopicStatus = function (status) {
+            var deferred = $q.defer();
+
+            $timeout(function () {
+                deferred.notify({});
+
+                $timeout(function () {
+                    deferred.resolve({ 'status': status }); // todo: update
+                }, 3000);
+
+                // $http({
+                //     method: 'POST',
+                //     data: { 'status': status }, // todo: update this
+                //     cache: false,
+                //     url: '' // todo: update this
+                // }).then(function () {
+                //     deferred.resolve();
+                // }, function (error) {
+                //     $log.error("AhjoMeetingSrv: setTopicStatus");
+                //     deferred.reject(error);
+                // });
+
+            }, 0);
+
+            return deferred.promise;
+        };
+
+        self.setMeetingStatus = function (status) {
+            var deferred = $q.defer();
+
+            $timeout(function () {
+                deferred.notify({});
+
+                $timeout(function () {
+                    deferred.resolve({ 'status': status }); // todo: update
+                }, 3000);
+
+                // $http({
+                //     method: 'POST',
+                //     data: { 'status': status }, // todo: update this
+                //     cache: false,
+                //     url: '' // todo: update this
+                // }).then(function () {
+                //     deferred.resolve();
+                // }, function (error) {
+                //     $log.error("AhjoMeetingSrv: setMeetingStatus");
+                //     deferred.reject(error);
+                // });
+
+            }, 0);
+
+            return deferred.promise;
+        };
+
     }]);

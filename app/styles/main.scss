@@ -122,12 +122,16 @@ iframe {
     min-width: 300px;
 }
 
-.db-min-width-22 {
-    min-width: 22px;
+.db-min-width-20 {
+    min-width: 20px;
 }
 
 .db-min-width-120 {
     min-width: 120px;
+}
+
+.db-min-height-24 {
+    min-height: 24px;
 }
 
 .db-font-clr-white {
@@ -159,7 +163,7 @@ iframe {
 }
 
 .db-transparent {
-    background-color: transparent;
+    background-color: transparent !important;
 }
 
 .db-margin-2 {
