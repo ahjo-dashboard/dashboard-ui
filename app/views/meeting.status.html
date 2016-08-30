@@ -1,20 +1,26 @@
 <div class="ad-page">
 
     <div ng-if="!msc.isMobile" class="ad-page-header db-center-v">
-        <button type="button" class="btn db-btn-prim glyphicon glyphicon-th-list" ng-click="closeMenu()" tooltip-enable="isTooltips" uib-tooltip="{{'STR_INFO_MENUBTN' | translate}}" tooltip-placement="right">
+        <button type="button" class="btn db-btn-prim" ng-click="closeMenu()" tooltip-enable="isTooltips" uib-tooltip="{{'STR_INFO_MENUBTN' | translate}}"
+            tooltip-placement="right">
+            <span class="glyphicon glyphicon-th-list"></span>
         </button>
-        <button db-confirm confirm-enabled="msc.hasUnsavedData" confirm-config="msc.unsavedConfig" type="button" class="btn db-btn-prim glyphicon glyphicon-log-out" ng-click="msc.logOut()" tooltip-enable="isTooltips" uib-tooltip="{{'STR_MTG_LOGOUT' | translate}}"
-        tooltip-placement="right">
+        <button db-confirm confirm-enabled="msc.hasUnsavedData" confirm-config="msc.unsavedConfig" type="button" class="btn db-btn-prim"
+            ng-click="msc.logOut()" tooltip-enable="isTooltips" uib-tooltip="{{'STR_MTG_LOGOUT' | translate}}" tooltip-placement="right">
+            <span class="glyphicon glyphicon-log-out"></span>
         </button>
-        <button type="button" class="btn db-btn-prim glyphicon glyphicon-info-sign disabled" ng-click="">
+        <button type="button" class="btn db-btn-prim disabled" ng-click="">
+            <span class="glyphicon glyphicon-info-sign"></span>
         </button>
-        <button type="button" class="btn db-btn-prim glyphicon ng-class:[{'glyphicon-resize-vertical':parallelMode},{'glyphicon-resize-horizontal':!parallelMode}]" ng-click="msc.toggleParallelMode()" ng-disabled="!msc.parallelModeActive" tooltip-enable="isTooltips"
-        uib-tooltip="{{parallelMode ? 'STR_INFO_VIEW_VERT' : 'STR_INFO_VIEW_HORIZ' | translate}}" tooltip-placement="right">
+        <button type="button" class="btn db-btn-prim" ng-click="msc.toggleParallelMode()" ng-disabled="!msc.parallelModeActive" tooltip-enable="isTooltips"
+            uib-tooltip="{{parallelMode ? 'STR_INFO_VIEW_VERT' : 'STR_INFO_VIEW_HORIZ' | translate}}" tooltip-placement="right">
+            <span class="glyphicon ng-class:[{'glyphicon-resize-vertical':parallelMode},{'glyphicon-resize-horizontal':!parallelMode}]"></span>
         </button>
     </div>
 
     <div ng-if="msc.isMobile" class="ad-page-header db-center-v">
-        <button type="button" class="btn btn-lg db-btn-prim db-no-margin glyphicon glyphicon-menu-left" ng-click="goHome()">
+        <button type="button" class="btn btn-lg db-btn-prim db-no-margin" ng-click="goHome()">
+            <span class="glyphicon glyphicon-menu-left"></span>
         </button>
         <h4 translate translate-cloak>STR_TOPIC_LIST</h4>
     </div>
@@ -31,16 +37,19 @@
                 </uib-progressbar>
             </div>
             <div ng-if='!msc.loading' class="list-group-item db-prim-bg db-padding-05">
-                <button type="button" class="btn btn-block db-brd-all db-flex ng-class:[{'db-btn-sel':msc.chairman},{'db-no-pointer-events db-btn-prim':!msc.chairman}]" ng-disabled="msc.updatingStatus" tooltip-enable="isTooltips" uib-tooltip="{{'STR_CHANGE_MEETING_STATUS' | translate}}" ng-click="msc.changeMeetingStatus()">
-                    <span ng-if="!msc.updatingStatus" class="badge db-flex-area db-font-12 ng-class:[msc.mtgStatusClass(msc.meeting)]" translate translate-cloak>{{msc.stringId(msc.meeting)}}</span>
-                    <span class="db-min-height-24" us-spinner="{radius:4, width:2, length:4}" spinner-on="msc.updatingStatus"></span>
+                <button type="button" class="btn btn-block db-brd-all db-flex ng-class:[{'db-btn-sel':msc.chairman},{'db-no-pointer-events db-btn-prim':!msc.chairman}]"
+                    tooltip-enable="isTooltips" uib-tooltip="{{'STR_CHANGE_MEETING_STATUS' | translate}}" ng-click="msc.changeMeetingStatus()">
+                    <span class="badge db-flex-area db-font-12 ng-class:[msc.mtgStatusClass(msc.meeting)]" translate translate-cloak>{{msc.stringId(msc.meeting)}}</span>
                 </button>
             </div>
 
             <div class="list-group-item db-flex db-padding-05-ver db-overflow-hidden ng-class:[{'db-opt-bg db-font-clr-white': (msc.isSelected(topic) && !msc.isMobile), 'db-item-disabled': !msc.canAccess(topic), 'db-padding-0-hor':!msc.chairman, 'db-padding-10-hor':msc.chairman}]"
-                ng-repeat="topic in msc.meeting.topicList track by $index" db-confirm confirm-enabled="msc.hasUnsavedData && !msc.isSelected(topic)" confirm-config="msc.unsavedConfig" ng-click="msc.topicSelected(topic)">
-                <button class="btn db-btn-tiny ng-class:[{'db-btn-sel':msc.chairman},{'db-btn-transparent db-no-pointer-events':!msc.chairman}]" ng-disabled="msc.updatingStatus" tooltip-enable="isTooltips" tooltip-placement="right" uib-tooltip="{{'STR_CHANGE_TOPIC_STATUS' | translate}}" ng-click="msc.changeTopicStatus(topic); msc.isMobile && $event.stopPropagation();">
-                    <div ng-if="!topic.updatingStatus" class="db-iconwrapper">
+                ng-repeat="topic in msc.meeting.topicList track by $index" db-confirm confirm-enabled="msc.hasUnsavedData && !msc.isSelected(topic)"
+                confirm-config="msc.unsavedConfig" ng-click="msc.topicSelected(topic)">
+                <button class="btn db-btn-tiny ng-class:[{'db-btn-sel':msc.chairman},{'db-btn-transparent db-no-pointer-events':!msc.chairman}]"
+                    tooltip-enable="isTooltips" tooltip-placement="right" uib-tooltip="{{'STR_CHANGE_TOPIC_STATUS' | translate}}"
+                    ng-click="msc.changeTopicStatus(topic); msc.isMobile && $event.stopPropagation();">
+                    <div class="db-iconwrapper">
                         <img ng-src="{{msc.statusIcon(topic)}}">
                         <img ng-show="topic.includePublishedRemark" ng-src="images/mtg-states/prop-indicator.png">
                         <img ng-show="{{!msc.isTopicPublic(topic)}}" ng-src="images/mtg-states/conf-indicator.png">
@@ -53,7 +62,8 @@
                     <span class="glyphicon glyphicon-bell db-newprops db-fs-12" aria-hidden="true"></span>
                 </div>
                 <div class="db-center-v db-flex-area db-margin-10-hor">
-                    <h5 class="ng-class:[{'db-twoliner-12':!msc.isMobile}]" tooltip-enable="isTooltips" uib-tooltip-template="'topicTooltipTpl.html'" tooltip-class="db-tooltip" tooltip-placement="top-left">{{topic.topicreference}} {{topic.topicTitle}}</h5>
+                    <h5 class="ng-class:[{'db-twoliner-12':!msc.isMobile}]" tooltip-enable="isTooltips" uib-tooltip-template="'topicTooltipTpl.html'"
+                        tooltip-class="db-tooltip" tooltip-placement="top-left">{{topic.topicreference}} {{topic.topicTitle}}</h5>
                 </div>
             </div>
     </div>
