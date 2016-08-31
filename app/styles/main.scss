@@ -166,6 +166,10 @@ iframe {
     background-color: transparent !important;
 }
 
+.db-white-bg {
+    background-color: $db-color-white !important;
+}
+
 .db-margin-2 {
     margin: 2px !important;
 }
@@ -204,6 +208,14 @@ iframe {
     margin: 1.5vh;
 }
 
+.db-margin-05-right {
+    margin-right: 0.5vh;
+}
+
+.db-margin-05-left {
+    margin-left: 0.5vh;
+}
+
 .db-padding-05 {
     padding: 0.5vh !important;
 }
@@ -234,6 +246,11 @@ iframe {
 .db-padding-05-ver {
     padding-top: 0.5vh !important;
     padding-bottom: 0.5vh !important;
+}
+
+.db-padding-07-ver {
+    padding-top: 0.7vh !important;
+    padding-bottom: 0.7vh !important;
 }
 
 .db-padding-2 {

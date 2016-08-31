@@ -17,6 +17,7 @@ angular.module('dashboard')
         var self = this;
         self.isMobile = $rootScope.isMobile;
         var isTablet = $rootScope.isTablet;
+        var mtgRole = StorageSrv.getKey(CONST.KEY.MEETING_ROLE);
         self.primaryUrl = null;
         self.secondaryUrl = null;
         self.error = null;
@@ -40,6 +41,7 @@ angular.module('dashboard')
         self.unsavedConfig = { title: 'STR_CONFIRM', text: 'STR_WARNING_UNSAVED', yes: 'STR_CONTINUE' };
         self.hasUnsavedProposal = false;
         self.remarkIsUnsaved = false;
+        self.isChairman = false;
 
         function setBlockMode(mode) {
             self.bm = self.isMobile ? CONST.BLOCKMODE.SECONDARY : mode;
@@ -73,6 +75,15 @@ angular.module('dashboard')
             }, 0);
         }
 
+        function setDefaultSecondaryMode() {
+            if (self.isChairman) {
+                setSecondaryMode(CONST.SECONDARYMODE.DECISIONS);
+            }
+            else {
+                setSecondaryMode(CONST.SECONDARYMODE.PROPOSALS);
+            }
+        }
+
         function checkMode() {
             if (self.bm === CONST.BLOCKMODE.PRIMARY) {
                 setBlockMode(CONST.BLOCKMODE.DEFAULT);
@@ -91,7 +102,7 @@ angular.module('dashboard')
             self.header = null;
 
             if (self.sm !== CONST.SECONDARYMODE.PROPOSALS && self.sm !== CONST.SECONDARYMODE.REMARK) {
-                setSecondaryMode(CONST.SECONDARYMODE.PROPOSALS);
+                setDefaultSecondaryMode();
             }
 
             if (angular.isObject(topic)) {
@@ -224,6 +235,10 @@ angular.module('dashboard')
             checkMode();
         };
 
+        self.decisionsClicked = function () {
+            setSecondaryMode(CONST.SECONDARYMODE.DECISIONS);
+        };
+
         self.isSecret = function (item) {
             return (item && item.publicity) ? (item.publicity === CONST.PUBLICITY.SECRET) : false;
         };
@@ -285,8 +300,14 @@ angular.module('dashboard')
             $log.debug("meetingDetailsCtrl: DESTROY");
         });
 
+        // CONSTRUCT
+
+        if (angular.isObject(mtgRole) && mtgRole.RoleID === CONST.MTGROLE.CHAIRMAN) {
+            self.isChairman = true;
+        }
         setBlockMode(CONST.BLOCKMODE.DEFAULT);
         setPrimaryMode();
-        setSecondaryMode(CONST.SECONDARYMODE.PROPOSALS);
+        setDefaultSecondaryMode();
+
         setData(StorageSrv.getKey(CONST.KEY.TOPIC));
     }]);

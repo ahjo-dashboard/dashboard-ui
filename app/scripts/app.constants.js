@@ -35,7 +35,8 @@ angular.module('dashboard')
             ATTACHMENTS: 'ATTACHMENTS',
             MATERIALS: 'MATERIALS',
             REMARK: 'REMARK',
-            SECRET: 'SECRET'
+            SECRET: 'SECRET',
+            DECISIONS: 'DECISIONS'
         },
         'HOMEMODE': {
             ALL: 0,
