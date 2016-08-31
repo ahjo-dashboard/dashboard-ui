@@ -19,15 +19,15 @@ angular.module('dashboard')
             },
             'TYPE': [
                 { value: 1, text: "Päätös", roles: [] },
-                { value: 2, text: "Esityksen muutos", roles: [], cityCouncilRoles: [] },
-                { value: 3, text: "Pöydällepanoehdotus", roles: [CONST.MTGROLE.PARTICIPANT_FULL], cityCouncilRoles: [CONST.MTGROLE.PARTICIPANT_FULL] },
-                { value: 4, text: "Palautusehdotus", roles: [CONST.MTGROLE.PARTICIPANT_FULL], cityCouncilRoles: [CONST.MTGROLE.PARTICIPANT_FULL] },
-                { value: 5, text: "Vastaehdotus", roles: [CONST.MTGROLE.PARTICIPANT_FULL], cityCouncilRoles: [CONST.MTGROLE.PARTICIPANT_FULL] },
-                { value: 6, text: "Hylkäysehdotus", roles: [CONST.MTGROLE.PARTICIPANT_FULL], cityCouncilRoles: [CONST.MTGROLE.PARTICIPANT_FULL] },
-                { value: 7, text: "Ponsi", roles: [], cityCouncilRoles: [CONST.MTGROLE.PARTICIPANT_FULL] },
+                { value: 2, text: "Esityksen muutos", roles: [], cityCouncilRoles: [], decisionOrder: 1 },
+                { value: 3, text: "Pöydällepanoehdotus", roles: [CONST.MTGROLE.PARTICIPANT_FULL], cityCouncilRoles: [CONST.MTGROLE.PARTICIPANT_FULL], decisionOrder: 3 },
+                { value: 4, text: "Palautusehdotus", roles: [CONST.MTGROLE.PARTICIPANT_FULL], cityCouncilRoles: [CONST.MTGROLE.PARTICIPANT_FULL], decisionOrder: 4 },
+                { value: 5, text: "Vastaehdotus", roles: [CONST.MTGROLE.PARTICIPANT_FULL], cityCouncilRoles: [CONST.MTGROLE.PARTICIPANT_FULL], decisionOrder: 5 },
+                { value: 6, text: "Hylkäysehdotus", roles: [CONST.MTGROLE.PARTICIPANT_FULL], cityCouncilRoles: [CONST.MTGROLE.PARTICIPANT_FULL], decisionOrder: 6 },
+                { value: 7, text: "Ponsi", roles: [], cityCouncilRoles: [CONST.MTGROLE.PARTICIPANT_FULL], decisionOrder: 7 },
                 { value: 8, text: "Eriävä mielipide", roles: [CONST.MTGROLE.PARTICIPANT_FULL], cityCouncilRoles: [CONST.MTGROLE.PARTICIPANT_FULL] },
                 { value: 9, text: "Esteellinen", roles: [], cityCouncilRoles: [] },
-                { value: 10, text: "Esityksen poisto", roles: [], cityCouncilRoles: [] }
+                { value: 10, text: "Esityksen poisto", roles: [], cityCouncilRoles: [], decisionOrder: 2 }
             ],
             'TOGGLE': 'PROPS.TOGGLE',
             'COUNT': 'PROPS.COUNT',

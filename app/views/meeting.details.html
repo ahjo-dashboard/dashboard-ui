@@ -89,6 +89,10 @@
                     db-confirm confirm-enabled="c.hasUnsavedProposal || c.remarkIsUnsaved" confirm-config="c.unsavedConfig" ng-click="c.remarkClicked()">
                     <span translate translate-cloak>STR_REMARK</span>
                 </button>
+                <button ng-if="c.isChairman" type="button" class="btn btn-block db-btn-sel db-btn-big db-brd-all ng-class:[{'active':c.sm === c.sms.DECISIONS},{'db-margin-2':!c.isMobile}]"
+                    db-confirm confirm-enabled="c.hasUnsavedProposal || c.remarkIsUnsaved" confirm-config="c.unsavedConfig" ng-click="c.decisionsClicked()">
+                    <span translate translate-cloak>Päätökset</span>
+                </button>
             </div>
 
             <!-- SECONDARY BLOCK CONTENT -->
@@ -98,6 +102,7 @@
                 <db-imgviewer ng-if="c.sm === c.sms.SECRET" file-conf="c.tData"></db-imgviewer>
                 <db-remark ng-if="c.sm === c.sms.REMARK" topic="c.topic"></db-remark>
                 <db-proposal-list ng-if="c.sm === c.sms.PROPOSALS" topic="c.topic"></db-proposal-list>
+                <db-decisions ng-if="c.sm === c.sms.DECISIONS"></db-decisions>
             </div>
             <div ng-hide="!c.selData" class="db-block-content db-brd-bottom ng-class:[{'db-block-border':!c.isMobile},{'db-padding-15':c.isMobile}]">
                 <db-selection-list ng-attr-sel-data="c.selData" ng-attr-on-select="c.selectionClicked(data)"></db-selection-list>
