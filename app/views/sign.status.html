@@ -3,22 +3,27 @@
     <!-- HEADERS -->
 
     <div ng-if="!c.isMobile" class="ad-page-header db-center-v">
-        <button type="button" class="btn db-btn-prim glyphicon glyphicon-th-list" ng-click="closeMenu()" tooltip-enable="isTooltips"
+        <button type="button" class="btn db-btn-prim" ng-click="closeMenu()" tooltip-enable="isTooltips"
             uib-tooltip="{{'STR_INFO_MENUBTN' | translate}}" tooltip-placement="right">
+            <span class="glyphicon glyphicon-th-list"></span>
         </button>
-        <button type="button" class="btn db-btn-prim glyphicon glyphicon-log-out" ng-click="c.goHome()" tooltip-enable="isTooltips"
+        <button type="button" class="btn db-btn-prim" ng-click="c.goHome()" tooltip-enable="isTooltips"
             uib-tooltip="{{'STR_INFO_HOMEBTN' | translate}}" tooltip-placement="right">
+            <span class="glyphicon glyphicon-log-out"></span>
         </button>
-        <button type="button" class="btn db-btn-prim glyphicon glyphicon-info-sign disabled" ng-click="">
-        </button>
-        <button ng-if="!c.isTablet" type="button" class="btn db-btn-prim glyphicon ng-class:[{'glyphicon-resize-vertical':parallelMode},{'glyphicon-resize-horizontal':!parallelMode}]"
+        <button ng-if="!c.isTablet" type="button" class="btn db-btn-prim"
             ng-click="c.toggleParallelMode()" tooltip-enable="isTooltips" uib-tooltip="{{parallelMode ? 'STR_INFO_VIEW_VERT' : 'STR_INFO_VIEW_HORIZ' | translate}}"
             tooltip-placement="right">
+            <span class="glyphicon ng-class:[{'glyphicon-resize-vertical':parallelMode},{'glyphicon-resize-horizontal':!parallelMode}]"></span>
+        </button>
+        <button type="button" class="btn db-btn-prim disabled" ng-click="">
+            <span class="glyphicon glyphicon-info-sign"></span>
         </button>
     </div>
 
     <div ng-if="c.isMobile" class="ad-page-header db-center-v">
-        <button type="button" class="btn btn-lg db-btn-prim db-no-margin glyphicon glyphicon-menu-left" ng-click="c.goHome()">
+        <button type="button" class="btn btn-lg db-btn-prim db-no-margin" ng-click="c.goHome()">
+            <span class="glyphicon glyphicon-menu-left"></span>
         </button>
         <h4 translate translate-cloak>STR_SIGNINGS</h4>
     </div>
