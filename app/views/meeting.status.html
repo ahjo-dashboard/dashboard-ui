@@ -1,20 +1,25 @@
 <div class="ad-page">
 
     <div ng-if="!msc.isMobile" class="ad-page-header db-center-v">
-        <button type="button" class="btn db-btn-prim glyphicon glyphicon-th-list" ng-click="closeMenu()" tooltip-enable="isTooltips" uib-tooltip="{{'STR_INFO_MENUBTN' | translate}}" tooltip-placement="right">
+        <button type="button" class="btn db-btn-prim" ng-click="closeMenu()" tooltip-enable="isTooltips" uib-tooltip="{{'STR_INFO_MENUBTN' | translate}}" tooltip-placement="right">
+            <span class="glyphicon glyphicon-th-list"></span>
         </button>
-        <button db-confirm confirm-enabled="msc.hasUnsavedData" confirm-config="msc.unsavedConfig" type="button" class="btn db-btn-prim glyphicon glyphicon-log-out" ng-click="msc.logOut()" tooltip-enable="isTooltips" uib-tooltip="{{'STR_MTG_LOGOUT' | translate}}"
+        <button db-confirm confirm-enabled="msc.hasUnsavedData" confirm-config="msc.unsavedConfig" type="button" class="btn db-btn-prim" ng-click="msc.logOut()" tooltip-enable="isTooltips" uib-tooltip="{{'STR_MTG_LOGOUT' | translate}}"
         tooltip-placement="right">
+            <span class="glyphicon glyphicon-log-out"></span>
         </button>
-        <button type="button" class="btn db-btn-prim glyphicon glyphicon-info-sign disabled" ng-click="">
-        </button>
-        <button type="button" class="btn db-btn-prim glyphicon ng-class:[{'glyphicon-resize-vertical':parallelMode},{'glyphicon-resize-horizontal':!parallelMode}]" ng-click="msc.toggleParallelMode()" ng-disabled="!msc.parallelModeActive" tooltip-enable="isTooltips"
+        <button type="button" class="btn db-btn-prim" ng-click="msc.toggleParallelMode()" ng-disabled="!msc.parallelModeActive" tooltip-enable="isTooltips"
         uib-tooltip="{{parallelMode ? 'STR_INFO_VIEW_VERT' : 'STR_INFO_VIEW_HORIZ' | translate}}" tooltip-placement="right">
+            <span class="glyphicon ng-class:[{'glyphicon-resize-vertical':parallelMode},{'glyphicon-resize-horizontal':!parallelMode}]"></span>
+        </button>
+        <button type="button" class="btn db-btn-prim disabled" ng-click="">
+            <span class="glyphicon glyphicon-info-sign"></span>
         </button>
     </div>
 
     <div ng-if="msc.isMobile" class="ad-page-header db-center-v">
-        <button type="button" class="btn btn-lg db-btn-prim db-no-margin glyphicon glyphicon-menu-left" ng-click="goHome()">
+        <button type="button" class="btn btn-lg db-btn-prim db-no-margin" ng-click="goHome()">
+            <span class="glyphicon glyphicon-menu-left"></span>
         </button>
         <h4 translate translate-cloak>STR_TOPIC_LIST</h4>
     </div>
@@ -53,7 +58,9 @@
                     <span class="glyphicon glyphicon-bell db-newprops db-fs-12" aria-hidden="true"></span>
                 </div>
                 <div class="db-center-v db-flex-area db-margin-10-hor">
-                    <h5 class="ng-class:[{'db-twoliner-12':!msc.isMobile}]" tooltip-enable="isTooltips" uib-tooltip-template="'topicTooltipTpl.html'" tooltip-class="db-tooltip" tooltip-placement="top-left">{{topic.topicreference}} {{topic.topicTitle}}</h5>
+                    <span class="ng-class:[{'db-twoliner-12':!msc.isMobile}]" tooltip-enable="isTooltips" uib-tooltip-template="'topicTooltipTpl.html'" tooltip-class="db-tooltip" tooltip-placement="top-left">
+                        {{topic.topicreference}} {{topic.topicTitle}}
+                    </span>
                 </div>
             </div>
     </div>
