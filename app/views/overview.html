@@ -7,8 +7,9 @@
             <h4 class="hidden-sm hidden-md hidden-lg db-flex-area" translate>STR_APPNAME</h4>
             <h3 class="hidden-xs db-flex-area" translate>STR_APPNAME</h3>
             <button ng-if="env_dev" type="button" class="btn db-btn-prim" ng-click="oc.logout()" tooltip-enable="isTooltips" tooltip-placement="left"
-                uib-tooltip="{{'STR_LOGOUT' | translate}}"></button>
+                uib-tooltip="{{'STR_LOGOUT' | translate}}">
                 <span class="glyphicon glyphicon-log-out"></span>
+            </button>
             <button type="button" class="btn db-btn-prim" ng-click="oc.showInfo()">
                 <span class="glyphicon glyphicon-info-sign center"></span>
             </button>
