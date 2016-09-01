@@ -41,7 +41,8 @@
             <li ng-if="item.visible" type="button" class="list-group-item" ng-repeat="item in c.data | orderBy:'meeting.meetingDate': reverse track by $index">
                 <div class="row">
                     <div class="col-xs-12 col-sm-4">
-                        {{item.meeting.meetingDate | date:'yyyy-MM-dd HH:mm' }}<span class="db-fw-700 db-margin-10-hor">{{item.meeting.name}}</span>
+                        <span class="db-fw-700 ng-class:[{'db-padding-05-ver db-fs-11':c.isMobile}]">{{item.meeting.name}}</span>
+                        &nbsp;{{item.meeting.meetingDate | date:'HH:mm' }}
                     </div>
                     <div class="col-xs-12 col-sm-2 ng-class:[{'db-padding-05-ver db-fs-11':c.isMobile}]">
                         <span class="label ng-class:[c.mtgStatusClass(item)]" translate translate-cloak>{{c.statusStringId(item)}}</span>

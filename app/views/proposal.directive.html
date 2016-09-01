@@ -4,7 +4,7 @@
     <div class="db-flex db-center-v" ng-click="(c.mode !== c.modes.EDIT) && c.toggleCollapse()">
 
         <span class="db-margin-10-right glyphicon ng-class:{'glyphicon-minus': c.mode !== c.modes.COLLAPSED, 'glyphicon-plus': c.mode === c.modes.COLLAPSED}"
-            aria-hidden="true"></span>
+            aria-hidden="true" tooltip-enable="c.isTooltips" tooltip-placement="right" uib-tooltip="{{'STR_EXPANDCOLLAPSE' | translate}}"></span>
 
         <span ng-show="c.uiProposal.isPublishedIcon" class="db-margin-10-right glyphicon glyphicon-send db-newprops" aria-hidden="true"
             tooltip-enable="c.isTooltips" uib-tooltip="{{'STR_PUBLISHED' | translate}}" tooltip-placement="right"></span>
@@ -29,7 +29,9 @@
 
             <div ng-if="c.mode !== c.modes.COLLAPSED" class="db-flex-right db-flex-area">
                 <button ng-if="c.uiProposal.isOwnProposal && (c.mode !== c.modes.EDIT)" class="btn btn-danger db-btn-big db-margin-2" db-confirm
-                    confirm-config="c.uiProposal.isPublishedIcon ? c.deleteConfigPub : c.deleteConfig" ng-click="c.remove(data)"><span translate translate-cloak>STR_DELETE</span></button>
+                confirm-config="c.uiProposal.isPublished ? c.deleteConfigPub : c.uiProposal.isPublishedIcon ? c.deleteConfigDraftAndPub : c.deleteConfigDraft" ng-click="c.remove(data)">
+                    <span translate translate-cloak>STR_DELETE</span>
+                </button>
                 <button ng-if="c.uiProposal.isOwnProposal && (c.mode === c.modes.EDIT)" class="btn btn-danger db-btn-big db-margin-2" ng-click="c.cancel()"><span translate translate-cloak>STR_CANCEL</span></button>
                 <button ng-if="c.uiProposal.isOwnProposal && !c.uiProposal.isPublished" class="btn btn-success db-btn-big db-margin-2" db-confirm
                     confirm-config="c.publishConfig" ng-click="c.send()"><span translate translate-cloak>STR_PUBLISH</span></button>

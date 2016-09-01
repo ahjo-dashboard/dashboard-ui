@@ -98,12 +98,12 @@ angular.module('dashboard')
         'MTGSTATUS': {
             RESERVED: { value: 0, stringId: 'STR_RESERVED_MEETING', badgeClass: 'db-badge-dark' },
             CREATED: { value: 1, stringId: 'STR_CREATED', badgeClass: 'db-badge-dark' },
-            TECHNICALLY_OPEN: { value: 2, stringId: 'STR_TECHNICALLY_OPEN', badgeClass: 'db-badge-dark' },
-            ACTIVE: { value: 3, stringId: 'STR_ACTIVE', badgeClass: 'db-badge-yel' },
+            TECHNICALLY_OPEN: { value: 2, stringId: 'STR_TECHNICALLY_OPEN', badgeClass: 'db-badge-yel' },
+            ACTIVE: { value: 3, stringId: 'STR_ACTIVE', badgeClass: 'db-badge-gre' },
             ABORTED: { value: 4, stringId: 'STR_ABORTED', badgeClass: 'db-badge-pur' },
-            OFFICIALLY_CLOSED: { value: 5, stringId: 'STR_OFFICIALLY_CLOSED', badgeClass: 'db-badge-gre' },
-            RECORDS_MOVED: { value: 6, stringId: 'STR_RECORDS_MOVED', badgeClass: 'db-badge-gre' },
-            TECHNICALLY_CLOSED: { value: 7, stringId: 'STR_TECNICALLY_CLOSED', badgeClass: 'db-badge-gre' },
+            OFFICIALLY_CLOSED: { value: 5, stringId: 'STR_OFFICIALLY_CLOSED', badgeClass: 'db-badge-dark' },
+            RECORDS_MOVED: { value: 6, stringId: 'STR_RECORDS_MOVED', badgeClass: 'db-badge-dark' },
+            TECHNICALLY_CLOSED: { value: 7, stringId: 'STR_TECNICALLY_CLOSED', badgeClass: 'db-badge-dark' },
         },
         'MEETINGSTATUSACTIONS': {
             OPEN: { value: 1, stringId: 'STR_OPEN', active: [1, 2] },
