@@ -13,7 +13,6 @@
             <button type="button" class="btn db-btn-prim" ng-click="oc.showInfo()">
                 <span class="glyphicon glyphicon-info-sign center"></span>
             </button>
-
         </div>
     </div>
 
@@ -39,7 +38,8 @@
                 <button type="button" class="hidden-xs btn db-btn-prim ad-xs">
                     <span class="glyphicon glyphicon-info-sign"></span>
                 </button>
-                <button type="button" class="btn db-btn-prim ad-xs db-btn-list-topright-xs db-btn-list-topright-sm" ng-click="oc.upperClicked()">
+                <button type="button" class="btn db-btn-prim ad-xs db-btn-list-topright-xs db-btn-list-topright-sm" ng-click="oc.upperClicked()"
+                    tooltip-enable="isTooltips" tooltip-placement="top" uib-tooltip="{{'STR_EXPANDCOLLAPSE' | translate}}">
                     <span class="ng-class: ['glyphicon', {'glyphicon-plus':oc.blockMode !== oc.bms.PRIMARY, 'glyphicon-minus':oc.blockMode === oc.bms.PRIMARY}]"></span>
                 </button>
             </div>
@@ -66,7 +66,8 @@
                 <button type="button" class="hidden-xs btn db-btn-prim ad-xs">
                     <span class="glyphicon glyphicon-info-sign"></span>
                 </button>
-                <button type="button" class="btn db-btn-prim ad-xs db-btn-list-topright-xs db-btn-list-topright-sm" ng-click="oc.lowerClicked()">
+                <button type="button" class="btn db-btn-prim ad-xs db-btn-list-topright-xs db-btn-list-topright-sm" ng-click="oc.lowerClicked()"
+                    tooltip-enable="isTooltips" tooltip-placement="top" uib-tooltip="{{'STR_EXPANDCOLLAPSE' | translate}}">
                     <span class="glyphicon ng-class:[{'glyphicon-plus':oc.blockMode !== oc.bms.SECONDARY, 'glyphicon-minus':oc.blockMode === oc.bms.SECONDARY}]"></span>
                 </button>
             </div>

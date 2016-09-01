@@ -10,7 +10,7 @@
                 <div class="list-group-item db-no-padding" ng-repeat="i in c.record | filter: { type: d.value } | filter:query as filtered track by $index">
                     <div class="db-flex db-padding-10" ng-click="c.itemSelected(i)">
                         <span class="db-margin-05-right glyphicon ng-class:{'glyphicon-minus': c.isSelected(i), 'glyphicon-plus': !c.isSelected(i)}"
-                            aria-hidden="true"></span>
+                            aria-hidden="true" tooltip-enable="c.isTooltips" tooltip-placement="right" uib-tooltip="{{'STR_EXPANDCOLLAPSE' | translate}}"></span>
                         <h5 class="db-flex-area">{{i.name}}
                             <span ng-show="c.isSupported(i)">
                                 <span class="glyphicon glyphicon-thumbs-up db-margin-05" tooltip-enable="c.isTooltips" uib-tooltip="{{'STR_SUPPORTED' | translate}}" tooltip-placement="right"></span>

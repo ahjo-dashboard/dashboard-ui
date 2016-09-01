@@ -3,7 +3,9 @@
     <ul class="list-group" ng-repeat="data in c.data track by $index">
         <div class="db-list-group-item-prim" ng-click="isCollapsed = !isCollapsed">
             <div class="db-flex db-center-v">
-                <span class="db-margin-10-right glyphicon ng-class:{'glyphicon-minus': !isCollapsed, 'glyphicon-plus': isCollapsed}" aria-hidden="true"></span>
+                <span class="db-margin-10-right glyphicon ng-class:{'glyphicon-minus': !isCollapsed, 'glyphicon-plus': isCollapsed}" aria-hidden="true"
+                    tooltip-enable="c.isTooltips" tooltip-placement="right" uib-tooltip="{{'STR_EXPANDCOLLAPSE' | translate}}">
+                </span>
                 <h5 ng-if="data.title.header" translate translate-cloak>{{data.title.header}}</h5>
                 &nbsp;&nbsp;
                 <span class="badge db-badge-hdr ng-cloak">{{data.objects.length}}</span>

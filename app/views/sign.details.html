@@ -14,7 +14,8 @@
                 <button ng-if="menuClosed()" type="button" class="btn db-btn-prim db-btn-small db-brd-all db-margin-2" ng-click="c.toggleParallelMode()" tooltip-enable="isTooltips" uib-tooltip="{{parallelMode ? 'STR_INFO_VIEW_VERT' : 'STR_INFO_VIEW_HORIZ' | translate}}" tooltip-placement="right">
                     <span class="glyphicon ng-class:[{'glyphicon-resize-vertical':parallelMode},{'glyphicon-resize-horizontal':!parallelMode}]"></span>
                 </button>
-                <button type="button" class="btn db-btn-prim db-btn-small db-brd-all db-margin-2" ng-disabled="parallelMode" ng-click="c.primaryClicked()">
+                <button type="button" class="btn db-btn-prim db-btn-small db-brd-all db-margin-2" ng-disabled="parallelMode" ng-click="c.primaryClicked()"
+                    tooltip-enable="isTooltips" tooltip-placement="right" uib-tooltip="{{'STR_EXPANDCOLLAPSE' | translate}}">
                     <span class="glyphicon ng-class:[{'glyphicon-minus':c.bm === c.bms.PRIMARY},{'glyphicon-plus':c.bm !== c.bms.PRIMARY}]"></span>
                 </button>
 
@@ -52,8 +53,8 @@
                 </button>
 
                 <button ng-if="!c.isTablet" type="button" class="btn db-btn-prim db-btn-small db-brd-all db-margin-2" ng-disabled="parallelMode"
-                    ng-click="c.secondaryClicked()">
-                    <span class="glyphicon ng-class:[{'glyphicon-minus':c.bm === c.bms.SECONDARY},{'glyphicon-plus':c.bm !== c.bms.SECONDARY}]""></span>
+                    ng-click="c.secondaryClicked()" tooltip-enable="isTooltips" tooltip-placement="right" uib-tooltip="{{'STR_EXPANDCOLLAPSE' | translate}}">
+                    <span class="glyphicon ng-class:[{'glyphicon-minus':c.bm === c.bms.SECONDARY},{'glyphicon-plus':c.bm !== c.bms.SECONDARY}]"></span>
                 </button>
 
                 <button ng-if="c.isTablet" type="button" class="btn db-btn-sel db-btn-big db-brd-all db-margin-2" ng-click="c.openDoc(c.btnModel.doc)">

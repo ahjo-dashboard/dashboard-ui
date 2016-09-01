@@ -4,7 +4,7 @@
     <div class="db-flex db-center-v" ng-click="(c.mode !== c.modes.EDIT) && c.toggleCollapse()">
 
         <span class="db-margin-10-right glyphicon ng-class:{'glyphicon-minus': c.mode !== c.modes.COLLAPSED, 'glyphicon-plus': c.mode === c.modes.COLLAPSED}"
-            aria-hidden="true"></span>
+            aria-hidden="true" tooltip-enable="c.isTooltips" tooltip-placement="right" uib-tooltip="{{'STR_EXPANDCOLLAPSE' | translate}}"></span>
 
         <span ng-show="c.uiProposal.isPublishedIcon" class="db-margin-10-right glyphicon glyphicon-send db-newprops" aria-hidden="true"
             tooltip-enable="c.isTooltips" uib-tooltip="{{'STR_PUBLISHED' | translate}}" tooltip-placement="right"></span>
