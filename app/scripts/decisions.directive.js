@@ -13,7 +13,7 @@
 angular.module('dashboard')
     .directive('dbDecisions', [function () {
 
-        var controller = ['$log', '$scope', 'AhjoMeetingSrv', 'StorageSrv', 'CONST', 'PROPS', function ($log, $scope, AhjoMeetingSrv, StorageSrv, CONST, PROPS) {
+        var controller = ['$log', '$scope', 'AhjoMeetingSrv', 'StorageSrv', 'CONST', 'PROPS', '$rootScope', function ($log, $scope, AhjoMeetingSrv, StorageSrv, CONST, PROPS, $rootScope) {
             $log.log("dbDecisions: CONTROLLER");
             var self = this;
             self.loading = false;
@@ -22,6 +22,7 @@ angular.module('dashboard')
             self.record = null;
             self.supporter = null;
             self.voting = null;
+            self.isTooltips = $rootScope.isTooltips;
 
             // FUNCTIONS
 
