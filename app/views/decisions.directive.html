@@ -12,9 +12,8 @@
                         <span class="db-margin-05-right glyphicon ng-class:{'glyphicon-minus': c.isSelected(i), 'glyphicon-plus': !c.isSelected(i)}"
                             aria-hidden="true"></span>
                         <h5 class="db-flex-area">{{i.name}}
-                            <span ng-show="true"> <!-- TODO: fixme -->
-                                &nbsp;
-                                <span class="glyphicon glyphicon-user center" tooltip-enable="c.isTooltips" uib-tooltip="{{'STR_SUPPORTED' | translate}}" tooltip-placement="right"></span>
+                            <span ng-show="c.isSupported(i)">
+                                <span class="glyphicon glyphicon-thumbs-up db-margin-05" tooltip-enable="c.isTooltips" uib-tooltip="{{'STR_SUPPORTED' | translate}}" tooltip-placement="right"></span>
                             <span>
                         </h5>
                     </div>

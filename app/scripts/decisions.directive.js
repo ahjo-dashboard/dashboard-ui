@@ -70,6 +70,18 @@ angular.module('dashboard')
                 return self.selectedItem === item;
             };
 
+            self.isSupported = function (item) {
+                var found = false;
+                if (angular.isObject(item)) {
+                    angular.forEach(self.supporter, function (s) {
+                        if (angular.isObject(s) && angular.equals(s.minuteEntryGuid, item.minuteEntryGuid)) {
+                            found = true;
+                        }
+                    });
+                }
+                return found;
+            };
+
             // WATCHERS
 
             $scope.$watch(function () {
