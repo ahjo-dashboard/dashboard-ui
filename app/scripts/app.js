@@ -73,7 +73,7 @@ angular.module('dashboard', [
         $httpProvider.defaults.withCredentials = true;
 
         $uibTooltipProvider.options({
-            popupDelay: 1700,
+            popupDelay: 1000,
             appendToBody: true // Otherwise tooltip is under some elements
         });
     })
