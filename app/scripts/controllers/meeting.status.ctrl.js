@@ -86,7 +86,7 @@ angular.module('dashboard')
         function storeTopic(topic) {
             if (angular.isObject(topic)) {
                 selectedTopicGuid = topic.topicGuid;
-                StorageSrv.setKey(CONST.KEY.TOPIC, angular.copy(topic));
+                StorageSrv.setKey(CONST.KEY.TOPIC, topic);
             }
             else {
                 $log.error("meetingStatusCtrl: storeTopic invalid parameter:");

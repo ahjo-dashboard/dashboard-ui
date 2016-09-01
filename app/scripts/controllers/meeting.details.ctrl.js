@@ -37,7 +37,6 @@ angular.module('dashboard')
         self.dData = null;
         self.amData = null;
 
-        self.propCount = null;
         self.unsavedConfig = { title: 'STR_CONFIRM', text: 'STR_WARNING_UNSAVED', yes: 'STR_CONTINUE' };
         self.hasUnsavedProposal = false;
         self.remarkIsUnsaved = false;
@@ -276,9 +275,10 @@ angular.module('dashboard')
         });
 
         var proposalCountWatcher = $rootScope.$on(PROPS.COUNT, function (event, data) {
-            self.propCount = null;
             if (angular.isObject(data) && !angular.isUndefined(data.published)) {
-                self.propCount = data.published;
+                if (angular.isObject(self.topic)) {
+                    self.topic.db_publishedProposalCount = data.published;
+                }
             }
         });
 
