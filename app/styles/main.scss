@@ -695,11 +695,11 @@ body {
     }
 
     .db-badge-gre {
-        @include db-badge-mix($db-color-success);
+        @include db-badge-mix($db-color-success, $badge-font-color-dark, $badge-font-color-dark);
     }
 
     .db-badge-dark {
-        @include db-badge-mix(#777777);
+        @include db-badge-mix(#a6a6a6);
     }
 
     .db-badge-red {
