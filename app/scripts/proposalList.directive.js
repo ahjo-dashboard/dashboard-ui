@@ -82,7 +82,7 @@ angular.module('dashboard')
                     }
                 });
 
-                $rootScope.$emit(PROPS.COUNT, { 'drafts': drafts, 'published': self.publishedCount });
+                $rootScope.$emit(PROPS.COUNT, { 'drafts': drafts, 'published': self.publishedCount, 'topicGuid': topicGuid });
             }
 
             function checkProposals(proposals) {
@@ -296,6 +296,7 @@ angular.module('dashboard')
                     }
                     if (!exists) {
                         self.proposals.splice(0, 0, data.proposal);
+                        countProposals(self.proposals);
                     }
                 }
                 else {

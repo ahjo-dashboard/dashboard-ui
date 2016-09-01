@@ -12,7 +12,7 @@
 * Controller of the dashboard
 */
 angular.module('dashboard')
-    .controller('meetingStatusCtrl', ['$log', '$scope', '$rootScope', '$stateParams', '$state', 'CONST', 'StorageSrv', 'ENV', 'AhjoMeetingSrv', '$timeout', 'Utils', 'DialogUtils', '$uibModal', function ($log, $scope, $rootScope, $stateParams, $state, CONST, StorageSrv, ENV, AhjoMeetingSrv, $timeout, Utils, DialogUtils, $uibModal) {
+    .controller('meetingStatusCtrl', ['$log', '$scope', '$rootScope', '$stateParams', '$state', 'CONST', 'StorageSrv', 'ENV', 'AhjoMeetingSrv', '$timeout', 'Utils', 'DialogUtils', '$uibModal', 'PROPS', function ($log, $scope, $rootScope, $stateParams, $state, CONST, StorageSrv, ENV, AhjoMeetingSrv, $timeout, Utils, DialogUtils, $uibModal, PROPS) {
         $log.debug("meetingStatusCtrl: CONTROLLER");
 
         // VARIABLES
@@ -469,6 +469,16 @@ angular.module('dashboard')
             }
         });
 
+        var proposalCountWatcher = $rootScope.$on(PROPS.COUNT, function (event, data) {
+            if (angular.isObject(self.meeting)) {
+                angular.forEach(self.meeting.topicList, function (t) {
+                    if (angular.isObject(data) && angular.isObject(t) && angular.equals(data.topicGuid, t.topicGuid)) {
+                        t.includePublishedRemark = (data.published > 0);
+                    }
+                }, this);
+            }
+        });
+
         var unsavedWatcher = $rootScope.$on(CONST.UNSAVEMEETINGDDATA, function (event, hasUnsaved) {
             self.hasUnsavedData = hasUnsaved ? true : false;
         });
@@ -479,6 +489,7 @@ angular.module('dashboard')
 
         $scope.$on('$destroy', unsavedWatcher);
         $scope.$on('$destroy', modeWatcher);
+        $scope.$on('$destroy', proposalCountWatcher);
 
         $scope.$on('$destroy', function () {
             $log.debug("meetingStatusCtrl: DESTROY");
