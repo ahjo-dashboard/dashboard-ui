@@ -14,8 +14,7 @@ angular.module('dashboard')
     .directive('dbPdf', ['$rootScope', 'CONST', '$log', '$compile', function ($rootScope, CONST, $log, $compile) {
         return {
             scope: {
-                uri: '=',
-                hide: '='
+                uri: '='
             },
             template: '<div></div>',
             restrict: 'AE',
@@ -23,7 +22,6 @@ angular.module('dashboard')
             link: function (scope, element/*, attrs*/) {
 
                 var params = "secondary=false&amp;mixed=false#view=FitH&amp;toolbar=0&amp;statusbar=0&amp;messages=0&amp;navpanes=0";
-                var isIe = $rootScope.isIe;
                 var noContentUri = 'no.content.html';
                 element.addClass('db-directive');
 
@@ -48,7 +46,12 @@ angular.module('dashboard')
                         content = '<iframe src="' + data.uri + paramSeparator(data.uri) + params + '"></iframe>';
                     }
                     element.append($compile(content)(scope));
-                    show();
+                    if ($rootScope.modalActive) {
+                        hide();
+                    }
+                    else {
+                        show();
+                    }
                 }
 
                 scope.$watch(
@@ -61,11 +64,11 @@ angular.module('dashboard')
 
                 scope.$watch(
                     function () {
-                        return { hide: scope.hide };
+                        return { modalActive: $rootScope.modalActive };
                     },
                     function (data) {
                         if (angular.isObject(data)) {
-                            if (data.hide) {
+                            if (data.modalActive) {
                                 hide();
                             }
                             else {
@@ -76,18 +79,6 @@ angular.module('dashboard')
                     true
                 );
 
-                var confirmWatcher = $rootScope.$on(CONST.CONFIRMACTIVE, function (event, data) {
-                    if (isIe && angular.isObject(data)) {
-                        if (data.open === true) {
-                            hide();
-                        }
-                        else if (data.open === false) {
-                            show();
-                        }
-                    }
-                });
-
-                scope.$on('$destroy', confirmWatcher);
                 scope.$on('$destroy', function () {
                     $log.debug("pdfDirective: DESTROY");
                 });

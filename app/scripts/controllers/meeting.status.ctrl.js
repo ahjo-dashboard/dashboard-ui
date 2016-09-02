@@ -67,11 +67,11 @@ angular.module('dashboard')
                 });
 
                 modalInstance.opened.then(function () {
-                    $rootScope.$emit(CONST.CONFIRMACTIVE, { 'open': true });
+                    DialogUtils.setModalActiveFlag(true);
                 });
 
                 modalInstance.closed.then(function () {
-                    $rootScope.$emit(CONST.CONFIRMACTIVE, { 'open': false });
+                    DialogUtils.setModalActiveFlag(false);
                 });
 
                 modalInstance.result.then(function (selectedItem) {
