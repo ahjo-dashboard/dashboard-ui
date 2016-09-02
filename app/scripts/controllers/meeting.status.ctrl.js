@@ -384,7 +384,7 @@ angular.module('dashboard')
 
         self.changeMeetingStatus = function () {
             if (!angular.isObject(mtgItem)) {
-                $log.error("meetingStatusCtrl.changeMeetingStatus: invalid parameter");
+                $log.error("meetingStatusCtrl.changeMeetingStatus: mtgItem missing");
                 return;
             }
             $log.debug("meetingStatusCtrl.changeMeetingStatus");
@@ -417,6 +417,10 @@ angular.module('dashboard')
         };
 
         self.changeTopicStatus = function (topic) {
+            if (!angular.isObject(mtgItem)) {
+                $log.error("meetingStatusCtrl.changeTopicStatus: mtgItem missing");
+                return;
+            }
             if (angular.isObject(topic)) {
                 $log.debug("meetingStatusCtrl.changeTopicStatus");
                 var items = [];
@@ -433,7 +437,7 @@ angular.module('dashboard')
                         return;
                     }
                     $log.debug("meetingStatusCtrl.changeTopicStatus: selected: " + JSON.stringify(status));
-                    AhjoMeetingSrv.setTopicStatus(topic.topicGuid, status.value).then(function (result) {
+                    AhjoMeetingSrv.setTopicStatus(topic.topicGuid, mtgItem.meetingGuid, status.value).then(function (result) {
                         $log.debug("meetingStatusCtrl.setTopicStatus: " + JSON.stringify(result));
                         // todo: implement result handling
                     }, function (error) {

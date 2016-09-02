@@ -290,7 +290,7 @@ angular.module('dashboard')
             return deferred.promise;
         };
 
-        self.setTopicStatus = function (topicGuid, stateId) {
+        self.setTopicStatus = function (topicGuid, meetingGuid, stateId) {
             var deferred = $q.defer();
 
             $timeout(function () {
@@ -298,7 +298,7 @@ angular.module('dashboard')
                 $http({
                     method: 'POST',
                     cache: false,
-                    url: ENV.AhjoApi_TopicStatus.replace(':stateId', stateId).replace(':topicGuid', topicGuid)
+                    url: ENV.AhjoApi_TopicStatus.replace(':stateId', stateId).replace(':meetingGuid', meetingGuid).replace(':topicGuid', topicGuid)
                 }).then(function (response) {
                     if (angular.isObject(response) && angular.isObject(response.data)) {
                         deferred.resolve(response.data);
