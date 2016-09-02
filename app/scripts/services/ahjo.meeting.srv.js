@@ -290,55 +290,49 @@ angular.module('dashboard')
             return deferred.promise;
         };
 
-        self.setTopicStatus = function (status) {
+        self.setTopicStatus = function (topicGuid, stateId) {
             var deferred = $q.defer();
 
             $timeout(function () {
                 deferred.notify({});
-
-                $timeout(function () {
-                    deferred.resolve({ 'status': status }); // todo: update
-                }, 3000);
-
-                // $http({
-                //     method: 'POST',
-                //     data: { 'status': status }, // todo: update this
-                //     cache: false,
-                //     url: '' // todo: update this
-                // }).then(function () {
-                //     deferred.resolve();
-                // }, function (error) {
-                //     $log.error("AhjoMeetingSrv: setTopicStatus");
-                //     deferred.reject(error);
-                // });
+                $http({
+                    method: 'POST',
+                    cache: false,
+                    url: ENV.AhjoApi_TopicStatus.replace(':stateId', stateId).replace(':topicGuid', topicGuid)
+                }).then(function (response) {
+                    if (angular.isObject(response) && angular.isObject(response.data)) {
+                        deferred.resolve(response.data);
+                    }
+                    else {
+                        deferred.reject({}); // todo: update error
+                    }
+                }, function (error) {
+                    deferred.reject(error);
+                });
 
             }, 0);
 
             return deferred.promise;
         };
 
-        self.setMeetingStatus = function (status) {
+        self.setMeetingStatus = function (meetingGuid, stateId) {
             var deferred = $q.defer();
-
             $timeout(function () {
                 deferred.notify({});
-
-                $timeout(function () {
-                    deferred.resolve({ 'status': status }); // todo: update
-                }, 3000);
-
-                // $http({
-                //     method: 'POST',
-                //     data: { 'status': status }, // todo: update this
-                //     cache: false,
-                //     url: '' // todo: update this
-                // }).then(function () {
-                //     deferred.resolve();
-                // }, function (error) {
-                //     $log.error("AhjoMeetingSrv: setMeetingStatus");
-                //     deferred.reject(error);
-                // });
-
+                $http({
+                    method: 'POST',
+                    cache: false,
+                    url: ENV.AhjoApi_MeetingStatus.replace(':stateId', stateId).replace(':meetingGuid', meetingGuid)
+                }).then(function (response) {
+                    if (angular.isObject(response) && angular.isObject(response.data)) {
+                        deferred.resolve(response.data);
+                    }
+                    else {
+                        deferred.reject({}); // todo: update error
+                    }
+                }, function (error) {
+                    deferred.reject(error);
+                });
             }, 0);
 
             return deferred.promise;
