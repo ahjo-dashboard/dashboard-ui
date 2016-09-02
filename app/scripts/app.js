@@ -103,6 +103,7 @@ angular.module('dashboard', [
         $rootScope.isMobile = Utils.isClientMobile();
         $rootScope.isTablet = Utils.isUaMobile();
         $rootScope.isTooltips = !$rootScope.isMobile && !$rootScope.isTablet;
+        $rootScope.modalActive = false;
         console.log("app.run: IE=" + $rootScope.isIe + "  Edge=" + $rootScope.isEdge + " Mobile=" + $rootScope.isMobile + " Tooltips=" + $rootScope.isTooltips);
 
         $rootScope.parallelMode = (!$rootScope.isMobile && !$rootScope.isTablet); // Default meeting layout mode parallel only on desktop because on small screens it's not so useful'

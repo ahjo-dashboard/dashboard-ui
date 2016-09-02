@@ -107,5 +107,15 @@ angular.module('dashboard')
             closeProgressNow();
         };
 
+        /*
+         * @name dashboard.dialogutils.setModalActiveFlag
+         * @description sets rootlevel modal dialog open flag for IE
+         */
+        self.setModalActiveFlag = function (active) {
+            if ($rootScope.isIe) {
+                $rootScope.modalActive = active;
+            }
+        };
+
         return self;
     });

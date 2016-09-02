@@ -10,7 +10,6 @@ angular.module('dashboard')
             HALF: 1,
             FULL: 2
         },
-        'CONFIRMACTIVE': 'CONFIRMACTIVE',
         'PROPOSALEVENT': 'PROPOSALEVENT',
         'PROPOSALSHASUNSAVED': 'PROPOSALSHASUNSAVED',
         'REMARKISUNSAVED': 'REMARKISUNSAVED',

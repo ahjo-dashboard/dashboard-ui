@@ -13,7 +13,7 @@
 angular.module('dashboard')
     .directive('dbConfirm', ['$log', function () {
 
-        var controller = ['$log', '$scope', '$uibModal', '$rootScope', 'CONST', function ($log, $scope, $uibModal, $rootScope, CONST) {
+        var controller = ['$log', '$scope', '$uibModal', '$rootScope', 'CONST', 'DialogUtils', function ($log, $scope, $uibModal, $rootScope, CONST, DialogUtils) {
             var conf;
             $scope.open = function () {
                 var modalInstance = $uibModal.open({
@@ -61,14 +61,14 @@ angular.module('dashboard')
                     if (angular.isObject(conf)) {
                         conf.isOpen = true;
                     }
-                    $rootScope.$emit(CONST.CONFIRMACTIVE, { 'open': true });
+                    DialogUtils.setModalActiveFlag(true);
                 });
 
                 modalInstance.closed.then(function () {
                     if (angular.isObject(conf)) {
                         conf.isOpen = false;
                     }
-                    $rootScope.$emit(CONST.CONFIRMACTIVE, { 'open': false });
+                    DialogUtils.setModalActiveFlag(false);
                 });
 
             };
