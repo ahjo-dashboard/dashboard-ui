@@ -81,7 +81,7 @@
                 <button type="button" class="btn btn-block db-btn-sel db-btn-big db-brd-all ng-class:[{'active':c.sm === c.sms.PROPOSALS},{'db-margin-2':!c.isMobile}]"
                     db-confirm confirm-enabled="c.hasUnsavedProposal || c.remarkIsUnsaved" confirm-config="c.unsavedConfig" ng-click="c.proposalsClicked()">
                     <span translate translate-cloak>STR_PROPOSALS</span>
-                    <span ng-if="c.topic.db_publishedProposalCount" class="badge ng-cloak ng-class:[{'db-font-clr-dark': c.topic.db_publishedProposalCount}]" tooltip-enable="isTooltips"
+                    <span ng-if="c.topic.db_publishedProposalCount >= 0" class="badge ng-cloak db-font-clr-dark" tooltip-enable="isTooltips"
                     uib-tooltip="{{'STR_PROP_PUB_COUNT' | translate}}" tooltip-placement="bottom">
                         {{c.topic.db_publishedProposalCount}}
                     </span>
