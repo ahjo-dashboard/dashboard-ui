@@ -172,7 +172,7 @@ angular.module('dashboard')
         }
 
         function getEvents() {
-            if (lastEventId && mtgItem.meetingGuid) {
+            if (lastEventId && angular.isObject(mtgItem) && mtgItem.meetingGuid) {
                 var proposalEvents = [];
                 AhjoMeetingSrv.getEvents(lastEventId, mtgItem.meetingGuid).then(function (response) {
                     if (angular.isArray(response)) {
@@ -248,6 +248,10 @@ angular.module('dashboard')
         }
 
         function getMeeting(mtgItem) {
+            if (!angular.isObject(mtgItem)) {
+                $log.error("meetingStatusCtrl: getMeeting invalid parameter:");
+                return;
+            }
             $log.debug("meetingStatusCtrl.getMeeting");
             self.uiName = mtgItem.agencyName + ' ' + mtgItem.name;
             selectedTopicGuid = null;
@@ -379,6 +383,10 @@ angular.module('dashboard')
         };
 
         self.changeMeetingStatus = function () {
+            if (!angular.isObject(mtgItem)) {
+                $log.error("meetingStatusCtrl.changeMeetingStatus: mtgItem missing");
+                return;
+            }
             $log.debug("meetingStatusCtrl.changeMeetingStatus");
             var items = [];
             angular.forEach(CONST.MEETINGSTATUSACTIONS, function (status) {
@@ -389,11 +397,17 @@ angular.module('dashboard')
                 }
             }, items);
             openStatusChangeView('STR_CHANGE_MEETING_STATUS', items, function (status) {
+                if (!angular.isObject(status)) {
+                    $log.error("meetingStatusCtrl.changeMeetingStatus: invalid status");
+                    return;
+                }
                 $log.debug("meetingStatusCtrl.changeMeetingStatus: selected: " + JSON.stringify(status));
-                AhjoMeetingSrv.setMeetingStatus(status).then(function (result) {
+                AhjoMeetingSrv.setMeetingStatus(mtgItem.meetingGuid, status.value).then(function (result) {
                     $log.debug("meetingStatusCtrl.setMeetingStatus: " + JSON.stringify(result));
+                    // todo: implement result handling
                 }, function (error) {
                     $log.error("meetingStatusCtrl.setMeetingStatus: " + JSON.stringify(error));
+                    // todo: implement error handling
                 }, function (/*notification*/) {
                     self.updatingStatus = true;
                 }).finally(function () {
@@ -403,6 +417,10 @@ angular.module('dashboard')
         };
 
         self.changeTopicStatus = function (topic) {
+            if (!angular.isObject(mtgItem)) {
+                $log.error("meetingStatusCtrl.changeTopicStatus: mtgItem missing");
+                return;
+            }
             if (angular.isObject(topic)) {
                 $log.debug("meetingStatusCtrl.changeTopicStatus");
                 var items = [];
@@ -414,11 +432,17 @@ angular.module('dashboard')
                     }
                 }, items);
                 openStatusChangeView('STR_CHANGE_TOPIC_STATUS', items, function (status) {
+                    if (!angular.isObject(status)) {
+                        $log.error("meetingStatusCtrl.changeTopicStatus: invalid status");
+                        return;
+                    }
                     $log.debug("meetingStatusCtrl.changeTopicStatus: selected: " + JSON.stringify(status));
-                    AhjoMeetingSrv.setTopicStatus(status).then(function (result) {
+                    AhjoMeetingSrv.setTopicStatus(topic.topicGuid, mtgItem.meetingGuid, status.value).then(function (result) {
                         $log.debug("meetingStatusCtrl.setTopicStatus: " + JSON.stringify(result));
+                        // todo: implement result handling
                     }, function (error) {
                         $log.error("meetingStatusCtrl.setTopicStatus: " + JSON.stringify(error));
+                        // todo: implement error handling
                     }, function (/*notification*/) {
                         topic.updatingStatus = true;
                     }).finally(function () {
