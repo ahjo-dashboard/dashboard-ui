@@ -125,11 +125,13 @@ app.controller('signDetailsCtrl', function ($log, $state, $rootScope, ENV, CONST
     };
 
     self.actionDoc = function () {
+        self.docUrl = null; // Null first in case it helps to revert iFrame if it navigates to an url embedded in pdf clicked by user, which won't update docUrl
         self.docUrl = self.btnModel.doc.url;
         setBlockContent(self.btnModel.doc);
     };
 
     self.actionDocTr = function () {
+        self.docUrl = null; // Null first in case it helps to revert iFrame if it navigates to an url embedded in pdf clicked by user, which won't update docUrl
         self.docUrl = self.btnModel.doctr.url;
         setBlockContent(self.btnModel.doctr);
     };
