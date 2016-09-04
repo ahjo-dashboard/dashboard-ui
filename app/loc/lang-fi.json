@@ -145,5 +145,12 @@
     "STR_REMARK_FAILED": "Oman merkinnän haku epäonnistui",
     "STR_ZOOM": "Suurennos:",
     "STR_PAGE": "Sivu:",
-    "STR_INFO_CONFIDENTIAL": "Luottamuksellinen"
+    "STR_INFO_CONFIDENTIAL": "Luottamuksellinen",
+    "STR_ERR_OP_FAIL": "Toiminto ei onnistunut",
+    "STR_REST_RES_1001": "@:STR_ERR_OP_FAIL",
+    "STR_REST_RES_1002": "Virheellinen kokouksen tila",
+    "STR_REST_RES_1003": "Virheellinen asian tila",
+    "STR_REST_RES_1004": "Virheellinen käyttäjärooli",
+    "STR_REST_RES_1005": "Kokoukseen on jo kirjautunut osanottaja valitulla roolilla",
+    "STR_ERR_TITLE": "Virhe"
 }
