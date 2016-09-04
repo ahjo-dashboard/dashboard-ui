@@ -248,7 +248,7 @@ angular.module('dashboard')
             return deferred.promise;
         };
 
-        self.meetingLogin = function (meetingGuid, meetingRole, personGuid) {
+        self.meetingLogin = function meetingLoginFn(meetingGuid, meetingRole, personGuid) {
             var deferred = $q.defer();
             $http({
                 method: 'POST',
@@ -259,8 +259,8 @@ angular.module('dashboard')
                 },
                 cache: false,
                 url: ENV.AhjoApi_MeetingLogin
-            }).then(function () {
-                deferred.resolve();
+            }).then(function (resp) {
+                deferred.resolve(resp);
             }, function (error) {
                 $log.error("AhjoMeetingSrv: login");
                 deferred.reject(error);
@@ -269,7 +269,7 @@ angular.module('dashboard')
             return deferred.promise;
         };
 
-        self.meetingLogout = function (meetingGuid, meetingRole, personGuid) {
+        self.meetingLogout = function meetingLogoutFn(meetingGuid, meetingRole, personGuid) {
             var deferred = $q.defer();
             $http({
                 method: 'POST',
@@ -280,8 +280,8 @@ angular.module('dashboard')
                 },
                 cache: false,
                 url: ENV.AhjoApi_MeetingLogout
-            }).then(function () {
-                deferred.resolve();
+            }).then(function (resp) {
+                deferred.resolve(resp);
             }, function (error) {
                 $log.error("AhjoMeetingSrv: logout");
                 deferred.reject(error);
