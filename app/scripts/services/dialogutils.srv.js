@@ -12,7 +12,7 @@
 * Service in the dashboard.
 */
 angular.module('dashboard')
-    .factory('DialogUtils', function ($log, $q, $uibModal, $timeout, $rootScope) {
+    .factory('DialogUtils', function ($log, $q, $uibModal, $timeout, $rootScope, ngDialog) {
 
         // VARIABLES
 
@@ -98,6 +98,52 @@ angular.module('dashboard')
             }
         };
 
+
+        /*
+         * @name dashboard.dialogutils.showError
+         * @description .
+         * @param {string} Scope to use for communicating with the dialog
+         * @param {string} String id for title.
+         * @param {string} String id for body
+         * @returns {} ngDialog
+         */
+        self.showError = function showErrorFn(aTitleStrId, aBodyStrId) {
+            $log.debug("DialogUtils.showError: " + JSON.stringify(aTitleStrId) +", " + JSON.stringify(aBodyStrId));
+            // var dlgScope = aScope;
+            // dlgScope.dbDlgTitleStrId = aTitleStrId;
+            // dlgScope.dbDlgbodyStrId = aBodyStr;
+            return ngDialog.open({
+                template: 'views/errordlg.html',
+                controller: 'errordlgCtrl',
+                controllerAs: 'c',
+                resolve: {
+                    titleStrId: function () { return aTitleStrId;  },
+                    bodyStrId: function () { return aBodyStrId;  }
+                }
+            });
+
+            // var dlg = $uibModal.open({
+            //     animation: false,
+            //     ariaLabelledBy: 'modal-title',
+            //     ariaDescribedBy: 'modal-body',
+            //     backdrop: true,
+            //     templateUrl: 'views/errordlg.html',
+            //     controller: 'errordlgCtrl',
+            //     controllerAs: 'c',
+            //     resolve: {
+            //         titleStrId: function () { return aTitleStrId; },
+            //         bodyStr: function () { return aBodyStr; }
+            //     }
+            // });
+            // dlg.result.then(function (/*selection*/) {
+            // }, function (/*error*/) {
+            // });
+            // dlg.result.finally(function (/*selection*/) {
+            //     $log.debug("DialogUtils.showError: error dialog finally closing");
+            // });
+
+        };
+
         /*
          * @name dashboard.dialogutils.clearAll
          * @description Clears all notifications owned by this factory
@@ -105,6 +151,7 @@ angular.module('dashboard')
         self.clearAll = function clearAllFn() {
             $log.debug("DialogUtils.clearAll");
             closeProgressNow();
+            ngDialog.closeAll();
         };
 
         /*

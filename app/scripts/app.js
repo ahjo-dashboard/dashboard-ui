@@ -23,9 +23,10 @@ angular.module('dashboard', [
     'angularSpinner',
     'monospaced.elastic',
     'focus-if',
-    'pascalprecht.translate'
+    'pascalprecht.translate',
+    'ngDialog'
 ])
-    .config(function ($urlRouterProvider, $stateProvider, ENV, G_APP, $logProvider, $provide, $compileProvider, $translateProvider, $httpProvider, $uibTooltipProvider) {
+    .config(function ($urlRouterProvider, $stateProvider, ENV, G_APP, $logProvider, $provide, $compileProvider, $translateProvider, $httpProvider, $uibTooltipProvider, ngDialogProvider) {
         // Startup logged always regardless of ENV config, so using console instead of $log
         console.log('dashboard.config: ver: ' + G_APP.app_version + ' env: ' + ENV.app_env + ' logging: ' + ENV.app_debuglogs);
 
@@ -75,6 +76,14 @@ angular.module('dashboard', [
         $uibTooltipProvider.options({
             popupDelay: 1000,
             appendToBody: true // Otherwise tooltip is under some elements
+        });
+
+        ngDialogProvider.setDefaults({
+            className: 'ngdialog-theme-default',
+            showClose: false,
+            closeByDocument: true,
+            closeByEscape: true,
+            closeByNavigation: true
         });
     })
     .run(function ($rootScope, $log, $window, CONST, ENV, $state, $timeout, $translate, Utils, StorageSrv, ngToast, DialogUtils) {
