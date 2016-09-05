@@ -1,7 +1,8 @@
 <div>
-    <div class="modal-header db-alert-header">
+    <div class="modal-header ng-class:{'db-alert-header': c.isError, 'db-confirm-header': !c.isError}">
         <h3>
-            <span class="glyphicon glyphicon-alert"></span>
+            <span ng-if="c.isError" class="glyphicon glyphicon-alert"></span>
+            <span ng-if="!c.isError" class="glyphicon glyphicon-info-sign"></span>
             &nbsp;
             <span translate translate-cloak>{{c.dbDlgTitleStrId}}</span>
         </h3>

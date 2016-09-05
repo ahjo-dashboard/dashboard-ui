@@ -39,6 +39,22 @@ angular.module('dashboard')
             }
         }
 
+        function showModal(aIsError, aTitleStrId, aBodyStrId, aCloseByNavi) {
+            $log.debug("DialogUtils.showModal: isError=" +aIsError +" " + JSON.stringify(aTitleStrId) + ", " + JSON.stringify(aBodyStrId));
+            var closeNavi = angular.isDefined(aCloseByNavi) ? aCloseByNavi : false;
+            return ngDialog.open({
+                template: 'views/errordlg.html',
+                controller: 'errordlgCtrl',
+                controllerAs: 'c',
+                closeByNavigation: closeNavi,
+                resolve: {
+                    titleStrId: function () { return aTitleStrId; },
+                    bodyStrId: function () { return aBodyStrId; },
+                    isError: function () { return aIsError; }
+                }
+            });
+        }
+
         /*
          * @name dashboard.dialogutils.openProgress
          * @description Displays a modal progress dialog. Parallel calls clear pending cancel requests and update the existing dialog.
@@ -98,50 +114,32 @@ angular.module('dashboard')
             }
         };
 
+        /*
+         * @name dashboard.dialogutils.showInfo
+         * @description Displays an info dialog
+         * @param {string} Title string id
+         * @param {string} Body text string id
+         * @param {boolean} True if url navigation should close the dialog
+         * @returns {} ngDialog promise
+         */
+        self.showInfo = function showInfoFn(aTitleStrId, aBodyStrId, aCloseByNavi) {
+            // $log.debug("DialogUtils.showError: " + JSON.stringify(aTitleStrId) + ", " + JSON.stringify(aBodyStrId));
+            var closeNavi = angular.isDefined(aCloseByNavi) ? aCloseByNavi : false;
+            return showModal(false, aTitleStrId, aBodyStrId, closeNavi);
+        };
 
         /*
          * @name dashboard.dialogutils.showError
-         * @description .
-         * @param {string} Scope to use for communicating with the dialog
-         * @param {string} String id for title.
-         * @param {string} String id for body
-         * @returns {} ngDialog
+         * @description Displays an error modal
+         * @param {string} Title string id
+         * @param {string} Body text string id
+         * @param {boolean} True if url navigation should close the dialog
+         * @returns {} ngDialog promise
          */
-        self.showError = function showErrorFn(aTitleStrId, aBodyStrId) {
-            $log.debug("DialogUtils.showError: " + JSON.stringify(aTitleStrId) +", " + JSON.stringify(aBodyStrId));
-            // var dlgScope = aScope;
-            // dlgScope.dbDlgTitleStrId = aTitleStrId;
-            // dlgScope.dbDlgbodyStrId = aBodyStr;
-            return ngDialog.open({
-                template: 'views/errordlg.html',
-                controller: 'errordlgCtrl',
-                controllerAs: 'c',
-                resolve: {
-                    titleStrId: function () { return aTitleStrId;  },
-                    bodyStrId: function () { return aBodyStrId;  }
-                }
-            });
-
-            // var dlg = $uibModal.open({
-            //     animation: false,
-            //     ariaLabelledBy: 'modal-title',
-            //     ariaDescribedBy: 'modal-body',
-            //     backdrop: true,
-            //     templateUrl: 'views/errordlg.html',
-            //     controller: 'errordlgCtrl',
-            //     controllerAs: 'c',
-            //     resolve: {
-            //         titleStrId: function () { return aTitleStrId; },
-            //         bodyStr: function () { return aBodyStr; }
-            //     }
-            // });
-            // dlg.result.then(function (/*selection*/) {
-            // }, function (/*error*/) {
-            // });
-            // dlg.result.finally(function (/*selection*/) {
-            //     $log.debug("DialogUtils.showError: error dialog finally closing");
-            // });
-
+        self.showError = function showErrorFn(aTitleStrId, aBodyStrId, aCloseByNavi) {
+            // $log.debug("DialogUtils.showError: " + JSON.stringify(aTitleStrId) + ", " + JSON.stringify(aBodyStrId));
+            var closeNavi = angular.isDefined(aCloseByNavi) ? aCloseByNavi : false;
+            return showModal(true, aTitleStrId, aBodyStrId, closeNavi);
         };
 
         /*

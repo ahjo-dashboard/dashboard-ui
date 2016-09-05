@@ -12,8 +12,9 @@
  * Controller of the dashboard
  */
 angular.module('dashboard')
-    .controller('errordlgCtrl', function (titleStrId, bodyStrId) {
+    .controller('errordlgCtrl', function (titleStrId, bodyStrId, isError) {
         var self = this;
         self.dbDlgTitleStrId = titleStrId;
         self.dbDlgbodyStrId = bodyStrId;
+        self.isError = isError;
     });
