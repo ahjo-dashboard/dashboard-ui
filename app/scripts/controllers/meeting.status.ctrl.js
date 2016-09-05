@@ -469,13 +469,13 @@ angular.module('dashboard')
         self.logOut = function logOutFn() {
             $log.debug("meetingStatusCtrl.logOut: \n - meeting:\n" + JSON.stringify(mtgItem) + "\n - role: " + JSON.stringify(mtgRole) + "\n - mtgPersonGuid: " + mtgPersonGuid);
             if (angular.isObject(mtgItem) && angular.isObject(mtgRole) && mtgPersonGuid) {
-                DialogUtils.openProgress('STR_MTG_EXIT_PROGRESS');
+                var dlg = DialogUtils.showProgress('STR_MTG_EXIT_PROGRESS');
                 AhjoMeetingSrv.meetingLogout(mtgItem.meetingGuid, mtgRole.RoleID, mtgPersonGuid).then(function () {
                 }, function (error) {
                     $log.error("meetingStatusCtrl.logOut: " + JSON.stringify(error));
                 }).finally(function () {
                     $state.go(CONST.APPSTATE.HOME, { menu: CONST.MENU.CLOSED });
-                    DialogUtils.closeProgress();
+                    DialogUtils.close(dlg);
                 });
             } else {
                 $log.error("meetingStatusCtrl.logOut: bad args \n - meeting:\n" + JSON.stringify(mtgItem) + "\n - role: " + JSON.stringify(mtgRole) + "\n - mtgPersonGuid: " + mtgPersonGuid);
