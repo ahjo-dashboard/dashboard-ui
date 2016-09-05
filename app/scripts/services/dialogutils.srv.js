@@ -43,8 +43,8 @@ angular.module('dashboard')
             $log.debug("DialogUtils.showModal: isError=" +aIsError +" " + JSON.stringify(aTitleStrId) + ", " + JSON.stringify(aBodyStrId));
             var closeNavi = angular.isDefined(aCloseByNavi) ? aCloseByNavi : false;
             return ngDialog.open({
-                template: 'views/errordlg.html',
-                controller: 'errordlgCtrl',
+                template: 'views/infodialog.tmpl.html',
+                controller: 'infoDialogCtrl',
                 controllerAs: 'c',
                 closeByNavigation: closeNavi,
                 resolve: {

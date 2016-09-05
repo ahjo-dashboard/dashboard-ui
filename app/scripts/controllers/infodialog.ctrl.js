@@ -6,13 +6,13 @@
 
 /**
  * @ngdoc function
- * @name dashboard.controller:errordlgCtrl
+ * @name dashboard.controller:infoDialogCtrl
  * @description
- * # errordlgCtrl
+ * # infoDialogCtrl
  * Controller of the dashboard
  */
 angular.module('dashboard')
-    .controller('errordlgCtrl', function (titleStrId, bodyStrId, isError) {
+    .controller('infoDialogCtrl', function (titleStrId, bodyStrId, isError) {
         var self = this;
         self.dbDlgTitleStrId = titleStrId;
         self.dbDlgbodyStrId = bodyStrId;
