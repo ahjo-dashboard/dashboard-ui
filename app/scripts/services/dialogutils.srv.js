@@ -17,6 +17,7 @@ angular.module('dashboard')
         // VARIABLES
 
         var self = this;
+        self.isModalActive = false;
 
         // FUNCTIONS
 
@@ -105,12 +106,19 @@ angular.module('dashboard')
 
         /*
          * @name dashboard.dialogutils.setModalActiveFlag
-         * @description sets rootlevel modal dialog open flag for IE
+         * @description sets modal dialog open flag for IE
          */
         self.setModalActiveFlag = function (active) {
-            if ($rootScope.isIe) {
-                $rootScope.modalActive = active;
-            }
+            self.modalActive = active;
+        };
+
+        /*
+         * @name dashboard.dialogutils.isModalActive
+         * @description For IE checks if app's modal dialogs are open
+         * @returns {boolean} True if a modal dialog is open on IE, false if not IE or no modals open.
+         */
+        self.isModalActive = function () {
+            return $rootScope.isIe && (self.modalActive || ngDialog.getOpenDialogs().length);
         };
 
         return self;

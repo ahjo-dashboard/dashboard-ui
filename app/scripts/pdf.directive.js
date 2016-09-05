@@ -46,7 +46,7 @@ angular.module('dashboard')
                         content = '<iframe src="' + data.uri + paramSeparator(data.uri) + params + '"></iframe>';
                     }
                     element.append($compile(content)(scope));
-                    if ($rootScope.modalActive) {
+                    if ($rootScope.isModalActive()) {
                         hide();
                     }
                     else {
@@ -64,7 +64,7 @@ angular.module('dashboard')
 
                 scope.$watch(
                     function () {
-                        return { modalActive: $rootScope.modalActive };
+                        return { modalActive: $rootScope.isModalActive() };
                     },
                     function (data) {
                         if (angular.isObject(data)) {
