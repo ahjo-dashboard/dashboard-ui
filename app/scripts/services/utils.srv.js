@@ -12,7 +12,7 @@
 * Service in the dashboard.
 */
 angular.module('dashboard')
-    .factory('Utils', function ($log, $window, CONST, AttachmentData) {
+    .factory('Utils', function ($log, $window, CONST, AttachmentData, DialogUtils) {
         var Utils = {};
 
         Utils.isResoXs = function (argUa) {
@@ -104,6 +104,70 @@ angular.module('dashboard')
             else {
                 $log.error("Utils.openNewWin: ignored due to bad url " + aUrl);
             }
+        };
+        /*
+         * @name dashboard.utils.stringIdForError
+         * @description Resolves a localized string id for an operation result code.
+         * @param {number} Result code to parse.
+         * @returns {string} String id.
+         */
+        Utils.stringIdForError = function stringIdForErrorFn(aNum) {
+            var res = "STR_ERR_OP_FAIL";
+            if (!angular.isNumber(aNum)) {
+                $log.error("Utils.stringIdForError: bad arg, not a number: " + JSON.stringify(aNum) +" type=" +typeof aNum);
+            }
+
+            switch (aNum) {
+                // Ahjo Meeting error codes
+                case CONST.MTGAPICODES.K1001.value:
+                    res = CONST.MTGAPICODES.K1001.strId;
+                    break;
+                case CONST.MTGAPICODES.K1002.value:
+                    res = CONST.MTGAPICODES.K1002.strId;
+                    break;
+                case CONST.MTGAPICODES.K1003.value:
+                    res = CONST.MTGAPICODES.K1003.strId;
+                    break;
+                case CONST.MTGAPICODES.K1004.value:
+                    res = CONST.MTGAPICODES.K1004.strId;
+                    break;
+                case CONST.MTGAPICODES.K1005.value:
+                    res = CONST.MTGAPICODES.K1005.strId;
+                    break;
+
+                default:
+                    $log.log("Utils.stringIdForError: didn't find a string id for '" + aNum + "', defaulting to " + res);
+            }
+            return res;
+        };
+
+        /*
+         * @name dashboard.utils.processAhjoError
+         * @description Parses an Ahjo Meeting API response for any errors and displays a result dialog if necessary.
+         * @param {string} a1 REST response to process. Expects a HTTP response in a `status` property and an Ahjo Meeting API response in `data.error`.
+         * @returns {integer} Parsed error code, 0 if no error, -1 if bad response object.
+         */
+        Utils.processAhjoError = function processAhjoErrorFn(aResp) {
+            // $log.debug("Utils.processAhjoError: \n" +JSON.stringify(aResp));
+            var res = 0;
+            if (!angular.isObject(aResp)) { // Bad function arg handling
+                $log.error("Utils.processAhjoError: bad argument");
+                res = CONST.NOTFOUND;
+            } else if (!angular.equals(aResp.status, CONST.HTTPSTATUS.K200.value)) { // HTTP result other than 200
+                $log.error("Utils.processAhjoError: status object \n" + JSON.stringify(aResp));
+                res = aResp.status;
+            } else if (angular.isObject(aResp.data) && angular.isObject(aResp.data.error)) { // HTTP OK but REST error
+                $log.error("Utils.processAhjoError: error object \n" + JSON.stringify(aResp));
+                res = aResp.data.error.errorcode ? aResp.data.error.errorcode : CONST.NOTFOUND;
+            } else {
+                // No errors
+            }
+
+            if (res) {
+                var str = Utils.stringIdForError(res);
+                DialogUtils.showError("STR_ERR_TITLE", str);
+            }
+            return res;
         };
 
         return Utils;

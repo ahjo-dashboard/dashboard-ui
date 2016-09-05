@@ -60,6 +60,10 @@ iframe {
     flex: 1;
 }
 
+.ngdialog-content {
+    padding: 0 !important;
+}
+
 // Globally center modal dialogs
 .modal-dialog {
     height: 100%;
@@ -933,6 +937,14 @@ body {
                     }
                 }
             }
+        }
+    }
+
+    .db-alert-header {
+        padding-left: $header-leftmargin;
+        background-color: $db-color-danger;
+        h1, h2, h3, h4, h5 {
+            color: $font-color-header;
         }
     }
 

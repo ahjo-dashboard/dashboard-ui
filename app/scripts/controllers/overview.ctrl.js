@@ -12,7 +12,7 @@
  * Controller of the dashboard
  */
 angular.module('dashboard')
-    .controller('overviewCtrl', ['$scope', '$log', 'ENV', 'SigningOpenApi', '$state', '$rootScope', 'CONST', '$stateParams', 'MTGD', 'StorageSrv', '$http', 'DialogUtils', 'AhjoMeetingSrv', function ($scope, $log, ENV, SigningOpenApi, $state, $rootScope, CONST, $stateParams, MTGD, StorageSrv, $http, DialogUtils, AhjoMeetingSrv) {
+    .controller('overviewCtrl', ['$scope', '$log', 'ENV', 'SigningOpenApi', '$state', '$rootScope', 'CONST', '$stateParams', 'MTGD', 'StorageSrv', '$http', 'Utils', 'DialogUtils', 'AhjoMeetingSrv', function ($scope, $log, ENV, SigningOpenApi, $state, $rootScope, CONST, $stateParams, MTGD, StorageSrv, $http, Utils, DialogUtils, AhjoMeetingSrv) {
         $log.debug("overviewCtrl: CONTROLLER, mode: ", $stateParams.state);
         var self = this;
         self.loading = 0;
@@ -79,14 +79,16 @@ angular.module('dashboard')
             }
         }
 
-        self.loginMeeting = function (meetingItem, meetingRole, personGuid) {
-            $log.debug("overviewCtrl.loginMeeting: \n - meeting:\n" +JSON.stringify(meetingItem) +"\n - role: " +JSON.stringify(meetingRole) + "\n - personGuid: " +personGuid);
+        self.loginMeeting = function loginMeetingFn(meetingItem, meetingRole, personGuid) {
+            $log.debug("overviewCtrl.loginMeeting: \n - meeting:\n" + JSON.stringify(meetingItem) + "\n - role: " + JSON.stringify(meetingRole) + "\n - personGuid: " + personGuid);
             DialogUtils.openProgress('STR_MTG_LOGIN_PROGRESS');
-            AhjoMeetingSrv.meetingLogin(meetingItem.meetingGuid, meetingRole.RoleID, personGuid).then(function () {
-                goToMeeting(meetingItem, meetingRole, personGuid);
+            AhjoMeetingSrv.meetingLogin(meetingItem.meetingGuid, meetingRole.RoleID, personGuid).then(function (resp) {
+                $log.debug("overviewCtrl.loginMeeting: result \n" + JSON.stringify(resp));
+                if (!Utils.processAhjoError(resp)) {
+                    goToMeeting(meetingItem, meetingRole, personGuid);
+                }
             }, function (error) {
-                $log.error("overviewCtrl.loginMeeting: " + JSON.stringify(error));
-                $rootScope.failedInfo('STR_LOGIN_FAILED');
+                Utils.processAhjoError(error);
             }).finally(function () {
                 DialogUtils.closeProgress();
             });

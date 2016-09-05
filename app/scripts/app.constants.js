@@ -18,6 +18,16 @@ angular.module('dashboard')
         'MEETINGPARALLELMODE': 'MEETINGPARALLELMODE',
         'POLLINGTIMEOUT': 10000,
         'NOTFOUND': -1,
+        'HTTPSTATUS': {
+            K200: { value: 200, strId: null }
+        },
+        'MTGAPICODES': {
+            K1001: { value: 1001, strId: 'STR_REST_RES_1001' },
+            K1002: { value: 1002, strId: 'STR_REST_RES_1002' },
+            K1003: { value: 1003, strId: 'STR_REST_RES_1003' },
+            K1004: { value: 1004, strId: 'STR_REST_RES_1004' },
+            K1005: { value: 1005, strId: 'STR_REST_RES_1005' }
+        },
         'ID': 'id',
         'BLOCKMODE': {
             DEFAULT: 0,
