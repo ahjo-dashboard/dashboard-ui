@@ -167,8 +167,6 @@ angular.module('dashboard')
                     $log.error("meetingStatusCtrl: ignored, bad sequencenumber");
                 }
             }
-
-
         }
 
         function personLoggedOut() {
@@ -471,6 +469,8 @@ angular.module('dashboard')
             if (angular.isObject(mtgItem) && angular.isObject(mtgRole) && mtgPersonGuid) {
                 var dlg = DialogUtils.showProgress('STR_MTG_EXIT_PROGRESS');
                 AhjoMeetingSrv.meetingLogout(mtgItem.meetingGuid, mtgRole.RoleID, mtgPersonGuid).then(function () {
+                    // Potential logout error code ignored, user has no means to recover.
+                    // Proceed with state transition.
                 }, function (error) {
                     $log.error("meetingStatusCtrl.logOut: " + JSON.stringify(error));
                 }).finally(function () {
