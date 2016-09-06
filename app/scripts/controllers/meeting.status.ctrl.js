@@ -455,7 +455,7 @@ angular.module('dashboard')
                 $log.debug("meetingStatusCtrl.changeTopicStatus: current status=" + topic.topicStatus);
                 var items = [];
                 angular.forEach(CONST.TOPICSTATUSACTIONS, function (status) {
-                    if (angular.isObject(status)) {
+                    if (angular.isObject(status) && status.hidden.indexOf(topic.topicStatus) <= CONST.NOTFOUND) {
                         status.disabled = status.active.indexOf(topic.topicStatus) <= CONST.NOTFOUND;
                         this.push(status);
                     }

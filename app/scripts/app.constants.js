@@ -139,11 +139,11 @@ angular.module('dashboard')
             READY: { stateId: 4, iconPath: "images/mtg-states/mtg-ag-state-4.png", stringId: 'STR_TOPIC_STATUS_READY' }
         },
         'TOPICSTATUSACTIONS': {
-            OPEN: { stateId: 2, stringId: 'STR_OPEN', active: [1], actionId: 2 },
-            CLOSE: { stateId: 4, stringId: 'STR_READY', active: [2], actionId: 5 },
-            ABORT: { stateId: 3, stringId: 'STR_ABORT', active: [2], actionId: 4 },
-            REOPEN: { stateId: 2, stringId: 'STR_OPEN', active: [4], actionId: 3 },
-            CONTINUE: { stateId: 2, stringId: 'STR_CONTINUE', active: [3], actionId: 8 }
+            OPEN: { stateId: 2, stringId: 'STR_OPEN', active: [1], hidden: [4], actionId: 2 },
+            REOPEN: { stateId: 2, stringId: 'STR_OPEN', active: [4], hidden: [1, 2, 3], actionId: 3 },
+            ABORT: { stateId: 3, stringId: 'STR_ABORT', active: [2], hidden: [], actionId: 4 },
+            CONTINUE: { stateId: 2, stringId: 'STR_CONTINUE', active: [3], hidden: [], actionId: 8 },
+            CLOSE: { stateId: 4, stringId: 'STR_READY', active: [2], hidden: [], actionId: 5 }
         },
         'ESIGNSTATUS': { //SignApi_DocStatuses
             UNSIGNED: { value: 1, stringId: 'STR_UNSIGNED', badgeClass: 'db-badge-ora' },
