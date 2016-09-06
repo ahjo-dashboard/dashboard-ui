@@ -536,7 +536,7 @@ angular.module('dashboard')
         // CONSTRUCTION
         if (!mtgItem || !mtgRole) {
             $log.error("meetingStatusCtrl: bad meeting or role: \n " + JSON.stringify(mtgItem) + '\n' + JSON.stringify(mtgRole));
-            self.logOut();
+            $state.go(CONST.APPSTATE.HOME, { menu: CONST.MENU.CLOSED });
             return;
         } else {
             getMeeting(mtgItem);
