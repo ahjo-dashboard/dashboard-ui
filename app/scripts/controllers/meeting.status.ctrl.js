@@ -470,13 +470,6 @@ angular.module('dashboard')
 
                     AhjoMeetingSrv.setTopicStatus(topic.topicGuid, mtgItem.meetingGuid, status.actionId).then(function (result) {
                         $log.debug("meetingStatusCtrl.setTopicStatus: " + JSON.stringify(result));
-                    }, function (error) {
-                        $log.error("meetingStatusCtrl.setTopicStatus: " + JSON.stringify(error));
-                        // todo: implement error handling
-                    }, function (/*notification*/) {
-                        topic.updatingStatus = true;
-                    }).finally(function () {
-                        topic.updatingStatus = false;
                         activeTopicGuid = null;
                         if (status.stateId === CONST.TOPICSTATUS.ACTIVE.stateId) {
                             // store active topic if any
@@ -488,6 +481,13 @@ angular.module('dashboard')
                                 t.topicStatus = status.stateId;
                             }
                         }, this);
+                    }, function (error) {
+                        $log.error("meetingStatusCtrl.setTopicStatus: " + JSON.stringify(error));
+                        // todo: implement error handling
+                    }, function (/*notification*/) {
+                        topic.updatingStatus = true;
+                    }).finally(function () {
+                        topic.updatingStatus = false;
                     });
                 });
             }
