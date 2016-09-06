@@ -83,6 +83,7 @@ angular.module('dashboard')
             NO_ROLE: 8
         },
         'KEY': {
+            TESTENV_USERID: 'testenvuserid',
             TOPIC: 'topic',
             LIST_ATT: 'listattdata',
             SELECTION_DATA: 'selectiondata',

@@ -8,7 +8,7 @@
 * Controller of the dashboard
 */
 angular.module('dashboard')
-    .controller('loginCtrl', ['$log', '$http', '$state', 'ENV', 'CONST', '$timeout', function ($log, $http, $state, ENV, CONST, $timeout) {
+    .controller('loginCtrl', ['$log', '$http', '$state', 'ENV', 'CONST', '$timeout', 'Utils', 'StorageSrv', 'DialogUtils', function ($log, $http, $state, ENV, CONST, $timeout, Utils, StorageSrv, DialogUtils) {
         $log.log("loginCtrl.CONSTRUCT");
 
         var self = this;
@@ -47,33 +47,55 @@ angular.module('dashboard')
         });
 
         function loginRest() {
-            self.error = null;
+            var dlg = DialogUtils.showProgress('STR_LOGGING_IN', '' + self.data.selection);
             self.login = true;
+
             $http({
                 method: 'POST',
                 data: 'ADID=' + self.data.selection,
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                 withCredentials: true,
                 url: ENV.AhjoApi_UserLoginRest
-            }).then(function successCallback(/*response*/) {
-                self.data.selection = null;
-                $state.go(CONST.APPSTATE.HOME);
-                // Don't remove progress bar when continuing with state transition
-            }, function errorCallback(error) {
-                $log.error(error);
-                self.data.selection = null;
-                self.error = error;
-                self.login = false;
+            }).then(function (resp) {
+                if (!Utils.processAhjoError(resp)) { // LoginRest result: error
+                    // Setting TESTENV_USERID to store doesn't reflect the userid used by backend if in some error cases if response doesn't include a  Set-Cookie or similar issue.
+                    // That might happen e.g. due to backend completing 200OK but rejecting bad arguments for the request.
+                    // Result would be client thinking user was set successfully but in fact userid authenticated by backend would be used.
+                    StorageSrv.setKey(CONST.KEY.TESTENV_USERID, self.data.selection);
+
+                    $state.go(CONST.APPSTATE.HOME).finally(function () {
+                        $log.debug("loginCtrl.loginRest: state.go finally");
+                        DialogUtils.close(dlg);
+                        dlg = null;
+                    });
+
+                } else { // LoginRest result: OK
+                    DialogUtils.close(dlg);
+                }
+
+            }, function (error) { // LoginRest result: error
+                $log.error("loginCtrl.loginRest");
+                DialogUtils.close(dlg);
+                Utils.processAhjoError(error);
             }).finally(function () {
-                // Don't remove progress bar when continuing with state transition
+                $log.debug("loginCtrl.loginRest: finally");
+                self.data.selection = null;
+                self.login = false;
             });
         }
 
-        self.select = function () {
-            $log.debug('loginCtrl.select ' + self.data.selection);
+        self.selectUser = function () {
+            $log.debug('loginCtrl.selectUser: ' + self.data.selection);
             loginRest();
+        };
+
+        self.selectOwn = function () {
+            $log.debug('loginCtrl.selectOwn');
+            var dlg = DialogUtils.showProgress('STR_LOGGING_IN');
+            $state.go(CONST.APPSTATE.HOME).finally(function () {
+                $log.debug("loginCtrl.selectOwn: state.go finally");
+                DialogUtils.close(dlg);
+            });
         };
 
     }]);

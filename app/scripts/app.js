@@ -92,9 +92,12 @@ angular.module('dashboard', [
 
         $rootScope.$on('$stateChangeStart', function (event, next/*, toParams, fromParams*/) {
             $log.debug('app.stateChangeStart: ' + next.name);// +' toParams: ' +JSON.stringify(toParams) +' fromParams: ' +JSON.stringify(fromParams));
-            if (next.name === CONST.APPSTATE.HOME) {
-                StorageSrv.reset([CONST.KEY.SIGNING_RES, CONST.KEY.VISIBLE_MTGS]);
+            if (angular.equals(next.name, CONST.APPSTATE.HOME)) {
+                StorageSrv.reset([CONST.KEY.SIGNING_RES, CONST.KEY.VISIBLE_MTGS, CONST.KEY.TESTENV_USERID]);
                 StorageSrv.deleteKey(CONST.KEY.TOPIC, true);
+            } else if (angular.equals(next.name, CONST.APPSTATE.LOGIN)) {
+                StorageSrv.deleteKey(CONST.KEY.TESTENV_USERID, true);
+                StorageSrv.reset();
             }
         });
 
