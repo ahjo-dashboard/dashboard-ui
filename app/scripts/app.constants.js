@@ -17,6 +17,7 @@ angular.module('dashboard')
         'UNSAVEMEETINGDDATA': 'UNSAVEMEETINGDDATA',
         'MEETINGPARALLELMODE': 'MEETINGPARALLELMODE',
         'POLLINGTIMEOUT': 10000,
+        'PROGRESSDLGMINDURATIONMS': 900,
         'NOTFOUND': -1,
         'HTTPSTATUS': {
             K200: { value: 200, strId: null }
