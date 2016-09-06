@@ -145,9 +145,10 @@ angular.module('dashboard')
          * @name dashboard.utils.processAhjoError
          * @description Parses an Ahjo Meeting API response for any errors and displays a result dialog if necessary.
          * @param {string} a1 REST response to process. Expects a HTTP response in a `status` property and an Ahjo Meeting API response in `data.error`.
+         * @param {boolean} Optional. True if UI dialogs should be displayed (default if not defined), false if not.
          * @returns {integer} Parsed error code, 0 if no error, -1 if bad response object.
          */
-        Utils.processAhjoError = function processAhjoErrorFn(aResp) {
+        Utils.processAhjoError = function processAhjoErrorFn(aResp, aUi) {
             // $log.debug("Utils.processAhjoError: \n" +JSON.stringify(aResp));
             var res = 0;
             if (!angular.isObject(aResp)) { // Bad function arg handling
@@ -163,7 +164,7 @@ angular.module('dashboard')
                 // No errors
             }
 
-            if (res) {
+            if ((!angular.isDefined(aUi) || aUi) && res) {
                 var str = Utils.stringIdForError(res);
                 DialogUtils.showError("STR_ERR_TITLE", str);
             }
