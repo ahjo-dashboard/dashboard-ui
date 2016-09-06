@@ -12,7 +12,7 @@
 * Service in the dashboard.
 */
 angular.module('dashboard')
-    .factory('DialogUtils', function ($log, $q, $uibModal, $timeout, $rootScope, ngDialog) {
+    .factory('DialogUtils', function ($log, $q, $uibModal, $timeout, $rootScope, ngDialog, CONST) {
 
         // VARIABLES
 
@@ -20,7 +20,6 @@ angular.module('dashboard')
         self.isModalActive = false;
 
         // FUNCTIONS
-
 
         function showModal(aIsError, aTitleStrId, aBodyStrId, aCloseByNavi) {
             var closeNavi = angular.isDefined(aCloseByNavi) ? aCloseByNavi : false;
@@ -52,20 +51,33 @@ angular.module('dashboard')
          * @name dashboard.dialogutils.showProgress
          * @description Displays a progress modal
          * @param {string} Title string id
-         * @param {boolean} True if url navigation should close the dialog
+         * @param {number} Optional minimum duration for the dialog, otherwise a default is used.
          * @returns {} ngDialog promise
          */
-        self.showProgress = function (titleStrId) {
+        self.showProgress = function (aTitleStrId, aMinDur) {
+            var minDur = angular.isNumber(aMinDur) ? aMinDur : CONST.PROGRESSDLGMINDURATIONMS;
+            var timer = null;
+            if (minDur) {
+                timer = $timeout(function () {
+                    timer = null;
+                    // $log.debug("DialogUtils.showProgress: timeout, " + JSON.stringify(aTitleStrId));
+                }, minDur);
+            }
             var dlg = ngDialog.open({
                 template: 'views/progressdialog.tmpl.html',
                 controller: 'progressDialogCtrl',
                 controllerAs: 'c',
                 closeByNavigation: true,
                 resolve: {
-                    titleStrId: function () { return titleStrId; }
+                    titleStrId: function () { return aTitleStrId; }
+                },
+                preCloseCallback: function () {
+                    var res = timer ? timer : true;
+                    $log.debug("DialogUtils.showProgress: preCloseCallback " + dlg.id + " returning '" + res);
+                    return res;
                 }
             });
-            $log.debug("DialogUtils.showProgress: " + dlg.id + " , " + JSON.stringify(titleStrId));
+            $log.debug("DialogUtils.showProgress: " + dlg.id + " , " + JSON.stringify(aTitleStrId));
             return dlg;
         };
 
