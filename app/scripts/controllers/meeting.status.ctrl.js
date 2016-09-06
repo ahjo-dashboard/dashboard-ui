@@ -24,6 +24,7 @@ angular.module('dashboard')
         var mtgRole = StorageSrv.getKey(CONST.KEY.MEETING_ROLE);
         var mtgPersonGuid = StorageSrv.getKey(CONST.KEY.MEETING_PERSONGUID);
         var mtgItem = StorageSrv.getKey(CONST.KEY.MEETING_ITEM);
+        var activeTopicGuid = null;
         var self = this;
         self.isMobile = $rootScope.isMobile;
         self.uiName = null;
@@ -105,8 +106,8 @@ angular.module('dashboard')
             if (angular.isObject(event) && angular.isObject(self.meeting) && angular.isArray(self.meeting.topicList)) {
                 for (var i = 0; i < self.meeting.topicList.length; i++) {
                     var topic = self.meeting.topicList[i];
-                    if (angular.isObject(topic) && angular.equals(topic.topicGuid, event.topicID)) {
-                        topic.topicStatus = event.topicStateType;
+                    if (angular.isObject(topic) && angular.equals(topic.topicGuid, event.topicGuid)) {
+                        topic.topicStatus = event.topicState;
                     }
                 }
             }
@@ -264,6 +265,7 @@ angular.module('dashboard')
             $log.debug("meetingStatusCtrl.getMeeting");
             self.uiName = mtgItem.agencyName + ' ' + mtgItem.name;
             selectedTopicGuid = null;
+            activeTopicGuid = null;
             StorageSrv.deleteKey(CONST.KEY.TOPIC);
             $timeout.cancel(pollingTimer);
             pollingTimer = null;
@@ -278,6 +280,10 @@ angular.module('dashboard')
                                 t.userPersonGuid = self.meeting.userPersonGuid;
                                 t.isCityCouncil = self.meeting.isCityCouncil;
                                 t.showClassifiedDocs = self.meeting.showClassifiedDocs;
+                                // store active topic if any
+                                if (!activeTopicGuid && t.topicStatus === CONST.TOPICSTATUS.ACTIVE.stateId) {
+                                    activeTopicGuid = t.topicGuid;
+                                }
                             }
                         }, this);
 
@@ -345,10 +351,24 @@ angular.module('dashboard')
             return false;
         };
 
+        self.canOpenTopic = function (topic) {
+            var result = false;
+            if (angular.isObject(topic)) {
+                // is meeting active
+                if (angular.isObject(self.meeting) && self.meeting.meetingStatus === CONST.MTGSTATUS.ACTIVE.stateId) {
+                    // is topic active
+                    if (!activeTopicGuid || topic.topicGuid === activeTopicGuid) {
+                        result = true;
+                    }
+                }
+            }
+            return result;
+        };
+
         self.statusIcon = function (topic) {
             if (angular.isObject(topic) && topic.topicStatus) {
                 for (var item in CONST.TOPICSTATUS) {
-                    if (CONST.TOPICSTATUS.hasOwnProperty(item) && topic.topicStatus === CONST.TOPICSTATUS[item].value) {
+                    if (CONST.TOPICSTATUS.hasOwnProperty(item) && topic.topicStatus === CONST.TOPICSTATUS[item].stateId) {
                         return CONST.TOPICSTATUS[item].iconPath;
                     }
                 }
@@ -359,7 +379,7 @@ angular.module('dashboard')
         self.topicStatusText = function (topic) {
             if (angular.isObject(topic) && topic.topicStatus) {
                 for (var item in CONST.TOPICSTATUS) {
-                    if (CONST.TOPICSTATUS.hasOwnProperty(item) && topic.topicStatus === CONST.TOPICSTATUS[item].value) {
+                    if (CONST.TOPICSTATUS.hasOwnProperty(item) && topic.topicStatus === CONST.TOPICSTATUS[item].stateId) {
                         return CONST.TOPICSTATUS[item].stringId;
                     }
                 }
@@ -371,7 +391,7 @@ angular.module('dashboard')
         self.stringId = function (meeting) {
             for (var item in CONST.MTGSTATUS) {
                 if (CONST.MTGSTATUS.hasOwnProperty(item)) {
-                    if (angular.isObject(meeting) && meeting.meetingStatus === CONST.MTGSTATUS[item].value) {
+                    if (angular.isObject(meeting) && meeting.meetingStatus === CONST.MTGSTATUS[item].stateId) {
                         return CONST.MTGSTATUS[item].stringId;
                     }
                 }
@@ -381,7 +401,7 @@ angular.module('dashboard')
 
         self.mtgStatusClass = function (meeting) {
             if (angular.isObject(meeting)) {
-                var s = Utils.objWithVal(CONST.MTGSTATUS, CONST.KEY.VALUE, meeting.meetingStatus);
+                var s = Utils.objWithVal(CONST.MTGSTATUS, CONST.KEY.STATE_ID, meeting.meetingStatus);
                 return s ? s.badgeClass : 'db-badge-red';
             }
             return 'db-badge-red';
@@ -396,7 +416,7 @@ angular.module('dashboard')
                 $log.error("meetingStatusCtrl.changeMeetingStatus: mtgItem missing");
                 return;
             }
-            $log.debug("meetingStatusCtrl.changeMeetingStatus");
+            $log.debug("meetingStatusCtrl.changeMeetingStatus: current status=" + self.meeting.meetingStatus);
             var items = [];
             angular.forEach(CONST.MEETINGSTATUSACTIONS, function (status) {
                 if (angular.isObject(status) && angular.isObject(self.meeting)) {
@@ -405,13 +425,14 @@ angular.module('dashboard')
                     this.push(status);
                 }
             }, items);
+
             openStatusChangeView('STR_CHANGE_MEETING_STATUS', items, function (status) {
                 if (!angular.isObject(status)) {
                     $log.error("meetingStatusCtrl.changeMeetingStatus: invalid status");
                     return;
                 }
                 $log.debug("meetingStatusCtrl.changeMeetingStatus: selected: " + JSON.stringify(status));
-                AhjoMeetingSrv.setMeetingStatus(mtgItem.meetingGuid, status.value).then(function (result) {
+                AhjoMeetingSrv.setMeetingStatus(mtgItem.meetingGuid, status.stateId).then(function (result) {
                     $log.debug("meetingStatusCtrl.setMeetingStatus: " + JSON.stringify(result));
                     // todo: implement result handling
                 }, function (error) {
@@ -431,24 +452,35 @@ angular.module('dashboard')
                 return;
             }
             if (angular.isObject(topic)) {
-                $log.debug("meetingStatusCtrl.changeTopicStatus");
+                $log.debug("meetingStatusCtrl.changeTopicStatus: current status=" + topic.topicStatus);
                 var items = [];
                 angular.forEach(CONST.TOPICSTATUSACTIONS, function (status) {
-                    if (angular.isObject(status) && angular.isObject(topic)) {
-                        // todo: active status needs to be updated to app constants
+                    if (angular.isObject(status) && status.hidden.indexOf(topic.topicStatus) <= CONST.NOTFOUND) {
                         status.disabled = status.active.indexOf(topic.topicStatus) <= CONST.NOTFOUND;
                         this.push(status);
                     }
                 }, items);
+
                 openStatusChangeView('STR_CHANGE_TOPIC_STATUS', items, function (status) {
                     if (!angular.isObject(status)) {
                         $log.error("meetingStatusCtrl.changeTopicStatus: invalid status");
                         return;
                     }
                     $log.debug("meetingStatusCtrl.changeTopicStatus: selected: " + JSON.stringify(status));
-                    AhjoMeetingSrv.setTopicStatus(topic.topicGuid, mtgItem.meetingGuid, status.value).then(function (result) {
+
+                    AhjoMeetingSrv.setTopicStatus(topic.topicGuid, mtgItem.meetingGuid, status.actionId).then(function (result) {
                         $log.debug("meetingStatusCtrl.setTopicStatus: " + JSON.stringify(result));
-                        // todo: implement result handling
+                        activeTopicGuid = null;
+                        if (status.stateId === CONST.TOPICSTATUS.ACTIVE.stateId) {
+                            // store active topic if any
+                            activeTopicGuid = topic.topicGuid;
+                        }
+                        // set requested state id to topic. pending response value to be updated
+                        angular.forEach(self.meeting.topicList, function (t) {
+                            if (status.stateId && angular.isObject(t) && angular.equals(topic.topicGuid, t.topicGuid)) {
+                                t.topicStatus = status.stateId;
+                            }
+                        }, this);
                     }, function (error) {
                         $log.error("meetingStatusCtrl.setTopicStatus: " + JSON.stringify(error));
                         // todo: implement error handling

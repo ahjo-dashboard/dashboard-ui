@@ -149,7 +149,7 @@ angular.module('dashboard')
                 if (angular.isObject(arg) && angular.isDefined(arg.meeting) && angular.isDefined(arg.meeting.state)) {
                     for (var item in CONST.MTGSTATUS) {
                         if (CONST.MTGSTATUS.hasOwnProperty(item)) {
-                            if (arg.meeting.state === CONST.MTGSTATUS[item].value) {
+                            if (arg.meeting.state === CONST.MTGSTATUS[item].stateId) {
                                 return CONST.MTGSTATUS[item].stringId;
                             }
                         }
@@ -160,7 +160,7 @@ angular.module('dashboard')
 
             self.mtgStatusClass = function (arg) {
                 if (angular.isObject(arg) && angular.isDefined(arg.meeting.state) && angular.isDefined(arg.meeting.state)) {
-                    var s = Utils.objWithVal(CONST.MTGSTATUS, 'value', arg.meeting.state);
+                    var s = Utils.objWithVal(CONST.MTGSTATUS, CONST.KEY.STATE_ID, arg.meeting.state);
                     return s ? s.badgeClass : 'db-badge-red';
                 }
                 return 'db-badge-red';
