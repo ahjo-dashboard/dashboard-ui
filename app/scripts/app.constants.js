@@ -117,10 +117,10 @@ angular.module('dashboard')
             TECHNICALLY_CLOSED: { stateId: 7, stringId: 'STR_TECNICALLY_CLOSED', badgeClass: 'db-badge-dark' },
         },
         'MEETINGSTATUSACTIONS': {
-            OPEN: { stateId: 3, stringId: 'STR_OPEN', active: [2] },
-            CLOSE: { stateId: 5, stringId: 'STR_READY', active: [] },
-            ABORT: { stateId: 4, stringId: 'STR_ABORT', active: [3] },
-            CONTINUE: { stateId: 8, stringId: 'STR_CONTINUE', active: [4] }
+            OPEN: { stateId: 3, stringId: 'STR_OPEN', active: [], actionId: 2 },
+            CLOSE: { stateId: 5, stringId: 'STR_READY', active: [], actionId: 5 },
+            ABORT: { stateId: 4, stringId: 'STR_ABORT', active: [3], actionId: 4 },
+            CONTINUE: { stateId: 3, stringId: 'STR_CONTINUE', active: [4], actionId: 8 }
         },
         'MTGEVENT': {
             LASTEVENTID: 'LastEventId',

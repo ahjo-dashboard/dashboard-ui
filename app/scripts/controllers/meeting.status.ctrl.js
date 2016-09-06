@@ -97,7 +97,7 @@ angular.module('dashboard')
         function meetingStatusChanged(event) {
             $log.debug("meetingStatusCtrl: meetingStatusChanged");
             if (angular.isObject(event) && angular.isObject(self.meeting)) {
-                self.meeting.meetingStatus = event.meetingStateType;
+                self.meeting.meetingStatus = event.meetingState;
             }
         }
 
@@ -412,7 +412,7 @@ angular.module('dashboard')
                 return self.canOpenTopic(topic) ? 'STR_CHANGE_TOPIC_STATUS' : 'STR_INFO_TOPIC_STATUS_CHANGE_DISABLED';
             }
             $log.error("meetingStatusCtrl: topicBtnTooltip invalid parameter:");
-            return null;
+            return '';
         };
 
         self.toggleParallelMode = function () {
@@ -440,7 +440,7 @@ angular.module('dashboard')
                     return;
                 }
                 $log.debug("meetingStatusCtrl.changeMeetingStatus: selected: " + JSON.stringify(status));
-                AhjoMeetingSrv.setMeetingStatus(mtgItem.meetingGuid, status.stateId).then(function (result) {
+                AhjoMeetingSrv.setMeetingStatus(mtgItem.meetingGuid, status.actionId).then(function (result) {
                     $log.debug("meetingStatusCtrl.setMeetingStatus: " + JSON.stringify(result));
                     // todo: implement result handling
                 }, function (error) {
