@@ -170,12 +170,14 @@ angular.module('dashboard')
             }
         }
 
-        function personLoggedOut() {
-            $log.debug("meetingStatusCtrl.personLoggedOut");
-            DialogUtils.showInfo('STR_INFO_TITLE', 'STR_FORCED_LOGOUT', false).closePromise.finally(function () {
-                $log.debug("meetingStatusCtrl.personLoggedOut: modal dialog finally closed");
-                $state.go(CONST.APPSTATE.HOME, { menu: CONST.MENU.CLOSED });
-            });
+        function personLoggedOut(aEvent) {
+            $log.debug("meetingStatusCtrl.personLoggedOut: " +JSON.stringify(aEvent));
+            if (angular.isObject(aEvent) && angular.equals(aEvent.personGuid, mtgPersonGuid) && angular.equals(aEvent.meetingID, mtgItem.meetingGuid)) {
+                DialogUtils.showInfo('STR_INFO_TITLE', 'STR_FORCED_LOGOUT', false).closePromise.finally(function () {
+                    $log.debug("meetingStatusCtrl.personLoggedOut: modal dialog finally closed");
+                    $state.go(CONST.APPSTATE.HOME, { menu: CONST.MENU.CLOSED });
+                });
+            }
         }
 
         function getEvents() {
@@ -215,7 +217,7 @@ angular.module('dashboard')
                                     topicEdited(event, mtgItem.meetingGuid, self.meeting);
                                     break;
                                 case CONST.MTGEVENT.LOGGEDOUT:
-                                    personLoggedOut();
+                                    personLoggedOut(event);
                                     break;
                                 default:
                                     $log.error("meetingStatusCtrl: unsupported typeName: " + event.typeName);
