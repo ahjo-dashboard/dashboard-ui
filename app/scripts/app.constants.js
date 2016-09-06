@@ -92,7 +92,8 @@ angular.module('dashboard')
             MEETING_PERSONGUID: 'personguid',
             PROPOSAL_EVENT_ARRAY: 'proposaleventarray',
             SIGN_ITEM: 'signitem',
-            VALUE: 'value'
+            VALUE: 'value',
+            STATE_ID: 'stateId'
         },
         'BTNTYPE': {
             DEFAULT: 'btn-default',
@@ -105,20 +106,20 @@ angular.module('dashboard')
             SECRET: 2
         },
         'MTGSTATUS': {
-            RESERVED: { value: 0, stringId: 'STR_RESERVED_MEETING', badgeClass: 'db-badge-dark' },
-            CREATED: { value: 1, stringId: 'STR_CREATED', badgeClass: 'db-badge-dark' },
-            TECHNICALLY_OPEN: { value: 2, stringId: 'STR_TECHNICALLY_OPEN', badgeClass: 'db-badge-yel' },
-            ACTIVE: { value: 3, stringId: 'STR_ACTIVE', badgeClass: 'db-badge-gre' },
-            ABORTED: { value: 4, stringId: 'STR_ABORTED', badgeClass: 'db-badge-pur' },
-            OFFICIALLY_CLOSED: { value: 5, stringId: 'STR_OFFICIALLY_CLOSED', badgeClass: 'db-badge-dark' },
-            RECORDS_MOVED: { value: 6, stringId: 'STR_RECORDS_MOVED', badgeClass: 'db-badge-dark' },
-            TECHNICALLY_CLOSED: { value: 7, stringId: 'STR_TECNICALLY_CLOSED', badgeClass: 'db-badge-dark' },
+            RESERVED: { stateId: 0, stringId: 'STR_RESERVED_MEETING', badgeClass: 'db-badge-dark' },
+            CREATED: { stateId: 1, stringId: 'STR_CREATED', badgeClass: 'db-badge-dark' },
+            TECHNICALLY_OPEN: { stateId: 2, stringId: 'STR_TECHNICALLY_OPEN', badgeClass: 'db-badge-yel' },
+            ACTIVE: { stateId: 3, stringId: 'STR_ACTIVE', badgeClass: 'db-badge-gre' },
+            ABORTED: { stateId: 4, stringId: 'STR_ABORTED', badgeClass: 'db-badge-pur' },
+            OFFICIALLY_CLOSED: { stateId: 5, stringId: 'STR_OFFICIALLY_CLOSED', badgeClass: 'db-badge-dark' },
+            RECORDS_MOVED: { stateId: 6, stringId: 'STR_RECORDS_MOVED', badgeClass: 'db-badge-dark' },
+            TECHNICALLY_CLOSED: { stateId: 7, stringId: 'STR_TECNICALLY_CLOSED', badgeClass: 'db-badge-dark' },
         },
         'MEETINGSTATUSACTIONS': {
-            OPEN: { value: 1, stringId: 'STR_OPEN', active: [1, 2] },
-            CLOSE: { value: 2, stringId: 'STR_READY', active: [3] },
-            ABORT: { value: 3, stringId: 'STR_ABORT', active: [3] },
-            CONTINUE: { value: 4, stringId: 'STR_CONTINUE', active: [4] }
+            OPEN: { stateId: 3, stringId: 'STR_OPEN', active: [2] },
+            CLOSE: { stateId: 5, stringId: 'STR_READY', active: [] },
+            ABORT: { stateId: 4, stringId: 'STR_ABORT', active: [3] },
+            CONTINUE: { stateId: 8, stringId: 'STR_CONTINUE', active: [4] }
         },
         'MTGEVENT': {
             LASTEVENTID: 'LastEventId',
@@ -132,17 +133,17 @@ angular.module('dashboard')
             LOGGEDOUT: 'PersonLoggedOutEvent'
         },
         'TOPICSTATUS': {
-            NONE: { value: 0, iconPath: "", icon_conf: "", icon_props: "", icon_conf_prop: "", stringId: '' },
-            PENDING: { value: 1, iconPath: "images/mtg-states/mtg-ag-state-1.png", stringId: 'STR_TOPIC_STATUS_PENDING' },
-            ACTIVE: { value: 2, iconPath: "images/mtg-states/mtg-ag-state-2.png", stringId: 'STR_TOPIC_STATUS_ACTIVE' },
-            ABORTED: { value: 3, iconPath: "images/mtg-states/mtg-ag-state-3.png", stringId: 'STR_TOPIC_STATUS_ABORTED' },
-            READY: { value: 4, iconPath: "images/mtg-states/mtg-ag-state-4.png", stringId: 'STR_TOPIC_STATUS_READY' }
+            PENDING: { stateId: 1, iconPath: "images/mtg-states/mtg-ag-state-1.png", stringId: 'STR_TOPIC_STATUS_PENDING' },
+            ACTIVE: { stateId: 2, iconPath: "images/mtg-states/mtg-ag-state-2.png", stringId: 'STR_TOPIC_STATUS_ACTIVE' },
+            ABORTED: { stateId: 3, iconPath: "images/mtg-states/mtg-ag-state-3.png", stringId: 'STR_TOPIC_STATUS_ABORTED' },
+            READY: { stateId: 4, iconPath: "images/mtg-states/mtg-ag-state-4.png", stringId: 'STR_TOPIC_STATUS_READY' }
         },
         'TOPICSTATUSACTIONS': {
-            OPEN: { value: 1, stringId: 'STR_OPEN', active: [1] },
-            CLOSE: { value: 2, stringId: 'STR_READY', active: [2] },
-            ABORT: { value: 3, stringId: 'STR_ABORT', active: [2] },
-            CONTINUE: { value: 4, stringId: 'STR_CONTINUE', active: [3] }
+            OPEN: { stateId: 2, stringId: 'STR_OPEN', active: [1], actionId: 2 },
+            CLOSE: { stateId: 4, stringId: 'STR_READY', active: [2], actionId: 5 },
+            ABORT: { stateId: 3, stringId: 'STR_ABORT', active: [2], actionId: 4 },
+            REOPEN: { stateId: 2, stringId: 'STR_OPEN', active: [4], actionId: 3 },
+            CONTINUE: { stateId: 2, stringId: 'STR_CONTINUE', active: [3], actionId: 8 }
         },
         'ESIGNSTATUS': { //SignApi_DocStatuses
             UNSIGNED: { value: 1, stringId: 'STR_UNSIGNED', badgeClass: 'db-badge-ora' },
