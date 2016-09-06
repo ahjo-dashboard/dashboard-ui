@@ -407,6 +407,14 @@ angular.module('dashboard')
             return 'db-badge-red';
         };
 
+        self.topicBtnTooltip = function (topic) {
+            if (angular.isObject(topic)) {
+                return self.canOpenTopic(topic) ? 'STR_CHANGE_TOPIC_STATUS' : 'STR_INFO_TOPIC_STATUS_CHANGE_DISABLED';
+            }
+            $log.error("meetingStatusCtrl: topicBtnTooltip invalid parameter:");
+            return null;
+        };
+
         self.toggleParallelMode = function () {
             $rootScope.parallelMode = $rootScope.parallelMode ? false : true;
         };
@@ -453,43 +461,51 @@ angular.module('dashboard')
             }
             if (angular.isObject(topic)) {
                 $log.debug("meetingStatusCtrl.changeTopicStatus: current status=" + topic.topicStatus);
-                var items = [];
-                angular.forEach(CONST.TOPICSTATUSACTIONS, function (status) {
-                    if (angular.isObject(status) && status.hidden.indexOf(topic.topicStatus) <= CONST.NOTFOUND) {
-                        status.disabled = status.active.indexOf(topic.topicStatus) <= CONST.NOTFOUND;
-                        this.push(status);
-                    }
-                }, items);
 
-                openStatusChangeView('STR_CHANGE_TOPIC_STATUS', items, function (status) {
-                    if (!angular.isObject(status)) {
-                        $log.error("meetingStatusCtrl.changeTopicStatus: invalid status");
-                        return;
-                    }
-                    $log.debug("meetingStatusCtrl.changeTopicStatus: selected: " + JSON.stringify(status));
-
-                    AhjoMeetingSrv.setTopicStatus(topic.topicGuid, mtgItem.meetingGuid, status.actionId).then(function (result) {
-                        $log.debug("meetingStatusCtrl.setTopicStatus: " + JSON.stringify(result));
-                        activeTopicGuid = null;
-                        if (status.stateId === CONST.TOPICSTATUS.ACTIVE.stateId) {
-                            // store active topic if any
-                            activeTopicGuid = topic.topicGuid;
+                if (self.canOpenTopic(topic)) {
+                    var items = [];
+                    angular.forEach(CONST.TOPICSTATUSACTIONS, function (status) {
+                        if (angular.isObject(status) && status.hidden.indexOf(topic.topicStatus) <= CONST.NOTFOUND) {
+                            status.disabled = status.active.indexOf(topic.topicStatus) <= CONST.NOTFOUND;
+                            this.push(status);
                         }
-                        // set requested state id to topic. pending response value to be updated
-                        angular.forEach(self.meeting.topicList, function (t) {
-                            if (status.stateId && angular.isObject(t) && angular.equals(topic.topicGuid, t.topicGuid)) {
-                                t.topicStatus = status.stateId;
+                    }, items);
+
+                    openStatusChangeView('STR_CHANGE_TOPIC_STATUS', items, function (status) {
+                        if (!angular.isObject(status)) {
+                            $log.error("meetingStatusCtrl.changeTopicStatus: invalid status");
+                            return;
+                        }
+                        $log.debug("meetingStatusCtrl.changeTopicStatus: selected: " + JSON.stringify(status));
+
+                        AhjoMeetingSrv.setTopicStatus(topic.topicGuid, mtgItem.meetingGuid, status.actionId).then(function (result) {
+                            $log.debug("meetingStatusCtrl.setTopicStatus: " + JSON.stringify(result));
+                            activeTopicGuid = null;
+                            if (status.stateId === CONST.TOPICSTATUS.ACTIVE.stateId) {
+                                // store active topic if any
+                                activeTopicGuid = topic.topicGuid;
                             }
-                        }, this);
-                    }, function (error) {
-                        $log.error("meetingStatusCtrl.setTopicStatus: " + JSON.stringify(error));
-                        // todo: implement error handling
-                    }, function (/*notification*/) {
-                        topic.updatingStatus = true;
-                    }).finally(function () {
-                        topic.updatingStatus = false;
+                            // set requested state id to topic. pending response value to be updated
+                            angular.forEach(self.meeting.topicList, function (t) {
+                                if (status.stateId && angular.isObject(t) && angular.equals(topic.topicGuid, t.topicGuid)) {
+                                    t.topicStatus = status.stateId;
+                                }
+                            }, this);
+                        }, function (error) {
+                            $log.error("meetingStatusCtrl.setTopicStatus: " + JSON.stringify(error));
+                            // todo: implement error handling
+                        }, function (/*notification*/) {
+                            topic.updatingStatus = true;
+                        }).finally(function () {
+                            topic.updatingStatus = false;
+                        });
                     });
-                });
+                }
+                else {
+                    DialogUtils.showInfo('STR_INFO_TITLE', 'STR_INFO_TOPIC_STATUS_CHANGE_DISABLED', false).closePromise.finally(function () {
+                        $log.debug("meetingStatusCtrl.changeTopicStatus: modal dialog finally closed");
+                    });
+                }
             }
             else {
                 $log.error("meetingStatusCtrl: changeTopicStatus invalid parameter:");

@@ -154,5 +154,6 @@
     "STR_REST_RES_1005": "Kokoukseen on jo kirjautunut osanottaja valitulla roolilla",
     "STR_FORCED_LOGOUT": "Olet kirjautunut ulos tai sinut on kirjattu ulos kokouksesta",
     "STR_ERR_TITLE": "Virhe",
-    "STR_INFO_TITLE": "Info"
+    "STR_INFO_TITLE": "Info",
+    "STR_INFO_TOPIC_STATUS_CHANGE_DISABLED": "Tilaa ei voi muuttaa koska toisen asian käsittely on kesken"
 }
