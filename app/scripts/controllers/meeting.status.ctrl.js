@@ -167,8 +167,14 @@ angular.module('dashboard')
                     $log.error("meetingStatusCtrl: ignored, bad sequencenumber");
                 }
             }
+        }
 
-
+        function personLoggedOut() {
+            $log.debug("meetingStatusCtrl.personLoggedOut");
+            DialogUtils.showInfo('STR_INFO_TITLE', 'STR_FORCED_LOGOUT', false).closePromise.finally(function () {
+                $log.debug("meetingStatusCtrl.personLoggedOut: modal dialog finally closed");
+                $state.go(CONST.APPSTATE.HOME, { menu: CONST.MENU.CLOSED });
+            });
         }
 
         function getEvents() {
@@ -206,6 +212,9 @@ angular.module('dashboard')
                                     break;
                                 case CONST.MTGEVENT.TOPICEDITED:
                                     topicEdited(event, mtgItem.meetingGuid, self.meeting);
+                                    break;
+                                case CONST.MTGEVENT.LOGGEDOUT:
+                                    personLoggedOut();
                                     break;
                                 default:
                                     $log.error("meetingStatusCtrl: unsupported typeName: " + event.typeName);
@@ -458,13 +467,15 @@ angular.module('dashboard')
         self.logOut = function logOutFn() {
             $log.debug("meetingStatusCtrl.logOut: \n - meeting:\n" + JSON.stringify(mtgItem) + "\n - role: " + JSON.stringify(mtgRole) + "\n - mtgPersonGuid: " + mtgPersonGuid);
             if (angular.isObject(mtgItem) && angular.isObject(mtgRole) && mtgPersonGuid) {
-                DialogUtils.openProgress('STR_MTG_EXIT_PROGRESS');
+                var dlg = DialogUtils.showProgress('STR_MTG_EXIT_PROGRESS');
                 AhjoMeetingSrv.meetingLogout(mtgItem.meetingGuid, mtgRole.RoleID, mtgPersonGuid).then(function () {
+                    // Potential logout error code ignored, user has no means to recover.
+                    // Proceed with state transition.
                 }, function (error) {
                     $log.error("meetingStatusCtrl.logOut: " + JSON.stringify(error));
                 }).finally(function () {
                     $state.go(CONST.APPSTATE.HOME, { menu: CONST.MENU.CLOSED });
-                    DialogUtils.closeProgress();
+                    DialogUtils.close(dlg);
                 });
             } else {
                 $log.error("meetingStatusCtrl.logOut: bad args \n - meeting:\n" + JSON.stringify(mtgItem) + "\n - role: " + JSON.stringify(mtgRole) + "\n - mtgPersonGuid: " + mtgPersonGuid);

@@ -128,7 +128,8 @@ angular.module('dashboard')
             REMARKDELETED: 'RemarkDeletedEvent',
             MEETINGSTATECHANGED: 'MeetingStateChangedEvent',
             TOPICSTATECHANGED: 'TopicStateChangedEvent',
-            TOPICEDITED: 'TopicEditedEvent'
+            TOPICEDITED: 'TopicEditedEvent',
+            LOGGEDOUT: 'PersonLoggedOutEvent'
         },
         'TOPICSTATUS': {
             NONE: { value: 0, iconPath: "", icon_conf: "", icon_props: "", icon_conf_prop: "", stringId: '' },

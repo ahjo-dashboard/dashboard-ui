@@ -88,6 +88,8 @@ angular.module('dashboard', [
     })
     .run(function ($rootScope, $log, $window, CONST, ENV, $state, $timeout, $translate, Utils, StorageSrv, ngToast, DialogUtils) {
 
+        $rootScope.isModalActive = DialogUtils.isModalActive;
+
         $rootScope.$on('$stateChangeStart', function (event, next/*, toParams, fromParams*/) {
             $log.debug('app.stateChangeStart: ' + next.name);// +' toParams: ' +JSON.stringify(toParams) +' fromParams: ' +JSON.stringify(fromParams));
             if (next.name === CONST.APPSTATE.HOME) {
@@ -112,7 +114,6 @@ angular.module('dashboard', [
         $rootScope.isMobile = Utils.isClientMobile();
         $rootScope.isTablet = Utils.isUaMobile();
         $rootScope.isTooltips = !$rootScope.isMobile && !$rootScope.isTablet;
-        $rootScope.modalActive = false;
         console.log("app.run: IE=" + $rootScope.isIe + "  Edge=" + $rootScope.isEdge + " Mobile=" + $rootScope.isMobile + " Tooltips=" + $rootScope.isTooltips);
 
         $rootScope.parallelMode = (!$rootScope.isMobile && !$rootScope.isTablet); // Default meeting layout mode parallel only on desktop because on small screens it's not so useful'

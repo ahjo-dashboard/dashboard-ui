@@ -6,14 +6,13 @@
 
 /**
  * @ngdoc function
- * @name dashboard.controller:errordlgCtrl
+ * @name dashboard.controller:progressDialogCtrl
  * @description
- * # errordlgCtrl
+ * # progressDialogCtrl
  * Controller of the dashboard
  */
 angular.module('dashboard')
-    .controller('errordlgCtrl', function (titleStrId, bodyStrId) {
+    .controller('progressDialogCtrl', function (titleStrId) {
         var self = this;
-        self.dbDlgTitleStrId = titleStrId;
-        self.dbDlgbodyStrId = bodyStrId;
+        self.titleStrId = titleStrId;
     });

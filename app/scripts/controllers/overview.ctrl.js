@@ -81,7 +81,7 @@ angular.module('dashboard')
 
         self.loginMeeting = function loginMeetingFn(meetingItem, meetingRole, personGuid) {
             $log.debug("overviewCtrl.loginMeeting: \n - meeting:\n" + JSON.stringify(meetingItem) + "\n - role: " + JSON.stringify(meetingRole) + "\n - personGuid: " + personGuid);
-            DialogUtils.openProgress('STR_MTG_LOGIN_PROGRESS');
+            var dlg = DialogUtils.showProgress('STR_MTG_LOGIN_PROGRESS');
             AhjoMeetingSrv.meetingLogin(meetingItem.meetingGuid, meetingRole.RoleID, personGuid).then(function (resp) {
                 $log.debug("overviewCtrl.loginMeeting: result \n" + JSON.stringify(resp));
                 if (!Utils.processAhjoError(resp)) {
@@ -90,7 +90,7 @@ angular.module('dashboard')
             }, function (error) {
                 Utils.processAhjoError(error);
             }).finally(function () {
-                DialogUtils.closeProgress();
+                DialogUtils.close(dlg);
             });
         };
 
@@ -144,6 +144,4 @@ angular.module('dashboard')
         $scope.$on('$destroy', function () {
             $log.debug("overviewCtrl: DESTROY");
         });
-
-        DialogUtils.clearAll(); // Clear all in case user navigates back from deeper views where a progress dialog etc. are displayed
     }]);
