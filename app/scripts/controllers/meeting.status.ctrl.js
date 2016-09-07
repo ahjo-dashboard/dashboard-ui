@@ -424,7 +424,7 @@ angular.module('dashboard')
                 $log.error("meetingStatusCtrl.changeMeetingStatus: mtgItem or meeting missing");
             }
             else if (self.meeting.isSaliEnabled) {
-                DialogUtils.showInfo('STR_INFO_TITLE', 'STR_INFO_SALI_MODE', false).closePromise.finally(function () {
+                DialogUtils.showInfo('STR_INFO_TITLE', 'STR_INFO_SALI_MODE', true).closePromise.finally(function () {
                     $log.debug("meetingStatusCtrl.changeMeetingStatus: modal dialog finally closed");
                 });
             }
@@ -465,7 +465,7 @@ angular.module('dashboard')
                 $log.error("meetingStatusCtrl.changeTopicStatus: mtgItem or meeting missing");
             }
             else if (self.meeting.isSaliEnabled) {
-                DialogUtils.showInfo('STR_INFO_TITLE', 'STR_INFO_SALI_MODE', false).closePromise.finally(function () {
+                DialogUtils.showInfo('STR_INFO_TITLE', 'STR_INFO_SALI_MODE', true).closePromise.finally(function () {
                     $log.debug("meetingStatusCtrl.changeTopicStatus: modal dialog finally closed");
                 });
             }
