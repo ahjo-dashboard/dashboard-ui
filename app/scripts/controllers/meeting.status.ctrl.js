@@ -23,7 +23,7 @@ angular.module('dashboard')
         var selectedTopicGuid = null;
         var mtgRole = StorageSrv.getKey(CONST.KEY.MEETING_ROLE);
         var mtgPersonGuid = StorageSrv.getKey(CONST.KEY.MEETING_PERSONGUID);
-        var mtgItem = StorageSrv.getKey(CONST.KEY.MEETING_ITEM);
+        var mtgItemSelected = StorageSrv.getKey(CONST.KEY.MEETING_ITEM);
         var activeTopicGuid = null;
         var self = this;
         self.isMobile = $rootScope.isMobile;
@@ -172,7 +172,7 @@ angular.module('dashboard')
 
         function personLoggedOut(aEvent) {
             $log.debug("meetingStatusCtrl.personLoggedOut: " +JSON.stringify(aEvent));
-            if (angular.isObject(aEvent) && angular.equals(aEvent.personGuid, mtgPersonGuid) && angular.equals(aEvent.meetingID, mtgItem.meetingGuid)) {
+            if (angular.isObject(aEvent) && angular.equals(aEvent.personGuid, mtgPersonGuid) && angular.equals(aEvent.meetingID, mtgItemSelected.meetingGuid)) {
                 DialogUtils.showInfo('STR_INFO_TITLE', 'STR_FORCED_LOGOUT', false).closePromise.finally(function () {
                     $log.debug("meetingStatusCtrl.personLoggedOut: modal dialog finally closed");
                     $state.go(CONST.APPSTATE.HOME, { menu: CONST.MENU.CLOSED });
@@ -259,12 +259,12 @@ angular.module('dashboard')
             }
         }
 
-        function getMeeting(mtgItem) {
+        function getMeetingDetails(mtgItem) {
             if (!angular.isObject(mtgItem)) {
-                $log.error("meetingStatusCtrl: getMeeting invalid parameter:");
+                $log.error("meetingStatusCtrl: getMeetingDetails invalid parameter:");
                 return;
             }
-            $log.debug("meetingStatusCtrl.getMeeting");
+            $log.debug("meetingStatusCtrl.getMeetingDetails");
             self.uiName = mtgItem.agencyName + ' ' + mtgItem.name;
             selectedTopicGuid = null;
             activeTopicGuid = null;
@@ -272,7 +272,7 @@ angular.module('dashboard')
             $timeout.cancel(pollingTimer);
             pollingTimer = null;
             AhjoMeetingSrv.getMeeting(mtgItem.meetingGuid).then(function (response) {
-                $log.debug("meetingStatusCtrl.getMeeting: done");
+                $log.debug("meetingStatusCtrl.getMeetingDetails: done");
                 if (angular.isObject(response) && angular.isArray(response.objects) && response.objects.length) {
                     self.mtgDetails = response.objects[0];
                     if (angular.isObject(self.mtgDetails) && angular.isArray(self.mtgDetails.topicList)) {
@@ -314,7 +314,7 @@ angular.module('dashboard')
                     }
                 }
             }, function (error) {
-                $log.error("meetingStatusCtrl: getMeeting error: " + JSON.stringify(error));
+                $log.error("meetingStatusCtrl: getMeetingDetails: " + JSON.stringify(error));
                 self.error = error;
             }).finally(function () {
                 self.loading = false;
@@ -526,10 +526,10 @@ angular.module('dashboard')
         };
 
         self.logOut = function logOutFn() {
-            $log.debug("meetingStatusCtrl.logOut: \n - meeting:\n" + JSON.stringify(mtgItem) + "\n - role: " + JSON.stringify(mtgRole) + "\n - mtgPersonGuid: " + mtgPersonGuid);
-            if (angular.isObject(mtgItem) && angular.isObject(mtgRole) && mtgPersonGuid) {
+            $log.debug("meetingStatusCtrl.logOut: \n - meeting:\n" + JSON.stringify(mtgItemSelected) + "\n - role: " + JSON.stringify(mtgRole) + "\n - mtgPersonGuid: " + mtgPersonGuid);
+            if (angular.isObject(mtgItemSelected) && angular.isObject(mtgRole) && mtgPersonGuid) {
                 var dlg = DialogUtils.showProgress('STR_MTG_EXIT_PROGRESS');
-                AhjoMeetingSrv.meetingLogout(mtgItem.meetingGuid, mtgRole.RoleID, mtgPersonGuid).then(function () {
+                AhjoMeetingSrv.meetingLogout(mtgItemSelected.meetingGuid, mtgRole.RoleID, mtgPersonGuid).then(function () {
                     // Potential logout error code ignored, user has no means to recover.
                     // Proceed with state transition.
                 }, function (error) {
@@ -539,18 +539,18 @@ angular.module('dashboard')
                     DialogUtils.close(dlg);
                 });
             } else {
-                $log.error("meetingStatusCtrl.logOut: bad args \n - meeting:\n" + JSON.stringify(mtgItem) + "\n - role: " + JSON.stringify(mtgRole) + "\n - mtgPersonGuid: " + mtgPersonGuid);
+                $log.error("meetingStatusCtrl.logOut: bad args \n - meeting:\n" + JSON.stringify(mtgItemSelected) + "\n - role: " + JSON.stringify(mtgRole) + "\n - mtgPersonGuid: " + mtgPersonGuid);
                 $state.go(CONST.APPSTATE.HOME, { menu: CONST.MENU.CLOSED });
             }
         };
 
         // CONSTRUCTION
-        if (!mtgItem || !mtgRole) {
-            $log.error("meetingStatusCtrl: bad meeting or role: \n " + JSON.stringify(mtgItem) + '\n' + JSON.stringify(mtgRole));
+        if (!mtgItemSelected || !mtgRole) {
+            $log.error("meetingStatusCtrl: bad meeting or role: \n " + JSON.stringify(mtgItemSelected) + '\n' + JSON.stringify(mtgRole));
             $state.go(CONST.APPSTATE.HOME, { menu: CONST.MENU.CLOSED });
             return;
         } else {
-            getMeeting(mtgItem);
+            getMeetingDetails(mtgItemSelected);
         }
 
         if (angular.isObject(mtgRole)) {
