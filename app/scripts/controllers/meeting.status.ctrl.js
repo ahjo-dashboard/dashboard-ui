@@ -28,7 +28,7 @@ angular.module('dashboard')
         var self = this;
         self.isMobile = $rootScope.isMobile;
         self.uiName = null;
-        self.meeting = null;
+        self.mtgDetails = null;
         self.chairman = false;
         self.loading = true;
         self.updatingStatus = false;
@@ -96,16 +96,16 @@ angular.module('dashboard')
 
         function meetingStatusChanged(event) {
             $log.debug("meetingStatusCtrl: meetingStatusChanged");
-            if (angular.isObject(event) && angular.isObject(self.meeting)) {
-                self.meeting.meetingStatus = event.meetingState;
+            if (angular.isObject(event) && angular.isObject(self.mtgDetails)) {
+                self.mtgDetails.meetingStatus = event.meetingState;
             }
         }
 
         function topicStatusChanged(event) {
             $log.debug("meetingStatusCtrl: topicStatusChanged");
-            if (angular.isObject(event) && angular.isObject(self.meeting) && angular.isArray(self.meeting.topicList)) {
-                for (var i = 0; i < self.meeting.topicList.length; i++) {
-                    var topic = self.meeting.topicList[i];
+            if (angular.isObject(event) && angular.isObject(self.mtgDetails) && angular.isArray(self.mtgDetails.topicList)) {
+                for (var i = 0; i < self.mtgDetails.topicList.length; i++) {
+                    var topic = self.mtgDetails.topicList[i];
                     if (angular.isObject(topic) && angular.equals(topic.topicGuid, event.topicGuid)) {
                         topic.topicStatus = event.topicState;
                     }
@@ -115,7 +115,7 @@ angular.module('dashboard')
 
         function proposalsStatusChanged(events) {
             $log.debug("meetingStatusCtrl: proposalsStatusChanged");
-            if (angular.isArray(events) && angular.isObject(self.meeting) && angular.isArray(self.meeting.topicList)) {
+            if (angular.isArray(events) && angular.isObject(self.mtgDetails) && angular.isArray(self.mtgDetails.topicList)) {
 
                 var changedTopicGuidArray = [];
                 angular.forEach(events, function (topic) {
@@ -124,8 +124,8 @@ angular.module('dashboard')
                     }
                 }, changedTopicGuidArray);
 
-                for (var j = 0; j < self.meeting.topicList.length; j++) {
-                    var topic = self.meeting.topicList[j];
+                for (var j = 0; j < self.mtgDetails.topicList.length; j++) {
+                    var topic = self.mtgDetails.topicList[j];
                     if (angular.isObject(topic)) {
                         topic.isModified = (changedTopicGuidArray.indexOf(topic.topicGuid) > CONST.NOTFOUND);
                         if (!self.isMobile && angular.equals(topic.topicGuid, selectedTopicGuid)) {
@@ -214,7 +214,7 @@ angular.module('dashboard')
                                     topicStatusChanged(event);
                                     break;
                                 case CONST.MTGEVENT.TOPICEDITED:
-                                    topicEdited(event, mtgItem.meetingGuid, self.meeting);
+                                    topicEdited(event, mtgItem.meetingGuid, self.mtgDetails);
                                     break;
                                 case CONST.MTGEVENT.LOGGEDOUT:
                                     personLoggedOut(event);
@@ -236,9 +236,9 @@ angular.module('dashboard')
                     if (proposalEvents.length) {
                         var concated = proposalEvents;
 
-                        if (angular.isObject(self.meeting) && angular.isArray(self.meeting.topicList)) {
+                        if (angular.isObject(self.mtgDetails) && angular.isArray(self.mtgDetails.topicList)) {
                             angular.forEach(concated, function (e) {
-                                angular.forEach(self.meeting.topicList, function (t) {
+                                angular.forEach(self.mtgDetails.topicList, function (t) {
                                     if (angular.isObject(e) && angular.isObject(t) && angular.equals(e.proposal.topicGuid, t.topicGuid)) {
                                         t.includePublishedRemark = true;
                                     }
@@ -274,14 +274,14 @@ angular.module('dashboard')
             AhjoMeetingSrv.getMeeting(mtgItem.meetingGuid).then(function (response) {
                 $log.debug("meetingStatusCtrl.getMeeting: done");
                 if (angular.isObject(response) && angular.isArray(response.objects) && response.objects.length) {
-                    self.meeting = response.objects[0];
-                    if (angular.isObject(self.meeting) && angular.isArray(self.meeting.topicList)) {
+                    self.mtgDetails = response.objects[0];
+                    if (angular.isObject(self.mtgDetails) && angular.isArray(self.mtgDetails.topicList)) {
 
-                        angular.forEach(self.meeting.topicList, function (t) {
+                        angular.forEach(self.mtgDetails.topicList, function (t) {
                             if (angular.isObject(t)) {
-                                t.userPersonGuid = self.meeting.userPersonGuid;
-                                t.isCityCouncil = self.meeting.isCityCouncil;
-                                t.showClassifiedDocs = self.meeting.showClassifiedDocs;
+                                t.userPersonGuid = self.mtgDetails.userPersonGuid;
+                                t.isCityCouncil = self.mtgDetails.isCityCouncil;
+                                t.showClassifiedDocs = self.mtgDetails.showClassifiedDocs;
                                 // store active topic if any
                                 if (!activeTopicGuid && t.topicStatus === CONST.TOPICSTATUS.ACTIVE.stateId) {
                                     activeTopicGuid = t.topicGuid;
@@ -295,7 +295,7 @@ angular.module('dashboard')
                                 selectedTopicGuid = storedTopic.topicGuid;
                             }
                             else {
-                                self.meeting.topicList.forEach(function (topic) {
+                                self.mtgDetails.topicList.forEach(function (topic) {
                                     if (!selectedTopicGuid && self.canAccess(topic)) {
                                         storeTopic(topic);
                                     }
@@ -303,13 +303,13 @@ angular.module('dashboard')
                             }
                         }
 
-                        lastEventId = self.meeting.lastEventId;
+                        lastEventId = self.mtgDetails.lastEventId;
                         $timeout.cancel(pollingTimer);
                         pollingTimer = $timeout(function () {
                             getEvents();
                         }, CONST.POLLINGTIMEOUT);
 
-                        self.uiName = self.meeting.meetingTitle;
+                        self.uiName = self.mtgDetails.meetingTitle;
                     }
                 }
             }, function (error) {
@@ -324,8 +324,8 @@ angular.module('dashboard')
             if (angular.isObject(topic)) {
                 $log.debug("meetingStatusCtrl.topicSelected: publicity=" + topic.publicity);
                 if (!self.isSelected(topic)) {
-                    topic.userPersonGuid = self.meeting.userPersonGuid;
-                    topic.isCityCouncil = self.meeting.isCityCouncil;
+                    topic.userPersonGuid = self.mtgDetails.userPersonGuid;
+                    topic.isCityCouncil = self.mtgDetails.isCityCouncil;
                     storeTopic(topic);
                     if (self.isMobile) {
                         $state.go(CONST.APPSTATE.MEETINGDETAILS, {});
@@ -357,7 +357,7 @@ angular.module('dashboard')
             var result = false;
             if (angular.isObject(topic)) {
                 // is meeting active
-                if (angular.isObject(self.meeting) && self.meeting.meetingStatus === CONST.MTGSTATUS.ACTIVE.stateId) {
+                if (angular.isObject(self.mtgDetails) && self.mtgDetails.meetingStatus === CONST.MTGSTATUS.ACTIVE.stateId) {
                     // is topic active
                     if (!activeTopicGuid || topic.topicGuid === activeTopicGuid) {
                         result = true;
@@ -422,21 +422,21 @@ angular.module('dashboard')
         };
 
         self.changeMeetingStatus = function () {
-            if (!angular.isObject(mtgItem) || !angular.isObject(self.meeting)) {
+            if (!angular.isObject(mtgItem) || !angular.isObject(self.mtgDetails)) {
                 $log.error("meetingStatusCtrl.changeMeetingStatus: mtgItem or meeting missing");
             }
-            else if (self.meeting.isSaliEnabled) {
+            else if (self.mtgDetails.isSaliEnabled) {
                 DialogUtils.showInfo('STR_INFO_TITLE', 'STR_INFO_SALI_MODE', true).closePromise.finally(function () {
                     $log.debug("meetingStatusCtrl.changeMeetingStatus: modal dialog finally closed");
                 });
             }
             else {
-                $log.debug("meetingStatusCtrl.changeMeetingStatus: current status=" + self.meeting.meetingStatus);
+                $log.debug("meetingStatusCtrl.changeMeetingStatus: current status=" + self.mtgDetails.meetingStatus);
                 var items = [];
                 angular.forEach(CONST.MEETINGSTATUSACTIONS, function (status) {
                     if (angular.isObject(status)) {
                         // todo: active status needs to be updated to app constants
-                        status.disabled = status.active.indexOf(self.meeting.meetingStatus) <= CONST.NOTFOUND;
+                        status.disabled = status.active.indexOf(self.mtgDetails.meetingStatus) <= CONST.NOTFOUND;
                         this.push(status);
                     }
                 }, items);
@@ -463,10 +463,10 @@ angular.module('dashboard')
         };
 
         self.changeTopicStatus = function (topic) {
-            if (!angular.isObject(mtgItem) || !angular.isObject(self.meeting)) {
+            if (!angular.isObject(mtgItem) || !angular.isObject(self.mtgDetails)) {
                 $log.error("meetingStatusCtrl.changeTopicStatus: mtgItem or meeting missing");
             }
-            else if (self.meeting.isSaliEnabled) {
+            else if (self.mtgDetails.isSaliEnabled) {
                 DialogUtils.showInfo('STR_INFO_TITLE', 'STR_INFO_SALI_MODE', true).closePromise.finally(function () {
                     $log.debug("meetingStatusCtrl.changeTopicStatus: modal dialog finally closed");
                 });
@@ -498,7 +498,7 @@ angular.module('dashboard')
                                 activeTopicGuid = topic.topicGuid;
                             }
                             // set requested state id to topic. pending response value to be updated
-                            angular.forEach(self.meeting.topicList, function (t) {
+                            angular.forEach(self.mtgDetails.topicList, function (t) {
                                 if (status.stateId && angular.isObject(t) && angular.equals(topic.topicGuid, t.topicGuid)) {
                                     t.topicStatus = status.stateId;
                                 }
@@ -565,8 +565,8 @@ angular.module('dashboard')
         });
 
         var proposalCountWatcher = $rootScope.$on(PROPS.COUNT, function (event, data) {
-            if (angular.isObject(self.meeting)) {
-                angular.forEach(self.meeting.topicList, function (t) {
+            if (angular.isObject(self.mtgDetails)) {
+                angular.forEach(self.mtgDetails.topicList, function (t) {
                     if (angular.isObject(data) && angular.isObject(t) && angular.equals(data.topicGuid, t.topicGuid)) {
                         t.includePublishedRemark = (data.published > 0);
                     }
