@@ -104,7 +104,10 @@ angular.module('dashboard')
                 }
             }, self.types);
 
-            getDecisions(StorageSrv.getKey(CONST.KEY.TOPIC));
+            var topic = StorageSrv.getKey(CONST.KEY.TOPIC);
+            if (angular.isObject(topic)) {
+                getDecisions(topic);
+            }
         }];
 
         return {
