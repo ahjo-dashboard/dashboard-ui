@@ -422,46 +422,56 @@ angular.module('dashboard')
         };
 
         self.changeMeetingStatus = function () {
-            if (!angular.isObject(mtgItem)) {
-                $log.error("meetingStatusCtrl.changeMeetingStatus: mtgItem missing");
-                return;
+            if (!angular.isObject(mtgItem) || !angular.isObject(self.meeting)) {
+                $log.error("meetingStatusCtrl.changeMeetingStatus: mtgItem or meeting missing");
             }
-            $log.debug("meetingStatusCtrl.changeMeetingStatus: current status=" + self.meeting.meetingStatus);
-            var items = [];
-            angular.forEach(CONST.MEETINGSTATUSACTIONS, function (status) {
-                if (angular.isObject(status) && angular.isObject(self.meeting)) {
-                    // todo: active status needs to be updated to app constants
-                    status.disabled = status.active.indexOf(self.meeting.meetingStatus) <= CONST.NOTFOUND;
-                    this.push(status);
-                }
-            }, items);
-
-            openStatusChangeView('STR_CHANGE_MEETING_STATUS', items, function (status) {
-                if (!angular.isObject(status)) {
-                    $log.error("meetingStatusCtrl.changeMeetingStatus: invalid status");
-                    return;
-                }
-                $log.debug("meetingStatusCtrl.changeMeetingStatus: selected: " + JSON.stringify(status));
-                AhjoMeetingSrv.setMeetingStatus(mtgItem.meetingGuid, status.actionId).then(function (result) {
-                    $log.debug("meetingStatusCtrl.setMeetingStatus: " + JSON.stringify(result));
-                    // todo: implement result handling
-                }, function (error) {
-                    $log.error("meetingStatusCtrl.setMeetingStatus: " + JSON.stringify(error));
-                    // todo: implement error handling
-                }, function (/*notification*/) {
-                    self.updatingStatus = true;
-                }).finally(function () {
-                    self.updatingStatus = false;
+            else if (self.meeting.isSaliEnabled) {
+                DialogUtils.showInfo('STR_INFO_TITLE', 'STR_INFO_SALI_MODE', true).closePromise.finally(function () {
+                    $log.debug("meetingStatusCtrl.changeMeetingStatus: modal dialog finally closed");
                 });
-            });
+            }
+            else {
+                $log.debug("meetingStatusCtrl.changeMeetingStatus: current status=" + self.meeting.meetingStatus);
+                var items = [];
+                angular.forEach(CONST.MEETINGSTATUSACTIONS, function (status) {
+                    if (angular.isObject(status)) {
+                        // todo: active status needs to be updated to app constants
+                        status.disabled = status.active.indexOf(self.meeting.meetingStatus) <= CONST.NOTFOUND;
+                        this.push(status);
+                    }
+                }, items);
+
+                openStatusChangeView('STR_CHANGE_MEETING_STATUS', items, function (status) {
+                    if (!angular.isObject(status)) {
+                        $log.error("meetingStatusCtrl.changeMeetingStatus: invalid status");
+                        return;
+                    }
+                    $log.debug("meetingStatusCtrl.changeMeetingStatus: selected: " + JSON.stringify(status));
+                    AhjoMeetingSrv.setMeetingStatus(mtgItem.meetingGuid, status.actionId).then(function (result) {
+                        $log.debug("meetingStatusCtrl.setMeetingStatus: " + JSON.stringify(result));
+                        // todo: implement result handling
+                    }, function (error) {
+                        $log.error("meetingStatusCtrl.setMeetingStatus: " + JSON.stringify(error));
+                        // todo: implement error handling
+                    }, function (/*notification*/) {
+                        self.updatingStatus = true;
+                    }).finally(function () {
+                        self.updatingStatus = false;
+                    });
+                });
+            }
         };
 
         self.changeTopicStatus = function (topic) {
-            if (!angular.isObject(mtgItem)) {
-                $log.error("meetingStatusCtrl.changeTopicStatus: mtgItem missing");
-                return;
+            if (!angular.isObject(mtgItem) || !angular.isObject(self.meeting)) {
+                $log.error("meetingStatusCtrl.changeTopicStatus: mtgItem or meeting missing");
             }
-            if (angular.isObject(topic)) {
+            else if (self.meeting.isSaliEnabled) {
+                DialogUtils.showInfo('STR_INFO_TITLE', 'STR_INFO_SALI_MODE', true).closePromise.finally(function () {
+                    $log.debug("meetingStatusCtrl.changeTopicStatus: modal dialog finally closed");
+                });
+            }
+            else if (angular.isObject(topic)) {
                 $log.debug("meetingStatusCtrl.changeTopicStatus: current status=" + topic.topicStatus);
 
                 if (self.canOpenTopic(topic)) {
