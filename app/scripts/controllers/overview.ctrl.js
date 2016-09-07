@@ -114,6 +114,7 @@ angular.module('dashboard')
 
         self.showInfo = function () {
             $log.debug("overviewCtrl: showInfo");
+            $state.go(CONST.APPSTATE.INFO);
         };
 
         self.upperClicked = function () {

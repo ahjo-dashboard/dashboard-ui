@@ -1,30 +1,81 @@
 <div class="ad-page">
 
-    <div class="db-new-page-header">
-        <div class="container col-xs-12">
-            <div class="row">
-                <i class="col-xs-2 glyphicon glyphicon-menu-left" aria-hidden="true" ng-click="goBack()"></i>
-                <div class="col-xs-10">
-                    <h3 >Info</h3>
-                </div>
-            </div>
-        </div>
+    <div class="ad-page-header db-center-v">
+        <button type="button" class="btn db-btn-prim" ng-click="goHome()" tooltip-enable="isTooltips" uib-tooltip="{{'STR_INFO_HOMEBTN' | translate}}"
+            tooltip-placement="right">
+            <span class="glyphicon glyphicon-menu-left"></span>
+        </button>
+        <h4 translate translate-cloak>Tietoja sovelluksesta</h4>
     </div>
 
     <div class="ad-page-content">
-
         <div class="ad-page-container">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin est urna, sagittis eget faucibus sed, dignissim eu eros. Quisque ac mauris fermentum, fermentum metus sit amet, luctus nisl. Pellentesque nec rhoncus est. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur eu posuere eros. Aenean semper interdum justo vel semper. Mauris neque dolor, blandit et sapien in, tristique feugiat ligula. Praesent ut nunc id nibh luctus venenatis. Proin sollicitudin vehicula tellus, quis euismod mi sodales id. Donec egestas sit amet nisl sit amet dignissim.
-
-            Nam id elit placerat, gravida purus eu, tempus leo. Aenean nec facilisis augue. Ut scelerisque ex iaculis mi viverra egestas. Ut vitae vestibulum ligula, sit amet consequat nunc. Donec eget risus ac ligula porttitor lobortis eu sit amet nisi. Proin eleifend mollis ante non condimentum. Mauris vitae massa laoreet, malesuada erat quis, scelerisque nibh.
-
-            Quisque a velit et odio luctus sollicitudin eget et sem. Suspendisse consectetur enim ac tellus tempus ultrices. Pellentesque rhoncus ipsum felis, non egestas neque lacinia nec. Nulla vestibulum tristique feugiat. Cras sodales justo in erat ornare, in dapibus lacus maximus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Sed finibus diam et consequat vestibulum. Vivamus ante neque, hendrerit non lorem eget, porta sodales urna. Cras scelerisque posuere magna eget tincidunt. Nullam ac felis non leo tempor imperdiet. Nunc vitae tellus dolor.
-
-            Ut mauris mauris, imperdiet at lobortis nec, egestas quis orci. Donec volutpat ipsum eget elit rhoncus mollis. Mauris vel quam ipsum. Nullam ut condimentum arcu, viverra congue est. Nullam in metus consequat quam posuere vestibulum condimentum sit amet elit. Donec velit neque, bibendum vel sapien et, consequat luctus libero. Sed mollis congue varius. Nam eu dignissim lorem. Pellentesque nunc est, sollicitudin ut mi in, varius tincidunt libero. Quisque sit amet dictum purus, in tincidunt orci.
-
-            Ut vitae ante et lacus gravida condimentum. Aliquam sed diam non est blandit aliquet ac a est. Suspendisse quam lorem, pulvinar ut faucibus eu, suscipit vitae quam. Donec pellentesque hendrerit fringilla. Morbi aliquet diam et orci molestie dictum. Aenean a erat sit amet turpis tincidunt sagittis. Praesent molestie felis sit amet lacus accumsan, sed finibus nisl sollicitudin. Aliquam lobortis, lacus a facilisis efficitur, mauris nulla euismod dolor, at pharetra quam libero in sem. Nullam egestas tellus a massa placerat accumsan. Phasellus consequat non lorem et pulvinar. Aliquam erat volutpat. Praesent sit amet posuere libero, a vehicula mauris. Suspendisse sit amet elementum tellus. Aenean porta tempus viverra. Suspendisse risus ex, imperdiet id nulla interdum, tempor porttitor turpis. Morbi viverra sem at tristique tempor.
+            <div>
+                <p>Version: {{dbAppVersion}} {{dbAppEnv}}</p>
+                <p>UA: {{dbUa}}</p>
+                <p>
+                    <h5>Lisenssit</h5>
+                    <div class="db-margin-05">
+                        <h5>ahjo dashboard-ui</h5>
+                        The MIT License (MIT) Copyright (c) 2016 Tieto Finland Oy. Permission is hereby granted, free of charge, to any person obtaining
+                        a copy of this software and associated documentation files (the "Software"), to deal in the Software
+                        without restriction, including without limitation the rights to use, copy, modify, merge, publish,
+                        distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software
+                        is furnished to do so, subject to the following conditions: The above copyright notice and this permission
+                        notice shall be included in all copies or substantial portions of the Software. THE SOFTWARE IS PROVIDED
+                        "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+                        OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS
+                        OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF
+                        CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+                        OTHER DEALINGS IN THE SOFTWARE.
+                    </div>
+                    <div class="db-margin-05">
+                        <h5>Angular</h5>
+                    </div>
+                    <div class="db-margin-05">
+                        <h5>bootstrap-sass-official</h5>
+                    </div>
+                    <div class="db-margin-05">
+                        <h5>angular-touch</h5>
+                    </div>
+                    <div class="db-margin-05">
+                        <h5>angular-ui-router</h5>
+                    </div>
+                    <div class="db-margin-05">
+                        <h5>angular-animate</h5>
+                    </div>
+                    <div class="db-margin-05">
+                        <h5>angular-resource</h5>
+                    </div>
+                    <div class="db-margin-05">
+                        <h5>angular-bootstrap</h5>
+                    </div>
+                    <div class="db-margin-05">
+                        <h5>angular-sanitize</h5>
+                    </div>
+                    <div class="db-margin-05">
+                        <h5>angular-translate</h5>
+                    </div>
+                    <div class="db-margin-05">
+                        <h5>angular-translate-loader-static-files</h5>
+                    </div>
+                    <div class="db-margin-05">
+                        <h5>ngToast</h5>
+                    </div>
+                    <div class="db-margin-05">
+                        <h5>angular-spinner</h5>
+                    </div>
+                    <div class="db-margin-05">
+                        <h5>angular-elastic</h5>
+                    </div>
+                    <div class="db-margin-05">
+                        <h5>ng-focus-if</h5>
+                    </div>
+                    <div class="db-margin-05">
+                        <h5>ng-dial</h5>
+                    </div>
+                </p>
+            </div>
         </div>
-
     </div>
-
 </div>

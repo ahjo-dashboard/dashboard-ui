@@ -86,7 +86,7 @@ angular.module('dashboard', [
             closeByNavigation: true
         });
     })
-    .run(function ($rootScope, $log, $window, CONST, ENV, $state, $timeout, $translate, Utils, StorageSrv, ngToast, DialogUtils) {
+    .run(function ($rootScope, $log, $window, CONST, ENV, $state, $timeout, $translate, Utils, StorageSrv, ngToast, DialogUtils, G_APP) {
 
         $rootScope.isModalActive = DialogUtils.isModalActive;
 
@@ -110,16 +110,18 @@ angular.module('dashboard', [
         // rootScope.env_dev
 
         $rootScope.env_dev = ENV.app_env !== 'prod';
-
-        console.log("app.run: UA=" + $window.navigator.userAgent);
+        $rootScope.dbUa = $window.navigator.userAgent;
+        $rootScope.dbAppVersion = G_APP.app_version;
+        $rootScope.dbAppEnv = ENV.app_env;
         $rootScope.isIe = Utils.isUaIe($window.navigator.userAgent);
         $rootScope.isEdge = Utils.isUAEdge($window.navigator.userAgent);
         $rootScope.isMobile = Utils.isClientMobile();
         $rootScope.isTablet = Utils.isUaMobile();
         $rootScope.isTooltips = !$rootScope.isMobile && !$rootScope.isTablet;
-        console.log("app.run: IE=" + $rootScope.isIe + "  Edge=" + $rootScope.isEdge + " Mobile=" + $rootScope.isMobile + " Tooltips=" + $rootScope.isTooltips);
 
-        $rootScope.parallelMode = (!$rootScope.isMobile && !$rootScope.isTablet); // Default meeting layout mode parallel only on desktop because on small screens it's not so useful'
+        console.log("app.run: IE=" + $rootScope.isIe + "  Edge=" + $rootScope.isEdge + " Mobile=" + $rootScope.isMobile + " Tooltips=" + $rootScope.isTooltips +" UA=" + $window.navigator.userAgent);
+
+        $rootScope.parallelMode = (!$rootScope.isMobile && !$rootScope.isTablet); // Default meeting layout mode parallel only on desktop because on small screens it's not so useful
 
         // Confirmation for tab/browser closing
         $rootScope.txtConfirmCloseApp = '';
