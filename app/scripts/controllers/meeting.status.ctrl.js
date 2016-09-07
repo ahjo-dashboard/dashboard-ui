@@ -136,34 +136,34 @@ angular.module('dashboard')
             }
         }
 
-        function topicEdited(event, mtgGuid, mtg) {
-            if (!angular.isObject(event) || !angular.isObject(event.topic) || !angular.isObject(mtg) || !mtgGuid || !angular.isArray(mtg.topicList)) {
+        function topicEdited(event, mtgDetails) {
+            if (!angular.isObject(event) || !angular.isObject(event.topic) || !angular.isObject(mtgDetails) || !mtgDetails.meetingGuid || !angular.isArray(mtgDetails.topicList)) {
                 $log.error("meetingStatusCtrl.topicEdited: ignored, bad args");
                 return;
             }
 
-            if (!angular.equals(event.meetingID, mtgGuid)) {
-                $log.debug("meetingStatusCtrl.topicEdited: ignored, not this meeting, event.meetingID=" + event.meetingID + " meeting=" + mtg.meetingGuid);
+            if (!angular.equals(event.meetingID, mtgDetails.meetingGuid)) {
+                $log.debug("meetingStatusCtrl.topicEdited: ignored, not this meeting, event.meetingID=" + event.meetingID + " meeting=" + mtgDetails.meetingGuid);
                 return;
             }
 
             var eTopic = event.topic;
-            $log.debug("meetingStatusCtrl: topicEdited, topicGuid=" + eTopic.topicGuid + " sequencenumber=" + eTopic.sequencenumber + " mtgGuid=" + mtgGuid);
+            $log.debug("meetingStatusCtrl: topicEdited, topicGuid=" + eTopic.topicGuid + " sequencenumber=" + eTopic.sequencenumber + " mtgGuid=" + mtgDetails.meetingGuid);
 
             var matchInd;
-            for (var i = 0; !angular.isDefined(matchInd) && i < mtg.topicList.length; i++) {
-                if (angular.equals(eTopic.topicGuid, mtg.topicList[i].topicGuid)) {
+            for (var i = 0; !angular.isDefined(matchInd) && i < mtgDetails.topicList.length; i++) {
+                if (angular.equals(eTopic.topicGuid, mtgDetails.topicList[i].topicGuid)) {
                     matchInd = i;
                     $log.debug("meetingStatusCtrl: merging, topicGuid exists at matchInd=" + matchInd);
-                    angular.merge(mtg.topicList[matchInd], eTopic);
+                    angular.merge(mtgDetails.topicList[matchInd], eTopic);
                 }
             }
 
             if (!angular.isDefined(matchInd)) {
-                $log.debug("meetingStatusCtrl: adding a new topic sequenceNumber=" + eTopic.sequencenumber + " topicList.length=" + mtg.topicList.length);
+                $log.debug("meetingStatusCtrl: adding a new topic sequenceNumber=" + eTopic.sequencenumber + " topicList.length=" + mtgDetails.topicList.length);
                 var ind = eTopic.sequencenumber - 1;
-                if ((ind >= 0) && (ind < mtg.topicList.length)) {
-                    mtg.topicList.splice(ind, 0, eTopic);
+                if ((ind >= 0) && (ind < mtgDetails.topicList.length)) {
+                    mtgDetails.topicList.splice(ind, 0, eTopic);
                 } else {
                     $log.error("meetingStatusCtrl: ignored, bad sequencenumber");
                 }
@@ -181,9 +181,9 @@ angular.module('dashboard')
         }
 
         function getEvents() {
-            if (lastEventId && angular.isObject(mtgItem) && mtgItem.meetingGuid) {
+            if (lastEventId && angular.isObject(self.mtgDetails) && self.mtgDetails.meetingGuid) {
                 var proposalEvents = [];
-                AhjoMeetingSrv.getEvents(lastEventId, mtgItem.meetingGuid).then(function (response) {
+                AhjoMeetingSrv.getEvents(lastEventId, self.mtgDetails.meetingGuid).then(function (response) {
                     if (angular.isArray(response)) {
                         response.forEach(function (event) {
                             $log.debug("meetingStatusCtrl: getEvents then: " + event.typeName);
@@ -214,7 +214,7 @@ angular.module('dashboard')
                                     topicStatusChanged(event);
                                     break;
                                 case CONST.MTGEVENT.TOPICEDITED:
-                                    topicEdited(event, mtgItem.meetingGuid, self.mtgDetails);
+                                    topicEdited(event, self.mtgDetails);
                                     break;
                                 case CONST.MTGEVENT.LOGGEDOUT:
                                     personLoggedOut(event);
@@ -310,6 +310,7 @@ angular.module('dashboard')
                         }, CONST.POLLINGTIMEOUT);
 
                         self.uiName = self.mtgDetails.meetingTitle;
+                        self.mtgDetails.meetingGuid = mtgItem.meetingGuid;
                     }
                 }
             }, function (error) {
@@ -422,8 +423,8 @@ angular.module('dashboard')
         };
 
         self.changeMeetingStatus = function () {
-            if (!angular.isObject(mtgItem) || !angular.isObject(self.mtgDetails)) {
-                $log.error("meetingStatusCtrl.changeMeetingStatus: mtgItem or meeting missing");
+            if (!angular.isObject(self.mtgDetails)) {
+                $log.error("meetingStatusCtrl.changeMeetingStatus: meeting details missing");
             }
             else if (self.mtgDetails.isSaliEnabled) {
                 DialogUtils.showInfo('STR_INFO_TITLE', 'STR_INFO_SALI_MODE', true).closePromise.finally(function () {
@@ -447,7 +448,7 @@ angular.module('dashboard')
                         return;
                     }
                     $log.debug("meetingStatusCtrl.changeMeetingStatus: selected: " + JSON.stringify(status));
-                    AhjoMeetingSrv.setMeetingStatus(mtgItem.meetingGuid, status.actionId).then(function (result) {
+                    AhjoMeetingSrv.setMeetingStatus(self.mtgDetails.meetingGuid, status.actionId).then(function (result) {
                         $log.debug("meetingStatusCtrl.setMeetingStatus: " + JSON.stringify(result));
                         // todo: implement result handling
                     }, function (error) {
@@ -463,8 +464,8 @@ angular.module('dashboard')
         };
 
         self.changeTopicStatus = function (topic) {
-            if (!angular.isObject(mtgItem) || !angular.isObject(self.mtgDetails)) {
-                $log.error("meetingStatusCtrl.changeTopicStatus: mtgItem or meeting missing");
+            if (!angular.isObject(self.mtgDetails)) {
+                $log.error("meetingStatusCtrl.changeTopicStatus: meeting details missing");
             }
             else if (self.mtgDetails.isSaliEnabled) {
                 DialogUtils.showInfo('STR_INFO_TITLE', 'STR_INFO_SALI_MODE', true).closePromise.finally(function () {
@@ -490,7 +491,7 @@ angular.module('dashboard')
                         }
                         $log.debug("meetingStatusCtrl.changeTopicStatus: selected: " + JSON.stringify(status));
 
-                        AhjoMeetingSrv.setTopicStatus(topic.topicGuid, mtgItem.meetingGuid, status.actionId).then(function (result) {
+                        AhjoMeetingSrv.setTopicStatus(topic.topicGuid, self.mtgDetails.meetingGuid, status.actionId).then(function (result) {
                             $log.debug("meetingStatusCtrl.setTopicStatus: " + JSON.stringify(result));
                             activeTopicGuid = null;
                             if (status.stateId === CONST.TOPICSTATUS.ACTIVE.stateId) {
