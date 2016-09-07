@@ -54,7 +54,7 @@ angular.module('dashboard')
          * @param {number} Optional minimum duration for the dialog, otherwise a default is used.
          * @returns {} ngDialog promise
          */
-        self.showProgress = function (aTitleStrId, aMinDur) {
+        self.showProgress = function (aTitleStrId, aBodyStrId, aMinDur) {
             var minDur = angular.isNumber(aMinDur) ? aMinDur : CONST.PROGRESSDLGMINDURATIONMS;
             var timer = null;
             if (minDur) {
@@ -69,15 +69,16 @@ angular.module('dashboard')
                 controllerAs: 'c',
                 closeByNavigation: true,
                 resolve: {
-                    titleStrId: function () { return aTitleStrId; }
+                    titleStrId: function () { return aTitleStrId; },
+                    bodyStrId: function () { return aBodyStrId; }
                 },
                 preCloseCallback: function () {
                     var res = timer ? timer : true;
-                    $log.debug("DialogUtils.showProgress: preCloseCallback " + dlg.id + " returning '" + res);
+                    // $log.debug("DialogUtils.showProgress: preCloseCallback " + dlg.id + " returning '" + res);
                     return res;
                 }
             });
-            $log.debug("DialogUtils.showProgress: " + dlg.id + " , " + JSON.stringify(aTitleStrId));
+            $log.debug("DialogUtils.showProgress: " + dlg.id + ", " + JSON.stringify(aTitleStrId));
             return dlg;
         };
 

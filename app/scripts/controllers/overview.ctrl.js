@@ -21,6 +21,7 @@ angular.module('dashboard')
         self.blockMode = CONST.BLOCKMODE.DEFAULT;
         self.vbl = MTGD.VISIBLE;
         self.bms = CONST.BLOCKMODE;
+        self.testEnvUserId = StorageSrv.getKey(CONST.KEY.TESTENV_USERID);
 
         var visibleMtgs = StorageSrv.getKey(CONST.KEY.VISIBLE_MTGS);
         switch (visibleMtgs) {
@@ -79,6 +80,23 @@ angular.module('dashboard')
             }
         }
 
+        function logoutRest() {
+            $log.debug("overviewCtrl.logoutRest");
+            self.logoutProm = $http({
+                method: 'GET',
+                withCredentials: true,
+                url: ENV.AHJOAPI_USERLOGOUTREST
+            }).then(function successCallback(resp) {
+                $log.debug("overviewCtrl.logoutRest: done");
+                Utils.processAhjoError(resp); // Print any errors but transition state in any case.
+            }, function errorCallback(error) {
+                $log.error("overviewCtrl.logoutRest");
+                Utils.processAhjoError(error);
+            }).finally(function () {
+                $state.go(CONST.APPSTATE.LOGIN);
+            });
+        }
+
         self.loginMeeting = function loginMeetingFn(meetingItem, meetingRole, personGuid) {
             $log.debug("overviewCtrl.loginMeeting: \n - meeting:\n" + JSON.stringify(meetingItem) + "\n - role: " + JSON.stringify(meetingRole) + "\n - personGuid: " + personGuid);
             var dlg = DialogUtils.showProgress('STR_MTG_LOGIN_PROGRESS');
@@ -115,21 +133,6 @@ angular.module('dashboard')
             self.closedSignReqs = value;
             StorageSrv.setKey(CONST.KEY.SIGNING_RES, value);
         };
-
-        function logoutRest() {
-            $log.debug("overviewCtrl.logoutRest");
-            self.logoutProm = $http({
-                method: 'GET',
-                withCredentials: true,
-                url: ENV.AHJOAPI_USERLOGOUTREST
-            }).then(function successCallback(/*response*/) {
-                $log.debug("overviewCtrl.logoutRest: done");
-                $state.go(CONST.APPSTATE.LOGIN);
-            }, function errorCallback(error) {
-                $log.error(error);
-            }).finally(function () {
-            });
-        }
 
         self.logout = function () {
             $log.debug("overviewCtrl.logout");

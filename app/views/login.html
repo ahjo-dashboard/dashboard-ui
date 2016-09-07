@@ -19,23 +19,25 @@
                     </p>
                 </div>
 
-                <form ng-hide="lc.login || lc.loadingUsers">
+                <form ng-hide="lc.login || lc.loadingUsers || lc.error">
                     <select db-selection sel-items="lc.data.options" ng-model="lc.data.selection">
                     </select>
                     <br><br>
-                    <button ng-disabled="!lc.data.selection || lc.login || lc.loadingUsers" class="btn btn-success" type="submit" ng-click="lc.select()"
+                    <button ng-hide="!lc.data.selection || lc.login || lc.loadingUsers" class="btn btn-success" type="submit" ng-click="lc.selectUser()"
                         ng-disabled="lc.login">
                         <span translate translate-cloak>{{'STR_LOGIN'}}</span>
                     </button>
                 </form>
 
-                <uib-progressbar ng-show="lc.login || lc.loadingUsers" class="progress-striped active" type="info">
-                    <span ng-if="lc.loadingUsers">Haetaan käyttäjätunnuksia</span>
-                    <span ng-if="lc.login"><span>Kirjaudutaan tunnuksella &quot;</span><span>{{lc.data.selection}}</span><span>&quot;</span>
-                </uib-progressbar>
+                <span ng-if="lc.loadingUsers">Haetaan käyttäjätunnuksia</span>
+                <div ng-show="lc.loadingUsers" class="db-spinner-cont">
+                    <div us-spinner spinner-on="true"></div>
+                </div>
 
                 <div uib-alert ng-if="lc.error" ng-class="'alert-danger'">
-                    <span translate-cloak translate>STR_FAIL_LOADING</span>&nbsp;<span translate>STR_TRY_LATER</span>
+                    <span translate-cloak translate>STR_FAIL_LOADING</span>
+                    <br>
+                    <span translate>STR_TRY_LATER</span>
                     <br>{{lc.error.status}}&nbsp;{{lc.error.statusText}}
                 </div>
 
@@ -47,7 +49,7 @@
                 <div class="db-error">
                     Vaihtoehtoisesti voit kirjautua myös omalla tunnuksellasi
                     <br>
-                    <button type="button" class="btn btn-success" ng-click="goHome()" ng-disabled="lc.login">Kirjaudu omalla</button>
+                    <button type="button" class="btn btn-success" ng-click="lc.selectOwn()" ng-disabled="lc.login">Kirjaudu omalla</button>
                 </div>
             </div>
 

@@ -12,7 +12,8 @@
  * Controller of the dashboard
  */
 angular.module('dashboard')
-    .controller('progressDialogCtrl', function (titleStrId) {
+    .controller('progressDialogCtrl', function (titleStrId, bodyStrId) {
         var self = this;
         self.titleStrId = titleStrId;
+        self.bodyStrId = bodyStrId;
     });

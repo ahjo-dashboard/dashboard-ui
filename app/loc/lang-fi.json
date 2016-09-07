@@ -31,6 +31,7 @@
     "STR_TIME": "Aika",
     "STR_LOADING": "Ladataan...",
     "STR_LOADING_DATA": "Haetaan tietoja",
+    "STR_LOGGING_IN": "Kirjaudutaan",
     "STR_FAIL_LOADING": "Haku ei onnistunut",
     "STR_FAIL_OP": "Toiminto ei onnistunut",
     "STR_OP_SUCCESS": "Toiminto onnistui",
