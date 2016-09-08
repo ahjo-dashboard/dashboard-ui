@@ -23,34 +23,26 @@ angular.module('dashboard')
             self.supporter = null;
             self.voting = null;
             self.isTooltips = $rootScope.isTooltips;
+            var mtgTopicSelected = StorageSrv.getKey(CONST.KEY.TOPIC);
+            var mtgItemSelected = StorageSrv.getKey(CONST.KEY.MEETING_ITEM);
 
             // FUNCTIONS
 
-            function getDecisions(topic) {
-                if (angular.isObject(topic)) {
+            function getDecisions(aMtg, aTopic) {
+                $log.debug("dbDecisions.getDecisions", arguments);
+                if (angular.isObject(aTopic) && angular.isObject(aMtg)) {
                     self.record = null;
                     self.supporter = null;
                     self.voting = null;
 
-                    AhjoMeetingSrv.getDecisions(topic.topicGuid).then(function (data) {
-                        $log.log("dbDecisions.getDecisions");
-
-                        if (angular.isObject(data) && angular.isObject(data.objects)) {
-                            if (angular.isArray(data.objects.record)) {
-                                self.record = data.objects.record;
-                            }
-                            if (angular.isArray(data.objects.supporter)) {
-                                self.supporter = data.objects.supporter;
-                            }
-                            if (angular.isArray(data.objects.voting)) {
-                                self.voting = data.objects.voting;
-                            }
-                        }
-                        else {
-                            $log.error("dbDecisions.getDecisions: invalid response");
-                        }
-                    }, function (/*error*/) {
-                        $log.error("dbDecisions.getDecisions");
+                    AhjoMeetingSrv.getDecisions(aMtg.meetingGuid, aTopic.topicGuid).then(function (resp) {
+                        $log.log("dbDecisions.getDecisions done", resp);
+                        self.record = resp.record;
+                        self.supporter = resp.supporter;
+                        self.voting = resp.voting;
+                    }, function (error) {
+                        $log.error("dbDecisions.getDecisions ", arguments);
+                        self.error = error.error;
                     }, function (/*notification*/) {
                         self.loading = true;
                     }).finally(function () {
@@ -58,7 +50,7 @@ angular.module('dashboard')
                     });
                 }
                 else {
-                    $log.error("dbDecisions.getDecisions: invalid parameter");
+                    $log.error("dbDecisions.getDecisions: bad args");
                 }
             }
 
@@ -88,7 +80,7 @@ angular.module('dashboard')
                 return StorageSrv.getKey(CONST.KEY.TOPIC);
             }, function (topic, oldTopic) {
                 if (!angular.equals(topic, oldTopic)) {
-                    getDecisions(topic);
+                    getDecisions(mtgItemSelected, topic);
                 }
             });
 
@@ -104,10 +96,7 @@ angular.module('dashboard')
                 }
             }, self.types);
 
-            var topic = StorageSrv.getKey(CONST.KEY.TOPIC);
-            if (angular.isObject(topic)) {
-                getDecisions(topic);
-            }
+            getDecisions(mtgItemSelected, mtgTopicSelected);
         }];
 
         return {
