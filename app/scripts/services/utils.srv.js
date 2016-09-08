@@ -156,7 +156,7 @@ angular.module('dashboard')
             var result = CONST.GENERALERROR;
             if (angular.isObject(response) && angular.isObject(response.data)) {
                 if (angular.isObject(response.data.error) && response.data.error.errorcode > 0) {
-                    result.error = response.data.error;
+                    result.errorCode = response.data.error.errorcode;
                 }
                 else if (angular.isObject(response.data.objects)) {
                     result = { 'data': response.data.objects };

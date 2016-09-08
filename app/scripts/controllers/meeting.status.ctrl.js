@@ -474,8 +474,10 @@ angular.module('dashboard')
                         }
 
                     }, function (error) {
-                        $log.error("meetingStatusCtrl.setMeetingStatus: " + JSON.stringify(error));
-                        // todo: implement error handling
+                        $log.error("meetingStatusCtrl.setMeetingStatus: ", arguments);
+                        if (angular.isObject(error)) {
+                            Utils.showErrorForNum(error.errorCode);
+                        }
                     }, function (/*notification*/) {
                         self.updatingStatus = true;
                     }).finally(function () {
@@ -528,10 +530,9 @@ angular.module('dashboard')
                                 }, this);
                             }
                         }, function (error) {
-                            $log.error("meetingStatusCtrl.setTopicStatus: " + JSON.stringify(error));
+                            $log.error("meetingStatusCtrl.setTopicStatus: ", arguments);
                             if (angular.isObject(error)) {
-                                var str = Utils.stringIdForError(error.error);
-                                DialogUtils.showError("STR_ERR_TITLE", str);
+                                Utils.showErrorForNum(error.errorCode);
                             }
                         }, function (/*notification*/) {
                             topic.updatingStatus = true;

@@ -42,7 +42,7 @@ angular.module('dashboard')
                         self.voting = resp.voting;
                     }, function (error) {
                         $log.error("dbDecisions.getDecisions ", arguments);
-                        self.error = error.error;
+                        self.error = error.errorCode;
                     }, function (/*notification*/) {
                         self.loading = true;
                     }).finally(function () {
