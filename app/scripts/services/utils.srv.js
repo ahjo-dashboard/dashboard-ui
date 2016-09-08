@@ -173,7 +173,7 @@ angular.module('dashboard')
          */
         Utils.parseHtmlError = function (error) {
             var result = CONST.GENERALERROR;
-            var ec = Utils.processAhjoError(error);
+            var ec = Utils.processAhjoError(error, false);
             result.errorCode = ec;
             return result;
         };
