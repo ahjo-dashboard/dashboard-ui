@@ -114,7 +114,7 @@ angular.module('dashboard')
         Utils.stringIdForError = function stringIdForErrorFn(aNum) {
             var res = "STR_ERR_OP_FAIL";
             if (!angular.isNumber(aNum)) {
-                $log.error("Utils.stringIdForError: bad arg, not a number: " + JSON.stringify(aNum) +" type=" +typeof aNum);
+                $log.error("Utils.stringIdForError: bad arg, not a number ", arguments);
             }
 
             switch (aNum) {
@@ -139,6 +139,11 @@ angular.module('dashboard')
                     $log.log("Utils.stringIdForError: didn't find a string id for '" + aNum + "', defaulting to " + res);
             }
             return res;
+        };
+
+        Utils.showErrorForNum = function showErrorForNum(aNum) {
+            var str = Utils.stringIdForError(aNum);
+            DialogUtils.showError("STR_ERR_TITLE", str);
         };
 
         /*
