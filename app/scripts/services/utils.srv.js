@@ -142,6 +142,25 @@ angular.module('dashboard')
         };
 
         /*
+         * @name dashboard.utils.parseResponse
+         * @description Parses an Ahjo Meeting API response for any and returns error object or data object
+         * @param {Object} response REST response to process.
+         * @returns {Object} included parsed error { 'error': value } or data { 'data': value }
+         */
+        Utils.parseResponse = function (response) {
+            var result = CONST.GENERALERROR;
+            if (angular.isObject(response) && angular.isObject(response.data)) {
+                if (angular.isObject(response.data.error) && response.data.error.errorcode > 0) {
+                    result.error = response.data.error.errorcode;
+                }
+                else if (angular.isObject(response.data.objects)) {
+                    result = { 'data': response.data.objects };
+                }
+            }
+            return result;
+        };
+
+        /*
          * @name dashboard.utils.processAhjoError
          * @description Parses an Ahjo Meeting API response for any errors and displays a result dialog if necessary.
          * @param {string} a1 REST response to process. Expects a HTTP response in a `status` property and an Ahjo Meeting API response in `data.error`.
