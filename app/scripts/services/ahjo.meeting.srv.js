@@ -79,7 +79,7 @@ angular.module('dashboard')
                 }).then(function (resp) {
 
                     var tmp = Utils.parseResponse(resp);
-                    if (!angular.isDefined(tmp.error)) {
+                    if (angular.isObject(resp) && resp.data) {
                         def.resolve(tmp.data);
                     } else {
                         def.reject(tmp);
