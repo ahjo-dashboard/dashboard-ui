@@ -14,6 +14,7 @@ angular.module('dashboard')
         'PROPOSALSHASUNSAVED': 'PROPOSALSHASUNSAVED',
         'REMARKISUNSAVED': 'REMARKISUNSAVED',
         'PROPOSALDELETED': 'PROPOSALDELETED',
+        'TOPICMINUTEUPDATED': 'TOPICMINUTEUPDATED',
         'UNSAVEMEETINGDDATA': 'UNSAVEMEETINGDDATA',
         'MEETINGPARALLELMODE': 'MEETINGPARALLELMODE',
         'POLLINGTIMEOUT': 10000,
@@ -133,7 +134,8 @@ angular.module('dashboard')
             MEETINGSTATECHANGED: 'MeetingStateChangedEvent',
             TOPICSTATECHANGED: 'TopicStateChangedEvent',
             TOPICEDITED: 'TopicEditedEvent',
-            LOGGEDOUT: 'PersonLoggedOutEvent'
+            LOGGEDOUT: 'PersonLoggedOutEvent',
+            MINUTEUPDATED: 'MinuteEntryUpdateEvent'
         },
         'TOPICSTATUS': {
             PENDING: { stateId: 1, iconPath: "images/mtg-states/mtg-ag-state-1.png", stringId: 'STR_TOPIC_STATUS_PENDING' },

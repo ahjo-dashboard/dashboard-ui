@@ -84,8 +84,18 @@ angular.module('dashboard')
                 }
             });
 
+            var updatedWatcher = $rootScope.$on(CONST.TOPICMINUTEUPDATED, function (aEvent, aData) {
+                $log.debug("dbDecisions.updatedWatcher: ", arguments);
+                if (angular.isObject(aData)) {
+                    getDecisions(mtgItemSelected, mtgTopicSelected);
+                }
+            });
+
             $scope.$on('$destroy', function () {
                 $log.debug("dbDecisions: DESTROY");
+                if (angular.isFunction(updatedWatcher)) {
+                    updatedWatcher();
+                }
             });
 
             // CONSTRUCT

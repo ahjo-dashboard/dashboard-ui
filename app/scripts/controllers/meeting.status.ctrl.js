@@ -194,6 +194,11 @@ angular.module('dashboard')
             }
         }
 
+        function minuteUpdated(aEvent) {
+            $log.debug("meetingStatusCtrl.minuteUpdated", arguments);
+            $rootScope.$emit(CONST.TOPICMINUTEUPDATED, aEvent);
+        }
+
         function getEvents() {
             if (lastEventId && angular.isObject(self.mtgDetails) && self.mtgDetails.meetingGuid) {
                 var proposalEvents = [];
@@ -232,6 +237,9 @@ angular.module('dashboard')
                                     break;
                                 case CONST.MTGEVENT.LOGGEDOUT:
                                     personLoggedOut(event);
+                                    break;
+                                case CONST.MTGEVENT.MINUTEUPDATED:
+                                    minuteUpdated(event);
                                     break;
                                 default:
                                     $log.error("meetingStatusCtrl: unsupported typeName: " + event.typeName);
