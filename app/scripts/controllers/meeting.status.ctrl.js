@@ -98,12 +98,12 @@ angular.module('dashboard')
             $log.debug("meetingStatusCtrl: canMeetingToBeClosed");
             var result = true;
             if (angular.isObject(self.mtgDetails) && angular.isArray(self.mtgDetails.topicList)) {
-                self.mtgDetails.topicList.forEach(function (t) {
-                    if (angular.isObject(t) && t.topicStatus !== CONST.TOPICSTATUS.READY.stateId) {
+                for (var i = 0; result && i < self.mtgDetails.topicList.length; i++) {
+                    if (angular.isObject(self.mtgDetails.topicList[i]) && self.mtgDetails.topicList[i].topicStatus !== CONST.TOPICSTATUS.READY.stateId) {
                         // all topic states should be READY
                         result = false;
                     }
-                });
+                }
             }
             return result;
         }
