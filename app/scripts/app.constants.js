@@ -29,6 +29,7 @@ angular.module('dashboard')
             K1004: { value: 1004, strId: 'STR_REST_RES_1004' },
             K1005: { value: 1005, strId: 'STR_REST_RES_1005' }
         },
+        'GENERALERROR': { 'error': -1 },
         'ID': 'id',
         'BLOCKMODE': {
             DEFAULT: 0,
