@@ -94,8 +94,22 @@ angular.module('dashboard')
             }
         }
 
+        function canMeetingToBeClosed() {
+            $log.debug("meetingStatusCtrl: canMeetingToBeClosed");
+            var result = true;
+            if (angular.isObject(self.mtgDetails) && angular.isArray(self.mtgDetails.topicList)) {
+                self.mtgDetails.topicList.forEach(function (t) {
+                    if (angular.isObject(t) && t.topicStatus !== CONST.TOPICSTATUS.READY.stateId) {
+                        // all topic states should be READY
+                        result = false;
+                    }
+                });
+            }
+            return result;
+        }
+
         function meetingStatusChanged(event) {
-            $log.debug("meetingStatusCtrl: meetingStatusChanged");
+            $log.debug("meetingStatusCtrl: meetingStatusChanged", arguments);
             if (angular.isObject(event) && angular.isObject(self.mtgDetails)) {
                 self.mtgDetails.meetingStatus = event.meetingState;
             }
@@ -171,7 +185,7 @@ angular.module('dashboard')
         }
 
         function personLoggedOut(aEvent) {
-            $log.debug("meetingStatusCtrl.personLoggedOut: " +JSON.stringify(aEvent));
+            $log.debug("meetingStatusCtrl.personLoggedOut: " + JSON.stringify(aEvent));
             if (angular.isObject(aEvent) && angular.equals(aEvent.personGuid, mtgPersonGuid) && angular.equals(aEvent.meetingID, mtgItemSelected.meetingGuid)) {
                 DialogUtils.showInfo('STR_INFO_TITLE', 'STR_FORCED_LOGOUT', false).closePromise.finally(function () {
                     $log.debug("meetingStatusCtrl.personLoggedOut: modal dialog finally closed");
@@ -436,8 +450,10 @@ angular.module('dashboard')
                 var items = [];
                 angular.forEach(CONST.MEETINGSTATUSACTIONS, function (status) {
                     if (angular.isObject(status)) {
-                        // todo: active status needs to be updated to app constants
                         status.disabled = status.active.indexOf(self.mtgDetails.meetingStatus) <= CONST.NOTFOUND;
+                        if (self.mtgDetails.meetingStatus === CONST.MTGSTATUS.ACTIVE.stateId && status.stateId === CONST.MEETINGSTATUSACTIONS.CLOSE.stateId) {
+                            status.disabled = !canMeetingToBeClosed();
+                        }
                         this.push(status);
                     }
                 }, items);
@@ -450,7 +466,13 @@ angular.module('dashboard')
                     $log.debug("meetingStatusCtrl.changeMeetingStatus: selected: " + JSON.stringify(status));
                     AhjoMeetingSrv.setMeetingStatus(self.mtgDetails.meetingGuid, status.actionId).then(function (result) {
                         $log.debug("meetingStatusCtrl.setMeetingStatus: " + JSON.stringify(result));
-                        // todo: implement result handling
+
+                        if (angular.isObject(result)) {
+                            if (angular.isObject(self.mtgDetails)) {
+                                self.mtgDetails.meetingStatus = result.newState;
+                            }
+                        }
+
                     }, function (error) {
                         $log.error("meetingStatusCtrl.setMeetingStatus: " + JSON.stringify(error));
                         // todo: implement error handling
@@ -473,7 +495,7 @@ angular.module('dashboard')
                 });
             }
             else if (angular.isObject(topic)) {
-                $log.debug("meetingStatusCtrl.changeTopicStatus: current status=" + topic.topicStatus);
+                $log.debug("meetingStatusCtrl.changeTopicStatus: current status" + topic.topicStatus);
 
                 if (self.canOpenTopic(topic)) {
                     var items = [];
@@ -492,21 +514,25 @@ angular.module('dashboard')
                         $log.debug("meetingStatusCtrl.changeTopicStatus: selected: " + JSON.stringify(status));
 
                         AhjoMeetingSrv.setTopicStatus(topic.topicGuid, self.mtgDetails.meetingGuid, status.actionId).then(function (result) {
-                            $log.debug("meetingStatusCtrl.setTopicStatus: " + JSON.stringify(result));
                             activeTopicGuid = null;
-                            if (status.stateId === CONST.TOPICSTATUS.ACTIVE.stateId) {
-                                // store active topic if any
-                                activeTopicGuid = topic.topicGuid;
-                            }
-                            // set requested state id to topic. pending response value to be updated
-                            angular.forEach(self.mtgDetails.topicList, function (t) {
-                                if (status.stateId && angular.isObject(t) && angular.equals(topic.topicGuid, t.topicGuid)) {
-                                    t.topicStatus = status.stateId;
+
+                            if (angular.isObject(result)) {
+                                if (result.newState === CONST.TOPICSTATUS.ACTIVE.stateId) {
+                                    // store active topic if any
+                                    activeTopicGuid = topic.topicGuid;
                                 }
-                            }, this);
+                                angular.forEach(self.mtgDetails.topicList, function (t) {
+                                    if (angular.isObject(t) && angular.equals(result.guid, t.topicGuid)) {
+                                        t.topicStatus = result.newState;
+                                    }
+                                }, this);
+                            }
                         }, function (error) {
                             $log.error("meetingStatusCtrl.setTopicStatus: " + JSON.stringify(error));
-                            // todo: implement error handling
+                            if (angular.isObject(error)) {
+                                var str = Utils.stringIdForError(error.error);
+                                DialogUtils.showError("STR_ERR_TITLE", str);
+                            }
                         }, function (/*notification*/) {
                             topic.updatingStatus = true;
                         }).finally(function () {
