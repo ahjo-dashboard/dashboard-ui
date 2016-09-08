@@ -29,7 +29,7 @@ angular.module('dashboard')
             K1004: { value: 1004, strId: 'STR_REST_RES_1004' },
             K1005: { value: 1005, strId: 'STR_REST_RES_1005' }
         },
-        'GENERALERROR': { 'error': -1 },
+        'GENERALERROR': { 'errorCode': -1 },
         'ID': 'id',
         'BLOCKMODE': {
             DEFAULT: 0,
@@ -119,8 +119,8 @@ angular.module('dashboard')
             TECHNICALLY_CLOSED: { stateId: 7, stringId: 'STR_TECNICALLY_CLOSED', badgeClass: 'db-badge-dark' },
         },
         'MEETINGSTATUSACTIONS': {
-            OPEN: { stateId: 3, stringId: 'STR_OPEN', active: [], actionId: 2 },
-            CLOSE: { stateId: 5, stringId: 'STR_READY', active: [], actionId: 5 },
+            OPEN: { stateId: 3, stringId: 'STR_OPEN', active: [2], actionId: 3 },
+            CLOSE: { stateId: 5, stringId: 'STR_READY', active: [3], actionId: 5 },
             ABORT: { stateId: 4, stringId: 'STR_ABORT', active: [3], actionId: 4 },
             CONTINUE: { stateId: 3, stringId: 'STR_CONTINUE', active: [4], actionId: 8 }
         },
@@ -142,11 +142,10 @@ angular.module('dashboard')
             READY: { stateId: 4, iconPath: "images/mtg-states/mtg-ag-state-4.png", stringId: 'STR_TOPIC_STATUS_READY' }
         },
         'TOPICSTATUSACTIONS': {
-            OPEN: { stateId: 2, stringId: 'STR_OPEN', active: [1], hidden: [4], actionId: 2 },
-            REOPEN: { stateId: 2, stringId: 'STR_OPEN', active: [4], hidden: [1, 2, 3], actionId: 3 },
-            ABORT: { stateId: 3, stringId: 'STR_ABORT', active: [2], hidden: [], actionId: 4 },
-            CONTINUE: { stateId: 2, stringId: 'STR_CONTINUE', active: [3], hidden: [], actionId: 8 },
-            CLOSE: { stateId: 4, stringId: 'STR_READY', active: [2], hidden: [], actionId: 5 }
+            OPEN: { stringId: 'STR_OPEN', active: [1, 4], hidden: [], actionId: 2 },
+            ABORT: { stringId: 'STR_ABORT', active: [2], hidden: [], actionId: 4 },
+            CONTINUE: { stringId: 'STR_CONTINUE', active: [3], hidden: [], actionId: 8 },
+            CLOSE: { stringId: 'STR_READY', active: [2], hidden: [], actionId: 5 }
         },
         'ESIGNSTATUS': { //SignApi_DocStatuses
             UNSIGNED: { value: 1, stringId: 'STR_UNSIGNED', badgeClass: 'db-badge-ora' },

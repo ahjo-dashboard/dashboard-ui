@@ -12,9 +12,28 @@
 * Service in the dashboard.
 */
 angular.module('dashboard')
-    .service('AhjoMeetingSrv', ['$log', '$http', 'ENV', '$q', '$timeout', 'Utils', function ($log, $http, ENV, $q, $timeout, Utils) {
+    .service('AhjoMeetingSrv', ['$log', '$http', 'ENV', '$q', '$timeout', 'Utils', 'CONST', function ($log, $http, ENV, $q, $timeout, Utils, CONST) {
         $log.log("AhjoMeetingSrv: SERVICE");
         var self = this;
+
+        function handleResult(aDeferred, aResult) {
+            if (!angular.isObject(aDeferred)) {
+                $log.error("AhjoMeetingSrv: handleResult missing deferred");
+                return;
+            }
+            if (!angular.isObject(aResult)) {
+                aDeferred.reject(CONST.GENERALERROR);
+            }
+            else if (angular.isObject(aResult.error)) {
+                aDeferred.reject(aResult.error);
+            }
+            else if (angular.isObject(aResult.data)) {
+                aDeferred.resolve(aResult.data);
+            }
+            else {
+                aDeferred.reject(CONST.GENERALERROR);
+            }
+        }
 
         self.getMeeting = function (guid) {
             var deferred = $q.defer();
@@ -59,14 +78,14 @@ angular.module('dashboard')
             return deferred.promise;
         };
 
-         /*
-         * @name dashboard.utils.getDecisions
-         * @description Returned promise will resolve with response data
-         * or reject with { error: } object containing an HTTP or REST error code or -1 for a badly formatted response.
-         * @param {string} Meeting guid
-         * @param {string} Topic guid
-         * @returns {promise} Promise object
-         */
+        /*
+        * @name dashboard.utils.getDecisions
+        * @description Returned promise will resolve with response data
+        * or reject with { error: } object containing an HTTP or REST error code or -1 for a badly formatted response.
+        * @param {string} Meeting guid
+        * @param {string} Topic guid
+        * @returns {promise} Promise object
+        */
         self.getDecisions = function (aMeetingGuid, aTopicGuid) {
             var def = $q.defer();
             $timeout(function () {
@@ -138,7 +157,6 @@ angular.module('dashboard')
 
         self.setTopicStatus = function (topicGuid, meetingGuid, stateId) {
             var deferred = $q.defer();
-
             $timeout(function () {
                 deferred.notify({});
                 $http({
@@ -146,14 +164,11 @@ angular.module('dashboard')
                     cache: false,
                     url: ENV.AhjoApi_TopicStatus.replace(':stateId', stateId).replace(':meetingGuid', meetingGuid).replace(':topicGuid', topicGuid)
                 }).then(function (response) {
-                    if (angular.isObject(response) && angular.isObject(response.data)) {
-                        deferred.resolve(response.data);
-                    }
-                    else {
-                        deferred.reject({}); // todo: update error
-                    }
+                    var result = Utils.parseResponse(response);
+                    handleResult(deferred, result);
                 }, function (error) {
-                    deferred.reject(error);
+                    var e = Utils.parseHtmlError(error);
+                    deferred.reject(e);
                 });
 
             }, 0);
@@ -170,14 +185,11 @@ angular.module('dashboard')
                     cache: false,
                     url: ENV.AhjoApi_MeetingStatus.replace(':stateId', stateId).replace(':meetingGuid', meetingGuid)
                 }).then(function (response) {
-                    if (angular.isObject(response) && angular.isObject(response.data)) {
-                        deferred.resolve(response.data);
-                    }
-                    else {
-                        deferred.reject({}); // todo: update error
-                    }
+                    var result = Utils.parseResponse(response);
+                    handleResult(deferred, result);
                 }, function (error) {
-                    deferred.reject(error);
+                    var e = Utils.parseHtmlError(error);
+                    deferred.reject(e);
                 });
             }, 0);
 
