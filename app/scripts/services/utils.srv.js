@@ -141,7 +141,7 @@ angular.module('dashboard')
             return res;
         };
 
-        Utils.showErrorForNum = function showErrorForNum(aNum) {
+        Utils.showErrorForErrorCode = function showErrorForErrorCode(aNum) {
             var str = Utils.stringIdForError(aNum);
             DialogUtils.showError("STR_ERR_TITLE", str);
         };

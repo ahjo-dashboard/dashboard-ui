@@ -484,7 +484,7 @@ angular.module('dashboard')
                     }, function (error) {
                         $log.error("meetingStatusCtrl.setMeetingStatus: ", arguments);
                         if (angular.isObject(error)) {
-                            Utils.showErrorForNum(error.errorCode);
+                            Utils.showErrorForErrorCode(error.errorCode);
                         }
                     }, function (/*notification*/) {
                         self.updatingStatus = true;
@@ -540,7 +540,7 @@ angular.module('dashboard')
                         }, function (error) {
                             $log.error("meetingStatusCtrl.setTopicStatus: ", arguments);
                             if (angular.isObject(error)) {
-                                Utils.showErrorForNum(error.errorCode);
+                                Utils.showErrorForErrorCode(error.errorCode);
                             }
                         }, function (/*notification*/) {
                             topic.updatingStatus = true;
