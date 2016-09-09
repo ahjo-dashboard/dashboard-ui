@@ -1186,6 +1186,11 @@ body {
     align-items: center;
 }
 
+.db-voting-res-col {
+    width: 10% !important;
+    min-width: 50px;
+}
+
 @import "main.small.scss";
 @import "main.medium.scss";
 @import "main.large.scss";
