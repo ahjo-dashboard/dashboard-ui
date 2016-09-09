@@ -1,13 +1,13 @@
 <div class="db-directive db-spinner-cont">
     <span us-spinner spinner-on="c.loading"></span>
-    <div ng-if="c.error" uib-alert ng-class="'alert-danger'">
+    <div ng-if="c.errorCode" uib-alert ng-class="'alert-danger'">
         <span translate-cloak translate>STR_FAIL_LOADING</span>
         <br>
         <span translate>STR_TRY_LATER</span>
     </div>
 
     <div class="db-min-width-300">
-        <ul ng-if="!c.error" class="list-group db-no-margin" ng-repeat="d in c.types | orderBy : 'decisionOrder' track by $index">
+        <ul ng-if="!c.errorCode" class="list-group db-no-margin" ng-repeat="d in c.types | orderBy : 'decisionOrder' track by $index">
             <div class="list-group-item db-no-padding">
                 <h5 class="db-font-clr-white db-prim-bg db-padding-10-hor db-padding-07-ver">{{d.text}}
                     <span class="badge db-white-bg db-font-clr-dark db-margin-05-hor">{{filtered.length}}</span>
@@ -18,9 +18,9 @@
                             aria-hidden="true" tooltip-enable="c.isTooltips" tooltip-placement="right" uib-tooltip="{{'STR_EXPANDCOLLAPSE' | translate}}"></span>
                         <span class="db-flex-area">{{i.name}}
                             <span ng-if="i.proposalOrdernumber">&nbsp;/{{i.proposalOrdernumber}}</span>
-                            <span ng-show="c.isSupported(i)">
+                        <span ng-show="c.isSupported(i)">
                                 <span class="glyphicon glyphicon-thumbs-up db-margin-05" tooltip-enable="c.isTooltips" uib-tooltip="{{'STR_SUPPORTED' | translate}}" tooltip-placement="right"></span>
-                            <span>
+                        <span>
                         </span>
                     </div>
                     <div class="panel-collapse collapse" uib-collapse="!c.isSelected(i)">
@@ -38,9 +38,53 @@
             </div>
         </ul>
 
-        <ul ng-if="!c.error" class="list-group">
+        <ul ng-if="!c.errorCode" class="list-group">
             <div class="list-group-item db-no-padding">
-                <h5 class="db-font-clr-white db-prim-bg db-padding-05" translate translate-cloak>STR_VOTINGS</h5>
+                <div class="db-font-clr-white db-prim-bg db-padding-10-hor db-padding-07-ver">
+                    <div class="row">
+                        <span class="col-xs-7">
+                            <h5>{{'STR_VOTINGS' | translate}}
+                            <span ng-if="votingsWithVotes" class="badge db-white-bg db-font-clr-dark db-margin-05-hor">{{votingsWithVotes.length}}</span>
+                            </h5>
+                        </span>
+                        <span class="col-xs-1 db-no-padding">
+                        <span translate translate-cloak>STR_VOTE_YEA</span>
+                        </span>
+                        <span class="col-xs-1 db-no-padding">
+                        <span translate translate-cloak>STR_VOTE_NAY</span>
+                        </span>
+                        <span class="col-xs-1 db-no-padding">
+                        <span translate translate-cloak>STR_VOTE_EMPTY</span>
+                        </span>
+                        <span class="col-xs-2 db-no-padding">
+                        <span translate translate-cloak>STR_VOTE_ABSENT</span>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="list-group-item db-no-padding" ng-repeat="v in c.voting | filter: { hasVotes: true } | filter:query as votingsWithVotes track by $index">
+                    <div class="row db-flex db-padding-10 " ng-click="votingCollapse = !votingCollapse ">
+                        <div class="col-xs-7">
+                            {{v.sequencenumber}}
+                        </div>
+                        <h5 class="col-xs-1 db-no-padding">
+                            {{ (v.voteList | filter: { vote: 1 }).length }}
+                        </h5>
+                        <h5 class="col-xs-1 db-no-padding">
+                            {{ (v.voteList | filter: { vote: 2 }).length }}
+                        </h5>
+                        <h5 class="col-xs-1 db-no-padding">
+                            {{ (v.voteList | filter: { vote: 3 }).length }}
+                        </h5>
+                        <h5 class="col-xs-2 db-no-padding">
+                            {{ (v.voteList | filter: { vote: 4 }).length }}
+                        </h5>
+                    </div>
+                    <div class="panel-collapse collapse " uib-collapse="!votingCollapse ">
+                        <!--TODO: add votings here--><br><br><br>
+                    </div>
+                </div>
+
             </div>
         </ul>
     </div>

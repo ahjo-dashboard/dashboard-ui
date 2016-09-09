@@ -98,12 +98,12 @@ angular.module('dashboard')
             $log.debug("meetingStatusCtrl: canMeetingToBeClosed");
             var result = true;
             if (angular.isObject(self.mtgDetails) && angular.isArray(self.mtgDetails.topicList)) {
-                self.mtgDetails.topicList.forEach(function (t) {
-                    if (angular.isObject(t) && t.topicStatus !== CONST.TOPICSTATUS.READY.stateId) {
+                for (var i = 0; result && i < self.mtgDetails.topicList.length; i++) {
+                    if (angular.isObject(self.mtgDetails.topicList[i]) && self.mtgDetails.topicList[i].topicStatus !== CONST.TOPICSTATUS.READY.stateId) {
                         // all topic states should be READY
                         result = false;
                     }
-                });
+                }
             }
             return result;
         }
@@ -194,6 +194,11 @@ angular.module('dashboard')
             }
         }
 
+        function minuteUpdated(aEvent) {
+            $log.debug("meetingStatusCtrl.minuteUpdated", arguments);
+            $rootScope.$emit(CONST.TOPICMINUTEUPDATED, aEvent);
+        }
+
         function getEvents() {
             if (lastEventId && angular.isObject(self.mtgDetails) && self.mtgDetails.meetingGuid) {
                 var proposalEvents = [];
@@ -232,6 +237,9 @@ angular.module('dashboard')
                                     break;
                                 case CONST.MTGEVENT.LOGGEDOUT:
                                     personLoggedOut(event);
+                                    break;
+                                case CONST.MTGEVENT.MINUTEUPDATED:
+                                    minuteUpdated(event);
                                     break;
                                 default:
                                     $log.error("meetingStatusCtrl: unsupported typeName: " + event.typeName);
@@ -474,8 +482,10 @@ angular.module('dashboard')
                         }
 
                     }, function (error) {
-                        $log.error("meetingStatusCtrl.setMeetingStatus: " + JSON.stringify(error));
-                        // todo: implement error handling
+                        $log.error("meetingStatusCtrl.setMeetingStatus: ", arguments);
+                        if (angular.isObject(error)) {
+                            Utils.showErrorForErrorCode(error.errorCode);
+                        }
                     }, function (/*notification*/) {
                         self.updatingStatus = true;
                     }).finally(function () {
@@ -528,10 +538,9 @@ angular.module('dashboard')
                                 }, this);
                             }
                         }, function (error) {
-                            $log.error("meetingStatusCtrl.setTopicStatus: " + JSON.stringify(error));
+                            $log.error("meetingStatusCtrl.setTopicStatus: ", arguments);
                             if (angular.isObject(error)) {
-                                var str = Utils.stringIdForError(error.error);
-                                DialogUtils.showError("STR_ERR_TITLE", str);
+                                Utils.showErrorForErrorCode(error.errorCode);
                             }
                         }, function (/*notification*/) {
                             topic.updatingStatus = true;

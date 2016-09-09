@@ -96,17 +96,12 @@ angular.module('dashboard')
                     cache: false,
                     url: ENV.AhjoApi_Decisions.replace(':meetingguid', aMeetingGuid).replace(':topicguid', aTopicGuid)
                 }).then(function (resp) {
-
-                    var tmp = Utils.parseResponse(resp);
-                    if (angular.isObject(resp) && resp.data) {
-                        def.resolve(tmp.data);
-                    } else {
-                        def.reject(tmp);
-                    }
-
+                    var res = Utils.parseResponse(resp);
+                    handleResult(def, res);
                 }, function (aError) {
                     $log.error("AhjoMeetingSrv.getDecisions: http error", aError);
-                    def.reject({ 'error': aError.status });
+                    var e = Utils.parseHtmlError(aError);
+                    def.reject(e);
                 });
             }, 0);
 

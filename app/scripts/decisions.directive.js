@@ -23,6 +23,10 @@ angular.module('dashboard')
             self.supporter = null;
             self.voting = null;
             self.isTooltips = $rootScope.isTooltips;
+            self.errorCode = 0;
+            self.record = [];
+            self.supporter = [];
+            self.voting = [];
             var mtgTopicSelected = StorageSrv.getKey(CONST.KEY.TOPIC);
             var mtgItemSelected = StorageSrv.getKey(CONST.KEY.MEETING_ITEM);
 
@@ -31,18 +35,15 @@ angular.module('dashboard')
             function getDecisions(aMtg, aTopic) {
                 $log.debug("dbDecisions.getDecisions", arguments);
                 if (angular.isObject(aTopic) && angular.isObject(aMtg)) {
-                    self.record = null;
-                    self.supporter = null;
-                    self.voting = null;
 
                     AhjoMeetingSrv.getDecisions(aMtg.meetingGuid, aTopic.topicGuid).then(function (resp) {
                         $log.log("dbDecisions.getDecisions done", resp);
-                        self.record = resp.record;
-                        self.supporter = resp.supporter;
-                        self.voting = resp.voting;
+                        self.record = angular.isArray(resp.record) ? resp.record : [];
+                        self.supporter = angular.isArray(resp.supporter) ? resp.supporter : [];
+                        self.voting = angular.isArray(resp.voting) ? resp.voting : [];
                     }, function (error) {
                         $log.error("dbDecisions.getDecisions ", arguments);
-                        self.error = error.error;
+                        self.errorCode = error.errorCode;
                     }, function (/*notification*/) {
                         self.loading = true;
                     }).finally(function () {
@@ -84,8 +85,18 @@ angular.module('dashboard')
                 }
             });
 
+            var updatedWatcher = $rootScope.$on(CONST.TOPICMINUTEUPDATED, function (aEvent, aData) {
+                $log.debug("dbDecisions.updatedWatcher: ", arguments);
+                if (angular.isObject(aData)) {
+                    getDecisions(mtgItemSelected, mtgTopicSelected);
+                }
+            });
+
             $scope.$on('$destroy', function () {
                 $log.debug("dbDecisions: DESTROY");
+                if (angular.isFunction(updatedWatcher)) {
+                    updatedWatcher();
+                }
             });
 
             // CONSTRUCT

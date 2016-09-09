@@ -14,6 +14,7 @@ angular.module('dashboard')
         'PROPOSALSHASUNSAVED': 'PROPOSALSHASUNSAVED',
         'REMARKISUNSAVED': 'REMARKISUNSAVED',
         'PROPOSALDELETED': 'PROPOSALDELETED',
+        'TOPICMINUTEUPDATED': 'TOPICMINUTEUPDATED',
         'UNSAVEMEETINGDDATA': 'UNSAVEMEETINGDDATA',
         'MEETINGPARALLELMODE': 'MEETINGPARALLELMODE',
         'POLLINGTIMEOUT': 10000,
@@ -133,7 +134,8 @@ angular.module('dashboard')
             MEETINGSTATECHANGED: 'MeetingStateChangedEvent',
             TOPICSTATECHANGED: 'TopicStateChangedEvent',
             TOPICEDITED: 'TopicEditedEvent',
-            LOGGEDOUT: 'PersonLoggedOutEvent'
+            LOGGEDOUT: 'PersonLoggedOutEvent',
+            MINUTEUPDATED: 'MinuteEntryUpdateEvent'
         },
         'TOPICSTATUS': {
             PENDING: { stateId: 1, iconPath: "images/mtg-states/mtg-ag-state-1.png", stringId: 'STR_TOPIC_STATUS_PENDING' },
@@ -146,6 +148,12 @@ angular.module('dashboard')
             ABORT: { stringId: 'STR_ABORT', active: [2], hidden: [], actionId: 3 },
             CONTINUE: { stringId: 'STR_CONTINUE', active: [3], hidden: [], actionId: 8 },
             CLOSE: { stringId: 'STR_READY', active: [2], hidden: [], actionId: 4 }
+        },
+        'MTGVOTING': {
+            YEA: { id: 1, stringId: 'STR_VOTE_YEA'},
+            NAY: { id: 2, stringId: 'STR_VOTE_NAY'},
+            EMPTY: { id: 3, stringId: 'STR_VOTE_EMPTY'},
+            ABSENT: { id: 4, stringId: 'STR_VOTE_ABSENT'}
         },
         'ESIGNSTATUS': { //SignApi_DocStatuses
             UNSIGNED: { value: 1, stringId: 'STR_UNSIGNED', badgeClass: 'db-badge-ora' },
