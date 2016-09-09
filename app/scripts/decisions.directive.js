@@ -75,6 +75,18 @@ angular.module('dashboard')
                 return found;
             };
 
+            self.getVotingTitle = function getVotingTitle(aVoting) {
+                var res = '';
+                if (angular.isObject(aVoting)) {
+                    res += aVoting.sequencenumber;
+                    res += ': ';
+                    res += $rootScope.dbLang === CONST.DBLANG.FI ? aVoting.proposal1TextFi : aVoting.proposal1TextSv;
+                    res += ' - ';
+                    res += $rootScope.dbLang === CONST.DBLANG.FI ? aVoting.proposal2TextFi : aVoting.proposal2TextSv;
+                }
+                return res;
+            };
+
             // WATCHERS
 
             $scope.$watch(function () {
