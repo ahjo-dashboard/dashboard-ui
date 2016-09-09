@@ -23,6 +23,7 @@ angular.module('dashboard')
             self.supporter = null;
             self.voting = null;
             self.isTooltips = $rootScope.isTooltips;
+            self.errorCode = 0;
             var mtgTopicSelected = StorageSrv.getKey(CONST.KEY.TOPIC);
             var mtgItemSelected = StorageSrv.getKey(CONST.KEY.MEETING_ITEM);
 
@@ -42,7 +43,7 @@ angular.module('dashboard')
                         self.voting = resp.voting;
                     }, function (error) {
                         $log.error("dbDecisions.getDecisions ", arguments);
-                        self.error = error.errorCode;
+                        self.errorCode = error.errorCode;
                     }, function (/*notification*/) {
                         self.loading = true;
                     }).finally(function () {
