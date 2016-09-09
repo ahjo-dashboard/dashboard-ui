@@ -12,7 +12,13 @@
 * Controller of the dashboard
 */
 angular.module('dashboard')
-    .controller('meetingStatusCtrl', ['$log', '$scope', '$rootScope', '$stateParams', '$state', 'CONST', 'StorageSrv', 'ENV', 'AhjoMeetingSrv', '$timeout', 'Utils', 'DialogUtils', '$uibModal', 'PROPS', function ($log, $scope, $rootScope, $stateParams, $state, CONST, StorageSrv, ENV, AhjoMeetingSrv, $timeout, Utils, DialogUtils, $uibModal, PROPS) {
+    .constant('MTGST', {
+        'YES': 0,
+        'NO': 1,
+        'MTG_NOT_ACTIVE': 2,
+        'ANOTHER_TOPIC_ACTIVE': 3
+    })
+    .controller('meetingStatusCtrl', ['$log', '$scope', '$rootScope', '$stateParams', '$state', 'CONST', 'StorageSrv', 'ENV', 'AhjoMeetingSrv', '$timeout', 'Utils', 'DialogUtils', '$uibModal', 'PROPS', 'MTGST', function ($log, $scope, $rootScope, $stateParams, $state, CONST, StorageSrv, ENV, AhjoMeetingSrv, $timeout, Utils, DialogUtils, $uibModal, PROPS, MTGST) {
         $log.debug("meetingStatusCtrl: CONTROLLER");
 
         // VARIABLES
@@ -377,14 +383,20 @@ angular.module('dashboard')
         };
 
         self.canOpenTopic = function (topic) {
-            var result = false;
+            var result = MTGST.NO;
             if (angular.isObject(topic)) {
-                // is meeting active
                 if (angular.isObject(self.mtgDetails) && self.mtgDetails.meetingStatus === CONST.MTGSTATUS.ACTIVE.stateId) {
                     // is topic active
                     if (!activeTopicGuid || topic.topicGuid === activeTopicGuid) {
-                        result = true;
+                        result = MTGST.YES;
                     }
+                    else if (activeTopicGuid) {
+                        result = MTGST.ANOTHER_TOPIC_ACTIVE;
+                    }
+                }
+                else {
+                    // meeting inactive
+                    result = MTGST.MTG_NOT_ACTIVE;
                 }
             }
             return result;
@@ -433,11 +445,31 @@ angular.module('dashboard')
         };
 
         self.topicBtnTooltip = function (topic) {
+            var result = '';
             if (angular.isObject(topic)) {
-                return self.canOpenTopic(topic) ? 'STR_CHANGE_TOPIC_STATUS' : 'STR_INFO_TOPIC_STATUS_CHANGE_DISABLED';
+                var canOpen = self.canOpenTopic(topic);
+                switch (canOpen) {
+                    case MTGST.YES:
+                        result = 'STR_CHANGE_TOPIC_STATUS';
+                        break;
+                    case MTGST.NO:
+                        result = 'STR_ERR_OP_FAIL';
+                        break;
+                    case MTGST.MTG_NOT_ACTIVE:
+                        result = 'STR_INFO_MTG_INACTIVE';
+                        break;
+                    case MTGST.ANOTHER_TOPIC_ACTIVE:
+                        result = 'STR_INFO_TOPIC_STATUS_CHANGE_DISABLED';
+                        break;
+                    default:
+                        $log.error("meetingStatusCtrl: topicBtnTooltip unsupported mode");
+                        break;
+                }
             }
-            $log.error("meetingStatusCtrl: topicBtnTooltip invalid parameter:");
-            return '';
+            else {
+                $log.error("meetingStatusCtrl: topicBtnTooltip invalid parameter:");
+            }
+            return result;
         };
 
         self.toggleParallelMode = function () {
@@ -506,53 +538,63 @@ angular.module('dashboard')
             }
             else if (angular.isObject(topic)) {
                 $log.debug("meetingStatusCtrl.changeTopicStatus: current status" + topic.topicStatus);
+                var canOpen = self.canOpenTopic(topic);
 
-                if (self.canOpenTopic(topic)) {
-                    var items = [];
-                    angular.forEach(CONST.TOPICSTATUSACTIONS, function (status) {
-                        if (angular.isObject(status) && status.hidden.indexOf(topic.topicStatus) <= CONST.NOTFOUND) {
-                            status.disabled = status.active.indexOf(topic.topicStatus) <= CONST.NOTFOUND;
-                            this.push(status);
-                        }
-                    }, items);
+                switch (canOpen) {
+                    case MTGST.YES:
+                        var items = [];
+                        angular.forEach(CONST.TOPICSTATUSACTIONS, function (status) {
+                            if (angular.isObject(status) && status.hidden.indexOf(topic.topicStatus) <= CONST.NOTFOUND) {
+                                status.disabled = status.active.indexOf(topic.topicStatus) <= CONST.NOTFOUND;
+                                this.push(status);
+                            }
+                        }, items);
 
-                    openStatusChangeView('STR_CHANGE_TOPIC_STATUS', items, function (status) {
-                        if (!angular.isObject(status)) {
-                            $log.error("meetingStatusCtrl.changeTopicStatus: invalid status");
-                            return;
-                        }
-                        $log.debug("meetingStatusCtrl.changeTopicStatus: selected: " + JSON.stringify(status));
+                        openStatusChangeView('STR_CHANGE_TOPIC_STATUS', items, function (status) {
+                            if (!angular.isObject(status)) {
+                                $log.error("meetingStatusCtrl.changeTopicStatus: invalid status");
+                                return;
+                            }
+                            $log.debug("meetingStatusCtrl.changeTopicStatus: selected: " + JSON.stringify(status));
 
-                        AhjoMeetingSrv.setTopicStatus(topic.topicGuid, self.mtgDetails.meetingGuid, status.actionId).then(function (result) {
-                            activeTopicGuid = null;
+                            AhjoMeetingSrv.setTopicStatus(topic.topicGuid, self.mtgDetails.meetingGuid, status.actionId).then(function (result) {
+                                activeTopicGuid = null;
 
-                            if (angular.isObject(result)) {
-                                if (result.newState === CONST.TOPICSTATUS.ACTIVE.stateId) {
-                                    // store active topic if any
-                                    activeTopicGuid = topic.topicGuid;
-                                }
-                                angular.forEach(self.mtgDetails.topicList, function (t) {
-                                    if (angular.isObject(t) && angular.equals(result.guid, t.topicGuid)) {
-                                        t.topicStatus = result.newState;
+                                if (angular.isObject(result)) {
+                                    if (result.newState === CONST.TOPICSTATUS.ACTIVE.stateId) {
+                                        // store active topic if any
+                                        activeTopicGuid = topic.topicGuid;
                                     }
-                                }, this);
-                            }
-                        }, function (error) {
-                            $log.error("meetingStatusCtrl.setTopicStatus: ", arguments);
-                            if (angular.isObject(error)) {
-                                Utils.showErrorForErrorCode(error.errorCode);
-                            }
-                        }, function (/*notification*/) {
-                            topic.updatingStatus = true;
-                        }).finally(function () {
-                            topic.updatingStatus = false;
+                                    angular.forEach(self.mtgDetails.topicList, function (t) {
+                                        if (angular.isObject(t) && angular.equals(result.guid, t.topicGuid)) {
+                                            t.topicStatus = result.newState;
+                                        }
+                                    }, this);
+                                }
+                            }, function (error) {
+                                $log.error("meetingStatusCtrl.setTopicStatus: ", arguments);
+                                if (angular.isObject(error)) {
+                                    Utils.showErrorForErrorCode(error.errorCode);
+                                }
+                            }, function (/*notification*/) {
+                                topic.updatingStatus = true;
+                            }).finally(function () {
+                                topic.updatingStatus = false;
+                            });
                         });
-                    });
-                }
-                else {
-                    DialogUtils.showInfo('STR_INFO_TITLE', 'STR_INFO_TOPIC_STATUS_CHANGE_DISABLED', false).closePromise.finally(function () {
-                        $log.debug("meetingStatusCtrl.changeTopicStatus: modal dialog finally closed");
-                    });
+                        break;
+                    case MTGST.NO:
+                        DialogUtils.showInfo('STR_INFO_TITLE', 'STR_ERR_OP_FAIL', false);
+                        break;
+                    case MTGST.MTG_NOT_ACTIVE:
+                        DialogUtils.showInfo('STR_INFO_TITLE', 'STR_INFO_MTG_INACTIVE', false);
+                        break;
+                    case MTGST.ANOTHER_TOPIC_ACTIVE:
+                        DialogUtils.showInfo('STR_INFO_TITLE', 'STR_INFO_TOPIC_STATUS_CHANGE_DISABLED', false);
+                        break;
+                    default:
+                        $log.error("meetingStatusCtrl: changeTopicStatus unsupported mode");
+                        break;
                 }
             }
             else {
