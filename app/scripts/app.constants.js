@@ -28,7 +28,8 @@ angular.module('dashboard')
             K1002: { value: 1002, strId: 'STR_REST_RES_1002' },
             K1003: { value: 1003, strId: 'STR_REST_RES_1003' },
             K1004: { value: 1004, strId: 'STR_REST_RES_1004' },
-            K1005: { value: 1005, strId: 'STR_REST_RES_1005' }
+            K1005: { value: 1005, strId: 'STR_REST_RES_1005' },
+            K1007: { value: 1007, strId: 'STR_REST_RES_1007' }
         },
         'GENERALERROR': { 'errorCode': -1 },
         'ID': 'id',
