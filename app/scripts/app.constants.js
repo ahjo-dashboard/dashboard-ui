@@ -143,9 +143,9 @@ angular.module('dashboard')
         },
         'TOPICSTATUSACTIONS': {
             OPEN: { stringId: 'STR_OPEN', active: [1, 4], hidden: [], actionId: 2 },
-            ABORT: { stringId: 'STR_ABORT', active: [2], hidden: [], actionId: 4 },
+            ABORT: { stringId: 'STR_ABORT', active: [2], hidden: [], actionId: 3 },
             CONTINUE: { stringId: 'STR_CONTINUE', active: [3], hidden: [], actionId: 8 },
-            CLOSE: { stringId: 'STR_READY', active: [2], hidden: [], actionId: 5 }
+            CLOSE: { stringId: 'STR_READY', active: [2], hidden: [], actionId: 4 }
         },
         'ESIGNSTATUS': { //SignApi_DocStatuses
             UNSIGNED: { value: 1, stringId: 'STR_UNSIGNED', badgeClass: 'db-badge-ora' },
