@@ -27,9 +27,9 @@
                     </div>
                     <div class="panel-collapse collapse" uib-collapse="!c.isSelected(i)">
                         <div class="db-padding-10-hor">
-                            <span translate translate-cloak>STR_SROLE_SUPPORTER</span>:<b ng-repeat="s in c.supporter | filter: { minuteEntryGuid: i.minuteEntryGuid }  | filter:query as filtered2 track by $index">
+                            <span translate translate-cloak>STR_SROLE_SUPPORTER</span>:<span ng-repeat="s in c.supporter | filter: { minuteEntryGuid: i.minuteEntryGuid }  | filter:query as filtered2 track by $index">
                             <span ng-if="0 < $index">, </span>
-                            <span class="db-margin-05-left">{{s.name}}</span></b><span ng-if="filtered2.length === 0" class="db-margin-05-left">-</span>
+                            <span class="db-margin-05-left">{{s.name}}</span></span><span ng-if="filtered2.length === 0" class="db-margin-05-left">-</span>
                         </div>
                         <div class="db-padding-10-hor db-margin-10-top"><span translate translate-cloak>STR_TEXT</span>:</div>
                         <pre class="db-margin-10-hor">{{i.text}}</pre>
