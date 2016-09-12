@@ -33,8 +33,8 @@
                         </div>
                         <div class="db-padding-10-hor db-margin-10-top"><span translate translate-cloak>STR_TEXT</span>:</div>
                         <pre class="db-margin-10-hor">{{i.text}}</pre>
-                        <div class="db-padding-10-hor"><span translate translate-cloak>STR_TRANSLATION</span>:</div>
-                        <pre class="db-margin-10-hor">{{i.translationText}}</pre>
+                        <div ng-if="i.translationText" class="db-padding-10-hor"><span translate translate-cloak>STR_TRANSLATION</span>:</div>
+                        <pre ng-if="i.translationText" class="db-margin-10-hor">{{i.translationText}}</pre>
                     </div>
                 </div>
             </div>
