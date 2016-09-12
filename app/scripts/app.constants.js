@@ -20,6 +20,10 @@ angular.module('dashboard')
         'POLLINGTIMEOUT': 10000,
         'PROGRESSDLGMINDURATIONMS': 900,
         'NOTFOUND': -1,
+        'DBLANG': {
+            FI: 'fi',
+            SV: 'sv'
+        },
         'HTTPSTATUS': {
             K200: { value: 200, strId: null }
         },
