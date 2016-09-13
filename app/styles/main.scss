@@ -384,6 +384,13 @@ iframe {
     border-width: 0 !important;
 }
 
+.db-btn-separator-big {
+    height: 36px;
+    max-width: 4px;
+    overflow: hidden;
+    pointer-events: none;
+}
+
 .db-list-group-item-prim {
     @extend .list-group-item;
     color: $db-color-white;
@@ -720,6 +727,10 @@ body {
 
     .db-btn-transparent {
         @include button-variant(transparent, transparent, transparent);
+    }
+
+    .db-btn-white {
+        @include button-variant($db-color-dark, $db-color-white, $db-color-white);
     }
 
     .db-btn-prim {
