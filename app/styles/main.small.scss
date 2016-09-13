@@ -59,6 +59,10 @@ $db-color-danger: #d9534f;
                 padding: ($header-height - $button-height) * 0.5;
             }
         }
+
+        .ad-page-content .btn {
+            text-align: left;
+        }
     }
 
     .db-btn-list-topleft-sm { border-top-left-radius: $btn-radius !important; }

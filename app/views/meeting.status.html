@@ -45,7 +45,7 @@
             <div class="list-group-item db-flex db-padding-05-ver db-overflow-hidden ng-class:[{'db-opt-bg db-font-clr-white': (msc.isSelected(topic) && !msc.isMobile), 'db-item-disabled': !msc.canAccess(topic), 'db-padding-0-hor':!msc.chairman, 'db-padding-10-hor':msc.chairman}]"
                 ng-repeat="topic in msc.mtgDetails.topicList track by $index" db-confirm confirm-enabled="msc.hasUnsavedData && !msc.isSelected(topic)" confirm-config="msc.unsavedConfig" ng-click="msc.topicSelected(topic)">
                 <button class="btn db-btn-tiny ng-class:[{'db-btn-sel':msc.chairman},{'db-btn-transparent db-no-pointer-events':!msc.chairman}]" ng-disabled="msc.updatingStatus" tooltip-enable="isTooltips" tooltip-placement="right" uib-tooltip="{{msc.topicBtnTooltip(topic) | translate}}" ng-click="msc.changeTopicStatus(topic); msc.isMobile && $event.stopPropagation();">
-                    <div ng-if="!topic.updatingStatus" class="db-iconwrapper">
+                    <div ng-if="!topic.updatingStatus" class="db-iconwrapper text-align-left">
                         <img ng-src="{{msc.statusIcon(topic)}}">
                         <img ng-show="topic.includePublishedRemark" ng-src="images/mtg-states/prop-indicator.png">
                         <img ng-show="{{!msc.isTopicPublic(topic)}}" ng-src="images/mtg-states/conf-indicator.png">
