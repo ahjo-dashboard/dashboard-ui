@@ -70,7 +70,7 @@
                 </div>
             </div>
 
-            <db-link ng-if="c.isMobile" ng-attr-config="c.btnModel.doc.linkConfig" ng-attr-uri="c.btnModel.doc.url" class="db-btn-x-big  db-btn-prim btn-block"></db-link>
+            <db-link ng-if="c.isMobile" ng-attr-config="c.btnModel.doc.linkConfig" ng-attr-uri="c.btnModel.doc.url" ng-attr-set-disabled="c.op.busy === true" class="db-btn-x-big db-btn-prim btn-block" ></db-link>
 
             <db-link ng-if="c.isMobile && c.btnModel.doctr.url" ng-attr-config="c.btnModel.doctr.linkConfig" ng-attr-uri="c.btnModel.doctr.url"
                 class="db-btn-x-big db-btn-prim"></db-link>
