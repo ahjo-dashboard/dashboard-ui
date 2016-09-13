@@ -69,12 +69,15 @@ angular.module('dashboard')
             if (!angular.isArray(self.storedDocuments)) {
                 self.storedDocuments = [];
             }
-            var index = storedDataIndex(data);
+            if (storedDataIndex(data) === CONST.NOTFOUND) {
+                self.storedDocuments.splice(0, 0, data);
+            }
+        }
+
+        function removeStoredDocument(data) {
+            var index = storedDataIndex(data)
             if (index > CONST.NOTFOUND) {
                 self.storedDocuments.splice(index, 1);
-            }
-            else {
-                self.storedDocuments.splice(0, 0, data);
             }
         }
 
@@ -310,12 +313,11 @@ angular.module('dashboard')
         };
 
         self.addBookmark = function (data) {
-            if (angular.isObject(data)) {
-                storeDocument(data);
-            }
-            else {
-                $log.error("meetingDetailsCtrl: addBookmark invalid parameter");
-            }
+            storeDocument(data);
+        };
+
+        self.removeBookmark = function (data) {
+            removeStoredDocument(data);
         };
 
         self.showPresentation = function (data) {
