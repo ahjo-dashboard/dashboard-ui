@@ -75,7 +75,7 @@ angular.module('dashboard')
         }
 
         function removeStoredDocument(data) {
-            var index = storedDataIndex(data)
+            var index = storedDataIndex(data);
             if (index > CONST.NOTFOUND) {
                 self.storedDocuments.splice(index, 1);
             }
