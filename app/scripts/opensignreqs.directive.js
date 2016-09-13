@@ -158,9 +158,14 @@ angular.module('dashboard')
                 });
             }
 
-            // Filters out Viranhaltijapäätös which are rejected/returned
+            /*
+            * @name dashboard.adOpenSignreqs.filterOutClosedOfficials
+            * @description Filters out Viranhaltijapäätös which are rejected/returned
+            * @param Array item to compare
+            * @returns {boolean} True if item qualified, false if filtered out.
+            */
             function filterOutClosedOfficials(aItem) {
-                return ("DocumentType" in aItem) && ("Status" in aItem) && !((aItem.DocumentType === CONST.ESIGNTYPE.OFFICIAL.value) && ((aItem.Status === CONST.ESIGNSTATUS.RETURNED.value) || (aItem.Status === CONST.ESIGNSTATUS.REJECTED.value)));
+                return angular.isObject(aItem) && !(angular.equals(aItem.DocumentType, CONST.ESIGNTYPE.OFFICIAL.value) && (angular.equals(aItem.Status, CONST.ESIGNSTATUS.RETURNED.value) || angular.equals(aItem.Status, CONST.ESIGNSTATUS.REJECTED.value)) );
             }
 
             function filterOfficials(aItem) {
