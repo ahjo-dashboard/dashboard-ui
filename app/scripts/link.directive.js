@@ -16,7 +16,8 @@ angular.module('dashboard')
         return {
             scope: {
                 config: '=',
-                uri: '='
+                uri: '=',
+                setDisabled: '='
             },
             templateUrl: 'views/link.directive.html',
             restrict: 'AE',
