@@ -36,18 +36,45 @@ angular.module('dashboard')
         self.aData = null;
         self.dData = null;
         self.amData = null;
+        self.activeData = null;
 
         self.unsavedConfig = { title: 'STR_CONFIRM', text: 'STR_WARNING_UNSAVED', yes: 'STR_CONTINUE' };
         self.hasUnsavedProposal = false;
         self.remarkIsUnsaved = false;
         self.isChairman = false;
 
+        self.storedDocuments = null;
+
+        function addStoredDocument(data) {
+            if (!angular.isObject(data)) {
+                $log.error("meetingDetailsCtrl: addStoredDocument invalid parameter");
+                return;
+            }
+            if (!angular.isArray(self.storedDocuments)) {
+                self.storedDocuments = [];
+            }
+            var index = CONST.NOTFOUND;
+            for (var i = 0; i < self.storedDocuments.length && index === CONST.NOTFOUND; i++) {
+                var doc = self.storedDocuments[i];
+                if (angular.isObject(doc) && angular.equals(data.link, doc.link)) {
+                    index = i;
+                }
+            }
+
+            if (index > CONST.NOTFOUND) {
+                self.storedDocuments.splice(index, 1);
+            }
+            else {
+                self.storedDocuments.splice(0, 0, data);
+            }
+        }
+
         function setBlockMode(mode) {
             self.bm = self.isMobile ? CONST.BLOCKMODE.SECONDARY : mode;
         }
 
         function setPrimaryMode() {
-            var secret = self.isSecret(self.tData);
+            var secret = self.isSecret(self.activeData);
             if (self.isMobile) {
                 self.pm = CONST.PRIMARYMODE.HIDDEN;
             }
@@ -91,10 +118,12 @@ angular.module('dashboard')
         }
 
         function setData(topic) {
+            $log.debug("meetingDetailsCtrl: setData", arguments);
             self.topic = null;
             self.aData = null;
             self.tData = null;
             self.dData = null;
+            self.activeData = null;
             self.secondaryUrl = null;
             self.primaryUrl = null;
             self.selData = null;
@@ -113,6 +142,10 @@ angular.module('dashboard')
                         $log.debug("meetingDetailsCtrl.setData: esitys publicity=" + item.publicity + " link=" + item.link + " pageCount=" + item.pageCount);
                         self.tData = AttachmentData.create(
                             ((angular.isString(item.documentTitle) && item.documentTitle.length) ? item.documentTitle : 'STR_TOPIC'), item.link, item.publicity, null, null, item.pageCount);
+                        if (angular.isObject(self.tData)) {
+                            self.tData.topicTitle = topic.topicTitle;
+                        }
+                        self.activeData = self.tData;
                     }
                 }
 
@@ -242,6 +275,10 @@ angular.module('dashboard')
             return (item && item.publicity) ? (item.publicity === CONST.PUBLICITY.SECRET) : false;
         };
 
+        self.isActive = function (data) {
+            return angular.isObject(data) && angular.isObject(self.activeData) && angular.equals(data.link, self.activeData.link);
+        };
+
         self.materialCount = function () {
             var attachmentCount = ((self.aData instanceof Object) && (self.aData.objects instanceof Array)) ? self.aData.objects.length : 0;
             var decisionCount = ((self.dData instanceof Object) && (self.dData.objects instanceof Array)) ? self.dData.objects.length : 0;
@@ -254,8 +291,28 @@ angular.module('dashboard')
             setBlockMode(CONST.BLOCKMODE.DEFAULT);
         };
 
-        self.newTab = function (link) {
-            Utils.openNewWin(link);
+        self.newTab = function (data) {
+            if (angular.isObject(data)) {
+                if (self.isSecret(data)) {
+                    addStoredDocument(data);
+                }
+                else {
+                    Utils.openNewWin(data.link);
+                }
+            }
+            else {
+                $log.error("meetingDetailsCtrl: newTab invalid parameter");
+            }
+        };
+
+        self.showPresentation = function (data) {
+            if (angular.isObject(data)) {
+                self.activeData = data;
+                setPrimaryMode();
+            }
+            else {
+                $log.error("meetingDetailsCtrl: showPresentation invalid parameter");
+            }
         };
 
         $scope.$watch(function () {
