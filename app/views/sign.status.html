@@ -41,14 +41,14 @@
 
         <div class="ad-page-container">
 
-            <div class="db-spinner-cont btn-block">
+            <div class="btn-block ng-class:{'db-spinner-cont': c.op.busy}">
                 <div ng-hide="c.op && c.op.error">
-                    <button id="c.btnModel.acc.id" ng-hide="c.btnModel.acc.hideBtn" type="button" class="btn btn-block btn-lg db-btn-x-big btn-success ng-class: {active: c.isActive(c.btnModel.acc.id)}"
+                    <button id="c.btnModel.acc.id" ng-if="!c.btnModel.acc.hideBtn" type="button" class="btn btn-block btn-lg db-btn-x-big btn-success ng-class: {active: c.isActive(c.btnModel.acc.id)}"
                         ng-click="c.actionSign()" ng-disabled="c.isDisabled(c.btnModel.acc.id)" db-confirm confirm-config="c.btnModel.acc.cConf">
                         <span translate translate-cloak>STR_SIGNING_ACCEPT</span>
                     </button>
 
-                    <button id="c.btnModel.rej.id" ng-hide="c.btnModel.rej.hideBtn" type="button" class="btn btn-block btn-lg db-btn-x-big btn-danger ng-class: {active: c.isActive(c.btnModel.rej.id)}"
+                    <button id="c.btnModel.rej.id" ng-if="!c.btnModel.rej.hideBtn" type="button" class="btn btn-block btn-lg db-btn-x-big btn-danger ng-class: {active: c.isActive(c.btnModel.rej.id)}"
                         ng-click="c.actionReject()" ng-disabled="c.isDisabled(c.btnModel.rej.id)" db-confirm confirm-config="c.btnModel.rej.cConf">
                         <span translate translate-cloak>{{c.btnModel.rej.strId}}</span>
                     </button>
