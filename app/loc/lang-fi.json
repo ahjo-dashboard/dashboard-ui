@@ -90,6 +90,8 @@
     "STR_PRESENTATION": "Esitys",
     "STR_TOPIC_DOWNLOAD": "Lataa esitys",
     "STR_OPEN_NEW_TAB": "Avaa uuteen välilehteen",
+    "STR_ADD_BOOKMARK": "Aseta salaisen documentin kirjanmerkki",
+    "STR_REMOVE_BOOKMARK": "Poista salaisen documentin kirjanmerkki",
     "STR_PROPOSALS": "Ehdotukset",
     "STR_DECISIONS": "Käsittely ja päätös",
     "STR_SUPPORTED": "Kannatettu",

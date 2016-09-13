@@ -28,8 +28,10 @@
                         tooltip-enable="isTooltips" tooltip-placement="right" uib-tooltip="{{'STR_EXPANDCOLLAPSE' | translate}}">
                         <span class="glyphicon ng-class:[{'glyphicon-minus':c.bm === c.bms.PRIMARY},{'glyphicon-plus':c.bm !== c.bms.PRIMARY}]"></span>
                     </button>
-                    <button type="button" class="btn db-btn-sel db-btn-big db-brd-all db-margin-2 ng-class:[{'active':c.isActive(c.tData)}]" ng-disabled="!c.tData" ng-click="c.showPresentation(c.tData)">
-                        <span translate translate-cloak>STR_PRESENTATION</span>
+                    <button type="button" class="btn db-btn-sel db-btn-big db-brd-all db-margin-2 ng-class:[{'active':c.isActive(c.tData)}]"
+                        ng-click="c.showPresentation(c.tData)">
+                        <span ng-if="!c.tData.topicTitle" class="db-oneliner" translate translate-cloak>STR_PRESENTATION</span>
+                        <span ng-if="c.tData.topicTitle" class="db-oneliner" translate translate-cloak>{{c.tData.topicTitle}}</span>
                     </button>
 
                     <button ng-repeat="d in c.storedDocuments track by $index" type="button" class="btn db-btn-sel db-btn-big db-brd-all db-margin-2 ng-class:[{'active':c.isActive(d)}]"
@@ -38,9 +40,14 @@
                     </button>
 
                 </div>
-                <button type="button" class="btn db-btn-prim db-btn-small db-brd-all db-margin-2 db-flex-right" ng-click="c.newTab(c.tData)"
-                    ng-disabled="!c.tData || !c.tData.link" tooltip-enable="isTooltips" uib-tooltip="{{'STR_OPEN_NEW_TAB' | translate}}"
-                    tooltip-placement="bottom">
+                <button ng-if="c.isSecret(c.activeData)" type="button" class="btn db-btn-prim db-btn-small db-brd-all db-margin-2 db-flex-right"
+                    ng-click="c.addBookmark(c.tData)" ng-disabled="!c.activeData || !c.activeData.link" tooltip-enable="isTooltips"
+                    uib-tooltip="{{c.isDataStored(c.activeData) ? 'STR_REMOVE_BOOKMARK':'STR_ADD_BOOKMARK' | translate}}" tooltip-placement="bottom">
+                    <span class="glyphicon ng-class:[{'glyphicon-remove-sign':c.isDataStored(c.activeData)},{'glyphicon-bookmark':!c.isDataStored(c.activeData)}]"></span>
+                </button>
+                <button ng-if="!c.isSecret(c.activeData)" type="button" class="btn db-btn-prim db-btn-small db-brd-all db-margin-2 db-flex-right"
+                    ng-click="c.newTab(c.tData.link)" ng-disabled="!c.activeData || !c.activeData.link" tooltip-enable="isTooltips"
+                    uib-tooltip="{{'STR_OPEN_NEW_TAB' | translate}}" tooltip-placement="bottom">
                     <span class="glyphicon glyphicon-new-window"></span>
                 </button>
             </div>

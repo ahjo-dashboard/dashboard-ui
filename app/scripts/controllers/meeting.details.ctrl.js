@@ -45,22 +45,31 @@ angular.module('dashboard')
 
         self.storedDocuments = null;
 
-        function addStoredDocument(data) {
+        function storedDataIndex(data) {
+            var index = CONST.NOTFOUND;
+            if (angular.isObject(data)) {
+                for (var i = 0; angular.isArray(self.storedDocuments) && i < self.storedDocuments.length && index === CONST.NOTFOUND; i++) {
+                    var doc = self.storedDocuments[i];
+                    if (angular.isObject(doc) && angular.equals(data.link, doc.link)) {
+                        index = i;
+                    }
+                }
+            }
+            else {
+                $log.error("meetingDetailsCtrl: storedDataIndex invalid parameter");
+            }
+            return index;
+        }
+
+        function storeDocument(data) {
             if (!angular.isObject(data)) {
-                $log.error("meetingDetailsCtrl: addStoredDocument invalid parameter");
+                $log.error("meetingDetailsCtrl: storeDocument invalid parameter");
                 return;
             }
             if (!angular.isArray(self.storedDocuments)) {
                 self.storedDocuments = [];
             }
-            var index = CONST.NOTFOUND;
-            for (var i = 0; i < self.storedDocuments.length && index === CONST.NOTFOUND; i++) {
-                var doc = self.storedDocuments[i];
-                if (angular.isObject(doc) && angular.equals(data.link, doc.link)) {
-                    index = i;
-                }
-            }
-
+            var index = storedDataIndex(data);
             if (index > CONST.NOTFOUND) {
                 self.storedDocuments.splice(index, 1);
             }
@@ -279,6 +288,11 @@ angular.module('dashboard')
             return angular.isObject(data) && angular.isObject(self.activeData) && angular.equals(data.link, self.activeData.link);
         };
 
+        self.isDataStored = function (data) {
+            var index = storedDataIndex(data);
+            return (index > CONST.NOTFOUND);
+        };
+
         self.materialCount = function () {
             var attachmentCount = ((self.aData instanceof Object) && (self.aData.objects instanceof Array)) ? self.aData.objects.length : 0;
             var decisionCount = ((self.dData instanceof Object) && (self.dData.objects instanceof Array)) ? self.dData.objects.length : 0;
@@ -291,28 +305,22 @@ angular.module('dashboard')
             setBlockMode(CONST.BLOCKMODE.DEFAULT);
         };
 
-        self.newTab = function (data) {
+        self.newTab = function (link) {
+            Utils.openNewWin(link);
+        };
+
+        self.addBookmark = function (data) {
             if (angular.isObject(data)) {
-                if (self.isSecret(data)) {
-                    addStoredDocument(data);
-                }
-                else {
-                    Utils.openNewWin(data.link);
-                }
+                storeDocument(data);
             }
             else {
-                $log.error("meetingDetailsCtrl: newTab invalid parameter");
+                $log.error("meetingDetailsCtrl: addBookmark invalid parameter");
             }
         };
 
         self.showPresentation = function (data) {
-            if (angular.isObject(data)) {
-                self.activeData = data;
-                setPrimaryMode();
-            }
-            else {
-                $log.error("meetingDetailsCtrl: showPresentation invalid parameter");
-            }
+            self.activeData = angular.isObject(data) ? data : null;
+            setPrimaryMode();
         };
 
         $scope.$watch(function () {
