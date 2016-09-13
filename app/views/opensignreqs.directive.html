@@ -53,8 +53,7 @@
         </uib-progressbar>
 
         <ul ng-if="!c.reqErr" class="list-group">
-            <li type="button" class="list-group-item col-xs-12" ng-repeat="i in c.model | filter: c.docFilter | orderBy:'RequestDate': reverse
-            track by $index">
+            <li type="button" class="list-group-item col-xs-12" ng-repeat="i in c.model | filter: c.docFilter track by $index">
                 <div class="row">
                     <div class="col-xs-12 col-sm-4">
                         <div>

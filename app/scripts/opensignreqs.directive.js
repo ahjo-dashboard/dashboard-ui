@@ -158,9 +158,54 @@ angular.module('dashboard')
                 });
             }
 
-            // Filter out Viranhaltijapäätös which are rejected/returned
-            function filterOfficialTypes(aItem) {
+            // Filters out Viranhaltijapäätös which are rejected/returned
+            function filterOutClosedOfficials(aItem) {
                 return ("DocumentType" in aItem) && ("Status" in aItem) && !((aItem.DocumentType === CONST.ESIGNTYPE.OFFICIAL.value) && ((aItem.Status === CONST.ESIGNSTATUS.RETURNED.value) || (aItem.Status === CONST.ESIGNSTATUS.REJECTED.value)));
+            }
+
+            function filterOfficials(aItem) {
+                return angular.isObject(aItem) && (aItem.DocumentType === CONST.ESIGNTYPE.OFFICIAL.value);
+            }
+
+            function filterPolicymakers(aItem) {
+                return angular.isObject(aItem) && (aItem.DocumentType === CONST.ESIGNTYPE.POLICYMAKER.value);
+            }
+
+            function cmpDate(a, b) {
+                var res = 0;
+                if (angular.isObject(a) && angular.isObject(b) && angular.isString(a.RequestDate) && angular.isString(b.RequestDate)) {
+                    var m = a.RequestDate.toLowerCase();
+                    var n = b.RequestDate.toLowerCase();
+                    if (m < n) { //sort newest first
+                        res = 1;
+                    } else if (m > n) {
+                        res = -1;
+                    }
+                } else {
+                    $log.error("adOpenSignreqs.cmpDate: bad args ", arguments);
+                }
+                return res;
+            }
+
+            /*
+            * @name dashboard.adOpenSignreqs.sortDocs
+            * @description Sorts signing docs array: grouped by type, official group first, group-internal sorting by date
+            * @param Esign document array to sort
+            * @returns {array}
+            */
+            function sortDocs(aArr) {
+                var res = [];
+                if (angular.isArray(aArr)) {
+                    var off = aArr.filter(filterOfficials);
+                    off.sort(cmpDate);
+                    var poli = aArr.filter(filterPolicymakers);
+                    off.sort(cmpDate);
+                    Array.prototype.push.apply(res, poli);
+                    Array.prototype.push.apply(res, off);
+                } else {
+                    $log.error("adOpenSignreqs.sortDocs: bad args ", arguments);
+                }
+                return res;
             }
 
             /* Fetch signing documents by year */
@@ -177,15 +222,16 @@ angular.module('dashboard')
 
                 tmp.prom = SigningClosedApi.query({ byYear: newY }, function (/*data*/) {
                     if (angular.isArray(tmp.prom)) {
-                        var data = tmp.prom.filter(filterOfficialTypes); // Alternatively fitlering could also be done on view template level
-                        Array.prototype.push.apply(self.modelClosed, data);
+                        var data = tmp.prom.filter(filterOutClosedOfficials);
                         $log.debug("adOpenSignreqs.getClosed: SigningOpenApi.query closed (" + tmp.year + ") done, filtered count: " + data.length +", unfiltered count: " +tmp.prom.length);
+                        data = sortDocs(data);
+                        Array.prototype.push.apply(self.modelClosed, data);
                     } else {
-                        $log.error("adOpenSignreqs.getClosed: bad response, ignored");
+                        $log.error("adOpenSignreqs.getClosed: bad response, ignored", arguments);
                     }
                     self.errClosed = null;
                 }, function (error) {
-                    $log.error("adOpenSignreqs.getClosed: SigningOpenApi.query (" + tmp.year + ") error: " + JSON.stringify(error));
+                    $log.error("adOpenSignreqs.getClosed: SigningOpenApi.query (" + tmp.year + ") error: ", arguments);
                     self.errClosed = error;
                 });
                 tmp.prom.$promise.finally(function () {
