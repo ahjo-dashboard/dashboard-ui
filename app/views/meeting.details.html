@@ -42,12 +42,12 @@
                 </div>
                 <button ng-if="c.isSecret(c.activeData) && c.isDataStored(c.activeData)" type="button" class="btn db-btn-prim db-btn-small db-brd-all db-margin-2 db-flex-right"
                     ng-click="c.removeBookmark(c.activeData)" ng-disabled="!c.activeData || !c.activeData.link" tooltip-enable="isTooltips"
-                    uib-tooltip="{'STR_REMOVE_BOOKMARK' | translate}}" tooltip-placement="bottom">
+                    uib-tooltip="{{'STR_REMOVE_BOOKMARK' | translate}}" tooltip-placement="bottom">
                     <span class="glyphicon glyphicon-remove-sign"></span>
                 </button>
                 <button ng-if="c.isSecret(c.activeData)  && !c.isDataStored(c.activeData)" type="button" class="btn db-btn-prim db-btn-small db-brd-all db-margin-2 db-flex-right"
                     ng-click="c.addBookmark(c.activeData)" ng-disabled="!c.activeData || !c.activeData.link" tooltip-enable="isTooltips"
-                    uib-tooltip="{'STR_ADD_BOOKMARK' | translate}}" tooltip-placement="bottom">
+                    uib-tooltip="{{'STR_ADD_BOOKMARK' | translate}}" tooltip-placement="bottom">
                     <span class="glyphicon glyphicon-bookmark"></span>
                 </button>
                 <button ng-if="!c.isSecret(c.activeData)" type="button" class="btn db-btn-prim db-btn-small db-brd-all db-margin-2 db-flex-right"
