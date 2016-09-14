@@ -41,6 +41,7 @@ angular.module('dashboard')
         self.hasUnsavedProposal = false;
         self.remarkIsUnsaved = false;
         self.isChairman = false;
+        self.motionCount = null;
 
         function setBlockMode(mode) {
             self.bm = self.isMobile ? CONST.BLOCKMODE.SECONDARY : mode;
@@ -296,12 +297,22 @@ angular.module('dashboard')
             $rootScope.$emit(CONST.UNSAVEMEETINGDDATA, (self.hasUnsavedProposal || self.remarkIsUnsaved));
         });
 
-        $scope.$on('$destroy', unsavedRemarkWatcher);
-        $scope.$on('$destroy', unsavedProposalWatcher);
-        $scope.$on('$destroy', proposalCountWatcher);
+        var motionsWatcher = $rootScope.$on(CONST.MOTIONSUPDATED, function (aEvent, aData) {
+                $log.debug("meetingDetailsCtrl.motionsWatcher: ", arguments);
+                if (angular.isObject(aData)) {
+                    self.motionCount = aData.count;
+                }
+                else {
+                    self.motionCount = null;
+                }
+            });
 
         $scope.$on('$destroy', function () {
             $log.debug("meetingDetailsCtrl: DESTROY");
+            unsavedRemarkWatcher();
+            unsavedProposalWatcher();
+            proposalCountWatcher();
+            motionsWatcher();
         });
 
         // CONSTRUCT

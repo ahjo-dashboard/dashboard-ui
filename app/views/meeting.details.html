@@ -98,6 +98,9 @@
                 <button type="button" class="btn btn-block db-btn-sel db-btn-big db-brd-all ng-class:[{'active':c.sm === c.sms.MOTIONS},{'db-margin-2':!c.isMobile}]"
                     db-confirm confirm-enabled="c.hasUnsavedProposal || c.remarkIsUnsaved" confirm-config="c.unsavedConfig" ng-click="c.motionsClicked()">
                     <span translate translate-cloak>STR_MOTIONS</span>
+                    <span ng-if="c.motionCount" class="badge ng-cloak ng-class:{'db-font-clr-dark': c.motionCount}" tooltip-enable="isTooltips" uib-tooltip="{{'STR_ALL_ATT_COUNT' | translate}}" tooltip-placement="bottom">
+                        {{c.motionCount}}
+                        </span>
                 </button>
             </div>
 

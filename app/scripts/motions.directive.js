@@ -13,7 +13,7 @@
 angular.module('dashboard')
     .directive('dbMotions', [function () {
 
-        var controller = ['$log', 'AhjoMeetingSrv', 'StorageSrv', 'CONST', function ($log, AhjoMeetingSrv, StorageSrv, CONST) {
+        var controller = ['$log', 'AhjoMeetingSrv', 'StorageSrv', 'CONST', '$rootScope', function ($log, AhjoMeetingSrv, StorageSrv, CONST, $rootScope) {
             $log.log("dbMotions: CONTROLLER");
             var self = this;
             self.loading = false;
@@ -24,6 +24,14 @@ angular.module('dashboard')
             var personGuid = StorageSrv.getKey(CONST.KEY.MEETING_PERSONGUID);
 
             // FUNCTIONS
+
+            function checkMotions(motions) {
+                if (!angular.isArray(motions)) {
+                    $log.error("dbMotions.checkMotions: bad args");
+                    return;
+                }
+                $rootScope.$emit(CONST.MOTIONSUPDATED, { count: self.motions.length });
+            }
 
             function getMotions(aMtg, aPersonGuid) {
                 $log.debug("dbMotions.getMotions", arguments);
@@ -40,6 +48,7 @@ angular.module('dashboard')
                         self.motions = [];
                     }).finally(function () {
                         self.loading = false;
+                        checkMotions(self.motions);
                     });
                 }
                 else {
@@ -60,7 +69,7 @@ angular.module('dashboard')
                 return angular.equals(motion, selectedMotion);
             };
 
-            self.typeString = function(id) {
+            self.typeString = function (id) {
                 var result = null;
                 angular.forEach(CONST.MOTIONTYPES, function (value) {
                     if (angular.isObject(value) && value.id === id) {
