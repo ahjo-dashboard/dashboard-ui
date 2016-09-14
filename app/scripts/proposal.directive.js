@@ -33,7 +33,8 @@ angular.module('dashboard')
             self.publishConfig = { title: 'STR_CONFIRM', text: 'STR_CNFM_SEND_PROP', yes: 'STR_YES' };
             self.deleteConfigDraft = { title: 'STR_CONFIRM', text: 'STR_CNFM_DEL_PROP', yes: 'STR_YES' };
             self.deleteConfigDraftAndPub = { title: 'STR_CONFIRM', text: 'STR_CNFM_DEL_PROP', yes: 'STR_YES', optionText: 'STR_CNFM_DEL_PROP_OPT' };
-            self.deleteConfigPub = { title: 'STR_CONFIRM', text: 'STR_CNFM_DEL_PUBLIC_PROP', yes: 'STR_YES'};
+            self.deleteConfigPub = { title: 'STR_CONFIRM', text: 'STR_CNFM_DEL_PUBLIC_PROP', yes: 'STR_YES' };
+            self.isMobile = $rootScope.isMobile;
             var previousIsPublished = null;
             var createDisabled = false;
 

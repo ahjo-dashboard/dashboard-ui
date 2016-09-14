@@ -706,6 +706,10 @@ body {
         @include db-badge-mix(#a6a6a6);
     }
 
+    .db-badge-gra {
+        @include db-badge-mix(#cccccc, $badge-font-color-dark, $badge-font-color-dark);
+    }
+
     .db-badge-red {
         @include db-badge-mix($db-color-danger);
     }
@@ -843,7 +847,7 @@ body {
         overflow: auto;
 
         .btn {
-            text-align: left;
+            text-align: center;
             white-space: normal;
             max-lines: 2;
             word-wrap: break-word;

@@ -120,9 +120,9 @@ angular.module('dashboard')
             TECHNICALLY_OPEN: { stateId: 2, stringId: 'STR_TECHNICALLY_OPEN', badgeClass: 'db-badge-yel' },
             ACTIVE: { stateId: 3, stringId: 'STR_ACTIVE', badgeClass: 'db-badge-gre' },
             ABORTED: { stateId: 4, stringId: 'STR_ABORTED', badgeClass: 'db-badge-pur' },
-            OFFICIALLY_CLOSED: { stateId: 5, stringId: 'STR_OFFICIALLY_CLOSED', badgeClass: 'db-badge-dark' },
-            RECORDS_MOVED: { stateId: 6, stringId: 'STR_RECORDS_MOVED', badgeClass: 'db-badge-dark' },
-            TECHNICALLY_CLOSED: { stateId: 7, stringId: 'STR_TECNICALLY_CLOSED', badgeClass: 'db-badge-dark' },
+            OFFICIALLY_CLOSED: { stateId: 5, stringId: 'STR_OFFICIALLY_CLOSED', badgeClass: 'db-badge-gra' },
+            RECORDS_MOVED: { stateId: 6, stringId: 'STR_RECORDS_MOVED', badgeClass: 'db-badge-gra' },
+            TECHNICALLY_CLOSED: { stateId: 7, stringId: 'STR_TECNICALLY_CLOSED', badgeClass: 'db-badge-gra' },
         },
         'MEETINGSTATUSACTIONS': {
             OPEN: { stateId: 3, stringId: 'STR_OPEN', active: [2], actionId: 3 },
