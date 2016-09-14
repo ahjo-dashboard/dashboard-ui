@@ -107,6 +107,9 @@ app.controller('signStatusCtrl', function ($log, $scope, $state, SigningAttApi, 
             btnModel.acc.disabled = true;
             btnModel.rej.disabled = true;
             btnModel.att.disabled = true;
+            btnModel.acc.hideBtn = true;
+            btnModel.rej.hideBtn = true;
+            btnModel.att.hideBtn = true;
         }
 
         btnModel.rej.strId = ("DocumentType" in aItem) && (aItem.DocumentType === CONST.ESIGNTYPE.OFFICIAL.value) ? 'STR_RETURN' : 'STR_REJECT';

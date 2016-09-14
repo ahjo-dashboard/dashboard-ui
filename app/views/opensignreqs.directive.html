@@ -53,12 +53,11 @@
         </uib-progressbar>
 
         <ul ng-if="!c.reqErr" class="list-group">
-            <li type="button" class="list-group-item col-xs-12" ng-repeat="i in c.model | filter: c.docFilter | orderBy:'RequestDate': reverse
-            track by $index">
+            <li type="button" class="list-group-item col-xs-12" ng-repeat="i in c.model | filter: c.docFilter track by $index">
                 <div class="row">
                     <div class="col-xs-12 col-sm-4">
                         <div>
-                            {{i.RequestDate | date:'yyyy-MM-dd'}}&nbsp;&nbsp;&nbsp;<b>{{i.Name}}</b>
+                            {{i.RequestDate | date:'dd.MM.yyyy'}}<b class="db-padding-10-hor">{{i.Name}}</b>
                         </div>
                         <div ng-if="i.ShortComment && i.ShortComment.length">
                             <i>{{i.ShortComment}}</i>
