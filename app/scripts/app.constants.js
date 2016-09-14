@@ -53,7 +53,8 @@ angular.module('dashboard')
             MATERIALS: 'MATERIALS',
             REMARK: 'REMARK',
             SECRET: 'SECRET',
-            DECISIONS: 'DECISIONS'
+            DECISIONS: 'DECISIONS',
+            MOTIONS: 'MOTIONS'
         },
         'HOMEMODE': {
             ALL: 0,
@@ -155,10 +156,14 @@ angular.module('dashboard')
             CLOSE: { stringId: 'STR_READY', active: [2], hidden: [], actionId: 4 }
         },
         'MTGVOTING': {
-            YEA: { id: 1, stringId: 'STR_VOTE_YEA'},
-            NAY: { id: 2, stringId: 'STR_VOTE_NAY'},
-            EMPTY: { id: 3, stringId: 'STR_VOTE_EMPTY'},
-            ABSENT: { id: 4, stringId: 'STR_VOTE_ABSENT'}
+            YEA: { id: 1, stringId: 'STR_VOTE_YEA' },
+            NAY: { id: 2, stringId: 'STR_VOTE_NAY' },
+            EMPTY: { id: 3, stringId: 'STR_VOTE_EMPTY' },
+            ABSENT: { id: 4, stringId: 'STR_VOTE_ABSENT' }
+        },
+        'MOTIONTYPES': {
+            'DEFAULT': { id: 1, stringId: 'STR_MOTION' },
+            'BUDGET': { id: 2, stringId: 'STR_BUDGET_MOTION' }
         },
         'ESIGNSTATUS': { //SignApi_DocStatuses
             UNSIGNED: { value: 1, stringId: 'STR_UNSIGNED', badgeClass: 'db-badge-ora' },

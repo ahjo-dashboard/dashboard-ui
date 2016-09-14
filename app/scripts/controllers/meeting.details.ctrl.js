@@ -238,6 +238,10 @@ angular.module('dashboard')
             setSecondaryMode(CONST.SECONDARYMODE.DECISIONS);
         };
 
+        self.motionsClicked = function () {
+            setSecondaryMode(CONST.SECONDARYMODE.MOTIONS);
+        };
+
         self.isSecret = function (item) {
             return (item && item.publicity) ? (item.publicity === CONST.PUBLICITY.SECRET) : false;
         };
