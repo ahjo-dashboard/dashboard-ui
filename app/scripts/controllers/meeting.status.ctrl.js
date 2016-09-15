@@ -352,20 +352,22 @@ angular.module('dashboard')
         function getMotions(aMtg, aPersonGuid) {
             $log.debug("meetingStatusCtrl.getMotions", arguments);
             if (angular.isObject(aMtg) && angular.isString(aPersonGuid)) {
+                var storedData = StorageSrv.getKey(CONST.KEY.MOTION_DATA);
+                var resultData = storedData ? storedData : angular.copy(CONST.MOTIONDATA);
 
                 AhjoMeetingSrv.getMotions(aMtg.meetingGuid, aPersonGuid).then(function (resp) {
                     $log.log("meetingStatusCtrl.getMotions done", resp);
-                    var motions = angular.isArray(resp) ? resp : [];
-                    $rootScope.$emit(CONST.MOTIONSUPDATED, { count: motions.length });
-                    StorageSrv.setKey(CONST.KEY.MOTION_ARRAY, motions);
+                    resultData.objects = angular.isArray(resp) ? resp : [];
                 }, function (error) {
                     $log.error("meetingStatusCtrl.getMotions ", arguments);
                     self.errorCode = error.errorCode;
                 }, function (/*notification*/) {
-                    // todo: loading indicator start needed ?
-                    self.motions = [];
+                    var loadingData = angular.copy(resultData);
+                    loadingData.loading = true;
+                    StorageSrv.setKey(CONST.KEY.MOTION_DATA, loadingData);
                 }).finally(function () {
-                    // todo: loading indicator stop needed ?
+                    $rootScope.$emit(CONST.MOTIONSUPDATED, { count: resultData.objects.length });
+                    StorageSrv.setKey(CONST.KEY.MOTION_DATA, resultData);
                 });
             }
             else {

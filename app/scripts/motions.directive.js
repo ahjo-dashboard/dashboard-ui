@@ -17,7 +17,7 @@ angular.module('dashboard')
             $log.log("dbMotions: CONTROLLER");
             var self = this;
             self.loading = false;
-            self.motions = StorageSrv.getKey(CONST.KEY.MOTION_ARRAY);
+            self.motions = null;
             self.errorCode = 0;
             self.isTooltips = $rootScope.isTooltips;
             var selectedMotion = null;
@@ -59,11 +59,12 @@ angular.module('dashboard')
             };
 
             $scope.$watch(function () {
-                return StorageSrv.getKey(CONST.KEY.MOTION_ARRAY);
-            }, function (array, oldArray) {
-                if (!angular.equals(array, oldArray)) {
-                    self.motions = angular.isArray(array) ? array : [];
+                return StorageSrv.getKey(CONST.KEY.MOTION_DATA);
+            }, function (data) {
+                if (angular.isObject(data) && !angular.equals(data.objects, self.motions)) {
+                    self.motions = (angular.isObject(data) && angular.isArray(data.objects)) ? data.objects : [];
                 }
+                self.loading = (angular.isObject(data) && data.loading === true);
             });
 
             $scope.$watch(function () {

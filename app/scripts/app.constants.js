@@ -20,6 +20,7 @@ angular.module('dashboard')
         'MEETINGPARALLELMODE': 'MEETINGPARALLELMODE',
         'POLLINGTIMEOUT': 10000,
         'PROGRESSDLGMINDURATIONMS': 900,
+        'MOTIONDATA': { loading: false, objects: [] },
         'NOTFOUND': -1,
         'DBLANG': {
             FI: 'fi',
@@ -102,7 +103,7 @@ angular.module('dashboard')
             MEETING_ROLE: 'meetingrole',
             MEETING_PERSONGUID: 'personguid',
             PROPOSAL_EVENT_ARRAY: 'proposaleventarray',
-            MOTION_ARRAY: 'motionarray',
+            MOTION_DATA: 'motionarray',
             SIGN_ITEM: 'signitem',
             VALUE: 'value',
             STATE_ID: 'stateId'
