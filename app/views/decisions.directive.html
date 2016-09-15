@@ -16,7 +16,7 @@
                 </h5>
                 <div class="list-group-item db-no-padding" ng-repeat="i in c.record | filter: { type: d.value } | filter:query as filtered track by $index">
                     <div class="db-flex db-padding-05" ng-click="c.itemSelected(i)">
-                        <span class="db-margin-05-right glyphicon ng-class:{'glyphicon-minus': c.isSelected(i), 'glyphicon-plus': !c.isSelected(i)}"
+                        <span class="db-margin-05-right center glyphicon ng-class:{'glyphicon-minus': c.isSelected(i), 'glyphicon-plus': !c.isSelected(i)}"
                             aria-hidden="true" tooltip-enable="c.isTooltips" tooltip-placement="right" uib-tooltip="{{'STR_EXPANDCOLLAPSE' | translate}}"></span>
                         <span class="db-flex-area">{{i.name}}
                             <span ng-if="i.proposalOrdernumber">&nbsp;/{{i.proposalOrdernumber}}</span>

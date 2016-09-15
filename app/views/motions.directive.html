@@ -1,0 +1,48 @@
+<div class="db-directive db-spinner-cont">
+
+    <span us-spinner spinner-on="c.loading"></span>
+
+    <div ng-if="c.errorCode" uib-alert ng-class="'alert-danger'">
+        <span translate translate-cloak>STR_FAIL_LOADING</span>
+        <br>
+        <span translate translate-cloak>STR_TRY_LATER</span>
+    </div>
+
+    <div class="db-min-width-300">
+        <ul ng-if="!c.errorCode" class="list-group db-no-margin db-brd-all db-overflow-hidden">
+            <div class="db-font-clr-white db-prim-bg db-padding-10 db-no-margin db-brd-top row">
+                <span class="col-xs-7 col-md-5 db-truncate" translate translate-cloak>STR_TITLE</span>
+                <span class="col-xs-5 col-md-3 db-truncate" translate translate-cloak>STR_CREATOR</span>
+                <span class="col-md-2 hidden-xs hidden-sm db-truncate" translate translate-cloak>STR_SIGNING_TYPE</span>
+                <span class="col-md-2 hidden-xs hidden-sm db-truncate" translate translate-cloak>STR_SIGNINGS</span>
+            </div>
+            <div class="list-group-item db-padding-10-hor" ng-repeat="m in c.motions | orderBy : 'publishDate' track by $index" ng-click="c.selectMotion(m)">
+                <div class="row">
+                    <span class="col-xs-7 col-md-5 db-flex">
+                    <span class="db-margin-10-right center glyphicon ng-class:{'glyphicon-minus':c.isSelected(m), 'glyphicon-plus':!c.isSelected(m)}" aria-hidden="true"></span>
+                    <b class="db-flex-area db-truncate">{{m.title}}</b>
+                    </span>
+                    <b><i class="col-xs-5 col-md-3 db-truncate">{{m.personName}}</i></b>
+                    <span class="col-md-2 hidden-xs hidden-sm db-truncate" translate translate-cloak>{{c.typeString(m.type)}}</span>
+                    <span ng-show="m.supporters" class="col-md-2 hidden-xs hidden-sm db-truncate">{{m.supporters.length}} <span ng-if="c.supporting(m.supporters)" class="glyphicon glyphicon-user db-margin-10-hor"
+                    tooltip-enable="c.isTooltips" uib-tooltip="{{'STR_MOTION_SIGNED_BY_ME' | translate}}" tooltip-placement="left"></span></span>
+                </div>
+                <div class="panel-collapse collapse" uib-collapse="!c.isSelected(m)">
+                    <div class="hidden-md hidden-lg db-margin-05-top">
+                        <span translate translate-cloak>STR_SIGNING_TYPE</span>:<span class="db-margin-05-left" translate
+                            translate-cloak>{{c.typeString(m.type)}}</span>
+                    </div>
+                    <div ng-if="m.supporters.length" class="db-margin-05">
+                        <span translate translate-cloak>STR_MOTION_SIGNERS</span>:<span ng-repeat="s in m.supporters track by $index"><span ng-if="0 < $index">, </span>
+                        <span class="db-margin-05-left">{{s.name}}</span></span>
+                    </div>
+                    <pre class="db-margin-10-ver">{{m.text}}</pre>
+
+                </div>
+
+            </div>
+
+        </ul>
+    </div>
+
+</div>
