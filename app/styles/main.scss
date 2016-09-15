@@ -77,6 +77,36 @@ iframe {
 }
 // End of globally center modal dialogs
 
+// Start svg glyps
+
+svg {
+    display: block;
+}
+
+.si-glyph * {
+    fill: $db-color-white;
+}
+
+.db-glyph-dark * {
+    fill: $db-color-dark;
+}
+
+.db-glyph-ora * {
+    fill: $proposals-color;
+}
+
+.db-glyph { // Both width and height have to be defined for IE11
+    width: 32px; // glyph.smarticons.co: "we recommend to set the SVG in its base grid 16x16 (16x16, 32x32) to keep pixel perfection and sharpness"
+    height: 32px;
+}
+
+.db-glyph-sm  {
+    width: 20px;
+    height: 20px;
+}
+
+// End svg glyphs
+
 .no-content {
     display: flex;
     align-items: center;
@@ -184,6 +214,10 @@ iframe {
 
 .db-margin-10-right {
     margin-right: 1.0vh !important;
+}
+
+.db-margin-10-left {
+    margin-left: 1.0vh !important;
 }
 
 .db-margin-05-hor {
@@ -343,10 +377,15 @@ iframe {
     word-break: break-all;
 }
 
+.db-txt-center {
+    text-align: center !important;
+}
+
 .db-center {
     display: flex;
     align-items: center;
     justify-content: center;
+    vertical-align: middle;
 }
 
 .db-center-v {
