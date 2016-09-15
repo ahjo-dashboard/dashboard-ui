@@ -53,8 +53,8 @@
                             ng-click="selected({meetingItem:item.meeting, meetingRole:role, personGuid: c.responseData.personGuid })" tooltip-enable="c.isTooltips"
                             tooltip-placement="left" uib-tooltip="{{'STR_MTG_LOGIN' | translate}}">
                             <div class="db-center">
-                                <span>{{role.RoleName}}</span>&nbsp;
-                                <span class="glyphicon glyphicon-log-in"></span>
+                                <span>{{role.RoleName}}</span>
+                                <div class="db-glyph-sm db-glyph-dark db-margin-05-left" ng-include="'images/si-glyph-arrow-right.svg'"></div>
                             </div>
                         </button>
                     </div>
