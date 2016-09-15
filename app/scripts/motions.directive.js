@@ -19,6 +19,7 @@ angular.module('dashboard')
             self.loading = false;
             self.motions = null;
             self.errorCode = 0;
+            self.isTooltips = $rootScope.isTooltips;
             var selectedMotion = null;
             var mtgItem = StorageSrv.getKey(CONST.KEY.MEETING_ITEM);
             var personGuid = StorageSrv.getKey(CONST.KEY.MEETING_PERSONGUID);
@@ -70,13 +71,13 @@ angular.module('dashboard')
             };
 
             self.typeString = function (id) {
-                var result = null;
+                var result = '-';
                 angular.forEach(CONST.MOTIONTYPES, function (value) {
                     if (angular.isObject(value) && value.id === id) {
                         result = value.stringId;
                     }
                 }, this);
-                return result ? result : '-';
+                return result;
             };
 
             self.supporting = function (supporters) {

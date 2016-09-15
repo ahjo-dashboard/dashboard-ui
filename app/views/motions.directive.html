@@ -24,18 +24,19 @@
                     </span>
                     <b><i class="col-xs-5 col-md-3 db-truncate">{{m.personName}}</i></b>
                     <span class="col-md-2 hidden-xs hidden-sm db-truncate" translate translate-cloak>{{c.typeString(m.type)}}</span>
-                    <span ng-show="m.supporters" class="col-md-2 hidden-xs hidden-sm db-truncate">{{m.supporters.length}} <span ng-if="c.supporting(m.supporters)" class="glyphicon glyphicon-user db-margin-10-hor"></span></span>
+                    <span ng-show="m.supporters" class="col-md-2 hidden-xs hidden-sm db-truncate">{{m.supporters.length}} <span ng-if="c.supporting(m.supporters)" class="glyphicon glyphicon-user db-margin-10-hor"
+                    tooltip-enable="c.isTooltips" uib-tooltip="{{'STR_MOTION_SIGNED_BY_ME' | translate}}" tooltip-placement="left"></span></span>
                 </div>
                 <div class="panel-collapse collapse" uib-collapse="!c.isSelected(m)">
                     <div class="hidden-md hidden-lg db-margin-05-top">
                         <span translate translate-cloak>STR_SIGNING_TYPE</span>:<span class="db-margin-05-left" translate
                             translate-cloak>{{c.typeString(m.type)}}</span>
                     </div>
-                    <div ng-if="m.supporters.length">
-                        <span translate translate-cloak>STR_SROLE_SUPPORTER</span>:<span ng-repeat="s in m.supporters track by $index"><span ng-if="0 < $index">, </span>
+                    <div ng-if="m.supporters.length" class="db-margin-05">
+                        <span translate translate-cloak>STR_MOTION_SIGNERS</span>:<span ng-repeat="s in m.supporters track by $index"><span ng-if="0 < $index">, </span>
                         <span class="db-margin-05-left">{{s.name}}</span></span>
                     </div>
-                    <pre class="db-margin-05-ver">{{m.text}}</pre>
+                    <pre class="db-margin-10-ver">{{m.text}}</pre>
 
                 </div>
 
