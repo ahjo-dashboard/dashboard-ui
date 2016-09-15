@@ -20,8 +20,8 @@ angular.module('dashboard')
             self.motions = null;
             self.errorCode = 0;
             self.isTooltips = $rootScope.isTooltips;
+            self.meetingActive = null;
             var selectedMotion = null;
-            var personGuid = StorageSrv.getKey(CONST.KEY.MEETING_PERSONGUID);
 
             // FUNCTIONS
 
@@ -48,14 +48,12 @@ angular.module('dashboard')
                 return result;
             };
 
-            self.isSupportedByUser = function (supporters) {
-                var result = false;
-                angular.forEach(supporters, function (value) {
-                    if (angular.isObject(value) && value.personGuid === personGuid) {
-                        result = true;
-                    }
-                }, this);
-                return result;
+            self.submit = function(/*motion*/) {
+                $log.log("dbMotions: submit", arguments);
+            };
+
+            self.support = function (/*motion*/) {
+                $log.log("dbMotions: support", arguments);
             };
 
             $scope.$watch(function () {
@@ -71,6 +69,12 @@ angular.module('dashboard')
                 return $rootScope.isTooltips;
             }, function (isTooltips) {
                 self.isTooltips = isTooltips;
+            });
+
+            $scope.$watch(function () {
+                return $rootScope.meetingStatus;
+            }, function (status) {
+                self.meetingActive = (status === CONST.MTGSTATUS.ACTIVE.stateId);
             });
 
         }];

@@ -41,6 +41,7 @@ angular.module('dashboard')
         self.hasUnsavedData = false;
         self.parallelModeActive = false;
         self.unsavedConfig = { title: 'STR_CONFIRM', text: 'STR_WARNING_UNSAVED', yes: 'STR_CONTINUE' };
+        $rootScope.meetingStatus = null;
 
         // FUNTIONS
 
@@ -100,8 +101,8 @@ angular.module('dashboard')
             }
         }
 
-        function canMeetingToBeClosed() {
-            $log.debug("meetingStatusCtrl: canMeetingToBeClosed");
+        function canCloseMeeting() {
+            $log.debug("meetingStatusCtrl: canCloseMeeting");
             var result = true;
             if (angular.isObject(self.mtgDetails) && angular.isArray(self.mtgDetails.topicList)) {
                 for (var i = 0; result && i < self.mtgDetails.topicList.length; i++) {
@@ -118,6 +119,7 @@ angular.module('dashboard')
             $log.debug("meetingStatusCtrl: meetingStatusChanged", arguments);
             if (angular.isObject(event) && angular.isObject(self.mtgDetails)) {
                 self.mtgDetails.meetingStatus = event.meetingState;
+                $rootScope.meetingStatus = self.mtgDetails.meetingStatus;
             }
         }
 
@@ -332,6 +334,7 @@ angular.module('dashboard')
                         }
 
                         lastEventId = self.mtgDetails.lastEventId;
+                        $rootScope.meetingStatus = self.mtgDetails.meetingStatus;
                         $timeout.cancel(pollingTimer);
                         pollingTimer = $timeout(function () {
                             getEvents();
@@ -518,7 +521,7 @@ angular.module('dashboard')
                     if (angular.isObject(status)) {
                         status.disabled = status.active.indexOf(self.mtgDetails.meetingStatus) <= CONST.NOTFOUND;
                         if (self.mtgDetails.meetingStatus === CONST.MTGSTATUS.ACTIVE.stateId && status.stateId === CONST.MEETINGSTATUSACTIONS.CLOSE.stateId) {
-                            status.disabled = !canMeetingToBeClosed();
+                            status.disabled = !canCloseMeeting();
                         }
                         this.push(status);
                     }
@@ -536,6 +539,7 @@ angular.module('dashboard')
                         if (angular.isObject(result)) {
                             if (angular.isObject(self.mtgDetails)) {
                                 self.mtgDetails.meetingStatus = result.newState;
+                                $rootScope.meetingStatus = self.mtgDetails.meetingStatus;
                             }
                         }
 
@@ -691,6 +695,7 @@ angular.module('dashboard')
         $scope.$on('$destroy', function () {
             $log.debug("meetingStatusCtrl: DESTROY");
             $timeout.cancel(pollingTimer);
+            $rootScope.meetingStatus = null;
         });
 
     }]);
