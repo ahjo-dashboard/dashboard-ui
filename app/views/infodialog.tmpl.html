@@ -1,11 +1,12 @@
 <div>
-    <div class="modal-header ng-class:{'db-alert-header': c.isError, 'db-confirm-header': !c.isError}">
-        <h3>
-            <span ng-if="c.isError" class="glyphicon glyphicon-alert"></span>
-            <span ng-if="!c.isError" class="glyphicon glyphicon-info-sign"></span>
-            &nbsp;
-            <span translate translate-cloak>{{c.dbDlgTitleStrId}}</span>
-        </h3>
+    <div class="modal-header db-center-v ng-class:{'db-alert-header': c.isError, 'db-confirm-header': !c.isError}">
+            <span ng-if="c.isError">
+                <div class="db-glyph" ng-include="'images/si-glyph-circle-error.svg'"></div>
+            </span>
+            <span ng-if="!c.isError">
+                <div class="db-glyph" ng-include="'images/si-glyph-circle-info.svg'"></div>
+            </span>
+            <h4 class="db-margin-10-left" translate translate-cloak>{{c.dbDlgTitleStrId}}</h4>
     </div>
     <div class="text-center">
         <span translate translate-cloak>{{c.dbDlgbodyStrId}}</span>

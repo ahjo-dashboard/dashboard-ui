@@ -1,10 +1,7 @@
 <div>
-    <div class="db-no-border modal-header db-confirm-header">
-        <h3>
-            <span class="glyphicon glyphicon-time"></span>
-            &nbsp;
-            <span translate translate-cloak>{{c.titleStrId}}</span>
-        </h3>
+    <div class="db-no-border modal-header db-confirm-header db-center-v">
+            <div class="db-glyph" ng-include="'images/si-glyph-clock.svg'"></div>
+            <h4 class="db-margin-10-left" translate translate-cloak>{{c.titleStrId}}</h4>
     </div>
     <div ng-if="c.bodyStrId" class="text-center">
         <span translate translate-cloak>{{c.bodyStrId}}</span>
