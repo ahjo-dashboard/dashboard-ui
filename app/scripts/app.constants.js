@@ -102,6 +102,7 @@ angular.module('dashboard')
             MEETING_ROLE: 'meetingrole',
             MEETING_PERSONGUID: 'personguid',
             PROPOSAL_EVENT_ARRAY: 'proposaleventarray',
+            MOTION_ARRAY: 'motionarray',
             SIGN_ITEM: 'signitem',
             VALUE: 'value',
             STATE_ID: 'stateId'

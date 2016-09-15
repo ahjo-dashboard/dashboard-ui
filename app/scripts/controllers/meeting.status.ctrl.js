@@ -349,6 +349,30 @@ angular.module('dashboard')
             });
         }
 
+        function getMotions(aMtg, aPersonGuid) {
+            $log.debug("meetingStatusCtrl.getMotions", arguments);
+            if (angular.isObject(aMtg) && angular.isString(aPersonGuid)) {
+
+                AhjoMeetingSrv.getMotions(aMtg.meetingGuid, aPersonGuid).then(function (resp) {
+                    $log.log("meetingStatusCtrl.getMotions done", resp);
+                    var motions = angular.isArray(resp) ? resp : [];
+                    $rootScope.$emit(CONST.MOTIONSUPDATED, { count: motions.length });
+                    StorageSrv.setKey(CONST.KEY.MOTION_ARRAY, motions);
+                }, function (error) {
+                    $log.error("meetingStatusCtrl.getMotions ", arguments);
+                    self.errorCode = error.errorCode;
+                }, function (/*notification*/) {
+                    // todo: loading indicator start needed ?
+                    self.motions = [];
+                }).finally(function () {
+                    // todo: loading indicator stop needed ?
+                });
+            }
+            else {
+                $log.error("meetingStatusCtrl.getMotions: bad args");
+            }
+        }
+
         self.topicSelected = function (topic) {
             if (angular.isObject(topic)) {
                 $log.debug("meetingStatusCtrl.topicSelected: publicity=" + topic.publicity);
@@ -622,17 +646,15 @@ angular.module('dashboard')
         };
 
         // CONSTRUCTION
-        if (!mtgItemSelected || !mtgRole) {
-            $log.error("meetingStatusCtrl: bad meeting or role: \n " + JSON.stringify(mtgItemSelected) + '\n' + JSON.stringify(mtgRole));
+        if (!angular.isObject(mtgItemSelected) || !angular.isObject(mtgRole) || !angular.isString(mtgPersonGuid)) {
+            $log.error("meetingStatusCtrl: bad meeting, role or person: \n " + JSON.stringify(mtgItemSelected) + '\n' + JSON.stringify(mtgRole) + '\n' + JSON.stringify(mtgPersonGuid));
             $state.go(CONST.APPSTATE.HOME, { menu: CONST.MENU.CLOSED });
             return;
-        } else {
-            getMeetingDetails(mtgItemSelected);
         }
 
-        if (angular.isObject(mtgRole)) {
-            self.chairman = (mtgRole.RoleID === CONST.MTGROLE.CHAIRMAN);
-        }
+        getMeetingDetails(mtgItemSelected);
+        getMotions(mtgItemSelected, mtgPersonGuid);
+        self.chairman = (mtgRole.RoleID === CONST.MTGROLE.CHAIRMAN);
 
         $scope.$watch(function () {
             return StorageSrv.getKey(CONST.KEY.PROPOSAL_EVENT_ARRAY);

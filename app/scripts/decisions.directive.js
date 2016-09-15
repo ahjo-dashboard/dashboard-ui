@@ -51,7 +51,7 @@ angular.module('dashboard')
                     });
                 }
                 else {
-                    $log.error("dbDecisions.getDecisions: bad args");
+                    $log.log("dbDecisions.getDecisions: bad args");
                 }
             }
 
