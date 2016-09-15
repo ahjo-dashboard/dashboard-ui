@@ -3,19 +3,18 @@
 
         <div class="overview-hdr">
 
+            <button ng-if="env_dev" type="button" class="btn db-btn-prim db-center db-margin-10-right" ng-click="oc.logout()" tooltip-enable="isTooltips" tooltip-placement="right"
+                uib-tooltip="{{'STR_LOGOUT' | translate}} {{oc.testEnvUserId}}" tooltip-popup-delay='0'>
+                <div class="db-glyph" ng-include="'images/si-glyph-arrow-left.svg'"></div>
+            </button>
             <img src="images/vaakuna.jpg" style="width: 40px;">
             <h4 class="hidden-sm hidden-md hidden-lg db-flex-area" translate>STR_APPNAME</h4>
             <h3 class="hidden-xs db-flex-area" translate>STR_APPNAME</h3>
-            <button ng-if="env_dev" type="button" class="btn db-btn-prim" ng-click="oc.logout()" tooltip-enable="isTooltips" tooltip-placement="left"
-                uib-tooltip="{{'STR_LOGOUT' | translate}} {{oc.testEnvUserId}}" tooltip-popup-delay='0'>
-                <span class="glyphicon glyphicon-log-out"></span>
-            </button>
             <button type="button" class="btn db-btn-prim" ng-click="oc.showInfo()">
-                <span class="glyphicon glyphicon-info-sign"></span>
+                <div class="db-glyph-sm" ng-include="'images/si-glyph-circle-info.svg'"></div>
             </button>
         </div>
     </div>
-
 
     <div class="ad-page-content">
 
@@ -36,11 +35,16 @@
                     <h4 class="hidden-xs" translate>STR_CLOSED_MEETINGS</h4>
                 </button>
                 <button type="button" class="hidden-xs btn db-btn-prim ad-xs">
-                    <span class="glyphicon glyphicon-info-sign"></span>
+                    <div class="db-center">
+                        <div class="db-glyph-sm" ng-include="'images/si-glyph-circle-info.svg'"></div>
+                    </div>
                 </button>
-                <button type="button" class="btn db-btn-prim ad-xs db-btn-list-topright-xs db-btn-list-topright-sm" ng-click="oc.upperClicked()"
+                <button type="button" class="btn db-btn-prim ad-xs db-center db-txt-center db-btn-list-topright-xs db-btn-list-topright-sm" ng-click="oc.upperClicked()"
                     tooltip-enable="isTooltips" tooltip-placement="top" uib-tooltip="{{'STR_EXPANDCOLLAPSE' | translate}}">
-                    <span class="ng-class: ['glyphicon', {'glyphicon-plus':oc.blockMode !== oc.bms.PRIMARY, 'glyphicon-minus':oc.blockMode === oc.bms.PRIMARY}]"></span>
+                    <div class="db-center">
+                        <div ng-if="oc.blockMode === oc.bms.PRIMARY" class="db-glyph-sm" ng-include="'images/si-glyph-circle-remove.svg'"></div>
+                        <div ng-if="oc.blockMode !== oc.bms.PRIMARY" class="db-glyph-sm" ng-include="'images/si-glyph-circle-plus.svg'"></div>
+                    </div>
                 </button>
             </div>
 
@@ -64,11 +68,16 @@
                     <h4 class="hidden-xs" translate>STR_CLOSED_SIGNINGS</h4>
                 </button>
                 <button type="button" class="hidden-xs btn db-btn-prim ad-xs">
-                    <span class="glyphicon glyphicon-info-sign"></span>
+                    <div class="db-center">
+                        <div class="db-glyph-sm" ng-include="'images/si-glyph-circle-info.svg'"></div>
+                    </div>
                 </button>
-                <button type="button" class="btn db-btn-prim ad-xs db-btn-list-topright-xs db-btn-list-topright-sm" ng-click="oc.lowerClicked()"
+                <button type="button" class="btn db-btn-prim ad-xs db-center db-btn-list-topright-xs db-btn-list-topright-sm" ng-click="oc.lowerClicked()"
                     tooltip-enable="isTooltips" tooltip-placement="top" uib-tooltip="{{'STR_EXPANDCOLLAPSE' | translate}}">
-                    <span class="glyphicon ng-class:[{'glyphicon-plus':oc.blockMode !== oc.bms.SECONDARY, 'glyphicon-minus':oc.blockMode === oc.bms.SECONDARY}]"></span>
+                    <div class="db-center">
+                        <div ng-if="oc.blockMode === oc.bms.SECONDARY" class="db-glyph-sm" ng-include="'images/si-glyph-circle-remove.svg'"></div>
+                        <div ng-if="oc.blockMode !== oc.bms.SECONDARY" class="db-glyph-sm" ng-include="'images/si-glyph-circle-plus.svg'"></div>
+                    </div>
                 </button>
             </div>
 
