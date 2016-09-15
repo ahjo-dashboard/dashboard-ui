@@ -13,49 +13,17 @@
 angular.module('dashboard')
     .directive('dbMotions', [function () {
 
-        var controller = ['$log', 'AhjoMeetingSrv', 'StorageSrv', 'CONST', '$rootScope', function ($log, AhjoMeetingSrv, StorageSrv, CONST, $rootScope) {
+        var controller = ['$log', 'StorageSrv', 'CONST', '$rootScope', '$scope', function ($log, StorageSrv, CONST, $rootScope, $scope) {
             $log.log("dbMotions: CONTROLLER");
             var self = this;
             self.loading = false;
-            self.motions = null;
+            self.motions = StorageSrv.getKey(CONST.KEY.MOTION_ARRAY);
             self.errorCode = 0;
             self.isTooltips = $rootScope.isTooltips;
             var selectedMotion = null;
-            var mtgItem = StorageSrv.getKey(CONST.KEY.MEETING_ITEM);
             var personGuid = StorageSrv.getKey(CONST.KEY.MEETING_PERSONGUID);
 
             // FUNCTIONS
-
-            function checkMotions(motions) {
-                if (!angular.isArray(motions)) {
-                    $log.error("dbMotions.checkMotions: bad args");
-                    return;
-                }
-                $rootScope.$emit(CONST.MOTIONSUPDATED, { count: self.motions.length });
-            }
-
-            function getMotions(aMtg, aPersonGuid) {
-                $log.debug("dbMotions.getMotions", arguments);
-                if (angular.isObject(aMtg) && angular.isString(aPersonGuid)) {
-
-                    AhjoMeetingSrv.getMotions(aMtg.meetingGuid, aPersonGuid).then(function (resp) {
-                        $log.log("dbMotions.getMotions done", resp);
-                        self.motions = angular.isArray(resp) ? resp : [];
-                    }, function (error) {
-                        $log.error("dbMotions.getMotions ", arguments);
-                        self.errorCode = error.errorCode;
-                    }, function (/*notification*/) {
-                        self.loading = true;
-                        self.motions = [];
-                    }).finally(function () {
-                        self.loading = false;
-                        checkMotions(self.motions);
-                    });
-                }
-                else {
-                    $log.error("dbMotions.getMotions: bad args");
-                }
-            }
 
             self.selectMotion = function (motion) {
                 if (self.isSelected(motion)) {
@@ -80,7 +48,7 @@ angular.module('dashboard')
                 return result;
             };
 
-            self.supporting = function (supporters) {
+            self.isSupportedByUser = function (supporters) {
                 var result = false;
                 angular.forEach(supporters, function (value) {
                     if (angular.isObject(value) && value.personGuid === personGuid) {
@@ -90,7 +58,19 @@ angular.module('dashboard')
                 return result;
             };
 
-            getMotions(mtgItem, personGuid);
+            $scope.$watch(function () {
+                return StorageSrv.getKey(CONST.KEY.MOTION_ARRAY);
+            }, function (array, oldArray) {
+                if (!angular.equals(array, oldArray)) {
+                    self.motions = angular.isArray(array) ? array : [];
+                }
+            });
+
+            $scope.$watch(function () {
+                return $rootScope.isTooltips;
+            }, function (isTooltips) {
+                self.isTooltips = isTooltips;
+            });
 
         }];
 

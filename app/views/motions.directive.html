@@ -24,7 +24,7 @@
                     </span>
                     <b><i class="col-xs-5 col-md-3 db-truncate">{{m.personName}}</i></b>
                     <span class="col-md-2 hidden-xs hidden-sm db-truncate" translate translate-cloak>{{c.typeString(m.type)}}</span>
-                    <span ng-show="m.supporters" class="col-md-2 hidden-xs hidden-sm db-truncate">{{m.supporters.length}} <span ng-if="c.supporting(m.supporters)" class="glyphicon glyphicon-user db-margin-10-hor"
+                    <span ng-show="m.supporters" class="col-md-2 hidden-xs hidden-sm db-truncate">{{m.supporters.length}} <span ng-if="c.isSupportedByUser(m.supporters)" class="glyphicon glyphicon-user db-margin-10-hor"
                     tooltip-enable="c.isTooltips" uib-tooltip="{{'STR_MOTION_SIGNED_BY_ME' | translate}}" tooltip-placement="left"></span></span>
                 </div>
                 <div class="panel-collapse collapse" uib-collapse="!c.isSelected(m)">
