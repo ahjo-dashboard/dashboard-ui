@@ -646,18 +646,15 @@ angular.module('dashboard')
         };
 
         // CONSTRUCTION
-        if (!mtgItemSelected || !mtgRole || !mtgPersonGuid) {
+        if (!angular.isObject(mtgItemSelected) || !angular.isObject(mtgRole) || !angular.isString(mtgPersonGuid)) {
             $log.error("meetingStatusCtrl: bad meeting, role or person: \n " + JSON.stringify(mtgItemSelected) + '\n' + JSON.stringify(mtgRole) + '\n' + JSON.stringify(mtgPersonGuid));
             $state.go(CONST.APPSTATE.HOME, { menu: CONST.MENU.CLOSED });
             return;
-        } else {
-            getMeetingDetails(mtgItemSelected);
-            getMotions(mtgItemSelected, mtgPersonGuid);
         }
 
-        if (angular.isObject(mtgRole)) {
-            self.chairman = (mtgRole.RoleID === CONST.MTGROLE.CHAIRMAN);
-        }
+        getMeetingDetails(mtgItemSelected);
+        getMotions(mtgItemSelected, mtgPersonGuid);
+        self.chairman = (mtgRole.RoleID === CONST.MTGROLE.CHAIRMAN);
 
         $scope.$watch(function () {
             return StorageSrv.getKey(CONST.KEY.PROPOSAL_EVENT_ARRAY);
