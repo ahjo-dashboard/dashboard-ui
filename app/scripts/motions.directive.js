@@ -56,6 +56,10 @@ angular.module('dashboard')
                 $log.log("dbMotions: support", arguments);
             };
 
+            self.removeSupport = function(/*motion*/) {
+                $log.log("dbMotions: removeSupport", arguments);
+            };
+
             $scope.$watch(function () {
                 return StorageSrv.getKey(CONST.KEY.MOTION_DATA);
             }, function (data) {

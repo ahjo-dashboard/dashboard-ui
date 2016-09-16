@@ -49,6 +49,7 @@
     "STR_SIGNING_DOC_POLICYMAKER": "Toimielimen pöytäkirja",
     "STR_SIGNING_DOC_OFFICIAL": "Viranhaltijapäätös",
     "STR_SIGNING_ACCEPT": "Allekirjoita",
+    "STR_SIGNING_REMOVE": "Poista allekirjoitus",
     "STR_SUBMIT_MOTION": "Jätä aloite",
     "STR_REJECT": "Hylkää",
     "STR_RETURN": "Palauta",
