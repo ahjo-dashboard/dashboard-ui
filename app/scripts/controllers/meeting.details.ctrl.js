@@ -17,7 +17,7 @@ angular.module('dashboard')
         var self = this;
         self.isMobile = $rootScope.isMobile;
         var isTablet = $rootScope.isTablet;
-        var mtgRole = StorageSrv.getKey(CONST.KEY.MEETING_ROLE);
+        var mtgItemSelected = StorageSrv.getKey(CONST.KEY.MEETING_ITEM);
         self.primaryUrl = null;
         self.secondaryUrl = null;
         self.error = null;
@@ -332,7 +332,7 @@ angular.module('dashboard')
 
         // CONSTRUCT
 
-        if (angular.isObject(mtgRole) && mtgRole.RoleID === CONST.MTGROLE.CHAIRMAN) {
+        if (angular.isObject(mtgItemSelected) && angular.isObject(mtgItemSelected.dbUserRole) && mtgItemSelected.dbUserRole.RoleID === CONST.MTGROLE.CHAIRMAN) {
             self.isChairman = true;
         }
         setBlockMode(CONST.BLOCKMODE.DEFAULT);
