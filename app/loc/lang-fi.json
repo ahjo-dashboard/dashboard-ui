@@ -166,6 +166,7 @@
     "STR_REST_RES_1004": "Virheellinen käyttäjärooli",
     "STR_REST_RES_1005": "Kokoukseen on jo kirjautunut osanottaja valitulla roolilla",
     "STR_REST_RES_1007": "Asialta puuttuu päätös",
+    "STR_REST_RES_1008": "Virhe aloitteen allekirjoittamisessa",
     "STR_FORCED_LOGOUT": "Olet kirjautunut ulos tai sinut on kirjattu ulos kokouksesta",
     "STR_ERR_TITLE": "Virhe",
     "STR_INFO_TITLE": "Info",

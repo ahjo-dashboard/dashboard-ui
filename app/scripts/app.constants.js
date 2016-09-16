@@ -35,7 +35,8 @@ angular.module('dashboard')
             K1003: { value: 1003, strId: 'STR_REST_RES_1003' },
             K1004: { value: 1004, strId: 'STR_REST_RES_1004' },
             K1005: { value: 1005, strId: 'STR_REST_RES_1005' },
-            K1007: { value: 1007, strId: 'STR_REST_RES_1007' }
+            K1007: { value: 1007, strId: 'STR_REST_RES_1007' },
+            K1008: { value: 1008, strId: 'STR_REST_RES_1008' }
         },
         'GENERALERROR': { 'errorCode': -1 },
         'ID': 'id',
@@ -144,7 +145,8 @@ angular.module('dashboard')
             TOPICSTATECHANGED: 'TopicStateChangedEvent',
             TOPICEDITED: 'TopicEditedEvent',
             LOGGEDOUT: 'PersonLoggedOutEvent',
-            MINUTEUPDATED: 'MinuteEntryUpdateEvent'
+            MINUTEUPDATED: 'MinuteEntryUpdateEvent',
+            MOTIONSUPPORTED: 'MotionSupportedEvent'
         },
         'TOPICSTATUS': {
             PENDING: { stateId: 1, iconPath: "images/mtg-states/mtg-ag-state-1.png", stringId: 'STR_TOPIC_STATUS_PENDING' },

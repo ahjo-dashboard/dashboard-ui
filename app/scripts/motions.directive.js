@@ -13,17 +13,57 @@
 angular.module('dashboard')
     .directive('dbMotions', [function () {
 
-        var controller = ['$log', 'StorageSrv', 'CONST', '$rootScope', '$scope', function ($log, StorageSrv, CONST, $rootScope, $scope) {
+        var controller = ['$log', 'StorageSrv', 'CONST', '$rootScope', '$scope', 'AhjoMeetingSrv', 'Utils', function ($log, StorageSrv, CONST, $rootScope, $scope, AhjoMeetingSrv, Utils) {
             $log.log("dbMotions: CONTROLLER");
             var self = this;
             self.loading = false;
             self.motions = null;
-            self.errorCode = 0;
+            self.error = null;
             self.isTooltips = $rootScope.isTooltips;
             self.meetingActive = null;
             var selectedMotion = null;
+            var mtgItemSelected = StorageSrv.getKey(CONST.KEY.MEETING_ITEM);
 
             // FUNCTIONS
+
+            function sign(aMotion, aMeetingGuid) {
+                if (!angular.isObject(aMotion) || !angular.isString(aMeetingGuid)) {
+                    $log.error("dbMotions.sign: bad args", arguments);
+                    return;
+                }
+                $log.log("dbMotions: sign", arguments);
+                AhjoMeetingSrv.signMotion(aMotion.motionGuid, aMotion.personGuid, aMeetingGuid).then(function (resp) {
+                    if (angular.isObject(resp)) {
+                        $log.log("dbMotions.sign done", resp);
+                        aMotion.isUserSupported = resp.isSupported;
+
+                        var supporter = {
+                            firstName: null,
+                            insertDateTime: null,
+                            lastName: null,
+                            motionGuid: aMotion.motionGuid,
+                            name: aMotion.personName,
+                            personGuid: aMotion.personGuid
+                        };
+                        if (angular.isArray(aMotion.supporters)) {
+                            aMotion.supporters.push(supporter);
+                        }
+                        else {
+                            aMotion.supporters = [supporter];
+                        }
+                    }
+                    else {
+                        $log.error("dbMotions.sign done ", resp);
+                    }
+                }, function (error) {
+                    $log.error("dbMotions.sign ", error);
+                    self.error = { 'errorCode': error.errorCode, 'errorString': Utils.stringIdForError(error.errorCode) };
+                }, function (/*notification*/) {
+                    self.loading = true;
+                }).finally(function () {
+                    self.loading = false;
+                });
+            }
 
             self.selectMotion = function (motion) {
                 if (self.isSelected(motion)) {
@@ -48,12 +88,17 @@ angular.module('dashboard')
                 return result;
             };
 
-            self.submit = function(/*motion*/) {
+            self.submit = function (/*motion*/) {
                 $log.log("dbMotions: submit", arguments);
             };
 
-            self.support = function (/*motion*/) {
+            self.support = function (motion) {
+                if (!angular.isObject(mtgItemSelected)) {
+                    $log.error("dbMotions.support: invalid mtg item", mtgItemSelected);
+                    return;
+                }
                 $log.log("dbMotions: support", arguments);
+                sign(motion, mtgItemSelected.meetingGuid);
             };
 
             $scope.$watch(function () {

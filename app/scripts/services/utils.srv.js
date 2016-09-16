@@ -137,6 +137,9 @@ angular.module('dashboard')
                 case CONST.MTGAPICODES.K1007.value:
                     res = CONST.MTGAPICODES.K1007.strId;
                     break;
+                case CONST.MTGAPICODES.K1008.value:
+                    res = CONST.MTGAPICODES.K1008.strId;
+                    break;
 
                 default:
                     $log.log("Utils.stringIdForError: didn't find a string id for '" + aNum + "', defaulting to " + res);
