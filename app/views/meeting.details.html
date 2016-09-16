@@ -1,8 +1,8 @@
 <div class="ad-page">
 
     <div ng-if="c.isMobile" class="ad-page-header db-center-v">
-        <button type="button" class="btn btn-lg db-btn-prim db-no-margin" ng-click="goBack()">
-            <span class="glyphicon glyphicon-menu-left"></span>
+        <button type="button" class="btn db-btn-prim" ng-click="goBack()">
+            <div class="db-glyph" ng-include="'images/si-glyph-arrow-left.svg'"></div>
         </button>
         <h4 translate translate-cloak>STR_TOPIC</h4>
     </div>
@@ -17,16 +17,24 @@
                 <div class="btn-group db-flex-area">
                     <button ng-if="menuClosed()" type="button" class="btn db-btn-prim db-btn-small db-brd-all db-margin-2" ng-click="openMenu()"
                         tooltip-enable="isTooltips" uib-tooltip="{{'STR_INFO_MENUBTN' | translate}}" tooltip-placement="right">
-                        <span class="glyphicon glyphicon-th-list"></span>
+                        <div class="db-center">
+                            <div class="db-glyph-sm" ng-include="'images/si-glyph-jump-double-page-left-right.svg'"></div>
+                        </div>
                     </button>
                     <button ng-if="menuClosed()" type="button" class="btn db-btn-prim db-btn-small db-brd-all db-margin-2" ng-click="c.toggleParallelMode()"
                         tooltip-enable="isTooltips" uib-tooltip="{{parallelMode ? 'STR_INFO_VIEW_VERT' : 'STR_INFO_VIEW_HORIZ' | translate}}"
                         tooltip-placement="right">
-                        <span class="glyphicon ng-class:[{'glyphicon-resize-vertical':parallelMode},{'glyphicon-resize-horizontal':!parallelMode}]"></span>
+                        <div class="db-center">
+                            <div ng-if="parallelMode" class="db-glyph-sm" ng-include="'images/si-glyph-arrow-up-down.svg'"></div>
+                            <div ng-if="!parallelMode" class="db-glyph-sm" ng-include="'images/si-glyph-arrow-left-right.svg'"></div>
+                        </div>
                     </button>
-                    <button ng-if="!parallelMode" type="button" class="btn db-btn-prim db-btn-small db-brd-all db-margin-2" ng-click="c.primaryClicked()"
+                    <button ng-if="!parallelMode" type="button" class="btn db-btn-prim db-btn-small db-brd-all db-margin-2 db-center" ng-click="c.primaryClicked()"
                         tooltip-enable="isTooltips" tooltip-placement="right" uib-tooltip="{{'STR_EXPANDCOLLAPSE' | translate}}">
-                        <span class="glyphicon ng-class:[{'glyphicon-minus':c.bm === c.bms.PRIMARY},{'glyphicon-plus':c.bm !== c.bms.PRIMARY}]"></span>
+                        <div class="db-center">
+                            <div ng-if="c.bm !== c.bms.PRIMARY" class="db-glyph-sm" ng-include="'images/si-glyph-circle-plus.svg'"></div>
+                            <div ng-if="c.bm === c.bms.PRIMARY" class="db-glyph-sm" ng-include="'images/si-glyph-circle-remove.svg'"></div>
+                        </div>
                     </button>
                     <button type="button" class="btn db-btn-sel db-btn-big db-brd-all db-margin-2 active db-no-pointer-events">
                         <span translate translate-cloak>STR_PRESENTATION</span>
@@ -35,7 +43,9 @@
                 <button ng-if="c.pm !== c.pms.SECRET" type="button" class="btn db-btn-prim db-btn-small db-brd-all db-margin-2 db-flex-right"
                     ng-click="c.newTab(c.tData.link)" ng-disabled="!c.tData || !c.tData.link" tooltip-enable="isTooltips" uib-tooltip="{{'STR_OPEN_NEW_TAB' | translate}}"
                     tooltip-placement="bottom">
-                    <span class="glyphicon glyphicon-new-window"></span>
+                    <div class="db-center">
+                        <div class="db-glyph-sm" ng-include="'images/si-glyph-forward-page.svg'"></div>
+                    </div>
                 </button>
             </div>
 
@@ -60,11 +70,16 @@
             <div class="db-prim-bg ng-class:[{'list-group db-no-margin db-padding-10 db-brd-all':c.isMobile},{'btn-group db-flex-wrap db-brd-top db-padding-2':!c.isMobile}]">
                 <button ng-if="menuClosed() && c.pm === c.pms.HIDDEN" type="button" class="btn db-btn-prim db-btn-small db-brd-all db-margin-2"
                     ng-click="openMenu()" tooltip-enable="isTooltips" uib-tooltip="{{'STR_INFO_MENUBTN' | translate}}" tooltip-placement="right">
-                    <span class="glyphicon glyphicon-th-list"></span>
+                    <div class="db-center">
+                        <div class="db-glyph-sm" ng-include="'images/si-glyph-jump-double-page-left-right.svg'"></div>
+                    </div>
                 </button>
                 <button ng-if="c.pm !== c.pms.HIDDEN && !parallelMode" type="button" class="btn btn-block db-btn-prim db-btn-small db-brd-all ng-class:[{'db-margin-2':!c.isMobile}]"
                     ng-click="c.secondaryClicked()" tooltip-enable="isTooltips" tooltip-placement="right" uib-tooltip="{{'STR_EXPANDCOLLAPSE' | translate}}">
-                    <span class="glyphicon ng-class:[{'glyphicon-minus':c.bm === c.bms.SECONDARY},{'glyphicon-plus':c.bm !== c.bms.SECONDARY}]"></span>
+                    <div class="db-center">
+                        <div ng-if="c.bm !== c.bms.SECONDARY" class="db-glyph-sm" ng-include="'images/si-glyph-circle-plus.svg'"></div>
+                        <div ng-if="c.bm === c.bms.SECONDARY" class="db-glyph-sm" ng-include="'images/si-glyph-circle-remove.svg'"></div>
+                    </div>
                 </button>
                 <button ng-if="c.pm === c.pms.HIDDEN" type="button" class="btn btn-block db-btn-sel db-btn-big db-brd-all ng-class:[{'db-margin-2':!c.isMobile},{'active':c.sm === c.sms.SECRET}]"
                     ng-disabled="!c.tData.link" ng-click="c.presentationClicked(c.tData)">

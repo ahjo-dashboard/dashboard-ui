@@ -7,52 +7,57 @@
 </div>
 <div class="ad-page-content">
     <div class="ad-page-container">
-        <div class="container col-xs-12">
-            <div class="row text-center">
+        <div class="text-center">
 
-                <div class="db-error">
-                    <h4>Testiympäristön käyttäjävalinta</h4>
-                    <br>
-                    <p>
-                        Voit valita käyttäjätunnuksen, jolle haetaan testiympäristön kokousten sisältö.
-                        <br>Sähköiset allekirjoitukset haetaan silti omalla tunnuksellasi
-                    </p>
-                </div>
-
-                <form ng-hide="lc.login || lc.loadingUsers || lc.error">
-                    <select db-selection sel-items="lc.data.options" ng-model="lc.data.selection">
-                    </select>
-                    <br><br>
-                    <button ng-hide="!lc.data.selection || lc.login || lc.loadingUsers" class="btn btn-success" type="submit" ng-click="lc.selectUser()"
-                        ng-disabled="lc.login">
-                        <span translate translate-cloak>{{'STR_LOGIN'}}</span>
-                    </button>
-                </form>
-
-                <span ng-if="lc.loadingUsers">Haetaan käyttäjätunnuksia</span>
-                <div ng-show="lc.loadingUsers" class="db-spinner-cont">
-                    <div us-spinner spinner-on="true"></div>
-                </div>
-
-                <div uib-alert ng-if="lc.error" ng-class="'alert-danger'">
-                    <span translate-cloak translate>STR_FAIL_LOADING</span>
-                    <br>
-                    <span translate>STR_TRY_LATER</span>
-                    <br>{{lc.error.status}}&nbsp;{{lc.error.statusText}}
-                </div>
-
+            <div class="db-error">
+                <h4>Testiympäristön käyttäjävalinta</h4>
+                <br>
+                <p>
+                    Voit valita käyttäjätunnuksen, jolle haetaan testiympäristön kokousten sisältö.
+                    <br> Sähköiset allekirjoitukset haetaan silti omalla tunnuksellasi
+                </p>
             </div>
 
-            <br><br>
+            <form ng-hide="lc.login || lc.loadingUsers || lc.error">
+                <select db-selection sel-items="lc.data.options" ng-model="lc.data.selection">
+                    </select>
+                <br><br>
+                <button ng-hide="!lc.data.selection || lc.login || lc.loadingUsers" class="btn btn-success" type="submit" ng-click="lc.selectUser()"
+                    ng-disabled="lc.login">
+                    <div class="db-flex db-flex-nowrap db-center-v">
+                        <span translate translate-cloak>{{'STR_LOGIN'}}</span>
+                        <div class="db-glyph-sm" ng-include="'images/si-glyph-arrow-right.svg'"></div>
+                    </div>
+                </button>
+            </form>
 
-            <div class="row text-center">
-                <div class="db-error">
-                    Vaihtoehtoisesti voit kirjautua myös omalla tunnuksellasi
-                    <br>
-                    <button type="button" class="btn btn-success" ng-click="lc.selectOwn()" ng-disabled="lc.login">Kirjaudu omalla</button>
-                </div>
+            <span ng-if="lc.loadingUsers">Haetaan käyttäjätunnuksia</span>
+            <div ng-show="lc.loadingUsers" class="db-spinner-cont">
+                <div us-spinner spinner-on="true"></div>
+            </div>
+
+            <div uib-alert ng-if="lc.error" ng-class="'alert-danger'">
+                <span translate-cloak translate>STR_FAIL_LOADING</span>
+                <br>
+                <span translate>STR_TRY_LATER</span>
+                <br>{{lc.error.status}}&nbsp;{{lc.error.statusText}}
             </div>
 
         </div>
+
+        <br><br>
+
+        <div class="text-center">
+            <p>
+                Vaihtoehtoisesti voit kirjautua myös omalla tunnuksellasi
+            </p>
+            <button type="button" class="btn btn-success" ng-click="lc.selectOwn()" ng-disabled="lc.login">
+                <div class="db-flex db-flex-nowrap db-center-v">
+                    <div>Kirjaudu omalla</div>
+                    <div class="db-glyph-sm" ng-include="'images/si-glyph-arrow-right.svg'"></div>
+                </div>
+            </button>
+        </div>
+
     </div>
 </div>

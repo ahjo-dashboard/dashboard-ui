@@ -90,10 +90,8 @@ angular.module('dashboard')
 
         self.selectOwn = function () {
             $log.debug('loginCtrl.selectOwn');
-            var dlg = DialogUtils.showProgress('STR_LOGGING_IN');
             $state.go(CONST.APPSTATE.HOME).finally(function () {
                 $log.debug("loginCtrl.selectOwn: state.go finally");
-                DialogUtils.close(dlg);
             });
         };
 
