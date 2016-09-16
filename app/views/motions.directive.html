@@ -25,7 +25,7 @@
                     <b><i class="col-xs-5 col-md-3 db-truncate">{{m.personName}}</i></b>
                     <span class="col-md-2 hidden-xs hidden-sm db-truncate" translate translate-cloak>{{c.typeString(m.type)}}</span>
                     <span ng-show="m.supporters" class="col-md-2 hidden-xs hidden-sm db-truncate"><span ng-if="m.supporters.length">{{m.supporters.length}}</span>
-                    <span ng-if="!m.supporters.length">-</span><span ng-if="c.isSupportedByUser(m.supporters)" class="glyphicon glyphicon-user db-margin-10-hor"
+                    <span ng-if="!m.supporters.length">-</span><span ng-if="m.isUserSupported" class="glyphicon glyphicon-user db-margin-10-hor"
                         tooltip-enable="c.isTooltips" uib-tooltip="{{'STR_MOTION_SIGNED_BY_ME' | translate}}" tooltip-placement="left"></span></span>
                 </div>
                 <div class="panel-collapse collapse" uib-collapse="!c.isSelected(m)">
@@ -38,6 +38,15 @@
                         <span class="db-margin-05-left">{{s.name}}</span></span>
                     </div>
                     <pre class="db-margin-10-ver">{{m.text}}</pre>
+
+                    <div ng-if="c.meetingActive" class="db-flex-right db-flex-area ng-class:{'db-flex-col': c.isMobile}">
+                        <button ng-if="m.isOwnMotion && !c.isSubmitted" class="btn btn-success db-btn-big db-margin-2 ng-class:{'btn-block':c.isMobile}" ng-click="c.submit(m)">
+                            <span translate translate-cloak>STR_SUBMIT_MOTION</span>
+                        </button>
+                        <button ng-if="!m.isOwnMotion && !m.isUserSupported" class="btn btn-success db-btn-big db-margin-2 ng-class:{'btn-block':c.isMobile}" ng-click="c.support(m)">
+                            <span translate translate-cloak>STR_SIGNING_ACCEPT</span>
+                        </button>
+                    </div>
 
                 </div>
 

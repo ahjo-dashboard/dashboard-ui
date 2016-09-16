@@ -24,6 +24,7 @@ angular.module('dashboard')
         // VARIABLES
 
         $rootScope.menu = $stateParams.menu;
+        $rootScope.meetingStatus = null;
         var pollingTimer = null;
         var lastEventId = null;
         var selectedTopicGuid = null;
@@ -100,8 +101,8 @@ angular.module('dashboard')
             }
         }
 
-        function canMeetingToBeClosed() {
-            $log.debug("meetingStatusCtrl: canMeetingToBeClosed");
+        function canCloseMeeting() {
+            $log.debug("meetingStatusCtrl: canCloseMeeting");
             var result = true;
             if (angular.isObject(self.mtgDetails) && angular.isArray(self.mtgDetails.topicList)) {
                 for (var i = 0; result && i < self.mtgDetails.topicList.length; i++) {
@@ -118,6 +119,7 @@ angular.module('dashboard')
             $log.debug("meetingStatusCtrl: meetingStatusChanged", arguments);
             if (angular.isObject(event) && angular.isObject(self.mtgDetails)) {
                 self.mtgDetails.meetingStatus = event.meetingState;
+                $rootScope.meetingStatus = self.mtgDetails.meetingStatus;
             }
         }
 
@@ -332,6 +334,7 @@ angular.module('dashboard')
                         }
 
                         lastEventId = self.mtgDetails.lastEventId;
+                        $rootScope.meetingStatus = self.mtgDetails.meetingStatus;
                         $timeout.cancel(pollingTimer);
                         pollingTimer = $timeout(function () {
                             getEvents();
@@ -352,20 +355,23 @@ angular.module('dashboard')
         function getMotions(aMtg, aPersonGuid) {
             $log.debug("meetingStatusCtrl.getMotions", arguments);
             if (angular.isObject(aMtg) && angular.isString(aPersonGuid)) {
+                var storedData = StorageSrv.getKey(CONST.KEY.MOTION_DATA);
+                // Copy insures own instance of data. Otherwise $watch does not work correctly
+                var resultData = storedData ? storedData : angular.copy(CONST.MOTIONDATA);
 
                 AhjoMeetingSrv.getMotions(aMtg.meetingGuid, aPersonGuid).then(function (resp) {
                     $log.log("meetingStatusCtrl.getMotions done", resp);
-                    var motions = angular.isArray(resp) ? resp : [];
-                    $rootScope.$emit(CONST.MOTIONSUPDATED, { count: motions.length });
-                    StorageSrv.setKey(CONST.KEY.MOTION_ARRAY, motions);
+                    resultData.objects = angular.isArray(resp) ? resp : [];
                 }, function (error) {
                     $log.error("meetingStatusCtrl.getMotions ", arguments);
                     self.errorCode = error.errorCode;
                 }, function (/*notification*/) {
-                    // todo: loading indicator start needed ?
-                    self.motions = [];
+                    var loadingData = angular.copy(resultData);
+                    loadingData.loading = true;
+                    StorageSrv.setKey(CONST.KEY.MOTION_DATA, loadingData);
                 }).finally(function () {
-                    // todo: loading indicator stop needed ?
+                    $rootScope.$emit(CONST.MOTIONSUPDATED, { count: resultData.objects.length });
+                    StorageSrv.setKey(CONST.KEY.MOTION_DATA, resultData);
                 });
             }
             else {
@@ -516,7 +522,7 @@ angular.module('dashboard')
                     if (angular.isObject(status)) {
                         status.disabled = status.active.indexOf(self.mtgDetails.meetingStatus) <= CONST.NOTFOUND;
                         if (self.mtgDetails.meetingStatus === CONST.MTGSTATUS.ACTIVE.stateId && status.stateId === CONST.MEETINGSTATUSACTIONS.CLOSE.stateId) {
-                            status.disabled = !canMeetingToBeClosed();
+                            status.disabled = !canCloseMeeting();
                         }
                         this.push(status);
                     }
@@ -534,6 +540,7 @@ angular.module('dashboard')
                         if (angular.isObject(result)) {
                             if (angular.isObject(self.mtgDetails)) {
                                 self.mtgDetails.meetingStatus = result.newState;
+                                $rootScope.meetingStatus = self.mtgDetails.meetingStatus;
                             }
                         }
 
@@ -689,6 +696,7 @@ angular.module('dashboard')
         $scope.$on('$destroy', function () {
             $log.debug("meetingStatusCtrl: DESTROY");
             $timeout.cancel(pollingTimer);
+            $rootScope.meetingStatus = null;
         });
 
     }]);

@@ -17,11 +17,11 @@ angular.module('dashboard')
             $log.log("dbMotions: CONTROLLER");
             var self = this;
             self.loading = false;
-            self.motions = StorageSrv.getKey(CONST.KEY.MOTION_ARRAY);
+            self.motions = null;
             self.errorCode = 0;
             self.isTooltips = $rootScope.isTooltips;
+            self.meetingActive = null;
             var selectedMotion = null;
-            var personGuid = StorageSrv.getKey(CONST.KEY.MEETING_PERSONGUID);
 
             // FUNCTIONS
 
@@ -48,28 +48,33 @@ angular.module('dashboard')
                 return result;
             };
 
-            self.isSupportedByUser = function (supporters) {
-                var result = false;
-                angular.forEach(supporters, function (value) {
-                    if (angular.isObject(value) && value.personGuid === personGuid) {
-                        result = true;
-                    }
-                }, this);
-                return result;
+            self.submit = function(/*motion*/) {
+                $log.log("dbMotions: submit", arguments);
+            };
+
+            self.support = function (/*motion*/) {
+                $log.log("dbMotions: support", arguments);
             };
 
             $scope.$watch(function () {
-                return StorageSrv.getKey(CONST.KEY.MOTION_ARRAY);
-            }, function (array, oldArray) {
-                if (!angular.equals(array, oldArray)) {
-                    self.motions = angular.isArray(array) ? array : [];
+                return StorageSrv.getKey(CONST.KEY.MOTION_DATA);
+            }, function (data) {
+                if (angular.isObject(data) && !angular.equals(data.objects, self.motions)) {
+                    self.motions = (angular.isArray(data.objects)) ? data.objects : [];
                 }
+                self.loading = (angular.isObject(data) && data.loading === true);
             });
 
             $scope.$watch(function () {
                 return $rootScope.isTooltips;
             }, function (isTooltips) {
                 self.isTooltips = isTooltips;
+            });
+
+            $scope.$watch(function () {
+                return $rootScope.meetingStatus;
+            }, function (status) {
+                self.meetingActive = (status === CONST.MTGSTATUS.ACTIVE.stateId);
             });
 
         }];
