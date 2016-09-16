@@ -24,8 +24,9 @@ angular.module('dashboard')
             if (!Utils.isAttConf(aArg)) {
                 Utils.openNewWin(aArg.link);
             } else {
-                StorageSrv.setKey(CONST.KEY.LIST_ATT, aArg);
-                $state.go(CONST.APPSTATE.MTG_LIST_ATTACHMENT);
+                // StorageSrv.setKey(CONST.KEY.LIST_ATT, aArg);
+                // $state.go(CONST.APPSTATE.MTG_LIST_ATTACHMENT);
+                $log.error("listCtrl.selAtt: this list component doesn't support opening confidential attachments");
             }
         };
 

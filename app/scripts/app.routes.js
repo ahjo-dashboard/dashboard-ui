@@ -69,26 +69,6 @@ angular.module('dashboard')
                         }
                     }
                 })
-                .state(CONST.APPSTATE.LIST, {
-                    url: '/list',
-                    views: {
-                        'childContent': {
-                            templateUrl: 'views/list.html',
-                            controller: 'listCtrl',
-                            controllerAs: 'c'
-                        }
-                    }
-                })
-                .state(CONST.APPSTATE.MTG_LIST_ATTACHMENT, {
-                    url: '/attachment',
-                    views: {
-                        'listContent': {
-                            templateUrl: 'views/attachment.html',
-                            controller: 'attCtrl',
-                            controllerAs: 'c'
-                        }
-                    }
-                })
                 .state(CONST.APPSTATE.LISTPROPOSALS, {
                     url: '/proposals',
                     views: {
