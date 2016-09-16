@@ -12,9 +12,8 @@
             <div class="list-group-item ng-class:[{'db-item-disabled': c.isLinkDisabled(att)}]" ng-repeat="att in data.objects track by $index">
                 <div class="db-flex">
                     <a class="db-flex-area" ng-click="!c.isLinkDisabled(att) && c.selected(att)"><span ng-if="att.orderNum">{{att.orderNum}}&nbsp;</span>{{att.title}}</a>
-                    <span ng-if="!c.isMobile" class="glyphicon glyphicon-new-window ng-class:[{'db-opacity-05':c.isOpenWindowDisabled(att)}]"
-                        ng-click="!c.isOpenWindowDisabled(att) && c.newTab(att.link)" aria-hidden="true" tooltip-enable="c.isTooltips"
-                        uib-tooltip="{{'STR_OPEN_NEW_TAB' | translate}}" tooltip-placement="bottom"></span>
+                    <div ng-if="!c.isMobile && !c.isOpenWindowDisabled(att)" class="db-glyph-sm db-glyph-dark" ng-include="'images/glyph-open-new.svg'" ng-click="!c.isOpenWindowDisabled(att) && c.newTab(att.link)" tooltip-enable="c.isTooltips"
+                        uib-tooltip="{{'STR_OPEN_NEW_TAB' | translate}}" tooltip-placement="left"></div>
                 </div>
             </div>
         </div>
