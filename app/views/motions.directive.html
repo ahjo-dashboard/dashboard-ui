@@ -18,10 +18,10 @@
             </div>
             <div class="list-group-item db-padding-10-hor" ng-repeat="m in c.motions | orderBy : 'publishDate' track by $index" ng-click="c.selectMotion(m)">
                 <div class="row">
-                    <span class="col-xs-7 col-md-5 db-flex">
-                    <span class="db-margin-10-right center glyphicon ng-class:{'glyphicon-minus':c.isSelected(m), 'glyphicon-plus':!c.isSelected(m)}" aria-hidden="true"></span>
-                    <b class="db-flex-area db-truncate">{{m.title}}</b>
-                    </span>
+                    <div class="col-xs-7 col-md-5 db-flex">
+                        <div class="db-glyph-sm db-glyph-dark db-margin-10-right" ng-include="c.isSelected(m) ? 'images/glyph-minimize.svg' : 'images/glyph-expand.svg'" tooltip-enable="c.isTooltips" tooltip-placement="right" uib-tooltip="{{'STR_EXPANDCOLLAPSE' | translate}}"></div>
+                        <b class="db-flex-area db-truncate">{{m.title}}</b>
+                    </div>
                     <b><i class="col-xs-5 col-md-3 db-truncate">{{m.personName}}</i></b>
                     <span class="col-md-2 hidden-xs hidden-sm db-truncate" translate translate-cloak>{{c.typeString(m.type)}}</span>
                     <span ng-show="m.supporters" class="col-md-2 hidden-xs hidden-sm db-truncate"><span ng-if="m.supporters.length">{{m.supporters.length}}</span>
