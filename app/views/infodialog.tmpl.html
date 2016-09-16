@@ -1,10 +1,10 @@
 <div>
     <div class="modal-header db-center-v ng-class:{'db-alert-header': c.isError, 'db-confirm-header': !c.isError}">
             <span ng-if="c.isError">
-                <div class="db-glyph" ng-include="'images/si-glyph-circle-error.svg'"></div>
+                <div class="db-glyph" ng-include="'images/glyph-error.svg'"></div>
             </span>
             <span ng-if="!c.isError">
-                <div class="db-glyph" ng-include="'images/si-glyph-circle-info.svg'"></div>
+                <div class="db-glyph" ng-include="'images/glyph-info.svg'"></div>
             </span>
             <h4 class="db-margin-10-left" translate translate-cloak>{{c.dbDlgTitleStrId}}</h4>
     </div>

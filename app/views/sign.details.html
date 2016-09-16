@@ -10,20 +10,20 @@
                 <button ng-if="menuClosed()" type="button" class="btn db-btn-prim db-btn-small db-brd-all db-margin-2" ng-click="openMenu()"
                     tooltip-enable="isTooltips" uib-tooltip="{{'STR_INFO_MENUBTN' | translate}}" tooltip-placement="right">
                     <div class="db-center">
-                        <div class="db-glyph-sm" ng-include="'images/si-glyph-jump-double-page-left-right.svg'"></div>
+                        <div class="db-glyph-sm" ng-include="'images/glyph-menu-toggle.svg'"></div>
                     </div>
                 </button>
                 <button ng-if="menuClosed()" type="button" class="btn db-btn-prim db-btn-small db-brd-all db-margin-2" ng-click="c.toggleParallelMode()" tooltip-enable="isTooltips" uib-tooltip="{{parallelMode ? 'STR_INFO_VIEW_VERT' : 'STR_INFO_VIEW_HORIZ' | translate}}" tooltip-placement="right">
                     <div class="db-center">
-                        <div ng-if="parallelMode" class="db-glyph-sm" ng-include="'images/si-glyph-arrow-up-down.svg'"></div>
-                        <div ng-if="!parallelMode" class="db-glyph-sm" ng-include="'images/si-glyph-arrow-left-right.svg'"></div>
+                        <div ng-if="parallelMode" class="db-glyph-sm" ng-include="'images/glyph-parallel.svg'"></div>
+                        <div ng-if="!parallelMode" class="db-glyph-sm" ng-include="'images/glyph-vertical.svg'"></div>
                     </div>
                     </button>
                 <button type="button" class="btn db-btn-prim db-btn-small db-brd-all db-margin-2" ng-disabled="parallelMode" ng-click="c.primaryClicked()"
                     tooltip-enable="isTooltips" tooltip-placement="right" uib-tooltip="{{'STR_EXPANDCOLLAPSE' | translate}}">
                     <div class="db-center">
-                        <div ng-if="c.bm !== c.bms.PRIMARY" class="db-glyph-sm" ng-include="'images/si-glyph-circle-plus.svg'"></div>
-                        <div ng-if="c.bm === c.bms.PRIMARY" class="db-glyph-sm" ng-include="'images/si-glyph-circle-remove.svg'"></div>
+                        <div ng-if="c.bm !== c.bms.PRIMARY" class="db-glyph-sm" ng-include="'images/glyph-expand.svg'"></div>
+                        <div ng-if="c.bm === c.bms.PRIMARY" class="db-glyph-sm" ng-include="'images/glyph-minimize.svg'"></div>
                     </div>
                 </button>
                 <button type="button" class="btn db-btn-sel db-btn-big db-brd-all db-margin-2 ng-class:{'active' : c.isActive(c.btnModel.doc.id) }"
@@ -57,15 +57,15 @@
                 <button ng-if="c.isTablet && menuClosed()" type="button" class="btn db-btn-prim db-btn-small db-brd-all db-margin-2"
                     ng-click="openMenu()" tooltip-enable="isTooltips" uib-tooltip="{{'STR_INFO_MENUBTN' | translate}}" tooltip-placement="right">
                     <div class="db-center">
-                        <div class="db-glyph-sm" ng-include="'images/si-glyph-jump-double-page-left-right.svg'"></div>
+                        <div class="db-glyph-sm" ng-include="'images/glyph-menu-toggle.svg'"></div>
                     </div>
                 </button>
 
                 <button ng-if="!c.isTablet" type="button" class="btn db-btn-prim db-btn-small db-brd-all db-margin-2" ng-disabled="parallelMode"
                     ng-click="c.secondaryClicked()" tooltip-enable="isTooltips" tooltip-placement="right" uib-tooltip="{{'STR_EXPANDCOLLAPSE' | translate}}">
                      <div class="db-center">
-                        <div ng-if="c.bm !== c.bms.SECONDARY" class="db-glyph-sm" ng-include="'images/si-glyph-circle-plus.svg'"></div>
-                        <div ng-if="c.bm === c.bms.SECONDARY" class="db-glyph-sm" ng-include="'images/si-glyph-circle-remove.svg'"></div>
+                        <div ng-if="c.bm !== c.bms.SECONDARY" class="db-glyph-sm" ng-include="'images/glyph-expand.svg'"></div>
+                        <div ng-if="c.bm === c.bms.SECONDARY" class="db-glyph-sm" ng-include="'images/glyph-minimize.svg'"></div>
                     </div>
                 </button>
 
