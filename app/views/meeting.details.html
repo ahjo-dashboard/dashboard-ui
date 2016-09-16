@@ -83,10 +83,14 @@
                     <button type="button" class="btn btn-block db-btn-sel db-btn-big db-brd-all ng-class:[{'active':c.sm === c.sms.PROPOSALS},{'db-margin-2':!c.isMobile}]"
                         db-confirm confirm-enabled="c.hasUnsavedProposal || c.remarkIsUnsaved" confirm-config="c.unsavedConfig"
                         ng-click="c.proposalsClicked()">
-                        <span translate translate-cloak>STR_PROPOSALS</span>
-                        <span ng-if="c.topic.db_publishedProposalCount >= 0" class="badge ng-cloak db-font-clr-dark" tooltip-enable="isTooltips"
-                        uib-tooltip="{{'STR_PROP_PUB_COUNT' | translate}}" tooltip-placement="bottom">{{c.topic.db_publishedProposalCount}}</span>
-                        <span ng-show="c.topic.isModified" class="glyphicon glyphicon-bell db-newprops" aria-hidden="true"></span>
+                        <div class="db-center">
+                            <div class="db-truncate" translate translate-cloak>STR_PROPOSALS</div>
+                            <div ng-if="c.topic.db_publishedProposalCount >= 0" class="badge ng-cloak db-font-clr-dark db-margin-10-hor" tooltip-enable="isTooltips"
+                            uib-tooltip="{{'STR_PROP_PUB_COUNT' | translate}}" tooltip-placement="bottom">
+                                {{c.topic.db_publishedProposalCount}}
+                            </div>
+                            <div ng-show="c.topic.isModified" class="db-glyph-sm db-glyph-ora" ng-include="'images/glyph-bell.svg'" tooltip-enable="isTooltips" tooltip-placement="right" uib-tooltip="{{'STR_INFO_NEW_PROPS' | translate}}"></div>
+                        </div>
                     </button>
                     <button type="button" class="btn btn-block db-btn-sel db-btn-big db-brd-all ng-class:[{'active':c.sm === c.sms.REMARK},{'db-margin-2':!c.isMobile}]"
                         db-confirm confirm-enabled="c.hasUnsavedProposal || c.remarkIsUnsaved" confirm-config="c.unsavedConfig"
