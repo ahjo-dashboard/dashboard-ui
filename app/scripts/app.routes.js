@@ -69,16 +69,6 @@ angular.module('dashboard')
                         }
                     }
                 })
-                .state(CONST.APPSTATE.LISTPROPOSALS, {
-                    url: '/proposals',
-                    views: {
-                        'listContent': {
-                            templateUrl: 'views/proposals.html',
-                            controller: 'proposalsCtrl',
-                            controllerAs: 'c'
-                        }
-                    }
-                })
                 .state(CONST.APPSTATE.REMARK, {
                     url: '/remark',
                     views: {
