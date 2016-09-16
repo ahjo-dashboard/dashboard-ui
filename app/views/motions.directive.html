@@ -40,11 +40,17 @@
                     <pre class="db-margin-10-ver">{{m.text}}</pre>
 
                     <div ng-if="c.meetingActive" class="db-flex-right db-flex-area ng-class:{'db-flex-col': c.isMobile}">
-                        <button ng-if="m.isOwnMotion && !c.isSubmitted" class="btn btn-success db-btn-big db-margin-2 ng-class:{'btn-block':c.isMobile}" ng-click="c.submit(m)">
+                        <button ng-if="m.isOwnMotion && !c.isSubmitted" class="btn btn-success db-btn-big db-margin-2 ng-class:{'btn-block':c.isMobile}"
+                            ng-click="c.submit(m)">
                             <span translate translate-cloak>STR_SUBMIT_MOTION</span>
                         </button>
-                        <button ng-if="!m.isOwnMotion && !m.isUserSupported" class="btn btn-success db-btn-big db-margin-2 ng-class:{'btn-block':c.isMobile}" ng-click="c.support(m)">
+                        <button ng-if="!m.isOwnMotion && !m.isUserSupported" class="btn btn-success db-btn-big db-margin-2 ng-class:{'btn-block':c.isMobile}"
+                            ng-click="c.support(m)">
                             <span translate translate-cloak>STR_SIGNING_ACCEPT</span>
+                        </button>
+                        <button ng-if="!m.isOwnMotion && m.isUserSupported" class="btn btn-danger db-btn-big db-margin-2 ng-class:{'btn-block':c.isMobile}"
+                            ng-click="c.removeSupport(m)">
+                            <span translate translate-cloak>STR_SIGNING_REMOVE</span>
                         </button>
                     </div>
 
