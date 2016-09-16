@@ -689,14 +689,20 @@ angular.module('dashboard')
             self.parallelModeActive = active ? true : false;
         });
 
-        $scope.$on('$destroy', unsavedWatcher);
-        $scope.$on('$destroy', modeWatcher);
-        $scope.$on('$destroy', proposalCountWatcher);
-
         $scope.$on('$destroy', function () {
             $log.debug("meetingStatusCtrl: DESTROY");
             $timeout.cancel(pollingTimer);
             $rootScope.meetingStatus = null;
+
+            if (angular.isFunction(unsavedWatcher)) {
+                unsavedWatcher();
+            }
+            if (angular.isFunction(modeWatcher)) {
+                modeWatcher();
+            }
+            if (angular.isFunction(proposalCountWatcher)) {
+                proposalCountWatcher();
+            }
         });
 
     }]);

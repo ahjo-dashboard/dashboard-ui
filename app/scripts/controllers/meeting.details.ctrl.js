@@ -298,21 +298,29 @@ angular.module('dashboard')
         });
 
         var motionsWatcher = $rootScope.$on(CONST.MOTIONSUPDATED, function (aEvent, aData) {
-                $log.debug("meetingDetailsCtrl.motionsWatcher: ", arguments);
-                if (angular.isObject(aData)) {
-                    self.motionCount = aData.count;
-                }
-                else {
-                    self.motionCount = null;
-                }
-            });
+            $log.debug("meetingDetailsCtrl.motionsWatcher: ", arguments);
+            if (angular.isObject(aData)) {
+                self.motionCount = aData.count;
+            }
+            else {
+                self.motionCount = null;
+            }
+        });
 
         $scope.$on('$destroy', function () {
             $log.debug("meetingDetailsCtrl: DESTROY");
-            unsavedRemarkWatcher();
-            unsavedProposalWatcher();
-            proposalCountWatcher();
-            motionsWatcher();
+            if (angular.isFunction(unsavedRemarkWatcher)) {
+                unsavedRemarkWatcher();
+            }
+            if (angular.isFunction(unsavedProposalWatcher)) {
+                unsavedProposalWatcher();
+            }
+            if (angular.isFunction(proposalCountWatcher)) {
+                proposalCountWatcher();
+            }
+            if (angular.isFunction(motionsWatcher)) {
+                motionsWatcher();
+            }
         });
 
         // CONSTRUCT
