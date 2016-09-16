@@ -69,16 +69,6 @@ angular.module('dashboard')
                         }
                     }
                 })
-                .state(CONST.APPSTATE.TOPIC, {
-                    url: '/topic',
-                    views: {
-                        'childContent': {
-                            templateUrl: 'views/attachment.html',
-                            controller: 'attachmentCtrl',
-                            controllerAs: 'c'
-                        }
-                    }
-                })
                 .state(CONST.APPSTATE.LIST, {
                     url: '/list',
                     views: {
