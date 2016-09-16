@@ -496,9 +496,7 @@ $blockOpenFlex: 9;
 }
 
 .db-block-close {
-    flex: 0 0;
-    min-height: 50px !important;
-    background-color: $db-color-prim;
+    display: none;
 }
 // BLOCK DECLARATION END
 

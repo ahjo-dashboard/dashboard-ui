@@ -29,22 +29,19 @@
                             <div ng-if="!parallelMode" class="db-glyph-sm" ng-include="'images/si-glyph-arrow-left-right.svg'"></div>
                         </div>
                     </button>
-                    <button ng-if="!parallelMode" type="button" class="btn db-btn-prim db-btn-small db-brd-all db-margin-2 db-center" ng-click="c.primaryClicked()"
-                        tooltip-enable="isTooltips" tooltip-placement="right" uib-tooltip="{{'STR_EXPANDCOLLAPSE' | translate}}">
-                        <div class="db-center">
-                            <div ng-if="c.bm !== c.bms.PRIMARY" class="db-glyph-sm" ng-include="'images/si-glyph-circle-plus.svg'"></div>
-                            <div ng-if="c.bm === c.bms.PRIMARY" class="db-glyph-sm" ng-include="'images/si-glyph-circle-remove.svg'"></div>
-                        </div>
-                    </button>
-                    <button type="button" class="btn db-btn-sel db-btn-big db-brd-all db-margin-2 active db-no-pointer-events">
-                        <span translate translate-cloak>STR_PRESENTATION</span>
-                    </button>
                 </div>
                 <button ng-if="c.pm !== c.pms.SECRET" type="button" class="btn db-btn-prim db-btn-small db-brd-all db-margin-2 db-flex-right"
                     ng-click="c.newTab(c.tData.link)" ng-disabled="!c.tData || !c.tData.link" tooltip-enable="isTooltips" uib-tooltip="{{'STR_OPEN_NEW_TAB' | translate}}"
                     tooltip-placement="bottom">
                     <div class="db-center">
                         <div class="db-glyph-sm" ng-include="'images/si-glyph-forward-page.svg'"></div>
+                    </div>
+                </button>
+                <button type="button" class="btn db-btn-prim db-btn-small db-brd-all db-margin-2 db-flex-right" ng-click="c.primaryClicked()"
+                    tooltip-enable="isTooltips" tooltip-placement="bottom" uib-tooltip="{{'STR_EXPANDCOLLAPSE' | translate}}">
+                    <div class="db-center">
+                        <div ng-if="c.bm !== c.bms.PRIMARY" class="db-glyph-sm" ng-include="'images/si-glyph-circle-plus.svg'"></div>
+                        <div ng-if="c.bm === c.bms.PRIMARY" class="db-glyph-sm" ng-include="'images/si-glyph-circle-remove.svg'"></div>
                     </div>
                 </button>
             </div>
@@ -67,55 +64,55 @@
             </div>
 
             <!-- SECONDARY BLOCK HEADER -->
-            <div class="db-prim-bg ng-class:[{'list-group db-no-margin db-padding-10 db-brd-all':c.isMobile},{'btn-group db-flex-wrap db-brd-top db-padding-2':!c.isMobile}]">
-                <button ng-if="menuClosed() && c.pm === c.pms.HIDDEN" type="button" class="btn db-btn-prim db-btn-small db-brd-all db-margin-2"
-                    ng-click="openMenu()" tooltip-enable="isTooltips" uib-tooltip="{{'STR_INFO_MENUBTN' | translate}}" tooltip-placement="right">
-                    <div class="db-center">
-                        <div class="db-glyph-sm" ng-include="'images/si-glyph-jump-double-page-left-right.svg'"></div>
-                    </div>
-                </button>
-                <button ng-if="c.pm !== c.pms.HIDDEN && !parallelMode" type="button" class="btn btn-block db-btn-prim db-btn-small db-brd-all ng-class:[{'db-margin-2':!c.isMobile}]"
-                    ng-click="c.secondaryClicked()" tooltip-enable="isTooltips" tooltip-placement="right" uib-tooltip="{{'STR_EXPANDCOLLAPSE' | translate}}">
+            <div class="db-prim-bg ng-class:[{'list-group db-no-margin db-padding-10 db-brd-all':c.isMobile},{'db-flex db-flex-wrap db-prim-bg db-brd-top db-padding-2':!c.isMobile}]">
+                <div class="btn-group db-flex-area">
+                    <button ng-if="menuClosed() && c.pm === c.pms.HIDDEN" type="button" class="btn db-btn-prim db-btn-small db-brd-all db-margin-2"
+                        ng-click="openMenu()" tooltip-enable="isTooltips" uib-tooltip="{{'STR_INFO_MENUBTN' | translate}}" tooltip-placement="right">
+                        <div class="db-center">
+                            <div class="db-glyph-sm" ng-include="'images/si-glyph-jump-double-page-left-right.svg'"></div>
+                        </div>
+                    </button>
+                    <button ng-if="c.pm === c.pms.HIDDEN" type="button" class="btn btn-block db-btn-sel db-btn-big db-brd-all ng-class:[{'db-margin-2':!c.isMobile},{'active':c.sm === c.sms.SECRET}]"
+                        ng-disabled="!c.tData.link" ng-click="c.presentationClicked(c.tData)">
+                        <span translate translate-cloak>STR_PRESENTATION</span>
+                    </button>
+                    <button type="button" class="btn btn-block db-btn-sel db-btn-big db-brd-all ng-class:[{'active':c.sm === c.sms.ATTACHMENTS},{'db-margin-2':!c.isMobile}]"
+                        ng-disabled="!c.materialCount()" db-confirm confirm-enabled="c.hasUnsavedProposal || c.remarkIsUnsaved"
+                        confirm-config="c.unsavedConfig" ng-click="c.attachmentClicked()">
+                        <span translate translate-cloak>STR_OTHER_MATERIAL</span>
+                        <span class="badge ng-cloak ng-class:[{'db-font-clr-dark': c.materialCount()}]" tooltip-enable="isTooltips" uib-tooltip="{{'STR_ALL_ATT_COUNT' | translate}}" tooltip-placement="bottom">{{c.materialCount()}}</span>
+                    </button>
+                    <button type="button" class="btn btn-block db-btn-sel db-btn-big db-brd-all ng-class:[{'active':c.sm === c.sms.PROPOSALS},{'db-margin-2':!c.isMobile}]"
+                        db-confirm confirm-enabled="c.hasUnsavedProposal || c.remarkIsUnsaved" confirm-config="c.unsavedConfig"
+                        ng-click="c.proposalsClicked()">
+                        <span translate translate-cloak>STR_PROPOSALS</span>
+                        <span ng-if="c.topic.db_publishedProposalCount >= 0" class="badge ng-cloak db-font-clr-dark" tooltip-enable="isTooltips"
+                        uib-tooltip="{{'STR_PROP_PUB_COUNT' | translate}}" tooltip-placement="bottom">{{c.topic.db_publishedProposalCount}}</span>
+                        <span ng-show="c.topic.isModified" class="glyphicon glyphicon-bell db-newprops" aria-hidden="true"></span>
+                    </button>
+                    <button type="button" class="btn btn-block db-btn-sel db-btn-big db-brd-all ng-class:[{'active':c.sm === c.sms.REMARK},{'db-margin-2':!c.isMobile}]"
+                        db-confirm confirm-enabled="c.hasUnsavedProposal || c.remarkIsUnsaved" confirm-config="c.unsavedConfig"
+                        ng-click="c.remarkClicked()">
+                        <span translate translate-cloak>STR_REMARK</span>
+                    </button>
+                    <button ng-if="c.isChairman" type="button" class="btn btn-block db-btn-sel db-btn-big db-brd-all ng-class:[{'active':c.sm === c.sms.DECISIONS},{'db-margin-2':!c.isMobile}]"
+                        db-confirm confirm-enabled="c.hasUnsavedProposal || c.remarkIsUnsaved" confirm-config="c.unsavedConfig"
+                        ng-click="c.decisionsClicked()">
+                        <span translate translate-cloak>STR_DECISIONS</span>
+                    </button>
+                    <button type="button" class="btn btn-block db-btn-sel db-btn-big db-brd-all ng-class:[{'active':c.sm === c.sms.MOTIONS},{'db-margin-2':!c.isMobile}]"
+                        db-confirm confirm-enabled="c.hasUnsavedProposal || c.remarkIsUnsaved" confirm-config="c.unsavedConfig"
+                        ng-click="c.motionsClicked()">
+                        <span translate translate-cloak>STR_MOTIONS</span>
+                        <span ng-if="c.motionCount" class="badge ng-cloak ng-class:{'db-font-clr-dark': c.motionCount}" tooltip-enable="isTooltips" uib-tooltip="{{'STR_ALL_ATT_COUNT' | translate}}" tooltip-placement="bottom">{{c.motionCount}}</span>
+                    </button>
+                </div>
+                <button ng-if="c.pm !== c.pms.HIDDEN" type="button" class="btn btn-block db-btn-prim db-btn-small db-brd-all db-flex-right ng-class:[{'db-margin-2':!c.isMobile}]"
+                    ng-click="c.secondaryClicked()" tooltip-enable="isTooltips" tooltip-placement="bottom" uib-tooltip="{{'STR_EXPANDCOLLAPSE' | translate}}">
                     <div class="db-center">
                         <div ng-if="c.bm !== c.bms.SECONDARY" class="db-glyph-sm" ng-include="'images/si-glyph-circle-plus.svg'"></div>
                         <div ng-if="c.bm === c.bms.SECONDARY" class="db-glyph-sm" ng-include="'images/si-glyph-circle-remove.svg'"></div>
                     </div>
-                </button>
-                <button ng-if="c.pm === c.pms.HIDDEN" type="button" class="btn btn-block db-btn-sel db-btn-big db-brd-all ng-class:[{'db-margin-2':!c.isMobile},{'active':c.sm === c.sms.SECRET}]"
-                    ng-disabled="!c.tData.link" ng-click="c.presentationClicked(c.tData)">
-                    <span translate translate-cloak>STR_PRESENTATION</span>
-                </button>
-                <button type="button" class="btn btn-block db-btn-sel db-btn-big db-brd-all ng-class:[{'active':c.sm === c.sms.ATTACHMENTS},{'db-margin-2':!c.isMobile}]"
-                    ng-disabled="!c.materialCount()" db-confirm confirm-enabled="c.hasUnsavedProposal || c.remarkIsUnsaved" confirm-config="c.unsavedConfig"
-                    ng-click="c.attachmentClicked()">
-                    <span translate translate-cloak>STR_OTHER_MATERIAL</span>
-                    <span class="badge ng-cloak ng-class:[{'db-font-clr-dark': c.materialCount()}]" tooltip-enable="isTooltips" uib-tooltip="{{'STR_ALL_ATT_COUNT' | translate}}" tooltip-placement="bottom">
-                        {{c.materialCount()}}
-                        </span>
-                </button>
-                <button type="button" class="btn btn-block db-btn-sel db-btn-big db-brd-all ng-class:[{'active':c.sm === c.sms.PROPOSALS},{'db-margin-2':!c.isMobile}]"
-                    db-confirm confirm-enabled="c.hasUnsavedProposal || c.remarkIsUnsaved" confirm-config="c.unsavedConfig" ng-click="c.proposalsClicked()">
-                    <span translate translate-cloak>STR_PROPOSALS</span>
-                    <span ng-if="c.topic.db_publishedProposalCount >= 0" class="badge ng-cloak db-font-clr-dark" tooltip-enable="isTooltips"
-                    uib-tooltip="{{'STR_PROP_PUB_COUNT' | translate}}" tooltip-placement="bottom">
-                        {{c.topic.db_publishedProposalCount}}
-                    </span>
-                    <span ng-show="c.topic.isModified" class="glyphicon glyphicon-bell db-newprops" aria-hidden="true"></span>
-                </button>
-                <button type="button" class="btn btn-block db-btn-sel db-btn-big db-brd-all ng-class:[{'active':c.sm === c.sms.REMARK},{'db-margin-2':!c.isMobile}]"
-                    db-confirm confirm-enabled="c.hasUnsavedProposal || c.remarkIsUnsaved" confirm-config="c.unsavedConfig" ng-click="c.remarkClicked()">
-                    <span translate translate-cloak>STR_REMARK</span>
-                </button>
-                <button ng-if="c.isChairman" type="button" class="btn btn-block db-btn-sel db-btn-big db-brd-all ng-class:[{'active':c.sm === c.sms.DECISIONS},{'db-margin-2':!c.isMobile}]"
-                    db-confirm confirm-enabled="c.hasUnsavedProposal || c.remarkIsUnsaved" confirm-config="c.unsavedConfig" ng-click="c.decisionsClicked()">
-                    <span translate translate-cloak>STR_DECISIONS</span>
-                </button>
-                <button type="button" class="btn btn-block db-btn-sel db-btn-big db-brd-all ng-class:[{'active':c.sm === c.sms.MOTIONS},{'db-margin-2':!c.isMobile}]"
-                    db-confirm confirm-enabled="c.hasUnsavedProposal || c.remarkIsUnsaved" confirm-config="c.unsavedConfig" ng-click="c.motionsClicked()">
-                    <span translate translate-cloak>STR_MOTIONS</span>
-                    <span ng-if="c.motionCount" class="badge ng-cloak ng-class:{'db-font-clr-dark': c.motionCount}" tooltip-enable="isTooltips" uib-tooltip="{{'STR_ALL_ATT_COUNT' | translate}}" tooltip-placement="bottom">
-                        {{c.motionCount}}
-                        </span>
                 </button>
             </div>
 
