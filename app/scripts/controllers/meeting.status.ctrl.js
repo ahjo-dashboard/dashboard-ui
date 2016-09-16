@@ -24,6 +24,7 @@ angular.module('dashboard')
         // VARIABLES
 
         $rootScope.menu = $stateParams.menu;
+        $rootScope.meetingStatus = null;
         var pollingTimer = null;
         var lastEventId = null;
         var selectedTopicGuid = null;
@@ -41,7 +42,6 @@ angular.module('dashboard')
         self.hasUnsavedData = false;
         self.parallelModeActive = false;
         self.unsavedConfig = { title: 'STR_CONFIRM', text: 'STR_WARNING_UNSAVED', yes: 'STR_CONTINUE' };
-        $rootScope.meetingStatus = null;
 
         // FUNTIONS
 
@@ -356,6 +356,7 @@ angular.module('dashboard')
             $log.debug("meetingStatusCtrl.getMotions", arguments);
             if (angular.isObject(aMtg) && angular.isString(aPersonGuid)) {
                 var storedData = StorageSrv.getKey(CONST.KEY.MOTION_DATA);
+                // Copy insures own instance of data. Otherwise $watch does not work correctly
                 var resultData = storedData ? storedData : angular.copy(CONST.MOTIONDATA);
 
                 AhjoMeetingSrv.getMotions(aMtg.meetingGuid, aPersonGuid).then(function (resp) {

@@ -60,7 +60,7 @@ angular.module('dashboard')
                 return StorageSrv.getKey(CONST.KEY.MOTION_DATA);
             }, function (data) {
                 if (angular.isObject(data) && !angular.equals(data.objects, self.motions)) {
-                    self.motions = (angular.isObject(data) && angular.isArray(data.objects)) ? data.objects : [];
+                    self.motions = (angular.isArray(data.objects)) ? data.objects : [];
                 }
                 self.loading = (angular.isObject(data) && data.loading === true);
             });
