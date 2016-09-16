@@ -92,6 +92,7 @@ angular.module('dashboard')
         }
 
         function setData(topic) {
+            $log.debug("meetingDetailsCtrl: setData", arguments);
             self.topic = null;
             self.aData = null;
             self.tData = null;
@@ -236,11 +237,17 @@ angular.module('dashboard')
         };
 
         self.decisionsClicked = function () {
+            self.selData = null;
             setSecondaryMode(CONST.SECONDARYMODE.DECISIONS);
+            resetUnsaved();
+            checkMode();
         };
 
         self.motionsClicked = function () {
+            self.selData = null;
             setSecondaryMode(CONST.SECONDARYMODE.MOTIONS);
+            resetUnsaved();
+            checkMode();
         };
 
         self.isSecret = function (item) {

@@ -1,15 +1,15 @@
-<div class="db-directive db-spinner-cont">
+<div class="db-directive db-spinner-cont" ng-click="c.error = null">
 
     <span us-spinner spinner-on="c.loading"></span>
 
-    <div ng-if="c.errorCode" uib-alert ng-class="'alert-danger'">
-        <span translate translate-cloak>STR_FAIL_LOADING</span>
+    <div ng-if="c.error" uib-alert ng-class="'alert-danger'">
+        <span translate translate-cloak>{{c.error.errorString}}</span>
         <br>
         <span translate translate-cloak>STR_TRY_LATER</span>
     </div>
 
     <div class="db-min-width-300">
-        <ul ng-if="!c.errorCode" class="list-group db-no-margin db-brd-all db-overflow-hidden">
+        <ul ng-if="!c.error" class="list-group db-no-margin db-brd-all db-overflow-hidden">
             <div class="db-font-clr-white db-prim-bg db-padding-10 db-no-margin db-brd-top row">
                 <span class="col-xs-7 col-md-5 db-truncate" translate translate-cloak>STR_TITLE</span>
                 <span class="col-xs-5 col-md-3 db-truncate" translate translate-cloak>STR_CREATOR</span>
@@ -25,7 +25,7 @@
                     <b><i class="col-xs-5 col-md-3 db-truncate">{{m.personName}}</i></b>
                     <span class="col-md-2 hidden-xs hidden-sm db-truncate" translate translate-cloak>{{c.typeString(m.type)}}</span>
                     <span ng-show="m.supporters" class="col-md-2 hidden-xs hidden-sm db-truncate"><span ng-if="m.supporters.length">{{m.supporters.length}}</span>
-                    <span ng-if="!m.supporters.length">-</span><span ng-if="m.isUserSupported" class="glyphicon glyphicon-user db-margin-10-hor"
+                    <span ng-if="!m.supporters.length">-</span><span ng-if="m.isUserSupported" class="glyphicon glyphicon-user db-padding-10-hor"
                         tooltip-enable="c.isTooltips" uib-tooltip="{{'STR_MOTION_SIGNED_BY_ME' | translate}}" tooltip-placement="left"></span></span>
                 </div>
                 <div class="panel-collapse collapse" uib-collapse="!c.isSelected(m)">

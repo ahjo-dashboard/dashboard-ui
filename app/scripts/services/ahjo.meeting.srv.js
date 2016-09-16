@@ -130,6 +130,28 @@ angular.module('dashboard')
             return def.promise;
         };
 
+        self.signMotion = function (aMotionguid, aPersonguid, aMeetingguid) {
+            var def = $q.defer();
+            $timeout(function () {
+                def.notify({});
+
+                $http({
+                    method: 'POST',
+                    cache: false,
+                    url: ENV.AhjoApi_MotionSign.replace(':meetingguid', aMeetingguid).replace(':personguid', aPersonguid).replace(':motionguid', aMotionguid)
+                }).then(function (resp) {
+                    var res = Utils.parseResponse(resp);
+                    handleResult(def, res);
+                }, function (aError) {
+                    $log.error("AhjoMeetingSrv.getMotions: http error", aError);
+                    var e = Utils.parseHtmlError(aError);
+                    def.reject(e);
+                });
+            }, 0);
+
+            return def.promise;
+        };
+
         self.meetingLogin = function meetingLoginFn(meetingGuid, meetingRole, personGuid) {
             var deferred = $q.defer();
             $http({

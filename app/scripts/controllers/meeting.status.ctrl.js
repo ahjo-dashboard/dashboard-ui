@@ -211,9 +211,9 @@ angular.module('dashboard')
             if (lastEventId && angular.isObject(self.mtgDetails) && self.mtgDetails.meetingGuid) {
                 var proposalEvents = [];
                 AhjoMeetingSrv.getEvents(lastEventId, self.mtgDetails.meetingGuid).then(function (response) {
+                    $log.debug("meetingStatusCtrl: getEvents done: ", arguments);
                     if (angular.isArray(response)) {
                         response.forEach(function (event) {
-                            $log.debug("meetingStatusCtrl: getEvents then: " + event.typeName);
                             switch (event.typeName) {
                                 case CONST.MTGEVENT.LASTEVENTID:
                                     lastEventId = event.lastEventId;
@@ -248,6 +248,9 @@ angular.module('dashboard')
                                     break;
                                 case CONST.MTGEVENT.MINUTEUPDATED:
                                     minuteUpdated(event);
+                                    break;
+                                case CONST.MTGEVENT.MOTIONSUPPORTED:
+                                    $log.error('MotionSupportedEvent: Pending implementation');
                                     break;
                                 default:
                                     $log.error("meetingStatusCtrl: unsupported typeName: " + event.typeName);
@@ -363,7 +366,7 @@ angular.module('dashboard')
                     $log.log("meetingStatusCtrl.getMotions done", resp);
                     resultData.objects = angular.isArray(resp) ? resp : [];
                 }, function (error) {
-                    $log.error("meetingStatusCtrl.getMotions ", arguments);
+                    $log.error("meetingStatusCtrl.getMotions ", error);
                     self.errorCode = error.errorCode;
                 }, function (/*notification*/) {
                     var loadingData = angular.copy(resultData);
