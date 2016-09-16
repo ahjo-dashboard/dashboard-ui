@@ -28,8 +28,6 @@ angular.module('dashboard')
         var pollingTimer = null;
         var lastEventId = null;
         var selectedTopicGuid = null;
-        var mtgRole = StorageSrv.getKey(CONST.KEY.MEETING_ROLE);
-        var mtgPersonGuid = StorageSrv.getKey(CONST.KEY.MEETING_PERSONGUID);
         var mtgItemSelected = StorageSrv.getKey(CONST.KEY.MEETING_ITEM);
         var activeTopicGuid = null;
         var self = this;
@@ -194,7 +192,7 @@ angular.module('dashboard')
 
         function personLoggedOut(aEvent) {
             $log.debug("meetingStatusCtrl.personLoggedOut: " + JSON.stringify(aEvent));
-            if (angular.isObject(aEvent) && angular.equals(aEvent.personGuid, mtgPersonGuid) && angular.equals(aEvent.meetingID, mtgItemSelected.meetingGuid)) {
+            if (angular.isObject(aEvent) && angular.isObject(mtgItemSelected) && angular.equals(aEvent.personGuid, mtgItemSelected.dbUserPersonGuid) && angular.equals(aEvent.meetingID, mtgItemSelected.meetingGuid)) {
                 DialogUtils.showInfo('STR_INFO_TITLE', 'STR_FORCED_LOGOUT', false).closePromise.finally(function () {
                     $log.debug("meetingStatusCtrl.personLoggedOut: modal dialog finally closed");
                     $state.go(CONST.APPSTATE.HOME, { menu: CONST.MENU.CLOSED });
@@ -306,9 +304,15 @@ angular.module('dashboard')
                 if (angular.isObject(response) && angular.isArray(response.objects) && response.objects.length) {
                     self.mtgDetails = response.objects[0];
                     if (angular.isObject(self.mtgDetails) && angular.isArray(self.mtgDetails.topicList)) {
+                        // forward data from meeting item to meeting details
+                        self.mtgDetails.dbUserRole = mtgItem.dbUserRole;
+                        self.mtgDetails.dbUserPersonGuid = mtgItem.dbUserPersonGuid;
 
                         angular.forEach(self.mtgDetails.topicList, function (t) {
                             if (angular.isObject(t)) {
+                                // forward data from meeting details to topic
+                                t.dbUserRole = self.mtgDetails.dbUserRole;
+                                t.dbUserPersonGuid = self.mtgDetails.dbUserPersonGuid;
                                 t.userPersonGuid = self.mtgDetails.userPersonGuid;
                                 t.isCityCouncil = self.mtgDetails.isCityCouncil;
                                 t.showClassifiedDocs = self.mtgDetails.showClassifiedDocs;
@@ -352,14 +356,14 @@ angular.module('dashboard')
             });
         }
 
-        function getMotions(aMtg, aPersonGuid) {
+        function getMotions(aMtg) {
             $log.debug("meetingStatusCtrl.getMotions", arguments);
-            if (angular.isObject(aMtg) && angular.isString(aPersonGuid)) {
+            if (angular.isObject(aMtg)) {
                 var storedData = StorageSrv.getKey(CONST.KEY.MOTION_DATA);
                 // Copy insures own instance of data. Otherwise $watch does not work correctly
                 var resultData = storedData ? storedData : angular.copy(CONST.MOTIONDATA);
 
-                AhjoMeetingSrv.getMotions(aMtg.meetingGuid, aPersonGuid).then(function (resp) {
+                AhjoMeetingSrv.getMotions(aMtg.meetingGuid, aMtg.dbUserPersonGuid).then(function (resp) {
                     $log.log("meetingStatusCtrl.getMotions done", resp);
                     resultData.objects = angular.isArray(resp) ? resp : [];
                 }, function (error) {
@@ -634,34 +638,34 @@ angular.module('dashboard')
         };
 
         self.logOut = function logOutFn() {
-            $log.debug("meetingStatusCtrl.logOut: \n - meeting:\n" + JSON.stringify(mtgItemSelected) + "\n - role: " + JSON.stringify(mtgRole) + "\n - mtgPersonGuid: " + mtgPersonGuid);
-            if (angular.isObject(mtgItemSelected) && angular.isObject(mtgRole) && mtgPersonGuid) {
+            if (angular.isObject(mtgItemSelected) && angular.isObject(mtgItemSelected.dbUserRole)) {
+                $log.debug("meetingStatusCtrl.logOut:", mtgItemSelected);
                 var dlg = DialogUtils.showProgress('STR_MTG_EXIT_PROGRESS');
-                AhjoMeetingSrv.meetingLogout(mtgItemSelected.meetingGuid, mtgRole.RoleID, mtgPersonGuid).then(function () {
+                AhjoMeetingSrv.meetingLogout(mtgItemSelected.meetingGuid, mtgItemSelected.dbUserRole.RoleID, mtgItemSelected.dbUserPersonGuid).then(function () {
                     // Potential logout error code ignored, user has no means to recover.
                     // Proceed with state transition.
                 }, function (error) {
-                    $log.error("meetingStatusCtrl.logOut: " + JSON.stringify(error));
+                    $log.error("meetingStatusCtrl.logOut:", error);
                 }).finally(function () {
                     $state.go(CONST.APPSTATE.HOME, { menu: CONST.MENU.CLOSED });
                     DialogUtils.close(dlg);
                 });
             } else {
-                $log.error("meetingStatusCtrl.logOut: bad args \n - meeting:\n" + JSON.stringify(mtgItemSelected) + "\n - role: " + JSON.stringify(mtgRole) + "\n - mtgPersonGuid: " + mtgPersonGuid);
+                $log.error("meetingStatusCtrl.logOut: bad args", mtgItemSelected);
                 $state.go(CONST.APPSTATE.HOME, { menu: CONST.MENU.CLOSED });
             }
         };
 
         // CONSTRUCTION
-        if (!angular.isObject(mtgItemSelected) || !angular.isObject(mtgRole) || !angular.isString(mtgPersonGuid)) {
-            $log.error("meetingStatusCtrl: bad meeting, role or person: \n " + JSON.stringify(mtgItemSelected) + '\n' + JSON.stringify(mtgRole) + '\n' + JSON.stringify(mtgPersonGuid));
+        if (!angular.isObject(mtgItemSelected) || !angular.isObject(mtgItemSelected.dbUserRole) || !angular.isString(mtgItemSelected.dbUserPersonGuid)) {
+            $log.error("meetingStatusCtrl: bad meeting, role or person:", mtgItemSelected);
             $state.go(CONST.APPSTATE.HOME, { menu: CONST.MENU.CLOSED });
             return;
         }
 
         getMeetingDetails(mtgItemSelected);
-        getMotions(mtgItemSelected, mtgPersonGuid);
-        self.chairman = (mtgRole.RoleID === CONST.MTGROLE.CHAIRMAN);
+        getMotions(mtgItemSelected);
+        self.chairman = (mtgItemSelected.dbUserRole.RoleID === CONST.MTGROLE.CHAIRMAN);
 
         $scope.$watch(function () {
             return StorageSrv.getKey(CONST.KEY.PROPOSAL_EVENT_ARRAY);

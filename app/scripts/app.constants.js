@@ -100,8 +100,6 @@ angular.module('dashboard')
             VISIBLE_MTGS: 'visiblemeetings',
             SIGNING_RES: 'signingres',
             MEETING_ITEM: 'meetingitem',
-            MEETING_ROLE: 'meetingrole',
-            MEETING_PERSONGUID: 'personguid',
             PROPOSAL_EVENT_ARRAY: 'proposaleventarray',
             MOTION_DATA: 'motionarray',
             SIGN_ITEM: 'signitem',
