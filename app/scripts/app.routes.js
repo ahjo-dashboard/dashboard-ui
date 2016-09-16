@@ -69,16 +69,6 @@ angular.module('dashboard')
                         }
                     }
                 })
-                .state(CONST.APPSTATE.REMARK, {
-                    url: '/remark',
-                    views: {
-                        'listContent': {
-                            templateUrl: 'views/remark.html',
-                            controller: 'remarkCtrl',
-                            controllerAs: 'c'
-                        }
-                    }
-                })
                 .state(CONST.APPSTATE.SIGN, {
                     url: '/sign',
                     views: {
