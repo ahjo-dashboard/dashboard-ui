@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg class="si-glyph si-glyph-layout-2" viewBox="0 0 17 16" xmlns="http://www.w3.org/2000/svg">
+  <title>1206</title>
+  <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="matrix(0, 1, -1, 0, 17.0315, -0.989501)">
+    <g transform="translate(1.000000, 0.000000)" fill="#434343">
+      <path d="M16,16 L0.021,16 L0.021,0.042 L16,0.042 L16,16 L16,16 Z M14.958,15.043 L14.958,1 L0.958,1 L0.958,15.043 L14.958,15.043 Z" class="si-glyph-fill"/>
+      <rect x="2" y="2" width="5" height="12" class="si-glyph-fill"/>
+      <rect x="9" y="2" width="5" height="12" class="si-glyph-fill"/>
+    </g>
+  </g>
+</svg>

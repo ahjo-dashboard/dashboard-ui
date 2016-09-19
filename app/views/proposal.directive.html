@@ -3,17 +3,14 @@
 
     <div class="db-flex db-center-v" ng-click="(c.mode !== c.modes.EDIT) && c.toggleCollapse()">
 
-        <span class="db-margin-10-right glyphicon ng-class:{'glyphicon-minus': c.mode !== c.modes.COLLAPSED, 'glyphicon-plus': c.mode === c.modes.COLLAPSED}"
-            aria-hidden="true" tooltip-enable="c.isTooltips" tooltip-placement="right" uib-tooltip="{{'STR_EXPANDCOLLAPSE' | translate}}"></span>
+        <div class="db-glyph-sm db-glyph-dark db-margin-10-right" ng-include="c.mode === c.modes.COLLAPSED ? 'images/glyph-expand.svg' : 'images/glyph-minimize.svg'" tooltip-enable="c.isTooltips" tooltip-placement="right" uib-tooltip="{{'STR_EXPANDCOLLAPSE' | translate}}">
+        </div>
 
-        <span ng-show="c.uiProposal.isPublishedIcon" class="db-margin-10-right glyphicon glyphicon-send db-newprops" aria-hidden="true"
-            tooltip-enable="c.isTooltips" uib-tooltip="{{'STR_PUBLISHED' | translate}}" tooltip-placement="right"></span>
+        <div ng-show="c.uiProposal.isPublishedIcon" class="db-glyph-sm db-glyph-ora db-margin-10-right" ng-include="'images/glyph-published.svg'" tooltip-enable="c.isTooltips" tooltip-placement="right" uib-tooltip="{{'STR_PUBLISHED' | translate}}"></div>
 
-        <span ng-show="c.uiProposal.isModified && !c.uiProposal.isOwnProposal" class=" db-margin-10-right glyphicon glyphicon-bell db-newprops" aria-hidden="true"
-            tooltip-enable="c.isTooltips" uib-tooltip="{{'STR_INFO_NEW_PROPS' | translate}}" tooltip-placement="right"></span>
+        <div ng-show="c.uiProposal.isModified && !c.uiProposal.isOwnProposal" class="db-glyph-sm db-glyph-ora db-margin-10-right" ng-include="'images/glyph-bell.svg'" tooltip-enable="c.isTooltips" tooltip-placement="right" uib-tooltip="{{'STR_INFO_NEW_PROPS' | translate}}"></div>
 
-        <span ng-show="c.uiProposal.isCopy" class=" db-margin-10-right glyphicon glyphicon-duplicate db-duplicate" aria-hidden="true"
-            tooltip-enable="c.isTooltips" uib-tooltip="{{'STR_DUPLICATE_PROP' | translate}}" tooltip-placement="right"></span>
+        <div ng-show="c.uiProposal.isCopy" class="db-glyph-sm db-glyph-dark db-margin-10-right" ng-include="'images/glyph-doc-copy.svg'" tooltip-enable="c.isTooltips" tooltip-placement="right" uib-tooltip="{{'STR_DUPLICATE_PROP' | translate}}"></div>
 
         <b class="db-margin-10-right">{{c.uiProposal.orderNumber}}</b><b class="db-margin-10-right">{{c.typeText(c.uiProposal.proposalType)}}</b>
         <b class="db-margin-10-right db-oneliner" ng-if="c.uiProposal.isPublished === c.status.YES"><i>{{c.uiProposal.personName}}</i></b>

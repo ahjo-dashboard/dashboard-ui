@@ -76,8 +76,6 @@ angular.module('dashboard')
             SIGNLISTATT: 'app.sign.signattlist',
             MEETINGDETAILS: "app.meeting.details",
             TOPIC: "app.meeting.details.topic",
-            LIST: "app.meeting.details.list",
-            MTG_LIST_ATTACHMENT: "app.meeting.details.list.attachment",
             LISTPROPOSALS: "app.meeting.details.list.proposals",
             REMARK: "app.meeting.details.list.remark",
             ERROR: "error"

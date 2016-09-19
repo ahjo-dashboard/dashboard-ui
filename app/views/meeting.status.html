@@ -3,24 +3,23 @@
     <div ng-if="!msc.isMobile" class="ad-page-header db-center-v">
         <button db-confirm confirm-enabled="msc.hasUnsavedData" confirm-config="msc.unsavedConfig" type="button" class="btn db-btn-prim" ng-click="msc.logOut()" tooltip-enable="isTooltips" uib-tooltip="{{'STR_MTG_LOGOUT' | translate}}"
         tooltip-placement="right">
-            <div class="db-glyph" ng-include="'images/si-glyph-arrow-left.svg'"></div>
+            <div class="db-glyph" ng-include="'images/glyph-back.svg'"></div>
         </button>
         <button type="button" class="btn db-btn-prim" ng-click="closeMenu()" tooltip-enable="isTooltips" uib-tooltip="{{'STR_INFO_MENUBTN' | translate}}" tooltip-placement="right">
-            <div class="db-glyph" ng-include="'images/si-glyph-jump-double-page-left-right.svg'"></div>
+            <div class="db-glyph" ng-include="'images/glyph-menu-toggle.svg'"></div>
         </button>
         <button type="button" class="btn db-btn-prim" ng-click="msc.toggleParallelMode()" ng-disabled="!msc.parallelModeActive" tooltip-enable="isTooltips"
         uib-tooltip="{{parallelMode ? 'STR_INFO_VIEW_VERT' : 'STR_INFO_VIEW_HORIZ' | translate}}" tooltip-placement="right">
-            <div ng-if="parallelMode" class="db-glyph" ng-include="'images/si-glyph-arrow-up-down.svg'"></div>
-            <div ng-if="!parallelMode" class="db-glyph" ng-include="'images/si-glyph-arrow-left-right.svg'"></div>
+            <div class="db-glyph" ng-include="parallelMode ? 'images/glyph-parallel.svg' : 'images/glyph-vertical.svg'"></div>
         </button>
         <button type="button" class="btn db-btn-prim disabled" ng-click="">
-            <div class="db-glyph" ng-include="'images/si-glyph-circle-info.svg'"></div>
+            <div class="db-glyph" ng-include="'images/glyph-info.svg'"></div>
         </button>
     </div>
 
     <div ng-if="msc.isMobile" class="ad-page-header db-center-v">
         <button type="button" class="btn db-btn-prim" ng-click="msc.logOut()">
-            <div class="db-glyph" ng-include="'images/si-glyph-arrow-left.svg'"></div>
+            <div class="db-glyph" ng-include="'images/glyph-back.svg'"></div>
         </button>
         <h4 translate translate-cloak>STR_TOPIC_LIST</h4>
     </div>
@@ -55,8 +54,8 @@
                         <span us-spinner="{radius:4, width:2, length:4}" spinner-on="true"></span>
                     </div>
                 </button>
-                <div ng-show="topic.isModified" class="db-center"  tooltip-enable="isTooltips" tooltip-placement="right" uib-tooltip="{{'STR_INFO_NEW_PROPS' | translate}}" >
-                    <div class="db-glyph-sm db-glyph-ora db-margin-05-left" ng-include="'images/si-glyph-bell.svg'"></div>
+                <div ng-show="topic.isModified" class="db-center" tooltip-enable="isTooltips" tooltip-placement="right" uib-tooltip="{{'STR_INFO_NEW_PROPS' | translate}}">
+                    <div class="db-glyph-sm db-glyph-ora db-margin-05-left" ng-include="'images/glyph-bell.svg'"></div>
                 </div>
                 <div class="db-center-v db-flex-area db-margin-10-hor">
                     <span class="ng-class:[{'db-twoliner-12':!msc.isMobile}]" tooltip-enable="isTooltips" uib-tooltip-template="'topicTooltipTpl.html'" tooltip-class="db-tooltip" tooltip-placement="top-left">

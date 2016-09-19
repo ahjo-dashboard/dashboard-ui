@@ -69,56 +69,6 @@ angular.module('dashboard')
                         }
                     }
                 })
-                .state(CONST.APPSTATE.TOPIC, {
-                    url: '/topic',
-                    views: {
-                        'childContent': {
-                            templateUrl: 'views/attachment.html',
-                            controller: 'attachmentCtrl',
-                            controllerAs: 'c'
-                        }
-                    }
-                })
-                .state(CONST.APPSTATE.LIST, {
-                    url: '/list',
-                    views: {
-                        'childContent': {
-                            templateUrl: 'views/list.html',
-                            controller: 'listCtrl',
-                            controllerAs: 'c'
-                        }
-                    }
-                })
-                .state(CONST.APPSTATE.MTG_LIST_ATTACHMENT, {
-                    url: '/attachment',
-                    views: {
-                        'listContent': {
-                            templateUrl: 'views/attachment.html',
-                            controller: 'attCtrl',
-                            controllerAs: 'c'
-                        }
-                    }
-                })
-                .state(CONST.APPSTATE.LISTPROPOSALS, {
-                    url: '/proposals',
-                    views: {
-                        'listContent': {
-                            templateUrl: 'views/proposals.html',
-                            controller: 'proposalsCtrl',
-                            controllerAs: 'c'
-                        }
-                    }
-                })
-                .state(CONST.APPSTATE.REMARK, {
-                    url: '/remark',
-                    views: {
-                        'listContent': {
-                            templateUrl: 'views/remark.html',
-                            controller: 'remarkCtrl',
-                            controllerAs: 'c'
-                        }
-                    }
-                })
                 .state(CONST.APPSTATE.SIGN, {
                     url: '/sign',
                     views: {
