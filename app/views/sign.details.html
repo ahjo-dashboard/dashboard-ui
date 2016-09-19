@@ -6,33 +6,38 @@
         <div ng-if="!c.isTablet" class="db-block db-margin-05 ng-class:[{'db-block-close':c.bm === c.bms.SECONDARY},{'db-block-open':c.bm !== c.bms.SECONDARY}]">
 
             <!-- PRIMARY BLOCK HEADER -->
-            <div class="btn-group db-flex-wrap db-prim-bg db-brd-top db-padding-2">
-                <button ng-if="menuClosed()" type="button" class="btn db-btn-prim db-btn-small db-brd-all db-margin-2" ng-click="openMenu()"
-                    tooltip-enable="isTooltips" uib-tooltip="{{'STR_INFO_MENUBTN' | translate}}" tooltip-placement="right">
-                    <div class="db-center">
-                        <div class="db-glyph-sm" ng-include="'images/glyph-menu-toggle.svg'"></div>
-                    </div>
-                </button>
-                <button ng-if="menuClosed()" type="button" class="btn db-btn-prim db-btn-small db-brd-all db-margin-2" ng-click="c.toggleParallelMode()" tooltip-enable="isTooltips" uib-tooltip="{{parallelMode ? 'STR_INFO_VIEW_VERT' : 'STR_INFO_VIEW_HORIZ' | translate}}" tooltip-placement="right">
-                    <div class="db-center">
-                        <div ng-if="parallelMode" class="db-glyph-sm" ng-include="'images/glyph-parallel.svg'"></div>
-                        <div ng-if="!parallelMode" class="db-glyph-sm" ng-include="'images/glyph-vertical.svg'"></div>
-                    </div>
+            <div class="db-flex db-flex-wrap db-prim-bg db-brd-top db-padding-2">
+                <div class="btn-group db-flex-area">
+                    <button ng-if="menuClosed()" type="button" class="btn db-btn-prim db-btn-small db-brd-all db-margin-2" ng-click="openMenu()"
+                        tooltip-enable="isTooltips" uib-tooltip="{{'STR_INFO_MENUBTN' | translate}}" tooltip-placement="right">
+                        <div class="db-center">
+                            <div class="db-glyph-sm" ng-include="'images/glyph-menu-toggle.svg'"></div>
+                        </div>
                     </button>
-                <button type="button" class="btn db-btn-prim db-btn-small db-brd-all db-margin-2" ng-disabled="parallelMode" ng-click="c.primaryClicked()"
+                    <button ng-if="menuClosed()" type="button" class="btn db-btn-prim db-btn-small db-brd-all db-margin-2" ng-click="c.toggleParallelMode()"
+                        tooltip-enable="isTooltips" uib-tooltip="{{parallelMode ? 'STR_INFO_VIEW_VERT' : 'STR_INFO_VIEW_HORIZ' | translate}}"
+                        tooltip-placement="right">
+                        <div class="db-center">
+                            <div ng-if="parallelMode" class="db-glyph-sm" ng-include="'images/glyph-parallel.svg'"></div>
+                            <div ng-if="!parallelMode" class="db-glyph-sm" ng-include="'images/glyph-vertical.svg'"></div>
+                        </div>
+                    </button>
+
+                    <button type="button" class="btn db-btn-sel db-btn-big db-brd-all db-margin-2 ng-class:{'active' : c.isActive(c.btnModel.doc.id) }"
+                        ng-click="c.actionDoc()">
+                        <span translate translate-cloak>STR_SIGNING_REQ</span>
+                    </button>
+                    <button type="button" class="btn db-btn-sel db-btn-big db-brd-all db-margin-2 ng-class:{'active' : c.isActive(c.btnModel.doctr.id) }"
+                        ng-click="c.actionDocTr()" ng-disabled="c.btnModel.doctr.disabled">
+                        <span translate translate-cloak>STR_TRANSLATION</span>
+                    </button>
+                </div>
+                <button type="button" class="btn db-btn-prim db-btn-small db-brd-all db-margin-2 db-flex-right" ng-click="c.primaryClicked()"
                     tooltip-enable="isTooltips" tooltip-placement="right" uib-tooltip="{{'STR_EXPANDCOLLAPSE' | translate}}">
                     <div class="db-center">
                         <div ng-if="c.bm !== c.bms.PRIMARY" class="db-glyph-sm" ng-include="'images/glyph-expand.svg'"></div>
                         <div ng-if="c.bm === c.bms.PRIMARY" class="db-glyph-sm" ng-include="'images/glyph-minimize.svg'"></div>
                     </div>
-                </button>
-                <button type="button" class="btn db-btn-sel db-btn-big db-brd-all db-margin-2 ng-class:{'active' : c.isActive(c.btnModel.doc.id) }"
-                    ng-click="c.actionDoc()">
-                    <span translate translate-cloak>STR_SIGNING_REQ</span>
-                </button>
-                <button type="button" class="btn db-btn-sel db-btn-big db-brd-all db-margin-2 ng-class:{'active' : c.isActive(c.btnModel.doctr.id) }"
-                    ng-click="c.actionDocTr()" ng-disabled="c.btnModel.doctr.disabled">
-                    <span translate translate-cloak>STR_TRANSLATION</span>
                 </button>
             </div>
 
@@ -52,40 +57,41 @@
         <div class="db-block db-margin-05 ng-class:[{'db-block-close':c.bm === c.bms.PRIMARY},{'db-block-open':c.bm !== c.bms.PRIMARY}]">
 
             <!-- SECONDARY BLOCK HEADER -->
-            <div class="btn-group db-flex-wrap db-prim-bg db-brd-top db-padding-2">
+            <div class="db-flex db-flex-wrap db-prim-bg db-brd-top db-padding-2">
+                <div class="btn-group db-flex-area">
+                    <button ng-if="c.isTablet && menuClosed()" type="button" class="btn db-btn-prim db-btn-small db-brd-all db-margin-2" ng-click="openMenu()"
+                        tooltip-enable="isTooltips" uib-tooltip="{{'STR_INFO_MENUBTN' | translate}}" tooltip-placement="right">
+                        <div class="db-center">
+                            <div class="db-glyph-sm" ng-include="'images/glyph-menu-toggle.svg'"></div>
+                        </div>
+                    </button>
 
-                <button ng-if="c.isTablet && menuClosed()" type="button" class="btn db-btn-prim db-btn-small db-brd-all db-margin-2"
-                    ng-click="openMenu()" tooltip-enable="isTooltips" uib-tooltip="{{'STR_INFO_MENUBTN' | translate}}" tooltip-placement="right">
+                    <button ng-if="c.isTablet" type="button" class="btn db-btn-sel db-btn-big db-brd-all db-margin-2" ng-click="c.openDoc(c.btnModel.doc)">
+                        <span translate translate-cloak>STR_SIGNING_REQ</span>
+                    </button>
+
+                    <button ng-if="c.isTablet" ng-hide="c.btnModel.doctr.disabled" type="button" class="btn db-btn-sel db-btn-big db-brd-all db-margin-2"
+                        ng-click="c.openDoc(c.btnModel.doctr)" ng-disabled="c.btnModel.doctr.disabled">
+                        <span translate translate-cloak>STR_TRANSLATION</span>
+                    </button>
+
+                    <button type="button" class="btn db-btn-sel db-btn-big db-brd-all db-margin-2 ng-class:[{ 'active' : c.isActive(c.btnModel.att.id) }]"
+                        ng-disabled="c.btnModel.att.disabled" ng-click="c.actionAtt()">
+                        <span translate translate-cloak>STR_ATTACHMENTS</span>
+                        <span class="badge ng-cloak db-opt-clr">{{c.btnModel.att.count}}</span>
+                    </button>
+
+                    <button type="button" class="btn db-btn-sel db-btn-big db-brd-all db-margin-2 ng-class:[{ 'active' : c.isActive(c.btnModel.sta.id) }]"
+                        ng-disabled="c.btnModel.sta.disabled" ng-click="c.actionReqStatuses()">
+                        <span translate translate-cloak>STR_SIGNEES_STATUSES</span>
+                    </button>
+                </div>
+                <button ng-if="!c.isTablet" type="button" class="btn db-btn-prim db-btn-small db-brd-all db-margin-2 db-flex-right" ng-click="c.secondaryClicked()"
+                    tooltip-enable="isTooltips" tooltip-placement="right" uib-tooltip="{{'STR_EXPANDCOLLAPSE' | translate}}">
                     <div class="db-center">
-                        <div class="db-glyph-sm" ng-include="'images/glyph-menu-toggle.svg'"></div>
-                    </div>
-                </button>
-
-                <button ng-if="!c.isTablet" type="button" class="btn db-btn-prim db-btn-small db-brd-all db-margin-2" ng-disabled="parallelMode"
-                    ng-click="c.secondaryClicked()" tooltip-enable="isTooltips" tooltip-placement="right" uib-tooltip="{{'STR_EXPANDCOLLAPSE' | translate}}">
-                     <div class="db-center">
                         <div ng-if="c.bm !== c.bms.SECONDARY" class="db-glyph-sm" ng-include="'images/glyph-expand.svg'"></div>
                         <div ng-if="c.bm === c.bms.SECONDARY" class="db-glyph-sm" ng-include="'images/glyph-minimize.svg'"></div>
                     </div>
-                </button>
-
-                <button ng-if="c.isTablet" type="button" class="btn db-btn-sel db-btn-big db-brd-all db-margin-2" ng-click="c.openDoc(c.btnModel.doc)">
-                    <span translate translate-cloak>STR_SIGNING_REQ</span>
-                </button>
-
-                <button ng-if="c.isTablet" ng-hide="c.btnModel.doctr.disabled" type="button" class="btn db-btn-sel db-btn-big db-brd-all db-margin-2" ng-click="c.openDoc(c.btnModel.doctr)" ng-disabled="c.btnModel.doctr.disabled">
-                    <span translate translate-cloak>STR_TRANSLATION</span>
-                </button>
-
-                <button type="button" class="btn db-btn-sel db-btn-big db-brd-all db-margin-2 ng-class:[{ 'active' : c.isActive(c.btnModel.att.id) }]"
-                    ng-disabled="c.btnModel.att.disabled" ng-click="c.actionAtt()">
-                    <span translate translate-cloak>STR_ATTACHMENTS</span>
-                    <span class="badge ng-cloak db-opt-clr">{{c.btnModel.att.count}}</span>
-                </button>
-
-                <button type="button" class="btn db-btn-sel db-btn-big db-brd-all db-margin-2 ng-class:[{ 'active' : c.isActive(c.btnModel.sta.id) }]"
-                    ng-disabled="c.btnModel.sta.disabled" ng-click="c.actionReqStatuses()">
-                    <span translate translate-cloak>STR_SIGNEES_STATUSES</span>
                 </button>
 
             </div>
