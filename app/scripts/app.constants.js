@@ -91,6 +91,10 @@ angular.module('dashboard')
             INFORMER: 7,
             NO_ROLE: 8
         },
+        'MTGTYPE': {
+            DEFAULT: 0,
+            CITY_COUNCIL: 1
+        },
         'KEY': {
             TESTENV_USERID: 'testenvuserid',
             TOPIC: 'topic',
