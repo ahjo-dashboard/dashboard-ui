@@ -91,6 +91,10 @@ angular.module('dashboard')
             INFORMER: 7,
             NO_ROLE: 8
         },
+        'MTGTYPE': {
+            DEFAULT: 0,
+            CITY_COUNCIL: 1
+        },
         'KEY': {
             TESTENV_USERID: 'testenvuserid',
             TOPIC: 'topic',
@@ -188,4 +192,28 @@ angular.module('dashboard')
             IREV: { value: 8, stringId: 'STR_SROLE_IREV' },
             CONF: { value: 9, stringId: 'STR_SROLE_CONF' }
         }
+    })
+    .factory('PROPS', function (CONST) {
+        return {
+            'PUBLISHED': {
+                NO: 0,
+                YES: 1
+            },
+            'TYPE': [
+                { value: 1, text: "Päätös", roles: [] },
+                { value: 2, text: "Esityksen muutos", roles: [], cityCouncilRoles: [], decisionOrder: 1, mgtTypes: [CONST.MTGTYPE.DEFAULT, CONST.MTGTYPE.CITYCOUNCIL] },
+                { value: 3, text: "Pöydällepanoehdotus", roles: [CONST.MTGROLE.PARTICIPANT_FULL], cityCouncilRoles: [CONST.MTGROLE.PARTICIPANT_FULL], decisionOrder: 3, mgtTypes: [CONST.MTGTYPE.DEFAULT, CONST.MTGTYPE.CITYCOUNCIL] },
+                { value: 4, text: "Palautusehdotus", roles: [CONST.MTGROLE.PARTICIPANT_FULL], cityCouncilRoles: [CONST.MTGROLE.PARTICIPANT_FULL], decisionOrder: 4, mgtTypes: [CONST.MTGTYPE.DEFAULT, CONST.MTGTYPE.CITYCOUNCIL] },
+                { value: 5, text: "Vastaehdotus", roles: [CONST.MTGROLE.PARTICIPANT_FULL], cityCouncilRoles: [CONST.MTGROLE.PARTICIPANT_FULL], decisionOrder: 5, mgtTypes: [CONST.MTGTYPE.DEFAULT, CONST.MTGTYPE.CITYCOUNCIL] },
+                { value: 6, text: "Hylkäysehdotus", roles: [CONST.MTGROLE.PARTICIPANT_FULL], cityCouncilRoles: [CONST.MTGROLE.PARTICIPANT_FULL], decisionOrder: 6, mgtTypes: [CONST.MTGTYPE.DEFAULT, CONST.MTGTYPE.CITYCOUNCIL] },
+                { value: 7, text: "Ponsi", roles: [], cityCouncilRoles: [CONST.MTGROLE.PARTICIPANT_FULL], decisionOrder: 7, mgtTypes: [CONST.MTGTYPE.CITYCOUNCIL] },
+                { value: 8, text: "Eriävä mielipide", roles: [CONST.MTGROLE.PARTICIPANT_FULL], cityCouncilRoles: [CONST.MTGROLE.PARTICIPANT_FULL], mgtTypes: [] },
+                { value: 9, text: "Esteellinen", roles: [], cityCouncilRoles: [], mgtTypes: [] },
+                { value: 10, text: "Esityksen poisto", roles: [], cityCouncilRoles: [], decisionOrder: 2, mgtTypes: [CONST.MTGTYPE.DEFAULT, CONST.MTGTYPE.CITYCOUNCIL] }
+            ],
+            'TOGGLE': 'PROPS.TOGGLE',
+            'COUNT': 'PROPS.COUNT',
+            'UPDATED': 'PROPS.UPDATED',
+            'REMOVE': 'PROPS.REMOVE'
+        };
     });

@@ -11,18 +11,18 @@
     <div class="db-min-width-300">
         <ul ng-if="!c.error" class="list-group db-no-margin db-brd-all db-overflow-hidden">
             <div class="db-font-clr-white db-prim-bg db-padding-10 db-no-margin db-brd-top row">
-                <span class="col-xs-7 col-md-5 db-truncate" translate translate-cloak>STR_TITLE</span>
-                <span class="col-xs-5 col-md-3 db-truncate" translate translate-cloak>STR_CREATOR</span>
-                <span class="col-md-2 hidden-xs hidden-sm db-truncate" translate translate-cloak>STR_SIGNING_TYPE</span>
-                <span class="col-md-2 hidden-xs hidden-sm db-truncate" translate translate-cloak>STR_SIGNINGS</span>
+                <h5 class="col-xs-7 col-md-5 db-truncate" translate translate-cloak>STR_TITLE</h5>
+                <h5 class="col-xs-5 col-md-3 db-truncate" translate translate-cloak>STR_CREATOR</h5>
+                <h5 class="col-md-2 hidden-xs hidden-sm db-truncate" translate translate-cloak>STR_SIGNING_TYPE</h5>
+                <h5 class="col-md-2 hidden-xs hidden-sm db-truncate" translate translate-cloak>STR_SIGNINGS</h5>
             </div>
             <div class="list-group-item db-padding-10-hor" ng-repeat="m in c.motions | orderBy : 'publishDate' track by $index" ng-click="c.selectMotion(m)">
                 <div class="row">
                     <div class="col-xs-7 col-md-5 db-flex">
                         <div class="db-glyph-sm db-glyph-dark db-margin-10-right" ng-include="c.isSelected(m) ? 'images/glyph-minimize.svg' : 'images/glyph-expand.svg'" tooltip-enable="c.isTooltips" tooltip-placement="right" uib-tooltip="{{'STR_EXPANDCOLLAPSE' | translate}}"></div>
-                        <b class="db-flex-area db-truncate">{{m.title}}</b>
+                        <div class="db-flex-area db-truncate">{{m.title}}</div>
                     </div>
-                    <b><i class="col-xs-5 col-md-3 db-truncate">{{m.personName}}</i></b>
+                    <i class="col-xs-5 col-md-3 db-truncate">{{m.personName}}</i>
                     <div class="col-md-2 hidden-xs hidden-sm db-truncate" translate translate-cloak>{{c.typeString(m.type)}}</div>
                     <div ng-show="m.supporters" class="col-md-2 hidden-xs hidden-sm db-truncate db-center">
                         <div ng-if="m.supporters.length">{{m.supporters.length}}</div>
@@ -35,11 +35,11 @@
                         <span translate translate-cloak>STR_SIGNING_TYPE</span>:<span class="db-margin-05-left" translate
                             translate-cloak>{{c.typeString(m.type)}}</span>
                     </div>
-                    <div ng-if="m.supporters.length" class="db-margin-05">
+                    <div ng-if="m.supporters.length" class="db-padding-10-hor db-margin-05">
                         <span translate translate-cloak>STR_MOTION_SIGNERS</span>:<span ng-repeat="s in m.supporters track by $index"><span ng-if="0 < $index">, </span>
                         <span class="db-margin-05-left">{{s.name}}</span></span>
                     </div>
-                    <pre class="db-margin-10-ver">{{m.text}}</pre>
+                    <pre class="db-margin-05-ver">{{m.text}}</pre>
 
                     <div ng-if="c.meetingActive" class="db-flex-right db-flex-area ng-class:{'db-flex-col': c.isMobile}">
                         <button ng-if="m.isOwnMotion && !c.isSubmitted" class="btn btn-success db-btn-big db-margin-2 ng-class:{'btn-block':c.isMobile}"

@@ -32,6 +32,23 @@ angular.module('dashboard')
 
             // FUNCTIONS
 
+            function setTypes(isCityCouncil) {
+                if (isCityCouncil === true || isCityCouncil === false) {
+                    $log.log("dbDecisions.setTypes", arguments);
+                    angular.forEach(PROPS.TYPE, function (type) {
+                        if (angular.isObject(type) && type.decisionOrder) {
+                            var mgtType = isCityCouncil ? CONST.MTGTYPE.CITYCOUNCIL : CONST.MTGTYPE.DEFAULT;
+                            if (angular.isArray(type.mgtTypes) && type.mgtTypes.indexOf(mgtType) > CONST.NOTFOUND) {
+                                this.push(type);
+                            }
+                        }
+                    }, self.types);
+                }
+                else {
+                    $log.error("dbDecisions.setTypes: bad args");
+                }
+            }
+
             function getDecisions(aMtg, aTopic) {
                 $log.debug("dbDecisions.getDecisions", arguments);
                 if (angular.isObject(aTopic) && angular.isObject(aMtg)) {
@@ -48,6 +65,7 @@ angular.module('dashboard')
                         self.loading = true;
                     }).finally(function () {
                         self.loading = false;
+                        setTypes(aTopic.isCityCouncil);
                     });
                 }
                 else {
@@ -112,12 +130,6 @@ angular.module('dashboard')
             });
 
             // CONSTRUCT
-
-            angular.forEach(PROPS.TYPE, function (type) {
-                if (angular.isObject(type) && type.decisionOrder) {
-                    this.push(type);
-                }
-            }, self.types);
 
             getDecisions(mtgItemSelected, mtgTopicSelected);
         }];

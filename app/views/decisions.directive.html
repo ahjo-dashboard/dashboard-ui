@@ -9,102 +9,100 @@
     </div>
 
     <div class="db-min-width-300">
-        <ul ng-if="!c.errorCode" class="list-group db-no-margin" ng-repeat="d in c.types | orderBy : 'decisionOrder' track by $index">
-            <div class="list-group-item db-no-padding">
-                <h5 class="db-font-clr-white db-prim-bg db-padding-10 db-brd-top">{{d.text}}
-                    <span class="badge db-white-bg db-font-clr-dark db-margin-05-hor">{{filtered.length}}</span>
-                </h5>
-                <div class="list-group-item db-no-padding" ng-repeat="i in c.record | filter: { type: d.value } | filter:query as filtered track by $index">
-                    <div class="db-flex db-center-v db-padding-05" ng-click="c.itemSelected(i)">
-                        <span class="db-glyph-sm db-glyph-dark db-margin-10-right" ng-include="!c.isSelected(i) ? 'images/glyph-expand.svg' : 'images/glyph-minimize.svg'" tooltip-enable="c.isTooltips" tooltip-placement="right" uib-tooltip="{{'STR_EXPANDCOLLAPSE' | translate}}"></span>
-                        <span class="">{{i.name}}</span>
-                        <span class="db-margin-10-left" ng-if="i.proposalOrdernumber">/{{i.proposalOrdernumber}}</span>
-                        <div ng-show="c.isSupported(i)" class="db-glyph-sm db-glyph-dark db-margin-10-left" ng-include="'images/glyph-like.svg'" tooltip-enable="c.isTooltips" uib-tooltip="{{'STR_SUPPORTED' | translate}}" tooltip-placement="right"></div>
-                    </div>
-                    <div class="panel-collapse collapse" uib-collapse="!c.isSelected(i)">
-                        <div class="db-padding-10-hor">
-                            <span translate translate-cloak>STR_SROLE_SUPPORTER</span>:<span ng-repeat="s in c.supporter | filter: { minuteEntryGuid: i.minuteEntryGuid }  | filter:query as filtered2 track by $index">
+        <ul ng-if="!c.errorCode" class="list-group db-margin-1-btm" ng-repeat="d in c.types | orderBy : 'decisionOrder' track by $index">
+            <h5 class="db-font-clr-white db-prim-bg db-padding-10 db-brd-top">{{d.text}}
+                <span class="badge db-white-bg db-font-clr-dark db-margin-05-hor">{{filtered.length}}</span>
+            </h5>
+            <div class="list-group-item db-padding-10-hor" ng-repeat="i in c.record | filter: { type: d.value } | filter:query as filtered track by $index">
+                <div class="db-flex db-center-v" ng-click="c.itemSelected(i)">
+                    <span class="db-glyph-sm db-glyph-dark db-margin-10-right" ng-include="!c.isSelected(i) ? 'images/glyph-expand.svg' : 'images/glyph-minimize.svg'"
+                        tooltip-enable="c.isTooltips" tooltip-placement="right" uib-tooltip="{{'STR_EXPANDCOLLAPSE' | translate}}"></span>
+                    <i class="">{{i.name}}</i>
+                    <span class="db-margin-10-left" ng-if="i.proposalOrdernumber">/{{i.proposalOrdernumber}}</span>
+                    <div ng-show="c.isSupported(i)" class="db-glyph-sm db-glyph-dark db-margin-10-left" ng-include="'images/glyph-like.svg'"
+                        tooltip-enable="c.isTooltips" uib-tooltip="{{'STR_SUPPORTED' | translate}}" tooltip-placement="right"></div>
+                </div>
+                <div class="panel-collapse collapse" uib-collapse="!c.isSelected(i)">
+                    <div class="db-padding-10-hor db-margin-05-top">
+                        <span translate translate-cloak>STR_SROLE_SUPPORTER</span>:<span ng-repeat="s in c.supporter | filter: { minuteEntryGuid: i.minuteEntryGuid }  | filter:query as filtered2 track by $index">
                             <span ng-if="0 < $index">, </span>
-                            <span class="db-margin-05-left">{{s.name}}</span></span><span ng-if="filtered2.length === 0" class="db-margin-05-left">-</span>
-                        </div>
-                        <div class="db-padding-10-hor db-margin-10-top"><span translate translate-cloak>STR_TEXT</span>:</div>
-                        <pre class="db-margin-10-hor">{{i.text}}</pre>
-                        <div ng-if="i.translationText" class="db-padding-10-hor"><span translate translate-cloak>STR_TRANSLATION</span>:</div>
-                        <pre ng-if="i.translationText" class="db-margin-10-hor">{{i.translationText}}</pre>
+                        <span class="db-margin-05-left">{{s.name}}</span></span><span ng-if="filtered2.length === 0" class="db-margin-05-left">-</span>
                     </div>
+                    <pre class="db-margin-05-ver">{{i.text}}</pre>
+                    <div ng-if="i.translationText" class="db-padding-10-hor"><span translate translate-cloak>STR_TRANSLATION</span>:</div>
+                    <pre ng-if="i.translationText" class="db-margin-05-ver">{{i.translationText}}</pre>
                 </div>
             </div>
         </ul>
 
         <!-- VOTINGS -->
-        <ul ng-if="!c.errorCode" class="list-group">
-            <div class="list-group-item db-no-padding db-no-border">
-                <!-- Votings header-->
-                <div class="db-font-clr-white db-prim-bg db-padding-10-hor db-padding-07-ver">
-                    <div class="db-flex">
+        <ul ng-if="!c.errorCode" class="list-group db-margin-1-btm">
+            <!-- Votings header-->
+            <div class="db-font-clr-white db-prim-bg db-padding-10 db-brd-top">
+                <div class="db-flex">
+                    <div class="db-flex-area">
+                        <h5>{{'STR_VOTINGS' | translate}}
+                            <span ng-if="votingsWithVotes" class="badge db-white-bg db-font-clr-dark db-margin-05-hor">{{votingsWithVotes.length}}</span>
+                        </h5>
+                    </div>
+                    <div ng-if="votingsWithVotes.length" class="db-voting-res-col db-center">
+                        <h5 translate translate-cloak>STR_VOTE_YEA</h5>
+                    </div>
+                    <div ng-if="votingsWithVotes.length" class="db-voting-res-col db-center">
+                        <span translate translate-cloak>STR_VOTE_NAY</span>
+                    </div>
+                    <div ng-if="votingsWithVotes.length" class="db-voting-res-col db-center">
+                        <span translate translate-cloak>STR_VOTE_EMPTY</span>
+                    </div>
+                    <div ng-if="votingsWithVotes.length" class="db-voting-res-col db-center">
+                        <span translate translate-cloak>STR_VOTE_ABSENT</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Voting item -->
+            <div class="list-group-item db-no-padding" ng-repeat="v in c.voting | filter: { hasVotes: true } | filter:query as votingsWithVotes track by $index">
+                <div class="list-group-item db-flex db-padding-05" ng-click="c.itemSelected(v)">
+                    <div class="db-flex ng-class:{'db-truncate': !c.isSelected(v)}">
+                        <div class="db-glyph-sm db-glyph-dark db-margin-10-right" ng-include="!c.isSelected(v) ? 'images/glyph-expand.svg' : 'images/glyph-minimize.svg'"
+                            tooltip-enable="c.isTooltips" tooltip-placement="right" uib-tooltip="{{'STR_EXPANDCOLLAPSE' | translate}}"></div>
+                        <div class="db-flex-area ng-class:{'db-truncate': !c.isSelected(v)}" tooltip-enable="c.isTooltips" tooltip-placement="top-left"
+                            uib-tooltip="{{c.getVotingTitle(v)}}">{{c.getVotingTitle(v)}}</div>
+                    </div>
+                    <div class="db-voting-res-col db-center ng-class:{'db-badge-gre db-underline': yesVotes > noVotes }">
+                        <span>{{ yesVotes = (v.voteList | filter: { vote: 1 }).length }}</span>
+                    </div>
+                    <div class="db-voting-res-col db-center ng-class:{'db-badge-red db-underline': yesVotes < noVotes }">
+                        {{ noVotes = (v.voteList | filter: { vote: 2 }).length}}
+                    </div>
+                    <div class="db-voting-res-col db-center">
+                        {{ (v.voteList | filter: { vote: 3 }).length }}
+                    </div>
+                    <div class="db-voting-res-col db-center">
+                        {{ (v.voteList | filter: { vote: 4 }).length }}
+                    </div>
+                </div>
+
+                <!-- Voting item details -->
+                <div class="panel-collapse collapse db-padding-05" uib-collapse="!c.isSelected(v)">
+                    <div ng-repeat="vl in v.voteList track by $index" class="list-group-item db-flex db-padding-05">
                         <div class="db-flex-area">
-                            <h5>{{'STR_VOTINGS' | translate}}
-                                <span ng-if="votingsWithVotes" class="badge db-white-bg db-font-clr-dark db-margin-05-hor">{{votingsWithVotes.length}}</span>
-                            </h5>
+                            {{vl.personName}}
                         </div>
-                        <div ng-if="votingsWithVotes.length" class="db-voting-res-col db-center">
-                            <h5 translate translate-cloak>STR_VOTE_YEA</h5>
+                        <div class="db-voting-res-col db-center">
+                            <span ng-if="vl.vote===1" class="db-badge-gre"><span class="db-padding-05">X</span></span>
                         </div>
-                        <div ng-if="votingsWithVotes.length" class="db-voting-res-col db-center">
-                            <span translate translate-cloak>STR_VOTE_NAY</span>
+                        <div class="db-voting-res-col db-center">
+                            <span ng-if="vl.vote===2" class="db-badge-red"><span class="db-padding-05">X</span></span>
                         </div>
-                        <div ng-if="votingsWithVotes.length" class="db-voting-res-col db-center">
-                            <span translate translate-cloak>STR_VOTE_EMPTY</span>
+                        <div class="db-voting-res-col db-center">
+                            <span ng-if="vl.vote===3" class="db-badge-dark"><span class="db-padding-05">X</span></span>
                         </div>
-                        <div ng-if="votingsWithVotes.length" class="db-voting-res-col db-center">
-                            <span translate translate-cloak>STR_VOTE_ABSENT</span>
+                        <div class="db-voting-res-col db-center">
+                            <span ng-if="vl.vote===4" class=""><span class="db-padding-05">X</span></span>
                         </div>
                     </div>
                 </div>
-
-                <!-- Voting item -->
-                <div class="list-group-item db-no-padding" ng-repeat="v in c.voting | filter: { hasVotes: true } | filter:query as votingsWithVotes track by $index">
-                    <div class="list-group-item db-flex db-padding-05" ng-click="c.itemSelected(v)">
-                        <div class="db-flex ng-class:{'db-truncate': !c.isSelected(v)}">
-                            <div class="db-glyph-sm db-glyph-dark db-margin-10-right" ng-include="!c.isSelected(v) ? 'images/glyph-expand.svg' : 'images/glyph-minimize.svg'" tooltip-enable="c.isTooltips" tooltip-placement="right" uib-tooltip="{{'STR_EXPANDCOLLAPSE' | translate}}"></div>
-                            <div class="db-flex-area ng-class:{'db-truncate': !c.isSelected(v)}" tooltip-enable="c.isTooltips" tooltip-placement="top-left" uib-tooltip="{{c.getVotingTitle(v)}}">{{c.getVotingTitle(v)}}</div>
-                        </div>
-                        <div class="db-voting-res-col db-center ng-class:{'db-badge-gre db-underline': yesVotes > noVotes }">
-                            <span>{{ yesVotes = (v.voteList | filter: { vote: 1 }).length }}</span>
-                        </div>
-                        <div class="db-voting-res-col db-center ng-class:{'db-badge-red db-underline': yesVotes < noVotes }">
-                            {{ noVotes = (v.voteList | filter: { vote: 2 }).length}}
-                        </div>
-                        <div class="db-voting-res-col db-center">
-                            {{ (v.voteList | filter: { vote: 3 }).length }}
-                        </div>
-                        <div class="db-voting-res-col db-center">
-                            {{ (v.voteList | filter: { vote: 4 }).length }}
-                        </div>
-                    </div>
-
-                    <!-- Voting item details -->
-                    <div class="panel-collapse collapse db-padding-05ö" uib-collapse="!c.isSelected(v)">
-                        <div ng-repeat="vl in v.voteList track by $index" class="list-group-item db-flex db-padding-05">
-                            <div class="db-flex-area">
-                                {{vl.personName}}
-                            </div>
-                            <div class="db-voting-res-col db-center">
-                                <span ng-if="vl.vote===1" class="db-badge-gre"><span class="db-padding-05">X</span></span>
-                            </div>
-                            <div class="db-voting-res-col db-center">
-                                <span ng-if="vl.vote===2" class="db-badge-red"><span class="db-padding-05">X</span></span>
-                            </div>
-                            <div class="db-voting-res-col db-center">
-                                <span ng-if="vl.vote===3" class="db-badge-dark"><span class="db-padding-05">X</span></span>
-                            </div>
-                            <div class="db-voting-res-col db-center">
-                                <span ng-if="vl.vote===4" class=""><span class="db-padding-05">X</span></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
             </div>
         </ul>
     </div>
