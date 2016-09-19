@@ -17,21 +17,20 @@
                 <div class="db-flex db-center-v" ng-click="c.itemSelected(i)">
                     <span class="db-glyph-sm db-glyph-dark db-margin-10-right" ng-include="!c.isSelected(i) ? 'images/glyph-expand.svg' : 'images/glyph-minimize.svg'"
                         tooltip-enable="c.isTooltips" tooltip-placement="right" uib-tooltip="{{'STR_EXPANDCOLLAPSE' | translate}}"></span>
-                    <span class="">{{i.name}}</span>
+                    <i class="">{{i.name}}</i>
                     <span class="db-margin-10-left" ng-if="i.proposalOrdernumber">/{{i.proposalOrdernumber}}</span>
                     <div ng-show="c.isSupported(i)" class="db-glyph-sm db-glyph-dark db-margin-10-left" ng-include="'images/glyph-like.svg'"
                         tooltip-enable="c.isTooltips" uib-tooltip="{{'STR_SUPPORTED' | translate}}" tooltip-placement="right"></div>
                 </div>
                 <div class="panel-collapse collapse" uib-collapse="!c.isSelected(i)">
-                    <div class="db-padding-10-hor">
+                    <div class="db-padding-10-hor db-margin-05-top">
                         <span translate translate-cloak>STR_SROLE_SUPPORTER</span>:<span ng-repeat="s in c.supporter | filter: { minuteEntryGuid: i.minuteEntryGuid }  | filter:query as filtered2 track by $index">
                             <span ng-if="0 < $index">, </span>
                         <span class="db-margin-05-left">{{s.name}}</span></span><span ng-if="filtered2.length === 0" class="db-margin-05-left">-</span>
                     </div>
-                    <div class="db-padding-10-hor db-margin-10-top"><span translate translate-cloak>STR_TEXT</span>:</div>
-                    <pre class="db-margin-10-hor">{{i.text}}</pre>
+                    <pre class="db-margin-05-ver">{{i.text}}</pre>
                     <div ng-if="i.translationText" class="db-padding-10-hor"><span translate translate-cloak>STR_TRANSLATION</span>:</div>
-                    <pre ng-if="i.translationText" class="db-margin-10-hor">{{i.translationText}}</pre>
+                    <pre ng-if="i.translationText" class="db-margin-05-ver">{{i.translationText}}</pre>
                 </div>
             </div>
         </ul>
