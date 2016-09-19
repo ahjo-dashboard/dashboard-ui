@@ -312,6 +312,10 @@ svg {
     padding-top: 0.7vh !important;
     padding-bottom: 0.7vh !important;
 }
+// correction for cutting of italic text
+.db-padding-2-right {
+    padding-right: 2px !important;
+}
 
 .db-padding-2 {
     padding: 2px !important;
