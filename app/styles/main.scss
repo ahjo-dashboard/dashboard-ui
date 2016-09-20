@@ -113,6 +113,12 @@ svg {
     border-radius: 10px;
 }
 
+.db-circle-30 {
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+}
+
 .no-content {
     display: flex;
     align-items: center;
@@ -323,6 +329,10 @@ svg {
     padding-right: 2px !important;
 }
 
+.db-padding-05-bottom {
+    padding-bottom: 0.5vh !important;
+}
+
 .db-padding-2 {
     padding: 2px !important;
 }
@@ -427,6 +437,14 @@ svg {
     border-top-left-radius: $btn-radius !important;
     border-bottom-left-radius: $btn-radius !important;
     border-bottom-right-radius: $btn-radius !important;
+}
+
+.db-brd-non-top {
+    border-top: none !important;
+}
+
+.db-brd-non-botton {
+    border-bottom: none !important;
 }
 
 .db-btn-tiny {
