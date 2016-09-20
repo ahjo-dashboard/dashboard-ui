@@ -193,6 +193,7 @@ angular.module('dashboard')
         function personLoggedOut(aEvent) {
             $log.debug("meetingStatusCtrl.personLoggedOut: " + JSON.stringify(aEvent));
             if (angular.isObject(aEvent) && angular.isObject(mtgItemSelected) && angular.equals(aEvent.personGuid, mtgItemSelected.dbUserPersonGuid) && angular.equals(aEvent.meetingID, mtgItemSelected.meetingGuid)) {
+                self.stopEventPolling();
                 DialogUtils.showInfo('STR_INFO_TITLE', 'STR_FORCED_LOGOUT', false).closePromise.finally(function () {
                     $log.debug("meetingStatusCtrl.personLoggedOut: modal dialog finally closed");
                     $state.go(CONST.APPSTATE.HOME, { menu: CONST.MENU.CLOSED });
@@ -259,11 +260,7 @@ angular.module('dashboard')
                 }, function (error) {
                     $log.error("meetingStatusCtrl: getEvents error: " + JSON.stringify(error));
                 }).finally(function () {
-                    $timeout.cancel(pollingTimer);
-                    pollingTimer = $timeout(function () {
-                        getEvents();
-                    }, CONST.POLLINGTIMEOUT);
-
+                    self.refreshEventPolling();
                     if (proposalEvents.length) {
                         var concated = proposalEvents;
 
@@ -300,8 +297,7 @@ angular.module('dashboard')
             selectedTopicGuid = null;
             activeTopicGuid = null;
             StorageSrv.deleteKey(CONST.KEY.TOPIC);
-            $timeout.cancel(pollingTimer);
-            pollingTimer = null;
+            self.stopEventPolling();
             AhjoMeetingSrv.getMeeting(mtgItem.meetingGuid).then(function (response) {
                 $log.debug("meetingStatusCtrl.getMeetingDetails: done");
                 if (angular.isObject(response) && angular.isArray(response.objects) && response.objects.length) {
@@ -342,10 +338,7 @@ angular.module('dashboard')
 
                         lastEventId = self.mtgDetails.lastEventId;
                         $rootScope.meetingStatus = self.mtgDetails.meetingStatus;
-                        $timeout.cancel(pollingTimer);
-                        pollingTimer = $timeout(function () {
-                            getEvents();
-                        }, CONST.POLLINGTIMEOUT);
+                        self.startEventPolling();
 
                         self.uiName = self.mtgDetails.meetingTitle;
                         self.mtgDetails.meetingGuid = mtgItem.meetingGuid;
@@ -385,6 +378,27 @@ angular.module('dashboard')
                 $log.error("meetingStatusCtrl.getMotions: bad args");
             }
         }
+
+        self.stopEventPolling = function () {
+            $log.debug("meetingStatusCtrl.stopEventPolling");
+            $timeout.cancel(pollingTimer);
+            pollingTimer = null;
+        };
+
+        self.startEventPolling = function () {
+            self.stopEventPolling();
+            $log.debug("meetingStatusCtrl.startEventPolling");
+            pollingTimer = $timeout(function () {
+                getEvents();
+            }, CONST.POLLINGTIMEOUT);
+        };
+
+        self.refreshEventPolling = function () {
+            $log.debug("meetingStatusCtrl.refreshEventPolling");
+            if (pollingTimer) {
+                self.startEventPolling();
+            }
+        };
 
         self.topicSelected = function (topic) {
             if (angular.isObject(topic)) {
@@ -643,6 +657,7 @@ angular.module('dashboard')
         self.logOut = function logOutFn() {
             if (angular.isObject(mtgItemSelected) && angular.isObject(mtgItemSelected.dbUserRole)) {
                 $log.debug("meetingStatusCtrl.logOut:", mtgItemSelected);
+                self.stopEventPolling();
                 var dlg = DialogUtils.showProgress('STR_MTG_EXIT_PROGRESS');
                 AhjoMeetingSrv.meetingLogout(mtgItemSelected.meetingGuid, mtgItemSelected.dbUserRole.RoleID, mtgItemSelected.dbUserPersonGuid).then(function () {
                     // Potential logout error code ignored, user has no means to recover.
