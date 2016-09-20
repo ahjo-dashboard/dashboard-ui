@@ -79,6 +79,9 @@ iframe {
 
 // Start svg glyps
 
+$db-glyph-sm-width: 16px;
+$db-glyph-width: 32px;
+
 svg {
     display: block;
 }
@@ -95,17 +98,31 @@ svg {
     fill: $proposals-color;
 }
 
+.db-glyph-alert-blue * {
+    fill: #31708f;
+}
+
+.db-glyph-conf svg { // Material icons styled via svg because no class in them
+    fill: #e60000;
+}
+
 .db-glyph { // Both width and height have to be defined for IE11
-    width: 32px; // glyph.smarticons.co: "we recommend to set the SVG in its base grid 16x16 (16x16, 32x32) to keep pixel perfection and sharpness"
-    height: 32px;
+    width: $db-glyph-width; // glyph.smarticons.co: "we recommend to set the SVG in its base grid 16x16 (16x16, 32x32) to keep pixel perfection and sharpness"
+    height: $db-glyph-width;
 }
 
 .db-glyph-sm  {
-    width: 20px;
-    height: 20px;
+    width: $db-glyph-sm-width;
+    height: $db-glyph-sm-width;
 }
 
 // End svg glyphs
+
+.db-spinner-cont {
+    position: relative; // us-spinner requires this, otherwise is placed outside parent.
+    flex: 1; // Or use min-height to have spinner displayed
+    min-height: 50px;
+}
 
 .db-circle-20 {
     width: 20px;
@@ -1230,21 +1247,32 @@ body {
     overflow: auto !important;
 }
 
-.db-conf-att {
-    input[type="number"] {
-        width: 4em;
-        margin: 0;
+// START IMGVIEWER
+
+input[type="number"].db-imgvw-input {
+    width: 4em; // 4 because of potential input spinbox
+    margin: 0;
+}
+
+@mixin db-input-nospin-mix() { // mixin because cannot @extend inside media query
+    -webkit-appearance: none !important;
+    margin: 0;
+}
+
+input[type=number].db-input-nospin::-webkit-inner-spin-button,
+input[type=number].db-input-nospin::-webkit-outer-spin-button {
+    @include db-input-nospin-mix();
+}
+
+@media screen and (max-width: 767px) {
+    input[type=number].db-input-nospin-xs::-webkit-inner-spin-button,
+    input[type=number].db-input-nospin-xs::-webkit-outer-spin-button {
+        @include db-input-nospin-mix();
     }
 }
 
-.db-spinner-cont {
-    position: relative; // us-spinner requires this, otherwise is placed outside parent.
-    flex: 1; // Or use min-height to have spinner displayed
-    min-height: 50px;
-}
-
 .db-hdr-l2 {
-    padding: 1vh $header-leftmargin;
+    padding: $header-leftmargin;
     min-height: 50px;
     display: flex;
     flex-direction: row;
@@ -1276,6 +1304,8 @@ body {
     justify-content: flex-start;
     align-items: center;
 }
+
+// END IMGVIEWER
 
 .db-voting-res-col {
     width: 10% !important;
