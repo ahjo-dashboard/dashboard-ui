@@ -640,10 +640,6 @@ $blockOpenFlex: 9;
 .remark {
     flex: 1;
 
-    span.glyphicon {
-        font-size: 1.0em !important;
-    }
-
     .rmk-header {
         background-color: $db-color-prim;
         position: relative;
@@ -958,10 +954,6 @@ body {
         }
     }
 
-    .glyphicon.center:before {
-        vertical-align: middle;
-    }
-
     .ad-page-header {
         position: absolute;
         top: 0;
@@ -986,26 +978,6 @@ body {
 
         h1, h2, h3, h4, h5 {
             color: $font-color-header;
-        }
-
-        .glyphicon {
-            color: $font-color-header;
-            text-align: center;
-        }
-
-        .glyphicon.center {
-            line-height: normal;
-            top: 0 !important;
-            margin: auto;
-        }
-
-        .glyphicon.left {
-            float: left;
-            text-align: left;
-        }
-        .glyphicon.right {
-            float: right;
-            text-align: right;
         }
 
         .left {
@@ -1147,12 +1119,6 @@ body {
             font-size: 1.5em;
             border: 0;
             border-radius: 0;
-            .glyphicon {
-                color: $font-color-header;
-                font-size: $default-font-size;
-                display: block;
-                text-align: center;
-            }
         }
 
         .ad-lg {
