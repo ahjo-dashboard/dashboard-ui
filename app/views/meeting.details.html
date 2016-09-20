@@ -25,7 +25,9 @@
                         tooltip-enable="isTooltips" uib-tooltip="{{parallelMode ? 'STR_INFO_VIEW_VERT' : 'STR_INFO_VIEW_HORIZ' | translate}}"
                         tooltip-placement="right">
                         <div class="db-center">
-                            <div class="db-glyph-sm" ng-include="parallelMode ? 'images/glyph-parallel.svg' : 'images/glyph-vertical.svg'"></div>
+                            <div class="db-glyph-sm db-overflow-hidden">
+                                <div ng-include="parallelMode ? 'images/glyph-parallel.svg' : 'images/glyph-vertical.svg'"></div>
+                            </div>
                         </div>
                     </button>
                 </div>
