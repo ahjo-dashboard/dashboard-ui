@@ -63,8 +63,9 @@
                             <i>{{i.ShortComment}}</i>
                         </div>
                     </div>
-                    <div class="col-xs-12 col-sm-2 ng-class:[{'db-padding-05-ver db-fs-11':c.isMobile}]">
-                        <span class="ng-class: [ 'label', c.statusStyle(i.Status)]" translate translate-cloak>{{c.statusStrId(i.Status)}}</span>
+                    <div class="col-xs-12 col-sm-2 db-flex ng-class:[{'db-padding-05-ver db-fs-11':c.isMobile}]">
+                        <div class="db-circle-20 ng-class:[c.statusStyle(i.Status)]"></div>
+                        <div class="db-flex-area db-margin-10-left" translate translate-cloak>{{c.statusStrId(i.Status)}}</div>
                     </div>
                     <div class="col-xs-12 col-sm-3 ng-class:[{'db-padding-05-ver db-fs-11':c.isMobile}]">
                         <span translate translate-cloak>{{c.docTypeStrId(i.DocumentType)}}</span>
