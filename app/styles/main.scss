@@ -210,6 +210,10 @@ svg {
     background-color: $db-color-white !important;
 }
 
+.db-margin-1 {
+    margin: 1px !important;
+}
+
 .db-margin-2 {
     margin: 2px !important;
 }
@@ -252,6 +256,10 @@ svg {
 
 .db-margin-10-btm {
     margin-bottom: 1.0vh !important;
+}
+
+.db-margin-1-top {
+    margin-top: 1px;
 }
 
 .db-margin-05-top {
@@ -1089,10 +1097,6 @@ body {
         flex-direction: column;
     }
 
-    .ad-flex-item-upper.ad-flex-show-full {
-        border-right-width: 0;
-    }
-
     .ad-flex-item-upper.ad-flex-hide {
         display: none;
     }
@@ -1130,11 +1134,7 @@ body {
     }
 
     .ad-flex-show {
-        flex-grow: 14;
-    }
-
-    .ad-flex-show-full {
-        flex-grow: 30;
+        flex-grow: 1;
     }
 
     .ad-flex-hide {
