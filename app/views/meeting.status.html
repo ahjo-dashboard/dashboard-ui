@@ -27,7 +27,7 @@
     <div class="ad-page-content">
         <ul class="list-group">
 
-            <div class="db-list-group-item-prim" tooltip-enable="isTooltips" uib-tooltip="{{msc.uiName}}" tooltip-placement="top">
+            <div class="db-list-group-item-prim db-brd-non-botton db-padding-05-bottom" tooltip-enable="isTooltips" uib-tooltip="{{msc.uiName}}" tooltip-placement="top">
                 <h4 class="db-margin-10-bottom">{{msc.uiName}}</h4>
             </div>
             <div ng-if='msc.loading' class="list-group-item">
@@ -35,9 +35,10 @@
                     <span translate translate-cloak>STR_LOADING_DATA</span>
                 </uib-progressbar>
             </div>
-            <div ng-if='!msc.loading' class="list-group-item db-prim-bg db-padding-05">
+            <div ng-if='!msc.loading' class="list-group-item db-brd-non-top db-prim-bg db-padding-05 db-flex">
                 <button type="button" class="btn btn-block db-brd-all db-flex ng-class:[{'db-btn-sel':msc.chairman},{'db-no-pointer-events db-btn-prim':!msc.chairman}]" ng-disabled="msc.updatingStatus" tooltip-enable="isTooltips" uib-tooltip="{{'STR_CHANGE_MEETING_STATUS' | translate}}" ng-click="msc.changeMeetingStatus()">
-                    <span ng-if="!msc.updatingStatus" class="badge db-flex-area db-font-12 db-overflow-hidden db-truncate ng-class:[msc.mtgStatusClass(msc.mtgDetails)]" translate translate-cloak>{{msc.stringId(msc.mtgDetails)}}</span>
+                    <div class="db-circle-30 ng-class:[msc.mtgStatusClass(msc.mtgDetails)]"></div>
+                    <span ng-if="!msc.updatingStatus" class="db-flex-area db-center-v db-font-12 db-margin-10-left db-overflow-hidden db-truncate" translate translate-cloak>{{msc.stringId(msc.mtgDetails)}}</span>
                     <span data-ng-if="msc.updatingStatus" class="db-min-height-24" us-spinner="{radius:4, width:2, length:4}" spinner-on="msc.updatingStatus"></span>
                 </button>
             </div>

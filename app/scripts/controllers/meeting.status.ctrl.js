@@ -380,21 +380,18 @@ angular.module('dashboard')
         }
 
         self.stopEventPolling = function () {
-            $log.debug("meetingStatusCtrl.stopEventPolling");
             $timeout.cancel(pollingTimer);
             pollingTimer = null;
         };
 
         self.startEventPolling = function () {
             self.stopEventPolling();
-            $log.debug("meetingStatusCtrl.startEventPolling");
             pollingTimer = $timeout(function () {
                 getEvents();
             }, CONST.POLLINGTIMEOUT);
         };
 
         self.refreshEventPolling = function () {
-            $log.debug("meetingStatusCtrl.refreshEventPolling");
             if (pollingTimer) {
                 self.startEventPolling();
             }
