@@ -35,7 +35,7 @@ app.controller('signStatusCtrl', function ($log, $scope, $state, SigningAttApi, 
     self.item = tmp;
     $log.debug("signStatusCtrl: name: " + self.item.Name);
 
-    // self.item.Comment = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."; //TODO: REMOVE THIS TEST CODE
+    // self.item.Comment = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."; //TODO: Enable to test comment field in view, user this only for layout development
 
     self.displayStatus = true;
     self.btnModel = {
@@ -143,15 +143,15 @@ app.controller('signStatusCtrl', function ($log, $scope, $state, SigningAttApi, 
 
         op.busy = true;
 
-        var resp = SigningOpenApi.save(op.item, function (value) {
-            $log.debug("signStatusCtrl.saveStatus: done \n" + JSON.stringify(value));
+        var resp = SigningOpenApi.save(op.item, function (/*value*/) {
+            $log.debug("signStatusCtrl.saveStatus: done \n", arguments);
             self.item.Status = op.item.Status;
             op.item = null; // Free up reference to allow cleanup
             if (angular.isFunction(cb)) {
                 cb();
             }
         }, function (error) {
-            $log.error("signStatusCtrl.saveStatus: \n" + JSON.stringify(error));
+            $log.error("signStatusCtrl.saveStatus: \n", arguments);
             op.error = new ErrorMsg('STR_FAIL_OP', error.status, error.statusText);
         });
         resp.$promise.finally(function () {
