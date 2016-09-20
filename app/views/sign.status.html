@@ -43,30 +43,18 @@
 
             <div class="btn-block ng-class:{'db-spinner-cont': c.op.busy}">
                 <div ng-hide="c.op && c.op.error">
-                    <button id="c.btnModel.acc.id" ng-if="!c.btnModel.acc.hideBtn" type="button" class="btn btn-block btn-lg db-btn-x-big btn-success ng-class: {active: c.isActive(c.btnModel.acc.id)}"
+                    <button id="c.btnModel.acc.id" ng-if="!c.btnModel.acc.hideBtn" type="button" class="btn btn-block btn-lg db-btn-x-big btn-success"
                         ng-click="c.actionSign()" ng-disabled="c.isDisabled(c.btnModel.acc.id)" db-confirm confirm-config="c.btnModel.acc.cConf">
                         <span translate translate-cloak>STR_SIGNING_ACCEPT</span>
                     </button>
 
-                    <button id="c.btnModel.rej.id" ng-if="!c.btnModel.rej.hideBtn" type="button" class="btn btn-block btn-lg db-btn-x-big btn-danger ng-class: {active: c.isActive(c.btnModel.rej.id)}"
+                    <button id="c.btnModel.rej.id" ng-if="!c.btnModel.rej.hideBtn" type="button" class="btn btn-block btn-lg db-btn-x-big btn-danger"
                         ng-click="c.actionReject()" ng-disabled="c.isDisabled(c.btnModel.rej.id)" db-confirm confirm-config="c.btnModel.rej.cConf">
                         <span translate translate-cloak>{{c.btnModel.rej.strId}}</span>
                     </button>
                 </div>
 
                 <div ng-show="c.op.busy" us-spinner spinner-on="c.op.busy">
-                </div>
-
-                <div ng-show="c.op.error && !c.op.busy">
-                    <!-- Error message for operation -->
-                    <div uib-alert ng-show="c.op.error" type="danger" close="c.op.error = null">
-                        <i class="glyphicon glyphicon-alert"></i>&nbsp;
-                        <span ng-if="c.op.error.locId" translate translate-cloak>{{c.op.error.locId}}</span>
-                        <div>
-                            <span ng-if="c.op.error.statusCode">{{c.op.error.statusCode}}&nbsp;</span>
-                            <span ng-if="c.op.error.statusTxt">{{c.op.error.statusTxt}}</span>
-                        </div>
-                    </div>
                 </div>
             </div>
 
@@ -75,13 +63,13 @@
             <db-link ng-if="c.isMobile && c.btnModel.doctr.url" ng-attr-config="c.btnModel.doctr.linkConfig" ng-attr-uri="c.btnModel.doctr.url"
                 class="db-btn-x-big db-btn-prim"></db-link>
 
-            <button ng-if="c.isMobile" id="c.btnModel.att.id" type="button" class="btn btn-block btn-lg db-btn-x-big db-btn-prim ng-class: {active: c.isActive(c.btnModel.att.id)}"
+            <button ng-if="c.isMobile" id="c.btnModel.att.id" type="button" class="btn btn-block btn-lg db-btn-x-big db-btn-prim"
                 ng-disabled="c.isDisabled(c.btnModel.att.id)" ng-click="c.actionAttList()">
                 <span translate translate-cloak>STR_ATTACHMENTS</span>
                 <span class="badge ng-cloak">{{c.btnModel.att.count}}</span>
             </button>
 
-            <button ng-if="c.isMobile" id="c.btnModel.sta.id" type="button" class="btn btn-block btn-lg db-btn-x-big db-btn-prim ng-class: {active: c.isActive(c.btnModel.sta.id)}"
+            <button ng-if="c.isMobile" id="c.btnModel.sta.id" type="button" class="btn btn-block btn-lg db-btn-x-big db-btn-prim"
                 ng-click="c.actionSignings()" ng-disabled="c.isDisabled(c.btnModel.sta.id)">
                 <span translate translate-cloak>STR_SIGNEES_STATUSES</span>
             </button>
