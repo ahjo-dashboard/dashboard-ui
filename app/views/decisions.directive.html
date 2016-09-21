@@ -15,12 +15,13 @@
             </h5>
             <div class="list-group-item db-padding-10-hor" ng-repeat="i in c.record | filter: { type: d.value } | filter:query as filtered track by $index">
                 <div class="db-flex db-center-v" ng-click="c.itemSelected(i)">
-                    <span class="db-glyph db-glyph-sm db-glyph-dark db-margin-10-right" ng-include="!c.isSelected(i) ? 'images/glyph-expand.svg' : 'images/glyph-minimize.svg'"
-                        tooltip-enable="c.isTooltips" tooltip-placement="right" uib-tooltip="{{'STR_EXPANDCOLLAPSE' | translate}}"></span>
-                    <i class="">{{i.name}}</i>
-                    <span class="db-margin-10-left" ng-if="i.proposalOrdernumber">/{{i.proposalOrdernumber}}</span>
-                    <div ng-show="c.isSupported(i)" class="db-glyph db-glyph-sm db-glyph-dark db-margin-10-left" ng-include="'images/glyph-like.svg'"
-                        tooltip-enable="c.isTooltips" uib-tooltip="{{'STR_SUPPORTED' | translate}}" tooltip-placement="right"></div>
+                    <div class="db-flex-area">
+                        <i>{{i.name}}</i>
+                        <span class="db-margin-10-left" ng-if="i.proposalOrdernumber">/{{i.proposalOrdernumber}}</span>
+                    </div>
+                    <div ng-show="c.isSupported(i)" class="db-glyph db-glyph-sm db-glyph-info db-margin-05-right" ng-include="'images/glyph-like.svg'"
+                        tooltip-enable="c.isTooltips" uib-tooltip="{{'STR_SUPPORTED' | translate}}" tooltip-placement="top"></div>
+                    <span class="db-glyph db-glyph-sm db-glyph-dark db-margin-10-right" ng-include="!c.isSelected(i) ? 'images/glyph-expand.svg' : 'images/glyph-minimize.svg'" tooltip-enable="c.isTooltips" tooltip-placement="top" uib-tooltip="{{'STR_EXPANDCOLLAPSE' | translate}}"></span>
                 </div>
                 <div class="panel-collapse collapse" uib-collapse="!c.isSelected(i)">
                     <div class="db-padding-10-hor db-margin-05-top">
@@ -57,17 +58,16 @@
                     <div ng-if="votingsWithVotes.length" class="db-voting-res-col db-center">
                         <span translate translate-cloak>STR_VOTE_ABSENT</span>
                     </div>
+                    <div ng-if="votingsWithVotes.length" class="db-glyph db-glyph-sm">
+                    </div>
                 </div>
             </div>
 
             <!-- Voting item -->
-            <div class="list-group-item db-no-padding" ng-repeat="v in c.voting | filter: { hasVotes: true } | filter:query as votingsWithVotes track by $index">
-                <div class="list-group-item db-flex db-padding-05" ng-click="c.itemSelected(v)">
-                    <div class="db-flex ng-class:{'db-truncate': !c.isSelected(v)}">
-                        <div class="db-glyph db-glyph-sm db-glyph-dark db-margin-10-right" ng-include="!c.isSelected(v) ? 'images/glyph-expand.svg' : 'images/glyph-minimize.svg'"
-                            tooltip-enable="c.isTooltips" tooltip-placement="right" uib-tooltip="{{'STR_EXPANDCOLLAPSE' | translate}}"></div>
-                        <div class="db-flex-area ng-class:{'db-truncate': !c.isSelected(v)}" tooltip-enable="c.isTooltips" tooltip-placement="top-left"
-                            uib-tooltip="{{c.getVotingTitle(v)}}">{{c.getVotingTitle(v)}}</div>
+            <div class="list-group-item db-padding-0-hor" ng-repeat="v in c.voting | filter: { hasVotes: true } | filter:query as votingsWithVotes track by $index">
+               <div class="db-flex db-padding-05 db-padding-10-hor" ng-click="c.itemSelected(v)">
+                    <div class="db-flex-area ng-class:{'db-truncate': !c.isSelected(v)}">
+                        <div class="db-flex-area ng-class:{'db-truncate': !c.isSelected(v)}" tooltip-enable="c.isTooltips" tooltip-placement="top-left" uib-tooltip="{{c.getVotingTitle(v)}}">{{c.getVotingTitle(v)}}</div>
                     </div>
                     <div class="db-voting-res-col db-center ng-class:{'db-badge-gre db-underline': yesVotes > noVotes }">
                         <span>{{ yesVotes = (v.voteList | filter: { vote: 1 }).length }}</span>
@@ -81,11 +81,15 @@
                     <div class="db-voting-res-col db-center">
                         {{ (v.voteList | filter: { vote: 4 }).length }}
                     </div>
+
+                    <div class="db-glyph db-glyph-sm db-glyph-dark db-margin-10-right" ng-include="!c.isSelected(v) ? 'images/glyph-expand.svg' : 'images/glyph-minimize.svg'"
+                        tooltip-enable="c.isTooltips" tooltip-placement="right" uib-tooltip="{{'STR_EXPANDCOLLAPSE' | translate}}"></div>
                 </div>
 
                 <!-- Voting item details -->
-                <div class="panel-collapse collapse db-padding-05" uib-collapse="!c.isSelected(v)">
-                    <div ng-repeat="vl in v.voteList track by $index" class="list-group-item db-flex db-padding-05">
+
+                <ul class="list-group panel-collapse collapse" uib-collapse="!c.isSelected(v)">
+                    <button type="button" ng-repeat="vl in v.voteList track by $index" class="list-group-item db-flex db-padding-05-ver">
                         <div class="db-flex-area">
                             {{vl.personName}}
                         </div>
@@ -101,8 +105,11 @@
                         <div class="db-voting-res-col db-center">
                             <span ng-if="vl.vote===4" class=""><span class="db-padding-05">X</span></span>
                         </div>
-                    </div>
-                </div>
+                        <div>
+                            <div class="db-glyph db-glyph-sm"></div>
+                        </div>
+                    </button>
+                </ul>
             </div>
         </ul>
     </div>
