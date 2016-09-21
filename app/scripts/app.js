@@ -185,17 +185,3 @@ angular.module('dashboard', [
             });
         };
     });
-
-angular.module('dashboard')
-    .config(function ($provide) {
-        $provide.decorator("$exceptionHandler", ['$delegate', '$injector', function ($delegate, $injector) {
-            return function (aException, aCause) {
-                $delegate(aException, aCause);
-
-                console.log('dashboard.exceptionHandler: redirecting state');
-                var $rs = $injector.get("$rootScope");
-                $rs.apperror = { exception: aException, cause: aCause };
-                $rs.goErrorLanding();
-            };
-        }]);
-    });
