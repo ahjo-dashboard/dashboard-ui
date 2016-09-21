@@ -202,8 +202,13 @@ angular.module('dashboard')
         }
 
         function minuteUpdated(aEvent) {
-            $log.debug("meetingStatusCtrl.minuteUpdated", arguments);
-            $rootScope.$emit(CONST.TOPICMINUTEUPDATED, aEvent);
+            if (angular.isObject(aEvent)) {
+                $log.debug("meetingStatusCtrl.minuteUpdated", arguments);
+                $rootScope.$emit(CONST.TOPICMINUTEUPDATED, aEvent);
+            }
+            else {
+                $log.error("meetingStatusCtrl.minuteUpdated", arguments);
+            }
         }
 
         function getEvents() {
@@ -213,47 +218,50 @@ angular.module('dashboard')
                     $log.debug("meetingStatusCtrl: getEvents done: ", arguments);
                     if (angular.isArray(response)) {
                         response.forEach(function (event) {
-                            switch (event.typeName) {
-                                case CONST.MTGEVENT.LASTEVENTID:
-                                    lastEventId = event.lastEventId;
-                                    break;
-                                case CONST.MTGEVENT.REMARKPUBLISHED:
-                                case CONST.MTGEVENT.REMARKUPDATED:
-                                    if (angular.isObject(event) && angular.isObject(event.proposal) && !event.proposal.isOwnProposal) {
-                                        proposalEvents.push(event);
-                                    }
-                                    break;
-                                case CONST.MTGEVENT.REMARKDELETED:
-                                    if (angular.isObject(event) && angular.isObject(event.proposal) && !event.proposal.isOwnProposal) {
-                                        // spare some extra time to handle other events before deletion
-                                        $timeout(function () {
-                                            $rootScope.$emit(CONST.PROPOSALDELETED, event);
-                                        }, 1000);
-                                    }
-                                    break;
-                                case CONST.MTGEVENT.REMARKUNPUBLISHED:
-                                    break;
-                                case CONST.MTGEVENT.MEETINGSTATECHANGED:
-                                    meetingStatusChanged(event);
-                                    break;
-                                case CONST.MTGEVENT.TOPICSTATECHANGED:
-                                    topicStatusChanged(event);
-                                    break;
-                                case CONST.MTGEVENT.TOPICEDITED:
-                                    topicEdited(event, self.mtgDetails);
-                                    break;
-                                case CONST.MTGEVENT.LOGGEDOUT:
-                                    personLoggedOut(event);
-                                    break;
-                                case CONST.MTGEVENT.MINUTEUPDATED:
-                                    minuteUpdated(event);
-                                    break;
-                                case CONST.MTGEVENT.MOTIONSUPPORTED:
-                                    $log.error('MotionSupportedEvent: Pending implementation');
-                                    break;
-                                default:
-                                    $log.error("meetingStatusCtrl: unsupported typeName: " + event.typeName);
-                                    break;
+                            if (angular.isObject(event)) {
+                                switch (event.typeName) {
+                                    case CONST.MTGEVENT.LASTEVENTID:
+                                        lastEventId = event.lastEventId;
+                                        break;
+                                    case CONST.MTGEVENT.REMARKPUBLISHED:
+                                    case CONST.MTGEVENT.REMARKUPDATED:
+                                        if (angular.isObject(event) && angular.isObject(event.proposal) && !event.proposal.isOwnProposal) {
+                                            proposalEvents.push(event);
+                                        }
+                                        break;
+                                    case CONST.MTGEVENT.REMARKDELETED:
+                                        if (angular.isObject(event) && angular.isObject(event.proposal) && !event.proposal.isOwnProposal) {
+                                            // spare some extra time to handle other events before deletion
+                                            $timeout(function () {
+                                                $rootScope.$emit(CONST.PROPOSALDELETED, event);
+                                            }, 1000);
+                                        }
+                                        break;
+                                    case CONST.MTGEVENT.REMARKUNPUBLISHED:
+                                        break;
+                                    case CONST.MTGEVENT.MEETINGSTATECHANGED:
+                                        meetingStatusChanged(event);
+                                        break;
+                                    case CONST.MTGEVENT.TOPICSTATECHANGED:
+                                        topicStatusChanged(event);
+                                        break;
+                                    case CONST.MTGEVENT.TOPICEDITED:
+                                        topicEdited(event, self.mtgDetails);
+                                        break;
+                                    case CONST.MTGEVENT.LOGGEDOUT:
+                                        personLoggedOut(event);
+                                        break;
+                                    case CONST.MTGEVENT.MINUTEUPDATED:
+                                    case CONST.MTGEVENT.MINUTEDELETED:
+                                        minuteUpdated(event);
+                                        break;
+                                    case CONST.MTGEVENT.MOTIONSUPPORTED:
+                                        $log.error('MotionSupportedEvent: Pending implementation');
+                                        break;
+                                    default:
+                                        $log.error("meetingStatusCtrl: unsupported typeName: " + event.typeName);
+                                        break;
+                                }
                             }
                         }, this);
                     }

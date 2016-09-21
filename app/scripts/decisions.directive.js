@@ -19,9 +19,6 @@ angular.module('dashboard')
             self.loading = false;
             self.types = [];
             self.selectedItem = null;
-            self.record = null;
-            self.supporter = null;
-            self.voting = null;
             self.isTooltips = $rootScope.isTooltips;
             self.errorCode = 0;
             self.record = [];
@@ -57,32 +54,51 @@ angular.module('dashboard')
                 self.voting = [];
             }
 
-            function updateDecision(decision) {
-                if (angular.isObject(decision)) {
+            function updateDecision(aDecision) {
+                if (angular.isObject(aDecision)) {
                     $log.log("dbDecisions.updateDecision", arguments);
-                    if (angular.isObject(mtgItemSelected) && angular.equals(mtgItemSelected.meetingGuid, decision.meetingID)) {
-                        if (angular.isObject(mtgTopicSelected) && angular.equals(mtgTopicSelected.topicGuid, decision.topicGuid)) {
-                            if (angular.isObject(decision.minuteEntry)) {
-                                if (!angular.isArray(self.record)) {
-                                    self.record = [];
-                                }
-                                if (!angular.isArray(self.supporter)) {
-                                    self.supporter = [];
-                                }
-                                var updated = false;
-                                for (var index = 0; !updated && index < self.record.length; index++) {
-                                    var entry = self.record[index];
-                                    if (angular.isObject(entry) && angular.equals(entry.minuteEntryGuid, decision.minuteEntry.minuteEntryGuid)) {
-                                        angular.merge(entry, decision.minuteEntry);
-                                        updated = true;
+
+                    if (aDecision.typeName === CONST.MTGEVENT.MINUTEUPDATED) {
+                        if (angular.isObject(mtgItemSelected) && angular.equals(mtgItemSelected.meetingGuid, aDecision.meetingID)) {
+                            if (angular.isObject(mtgTopicSelected) && angular.equals(mtgTopicSelected.topicGuid, aDecision.topicGuid)) {
+
+                                if (angular.isObject(aDecision.minuteEntry)) {
+                                    if (!angular.isArray(self.record)) {
+                                        self.record = [];
+                                    }
+                                    if (!angular.isArray(self.supporter)) {
+                                        self.supporter = [];
+                                    }
+                                    var updated = false;
+                                    for (var index = 0; !updated && index < self.record.length; index++) {
+                                        var entry = self.record[index];
+                                        if (angular.isObject(entry) && angular.equals(entry.minuteEntryGuid, aDecision.minuteEntry.minuteEntryGuid)) {
+                                            angular.merge(entry, aDecision.minuteEntry);
+                                            updated = true;
+                                        }
+                                    }
+                                    if (!updated) {
+                                        self.record.push(aDecision.minuteEntry);
                                     }
                                 }
-                                if (!updated) {
-                                    self.record.push(decision.minuteEntry);
+                                if (angular.isArray(aDecision.supporters) && aDecision.supporters.length) {
+                                    // todo: implement supporter updating
                                 }
                             }
-                            if (angular.isArray(decision.supporters) && decision.supporters.length) {
-                                // todo: implement supporter updating
+                        }
+                    }
+                    else if (aDecision.typeName === CONST.MTGEVENT.MINUTEDELETED) {
+                        if (angular.isObject(mtgItemSelected) && angular.equals(mtgItemSelected.meetingGuid, aDecision.meetingID)) {
+                            if (angular.isObject(mtgTopicSelected) && angular.equals(mtgTopicSelected.topicGuid, aDecision.topicGuid)) {
+
+                                var search = angular.isArray(self.record);
+                                for (var i = self.record.length + CONST.NOTFOUND; search && i > CONST.NOTFOUND; i--) {
+                                    var e = self.record[i];
+                                    if (angular.isObject(e) && angular.equals(e.minuteEntryGuid, aDecision.minuteEntryGuid)) {
+                                        self.record.splice(i, 1);
+                                        search = false;
+                                    }
+                                }
                             }
                         }
                     }
@@ -159,15 +175,15 @@ angular.module('dashboard')
                 }
             });
 
-            var updatedWatcher = $rootScope.$on(CONST.TOPICMINUTEUPDATED, function (aEvent, aData) {
+            var updateWatcher = $rootScope.$on(CONST.TOPICMINUTEUPDATED, function (aEvent, aData) {
                 $log.debug("dbDecisions.updatedWatcher: ", arguments);
                 updateDecision(aData);
             });
 
             $scope.$on('$destroy', function () {
                 $log.debug("dbDecisions: DESTROY");
-                if (angular.isFunction(updatedWatcher)) {
-                    updatedWatcher();
+                if (angular.isFunction(updateWatcher)) {
+                    updateWatcher();
                 }
             });
 
