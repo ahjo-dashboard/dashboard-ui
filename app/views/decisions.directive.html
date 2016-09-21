@@ -94,16 +94,16 @@
                             {{vl.personName}}
                         </div>
                         <div class="db-voting-res-col db-center">
-                            <span ng-if="vl.vote===1" class="db-badge-gre"><span class="db-padding-05">X</span></span>
+                            <span ng-if="vl.vote===1" class="db-badge-gre" tooltip-enable="c.isTooltips" tooltip-placement="top" uib-tooltip="{{'STR_VOTE_YEA' | translate}}"><span class="db-padding-05">X</span></span>
                         </div>
                         <div class="db-voting-res-col db-center">
-                            <span ng-if="vl.vote===2" class="db-badge-red"><span class="db-padding-05">X</span></span>
+                            <span ng-if="vl.vote===2" class="db-badge-red" tooltip-enable="c.isTooltips" tooltip-placement="top" uib-tooltip="{{'STR_VOTE_NAY' | translate}}"><span class="db-padding-05">X</span></span>
                         </div>
                         <div class="db-voting-res-col db-center">
-                            <span ng-if="vl.vote===3" class="db-badge-dark"><span class="db-padding-05">X</span></span>
+                            <span ng-if="vl.vote===3" class="db-badge-dark" tooltip-enable="c.isTooltips" tooltip-placement="top" uib-tooltip="{{'STR_VOTE_EMPTY' | translate}}"><span class="db-padding-05">X</span></span>
                         </div>
                         <div class="db-voting-res-col db-center">
-                            <span ng-if="vl.vote===4" class=""><span class="db-padding-05">X</span></span>
+                            <span ng-if="vl.vote===4"  tooltip-enable="c.isTooltips" tooltip-placement="top" uib-tooltip="{{'STR_VOTE_ABSENT' | translate}}"><span class="db-padding-05">X</span></span>
                         </div>
                         <div>
                             <div class="db-glyph db-glyph-sm"></div>
