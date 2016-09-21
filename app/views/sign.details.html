@@ -18,8 +18,9 @@
                         tooltip-enable="isTooltips" uib-tooltip="{{parallelMode ? 'STR_INFO_VIEW_VERT' : 'STR_INFO_VIEW_HORIZ' | translate}}"
                         tooltip-placement="right">
                         <div class="db-center">
-                            <div ng-if="parallelMode" class="db-glyph-sm" ng-include="'images/glyph-parallel.svg'"></div>
-                            <div ng-if="!parallelMode" class="db-glyph-sm" ng-include="'images/glyph-vertical.svg'"></div>
+                            <div class="db-glyph-sm db-overflow-hidden">
+                                <div class="db-glyph db-glyph-sm" ng-include="parallelMode ? 'images/glyph-parallel.svg' : 'images/glyph-vertical.svg'"></div>
+                            </div>
                         </div>
                     </button>
 
@@ -28,15 +29,14 @@
                         <span translate translate-cloak>STR_SIGNING_REQ</span>
                     </button>
                     <button type="button" class="btn db-btn-sel db-btn-big db-brd-all db-margin-2 ng-class:{'active' : c.isActive(c.btnModel.doctr.id) }"
-                        ng-click="c.actionDocTr()" ng-disabled="c.btnModel.doctr.disabled">
+                        ng-click="c.actionDocTr()" ng-hide="c.btnModel.doctr.disabled">
                         <span translate translate-cloak>STR_TRANSLATION</span>
                     </button>
                 </div>
                 <button type="button" class="btn db-btn-prim db-btn-small db-brd-all db-margin-2 db-flex-right" ng-click="c.primaryClicked()"
                     tooltip-enable="isTooltips" tooltip-placement="right" uib-tooltip="{{'STR_EXPANDCOLLAPSE' | translate}}">
-                    <div class="db-center">
-                        <div ng-if="c.bm !== c.bms.PRIMARY" class="db-glyph-sm" ng-include="'images/glyph-expand.svg'"></div>
-                        <div ng-if="c.bm === c.bms.PRIMARY" class="db-glyph-sm" ng-include="'images/glyph-minimize.svg'"></div>
+                    <div class="db-center ">
+                        <div class="db-glyph db-glyph-sm" ng-include="c.bm === c.bms.PRIMARY ? 'images/glyph-expand-minus.svg' : 'images/glyph-expand-plus.svg'"></div>
                     </div>
                 </button>
             </div>
@@ -89,8 +89,7 @@
                 <button ng-if="!c.isTablet" type="button" class="btn db-btn-prim db-btn-small db-brd-all db-margin-2 db-flex-right" ng-click="c.secondaryClicked()"
                     tooltip-enable="isTooltips" tooltip-placement="right" uib-tooltip="{{'STR_EXPANDCOLLAPSE' | translate}}">
                     <div class="db-center">
-                        <div ng-if="c.bm !== c.bms.SECONDARY" class="db-glyph-sm" ng-include="'images/glyph-expand.svg'"></div>
-                        <div ng-if="c.bm === c.bms.SECONDARY" class="db-glyph-sm" ng-include="'images/glyph-minimize.svg'"></div>
+                        <div class="db-glyph db-glyph-sm" ng-include="c.bm === c.bms.SECONDARY ? 'images/glyph-expand-minus.svg' : 'images/glyph-expand-plus.svg'"></div>
                     </div>
                 </button>
 

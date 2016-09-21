@@ -15,11 +15,11 @@
             </h5>
             <div class="list-group-item db-padding-10-hor" ng-repeat="i in c.record | filter: { type: d.value } | filter:query as filtered track by $index">
                 <div class="db-flex db-center-v" ng-click="c.itemSelected(i)">
-                    <span class="db-glyph-sm db-glyph-dark db-margin-10-right" ng-include="!c.isSelected(i) ? 'images/glyph-expand.svg' : 'images/glyph-minimize.svg'"
+                    <span class="db-glyph db-glyph-sm db-glyph-dark db-margin-10-right" ng-include="!c.isSelected(i) ? 'images/glyph-expand.svg' : 'images/glyph-minimize.svg'"
                         tooltip-enable="c.isTooltips" tooltip-placement="right" uib-tooltip="{{'STR_EXPANDCOLLAPSE' | translate}}"></span>
                     <i class="">{{i.name}}</i>
                     <span class="db-margin-10-left" ng-if="i.proposalOrdernumber">/{{i.proposalOrdernumber}}</span>
-                    <div ng-show="c.isSupported(i)" class="db-glyph-sm db-glyph-dark db-margin-10-left" ng-include="'images/glyph-like.svg'"
+                    <div ng-show="c.isSupported(i)" class="db-glyph db-glyph-sm db-glyph-dark db-margin-10-left" ng-include="'images/glyph-like.svg'"
                         tooltip-enable="c.isTooltips" uib-tooltip="{{'STR_SUPPORTED' | translate}}" tooltip-placement="right"></div>
                 </div>
                 <div class="panel-collapse collapse" uib-collapse="!c.isSelected(i)">
@@ -64,7 +64,7 @@
             <div class="list-group-item db-no-padding" ng-repeat="v in c.voting | filter: { hasVotes: true } | filter:query as votingsWithVotes track by $index">
                 <div class="list-group-item db-flex db-padding-05" ng-click="c.itemSelected(v)">
                     <div class="db-flex ng-class:{'db-truncate': !c.isSelected(v)}">
-                        <div class="db-glyph-sm db-glyph-dark db-margin-10-right" ng-include="!c.isSelected(v) ? 'images/glyph-expand.svg' : 'images/glyph-minimize.svg'"
+                        <div class="db-glyph db-glyph-sm db-glyph-dark db-margin-10-right" ng-include="!c.isSelected(v) ? 'images/glyph-expand.svg' : 'images/glyph-minimize.svg'"
                             tooltip-enable="c.isTooltips" tooltip-placement="right" uib-tooltip="{{'STR_EXPANDCOLLAPSE' | translate}}"></div>
                         <div class="db-flex-area ng-class:{'db-truncate': !c.isSelected(v)}" tooltip-enable="c.isTooltips" tooltip-placement="top-left"
                             uib-tooltip="{{c.getVotingTitle(v)}}">{{c.getVotingTitle(v)}}</div>
