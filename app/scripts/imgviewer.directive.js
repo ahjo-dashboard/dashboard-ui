@@ -13,7 +13,7 @@
 var app = angular.module('dashboard');
 app.directive('dbImgviewer', function () {
 
-    var controller = ['$log', '$q', '$http', '$scope', function ($log, $q, $http, $scope) {
+    var controller = ['$log', '$q', '$http', '$scope', '$rootScope', function ($log, $q, $http, $scope, $rootScope) {
         $log.debug("dbImgviewer.controller");
         var self = this;
         self.pages = [];
@@ -24,6 +24,7 @@ app.directive('dbImgviewer', function () {
         self.imgZoomMax = 1000;
         self.imgZoomMin = 1;
         self.zoomStep = 10;
+        self.isTooltips = $rootScope.isTooltips;
 
         self.imgEvent = function (data) {
             $log.debug("dbImgviewer.imgEvent: result=" + data.status);

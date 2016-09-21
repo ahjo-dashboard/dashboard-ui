@@ -35,7 +35,7 @@ app.controller('signStatusCtrl', function ($log, $scope, $state, SigningAttApi, 
     self.item = tmp;
     $log.debug("signStatusCtrl: name: " + self.item.Name);
 
-    // self.item.Comment = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."; //TODO: REMOVE THIS TEST CODE
+    // self.item.Comment = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."; //TODO: Enable to test comment field in view, user this only for layout development
 
     self.displayStatus = true;
     self.btnModel = {
@@ -70,14 +70,6 @@ app.controller('signStatusCtrl', function ($log, $scope, $state, SigningAttApi, 
     };
 
     // PRIVATE OBJECTS
-
-    function ErrorMsg(aLocId, aErrCode, aTxt) {
-        var self = this;
-        self.locId = aLocId ? aLocId : null;
-        self.statusCode = angular.isDefined(aErrCode) ? aErrCode : 0;
-        self.statusTxt = aTxt ? aTxt : null;
-        return self;
-    }
 
     function SignOperation(aItem, aNewStatus) {
         var self = this;
@@ -131,28 +123,29 @@ app.controller('signStatusCtrl', function ($log, $scope, $state, SigningAttApi, 
     }
 
     function saveStatus(op, cb) {
-        $log.log("signStatusCtrl.saveStatus");
-        $log.debug(op);
+        $log.log("signStatusCtrl.saveStatus: " , arguments);
 
         if (!(op instanceof SignOperation)) {
-            $log.error(op);
-            throw new Error("signStatusCtrl.saveStatus: bad arguments");
+            $log.error("signStatusCtrl.saveStatus: bad arguments");
+            return;
         }
 
         clearAlerts();
 
         op.busy = true;
 
-        var resp = SigningOpenApi.save(op.item, function (value) {
-            $log.debug("signStatusCtrl.saveStatus: done \n" + JSON.stringify(value));
+        var resp = SigningOpenApi.save(op.item, function (/*value*/) {
+            $log.debug("signStatusCtrl.saveStatus: done: ", arguments);
             self.item.Status = op.item.Status;
             op.item = null; // Free up reference to allow cleanup
             if (angular.isFunction(cb)) {
                 cb();
             }
         }, function (error) {
-            $log.error("signStatusCtrl.saveStatus: \n" + JSON.stringify(error));
-            op.error = new ErrorMsg('STR_FAIL_OP', error.status, error.statusText);
+            $log.error("signStatusCtrl.saveStatus: error: ", arguments);
+            if (angular.isObject(error)) {
+                Utils.showErrorForErrorCode(error.status);
+            }
         });
         resp.$promise.finally(function () {
             $log.debug("signStatusCtrl.saveStatus: finally");
@@ -161,22 +154,21 @@ app.controller('signStatusCtrl', function ($log, $scope, $state, SigningAttApi, 
     }
 
     function getRequestorInfo(reqInfo, item) {
-        $log.debug("signStatusCtrl.getRequestorInfo");
+        $log.debug("signStatusCtrl.getRequestorInfo", arguments);
 
         if (reqInfo && angular.isString(item.RequestorId) && item.RequestorId.length) {
             reqInfo.busy = true;
             var response = SigningPersonInfoApi.get({ userId: item.RequestorId }, function (/*data*/) {
                 $log.debug("signStatusCtrl.getRequestorInfo: success ");
                 reqInfo.email = response.email;
-            }, function (error) {
-                $log.error("signStatusCtrl.getRequestorInfo: api query error: " + JSON.stringify(error));
+            }, function (/*error*/) {
+                $log.error("signStatusCtrl.getRequestorInfo: error: ", arguments);
             });
             response.$promise.finally(function () {
                 reqInfo.busy = false;
-                $log.debug("signStatusCtrl.getRequestorInfo: " + JSON.stringify(reqInfo));
             });
         } else {
-            $log.error("signStatusCtrl.getRequestorInfo: bad args");
+            $log.error("signStatusCtrl.getRequestorInfo: bad args: ", arguments);
         }
     }
 
@@ -210,7 +202,6 @@ app.controller('signStatusCtrl', function ($log, $scope, $state, SigningAttApi, 
     };
 
     self.isDisabled = function (id) {
-        // $log.debug("signStatusCtrl.isDisabled: " + id);
         var res = false;
         if (self.op && self.op.busy) {
             res = true;
@@ -226,11 +217,6 @@ app.controller('signStatusCtrl', function ($log, $scope, $state, SigningAttApi, 
             }
         }
         return res;
-    };
-
-    self.isActive = function () {
-        //$log.debug("signStatusCtrl.isActive: " + id + "=" +self.btnModel[id].active);
-        return false;
     };
 
     /* Resolve css class for signing status */
