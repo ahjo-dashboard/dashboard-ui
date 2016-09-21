@@ -35,6 +35,7 @@ angular.module('dashboard')
             function setTypes(isCityCouncil) {
                 if (isCityCouncil === true || isCityCouncil === false) {
                     $log.log("dbDecisions.setTypes", arguments);
+                    var types = [];
                     angular.forEach(PROPS.TYPE, function (type) {
                         if (angular.isObject(type) && type.decisionOrder) {
                             var mgtType = isCityCouncil ? CONST.MTGTYPE.CITYCOUNCIL : CONST.MTGTYPE.DEFAULT;
@@ -42,17 +43,59 @@ angular.module('dashboard')
                                 this.push(type);
                             }
                         }
-                    }, self.types);
+                    }, types);
+                    self.types = types;
                 }
                 else {
                     $log.error("dbDecisions.setTypes: bad args");
                 }
             }
 
-            function getDecisions(aMtg, aTopic) {
-                $log.debug("dbDecisions.getDecisions", arguments);
-                if (angular.isObject(aTopic) && angular.isObject(aMtg)) {
+            function resetData() {
+                self.record = [];
+                self.supporter = [];
+                self.voting = [];
+            }
 
+            function updateDecision(decision) {
+                if (angular.isObject(decision)) {
+                    $log.log("dbDecisions.updateDecision", arguments);
+                    if (angular.isObject(mtgItemSelected) && angular.equals(mtgItemSelected.meetingGuid, decision.meetingID)) {
+                        if (angular.isObject(mtgTopicSelected) && angular.equals(mtgTopicSelected.topicGuid, decision.topicGuid)) {
+                            if (angular.isObject(decision.minuteEntry)) {
+                                if (!angular.isArray(self.record)) {
+                                    self.record = [];
+                                }
+                                if (!angular.isArray(self.supporter)) {
+                                    self.supporter = [];
+                                }
+                                var updated = false;
+                                for (var index = 0; !updated && index < self.record.length; index++) {
+                                    var entry = self.record[index];
+                                    if (angular.isObject(entry) && angular.equals(entry.minuteEntryGuid, decision.minuteEntry.minuteEntryGuid)) {
+                                        angular.merge(entry, decision.minuteEntry);
+                                        updated = true;
+                                    }
+                                }
+                                if (!updated) {
+                                    self.record.push(decision.minuteEntry);
+                                }
+                            }
+                            if (angular.isArray(decision.supporters) && decision.supporters.length) {
+                                // todo: implement supporter updating
+                            }
+                        }
+                    }
+                }
+                else {
+                    $log.error("dbDecisions.updateDecision", arguments);
+                }
+            }
+
+            function getDecisions(aMtg, aTopic) {
+                if (angular.isObject(aTopic) && angular.isObject(aMtg)) {
+                    $log.debug("dbDecisions.getDecisions", arguments);
+                    resetData();
                     AhjoMeetingSrv.getDecisions(aMtg.meetingGuid, aTopic.topicGuid).then(function (resp) {
                         $log.log("dbDecisions.getDecisions done", resp);
                         self.record = angular.isArray(resp.record) ? resp.record : [];
@@ -69,7 +112,7 @@ angular.module('dashboard')
                     });
                 }
                 else {
-                    $log.log("dbDecisions.getDecisions: bad args");
+                    $log.error("dbDecisions.getDecisions", arguments);
                 }
             }
 
@@ -109,17 +152,16 @@ angular.module('dashboard')
 
             $scope.$watch(function () {
                 return StorageSrv.getKey(CONST.KEY.TOPIC);
-            }, function (topic, oldTopic) {
-                if (!angular.equals(topic, oldTopic)) {
-                    getDecisions(mtgItemSelected, topic);
+            }, function (topic) {
+                if (!angular.equals(topic, mtgTopicSelected)) {
+                    mtgTopicSelected = topic;
+                    getDecisions(mtgItemSelected, mtgTopicSelected);
                 }
             });
 
             var updatedWatcher = $rootScope.$on(CONST.TOPICMINUTEUPDATED, function (aEvent, aData) {
                 $log.debug("dbDecisions.updatedWatcher: ", arguments);
-                if (angular.isObject(aData)) {
-                    getDecisions(mtgItemSelected, mtgTopicSelected);
-                }
+                updateDecision(aData);
             });
 
             $scope.$on('$destroy', function () {
