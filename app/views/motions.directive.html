@@ -29,7 +29,7 @@
                         <div ng-if="m.isUserSupported" class="db-glyph-sm db-glyph-dark db-margin-05-left" ng-include="'images/glyph-user.svg'" tooltip-enable="c.isTooltips" uib-tooltip="{{'STR_MOTION_SIGNED_BY_ME' | translate}}" tooltip-placement="left"></div>
                     </div>
                     <div class="col-xs-2 col-md-1 db-flex db-flex-col">
-                        <div class="db-flex-align-item-end db-glyph-sm db-glyph-dark" ng-include="c.isSelected(m) ? 'images/glyph-minimize.svg' : 'images/glyph-expand.svg'" tooltip-enable="c.isTooltips" tooltip-placement="top" uib-tooltip="{{'STR_EXPANDCOLLAPSE' | translate}}"></div>
+                        <div class="db-flex-align-item-end db-glyph-sm db-glyph-dark db-margin-10-right" ng-include="c.isSelected(m) ? 'images/glyph-minimize.svg' : 'images/glyph-expand.svg'" tooltip-enable="c.isTooltips" tooltip-placement="top" uib-tooltip="{{'STR_EXPANDCOLLAPSE' | translate}}"></div>
                     </div>
                 </div>
                 <div class="panel-collapse collapse" uib-collapse="!c.isSelected(m)">
