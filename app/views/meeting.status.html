@@ -30,10 +30,8 @@
             <div class="db-list-group-item-prim db-brd-non-botton db-padding-05-bottom" tooltip-enable="isTooltips" uib-tooltip="{{msc.uiName}}" tooltip-placement="top">
                 <h4 class="db-margin-10-bottom">{{msc.uiName}}</h4>
             </div>
-            <div ng-if='msc.loading' class="list-group-item">
-                <uib-progressbar class="progress-striped active db-no-margin" type="info">
-                    <span translate translate-cloak>STR_LOADING_DATA</span>
-                </uib-progressbar>
+            <div ng-if='msc.loading' class="list-group-item db-spinner-cont">
+                <div us-spinner spinner-on="true"></div>
             </div>
             <div ng-if='!msc.loading' class="list-group-item db-brd-non-top db-prim-bg db-padding-05 db-flex">
                 <button type="button" class="btn btn-block db-brd-all db-flex ng-class:[{'db-btn-sel':msc.chairman},{'db-no-pointer-events db-btn-prim':!msc.chairman}]" ng-disabled="msc.updatingStatus" tooltip-enable="isTooltips" uib-tooltip="{{'STR_CHANGE_MEETING_STATUS' | translate}}" ng-click="msc.changeMeetingStatus()">
