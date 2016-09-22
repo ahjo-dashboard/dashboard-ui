@@ -173,12 +173,6 @@ angular.module('dashboard', [
             return $rootScope.menu === CONST.MENU.FULL;
         };
 
-        $rootScope.successInfo = function (info) {
-            $translate(info).then(function (translatedValue) {
-                ngToast.success(translatedValue);
-            });
-        };
-
         $rootScope.failedInfo = function (info) {
             $translate(info).then(function (translatedValue) {
                 ngToast.danger(translatedValue);
