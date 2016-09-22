@@ -253,6 +253,7 @@ angular.module('dashboard')
                                         break;
                                     case CONST.MTGEVENT.MINUTEUPDATED:
                                     case CONST.MTGEVENT.MINUTEDELETED:
+                                    case CONST.MTGEVENT.MINUTETYPECHANGED:
                                         minuteUpdated(event);
                                         break;
                                     case CONST.MTGEVENT.MOTIONSUPPORTED:
