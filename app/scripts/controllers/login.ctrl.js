@@ -57,7 +57,7 @@ angular.module('dashboard')
                 withCredentials: true,
                 url: ENV.AhjoApi_UserLoginRest
             }).then(function (resp) {
-                $log.error("loginCtrl.loginRest: done");
+                $log.debug("loginCtrl.loginRest: done");
                 if (!Utils.processAhjoError(resp)) { // LoginRest result: OK
                     // Setting TESTENV_USERID to store doesn't reflect the userid used by backend if in some error cases if response doesn't include a  Set-Cookie or similar issue.
                     // That might happen e.g. due to backend completing 200OK but rejecting bad arguments for the request.

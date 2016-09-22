@@ -2,7 +2,6 @@
     <div class="ad-page-header db-center-v">
 
         <div class="overview-hdr">
-
             <button ng-if="env_dev" type="button" class="btn db-btn-prim db-center db-margin-10-right" ng-click="oc.logout()" tooltip-enable="isTooltips"
                 tooltip-placement="right" uib-tooltip="{{'STR_LOGOUT' | translate}} {{oc.testEnvUserId}}" tooltip-popup-delay='0'>
                 <div class="db-glyph" ng-include="'images/glyph-back.svg'"></div>
@@ -11,7 +10,7 @@
             <h4 class="hidden-sm hidden-md hidden-lg db-flex-area" translate>STR_APPNAME</h4>
             <h3 class="hidden-xs db-flex-area" translate>STR_APPNAME</h3>
             <button type="button" class="btn db-btn-prim" ng-click="oc.showInfo()">
-                <div class="db-glyph-sm" ng-include="'images/glyph-info.svg'"></div>
+                <div class="db-glyph db-glyph-sm" ng-include="'images/glyph-info.svg'"></div>
             </button>
         </div>
     </div>
@@ -34,14 +33,13 @@
                 </button>
                 <button type="button" class="hidden-xs btn db-btn-prim ad-xs">
                     <div class="db-center">
-                        <div class="db-glyph-sm" ng-include="'images/glyph-info.svg'"></div>
+                        <div class="db-glyph db-glyph-sm" ng-include="'images/glyph-info.svg'"></div>
                     </div>
                 </button>
-                <button type="button" class="btn db-btn-prim ad-xs db-center db-txt-center db-btn-list-topright-xs db-btn-list-topright-sm"
+                <button type="button" class="btn db-btn-prim ad-xs db-btn-list-topright-xs db-btn-list-topright-sm"
                     ng-click="oc.upperClicked()" tooltip-enable="isTooltips" tooltip-placement="top" uib-tooltip="{{'STR_EXPANDCOLLAPSE' | translate}}">
-                    <div class="db-center">
-                        <div ng-if="oc.blockMode === oc.bms.PRIMARY" class="db-glyph-sm" ng-include="'images/glyph-minimize.svg'"></div>
-                        <div ng-if="oc.blockMode !== oc.bms.PRIMARY" class="db-glyph-sm" ng-include="'images/glyph-expand.svg'"></div>
+                    <div class="db-center db-flex-area">
+                        <div class="db-glyph db-glyph-sm" ng-include="oc.blockMode === oc.bms.PRIMARY ? 'images/glyph-expand-minus.svg' : 'images/glyph-expand-plus.svg'"></div>
                     </div>
                 </button>
             </div>
@@ -65,14 +63,13 @@
                 </button>
                 <button type="button" class="hidden-xs btn db-btn-prim ad-xs">
                     <div class="db-center">
-                        <div class="db-glyph-sm" ng-include="'images/glyph-info.svg'"></div>
+                        <div class="db-glyph db-glyph-sm" ng-include="'images/glyph-info.svg'"></div>
                     </div>
                 </button>
-                <button type="button" class="btn db-btn-prim ad-xs db-center db-btn-list-topright-xs db-btn-list-topright-sm" ng-click="oc.lowerClicked()"
+                <button type="button" class="btn db-btn-prim ad-xs db-btn-list-topright-xs db-btn-list-topright-sm" ng-click="oc.lowerClicked()"
                     tooltip-enable="isTooltips" tooltip-placement="top" uib-tooltip="{{'STR_EXPANDCOLLAPSE' | translate}}">
-                    <div class="db-center">
-                        <div ng-if="oc.blockMode === oc.bms.SECONDARY" class="db-glyph-sm" ng-include="'images/glyph-minimize.svg'"></div>
-                        <div ng-if="oc.blockMode !== oc.bms.SECONDARY" class="db-glyph-sm" ng-include="'images/glyph-expand.svg'"></div>
+                    <div class="db-center db-flex-area">
+                        <div class="db-glyph db-glyph-sm" ng-include="oc.blockMode === oc.bms.SECONDARY ? 'images/glyph-expand-minus.svg' : 'images/glyph-expand-plus.svg'"></div>
                     </div>
                 </button>
             </div>

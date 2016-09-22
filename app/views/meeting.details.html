@@ -18,7 +18,7 @@
                     <button ng-if="menuClosed()" type="button" class="btn db-btn-prim db-btn-small db-brd-all db-margin-2" ng-click="openMenu()"
                         tooltip-enable="isTooltips" uib-tooltip="{{'STR_INFO_MENUBTN' | translate}}" tooltip-placement="right">
                         <div class="db-center">
-                            <div class="db-glyph-sm" ng-include="'images/glyph-menu-toggle.svg'"></div>
+                            <div class="db-glyph db-glyph-sm" ng-include="'images/glyph-menu-toggle.svg'"></div>
                         </div>
                     </button>
                     <button ng-if="menuClosed()" type="button" class="btn db-btn-prim db-btn-small db-brd-all db-margin-2" ng-click="c.toggleParallelMode()"
@@ -26,7 +26,7 @@
                         tooltip-placement="right">
                         <div class="db-center">
                             <div class="db-glyph-sm db-overflow-hidden">
-                                <div ng-include="parallelMode ? 'images/glyph-parallel.svg' : 'images/glyph-vertical.svg'"></div>
+                                <div class="db-glyph db-glyph-sm" ng-include="parallelMode ? 'images/glyph-parallel.svg' : 'images/glyph-vertical.svg'"></div>
                             </div>
                         </div>
                     </button>
@@ -35,13 +35,13 @@
                     ng-click="c.newTab(c.tData.link)" ng-disabled="!c.tData || !c.tData.link" tooltip-enable="isTooltips" uib-tooltip="{{'STR_OPEN_NEW_TAB' | translate}}"
                     tooltip-placement="bottom">
                     <div class="db-center">
-                        <div class="db-glyph-sm" ng-include="'images/glyph-open-new.svg'"></div>
+                        <div class="db-glyph db-glyph-sm" ng-include="'images/glyph-open-new.svg'"></div>
                     </div>
                 </button>
                 <button type="button" class="btn db-btn-prim db-btn-small db-brd-all db-margin-2 db-flex-right" ng-click="c.primaryClicked()"
                     tooltip-enable="isTooltips" tooltip-placement="bottom" uib-tooltip="{{'STR_EXPANDCOLLAPSE' | translate}}">
                     <div class="db-center">
-                        <div class="db-glyph-sm" ng-include="c.bm === c.bms.PRIMARY ? 'images/glyph-minimize.svg' : 'images/glyph-expand.svg'"></div>
+                        <div class="db-glyph db-glyph-sm" ng-include="c.bm === c.bms.PRIMARY ? 'images/glyph-expand-minus.svg' : 'images/glyph-expand-plus.svg'"></div>
                     </div>
                 </button>
             </div>
@@ -69,7 +69,7 @@
                     <button ng-if="menuClosed() && c.pm === c.pms.HIDDEN" type="button" class="btn db-btn-prim db-btn-small db-brd-all db-margin-2"
                         ng-click="openMenu()" tooltip-enable="isTooltips" uib-tooltip="{{'STR_INFO_MENUBTN' | translate}}" tooltip-placement="right">
                         <div class="db-center">
-                            <div class="db-glyph-sm" ng-include="'images/glyph-menu-toggle.svg'"></div>
+                            <div class="db-glyph db-glyph-sm" ng-include="'images/glyph-menu-toggle.svg'"></div>
                         </div>
                     </button>
                     <button ng-if="c.pm === c.pms.HIDDEN" type="button" class="btn btn-block db-btn-sel db-btn-big db-brd-all ng-class:[{'db-margin-2':!c.isMobile},{'active':c.sm === c.sms.SECRET}]"
@@ -91,7 +91,7 @@
                             uib-tooltip="{{'STR_PROP_PUB_COUNT' | translate}}" tooltip-placement="bottom">
                                 {{c.topic.db_publishedProposalCount}}
                             </div>
-                            <div ng-show="c.topic.isModified" class="db-glyph-sm db-glyph-ora" ng-include="'images/glyph-bell.svg'" tooltip-enable="isTooltips" tooltip-placement="right" uib-tooltip="{{'STR_INFO_NEW_PROPS' | translate}}"></div>
+                            <div ng-show="c.topic.isModified" class="db-glyph db-glyph-sm db-glyph-ora" ng-include="'images/glyph-bell.svg'" tooltip-enable="isTooltips" tooltip-placement="right" uib-tooltip="{{'STR_INFO_NEW_PROPS' | translate}}"></div>
                         </div>
                     </button>
                     <button type="button" class="btn btn-block db-btn-sel db-btn-big db-brd-all ng-class:[{'active':c.sm === c.sms.REMARK},{'db-margin-2':!c.isMobile}]"
@@ -114,8 +114,7 @@
                 <button ng-if="c.pm !== c.pms.HIDDEN" type="button" class="btn btn-block db-btn-prim db-btn-small db-brd-all db-flex-right ng-class:[{'db-margin-2':!c.isMobile}]"
                     ng-click="c.secondaryClicked()" tooltip-enable="isTooltips" tooltip-placement="bottom" uib-tooltip="{{'STR_EXPANDCOLLAPSE' | translate}}">
                     <div class="db-center">
-                        <div ng-if="c.bm !== c.bms.SECONDARY" class="db-glyph-sm" ng-include="'images/glyph-expand.svg'"></div>
-                        <div ng-if="c.bm === c.bms.SECONDARY" class="db-glyph-sm" ng-include="'images/glyph-minimize.svg'"></div>
+                        <div class="db-glyph db-glyph-sm" ng-include="c.bm === c.bms.SECONDARY ? 'images/glyph-expand-minus.svg' : 'images/glyph-expand-plus.svg'"></div>
                     </div>
                 </button>
             </div>

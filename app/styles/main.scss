@@ -79,41 +79,55 @@ iframe {
 
 // Start svg glyps
 
-$db-glyph-sm-width: 16px;
+$db-glyph-sm-width: 20px;
 $db-glyph-width: 32px;
 
 svg {
     display: block;
+    width: 100%;
+    height: 100%;
 }
 
-.si-glyph * {
+.si-glyph * { // Needed only by svgs from smarticons set. Remove if those are removed.
     fill: $db-color-white;
 }
 
-.db-glyph-dark * {
-    fill: $db-color-dark;
-}
-
-.db-glyph-ora * {
-    fill: $proposals-color;
-}
-
-.db-glyph-alert-blue * {
-    fill: #31708f;
-}
-
-.db-glyph-conf svg { // Material icons styled via svg because no class in them
-    fill: #e60000;
+.db-glyph svg {
+    fill: $db-color-white;
 }
 
 .db-glyph { // Both width and height have to be defined for IE11
-    width: $db-glyph-width; // glyph.smarticons.co: "we recommend to set the SVG in its base grid 16x16 (16x16, 32x32) to keep pixel perfection and sharpness"
+    width: $db-glyph-width;
     height: $db-glyph-width;
+
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
 }
 
-.db-glyph-sm  {
+.db-glyph-sm {
     width: $db-glyph-sm-width;
     height: $db-glyph-sm-width;
+}
+
+.db-glyph-dark svg {
+    fill: $db-color-dark !important;
+}
+
+.db-glyph-ora svg {
+    fill: $proposals-color;
+}
+
+.db-glyph-alert-blue svg {
+    fill: #31708f;
+}
+
+.db-glyph-info svg {
+    fill: #31708f;
+}
+
+.db-glyph-conf svg {
+    fill: #e60000;
 }
 
 // End svg glyphs
@@ -313,6 +327,10 @@ svg {
     margin-left: 1.0vh;
 }
 
+.db-padding-0-right {
+    padding-right: 0 !important;
+}
+
 .db-padding-05 {
     padding: 0.5vh !important;
 }
@@ -427,7 +445,7 @@ svg {
 }
 
 .db-center {
-    display: flex;
+    display: flex !important;
     align-items: center;
     justify-content: center;
     vertical-align: middle;

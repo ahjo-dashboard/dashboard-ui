@@ -12,10 +12,10 @@
 
                 <div class="db-hdr-l2-item">
                     <button type="button" class="btn db-btn-prim btn-md" ng-click="c.pageChanged(1)" ng-disabled="c.currPage === 1 || !c.pages.length">
-                    <div class="db-glyph-sm" ng-include="'images/glyph-triangle-left-double.svg'"></div>
+                    <div class="db-glyph db-glyph-sm" ng-include="'images/glyph-triangle-left-double.svg'"></div>
                 </button>
                     <button type="button" class="btn db-btn-prim btn-md" ng-click="c.pageChanged(c.currPage - 1)" ng-disabled="c.currPage === 1 || !c.pages.length">
-                    <div class="db-glyph-sm" ng-include="'images/glyph-triangle-left.svg'"></div>
+                    <div class="db-glyph db-glyph-sm" ng-include="'images/glyph-triangle-left.svg'"></div>
                 </button>
                 </div>
 
@@ -26,12 +26,12 @@
 
                 <div class="db-hdr-l2-item">
                     <button type="button" class="btn db-btn-prim btn-md" ng-click="c.pageChanged(c.currPage + 1)" ng-disabled="c.currPage >= c.pages.length">
-                    <div class="db-glyph-sm" ng-include="'images/glyph-triangle-right.svg'"></div>
+                    <div class="db-glyph db-glyph-sm" ng-include="'images/glyph-triangle-right.svg'"></div>
                 </button>
 
                     <button type="button" class="btn db-btn-prim btn-md db-center" ng-click="c.pageChanged(c.pages.length)" ng-disabled="c.currPage >= c.pages.length">
                     <div class="db-center db-flex-nowrap">
-                        <div class="db-glyph-sm" ng-include="'images/glyph-triangle-right-double.svg'"></div>
+                        <div class="db-glyph db-glyph-sm" ng-include="'images/glyph-triangle-right-double.svg'"></div>
                         <h6 ng-if="c.pages.length > 1" class="db-margin-05-left">({{c.pages.length}})</h6>
                     </div>
                 </button>
@@ -43,7 +43,7 @@
 
                 <div class="db-hdr-l2-item">
                     <button type="button" class="btn db-btn-prim btn-md" ng-click="c.imgZoom(true)" ng-disabled="!c.pages.length || !c.currPage">
-                    <div class="db-glyph-sm" ng-include="'images/glyph-minimize.svg'"></div>
+                    <div class="db-glyph db-glyph-sm" ng-include="'images/glyph-zoom-out.svg'"></div>
                 </button>
                 </div>
 
@@ -54,7 +54,7 @@
 
                 <div class="db-hdr-l2-item">
                     <button type="button" class="btn db-btn-prim btnmd" ng-click="c.imgZoom(false)" ng-disabled="!c.pages.length || !c.currPage">
-                    <div class="db-glyph-sm" ng-include="'images/glyph-expand.svg'"></div>
+                    <div class="db-glyph db-glyph-sm" ng-include="'images/glyph-zoom-in.svg'"></div>
                 </button>
                 </div>
             </div>

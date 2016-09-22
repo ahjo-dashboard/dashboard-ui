@@ -1,18 +1,18 @@
 <div class="db-overflow" ng-init="isCollapsed = false">
 
     <ul class="list-group" ng-repeat="data in c.data track by $index">
-        <div class="db-list-group-item-prim" ng-click="isCollapsed = !isCollapsed">
-            <div class="db-flex db-center-v">
-                 <div class="db-glyph-sm db-margin-10-right" ng-include="isCollapsed ? 'images/glyph-expand.svg' : 'images/glyph-minimize.svg'" tooltip-enable="c.isTooltips" tooltip-placement="right" uib-tooltip="{{'STR_EXPANDCOLLAPSE' | translate}}"></div>
+        <div class="db-flex db-list-group-item-prim" ng-click="isCollapsed = !isCollapsed">
+            <div class="db-center-v db-flex-area">
                 <h5 ng-if="data.title.header" translate translate-cloak>{{data.title.header}}</h5>
                 <span class="badge db-badge-hdr db-margin-10-left ng-cloak">{{data.objects.length}}</span>
             </div>
+            <div ng-if="data.objects.length" class="db-glyph db-glyph-sm db-margin-10-right" ng-include="isCollapsed ? 'images/glyph-expand.svg' : 'images/glyph-minimize.svg'" tooltip-enable="c.isTooltips" tooltip-placement="left" uib-tooltip="{{'STR_EXPANDCOLLAPSE' | translate}}"></div>
         </div>
         <div uib-collapse="isCollapsed">
             <div class="list-group-item ng-class:[{'db-item-disabled': c.isLinkDisabled(att)}]" ng-repeat="att in data.objects track by $index">
                 <div class="db-flex">
                     <a class="db-flex-area" ng-click="!c.isLinkDisabled(att) && c.selected(att)"><span ng-if="att.orderNum">{{att.orderNum}}&nbsp;</span>{{att.title}}</a>
-                    <div ng-if="!c.isMobile && !c.isOpenWindowDisabled(att)" class="db-glyph-sm db-glyph-dark" ng-include="'images/glyph-open-new.svg'" ng-click="!c.isOpenWindowDisabled(att) && c.newTab(att.link)" tooltip-enable="c.isTooltips"
+                    <div ng-if="!c.isMobile && !c.isOpenWindowDisabled(att)" class="db-glyph db-glyph-sm db-glyph-dark" ng-include="'images/glyph-open-new.svg'" ng-click="!c.isOpenWindowDisabled(att) && c.newTab(att.link)" tooltip-enable="c.isTooltips"
                         uib-tooltip="{{'STR_OPEN_NEW_TAB' | translate}}" tooltip-placement="left"></div>
                 </div>
             </div>
