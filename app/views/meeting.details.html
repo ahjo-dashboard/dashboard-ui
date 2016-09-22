@@ -66,10 +66,19 @@
             <!-- SECONDARY BLOCK HEADER -->
             <div class="db-prim-bg ng-class:[{'list-group db-no-margin db-padding-10 db-brd-all':c.isMobile},{'db-flex db-flex-wrap db-prim-bg db-brd-top db-padding-2':!c.isMobile}]">
                 <div class="btn-group db-flex-area">
-                    <button ng-if="menuClosed() && c.pm === c.pms.HIDDEN" type="button" class="btn db-btn-prim db-btn-small db-brd-all db-margin-2"
+                    <button ng-if="menuClosed() && (c.pm === c.pms.HIDDEN || c.bm === c.bms.SECONDARY)" type="button" class="btn db-btn-prim db-btn-small db-brd-all db-margin-2"
                         ng-click="openMenu()" tooltip-enable="isTooltips" uib-tooltip="{{'STR_INFO_MENUBTN' | translate}}" tooltip-placement="right">
                         <div class="db-center">
                             <div class="db-glyph db-glyph-sm" ng-include="'images/glyph-menu-toggle.svg'"></div>
+                        </div>
+                    </button>
+                    <button ng-if="menuClosed() && c.bm === c.bms.SECONDARY" type="button" class="btn db-btn-prim db-btn-small db-brd-all db-margin-2"
+                        ng-click="c.toggleParallelMode()" tooltip-enable="isTooltips" uib-tooltip="{{parallelMode ? 'STR_INFO_VIEW_VERT' : 'STR_INFO_VIEW_HORIZ' | translate}}"
+                        tooltip-placement="right">
+                        <div class="db-center">
+                            <div class="db-glyph-sm db-overflow-hidden">
+                                <div class="db-glyph db-glyph-sm" ng-include="parallelMode ? 'images/glyph-parallel.svg' : 'images/glyph-vertical.svg'"></div>
+                            </div>
                         </div>
                     </button>
                     <button ng-if="c.pm === c.pms.HIDDEN" type="button" class="btn btn-block db-btn-sel db-btn-big db-brd-all ng-class:[{'db-margin-2':!c.isMobile},{'active':c.sm === c.sms.SECRET}]"
