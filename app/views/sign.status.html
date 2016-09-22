@@ -36,7 +36,10 @@
 
         <div class="list-group db-margin-1-btm">
             <h4 class="db-list-group-item-prim" ng-cloak>{{c.item.Name}}</h4>
-            <h4 class="list-group-item ng-class:[c.statusStyle(c.item.Status)]" translate translate-cloak>{{c.statusStrId(c.item.Status)}}</h4>
+            <div class="list-group-item db-brd-non-top db-flex db-prim-bg">
+                <div class="db-circle-30 db-brd-1-dark ng-class:[c.statusStyle(c.item.Status)]"></div>
+                <b class="db-flex-area db-center-v db-font-clr-white db-font-12 db-margin-15-left db-overflow-hidden db-truncate" translate translate-cloak>{{c.statusStrId(c.item.Status)}}</b>
+            </div>
         </div>
 
         <div class="ad-page-container">

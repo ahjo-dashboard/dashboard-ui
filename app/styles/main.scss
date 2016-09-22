@@ -267,6 +267,10 @@ svg {
     margin-left: 1.0vh !important;
 }
 
+.db-margin-15-left {
+    margin-left: 1.5vh !important;
+}
+
 .db-margin-05-hor {
     margin-left: 0.5vh !important;
     margin-right: 0.5vh !important;
@@ -488,6 +492,10 @@ svg {
 
 .db-brd-non-botton {
     border-bottom: none !important;
+}
+
+.db-brd-1-dark {
+    border: 1px solid $db-color-dark;
 }
 
 .db-btn-tiny {
