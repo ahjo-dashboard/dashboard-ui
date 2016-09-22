@@ -142,12 +142,14 @@ svg {
     width: 20px;
     height: 20px;
     border-radius: 10px;
+    min-width: 20px;
 }
 
 .db-circle-30 {
     width: 30px;
     height: 30px;
     border-radius: 15px;
+    min-width: 30px;
 }
 
 .no-content {
