@@ -69,6 +69,7 @@ angular.module('dashboard')
                                     if (!angular.isArray(self.supporter)) {
                                         self.supporter = [];
                                     }
+                                    aDecision.minuteEntry.isModified = true;
                                     var updated = false;
                                     for (var index = 0; !updated && index < self.record.length; index++) {
                                         var entry = self.record[index];
@@ -110,7 +111,7 @@ angular.module('dashboard')
 
             function getDecisions(aMtg, aTopic) {
                 if (angular.isObject(aTopic) && angular.isObject(aMtg)) {
-                    $log.debug("dbDecisions.getDecisions", arguments);
+                    $log.log("dbDecisions.getDecisions", arguments);
                     resetData();
                     AhjoMeetingSrv.getDecisions(aMtg.meetingGuid, aTopic.topicGuid).then(function (resp) {
                         $log.log("dbDecisions.getDecisions done", resp);
@@ -132,8 +133,12 @@ angular.module('dashboard')
                 }
             }
 
-            self.itemSelected = function (item) {
-                self.selectedItem = (self.selectedItem === item) ? null : item;
+            self.itemSelected = function (aItem) {
+                $log.log("dbDecisions.itemSelected", arguments);
+                if (angular.isObject(aItem) && aItem.isModified) {
+                    aItem.isModified = false;
+                }
+                self.selectedItem = (self.selectedItem === aItem) ? null : aItem;
             };
 
             self.isSelected = function (item) {
@@ -176,12 +181,12 @@ angular.module('dashboard')
             });
 
             var updateWatcher = $rootScope.$on(CONST.TOPICMINUTEUPDATED, function (aEvent, aData) {
-                $log.debug("dbDecisions.updatedWatcher: ", arguments);
+                $log.log("dbDecisions.updatedWatcher: ", arguments);
                 updateDecision(aData);
             });
 
             $scope.$on('$destroy', function () {
-                $log.debug("dbDecisions: DESTROY");
+                $log.log("dbDecisions: DESTROY");
                 if (angular.isFunction(updateWatcher)) {
                     updateWatcher();
                 }
