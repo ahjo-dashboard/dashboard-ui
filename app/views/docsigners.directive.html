@@ -40,7 +40,7 @@
                 <span class="ng-class: [ 'label', c.statusStyle(c.item.Status)]" translate>{{c.statusStrId(c.item.Status)}}</span>
             </div>
             <div class="col-xs-6 col-sm-3">
-                <span>{{c.item.RequestDate | date:'yyyy-MM-dd HH:mm'}}</span>
+                <span>{{c.item.RequestDate | date:'dd.MM.yyyy HH:mm'}}</span>
             </div>
         </div>
         </button>
@@ -56,7 +56,7 @@
                     <span class="ng-class: [ 'label', c.statusStyle(i.status)]" translate>{{c.statusStrId(i.status)}}</span>
                 </div>
                 <div class="col-xs-6 col-sm-3">
-                    <span>{{i.statusChangedTime | date:'yyyy-MM-dd HH:mm'}}</span>
+                    <span>{{i.statusChangedTime | date:'dd.MM.yyyy HH:mm'}}</span>
                 </div>
             </div>
         </button>
