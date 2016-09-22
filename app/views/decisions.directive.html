@@ -11,7 +11,7 @@
     <div class="db-min-width-300">
         <ul ng-if="!c.errorCode" class="list-group db-margin-1-btm" ng-repeat="d in c.types | orderBy : 'decisionOrder' track by $index">
             <h5 class="db-font-clr-white db-prim-bg db-padding-10 db-brd-top">{{d.text}}
-                <span class="badge db-white-bg db-font-clr-dark db-margin-05-hor">{{filtered.length}}</span>
+                <span class="badge db-badge-hdr db-margin-05-hor">{{filtered.length}}</span>
             </h5>
             <div class="list-group-item db-padding-10-hor" ng-repeat="i in c.record | orderBy : 'insertDateTime' | filter: { type: d.value } | filter:query as filtered track by $index">
                 <div class="db-flex db-center-v" ng-click="c.itemSelected(i)">
@@ -46,7 +46,7 @@
                 <div class="db-flex">
                     <div class="db-flex-area">
                         <h5>{{'STR_VOTINGS' | translate}}
-                            <span ng-if="votingsWithVotes" class="badge db-white-bg db-font-clr-dark db-margin-05-hor">{{votingsWithVotes.length}}</span>
+                            <span ng-if="votingsWithVotes" class="badge db-badge-hdr db-margin-05-hor">{{votingsWithVotes.length}}</span>
                         </h5>
                     </div>
                     <div ng-if="votingsWithVotes.length" class="db-voting-res-col db-center">
