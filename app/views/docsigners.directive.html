@@ -33,11 +33,10 @@
             <div class="col-xs-12 col-sm-3">
                 <span translate translate-cloak>{{c.initiatorRoleStrId(c.item.DocumentType)}}</span>
             </div>
-            <div class="col-xs-12 col-sm-3">
-                {{c.item.RequestorName}}
-            </div>
-            <div class="col-xs-6 col-sm-3">
-                <span class="ng-class: [ 'label', c.statusStyle(c.item.Status)]" translate>{{c.statusStrId(c.item.Status)}}</span>
+            <div class="col-xs-12 col-sm-3">{{c.item.RequestorName}}</div>
+            <div class="col-xs-6 col-sm-3 db-flex">
+                <div class="db-circle-20 db-brd-1-dark ng-class:[c.statusStyle(c.item.Status)]"></div>
+                <div class="db-flex-area db-margin-10-left" translate translate-cloak>{{c.statusStrId(c.item.Status)}}</div>
             </div>
             <div class="col-xs-6 col-sm-3">
                 <span>{{c.item.RequestDate | date:'dd.MM.yyyy HH:mm'}}</span>
@@ -52,8 +51,9 @@
                 <div class="col-xs-12 col-sm-3">
                     {{i.name}}
                 </div>
-                <div class="col-xs-6 col-sm-3">
-                    <span class="ng-class: [ 'label', c.statusStyle(i.status)]" translate>{{c.statusStrId(i.status)}}</span>
+                <div class="col-xs-6 col-sm-3 db-flex">
+                    <div class="db-circle-20 db-brd-1-dark ng-class:[c.statusStyle(i.status)]"></div>
+                    <div class="db-flex-area db-margin-10-left" translate translate-cloak>{{c.statusStrId(i.status)}}</div>
                 </div>
                 <div class="col-xs-6 col-sm-3">
                     <span>{{i.statusChangedTime | date:'dd.MM.yyyy HH:mm'}}</span>
