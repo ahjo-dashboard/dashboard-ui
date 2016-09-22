@@ -68,15 +68,15 @@
 
             <!-- Voting item -->
             <div class="list-group-item db-padding-0-hor" ng-repeat="v in c.voting | filter: { hasVotes: true } | filter:query as votingsWithVotes track by $index">
-                <div class="db-flex db-padding-05 db-padding-10-hor" ng-click="c.itemSelected(v)">
+                <div class="db-flex db-padding-05 db-padding-10-hor ng-class:{'db-fw-700': c.isSelected(v)}" ng-click="c.itemSelected(v)">
                     <div class="db-flex-area ng-class:{'db-truncate': !c.isSelected(v)}">
                         <div class="db-flex-area ng-class:{'db-truncate': !c.isSelected(v)}" tooltip-enable="c.isTooltips" tooltip-placement="top-left"
                             uib-tooltip="{{c.getVotingTitle(v)}}">{{c.getVotingTitle(v)}}</div>
                     </div>
-                    <div class="db-voting-res-col db-center ng-class:{'db-badge-gre db-underline': yesVotes > noVotes }">
+                    <div class="db-voting-res-col db-center ng-class:{'db-badge-gre': yesVotes > noVotes }">
                         <span>{{ yesVotes = (v.voteList | filter: { vote: 1 }).length }}</span>
                     </div>
-                    <div class="db-voting-res-col db-center ng-class:{'db-badge-red db-underline': yesVotes < noVotes }">
+                    <div class="db-voting-res-col db-center ng-class:{'db-badge-red': yesVotes < noVotes }">
                         {{ noVotes = (v.voteList | filter: { vote: 2 }).length}}
                     </div>
                     <div class="db-voting-res-col db-center">
@@ -92,22 +92,22 @@
 
                 <!-- Voting item details -->
 
-                <ul class="list-group panel-collapse collapse" uib-collapse="!c.isSelected(v)">
+                <ul class="list-group panel-collapse collapse db-no-margin" uib-collapse="!c.isSelected(v)">
                     <button type="button" ng-repeat="vl in v.voteList track by $index" class="list-group-item db-flex db-padding-05-ver">
-                        <div class="db-flex-area">
+                        <div class="db-flex-area db-breakall">
                             {{vl.personName}}
                         </div>
-                        <div class="db-voting-res-col db-center">
-                            <span ng-if="vl.vote===1" class="db-badge-gre" tooltip-enable="c.isTooltips" tooltip-placement="top" uib-tooltip="{{'STR_VOTE_YEA' | translate}}"><span class="db-padding-05">X</span></span>
+                        <div class="db-voting-res-col db-center ng-class:{'db-bg-green': vl.vote===1}">
+                            <span ng-if="vl.vote===1"><span class="db-padding-05" translate translate-cloak>STR_VOTE_YEA</span></span>
+                        </div>
+                        <div class="db-voting-res-col db-center ng-class:{'db-badge-red': vl.vote===2}">
+                            <span ng-if="vl.vote===2"><span class="db-padding-05" translate translate-cloak>STR_VOTE_NAY</span></span>
+                        </div>
+                        <div class="db-voting-res-col db-center ng-class:{'db-badge-dark': vl.vote===3}">
+                            <span ng-if="vl.vote===3"><span class="db-padding-05" translate translate-cloak>STR_VOTE_EMPTY</span></span>
                         </div>
                         <div class="db-voting-res-col db-center">
-                            <span ng-if="vl.vote===2" class="db-badge-red" tooltip-enable="c.isTooltips" tooltip-placement="top" uib-tooltip="{{'STR_VOTE_NAY' | translate}}"><span class="db-padding-05">X</span></span>
-                        </div>
-                        <div class="db-voting-res-col db-center">
-                            <span ng-if="vl.vote===3" class="db-badge-dark" tooltip-enable="c.isTooltips" tooltip-placement="top" uib-tooltip="{{'STR_VOTE_EMPTY' | translate}}"><span class="db-padding-05">X</span></span>
-                        </div>
-                        <div class="db-voting-res-col db-center">
-                            <span ng-if="vl.vote===4"  tooltip-enable="c.isTooltips" tooltip-placement="top" uib-tooltip="{{'STR_VOTE_ABSENT' | translate}}"><span class="db-padding-05">X</span></span>
+                            <span ng-if="vl.vote===4"  tooltip-enable="c.isTooltips"><span class="db-padding-05" translate translate-cloak>STR_VOTE_ABSENT</span></span>
                         </div>
                         <div>
                             <div class="db-glyph db-glyph-sm"></div>
