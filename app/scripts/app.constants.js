@@ -147,6 +147,7 @@ angular.module('dashboard')
             LOGGEDOUT: 'PersonLoggedOutEvent',
             MINUTEUPDATED: 'MinuteEntryUpdateEvent',
             MINUTEDELETED: 'MinuteEntryDeletedEvent',
+            MINUTETYPECHANGED: 'MinuteEntryUpdateTypeChangedEvent',
             MOTIONSUPPORTED: 'MotionSupportedEvent'
         },
         'TOPICSTATUS': {
