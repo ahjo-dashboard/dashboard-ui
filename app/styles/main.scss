@@ -18,8 +18,8 @@ $db-color-sel: #C5CAE9;
 $db-color-white: #FFFFFF;
 $db-color-prim: #448AFF;
 $db-color-dark: #212121;
-$db-color-grey: #727272;
 $db-color-light-gray: #B6B6B6;
+$db-color-dark-gray: #a6a6a6;
 
 $appbgcolor: $db-color-white;
 $font-color-body: $db-color-dark;
@@ -241,10 +241,6 @@ svg {
 
 .db-transparent {
     background-color: transparent !important;
-}
-
-.db-white-bg {
-    background-color: $db-color-white !important;
 }
 
 .db-margin-1 {
@@ -804,6 +800,16 @@ body {
 
     .db-no-padding {
         padding: 0 !important;
+    }
+
+    .db-bg-green {
+        background-color: $db-color-success;
+    }
+    .db-bg-red {
+        background-color: $db-color-danger;
+    }
+    .db-bg-gray {
+        background-color: $db-color-dark-gray;
     }
 
     @mixin db-badge-mix($bgcolor, $bodycolor : white, $headingcolor : white) {
