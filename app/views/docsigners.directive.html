@@ -41,11 +41,11 @@
                 <div class="db-flex-area db-margin-10-left" translate translate-cloak>{{c.statusStrId(c.item.Status)}}</div>
             </div>
             <div class="col-xs-6 col-sm-3 ">
-                <span class="db-overflow-hidden">{{c.item.RequestDate | date:'dd.MM.yyyy HH:mm'}}</span>
+                <span class="db-overflow-hidden">{{c.model.RequestDate | date:'dd.MM.yyyy HH:mm'}}</span>
             </div>
         </div>
         </button>
-        <button type="button" class="list-group-item col-xs-12" ng-repeat="i in c.signers track by $index">
+        <button type="button" class="list-group-item col-xs-12" ng-repeat="i in c.model.Signers track by $index">
             <div class="row">
                 <div class="col-xs-12 col-sm-3 db-overflow-hidden">
                     <span translate translate-cloak>{{c.roleStrId(i.role)}}</span>
