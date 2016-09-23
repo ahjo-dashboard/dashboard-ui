@@ -90,7 +90,7 @@
                 <!-- Voting item details -->
 
                 <ul class="list-group panel-collapse collapse db-no-margin" uib-collapse="!c.isSelected(v)">
-                    <button type="button" ng-repeat="vl in v.voteList track by $index" class="list-group-item db-flex db-padding-05-ver">
+                    <button type="button" ng-repeat="vl in v.voteList | orderBy:'personName' track by $index" class="list-group-item db-flex db-padding-05-ver">
                         <div class="db-flex-area db-break-hyphen">
                             {{vl.personName}}
                         </div>
