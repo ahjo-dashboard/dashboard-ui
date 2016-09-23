@@ -94,6 +94,7 @@ svg {
 
 .db-glyph svg {
     fill: $db-color-white;
+    pointer-events: none;
 }
 
 .db-glyph { // Both width and height have to be defined for IE11
