@@ -68,7 +68,9 @@ angular.module('dashboard')
                                 for (var i = 0; !found && i < self.record.length; i++) {
                                     var entry = self.record[i];
                                     if (angular.isObject(entry) && angular.equals(entry.minuteEntryGuid, aDecision.minuteEntry.minuteEntryGuid)) {
+                                        var supporters = aDecision.minuteEntry.entrySupporters;
                                         angular.merge(entry, aDecision.minuteEntry);
+                                        entry.entrySupporters = supporters;
                                         found = true;
                                     }
                                 }
@@ -121,7 +123,7 @@ angular.module('dashboard')
                     $log.log("dbDecisions.getDecisions", arguments);
                     resetData();
                     AhjoMeetingSrv.getDecisions(aMtg.meetingGuid, aTopic.topicGuid).then(function (resp) {
-                        $log.log("dbDecisions.getDecisions done", resp);
+                        $log.log("dbDecisions.getDecisions done", arguments);
                         self.record = angular.isArray(resp.record) ? resp.record : [];
                         self.voting = angular.isArray(resp.voting) ? resp.voting : [];
                     }, function (error) {
