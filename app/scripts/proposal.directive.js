@@ -90,11 +90,10 @@ angular.module('dashboard')
                     }
 
                     AhjoProposalsSrv.post(proposal).$promise.then(function (response) {
-                        $log.debug("dbProposal: post then: " + JSON.stringify(response));
+                        $log.debug("dbProposal: post then: ", arguments);
                         if (angular.isObject(response) && angular.isObject(response.Data)) {
                             if (proposal.isPublished === PROPS.PUBLISHED.NO) {
                                 angular.merge($scope.proposal, response.Data);
-                                $rootScope.successInfo('STR_SAVE_SUCCESS');
                             }
                             else if (proposal.isPublished === PROPS.PUBLISHED.YES) {
                                 $scope.proposal.isPublishedIcon = PROPS.PUBLISHED.YES;
@@ -103,7 +102,6 @@ angular.module('dashboard')
                                 // otherwise published version deletion is not working
                                 $scope.proposal.proposalGuidCopy = proposal.proposalGuid;
                                 $scope.onAdd({ data: { 'proposal': proposal } });
-                                $rootScope.successInfo('STR_PUBLISH_SUCCESS');
                             }
                             else {
                                 $log.error('dbProposal: postProposal unsupported status');
@@ -143,7 +141,6 @@ angular.module('dashboard')
                             $log.debug("dbProposal: delete then: " + JSON.stringify(response));
                             if (angular.isObject(response) && angular.isObject(response.Data)) {
                                 $scope.onRemove({ data: { 'proposal': response.Data } });
-                                $rootScope.successInfo('STR_DELETE_SUCCESS');
                             }
                             else {
                                 $log.error('dbProposal: deleteProposal invalid response');

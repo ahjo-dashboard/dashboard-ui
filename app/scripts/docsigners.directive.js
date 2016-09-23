@@ -25,7 +25,7 @@ app.directive('docSigners', [function () {
 
         self.item = $scope.item;
         self.isMobile = $scope.ismobile;
-        self.signers = null;
+        self.model = null;
         self.busy = false;
 
 
@@ -41,10 +41,10 @@ app.directive('docSigners', [function () {
 
             resultCont.busy = true;
             var prom = SigningDocSignaturesApi.get({ reqId: item.ProcessGuid }, function (data) {
-                $log.debug("signDetailsCtrl.getReqStatuses: api query done ");
-                self.signers = data && data.Signers ? data.Signers : null;
-            }, function (error) {
-                $log.error("signDetailsCtrl.getReqStatuses: api query error: " + JSON.stringify(error));
+                $log.log("signDetailsCtrl.getReqStatuses: api query done ", arguments);
+                self.model = data && data.Signers ? data : null;
+            }, function () {
+                $log.error("signDetailsCtrl.getReqStatuses: api query error: ", arguments);
                 //TODO: display error?
             });
             prom.$promise.finally(function () {

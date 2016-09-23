@@ -67,8 +67,7 @@ angular.module('dashboard')
                 if (angular.isObject(copy)) {
                     self.loading = true;
                     AhjoRemarkSrv.post(remark).$promise.then(function (response) {
-                        $log.debug("dbRemark: post then: " + JSON.stringify(response));
-                        $rootScope.successInfo('STR_SAVE_SUCCESS');
+                        $log.debug("dbRemark: post then: ", arguments);
                         setUnsaved(false);
                         if (angular.isObject(response) && angular.isObject(response.objects)) {
                             self.remark = response.objects;
