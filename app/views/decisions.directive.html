@@ -90,9 +90,10 @@
                 <!-- Voting item details -->
 
                 <ul class="list-group panel-collapse collapse db-no-margin" uib-collapse="!c.isSelected(v)">
-                    <button type="button" ng-repeat="vl in v.voteList | orderBy:'personName' track by $index" class="list-group-item db-flex db-padding-05-ver">
-                        <div class="db-flex-area db-break-hyphen">
-                            {{vl.personName}}
+                    <button type="button" ng-repeat="vl in v.voteList | orderBy:vl:false:c.chairmanComparator track by $index" class="list-group-item db-flex db-padding-05-ver">
+                        <div class="db-flex-area db-center-v">
+                            <div class="db-break-hyphen">{{vl.personName}}</div>
+                            <div ng-if="vl.isChairman" class="db-glyph db-glyph-sm db-glyph-info db-margin-10-left" ng-include="'images/glyph-chairman.svg'" title="{{'STR_SROLE_CM' | translate}}"></div>
                         </div>
                         <div class="db-voting-res-col db-center ng-class:{'db-bg-green': vl.vote===1, 'hidden-xs': vl.vote!==1}">
                             <span ng-if="vl.vote===1"><span class="db-padding-05" translate translate-cloak>STR_VOTE_YEA</span></span>
