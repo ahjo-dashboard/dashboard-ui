@@ -52,7 +52,7 @@
             <span us-spinner spinner-on="c.loading()"></span>
         </div>
 
-        <ul ng-if="!c.reqErr" class="list-group">
+        <ul ng-if="!c.error" class="list-group">
             <li type="button" class="list-group-item col-xs-12" ng-repeat="i in c.model | filter: c.docFilter track by $index">
                 <div class="row">
                     <div class="col-xs-12 col-sm-4">
