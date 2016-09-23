@@ -48,9 +48,9 @@
 
     <div class="row">
 
-        <uib-progressbar ng-if="c.loading()" class="progress-striped active" type="info">
-            <i><span translate translate-cloak>STR_LOADING</span></i>
-        </uib-progressbar>
+        <div ng-show="c.loading()" class="db-spinner-cont">
+            <span us-spinner spinner-on="c.loading()"></span>
+        </div>
 
         <ul ng-if="!c.reqErr" class="list-group">
             <li type="button" class="list-group-item col-xs-12" ng-repeat="i in c.model | filter: c.docFilter track by $index">

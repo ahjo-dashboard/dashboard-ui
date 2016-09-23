@@ -33,7 +33,9 @@
 
     <div class="row">
 
-        <uib-progressbar ng-if="c.loading" class="progress-striped active" type="info"><i>Haetaan...</i></uib-progressbar>
+        <div ng-show="c.loading" class="db-spinner-cont" style="height: 100%;">
+            <span us-spinner spinner-on="c.loading"></span>
+        </div>
 
         <ul ng-if="!c.mtgErr" class="list-group">
             <li ng-if="item.visible" type="button" class="list-group-item" ng-repeat="item in c.data | orderBy:'meeting.meetingDate': reverse track by $index">
