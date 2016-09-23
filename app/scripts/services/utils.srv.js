@@ -149,7 +149,7 @@ angular.module('dashboard')
 
         Utils.showErrorForErrorCode = function showErrorForErrorCode(aNum) {
             var str = Utils.stringIdForError(aNum);
-            DialogUtils.showError("STR_ERR_TITLE", str);
+            DialogUtils.showError(null, str);
         };
 
         /*
@@ -209,7 +209,7 @@ angular.module('dashboard')
 
             if ((!angular.isDefined(aUi) || aUi) && res) {
                 var str = Utils.stringIdForError(res);
-                DialogUtils.showError("STR_ERR_TITLE", str);
+                DialogUtils.showError(null, str);
             }
             return res;
         };
