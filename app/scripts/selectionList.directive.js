@@ -18,7 +18,6 @@ angular.module('dashboard')
             var self = this;
             self.data = null;
             self.isMobile = $rootScope.isMobile;
-            self.isTooltips = $rootScope.isTooltips;
 
             self.selected = function (item) {
                 $log.log("dbSelectionList: selected: " + JSON.stringify(item));

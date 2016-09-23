@@ -1239,11 +1239,6 @@ body {
     overflow-x: hidden;
 }
 
-// Tooltip class had to be defined like this, otherwise didn't take effect
-.tooltip.db-tooltip .tooltip-inner {
-    text-align: left;
-}
-
 .db-overflow {
     overflow: auto !important;
 }

@@ -19,7 +19,6 @@ angular.module('dashboard')
             self.loading = false;
             self.motions = null;
             self.error = null;
-            self.isTooltips = $rootScope.isTooltips;
             self.meetingActive = null;
             var selectedMotion = null;
             var mtgItemSelected = StorageSrv.getKey(CONST.KEY.MEETING_ITEM);
@@ -101,7 +100,7 @@ angular.module('dashboard')
                 sign(motion, mtgItemSelected.meetingGuid);
             };
 
-            self.removeSupport = function(/*motion*/) {
+            self.removeSupport = function (/*motion*/) {
                 $log.log("dbMotions: removeSupport", arguments);
             };
 
@@ -112,12 +111,6 @@ angular.module('dashboard')
                     self.motions = (angular.isArray(data.objects)) ? data.objects : [];
                 }
                 self.loading = (angular.isObject(data) && data.loading === true);
-            });
-
-            $scope.$watch(function () {
-                return $rootScope.isTooltips;
-            }, function (isTooltips) {
-                self.isTooltips = isTooltips;
             });
 
             $scope.$watch(function () {
