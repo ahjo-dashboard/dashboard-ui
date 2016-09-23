@@ -22,7 +22,6 @@ angular.module('dashboard')
             self.isTooltips = $rootScope.isTooltips;
             self.errorCode = 0;
             self.record = [];
-            self.supporter = [];
             self.voting = [];
             var mtgTopicSelected = StorageSrv.getKey(CONST.KEY.TOPIC);
             var mtgItemSelected = StorageSrv.getKey(CONST.KEY.MEETING_ITEM);
@@ -50,7 +49,6 @@ angular.module('dashboard')
 
             function resetData() {
                 self.record = [];
-                self.supporter = [];
                 self.voting = [];
             }
 
@@ -125,7 +123,6 @@ angular.module('dashboard')
                     AhjoMeetingSrv.getDecisions(aMtg.meetingGuid, aTopic.topicGuid).then(function (resp) {
                         $log.log("dbDecisions.getDecisions done", resp);
                         self.record = angular.isArray(resp.record) ? resp.record : [];
-                        self.supporter = angular.isArray(resp.supporter) ? resp.supporter : [];
                         self.voting = angular.isArray(resp.voting) ? resp.voting : [];
                     }, function (error) {
                         $log.error("dbDecisions.getDecisions ", arguments);
@@ -152,18 +149,6 @@ angular.module('dashboard')
 
             self.isSelected = function (item) {
                 return self.selectedItem === item;
-            };
-
-            self.isSupported = function (item) {
-                var found = false;
-                if (angular.isObject(item)) {
-                    angular.forEach(self.supporter, function (s) {
-                        if (angular.isObject(s) && angular.equals(s.minuteEntryGuid, item.minuteEntryGuid)) {
-                            found = true;
-                        }
-                    });
-                }
-                return found;
             };
 
             self.getVotingTitle = function getVotingTitle(aVoting) {
