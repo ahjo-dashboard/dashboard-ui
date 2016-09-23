@@ -127,6 +127,10 @@ svg {
     fill: #31708f;
 }
 
+.db-glyph-error svg {
+    fill: $db-color-danger;
+}
+
 .db-glyph-conf svg {
     fill: #e60000;
 }
@@ -808,9 +812,11 @@ body {
     .db-bg-green {
         background-color: $db-color-success;
     }
+
     .db-bg-red {
         background-color: $db-color-danger;
     }
+
     .db-bg-gray {
         background-color: $db-color-dark-gray;
     }

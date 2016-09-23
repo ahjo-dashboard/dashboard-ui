@@ -1,9 +1,16 @@
-<div class="db-directive db-spinner-cont">
-    <div ng-show="c.busy">
+<div class="db-directive">
+    <div ng-show="c.busy" class="db-spinner-cont">
         <span us-spinner spinner-on="c.busy"></span>
     </div>
 
-    <ul ng-hide="c.busy" class="list-group">
+    <div ng-if="c.errorCode" uib-alert class="alert-danger">
+        <div class="db-flex db-center-v">
+            <div class="db-glyph db-glyph-error" ng-include="'images/glyph-error.svg'"></div>
+            <div class="db-margin-10-left" translate translate-cloak>STR_FAIL_LOADING</div>
+        </div>
+    </div>
+
+    <ul ng-hide="c.busy || c.errorCode" class="list-group">
 
         <div>
             <div class="col-xs-12 col-sm-3 db-no-padding">

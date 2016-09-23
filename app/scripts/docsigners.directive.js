@@ -27,12 +27,14 @@ app.directive('docSigners', [function () {
         self.isMobile = $scope.ismobile;
         self.model = null;
         self.busy = false;
+        self.errorCode = 0;
 
 
         // PRIVATE FUNCTIONS
 
         function getReqStatuses(item, resultCont) {
             $log.debug("signDetailsCtrl.getReqStatuses");
+            self.errorCode = 0;
 
             if (!item || !("ProcessGuid" in item) || !item.ProcessGuid) {
                 $log.error("signDetailsCtrl.getReqStatuses: bad args");
@@ -41,12 +43,14 @@ app.directive('docSigners', [function () {
 
             resultCont.busy = true;
             var prom = SigningDocSignaturesApi.get({ reqId: item.ProcessGuid }, function (data) {
-                $log.log("signDetailsCtrl.getReqStatuses: api query done ", arguments);
+                $log.log("signDetailsCtrl.getReqStatuses: done: ", arguments);
                 self.model = data && data.Signers ? data : null;
-            }, function () {
-                $log.error("signDetailsCtrl.getReqStatuses: api query error: ", arguments);
-                //TODO: display error?
-            });
+            }, function (error) {
+                $log.error("signDetailsCtrl.getReqStatuses: error: ", arguments);
+                if (angular.isObject(error)) {
+                    self.errorCode = error.status;
+                }
+                });
             prom.$promise.finally(function () {
                 resultCont.busy = false;
             });
