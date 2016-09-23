@@ -46,6 +46,7 @@
     "STR_SIGNED": "Allekirjoitettu",
     "STR_RETURNED": "Palautettu",
     "STR_UNDECIDED": "Ei päätöstä",
+    "STR_SIGNING_INITIATED": "Allekirjoituskierros aloitettu",
     "STR_SIGNING_DOC_POLICYMAKER": "Toimielimen pöytäkirja",
     "STR_SIGNING_DOC_OFFICIAL": "Viranhaltijapäätös",
     "STR_SIGNING_ACCEPT": "Allekirjoita",
