@@ -6,14 +6,15 @@
                 <h5 ng-if="data.title.header" translate translate-cloak>{{data.title.header}}</h5>
                 <span class="badge db-badge-hdr db-margin-10-left ng-cloak">{{data.objects.length}}</span>
             </div>
-            <div ng-if="data.objects.length" class="db-glyph db-glyph-sm db-margin-10-right" ng-include="isCollapsed ? 'images/glyph-expand.svg' : 'images/glyph-minimize.svg'" tooltip-enable="c.isTooltips" tooltip-placement="left" uib-tooltip="{{'STR_EXPANDCOLLAPSE' | translate}}"></div>
+            <div ng-if="data.objects.length" title="{{'STR_EXPANDCOLLAPSE' | translate}}" class="db-glyph db-glyph-sm db-margin-10-right"
+                ng-include="isCollapsed ? 'images/glyph-expand.svg' : 'images/glyph-minimize.svg'"></div>
         </div>
         <div uib-collapse="isCollapsed">
             <div class="list-group-item ng-class:{'db-item-disabled': c.isLinkDisabled(att)}" ng-repeat="att in data.objects track by $index">
                 <div class="db-flex">
                     <a class="db-flex-area" ng-click="!c.isLinkDisabled(att) && c.selected(att)"><span ng-if="att.orderNum">{{att.orderNum}}&nbsp;</span>{{att.title}}</a>
-                    <div ng-if="!c.isMobile && !c.isOpenWindowDisabled(att)" class="db-glyph db-glyph-sm db-glyph-dark" ng-include="'images/glyph-open-new.svg'" ng-click="!c.isOpenWindowDisabled(att) && c.newTab(att.link)" tooltip-enable="c.isTooltips"
-                        uib-tooltip="{{'STR_OPEN_NEW_TAB' | translate}}" tooltip-placement="left"></div>
+                    <div ng-if="!c.isMobile && !c.isOpenWindowDisabled(att)" title="{{'STR_OPEN_NEW_TAB' | translate}}" class="db-glyph db-glyph-sm db-glyph-dark"
+                        ng-include="'images/glyph-open-new.svg'" ng-click="!c.isOpenWindowDisabled(att) && c.newTab(att.link)"></div>
                 </div>
             </div>
         </div>
