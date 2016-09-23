@@ -1,6 +1,9 @@
 <div class="source-list-modal">
     <div class="modal-header db-confirm-header">
-        <h3 ng-if="title" class="modal-title" translate translate-cloak>{{title}}</h3>
+        <div class="db-center-v">
+            <div class="db-glyph" ng-include="'images/glyph-question.svg'"></div>
+            <h3 ng-if="title" class="modal-title db-margin-10-left" translate translate-cloak>{{title}}</h3>
+        </div>
     </div>
     <div class="modal-body db-no-padding">
         <ul class="list-group db-no-margin">
