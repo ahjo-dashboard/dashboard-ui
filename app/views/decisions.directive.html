@@ -20,7 +20,7 @@
                         <span class="db-margin-10-left" ng-if="i.proposalOrdernumber">/{{i.proposalOrdernumber}}</span>
                     </div>
                     <div ng-show="i.isModified === true" class="db-glyph db-glyph-sm db-glyph-ora db-margin-05-right" ng-include="'images/glyph-bell.svg'"
-                        tooltip-enable="c.isTooltips" tooltip-placement="top" uib-tooltip="{{'STR_INFO_NEW_PROPS' | translate}}"></div>
+                        tooltip-enable="c.isTooltips" tooltip-placement="top" uib-tooltip="{{'STR_INFO_DECISION_UPDATED' | translate}}"></div>
                     <div ng-show="i.entrySupporters.length" class="db-glyph db-glyph-sm db-glyph-info db-margin-05-right" ng-include="'images/glyph-like.svg'"
                         tooltip-enable="c.isTooltips" uib-tooltip="{{'STR_SUPPORTED' | translate}}" tooltip-placement="top"></div>
                     <span class="db-glyph db-glyph-sm db-glyph-dark db-margin-10-right" ng-include="!c.isSelected(i) ? 'images/glyph-expand.svg' : 'images/glyph-minimize.svg'"
