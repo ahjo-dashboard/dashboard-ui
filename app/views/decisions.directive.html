@@ -20,15 +20,15 @@
                         <span class="db-margin-10-left" ng-if="i.proposalOrdernumber">/{{i.proposalOrdernumber}}</span>
                     </div>
                     <div ng-show="i.isModified === true" class="db-glyph db-glyph-sm db-glyph-ora db-margin-05-right" ng-include="'images/glyph-bell.svg'"
-                        tooltip-enable="c.isTooltips" tooltip-placement="top" uib-tooltip="{{'STR_INFO_NEW_PROPS' | translate}}"></div>
-                    <div ng-show="c.isSupported(i)" class="db-glyph db-glyph-sm db-glyph-info db-margin-05-right" ng-include="'images/glyph-like.svg'"
+                        tooltip-enable="c.isTooltips" tooltip-placement="top" uib-tooltip="{{'STR_INFO_DECISION_UPDATED' | translate}}"></div>
+                    <div ng-show="i.entrySupporters.length" class="db-glyph db-glyph-sm db-glyph-info db-margin-05-right" ng-include="'images/glyph-like.svg'"
                         tooltip-enable="c.isTooltips" uib-tooltip="{{'STR_SUPPORTED' | translate}}" tooltip-placement="top"></div>
                     <span class="db-glyph db-glyph-sm db-glyph-dark db-margin-10-right" ng-include="!c.isSelected(i) ? 'images/glyph-expand.svg' : 'images/glyph-minimize.svg'"
                         tooltip-enable="c.isTooltips" tooltip-placement="top" uib-tooltip="{{'STR_EXPANDCOLLAPSE' | translate}}"></span>
                 </div>
                 <div class="panel-collapse collapse" uib-collapse="!c.isSelected(i)">
                     <div class="db-padding-10-hor db-margin-05-top">
-                        <span translate translate-cloak>STR_SROLE_SUPPORTER</span>:<span ng-repeat="s in c.supporter | filter: { minuteEntryGuid: i.minuteEntryGuid }  | filter:query as filtered2 track by $index">
+                        <span translate translate-cloak>STR_SROLE_SUPPORTER</span>:<span ng-repeat="s in i.entrySupporters | filter: { minuteEntryGuid: i.minuteEntryGuid }  | filter:query as filtered2 track by $index">
                             <span ng-if="0 < $index">, </span>
                         <span class="db-margin-05-left">{{s.name}}</span></span><span ng-if="filtered2.length === 0" class="db-margin-05-left">-</span>
                     </div>
