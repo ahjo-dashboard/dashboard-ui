@@ -209,7 +209,7 @@ angular.module('dashboard')
 
             if ((!angular.isDefined(aUi) || aUi) && res) {
                 var str = Utils.stringIdForError(res);
-                DialogUtils.showError(null, str);
+                DialogUtils.showError('STR_ERR_TITLE', str);
             }
             return res;
         };
