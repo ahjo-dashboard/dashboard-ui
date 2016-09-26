@@ -20,7 +20,7 @@ angular.module('dashboard')
     })
     .directive('dbProposal', [function () {
 
-        var controller = ['$log', '$scope', 'PROPS', 'PROP', '$rootScope', 'AhjoProposalsSrv', 'StorageSrv', 'CONST', '$timeout', 'Utils', function ($log, $scope, PROPS, PROP, $rootScope, AhjoProposalsSrv, StorageSrv, CONST, $timeout, Utils) {
+        var controller = ['$log', '$scope', 'PROPS', 'PROP', '$rootScope', 'AhjoProposalsSrv', 'StorageSrv', 'CONST', '$timeout', 'Utils', 'DialogUtils', function ($log, $scope, PROPS, PROP, $rootScope, AhjoProposalsSrv, StorageSrv, CONST, $timeout, Utils, DialogUtils) {
             var self = this;
             self.uiProposal = null;
 
@@ -112,7 +112,7 @@ angular.module('dashboard')
                     }, function (error) {
                         $log.error("dbProposal: post error: " + JSON.stringify(error));
                         proposal.saveAndPublish = false;
-                        $rootScope.failedInfo('STR_SAVE_FAILED');
+                        DialogUtils.showError('STR_SAVE_FAILED');
                     }).finally(function () {
                         $log.debug("dbProposal: post finally: ");
                         if (proposal.saveAndPublish) {
@@ -146,7 +146,7 @@ angular.module('dashboard')
                             }
                         }, function (error) {
                             $log.error("dbProposal: delete error: " + JSON.stringify(error));
-                            $rootScope.failedInfo('STR_DELETE_FAILED');
+                            DialogUtils.showError('STR_DELETE_FAILED');
                         }).finally(function () {
                             $log.debug("dbProposal: delete finally: ");
                             self.updating = false;
