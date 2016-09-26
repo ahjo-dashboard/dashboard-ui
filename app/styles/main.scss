@@ -64,7 +64,7 @@ iframe {
     padding: 0 !important;
 }
 
-// Globally center modal dialogs
+// Modal dialogs
 .modal-dialog {
     height: 100%;
     width: 100%;
@@ -75,7 +75,15 @@ iframe {
 .modal-content {
     margin: 0 auto;
 }
-// End of globally center modal dialogs
+
+.db-modal-backdrop {
+    opacity: 0.7 !important; // Should be same as .ngdialog-overlay
+}
+
+.ngdialog-overlay {
+    background: rgba(0, 0, 0, 0.7);
+}
+// End of modal dialogs
 
 // Start svg glyps
 
@@ -559,6 +567,10 @@ svg {
 
 .db-fs-12 {
     font-size: 1.2em !important;
+}
+
+.db-fs-15 {
+    font-size: 1.5em !important;
 }
 // GENERIC DECLARATION END
 

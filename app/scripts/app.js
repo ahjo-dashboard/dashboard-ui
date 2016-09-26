@@ -26,7 +26,7 @@ angular.module('dashboard', [
     'pascalprecht.translate',
     'ngDialog'
 ])
-    .config(function ($urlRouterProvider, $stateProvider, ENV, G_APP, $logProvider, $provide, $compileProvider, $translateProvider, $httpProvider, ngDialogProvider) {
+    .config(function ($urlRouterProvider, $stateProvider, ENV, G_APP, $logProvider, $provide, $compileProvider, $translateProvider, $httpProvider, ngDialogProvider, $uibModalProvider) {
         // Startup logged always regardless of ENV config, so using console instead of $log
         console.log('dashboard.config: ver: ' + G_APP.app_version + ' env: ' + ENV.app_env + ' logging: ' + ENV.app_debuglogs);
 
@@ -72,6 +72,10 @@ angular.module('dashboard', [
         $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|mailto|blob):/);
 
         $httpProvider.defaults.withCredentials = true;
+
+        if (angular.isObject($uibModalProvider) && angular.isObject($uibModalProvider.options)) {
+            $uibModalProvider.options.backdropClass = 'db-modal-backdrop';
+        }
 
         ngDialogProvider.setDefaults({
             className: 'ngdialog-theme-default',

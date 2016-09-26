@@ -131,9 +131,9 @@ angular.module('dashboard')
         },
         'MEETINGSTATUSACTIONS': {
             OPEN: { stateId: 3, stringId: 'STR_OPEN', active: [2], actionId: 3 },
-            CLOSE: { stateId: 5, stringId: 'STR_READY', active: [3], actionId: 5 },
             ABORT: { stateId: 4, stringId: 'STR_ABORT', active: [3], actionId: 4 },
-            CONTINUE: { stateId: 3, stringId: 'STR_CONTINUE', active: [4], actionId: 8 }
+            CONTINUE: { stateId: 3, stringId: 'STR_CONTINUE', active: [4], actionId: 8 },
+            CLOSE: { stateId: 5, stringId: 'STR_READY', active: [3], actionId: 5 }
         },
         'MTGEVENT': {
             LASTEVENTID: 'LastEventId',

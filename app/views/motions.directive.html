@@ -19,7 +19,7 @@
             <div class="list-group-item db-padding-10-hor" ng-repeat="m in c.motions | orderBy : 'publishDate' track by $index" ng-click="c.selectMotion(m)">
                 <div class="row">
                     <div class="col-xs-5 col-md-4 db-flex">
-                        <div class="db-flex-area db-truncate">{{m.title}}</div>
+                        <div class="db-flex-area db-truncate" title="{{m.title}}" >{{m.title}}</div>
                     </div>
                     <i class="col-xs-5 col-md-3 db-truncate">{{m.personName}}</i>
                     <div class="hidden-xs hidden-sm col-md-2 db-truncate" translate translate-cloak>{{c.typeString(m.type)}}</div>

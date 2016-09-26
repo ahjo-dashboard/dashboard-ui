@@ -46,7 +46,7 @@ angular.module('dashboard')
         function openStatusChangeView(title, items, callback) {
             if (angular.isString(title) && angular.isArray(items) && angular.isFunction(callback)) {
                 var modalInstance = $uibModal.open({
-                    animation: false,
+                    animation: true,
                     templateUrl: 'views/selection.modal.html',
                     controller: ['$scope', '$uibModalInstance', function ($scope, $uibModalInstance) {
                         $scope.title = title;
