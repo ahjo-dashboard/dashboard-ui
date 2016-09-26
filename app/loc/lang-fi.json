@@ -174,6 +174,6 @@
     "STR_ERR_TITLE": "Virhe",
     "STR_INFO_TITLE": "Info",
     "STR_INFO_SALI_MODE": "Toiminto ei ole salissa mahdollinen",
-    "STR_INFO_MTG_INACTIVE": "Tilaa ei voi muuttaa, koska kokous ei ole käynnissä",
-    "STR_INFO_TOPIC_STATUS_CHANGE_DISABLED": "Tilaa ei voi muuttaa, koska toisen asian käsittely on kesken"
+    "STR_INFO_MTG_INACTIVE": "Asian tilaa voi muuttaa vain, jos kokous on käynnissä",
+    "STR_INFO_TOPIC_STATUS_CHANGE_DISABLED": "Tilaa voi muuttaa vain, jos muita asioita ei ole käsittelyssä"
 }
