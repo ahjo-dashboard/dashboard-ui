@@ -13,9 +13,10 @@
 angular.module('dashboard')
     .directive('dbRemark', [function () {
 
-        var controller = ['$log', '$scope', 'AhjoRemarkSrv', '$rootScope', 'CONST', function ($log, $scope, AhjoRemarkSrv, $rootScope, CONST) {
+        var controller = ['$log', '$scope', 'AhjoRemarkSrv', '$rootScope', 'CONST', 'DialogUtils', function ($log, $scope, AhjoRemarkSrv, $rootScope, CONST, DialogUtils) {
             $log.log("dbRemark: CONTROLLER");
             var self = this;
+            self.error = false;
             self.editorText = null;
             var previousText = null;
             self.remark = null;
@@ -32,13 +33,13 @@ angular.module('dashboard')
             }
 
             function getRemark(guid) {
-                $log.debug("dbRemark: getRemark: " + guid);
+                $log.debug("dbRemark.getRemark: " + guid);
                 self.remark = null;
                 self.editorText = null;
                 if (angular.isString(guid)) {
                     self.loading = true;
                     AhjoRemarkSrv.get({ 'guid': guid }).$promise.then(function (response) {
-                        $log.debug("dbRemark: get then");
+                        $log.debug("dbRemark.getRemark: then");
                         if (angular.isObject(response) && angular.isObject(response.objects)) {
                             self.remark = response.objects;
                             self.editorText = self.remark.text;
@@ -46,12 +47,12 @@ angular.module('dashboard')
                         else {
                             $log.error('dbRemark: getRemark invalid response');
                         }
-                    }, function (error) {
-                        $log.error("dbRemark: get error: " + JSON.stringify(error));
+                    }, function (/*error*/) {
+                        $log.error("dbRemark.getRemark: error: ", arguments);
                     }).finally(function () {
-                        $log.debug("dbRemark: get finally: ");
+                        $log.debug("dbRemark.getRemark: finally: ");
                         if (!self.remark) {
-                            $rootScope.failedInfo('STR_REMARK_FAILED');
+                            self.error = true;
                         }
                         self.loading = false;
                     });
@@ -62,7 +63,7 @@ angular.module('dashboard')
             }
 
             function postRemark(remark) {
-                $log.debug("dbRemark: postRemark: " + JSON.stringify(remark));
+                $log.debug("dbRemark: postRemark: ", arguments);
                 var copy = angular.copy(remark);
                 if (angular.isObject(copy)) {
                     self.loading = true;
@@ -76,11 +77,11 @@ angular.module('dashboard')
                         else {
                             $log.error('dbRemark: postRemark response invalid');
                         }
-                    }, function (error) {
-                        $log.error("dbRemark: post error: " + JSON.stringify(error));
-                        $rootScope.failedInfo('STR_SAVE_FAILED');
+                    }, function (/*error*/) {
+                        $log.error("dbRemark: post error: ", arguments);
+                        DialogUtils.showError('STR_SAVE_FAILED');
                     }).finally(function () {
-                        $log.debug("dbRemark: post finally: ");
+                        $log.debug("dbRemark: post finally");
                         self.loading = false;
                     });
                 }
