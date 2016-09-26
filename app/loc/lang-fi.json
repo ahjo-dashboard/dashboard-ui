@@ -175,5 +175,6 @@
     "STR_INFO_TITLE": "Info",
     "STR_INFO_SALI_MODE": "Toiminto ei ole salissa mahdollinen",
     "STR_INFO_MTG_INACTIVE": "Asian tilaa voi muuttaa vain, jos kokous on käynnissä",
+    "STR_INFO_MTG_BAD_STATUS": "Kokouksen tilaa voi muuttaa vain tiloissa: 'teknisesti avattu', 'käynnissä' ja 'keskeytetty'",
     "STR_INFO_TOPIC_STATUS_CHANGE_DISABLED": "Tilaa voi muuttaa vain, jos muita asioita ei ole käsittelyssä"
 }
