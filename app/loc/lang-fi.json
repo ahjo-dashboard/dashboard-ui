@@ -8,6 +8,7 @@
     "STR_MTG_LOGIN_PROGRESS": "Haetaan kokousta",
     "STR_MTG_EXIT_PROGRESS": "Poistutaan kokouksesta",
     "STR_MTG_LOGOUT": "Kirjaudu ulos kokouksesta",
+    "STR_MTG_LOGOUT_CONFIRM": "Haluatko varmasti poistua kokouksesta?",
     "STR_LOGIN_FAILED": "Kirjautuminen ei onnistunut",
     "STR_INSTRUCTION": "Ohje",
     "STR_MEETINGS": "Kokoukset",
