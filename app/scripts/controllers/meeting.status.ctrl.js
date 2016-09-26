@@ -460,6 +460,11 @@ angular.module('dashboard')
             return result;
         };
 
+        self.canChangeMtgStatus = function (aMtgDetails) {
+            var result = self.chairman && (angular.isObject(aMtgDetails) && angular.isDefined(aMtgDetails.meetingStatus) && ((aMtgDetails.meetingStatus === CONST.MTGSTATUS.TECHNICALLY_OPEN.stateId) || (aMtgDetails.meetingStatus === CONST.MTGSTATUS.ACTIVE.stateId) || (aMtgDetails.meetingStatus === CONST.MTGSTATUS.ABORTED.stateId)));
+            return result;
+        };
+
         self.statusIcon = function (topic) {
             if (angular.isObject(topic) && topic.topicStatus) {
                 for (var item in CONST.TOPICSTATUS) {
@@ -540,6 +545,10 @@ angular.module('dashboard')
             }
             else if (self.mtgDetails.isSaliEnabled) {
                 DialogUtils.showInfo('STR_INFO_TITLE', 'STR_INFO_SALI_MODE', true).closePromise.finally(function () {
+                    $log.debug("meetingStatusCtrl.changeMeetingStatus: modal dialog finally closed");
+                });
+            } else if (!self.canChangeMtgStatus(self.mtgDetails)) {
+                DialogUtils.showInfo('STR_INFO_TITLE', 'STR_INFO_MTG_BAD_STATUS', true).closePromise.finally(function () {
                     $log.debug("meetingStatusCtrl.changeMeetingStatus: modal dialog finally closed");
                 });
             }
