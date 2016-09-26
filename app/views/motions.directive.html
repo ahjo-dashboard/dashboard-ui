@@ -26,11 +26,10 @@
                     <div ng-show="m.supporters" class="hidden-xs hidden-sm col-md-2 db-truncate db-center-v">
                         <div ng-if="m.supporters.length">{{m.supporters.length}}</div>
                         <div ng-if="!m.supporters.length">-</div>
-                        <div ng-if="m.isUserSupported" title="{{'STR_MOTION_SIGNED_BY_ME' | translate}}" class="db-glyph-sm db-glyph-dark db-margin-05-left"
-                            ng-include="'images/glyph-user.svg'"></div>
+                        <div ng-if="m.isUserSupported" title="{{'STR_MOTION_SIGNED_BY_ME' | translate}}" class="db-glyph db-glyph-sm db-glyph-info db-margin-05-left" ng-include="'images/glyph-user.svg'"></div>
                     </div>
                     <div class="col-xs-2 col-md-1 db-flex db-flex-col">
-                        <div title="{{'STR_EXPANDCOLLAPSE' | translate}}" class="db-flex-align-item-end db-glyph-sm db-glyph-dark db-margin-10-right"
+                        <div title="{{'STR_EXPANDCOLLAPSE' | translate}}" class="db-flex-align-item-end db-glyph db-glyph-sm db-glyph-dark db-margin-10-right"
                             ng-include="c.isSelected(m) ? 'images/glyph-minimize.svg' : 'images/glyph-expand.svg'"></div>
                     </div>
                 </div>

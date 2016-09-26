@@ -127,6 +127,10 @@ svg {
     fill: #31708f;
 }
 
+.db-glyph-error svg {
+    fill: $db-color-danger;
+}
+
 .db-glyph-conf svg {
     fill: #e60000;
 }
@@ -441,6 +445,18 @@ svg {
 
 .db-breakall {
     word-break: break-all;
+}
+
+.db-break-hyphen {
+    -ms-word-break: break-all;
+    word-break: break-all;
+
+    // Non standard for webkit
+    word-break: break-word;
+
+    -webkit-hyphens: auto;
+    -moz-hyphens: auto;
+    hyphens: auto;
 }
 
 .db-txt-center {
@@ -808,9 +824,11 @@ body {
     .db-bg-green {
         background-color: $db-color-success;
     }
+
     .db-bg-red {
         background-color: $db-color-danger;
     }
+
     .db-bg-gray {
         background-color: $db-color-dark-gray;
     }

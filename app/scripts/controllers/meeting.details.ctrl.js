@@ -20,7 +20,6 @@ angular.module('dashboard')
         var mtgItemSelected = StorageSrv.getKey(CONST.KEY.MEETING_ITEM);
         self.primaryUrl = null;
         self.secondaryUrl = null;
-        self.error = null;
         self.topic = null;
         self.bms = CONST.BLOCKMODE;
         self.bm = CONST.BLOCKMODE.DEFAULT; // State of view, which block(s) displayed

@@ -1,6 +1,9 @@
 <div class="source-list-modal">
     <div class="db-no-border modal-header db-confirm-header">
-        <h3 ng-if="title" class="modal-title">{{title | translate}}</h3>
+        <div class="db-center-v">
+            <div class="db-glyph" ng-include="'images/glyph-question.svg'"></div>
+            <h3 ng-if="title" class="modal-title db-margin-10-left">{{title | translate}}</h3>
+        </div>
     </div>
     <div ng-if="text" class="modal-body">{{text | translate}}</div>
     <div ng-if="option.text" class="checkbox modal-body">

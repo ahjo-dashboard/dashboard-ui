@@ -6,9 +6,9 @@
             <span ng-if="!c.isError">
                 <div class="db-glyph" ng-include="'images/glyph-info.svg'"></div>
             </span>
-            <h4 class="db-margin-10-left" translate translate-cloak>{{c.dbDlgTitleStrId}}</h4>
+            <h4 ng-if="c.dbDlgTitleStrId" class="db-margin-10-left" translate translate-cloak>{{c.dbDlgTitleStrId}}</h4>
     </div>
-    <div class="text-center">
+    <div class="text-center db-font-12">
         <span translate translate-cloak>{{c.dbDlgbodyStrId}}</span>
     </div>
     <div class="db-no-border modal-footer">

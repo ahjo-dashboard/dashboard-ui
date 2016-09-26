@@ -48,7 +48,6 @@
             <div class="db-block-content db-block-border db-brd-bottom">
                 <db-pdf ng-if="c.pm === c.pms.DEFAULT" ng-attr-uri="c.primaryUrl"></db-pdf>
                 <db-imgviewer ng-if="c.pm === c.pms.SECRET" file-conf="c.tData"></db-imgviewer>
-                <div ng-if="c.error" class="alert alert-danger" role="alert">{{c.error}}</div>
             </div>
 
         </div>

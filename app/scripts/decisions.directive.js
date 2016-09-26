@@ -164,6 +164,23 @@ angular.module('dashboard')
                 return res;
             };
 
+            /* Sort alphabetically but so that chairman is last */
+            self.chairmanComparator = function chairmanComparator(a1, a2) {
+                // Comparator apparently guaranteed to receive objects with 'value' property so skipping validation for simplicity.
+                var res = -1;
+                if (a1.value.isChairman) {
+                    res = 1;
+                } else if (a2.value.isChairman) {
+                    res = -1;
+                } else if (angular.isString(a1.value.personName) && angular.isString(a2.value.personName)) {
+                    res = a1.value.personName.localeCompare(a2.value.personName);
+                } else {
+                    $log.debug("dbDecisions.chairmanComparator: bad args: ", arguments);
+                    res = a1.index < a2.index ? -1 : 1; // Default to sorting by index
+                }
+                return res;
+            };
+
             // WATCHERS
 
             $scope.$watch(function () {

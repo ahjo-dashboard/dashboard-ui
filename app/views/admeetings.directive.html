@@ -63,10 +63,11 @@
             </li>
         </ul>
 
-        <div ng-if="c.mtgErr" class="alert alert-danger" role="alert">
-            Haku ei onnistunut. Ole hyvä ja yritä myöhemmin uudestaan.
-            <br>({{c.mtgErr.status}} {{c.mtgErr.statusText}})
+        <div ng-if="c.mtgErr" uib-alert class="alert-danger">
+            <div class="db-flex db-center-v">
+                <div class="db-glyph db-glyph-error" ng-include="'images/glyph-error.svg'"></div>
+                <div class="db-margin-10-left" translate translate-cloak>STR_FAIL_LOADING</div>
+            </div>
         </div>
-
     </div>
 </div>
