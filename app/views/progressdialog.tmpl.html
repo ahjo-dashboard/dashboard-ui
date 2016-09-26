@@ -1,9 +1,9 @@
 <div>
     <div class="db-no-border modal-header db-confirm-header db-center-v">
             <div class="db-glyph" ng-include="'images/glyph-wait.svg'"></div>
-            <h4 class="db-margin-10-left" translate translate-cloak>{{c.titleStrId}}</h4>
+            <h3 class="db-margin-10-left" translate translate-cloak>{{c.titleStrId}}</h3>
     </div>
-    <div ng-if="c.bodyStrId" class="text-center">
+    <div ng-if="c.bodyStrId" class="modal-body db-fs-15">
         <span translate translate-cloak>{{c.bodyStrId}}</span>
     </div>
     <div ng-show="true" class="db-spinner-cont">
