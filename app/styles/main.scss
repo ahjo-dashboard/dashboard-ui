@@ -60,6 +60,16 @@ iframe {
     flex: 1;
 }
 
+.db-pre {
+    background-color: #f5f5f5;
+    padding: 1.0vh;
+    border: 1px solid #cccccc;
+    border-top-right-radius: $btn-radius;
+    border-top-left-radius: $btn-radius;
+    border-bottom-left-radius: $btn-radius;
+    border-bottom-right-radius: $btn-radius;
+}
+
 .ngdialog-content {
     padding: 0 !important;
 }
@@ -188,7 +198,6 @@ svg {
     resize: none;
     width: 100%;
     height: auto;
-    max-height: 50vh;
 }
 
 .db-textarea-flex {

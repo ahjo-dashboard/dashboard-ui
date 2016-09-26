@@ -42,7 +42,7 @@
                         <span translate translate-cloak>STR_MOTION_SIGNERS</span>:<span ng-repeat="s in m.supporters track by $index"><span ng-if="0 < $index">, </span>
                         <span class="db-margin-05-left">{{s.name}}</span></span>
                     </div>
-                    <pre class="db-margin-05-ver">{{m.text}}</pre>
+                    <textarea db-textarea class="db-margin-05-ver db-padding-10 db-textarea db-overflow-hidden db-brd-all" readonly ng-model="m.text"></textarea>
 
                     <div ng-if="c.meetingActive" class="db-flex-right db-flex-area ng-class:{'db-flex-col': c.isMobile}">
                         <button ng-if="m.isOwnMotion && !c.isSubmitted" class="btn btn-success db-btn-big db-margin-2 ng-class:{'btn-block':c.isMobile}"
