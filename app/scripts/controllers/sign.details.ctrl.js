@@ -110,13 +110,9 @@ app.controller('signDetailsCtrl', function ($log, $state, $rootScope, ENV, CONST
         setBtnActive(btnItem, btnItem.block);
     }
 
-    function isModalOpen() {//TODO:
-        return false;
-    }
-
     // Workaround on IE to hide <object> pdf because IE displays it topmost covering modals and dropdowns.
-    function hidePdfOnIe() {//TODO fix
-        return $rootScope.isIe && (self.btnModel.att.isOpen || isModalOpen());
+    function hidePdfOnIe() {
+        return $rootScope.isIe && (self.btnModel.att.isOpen);
     }
 
     self.isActive = function (id) {
