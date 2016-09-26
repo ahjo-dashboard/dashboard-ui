@@ -12,7 +12,7 @@
  * Controller of the dashboard
  */
 var app = angular.module('dashboard');
-app.controller('signDetailsCtrl', function ($log, $state, $rootScope, ENV, CONST, StorageSrv, ListData, SigningUtil, Utils) {
+app.controller('signDetailsCtrl', function ($log, $state, $rootScope, ENV, CONST, StorageSrv, ListData, SigningUtil, Utils, $timeout, $scope) {
     $rootScope.menu = CONST.MENU.FULL;
 
     var self = this;
@@ -120,16 +120,24 @@ app.controller('signDetailsCtrl', function ($log, $state, $rootScope, ENV, CONST
         return !self.isMobile && self.btnModel[id].active;
     };
 
+    self.displayDoc = function (aModelItem) {
+        if (!self.docTimeout && angular.isObject(aModelItem)) {
+            $log.debug("signDetailsCtrl.displayDoc: timeout type=" + self.docTimeout, arguments);
+            self.docUrl = null;
+            self.docTimeout = $timeout(function () { // Re-set doc url on btn click to allow reverting to original. Caused by user clicking urls inside doc if browsing urls in embedded doc is allowed
+                self.docTimeout = null;
+                self.docUrl = aModelItem.url;
+                setBlockContent(aModelItem);
+            }, 0);
+        }
+    };
+
     self.actionDoc = function () {
-        self.docUrl = null; // Null first in case it helps to revert iFrame if it navigates to an url embedded in pdf clicked by user, which won't update docUrl
-        self.docUrl = self.btnModel.doc.url;
-        setBlockContent(self.btnModel.doc);
+        self.displayDoc(self.btnModel.doc);
     };
 
     self.actionDocTr = function () {
-        self.docUrl = null; // Null first in case it helps to revert iFrame if it navigates to an url embedded in pdf clicked by user, which won't update docUrl
-        self.docUrl = self.btnModel.doctr.url;
-        setBlockContent(self.btnModel.doctr);
+        self.displayDoc(self.btnModel.doctr);
     };
 
     self.actionAtt = function () {
@@ -198,6 +206,10 @@ app.controller('signDetailsCtrl', function ($log, $state, $rootScope, ENV, CONST
     self.openDoc = function (btnModelItem) {
         Utils.openNewWin(btnModelItem.url);
     };
+
+    $scope.$on('$destroy', function () {
+        $timeout.cancel(self.docTimeout);
+    });
 
     initCtrl(self.btnModel, self.item, self.item.Status);
     setBlockMode(CONST.BLOCKMODE.DEFAULT);
