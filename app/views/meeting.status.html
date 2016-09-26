@@ -1,7 +1,7 @@
 <div class="ad-page">
 
     <div ng-if="!msc.isMobile" class="ad-page-header db-center-v">
-        <button db-confirm confirm-enabled="msc.hasUnsavedData" confirm-config="msc.unsavedConfig" type="button" title="{{'STR_MTG_LOGOUT' | translate}}"
+        <button db-confirm confirm-enabled="true" confirm-config="msc.logoutConfig" type="button" title="{{'STR_MTG_LOGOUT' | translate}}"
             class="btn db-btn-prim" ng-click="msc.logOut()">
             <div class="db-glyph" ng-include="'images/glyph-back.svg'"></div>
         </button>
