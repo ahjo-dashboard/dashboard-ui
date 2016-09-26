@@ -31,9 +31,10 @@
                             <span ng-if="0 < $index">, </span>
                         <span class="db-margin-05-left">{{s.name}}</span></span><span ng-if="filtered2.length === 0" class="db-margin-05-left">-</span>
                     </div>
-                    <pre class="db-margin-05-ver">{{i.text}}</pre>
+                    <textarea db-textarea class="db-margin-05-ver db-padding-10 db-textarea db-overflow-hidden db-brd-all" readonly ng-model="i.text"></textarea>
                     <div ng-if="i.translationText" class="db-padding-10-hor"><span translate translate-cloak>STR_TRANSLATION</span>:</div>
-                    <pre ng-if="i.translationText" class="db-margin-05-ver">{{i.translationText}}</pre>
+                    <textarea ng-if="i.translationText" db-textarea class="db-margin-05-ver db-padding-10 db-textarea db-overflow-hidden db-brd-all" readonly
+                        ng-model="i.translationText"></textarea>
                 </div>
             </div>
         </ul>
