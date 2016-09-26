@@ -94,6 +94,7 @@ svg {
 
 .db-glyph svg {
     fill: $db-color-white;
+    pointer-events: none;
 }
 
 .db-glyph { // Both width and height have to be defined for IE11
@@ -1236,11 +1237,6 @@ body {
     height: auto;
     max-height: 400px;
     overflow-x: hidden;
-}
-
-// Tooltip class had to be defined like this, otherwise didn't take effect
-.tooltip.db-tooltip .tooltip-inner {
-    text-align: left;
 }
 
 .db-overflow {

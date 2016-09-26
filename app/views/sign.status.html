@@ -3,17 +3,14 @@
     <!-- HEADERS -->
 
     <div ng-if="!c.isMobile" class="ad-page-header db-center-v">
-        <button type="button" class="btn db-btn-prim" ng-click="c.goHome()" tooltip-enable="isTooltips"
-            uib-tooltip="{{'STR_INFO_HOMEBTN' | translate}}" tooltip-placement="right">
+        <button type="button" title="{{'STR_INFO_HOMEBTN' | translate}}" class="btn db-btn-prim" ng-click="c.goHome()">
             <div class="db-glyph" ng-include="'images/glyph-back.svg'"></div>
         </button>
-        <button type="button" class="btn db-btn-prim" ng-click="closeMenu()" tooltip-enable="isTooltips"
-            uib-tooltip="{{'STR_INFO_MENUBTN' | translate}}" tooltip-placement="right">
+        <button type="button" title="{{'STR_INFO_MENUBTN' | translate}}" class="btn db-btn-prim" ng-click="closeMenu()">
             <div class="db-glyph" ng-include="'images/glyph-menu-toggle.svg'"></div>
         </button>
-        <button ng-if="!c.isTablet" type="button" class="btn db-btn-prim"
-            ng-click="c.toggleParallelMode()" tooltip-enable="isTooltips" uib-tooltip="{{parallelMode ? 'STR_INFO_VIEW_VERT' : 'STR_INFO_VIEW_HORIZ' | translate}}"
-            tooltip-placement="right">
+        <button ng-if="!c.isTablet" type="button" title="{{parallelMode ? 'STR_INFO_VIEW_VERT' : 'STR_INFO_VIEW_HORIZ' | translate}}"
+            class="btn db-btn-prim" ng-click="c.toggleParallelMode()">
             <div class="db-glyph" ng-include="parallelMode ? 'images/glyph-parallel.svg' : 'images/glyph-vertical.svg'"></div>
         </button>
         <button type="button" class="btn db-btn-prim disabled" ng-click="">
@@ -38,7 +35,8 @@
             <h4 class="db-list-group-item-prim" ng-cloak>{{c.item.Name}}</h4>
             <div class="list-group-item db-brd-non-top db-flex db-prim-bg">
                 <div class="db-circle-30 db-brd-1-dark ng-class:[c.statusStyle(c.item.Status)]"></div>
-                <b class="db-flex-area db-center-v db-font-clr-white db-font-12 db-margin-15-left db-overflow-hidden db-truncate" translate translate-cloak>{{c.statusStrId(c.item.Status)}}</b>
+                <b class="db-flex-area db-center-v db-font-clr-white db-font-12 db-margin-15-left db-overflow-hidden db-truncate" translate
+                    translate-cloak>{{c.statusStrId(c.item.Status)}}</b>
             </div>
         </div>
 
@@ -61,25 +59,26 @@
                 </div>
             </div>
 
-            <db-link ng-if="c.isMobile" ng-attr-config="c.btnModel.doc.linkConfig" ng-attr-uri="c.btnModel.doc.url" ng-attr-set-disabled="c.op.busy === true" class="db-btn-x-big db-btn-prim btn-block" ></db-link>
+            <db-link ng-if="c.isMobile" ng-attr-config="c.btnModel.doc.linkConfig" ng-attr-uri="c.btnModel.doc.url" ng-attr-set-disabled="c.op.busy === true"
+                class="db-btn-x-big db-btn-prim btn-block"></db-link>
 
             <db-link ng-if="c.isMobile && c.btnModel.doctr.url" ng-attr-config="c.btnModel.doctr.linkConfig" ng-attr-uri="c.btnModel.doctr.url"
                 class="db-btn-x-big db-btn-prim"></db-link>
 
-            <button ng-if="c.isMobile" id="c.btnModel.att.id" type="button" class="btn btn-block btn-lg db-btn-x-big db-btn-prim"
-                ng-disabled="c.isDisabled(c.btnModel.att.id)" ng-click="c.actionAttList()">
+            <button ng-if="c.isMobile" id="c.btnModel.att.id" type="button" class="btn btn-block btn-lg db-btn-x-big db-btn-prim" ng-disabled="c.isDisabled(c.btnModel.att.id)"
+                ng-click="c.actionAttList()">
                 <span translate translate-cloak>STR_ATTACHMENTS</span>
                 <span class="badge ng-cloak">{{c.btnModel.att.count}}</span>
             </button>
 
-            <button ng-if="c.isMobile" id="c.btnModel.sta.id" type="button" class="btn btn-block btn-lg db-btn-x-big db-btn-prim"
-                ng-click="c.actionSignings()" ng-disabled="c.isDisabled(c.btnModel.sta.id)">
+            <button ng-if="c.isMobile" id="c.btnModel.sta.id" type="button" class="btn btn-block btn-lg db-btn-x-big db-btn-prim" ng-click="c.actionSignings()"
+                ng-disabled="c.isDisabled(c.btnModel.sta.id)">
                 <span translate translate-cloak>STR_SIGNEES_STATUSES</span>
             </button>
 
             <br>
 
-            <div uib-alert ng-class="'alert-warning'" tooltip-enable="isTooltips" uib-tooltip="{{c.item.Comment}}" tooltip-placement="bottom-left">
+            <div title="{{c.item.Comment}}" uib-alert ng-class="'alert-warning'">
                 <h5>
                     <span translate translate-cloak>STR_SENDER_COMMENT</span>
                 </h5>

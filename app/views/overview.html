@@ -2,8 +2,8 @@
     <div class="ad-page-header db-center-v">
 
         <div class="overview-hdr">
-            <button ng-if="env_dev" type="button" class="btn db-btn-prim db-center db-margin-10-right" ng-click="oc.logout()" tooltip-enable="isTooltips"
-                tooltip-placement="right" uib-tooltip="{{'STR_LOGOUT' | translate}} {{oc.testEnvUserId}}" tooltip-popup-delay='0'>
+            <button ng-if="env_dev" type="button" title="{{'STR_LOGOUT' | translate}} {{oc.testEnvUserId}}" class="btn db-btn-prim db-center db-margin-10-right"
+                ng-click="oc.logout()">
                 <div class="db-glyph" ng-include="'images/glyph-back.svg'"></div>
             </button>
             <img src="images/vaakuna.jpg" style="width: 40px;">
@@ -36,8 +36,8 @@
                         <div class="db-glyph db-glyph-sm" ng-include="'images/glyph-info.svg'"></div>
                     </div>
                 </button>
-                <button type="button" class="btn db-btn-prim ad-xs db-btn-list-topright-xs db-btn-list-topright-sm"
-                    ng-click="oc.upperClicked()" tooltip-enable="isTooltips" tooltip-placement="top" uib-tooltip="{{'STR_EXPANDCOLLAPSE' | translate}}">
+                <button type="button" title="{{'STR_EXPANDCOLLAPSE' | translate}}" class="btn db-btn-prim ad-xs db-btn-list-topright-xs db-btn-list-topright-sm"
+                    ng-click="oc.upperClicked()">
                     <div class="db-center db-flex-area">
                         <div class="db-glyph db-glyph-sm" ng-include="oc.blockMode === oc.bms.PRIMARY ? 'images/glyph-expand-minus.svg' : 'images/glyph-expand-plus.svg'"></div>
                     </div>
@@ -66,8 +66,8 @@
                         <div class="db-glyph db-glyph-sm" ng-include="'images/glyph-info.svg'"></div>
                     </div>
                 </button>
-                <button type="button" class="btn db-btn-prim ad-xs db-btn-list-topright-xs db-btn-list-topright-sm" ng-click="oc.lowerClicked()"
-                    tooltip-enable="isTooltips" tooltip-placement="top" uib-tooltip="{{'STR_EXPANDCOLLAPSE' | translate}}">
+                <button type="button" title="{{'STR_EXPANDCOLLAPSE' | translate}}" class="btn db-btn-prim ad-xs db-btn-list-topright-xs db-btn-list-topright-sm"
+                    ng-click="oc.lowerClicked()">
                     <div class="db-center db-flex-area">
                         <div class="db-glyph db-glyph-sm" ng-include="oc.blockMode === oc.bms.SECONDARY ? 'images/glyph-expand-minus.svg' : 'images/glyph-expand-plus.svg'"></div>
                     </div>

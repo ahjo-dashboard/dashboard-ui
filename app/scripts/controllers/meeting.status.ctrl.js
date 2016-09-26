@@ -501,7 +501,7 @@ angular.module('dashboard')
             return 'db-badge-red';
         };
 
-        self.topicBtnTooltip = function (topic) {
+        self.topicBtnTitle = function (topic) {
             var result = '';
             if (angular.isObject(topic)) {
                 var canOpen = self.canOpenTopic(topic);
@@ -519,12 +519,12 @@ angular.module('dashboard')
                         result = 'STR_INFO_TOPIC_STATUS_CHANGE_DISABLED';
                         break;
                     default:
-                        $log.error("meetingStatusCtrl: topicBtnTooltip unsupported mode");
+                        $log.error("meetingStatusCtrl: topicBtnTitle unsupported mode");
                         break;
                 }
             }
             else {
-                $log.error("meetingStatusCtrl: topicBtnTooltip invalid parameter:");
+                $log.error("meetingStatusCtrl: topicBtnTitle invalid parameter:");
             }
             return result;
         };

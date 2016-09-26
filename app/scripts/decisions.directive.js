@@ -19,7 +19,6 @@ angular.module('dashboard')
             self.loading = false;
             self.types = [];
             self.selectedItem = null;
-            self.isTooltips = $rootScope.isTooltips;
             self.errorCode = 0;
             self.record = [];
             self.voting = [];

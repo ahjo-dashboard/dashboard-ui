@@ -26,7 +26,7 @@ angular.module('dashboard', [
     'pascalprecht.translate',
     'ngDialog'
 ])
-    .config(function ($urlRouterProvider, $stateProvider, ENV, G_APP, $logProvider, $provide, $compileProvider, $translateProvider, $httpProvider, $uibTooltipProvider, ngDialogProvider) {
+    .config(function ($urlRouterProvider, $stateProvider, ENV, G_APP, $logProvider, $provide, $compileProvider, $translateProvider, $httpProvider, ngDialogProvider) {
         // Startup logged always regardless of ENV config, so using console instead of $log
         console.log('dashboard.config: ver: ' + G_APP.app_version + ' env: ' + ENV.app_env + ' logging: ' + ENV.app_debuglogs);
 
@@ -73,11 +73,6 @@ angular.module('dashboard', [
 
         $httpProvider.defaults.withCredentials = true;
 
-        $uibTooltipProvider.options({
-            popupDelay: 1000,
-            appendToBody: true // Otherwise tooltip is under some elements
-        });
-
         ngDialogProvider.setDefaults({
             className: 'ngdialog-theme-default',
             showClose: false,
@@ -106,7 +101,6 @@ angular.module('dashboard', [
         // GLOBAL VARIABLES
         // $rootScope.menu      FULL = 2, HALF = 1,  CLOSED = 0
         // $rootScope.isMobile
-        // $rootScope.isTooltips
         // rootScope.env_dev
 
         $rootScope.env_dev = ENV.app_env !== 'prod';
@@ -118,9 +112,8 @@ angular.module('dashboard', [
         $rootScope.isEdge = Utils.isUAEdge($window.navigator.userAgent);
         $rootScope.isMobile = Utils.isClientMobile();
         $rootScope.isTablet = Utils.isUaMobile();
-        $rootScope.isTooltips = !$rootScope.isMobile && !$rootScope.isTablet;
 
-        console.log("app.run: IE=" + $rootScope.isIe + "  Edge=" + $rootScope.isEdge + " Mobile=" + $rootScope.isMobile + " Tooltips=" + $rootScope.isTooltips +" UA=" + $window.navigator.userAgent + " LANG=" +$rootScope.dbLang);
+        console.log("app.run: IE=" + $rootScope.isIe + "  Edge=" + $rootScope.isEdge + " Mobile=" + $rootScope.isMobile + " UA=" + $window.navigator.userAgent + " LANG=" + $rootScope.dbLang);
 
         $rootScope.parallelMode = (!$rootScope.isMobile && !$rootScope.isTablet); // Default meeting layout mode parallel only on desktop because on small screens it's not so useful
 
