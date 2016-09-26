@@ -78,7 +78,7 @@ angular.module('dashboard')
                 $state.go(CONST.APPSTATE.MEETING, { 'menu': CONST.MENU.FULL });
             } else {
                 $log.error("overviewCtrl.goToMeeting: bad args=" ,arguments);
-                DialogUtils.showError('STR_ERR_TITLE', 'STR_FAIL_OP', true);
+                DialogUtils.showError('STR_FAIL_OP', null, true);
             }
         }
 
