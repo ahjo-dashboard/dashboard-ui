@@ -723,8 +723,10 @@ angular.module('dashboard')
             self.hasUnsavedData = hasUnsaved ? true : false;
         });
 
-        var modeWatcher = $rootScope.$on(CONST.MEETINGPARALLELMODE, function (event, active) {
-            self.parallelModeActive = active ? true : false;
+        var modeWatcher = $rootScope.$on(CONST.MTGUICHANGED, function (event, data) {
+            if (angular.isObject(data) && data.primaryBlockMode) {
+                self.parallelModeActive = data.primaryBlockMode !== CONST.PRIMARYMODE.HIDDEN;
+            }
         });
 
         $scope.$on('$destroy', function () {

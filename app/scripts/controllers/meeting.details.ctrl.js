@@ -44,6 +44,7 @@ angular.module('dashboard')
 
         function setBlockMode(mode) {
             self.bm = self.isMobile ? CONST.BLOCKMODE.SECONDARY : mode;
+            $rootScope.$emit(CONST.MTGUICHANGED, { blockMode: self.bm });
         }
 
         function setPrimaryMode() {
@@ -65,7 +66,7 @@ angular.module('dashboard')
             else {
                 self.pm = CONST.PRIMARYMODE.DEFAULT;
             }
-            $rootScope.$emit(CONST.MEETINGPARALLELMODE, self.pm !== CONST.PRIMARYMODE.HIDDEN);
+            $rootScope.$emit(CONST.MTGUICHANGED, { primaryBlockMode: self.pm });
         }
 
         function setSecondaryMode(mode) {

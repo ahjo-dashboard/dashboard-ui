@@ -13,7 +13,7 @@
 angular.module('dashboard')
     .directive('dbMotions', [function () {
 
-        var controller = ['$log', 'StorageSrv', 'CONST', '$rootScope', '$scope', 'AhjoMeetingSrv', 'Utils', function ($log, StorageSrv, CONST, $rootScope, $scope, AhjoMeetingSrv, Utils) {
+        var controller = ['$log', 'StorageSrv', 'CONST', '$rootScope', '$scope', 'AhjoMeetingSrv', 'Utils', '$timeout', function ($log, StorageSrv, CONST, $rootScope, $scope, AhjoMeetingSrv, Utils, $timeout) {
             $log.log("dbMotions: CONTROLLER");
             var self = this;
             self.loading = false;
@@ -24,6 +24,15 @@ angular.module('dashboard')
             var mtgItemSelected = StorageSrv.getKey(CONST.KEY.MEETING_ITEM);
 
             // FUNCTIONS
+
+            function setMotions(data) {
+                self.motions = [];
+                $timeout(function () {
+                    if (angular.isObject(data)) {
+                        self.motions = (angular.isArray(data.objects)) ? data.objects : [];
+                    }
+                }, 0);
+            }
 
             function sign(aMotion, aMeetingGuid) {
                 if (!angular.isObject(aMotion) || !angular.isString(aMeetingGuid)) {
@@ -107,9 +116,7 @@ angular.module('dashboard')
             $scope.$watch(function () {
                 return StorageSrv.getKey(CONST.KEY.MOTION_DATA);
             }, function (data) {
-                if (angular.isObject(data) && !angular.equals(data.objects, self.motions)) {
-                    self.motions = (angular.isArray(data.objects)) ? data.objects : [];
-                }
+                setMotions(data);
                 self.loading = (angular.isObject(data) && data.loading === true);
             });
 
@@ -117,6 +124,20 @@ angular.module('dashboard')
                 return $rootScope.meetingStatus;
             }, function (status) {
                 self.meetingActive = (status === CONST.MTGSTATUS.ACTIVE.stateId);
+            });
+
+            var modeWatcher = $rootScope.$on(CONST.MTGUICHANGED, function (event, data) {
+                if (angular.isObject(data) && (data.blockMode === CONST.BLOCKMODE.SECONDARY || data.blockMode === CONST.BLOCKMODE.DEFAULT)) {
+                    var motionData = StorageSrv.getKey(CONST.KEY.MOTION_DATA);
+                    setMotions(motionData);
+                }
+            });
+
+            $scope.$on('$destroy', function () {
+                $log.debug("dbMotions: DESTROY");
+                if (angular.isFunction(modeWatcher)) {
+                    modeWatcher();
+                }
             });
 
         }];
