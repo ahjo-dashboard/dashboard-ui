@@ -19,7 +19,6 @@ angular.module('dashboard', [
     'AhjoSigningService',
     'ui.bootstrap',
     'ngSanitize',
-    'ngToast',
     'angularSpinner',
     'monospaced.elastic',
     'focus-if',
@@ -85,7 +84,7 @@ angular.module('dashboard', [
             closeByNavigation: true
         });
     })
-    .run(function ($rootScope, $log, $window, CONST, ENV, $state, $timeout, $translate, Utils, StorageSrv, ngToast, DialogUtils, G_APP) {
+    .run(function ($rootScope, $log, $window, CONST, ENV, $state, $timeout, $translate, Utils, StorageSrv, DialogUtils, G_APP) {
 
         $rootScope.isModalActive = DialogUtils.isModalActive;
 
@@ -168,11 +167,5 @@ angular.module('dashboard', [
 
         $rootScope.menuFull = function () {
             return $rootScope.menu === CONST.MENU.FULL;
-        };
-
-        $rootScope.failedInfo = function (info) {
-            $translate(info).then(function (translatedValue) {
-                ngToast.danger(translatedValue);
-            });
         };
     });

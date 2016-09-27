@@ -98,14 +98,15 @@ angular.module('dashboard')
         /*
          * @name dashboard.dialogutils.showError
          * @description Displays an error modal
-         * @param {string} Title string id
          * @param {string} Body text string id
+         * @param {string} Title string id
          * @param {boolean} True if url navigation should close the dialog
          * @returns {} ngDialog promise
          */
-        self.showError = function showErrorFn(aTitleStrId, aBodyStrId, aCloseByNavi) {
+        self.showError = function showErrorFn(aBodyStrId, aTitleStrId, aCloseByNavi) {
             var closeNavi = angular.isDefined(aCloseByNavi) ? aCloseByNavi : false;
-            return showModal(true, aTitleStrId, aBodyStrId, closeNavi);
+            var titleStrId = angular.isString(aTitleStrId) ? aTitleStrId : 'STR_ERR_TITLE';
+            return showModal(true, titleStrId, aBodyStrId, closeNavi);
         };
 
         /*

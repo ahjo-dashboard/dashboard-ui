@@ -77,8 +77,8 @@ angular.module('dashboard')
                 StorageSrv.setKey(CONST.KEY.MEETING_ITEM, meetingItem);
                 $state.go(CONST.APPSTATE.MEETING, { 'menu': CONST.MENU.FULL });
             } else {
-                $log.error("overviewCtrl.goToMeeting: bad args \n meeting=" + JSON.stringify(meetingItem) + "\n  role=" + JSON.stringify(meetingRole) + "\n person=" + JSON.stringify(personGuid));
-                $rootScope.failedInfo('STR_LOGIN_FAILED');
+                $log.error("overviewCtrl.goToMeeting: bad args=" ,arguments);
+                DialogUtils.showError('STR_FAIL_OP', null, true);
             }
         }
 
@@ -100,10 +100,10 @@ angular.module('dashboard')
         }
 
         self.loginMeeting = function loginMeetingFn(meetingItem, meetingRole, personGuid) {
-            $log.debug("overviewCtrl.loginMeeting: \n - meeting:\n" + JSON.stringify(meetingItem) + "\n - role: " + JSON.stringify(meetingRole) + "\n - personGuid: " + personGuid);
+            $log.debug("overviewCtrl.loginMeeting: ", arguments);
             var dlg = DialogUtils.showProgress('STR_MTG_LOGIN_PROGRESS');
             AhjoMeetingSrv.meetingLogin(meetingItem.meetingGuid, meetingRole.RoleID, personGuid).then(function (resp) {
-                $log.debug("overviewCtrl.loginMeeting: result \n" + JSON.stringify(resp));
+                $log.debug("overviewCtrl.loginMeeting: result=", arguments);
                 if (!Utils.processAhjoError(resp)) {
                     goToMeeting(meetingItem, meetingRole, personGuid);
                 }
