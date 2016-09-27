@@ -15,21 +15,21 @@ angular.module('dashboard')
         return {
             scope: false,
             restrict: 'A',
+            require: 'ngModel',
             replace: 'true',
-            link: function (scope, element/*, attrs*/) {
-                var e = element[0];
-                var timer;
+            link: function (scope, element, attrs, ngModel) {
+                var value;
                 scope.$watch(
                     function () {
-                        return e.scrollHeight;
+                        return ngModel.$modelValue;
                     },
-                    function (scrollHeight) {
-                        if (scrollHeight) {
-                            // timer is used to avoid $digest() loop error
-                            $timeout.cancel(timer);
-                            timer = $timeout(function () {
-                                e.style.height = scrollHeight + 'px';
-                            }, 100);
+                    function (modelValue) {
+                        if (!angular.equals(value, modelValue)) {
+                            value = modelValue;
+                            $timeout(function () {
+                                var height = element[0].scrollHeight + 'px';
+                                element.css('height', height);
+                            }, 0);
                         }
                     },
                     true
