@@ -20,7 +20,7 @@
             <ul uib-dropdown-menu role="menu" aria-labelledby="agencyButton">
                 <li role="menuitem" ng-repeat="agency in c.agencyData track by $index"><a ng-click="c.setAgencyFilter(agency)">{{agency}}</a></li>
                 <li ng-if="c.aF" class="divider"></li>
-                <li ng-if="c.aF" role="menuitem"><a ng-click="c.setAgencyFilter(null)">Poista valinta</a></li>
+                <li ng-if="c.aF" role="menuitem"><a ng-click="c.setAgencyFilter(null)" translate translate-cloak>STR_CLEAR_SELECTION</a></li>
             </ul>
         </div>
 
