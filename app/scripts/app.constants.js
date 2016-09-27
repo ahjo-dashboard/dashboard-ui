@@ -23,8 +23,8 @@ angular.module('dashboard')
         'MOTIONDATA': { loading: false, objects: [] },
         'NOTFOUND': -1,
         'DBLANG': {
-            FI: 'fi',
-            SV: 'sv'
+            FI: { langCode: 'fi', flagIconPath: 'images/flag-fi.svg' },
+            SV: { langCode: 'sv', flagIconPath: 'images/flag-sv.svg' },
         },
         'HTTPSTATUS': {
             K200: { value: 200, strId: null }
