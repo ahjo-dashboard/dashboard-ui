@@ -54,7 +54,7 @@
                             type="button" title="{{'STR_MTG_LOGIN' | translate}}" class="btn db-btn-sel db-margin-2 ng-class:[{'btn-block db-fs-12':c.isMobile}]"
                             ng-click="selected({meetingItem:item.meeting, meetingRole:role, personGuid: c.responseData.personGuid })">
                             <div class="db-center">
-                                <span>{{role.RoleName}}</span>
+                                <span translate translate-cloak>{{c.roleNameStrId(role)}}</span>
                                 <div class="db-glyph db-glyph-sm db-glyph-dark db-margin-05-left" ng-include="'images/glyph-login.svg'"></div>
                             </div>
                         </button>

@@ -332,7 +332,7 @@ angular.module('dashboard')
 
         // CONSTRUCT
 
-        if (angular.isObject(mtgItemSelected) && angular.isObject(mtgItemSelected.dbUserRole) && mtgItemSelected.dbUserRole.RoleID === CONST.MTGROLE.CHAIRMAN) {
+        if (angular.isObject(mtgItemSelected) && angular.isObject(mtgItemSelected.dbUserRole) && mtgItemSelected.dbUserRole.RoleID === CONST.MTGROLE.CHAIRMAN.value) {
             self.isChairman = true;
         }
         setBlockMode(CONST.BLOCKMODE.DEFAULT);

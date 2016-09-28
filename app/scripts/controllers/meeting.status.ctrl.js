@@ -699,7 +699,7 @@ angular.module('dashboard')
 
         getMeetingDetails(mtgItemSelected);
         getMotions(mtgItemSelected);
-        self.chairman = (mtgItemSelected.dbUserRole.RoleID === CONST.MTGROLE.CHAIRMAN);
+        self.chairman = (mtgItemSelected.dbUserRole.RoleID === CONST.MTGROLE.CHAIRMAN.value);
 
         $scope.$watch(function () {
             return StorageSrv.getKey(CONST.KEY.PROPOSAL_EVENT_ARRAY);
