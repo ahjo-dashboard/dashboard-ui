@@ -81,7 +81,7 @@ angular.module('dashboard')
         Utils.objWithVal = function (arr, prop, val) {
             var res = null;
             if (!arr || !angular.isObject(arr) || !prop) {
-                $log.error("Utils.objWithVal: bad arguments: arr:" + arr + " prop:" + prop + " val:" + val);
+                $log.error("Utils.objWithVal: bad arguments:", arguments);
                 return res;
             }
 
