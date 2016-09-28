@@ -151,10 +151,10 @@ angular.module('dashboard')
             var res = '';
             switch ($rootScope.dbLang) {
                 case CONST.DBLANG.FI.langCode:
-                    res = CONST.DBLANG.FI.flagIconPath;
+                    res = CONST.DBLANG.SV.flagIconPath;
                     break;
                 case CONST.DBLANG.SV.langCode:
-                    res = CONST.DBLANG.SV.flagIconPath;
+                    res = CONST.DBLANG.FI.flagIconPath;
                     break;
                 default:
                     break;
