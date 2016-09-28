@@ -175,5 +175,6 @@ angular.module('dashboard', [
             $rootScope.dbLang = angular.equals($rootScope.dbLang, CONST.DBLANG.FI.langCode) ? CONST.DBLANG.SV.langCode : CONST.DBLANG.FI.langCode;
             $log.log("rootScope.toggleLang: " + $rootScope.dbLang + ", old translage.use was=" + $translate.use());
             $translate.use($rootScope.dbLang);
+            document.documentElement.setAttribute('lang', $rootScope.dbLang);// sets "lang" attribute to html
         };
     });
