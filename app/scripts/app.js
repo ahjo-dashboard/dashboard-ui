@@ -23,7 +23,8 @@ angular.module('dashboard', [
     'monospaced.elastic',
     'focus-if',
     'pascalprecht.translate',
-    'ngDialog'
+    'ngDialog',
+    'ngCookies'
 ])
     .config(function ($urlRouterProvider, $stateProvider, ENV, G_APP, $logProvider, $provide, $compileProvider, $translateProvider, $httpProvider, ngDialogProvider, $uibModalProvider) {
         // Startup logged always regardless of ENV config, so using console instead of $log
@@ -63,10 +64,11 @@ angular.module('dashboard', [
                 prefix: 'loc/lang-',
                 suffix: '.json'
             })
+            .useLocalStorage() // Remember language: localstore preferred over cookiestore
             .preferredLanguage('fi')
             .fallbackLanguage('fi')
-            .useSanitizeValueStrategy('escapeParameters')
-            .use('fi');
+            .useSanitizeValueStrategy('escapeParameters');
+            // .use('fi')
 
         $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|mailto|blob):/);
 
@@ -110,13 +112,13 @@ angular.module('dashboard', [
         $rootScope.dbUa = $window.navigator.userAgent;
         $rootScope.dbAppVersion = G_APP.app_version;
         $rootScope.dbAppEnv = ENV.app_env;
-        $rootScope.dbLang = CONST.DBLANG.FI;
+        $rootScope.dbLang = angular.isString($translate.proposedLanguage()) ? $translate.proposedLanguage() : CONST.DBLANG.FI.langCode;
         $rootScope.isIe = Utils.isUaIe($window.navigator.userAgent);
         $rootScope.isEdge = Utils.isUAEdge($window.navigator.userAgent);
         $rootScope.isMobile = Utils.isClientMobile();
         $rootScope.isTablet = Utils.isUaMobile();
 
-        console.log("app.run: IE=" + $rootScope.isIe + "  Edge=" + $rootScope.isEdge + " Mobile=" + $rootScope.isMobile + " UA=" + $window.navigator.userAgent + " LANG=" + $rootScope.dbLang);
+        console.log("app.run: IE=" + $rootScope.isIe + "  Edge=" + $rootScope.isEdge + " Mobile=" + $rootScope.isMobile + " UA=" + $window.navigator.userAgent + " translate.proposedLanguage=" + $translate.proposedLanguage() + " dbLang=" + $rootScope.dbLang);
 
         $rootScope.parallelMode = (!$rootScope.isMobile && !$rootScope.isTablet); // Default meeting layout mode parallel only on desktop because on small screens it's not so useful
 
@@ -167,5 +169,12 @@ angular.module('dashboard', [
 
         $rootScope.menuFull = function () {
             return $rootScope.menu === CONST.MENU.FULL;
+        };
+
+        $rootScope.toggleLang = function toggleLanguage() {
+            $rootScope.dbLang = angular.equals($rootScope.dbLang, CONST.DBLANG.FI.langCode) ? CONST.DBLANG.SV.langCode : CONST.DBLANG.FI.langCode;
+            $log.log("rootScope.toggleLang: " + $rootScope.dbLang + ", old translage.use was=" + $translate.use());
+            $translate.use($rootScope.dbLang);
+            document.documentElement.setAttribute('lang', $rootScope.dbLang);// sets "lang" attribute to html
         };
     });

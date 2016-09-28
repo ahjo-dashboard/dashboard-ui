@@ -4,11 +4,14 @@
         <div class="overview-hdr">
             <button ng-if="env_dev" type="button" title="{{'STR_LOGOUT' | translate}} {{oc.testEnvUserId}}" class="btn db-btn-prim db-center db-margin-10-right"
                 ng-click="oc.logout()">
-                <div class="db-glyph" ng-include="'images/glyph-back.svg'"></div>
+                <div class="db-glyph db-glyph-sm" ng-include="'images/glyph-back.svg'"></div>
             </button>
             <img src="images/vaakuna.jpg" style="width: 40px;">
-            <h4 class="hidden-sm hidden-md hidden-lg db-flex-area" translate>STR_APPNAME</h4>
+            <h5 class="hidden-sm hidden-md hidden-lg db-flex-area db-break-hyphen" translate>STR_APPNAME</h5>
             <h3 class="hidden-xs db-flex-area" translate>STR_APPNAME</h3>
+            <button type="button" class="btn db-btn-prim" ng-click="toggleLang()">
+                <div class="db-glyph db-glyph-sm" ng-include="oc.flagIconPath()"></div>
+            </button>
             <button type="button" class="btn db-btn-prim" ng-click="oc.showInfo()">
                 <div class="db-glyph db-glyph-sm" ng-include="'images/glyph-info.svg'"></div>
             </button>
@@ -21,13 +24,12 @@
 
             <!-- MEETINGS START -->
             <div ng-if="oc.hasMeetings" class="ad-flex-header">
-                <button type="button" class="btn db-btn-prim ad-lg db-btn-list-topleft-xs db-btn-list-topleft-sm ng-class:[{'active':oc.vblMtgs === oc.vbl.OPEN}]"
-                    ng-click="oc.setMtgsVisible(oc.vbl.OPEN)">
+                <button type="button" class="btn db-btn-prim ad-lg db-btn-list-topleft-xs db-btn-list-topleft-sm db-break-hyphen ng-class:[{'active':oc.vblMtgs === oc.vbl.OPEN}]" ng-click="oc.setMtgsVisible(oc.vbl.OPEN)">
                     <div class="visible-xs-block"><h5 translate>STR_OPEN_MEETINGS</h5>
                     </div>
                     <div class="hidden-xs"><h4 translate>STR_OPEN_MEETINGS</h4></div>
                 </button>
-                <button type="button" class="btn db-btn-prim ad-lg ng-class:[{'active':oc.vblMtgs === oc.vbl.CLOSED}]" ng-click="oc.setMtgsVisible(oc.vbl.CLOSED)">
+                <button type="button" class="btn db-btn-prim ad-lg db-break-hyphen ng-class:[{'active':oc.vblMtgs === oc.vbl.CLOSED}]" ng-click="oc.setMtgsVisible(oc.vbl.CLOSED)">
                     <h5 class="visible-xs-block" translate>STR_CLOSED_MEETINGS</h5>
                     <h4 class="hidden-xs" translate>STR_CLOSED_MEETINGS</h4>
                 </button>
@@ -52,12 +54,12 @@
 
             <!-- SIGNINGS START -->
             <div ng-if="oc.hasEsign" class="ad-flex-header ng-class:[{'db-margin-05-top': !isMobile}, {'db-margin-1-top': isMobile}]">
-                <button type="button" class="btn db-btn-prim ad-lg db-btn-list-topleft-xs db-btn-list-topleft-sm ng-class:[{'active':!oc.closedSignReqs}]"
+                <button type="button" class="btn db-btn-prim ad-lg db-btn-list-topleft-xs db-btn-list-topleft-sm db-break-hyphen ng-class:[{'active':!oc.closedSignReqs}]"
                     ng-click="oc.setClosedSignReqs(false)">
                     <h5 class="visible-xs-block" translate>STR_OPEN_SIGNINGS</h5>
                     <h4 class="hidden-xs" translate>STR_OPEN_SIGNINGS</h4>
                 </button>
-                <button type="button" class="btn db-btn-prim ad-lg ng-class:[{'active':oc.closedSignReqs}]" ng-click="oc.setClosedSignReqs(true)">
+                <button type="button" class="btn db-btn-prim ad-lg db-break-hyphen ng-class:[{'active':oc.closedSignReqs}]" ng-click="oc.setClosedSignReqs(true)">
                     <h5 class="visible-xs-block" translate>STR_CLOSED_SIGNINGS</h5>
                     <h4 class="hidden-xs" translate>STR_CLOSED_SIGNINGS</h4>
                 </button>
