@@ -13,7 +13,7 @@
 angular.module('dashboard')
     .directive('dbDecisions', [function () {
 
-        var controller = ['$log', '$scope', 'AhjoMeetingSrv', 'StorageSrv', 'CONST', 'PROPS', '$rootScope', function ($log, $scope, AhjoMeetingSrv, StorageSrv, CONST, PROPS, $rootScope) {
+        var controller = ['$log', '$scope', 'AhjoMeetingSrv', 'StorageSrv', 'CONST', 'PROPS', '$rootScope', '$timeout', function ($log, $scope, AhjoMeetingSrv, StorageSrv, CONST, PROPS, $rootScope, $timeout) {
             $log.log("dbDecisions: CONTROLLER");
             var self = this;
             self.loading = false;
@@ -49,6 +49,14 @@ angular.module('dashboard')
             function resetData() {
                 self.record = [];
                 self.voting = [];
+            }
+
+            function setData(record, voting) {
+                resetData();
+                $timeout(function () {
+                    self.record = angular.isArray(record) ? record : [];
+                    self.voting = angular.isArray(voting) ? voting : [];
+                }, 0);
             }
 
             function updateDecision(aDecision) {
@@ -123,8 +131,7 @@ angular.module('dashboard')
                     resetData();
                     AhjoMeetingSrv.getDecisions(aMtg.meetingGuid, aTopic.topicGuid).then(function (resp) {
                         $log.log("dbDecisions.getDecisions done", arguments);
-                        self.record = angular.isArray(resp.record) ? resp.record : [];
-                        self.voting = angular.isArray(resp.voting) ? resp.voting : [];
+                        setData(resp.record, resp.voting);
                     }, function (error) {
                         $log.error("dbDecisions.getDecisions ", arguments);
                         self.errorCode = error.errorCode;
@@ -148,8 +155,8 @@ angular.module('dashboard')
                 self.selectedItem = (self.selectedItem === aItem) ? null : aItem;
             };
 
-            self.isSelected = function (item) {
-                return self.selectedItem === item;
+            self.isSelected = function (aItem) {
+                return (angular.isObject(self.selectedItem) && angular.isObject(aItem) && angular.equals(self.selectedItem.minuteEntryGuid, aItem.minuteEntryGuid))
             };
 
             self.getVotingTitle = function getVotingTitle(aVoting) {
@@ -197,10 +204,19 @@ angular.module('dashboard')
                 updateDecision(aData);
             });
 
+            var modeWatcher = $rootScope.$on(CONST.MTGUICHANGED, function (event, data) {
+                if (angular.isObject(data) && (data.blockMode === CONST.BLOCKMODE.SECONDARY || data.blockMode === CONST.BLOCKMODE.DEFAULT)) {
+                    setData(self.record, self.voting);
+                }
+            });
+
             $scope.$on('$destroy', function () {
                 $log.log("dbDecisions: DESTROY");
                 if (angular.isFunction(updateWatcher)) {
                     updateWatcher();
+                }
+                if (angular.isFunction(modeWatcher)) {
+                    modeWatcher();
                 }
             });
 
