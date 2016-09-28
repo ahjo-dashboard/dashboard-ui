@@ -156,7 +156,7 @@ angular.module('dashboard')
             };
 
             self.isSelected = function (aItem) {
-                return (angular.isObject(self.selectedItem) && angular.isObject(aItem) && angular.equals(self.selectedItem.minuteEntryGuid, aItem.minuteEntryGuid))
+                return (angular.isObject(self.selectedItem) && angular.isObject(aItem) && angular.equals(self.selectedItem.minuteEntryGuid, aItem.minuteEntryGuid));
             };
 
             self.getVotingTitle = function getVotingTitle(aVoting) {
