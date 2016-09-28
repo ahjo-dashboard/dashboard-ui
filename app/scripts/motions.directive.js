@@ -16,6 +16,7 @@ angular.module('dashboard')
         var controller = ['$log', 'StorageSrv', 'CONST', '$rootScope', '$scope', 'AhjoMeetingSrv', 'Utils', '$timeout', function ($log, StorageSrv, CONST, $rootScope, $scope, AhjoMeetingSrv, Utils, $timeout) {
             $log.log("dbMotions: CONTROLLER");
             var self = this;
+            self.isIe = $rootScope.isIe;
             self.loading = false;
             self.motions = null;
             self.error = null;

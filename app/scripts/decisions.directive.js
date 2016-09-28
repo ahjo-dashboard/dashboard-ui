@@ -16,6 +16,7 @@ angular.module('dashboard')
         var controller = ['$log', '$scope', 'AhjoMeetingSrv', 'StorageSrv', 'CONST', 'PROPS', '$rootScope', '$timeout', function ($log, $scope, AhjoMeetingSrv, StorageSrv, CONST, PROPS, $rootScope, $timeout) {
             $log.log("dbDecisions: CONTROLLER");
             var self = this;
+            self.isIe = $rootScope.isIe;
             self.loading = false;
             self.types = [];
             self.selectedItem = null;
