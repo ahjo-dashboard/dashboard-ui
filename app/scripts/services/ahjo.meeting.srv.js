@@ -18,7 +18,7 @@ angular.module('dashboard')
                 method: ENV.HTTP_GET,
                 cache: false
             },
-            put: {
+            update: {
                 method: ENV.HTTP_PUT
             }
         });
@@ -145,7 +145,7 @@ angular.module('dashboard')
             var def = $q.defer();
             $timeout(function () {
                 def.notify({});
-                MotionResource.put(aMotion).$promise.then(function (aResource) {
+                MotionResource.update(aMotion).$promise.then(function (aResource) {
                     $log.debug("AhjoMeetingSrv.updateMotion done", aResource);
                     var res = Utils.parseResource(aResource);
                     handleResult(def, res);

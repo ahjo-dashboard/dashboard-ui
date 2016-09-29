@@ -66,6 +66,34 @@ angular.module('dashboard')
                 });
             }
 
+            function submit(aMotion) {
+                if (!angular.isObject(aMotion)) {
+                    $log.error("dbMotions.submit: bad args", arguments);
+                    return;
+                }
+                $log.log("dbMotions: submit", arguments);
+
+                var copyMotion = angular.copy(aMotion);
+                copyMotion.isSubmitted = true;
+
+                AhjoMeetingSrv.updateMotion(copyMotion).then(function (resp) {
+                    if (angular.isObject(resp) && angular.isObject(resp.motion)) {
+                        $log.log("dbMotions.submit done", resp);
+                        angular.merge(aMotion, resp.motion);
+                    }
+                    else {
+                        $log.error("dbMotions.submit done ", resp);
+                    }
+                }, function (error) {
+                    $log.error("dbMotions.submit", error);
+                    Utils.showErrorForError(error);
+                }, function (/*notification*/) {
+                    self.loading = true;
+                }).finally(function () {
+                    self.loading = false;
+                });
+            }
+
             self.selectMotion = function (motion) {
                 if (self.isSelected(motion)) {
                     selectedMotion = null;
@@ -89,26 +117,27 @@ angular.module('dashboard')
                 return result;
             };
 
-            self.submit = function (/*motion*/) {
+            self.submit = function (aMotion) {
                 $log.log("dbMotions: submit", arguments);
+                submit(aMotion);
             };
 
-            self.support = function (motion) {
+            self.support = function (aMotion) {
                 if (!angular.isObject(mtgItemSelected)) {
                     $log.error("dbMotions.support: invalid mtg item", mtgItemSelected);
                     return;
                 }
                 $log.log("dbMotions: support", arguments);
-                sign(motion, mtgItemSelected.meetingGuid, true);
+                sign(aMotion, mtgItemSelected.meetingGuid, true);
             };
 
-            self.removeSupport = function (motion) {
+            self.removeSupport = function (aMotion) {
                 if (!angular.isObject(mtgItemSelected)) {
                     $log.error("dbMotions.removeSupport: invalid mtg item", mtgItemSelected);
                     return;
                 }
                 $log.log("dbMotions: removeSupport", arguments);
-                sign(motion, mtgItemSelected.meetingGuid, false);
+                sign(aMotion, mtgItemSelected.meetingGuid, false);
             };
 
             $scope.$watch(function () {
