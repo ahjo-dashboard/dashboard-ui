@@ -213,12 +213,44 @@ angular.module('dashboard')
         }
 
         function motionUpdated(aEvent) {
-            if (angular.isObject(aEvent)) {
+            if (angular.isObject(aEvent) && angular.isObject(aEvent.motion)) {
                 $log.debug("meetingStatusCtrl.motionUpdated", arguments);
-                // todo: pending implementation
+                var data = StorageSrv.getKey(CONST.KEY.MOTION_DATA);
+                if (angular.isObject(data)) {
+                    if (angular.isArray(data.objects)) {
+                        var notFound = true;
+                        for (var index = 0; notFound && index < data.objects.length; index++) {
+                            var element = data.objects[index];
+                            if (angular.isObject(element) && angular.equals(element.motionGuid, aEvent.motion.motionGuid)) {
+                                angular.merge(element, aEvent.motion);
+                                notFound = false;
+                            }
+                        }
+                        if (notFound) {
+                            data.objects.push(aEvent.motion);
+                        }
+                    }
+                    else {
+                        data.objects = [aEvent.motion];
+                    }
+                }
+                else {
+                    data = { loading: false, objects: [aEvent.motion] };
+                }
+                StorageSrv.setKey(CONST.KEY.MOTION_DATA, data);
             }
             else {
                 $log.error("meetingStatusCtrl.motionUpdated", arguments);
+            }
+        }
+
+        function motionUnpublished(aEvent) {
+            if (angular.isObject(aEvent) && angular.isObject(aEvent.motion)) {
+                $log.debug("meetingStatusCtrl.motionUnpublished", arguments);
+                // todo: pending implementation
+            }
+            else {
+                $log.error("meetingStatusCtrl.motionUnpublished", arguments);
             }
         }
 
@@ -270,8 +302,10 @@ angular.module('dashboard')
                                     case CONST.MTGEVENT.MOTIONSUPPORTED:
                                     case CONST.MTGEVENT.MOTIONSUPPORTREMOVED:
                                     case CONST.MTGEVENT.MOTIONPUBLISHED:
-                                    case CONST.MTGEVENT.MOTIONUNPUBLISHED:
                                         motionUpdated(event);
+                                        break;
+                                    case CONST.MTGEVENT.MOTIONUNPUBLISHED:
+                                        motionUnpublished(event);
                                         break;
                                     default:
                                         $log.error("meetingStatusCtrl: unsupported typeName: " + event.typeName);
