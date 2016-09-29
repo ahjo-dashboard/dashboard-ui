@@ -158,6 +158,8 @@
     "STR_REST_RES_1005": "Kokoukseen on jo kirjautunut osanottaja valitulla roolilla",
     "STR_REST_RES_1007": "Asialta puuttuu päätös",
     "STR_REST_RES_1008": "Virhe aloitteen allekirjoittamisessa",
+    "STR_REST_RES_1009": "Virhe allekirjoituksen poistamisessa aloitteelta",
+    "STR_REST_RES_1010": "Virhe aloitteen jättämisessä",
     "STR_FORCED_LOGOUT": "Olet kirjautunut ulos tai sinut on kirjattu ulos kokouksesta",
     "STR_ERR_TITLE": "Varoitus",
     "STR_INFO_TITLE": "Info",

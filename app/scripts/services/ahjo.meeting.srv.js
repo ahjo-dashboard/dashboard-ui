@@ -12,13 +12,24 @@
 * Service in the dashboard.
 */
 angular.module('dashboard')
-    .service('AhjoMeetingSrv', ['$log', '$http', 'ENV', '$q', '$timeout', 'Utils', 'CONST', function ($log, $http, ENV, $q, $timeout, Utils, CONST) {
+    .factory('MotionResource', ['$resource', 'ENV', function ($resource, ENV) {
+        return $resource(ENV.AhjoApi_Motions, { meetingGuid: '@meetingGuid', personguid: '@personguid' }, {
+            get: {
+                method: ENV.HTTP_GET,
+                cache: false
+            },
+            update: {
+                method: ENV.HTTP_PUT
+            }
+        });
+    }])
+    .service('AhjoMeetingSrv', ['$log', '$http', 'ENV', '$q', '$timeout', 'Utils', 'CONST', 'MotionResource', function ($log, $http, ENV, $q, $timeout, Utils, CONST, MotionResource) {
         $log.log("AhjoMeetingSrv: SERVICE");
         var self = this;
 
         function handleResult(aDeferred, aResult) {
             if (!angular.isObject(aDeferred)) {
-                $log.error("AhjoMeetingSrv: handleResult missing deferred");
+                $log.error("AhjoMeetingSrv: handleResult", arguments);
                 return;
             }
             if (!angular.isObject(aResult)) {
@@ -35,12 +46,21 @@ angular.module('dashboard')
             }
         }
 
+        function handleHtmlError(aDeferred, aError) {
+            $log.error("AhjoMeetingSrv.handleHtmlError", arguments);
+            if (!angular.isObject(aDeferred)) {
+                return;
+            }
+            var e = Utils.parseHtmlError(aError);
+            aDeferred.reject(e);
+        }
+
         self.getMeeting = function (guid) {
             var deferred = $q.defer();
             $timeout(function () {
                 deferred.notify({});
                 $http({
-                    method: 'GET',
+                    method: ENV.HTTP_GET,
                     cache: false,
                     url: ENV.AhjoApi_Meeting.replace('{GUID}', guid)
                 }).then(function (response) {
@@ -59,7 +79,7 @@ angular.module('dashboard')
             $timeout(function () {
                 deferred.notify({});
                 $http({
-                    method: 'GET',
+                    method: ENV.HTTP_GET,
                     cache: false,
                     url: ENV.AhjoApi_Events.replace(':id', eventId).replace(':meetingGuid', meetingGuid)
                 }).then(function (response) {
@@ -90,18 +110,15 @@ angular.module('dashboard')
             var def = $q.defer();
             $timeout(function () {
                 def.notify({});
-
                 $http({
-                    method: 'GET',
+                    method: ENV.HTTP_GET,
                     cache: false,
                     url: ENV.AhjoApi_Decisions.replace(':meetingguid', aMeetingGuid).replace(':topicguid', aTopicGuid)
                 }).then(function (resp) {
                     var res = Utils.parseResponse(resp);
                     handleResult(def, res);
                 }, function (aError) {
-                    $log.error("AhjoMeetingSrv.getDecisions: http error", aError);
-                    var e = Utils.parseHtmlError(aError);
-                    def.reject(e);
+                    handleHtmlError(def, aError);
                 });
             }, 0);
 
@@ -112,40 +129,28 @@ angular.module('dashboard')
             var def = $q.defer();
             $timeout(function () {
                 def.notify({});
-
-                $http({
-                    method: 'GET',
-                    cache: false,
-                    url: ENV.AhjoApi_Motions.replace(':meetingGuid', aMeetingGuid).replace(':personguid', aPersonGuid)
-                }).then(function (resp) {
-                    var res = Utils.parseResponse(resp);
+                MotionResource.get({ 'meetingGuid': aPersonGuid, 'personguid': aPersonGuid }).$promise.then(function (aResponse) {
+                    $log.debug("AhjoMeetingSrv.getMotions done", aResponse);
+                    var res = Utils.parseResource(aResponse);
                     handleResult(def, res);
                 }, function (aError) {
-                    $log.error("AhjoMeetingSrv.getMotions: http error", aError);
-                    var e = Utils.parseHtmlError(aError);
-                    def.reject(e);
+                    handleHtmlError(def, aError);
                 });
             }, 0);
 
             return def.promise;
         };
 
-        self.signMotion = function (aMotionguid, aPersonguid, aMeetingguid) {
+        self.updateMotion = function (aMotion) {
             var def = $q.defer();
             $timeout(function () {
                 def.notify({});
-
-                $http({
-                    method: 'POST',
-                    cache: false,
-                    url: ENV.AhjoApi_MotionSign.replace(':meetingguid', aMeetingguid).replace(':personguid', aPersonguid).replace(':motionguid', aMotionguid)
-                }).then(function (resp) {
-                    var res = Utils.parseResponse(resp);
+                MotionResource.update(aMotion).$promise.then(function (aResource) {
+                    $log.debug("AhjoMeetingSrv.updateMotion done", aResource);
+                    var res = Utils.parseResource(aResource);
                     handleResult(def, res);
                 }, function (aError) {
-                    $log.error("AhjoMeetingSrv.getMotions: http error", aError);
-                    var e = Utils.parseHtmlError(aError);
-                    def.reject(e);
+                    handleHtmlError(def, aError);
                 });
             }, 0);
 
@@ -155,7 +160,7 @@ angular.module('dashboard')
         self.meetingLogin = function meetingLoginFn(meetingGuid, meetingRole, personGuid) {
             var deferred = $q.defer();
             $http({
-                method: 'POST',
+                method: ENV.HTTP_POST,
                 data: {
                     'meetingGuid': meetingGuid,
                     'meetingRole': meetingRole,
@@ -176,7 +181,7 @@ angular.module('dashboard')
         self.meetingLogout = function meetingLogoutFn(meetingGuid, meetingRole, personGuid) {
             var deferred = $q.defer();
             $http({
-                method: 'POST',
+                method: ENV.HTTP_POST,
                 data: {
                     'meetingGuid': meetingGuid,
                     'meetingRole': meetingRole,
@@ -199,17 +204,15 @@ angular.module('dashboard')
             $timeout(function () {
                 deferred.notify({});
                 $http({
-                    method: 'POST',
+                    method: ENV.HTTP_POST,
                     cache: false,
                     url: ENV.AhjoApi_TopicStatus.replace(':stateId', stateId).replace(':meetingGuid', meetingGuid).replace(':topicGuid', topicGuid)
-                }).then(function (response) {
-                    var result = Utils.parseResponse(response);
+                }).then(function (aResponse) {
+                    var result = Utils.parseResponse(aResponse);
                     handleResult(deferred, result);
-                }, function (error) {
-                    var e = Utils.parseHtmlError(error);
-                    deferred.reject(e);
+                }, function (aError) {
+                    handleHtmlError(deferred, aError);
                 });
-
             }, 0);
 
             return deferred.promise;
@@ -220,15 +223,14 @@ angular.module('dashboard')
             $timeout(function () {
                 deferred.notify({});
                 $http({
-                    method: 'POST',
+                    method: ENV.HTTP_POST,
                     cache: false,
                     url: ENV.AhjoApi_MeetingStatus.replace(':stateId', stateId).replace(':meetingGuid', meetingGuid)
-                }).then(function (response) {
-                    var result = Utils.parseResponse(response);
+                }).then(function (aResponse) {
+                    var result = Utils.parseResponse(aResponse);
                     handleResult(deferred, result);
-                }, function (error) {
-                    var e = Utils.parseHtmlError(error);
-                    deferred.reject(e);
+                }, function (aError) {
+                    handleHtmlError(deferred, aError);
                 });
             }, 0);
 

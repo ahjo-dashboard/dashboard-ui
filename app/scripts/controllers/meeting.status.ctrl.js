@@ -212,6 +212,16 @@ angular.module('dashboard')
             }
         }
 
+        function motionUpdated(aEvent) {
+            if (angular.isObject(aEvent)) {
+                $log.debug("meetingStatusCtrl.motionUpdated", arguments);
+                // todo: pending implementation
+            }
+            else {
+                $log.error("meetingStatusCtrl.motionUpdated", arguments);
+            }
+        }
+
         function getEvents() {
             if (lastEventId && angular.isObject(self.mtgDetails) && self.mtgDetails.meetingGuid) {
                 var proposalEvents = [];
@@ -258,7 +268,10 @@ angular.module('dashboard')
                                         minuteUpdated(event);
                                         break;
                                     case CONST.MTGEVENT.MOTIONSUPPORTED:
-                                        $log.error('MotionSupportedEvent: Pending implementation');
+                                    case CONST.MTGEVENT.MOTIONSUPPORTREMOVED:
+                                    case CONST.MTGEVENT.MOTIONPUBLISHED:
+                                    case CONST.MTGEVENT.MOTIONUNPUBLISHED:
+                                        motionUpdated(event);
                                         break;
                                     default:
                                         $log.error("meetingStatusCtrl: unsupported typeName: " + event.typeName);

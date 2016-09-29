@@ -140,6 +140,12 @@ angular.module('dashboard')
                 case CONST.MTGAPICODES.K1008.value:
                     res = CONST.MTGAPICODES.K1008.strId;
                     break;
+                case CONST.MTGAPICODES.K1009.value:
+                    res = CONST.MTGAPICODES.K1009.strId;
+                    break;
+                case CONST.MTGAPICODES.K1010.value:
+                    res = CONST.MTGAPICODES.K1010.strId;
+                    break;
 
                 default:
                     $log.log("Utils.stringIdForError: didn't find a string id for '" + aNum + "', defaulting to " + res);
@@ -152,20 +158,49 @@ angular.module('dashboard')
             DialogUtils.showError(str);
         };
 
+        Utils.showErrorForError = function (error) {
+            if (angular.isObject(error)) {
+                Utils.showErrorForErrorCode(error.errorCode);
+            }
+            else {
+                $log.error("Utils.showErrorForError", error);
+                Utils.showErrorForErrorCode(0);
+            }
+        };
+
         /*
          * @name dashboard.utils.parseResponse
          * @description Parses an Ahjo Meeting API response for any and returns error object or data object
-         * @param {Object} response REST response to process.
+         * @param {Object} aResponse REST response to process.
          * @returns {Object} included parsed error { 'errorCode': value } or data { 'data': value }
          */
-        Utils.parseResponse = function (response) {
+        Utils.parseResponse = function (aResponse) {
             var result = CONST.GENERALERROR;
-            if (angular.isObject(response) && angular.isObject(response.data)) {
-                if (angular.isObject(response.data.error) && response.data.error.errorcode > 0) {
-                    result.errorCode = response.data.error.errorcode;
+            if (angular.isObject(aResponse) && angular.isObject(aResponse.data)) {
+                if (angular.isObject(aResponse.data.error) && aResponse.data.error.errorcode > 0) {
+                    result.errorCode = aResponse.data.error.errorcode;
                 }
-                else if (angular.isObject(response.data.objects)) {
-                    result = { 'data': response.data.objects };
+                else if (angular.isObject(aResponse.data.objects)) {
+                    result = { 'data': aResponse.data.objects };
+                }
+            }
+            return result;
+        };
+
+        /*
+         * @name dashboard.utils.parseResource
+         * @description Parses an Ahjo Meeting API response for any and returns error object or data object
+         * @param {Object} aResource REST resource to process.
+         * @returns {Object} included parsed error { 'errorCode': value } or data { 'data': value }
+         */
+        Utils.parseResource = function (aResource) {
+            var result = CONST.GENERALERROR;
+            if (angular.isObject(aResource)) {
+                if (angular.isObject(aResource.error) && aResource.error.errorcode > 0) {
+                    result.errorCode = aResource.error.errorcode;
+                }
+                else if (angular.isObject(aResource.objects)) {
+                    result = { 'data': aResource.objects };
                 }
             }
             return result;
