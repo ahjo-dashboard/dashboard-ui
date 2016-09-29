@@ -114,7 +114,7 @@
                         <span translate translate-cloak>STR_MOTIONS</span>
                         <span ng-if="c.motionCount" title="{{'STR_ALL_ATT_COUNT' | translate}}" class="badge ng-cloak ng-class:{'db-font-clr-dark': c.motionCount}">{{c.motionCount}}</span>
                     </button>
-                    <button ng-show="c.isCityCouncil" type="button" class="btn db-btn-sel db-btn-dyna db-brd-all db-center-hor ng-class:[{'db-margin-2':!c.isMobile}]" ng-click="c.newTab(att.link)">
+                    <button ng-show="c.isCityCouncil" type="button" class="btn db-btn-sel db-btn-dyna db-brd-all db-center-hor ng-class:[{'db-margin-2':!c.isMobile}]" ng-click="c.motionsAppClicked()">
                         <div class="db-center">
                             <div translate translate-cloak>STR_MOTIONS_OPEN_APP</div>
                             <div class="db-glyph db-glyph-sm db-glyph-dark" ng-include="'images/glyph-open-new.svg'"></div>
