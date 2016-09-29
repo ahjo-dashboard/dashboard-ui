@@ -548,6 +548,19 @@ svg {
     font-size: $default-font-size !important;
 }
 
+.db-btn-dyna {
+    @extend .db-truncate;
+    height: 36px;
+    width: 100%;
+    // overflow: hidden;
+    font-size: $default-font-size !important;
+
+    @media screen and (min-width: 768px) {
+        width: auto;
+        font-size: 1.0em !important;
+    }
+}
+
 .db-btn-x-big {
     min-height: 60px;
     max-height: 80px;

@@ -103,16 +103,22 @@
                         ng-click="c.remarkClicked()">
                         <span translate translate-cloak>STR_REMARK</span>
                     </button>
-                    <button ng-if="c.isChairman" type="button" class="btn btn-block db-btn-sel db-btn-big db-brd-all ng-class:[{'active':c.sm === c.sms.DECISIONS},{'db-margin-2':!c.isMobile}]"
+                    <button ng-if="c.isChairman" type="button" class="btn db-btn-sel db-btn-dyna db-brd-all ng-class:[{'active':c.sm === c.sms.DECISIONS},{'db-margin-2':!c.isMobile}]"
                         db-confirm confirm-enabled="c.hasUnsavedProposal || c.remarkIsUnsaved" confirm-config="c.unsavedConfig"
                         ng-click="c.decisionsClicked()">
                         <span translate translate-cloak>STR_DECISIONS</span>
                     </button>
-                    <button type="button" class="btn btn-block db-btn-sel db-btn-big db-brd-all ng-class:[{'active':c.sm === c.sms.MOTIONS},{'db-margin-2':!c.isMobile}]"
+                    <button ng-show="c.isCityCouncil" type="button" class="btn btn-block db-btn-sel db-btn-big db-brd-all ng-class:[{'active':c.sm === c.sms.MOTIONS},{'db-margin-2':!c.isMobile}]"
                         db-confirm confirm-enabled="c.hasUnsavedProposal || c.remarkIsUnsaved" confirm-config="c.unsavedConfig"
                         ng-click="c.motionsClicked()">
                         <span translate translate-cloak>STR_MOTIONS</span>
                         <span ng-if="c.motionCount" title="{{'STR_ALL_ATT_COUNT' | translate}}" class="badge ng-cloak ng-class:{'db-font-clr-dark': c.motionCount}">{{c.motionCount}}</span>
+                    </button>
+                    <button ng-show="c.isCityCouncil" type="button" class="btn db-btn-sel db-btn-dyna db-brd-all db-center-hor ng-class:[{'db-margin-2':!c.isMobile}]" ng-click="c.newTab(att.link)">
+                        <div class="db-center">
+                            <div translate translate-cloak>STR_MOTIONS_OPEN_APP</div>
+                            <div class="db-glyph db-glyph-sm db-glyph-dark" ng-include="'images/glyph-open-new.svg'"></div>
+                        </div>
                     </button>
                 </div>
                 <button ng-if="c.pm !== c.pms.HIDDEN" type="button" title="{{'STR_EXPANDCOLLAPSE' | translate}}" class="btn btn-block db-btn-prim db-btn-small db-brd-all db-flex-right ng-class:[{'db-margin-2':!c.isMobile}]"

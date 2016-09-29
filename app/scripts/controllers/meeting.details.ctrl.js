@@ -41,6 +41,7 @@ angular.module('dashboard')
         self.remarkIsUnsaved = false;
         self.isChairman = false;
         self.motionCount = null;
+        self.isCityCouncil = false;
 
         function setBlockMode(mode) {
             self.bm = self.isMobile ? CONST.BLOCKMODE.SECONDARY : mode;
@@ -101,12 +102,14 @@ angular.module('dashboard')
             self.primaryUrl = null;
             self.selData = null;
             self.header = null;
+            self.isCityCouncil = false;
 
             if (self.sm !== CONST.SECONDARYMODE.PROPOSALS && self.sm !== CONST.SECONDARYMODE.REMARK) {
                 setDefaultSecondaryMode();
             }
 
             if (angular.isObject(topic)) {
+                self.isCityCouncil = topic.isCityCouncil;
                 self.topic = topic;
                 self.header = topic.topicTitle;
                 if (angular.isArray(topic.esitykset)) {
