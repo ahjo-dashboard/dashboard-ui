@@ -247,7 +247,22 @@ angular.module('dashboard')
         function motionUnpublished(aEvent) {
             if (angular.isObject(aEvent) && angular.isObject(aEvent.motion)) {
                 $log.debug("meetingStatusCtrl.motionUnpublished", arguments);
-                // todo: pending implementation
+                var data = StorageSrv.getKey(CONST.KEY.MOTION_DATA);
+                if (angular.isObject(data)) {
+                    if (angular.isArray(data.objects)) {
+                        var notFound = true;
+                        for (var index = data.objects.length + CONST.NOTFOUND; notFound && index > CONST.NOTFOUND; index--) {
+                            var element = data.objects[index];
+                            if (angular.isObject(element) && angular.equals(element.motionGuid, aEvent.motion.motionGuid)) {
+                                data.objects.splice(index, 1);
+                                notFound = false;
+                            }
+                        }
+                        if (!notFound) {
+                            StorageSrv.setKey(CONST.KEY.MOTION_DATA, data);
+                        }
+                    }
+                }
             }
             else {
                 $log.error("meetingStatusCtrl.motionUnpublished", arguments);
