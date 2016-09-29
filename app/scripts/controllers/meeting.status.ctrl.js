@@ -218,15 +218,15 @@ angular.module('dashboard')
                 var data = StorageSrv.getKey(CONST.KEY.MOTION_DATA);
                 if (angular.isObject(data)) {
                     if (angular.isArray(data.objects)) {
-                        var notFound = true;
-                        for (var index = 0; notFound && index < data.objects.length; index++) {
+                        var found = false;
+                        for (var index = 0; !found && index < data.objects.length; index++) {
                             var element = data.objects[index];
                             if (angular.isObject(element) && angular.equals(element.motionGuid, aEvent.motion.motionGuid)) {
                                 angular.merge(element, aEvent.motion);
-                                notFound = false;
+                                found = true;
                             }
                         }
-                        if (notFound) {
+                        if (!found) {
                             data.objects.push(aEvent.motion);
                         }
                     }
@@ -250,15 +250,15 @@ angular.module('dashboard')
                 var data = StorageSrv.getKey(CONST.KEY.MOTION_DATA);
                 if (angular.isObject(data)) {
                     if (angular.isArray(data.objects)) {
-                        var notFound = true;
-                        for (var index = data.objects.length + CONST.NOTFOUND; notFound && index > CONST.NOTFOUND; index--) {
+                        var found = false;
+                        for (var index = data.objects.length + CONST.NOTFOUND; !found && index > CONST.NOTFOUND; index--) {
                             var element = data.objects[index];
                             if (angular.isObject(element) && angular.equals(element.motionGuid, aEvent.motion.motionGuid)) {
                                 data.objects.splice(index, 1);
-                                notFound = false;
+                                found = true;
                             }
                         }
-                        if (!notFound) {
+                        if (found) {
                             StorageSrv.setKey(CONST.KEY.MOTION_DATA, data);
                         }
                     }
