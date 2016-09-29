@@ -34,7 +34,7 @@ angular.module('dashboard')
                 }, 0);
             }
 
-            function sign(aMotion, aMeetingGuid, aSupport) {
+            function signMotion(aMotion, aMeetingGuid, aSupport) {
                 if (!angular.isObject(aMotion) || !angular.isString(aMeetingGuid)) {
                     $log.error("dbMotions.sign: bad args", arguments);
                     return;
@@ -66,12 +66,12 @@ angular.module('dashboard')
                 });
             }
 
-            function submit(aMotion) {
+            function submitMotion(aMotion) {
                 if (!angular.isObject(aMotion)) {
-                    $log.error("dbMotions.submit: bad args", arguments);
+                    $log.error("dbMotions.submitMotion: bad args", arguments);
                     return;
                 }
-                $log.log("dbMotions: submit", arguments);
+                $log.log("dbMotions: submitMotion", arguments);
 
                 var copyMotion = angular.copy(aMotion);
                 copyMotion.isSubmitted = true;
@@ -119,7 +119,7 @@ angular.module('dashboard')
 
             self.submit = function (aMotion) {
                 $log.log("dbMotions: submit", arguments);
-                submit(aMotion);
+                submitMotion(aMotion);
             };
 
             self.support = function (aMotion) {
@@ -128,7 +128,7 @@ angular.module('dashboard')
                     return;
                 }
                 $log.log("dbMotions: support", arguments);
-                sign(aMotion, mtgItemSelected.meetingGuid, true);
+                signMotion(aMotion, mtgItemSelected.meetingGuid, true);
             };
 
             self.removeSupport = function (aMotion) {
@@ -137,7 +137,7 @@ angular.module('dashboard')
                     return;
                 }
                 $log.log("dbMotions: removeSupport", arguments);
-                sign(aMotion, mtgItemSelected.meetingGuid, false);
+                signMotion(aMotion, mtgItemSelected.meetingGuid, false);
             };
 
             $scope.$watch(function () {
