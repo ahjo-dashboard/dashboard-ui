@@ -223,6 +223,7 @@ angular.module('dashboard')
                             var element = data.objects[index];
                             if (angular.isObject(element) && angular.equals(element.motionGuid, aEvent.motion.motionGuid)) {
                                 angular.merge(element, aEvent.motion);
+                                element.supporters = aEvent.motion.supporters;
                                 found = true;
                             }
                         }
