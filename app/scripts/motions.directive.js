@@ -42,7 +42,7 @@ angular.module('dashboard')
                 $log.log("dbMotions: sign", arguments);
 
                 var copyMotion = angular.copy(aMotion);
-                copyMotion.actionPersonGuid = aMotion.personGuid;
+                copyMotion.actionPersonGuid = mtgItemSelected.dbUserPersonGuid;
                 copyMotion.meetingGuid = aMeetingGuid;
                 copyMotion.isUserSupported = aSupport;
                 console.log('UPDATE MOTION', copyMotion);
@@ -75,6 +75,8 @@ angular.module('dashboard')
 
                 var copyMotion = angular.copy(aMotion);
                 copyMotion.isSubmitted = true;
+                copyMotion.actionPersonGuid = mtgItemSelected.dbUserPersonGuid;
+                copyMotion.meetingGuid = mtgItemSelected.meetingGuid;
 
                 AhjoMeetingSrv.updateMotion(copyMotion).then(function (resp) {
                     if (angular.isObject(resp) && angular.isObject(resp.motion)) {
