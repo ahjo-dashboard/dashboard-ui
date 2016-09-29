@@ -8,9 +8,9 @@
         </div>
     </div>
 
-        <div ng-if="!c.error" class="rmk-header db-brd-top">
-            <h5 class="rmk-header-text" translate translate-cloak>STR_REMARK</h5>
-        </div>
+    <div ng-if="!c.error" class="rmk-header db-brd-top">
+        <h5 class="rmk-header-text" translate translate-cloak>STR_REMARK</h5>
+    </div>
 
     <textarea ng-if="c.isMobile && !c.error" msd-elastic class="db-textarea-flex db-padding-05" ng-model="c.editorText" autofocus ng-change="c.changed()"></textarea>
     <textarea ng-if="!c.isMobile && !c.error" class="db-textarea-flex db-padding-05" ng-model="c.editorText" autofocus ng-change="c.changed()"></textarea>
