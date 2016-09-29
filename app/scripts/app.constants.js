@@ -81,15 +81,14 @@ angular.module('dashboard')
             ERROR: "error"
         },
         'MTGROLE': {
-            NONE: 0,
-            CHAIRMAN: 1,
-            PARTICIPANT_FULL: 2,
-            DEMONSTRATOR: 3,
-            SECRETARY: 4,
-            PARTICIPANT_LIMITED: 5,
-            TRANSLATOR: 6,
-            INFORMER: 7,
-            NO_ROLE: 8
+            CHAIRMAN: { value: 1, strId: 'STR_MTG_ROLE_1' },
+            PARTICIPANT_FULL: { value: 2, strId: 'STR_MTG_ROLE_2' },
+            DEMONSTRATOR: { value: 3, strId: 'STR_MTG_ROLE_3' },
+            SECRETARY: { value: 4, strId: 'STR_MTG_ROLE_4' },
+            PARTICIPANT_LIMITED: { value: 5, strId: 'STR_MTG_ROLE_5' },
+            TRANSLATOR: { value: 6, strId: 'STR_MTG_ROLE_6' },
+            INFORMER: { value: 7, strId: 'STR_MTG_ROLE_7' },
+            NO_ROLE: { value: 8, strId: 'STR_MTG_ROLE_8' }
         },
         'MTGTYPE': {
             DEFAULT: 0,

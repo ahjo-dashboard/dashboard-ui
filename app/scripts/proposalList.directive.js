@@ -16,7 +16,7 @@ angular.module('dashboard')
         var controller = ['$log', '$scope', 'AhjoProposalsSrv', 'PROPS', '$rootScope', 'CONST', 'StorageSrv', function ($log, $scope, AhjoProposalsSrv, PROPS, $rootScope, CONST, StorageSrv) {
             $log.log("dbProposalList: CONTROLLER");
             var self = this;
-            var role = CONST.MTGROLE.PARTICIPANT_FULL; // todo: pending support for other roles.
+            var role = CONST.MTGROLE.PARTICIPANT_FULL.value; // todo: pending support for other roles.
             var personGuid = null;
             var topicGuid = null;
             var isCityCouncil = null;

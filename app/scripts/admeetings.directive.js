@@ -166,7 +166,19 @@ angular.module('dashboard')
             };
 
             self.isRoleSupported = function isRoleSupportedFn(role) {
-                return angular.isObject(role) && (CONST.MTGROLE.CHAIRMAN === role.RoleID || CONST.MTGROLE.PARTICIPANT_FULL === role.RoleID); // Roles supported by this interface
+                return angular.isObject(role) && (CONST.MTGROLE.CHAIRMAN.value === role.RoleID || CONST.MTGROLE.PARTICIPANT_FULL.value === role.RoleID); // Roles supported by this interface
+            };
+
+            /*
+            * @name dashboard.adMeetings.roleNameStrId
+            * @description Resolves a string id for meeting role
+            * @param {object} Role id object from meeting REST
+            * @returns {string} String id for angular translate
+            */
+            self.roleNameStrId = function roleNameStrId(aRoleId) {
+                var role = angular.isObject(aRoleId) ? Utils.objWithVal(CONST.MTGROLE, CONST.KEY.VALUE, aRoleId.RoleID) : null;
+                var res = angular.isObject(role) && angular.isString(role.strId) ? role.strId : CONST.MTGROLE.NO_ROLE.strId;
+                return res;
             };
 
             setTitle();
