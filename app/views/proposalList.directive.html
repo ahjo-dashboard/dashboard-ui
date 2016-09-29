@@ -13,7 +13,7 @@
                     translate translate-cloak>STR_CREATE_PROPOSAL</button>
                 <div uib-dropdown-menu role="menu" aria-labelledby="typeButton" class="dropdown-menu-right">
                     <div class="prop-dropdown-item" role="menuitem" ng-repeat="type in c.tps track by $index" ng-click="c.addProposalClicked(type)">
-                        <a>{{type.text}}</a>
+                        <a translate translate-cloak>{{type.strId}}</a>
                     </div>
                 </div>
             </div>
