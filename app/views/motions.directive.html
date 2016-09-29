@@ -40,8 +40,8 @@
                     <textarea db-textarea class="db-margin-05-ver db-padding-10 db-textarea db-brd-all ng-class:{ 'db-overflow-hidden': !c.isIe }"
                         readonly ng-model="m.text"></textarea>
 
-                    <div ng-if="c.meetingActive" class="db-flex-right db-flex-area ng-class:{'db-flex-col': c.isMobile}">
-                        <button ng-if="m.isOwnMotion && !c.isSubmitted && m.submitAllowed" class="btn btn-success db-btn-big db-margin-2 ng-class:{'btn-block':c.isMobile}"
+                    <div class="db-flex-right db-flex-area ng-class:{'db-flex-col': c.isMobile}">
+                        <button ng-if="c.meetingActive && m.isOwnMotion && !c.isSubmitted && m.submitAllowed" class="btn btn-success db-btn-big db-margin-2 ng-class:{'btn-block':c.isMobile}"
                             ng-click="c.submit(m)">
                             <span translate translate-cloak>STR_SUBMIT_MOTION</span>
                         </button>
