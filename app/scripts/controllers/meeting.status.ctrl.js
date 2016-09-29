@@ -215,6 +215,7 @@ angular.module('dashboard')
         function motionUpdated(aEvent) {
             if (angular.isObject(aEvent)) {
                 $log.debug("meetingStatusCtrl.motionUpdated", arguments);
+                // todo: pending implementation
             }
             else {
                 $log.error("meetingStatusCtrl.motionUpdated", arguments);
