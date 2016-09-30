@@ -62,7 +62,7 @@
 
             <!-- SECONDARY BLOCK HEADER -->
             <div class="db-prim-bg ng-class:[{'list-group db-no-margin db-padding-10 db-brd-all':c.isMobile},{'db-flex db-flex-wrap db-prim-bg db-brd-top db-padding-2':!c.isMobile}]">
-                <div class="btn-group db-flex-area">
+                <div class="btn-group db-no-padding db-flex-area">
                     <button ng-if="menuClosed() && (c.pm === c.pms.HIDDEN || c.bm === c.bms.SECONDARY)" type="button" title="{{'STR_INFO_MENUBTN' | translate}}"
                         class="btn db-btn-prim db-btn-small db-brd-all db-margin-2" ng-click="openMenu()">
                         <div class="db-center">
@@ -77,17 +77,17 @@
                             </div>
                         </div>
                     </button>
-                    <button ng-if="c.pm === c.pms.HIDDEN" type="button" class="btn btn-block db-btn-sel db-btn-big db-brd-all ng-class:[{'db-margin-2':!c.isMobile},{'active':c.sm === c.sms.SECRET}]"
+                    <button ng-if="c.pm === c.pms.HIDDEN" type="button" class="btn db-btn-sel db-btn-dyna db-brd-all ng-class:[{'db-margin-2':!c.isMobile, 'btn-block': c.isMobile},{'active':c.sm === c.sms.SECRET}]"
                         ng-disabled="!c.tData.link" ng-click="c.presentationClicked(c.tData)">
                         <span translate translate-cloak>STR_PRESENTATION</span>
                     </button>
-                    <button type="button" class="btn btn-block db-btn-sel db-btn-big db-brd-all ng-class:[{'active':c.sm === c.sms.ATTACHMENTS},{'db-margin-2':!c.isMobile}]"
+                    <button type="button" class="btn db-btn-sel db-btn-dyna db-brd-all ng-class:[{'active':c.sm === c.sms.ATTACHMENTS},{'db-margin-2':!c.isMobile, 'btn-block': c.isMobile}]"
                         ng-disabled="!c.materialCount()" db-confirm confirm-enabled="c.hasUnsavedProposal || c.remarkIsUnsaved"
                         confirm-config="c.unsavedConfig" ng-click="c.attachmentClicked()">
                         <span translate translate-cloak>STR_OTHER_MATERIAL</span>
                         <span title="{{'STR_ALL_ATT_COUNT' | translate}}" class="badge ng-cloak ng-class:[{'db-font-clr-dark': c.materialCount()}]">{{c.materialCount()}}</span>
                     </button>
-                    <button type="button" class="btn btn-block db-btn-sel db-btn-big db-brd-all ng-class:[{'active':c.sm === c.sms.PROPOSALS},{'db-margin-2':!c.isMobile}]"
+                    <button type="button" class="btn db-btn-sel db-btn-dyna db-brd-all ng-class:[{'active':c.sm === c.sms.PROPOSALS},{'db-margin-2':!c.isMobile, 'btn-block': c.isMobile}]"
                         db-confirm confirm-enabled="c.hasUnsavedProposal || c.remarkIsUnsaved" confirm-config="c.unsavedConfig"
                         ng-click="c.proposalsClicked()">
                         <div class="db-center">
@@ -98,23 +98,23 @@
                             <div ng-show="c.topic.isModified" title="{{'STR_INFO_NEW_PROPS' | translate}}" class="db-glyph db-glyph-sm db-glyph-ora" ng-include="'images/glyph-bell.svg'"></div>
                         </div>
                     </button>
-                    <button type="button" class="btn btn-block db-btn-sel db-btn-big db-brd-all ng-class:[{'active':c.sm === c.sms.REMARK},{'db-margin-2':!c.isMobile}]"
+                    <button type="button" class="btn db-btn-sel db-btn-dyna db-brd-all ng-class:[{'active':c.sm === c.sms.REMARK},{'db-margin-2':!c.isMobile, 'btn-block': c.isMobile}]"
                         db-confirm confirm-enabled="c.hasUnsavedProposal || c.remarkIsUnsaved" confirm-config="c.unsavedConfig"
                         ng-click="c.remarkClicked()">
                         <span translate translate-cloak>STR_REMARK</span>
                     </button>
-                    <button ng-if="c.isChairman" type="button" class="btn db-btn-sel db-btn-dyna db-brd-all ng-class:[{'active':c.sm === c.sms.DECISIONS},{'db-margin-2':!c.isMobile}]"
+                    <button ng-if="c.isChairman" type="button" class="btn db-btn-sel db-btn-dyna db-brd-all ng-class:[{'active':c.sm === c.sms.DECISIONS},{'db-margin-2':!c.isMobile, 'btn-block': c.isMobile}]"
                         db-confirm confirm-enabled="c.hasUnsavedProposal || c.remarkIsUnsaved" confirm-config="c.unsavedConfig"
                         ng-click="c.decisionsClicked()">
                         <span translate translate-cloak>STR_DECISIONS</span>
                     </button>
-                    <button ng-show="c.isCityCouncil" type="button" class="btn btn-block db-btn-sel db-btn-big db-brd-all ng-class:[{'active':c.sm === c.sms.MOTIONS},{'db-margin-2':!c.isMobile}]"
+                    <button ng-show="c.isCityCouncil" type="button" class="btn db-btn-sel db-btn-dyna db-brd-all ng-class:[{'active':c.sm === c.sms.MOTIONS},{'db-margin-2':!c.isMobile, 'btn-block': c.isMobile}]"
                         db-confirm confirm-enabled="c.hasUnsavedProposal || c.remarkIsUnsaved" confirm-config="c.unsavedConfig"
                         ng-click="c.motionsClicked()">
                         <span translate translate-cloak>STR_MOTIONS</span>
                         <span ng-if="c.motionCount" title="{{'STR_ALL_ATT_COUNT' | translate}}" class="badge ng-cloak ng-class:{'db-font-clr-dark': c.motionCount}">{{c.motionCount}}</span>
                     </button>
-                    <button ng-show="c.isCityCouncil" type="button" class="btn db-btn-sel db-btn-dyna db-brd-all db-center-hor ng-class:[{'db-margin-2':!c.isMobile}]" ng-click="c.motionsAppClicked()">
+                    <button ng-show="c.isCityCouncil" type="button" class="btn db-btn-sel db-btn-dyna db-brd-all db-center-hor ng-class:[{'db-margin-2':!c.isMobile, 'btn-block': c.isMobile}]" ng-click="c.motionsAppClicked()">
                         <div class="db-center">
                             <div translate translate-cloak>STR_MOTIONS_OPEN_APP</div>
                             <div class="db-glyph db-glyph-sm db-glyph-dark" ng-include="'images/glyph-open-new.svg'"></div>
