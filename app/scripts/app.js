@@ -177,4 +177,16 @@ angular.module('dashboard', [
             $translate.use($rootScope.dbLang);
             document.documentElement.setAttribute('lang', $rootScope.dbLang);// sets "lang" attribute to html
         };
+
+        /*
+         * @name dashboard.locProp
+         * @description Returns a language-setting dependent version of a property name.
+         * @param {string} Property name
+         * @returns {string|null} Property name specific to currently selected app language. undefined if bad argument.
+         */
+        $rootScope.locProp = function locProp(aPropName) {
+            var res = angular.isString(aPropName) ? aPropName + '_' + $rootScope.dbLang : undefined;
+            return res;
+        };
+
     });

@@ -33,10 +33,10 @@
                         <span class="db-margin-05-left">{{s.name}}</span></span><span ng-if="filtered2.length === 0" class="db-margin-05-left">-</span>
                     </div>
                     <textarea db-textarea class="db-margin-05-ver db-padding-10 db-textarea db-brd-all ng-class:{ 'db-overflow-hidden': !c.isIe }"
-                        readonly ng-model="i.text"></textarea>
-                    <div ng-if="i.translationText" class="db-padding-10-hor"><span translate translate-cloak>STR_TRANSLATION</span>:</div>
-                    <textarea ng-if="i.translationText" db-textarea class="db-margin-05-ver db-padding-10 db-textarea db-brd-all ng-class:{ 'db-overflow-hidden': !c.isIe }"
-                        readonly ng-model="i.translationText"></textarea>
+                        readonly ng-model="i.text_fi"></textarea>
+                    <div ng-if="i.text_sv" class="db-padding-10-hor"><span translate translate-cloak>STR_TRANSLATION</span>:</div>
+                    <textarea ng-if="i.text_sv" db-textarea class="db-margin-05-ver db-padding-10 db-textarea db-brd-all ng-class:{ 'db-overflow-hidden': !c.isIe }"
+                        readonly ng-model="i.text_sv"></textarea>
                 </div>
             </div>
         </ul>
