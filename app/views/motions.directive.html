@@ -21,7 +21,11 @@
                         <div ng-if="m.supporters.length">{{m.supporters.length}}</div>
                         <div ng-if="!m.supporters.length">-</div>
                         <div ng-if="m.isUserSupported" title="{{'STR_MOTION_SIGNED_BY_ME' | translate}}" class="db-glyph db-glyph-sm db-glyph-info db-margin-05-left"
-                            ng-include="'images/glyph-user.svg'"></div>
+                            ng-include="'images/glyph-user.svg'">
+                        </div>
+                        <div ng-if="m.isUserRead === false" title="{{'STR_UNREAD_MOTION' | translate}}" class="db-glyph db-glyph-sm db-glyph-ora db-margin-05-left"
+                            ng-include="'images/glyph-bell.svg'">
+                        </div>
                     </div>
                     <div class="col-xs-2 col-md-1 db-flex db-flex-col">
                         <div title="{{'STR_EXPANDCOLLAPSE' | translate}}" class="db-flex-align-item-end db-glyph db-glyph-sm db-glyph-dark db-margin-10-right"

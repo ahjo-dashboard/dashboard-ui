@@ -53,6 +53,7 @@
     "STR_SIGNING_ACCEPT": "Allekirjoita",
     "STR_SIGNING_REMOVE": "Poista allekirjoitus",
     "STR_SUBMIT_MOTION": "Jätä aloite",
+    "STR_UNREAD_MOTION": "Uusi aloite",
     "STR_REJECT": "Hylkää",
     "STR_RETURN": "Palauta",
     "STR_SIGNING_COMMENT_INFO": "Kommentit voit lähettää osoitteeseen (kopioi osoite tarvittaessa):",
