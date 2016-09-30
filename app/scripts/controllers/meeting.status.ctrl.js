@@ -428,22 +428,30 @@ angular.module('dashboard')
         function getMotions(aMtg) {
             $log.debug("meetingStatusCtrl.getMotions", arguments);
             if (angular.isObject(aMtg)) {
-                var storedData = StorageSrv.getKey(CONST.KEY.MOTION_DATA);
-                // Copy insures own instance of data. Otherwise $watch does not work correctly
-                var resultData = storedData ? storedData : angular.copy(CONST.MOTIONDATA);
-
+                var motionData = StorageSrv.getKey(CONST.KEY.MOTION_DATA);
+                if (!angular.isObject(motionData)) {
+                    // Copy insures own instance of data. Otherwise $watch does not work correctly
+                    motionData = angular.copy(CONST.MOTIONDATA);
+                    StorageSrv.setKey(CONST.KEY.MOTION_DATA, motionData);
+                }
                 AhjoMeetingSrv.getMotions(aMtg.meetingGuid, aMtg.dbUserPersonGuid).then(function (resp) {
                     $log.log("meetingStatusCtrl.getMotions done", resp);
-                    resultData.objects = angular.isArray(resp) ? resp : [];
+                    motionData.objects = angular.isArray(resp) ? resp : [];
                 }, function (error) {
                     $log.error("meetingStatusCtrl.getMotions ", error);
-                    self.errorCode = error.errorCode;
+                    if (angular.isObject(error)) {
+                        Utils.showErrorForErrorCode(error.errorCode);
+                    }
+                    motionData.failure = true;
                 }, function (/*notification*/) {
-                    var loadingData = angular.copy(resultData);
-                    loadingData.loading = true;
-                    StorageSrv.setKey(CONST.KEY.MOTION_DATA, loadingData);
+                    var notificationData = angular.copy(motionData);
+                    notificationData.loading = true;
+                    notificationData.failure = false;
+                    StorageSrv.setKey(CONST.KEY.MOTION_DATA, notificationData);
                 }).finally(function () {
-                    $rootScope.$emit(CONST.MOTIONSUPDATED, { count: resultData.objects.length });
+                    motionData.loading = false;
+                    var resultData = angular.copy(motionData);
+                    $rootScope.$emit(CONST.MOTIONSUPDATED, { count: motionData.objects.length });
                     StorageSrv.setKey(CONST.KEY.MOTION_DATA, resultData);
                 });
             }
@@ -792,6 +800,10 @@ angular.module('dashboard')
             }
         });
 
+        var getMotionsWatcher = $rootScope.$on(CONST.GETMOTIONS, function () {
+            getMotions(mtgItemSelected);
+        });
+
         $scope.$on('$destroy', function () {
             $log.debug("meetingStatusCtrl: DESTROY");
             $timeout.cancel(pollingTimer);
@@ -805,6 +817,9 @@ angular.module('dashboard')
             }
             if (angular.isFunction(proposalCountWatcher)) {
                 proposalCountWatcher();
+            }
+            if (angular.isFunction(getMotionsWatcher)) {
+                getMotionsWatcher();
             }
         });
 

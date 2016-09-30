@@ -251,6 +251,11 @@ angular.module('dashboard')
             setSecondaryMode(CONST.SECONDARYMODE.MOTIONS);
             resetUnsaved();
             checkMode();
+            var data = angular.copy(StorageSrv.getKey(CONST.KEY.MOTION_DATA));
+            var isObject = angular.isObject(data);
+            if (!isObject || (isObject && data.failure === true && data.loading === false)) {
+                $rootScope.$emit(CONST.GETMOTIONS, {});
+            }
         };
 
         self.motionsAppClicked = function motionsAppClicked() {
