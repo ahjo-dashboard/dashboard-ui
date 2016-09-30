@@ -17,13 +17,17 @@ angular.module('dashboard')
             get: {
                 method: ENV.HTTP_GET,
                 cache: false
-            },
+            }
+        });
+    }])
+    .factory('MotionResourceSubmit', ['$resource', 'ENV', function ($resource, ENV) {
+        return $resource(ENV.AhjoApi_Motions, null, {
             update: {
                 method: ENV.HTTP_PUT
             }
         });
     }])
-    .service('AhjoMeetingSrv', ['$log', '$http', 'ENV', '$q', '$timeout', 'Utils', 'CONST', 'MotionResource', function ($log, $http, ENV, $q, $timeout, Utils, CONST, MotionResource) {
+    .service('AhjoMeetingSrv', ['$log', '$http', 'ENV', '$q', '$timeout', 'Utils', 'CONST', 'MotionResource', 'MotionResourceSubmit', function ($log, $http, ENV, $q, $timeout, Utils, CONST, MotionResource, MotionResourceSubmit) {
         $log.log("AhjoMeetingSrv: SERVICE");
         var self = this;
 
@@ -129,7 +133,7 @@ angular.module('dashboard')
             var def = $q.defer();
             $timeout(function () {
                 def.notify({});
-                MotionResource.get({ 'meetingGuid': aPersonGuid, 'personguid': aPersonGuid }).$promise.then(function (aResponse) {
+                MotionResource.get({ 'meetingGuid': aMeetingGuid, 'personguid': aPersonGuid }).$promise.then(function (aResponse) {
                     $log.debug("AhjoMeetingSrv.getMotions done", aResponse);
                     var res = Utils.parseResource(aResponse);
                     handleResult(def, res);
@@ -145,7 +149,7 @@ angular.module('dashboard')
             var def = $q.defer();
             $timeout(function () {
                 def.notify({});
-                MotionResource.update(aMotion).$promise.then(function (aResource) {
+                MotionResourceSubmit.update(aMotion).$promise.then(function (aResource) {
                     $log.debug("AhjoMeetingSrv.updateMotion done", aResource);
                     var res = Utils.parseResource(aResource);
                     handleResult(def, res);

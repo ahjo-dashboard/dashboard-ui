@@ -12,7 +12,7 @@
  * Controller of the dashboard
  */
 angular.module('dashboard')
-    .controller('meetingDetailsCtrl', ['$log', '$rootScope', '$scope', '$state', 'CONST', 'StorageSrv', 'AttachmentData', 'ListData', 'PROPS', 'Utils', '$timeout', function ($log, $rootScope, $scope, $state, CONST, StorageSrv, AttachmentData, ListData, PROPS, Utils, $timeout) {
+    .controller('meetingDetailsCtrl', ['$log', '$rootScope', '$scope', '$state', 'CONST', 'StorageSrv', 'AttachmentData', 'ListData', 'PROPS', 'Utils', '$timeout', 'ENV', function ($log, $rootScope, $scope, $state, CONST, StorageSrv, AttachmentData, ListData, PROPS, Utils, $timeout, ENV) {
         $log.debug("meetingDetailsCtrl: CONTROLLER");
         var self = this;
         self.isMobile = $rootScope.isMobile;
@@ -41,6 +41,7 @@ angular.module('dashboard')
         self.remarkIsUnsaved = false;
         self.isChairman = false;
         self.motionCount = null;
+        self.isCityCouncil = false;
 
         function setBlockMode(mode) {
             self.bm = self.isMobile ? CONST.BLOCKMODE.SECONDARY : mode;
@@ -101,12 +102,14 @@ angular.module('dashboard')
             self.primaryUrl = null;
             self.selData = null;
             self.header = null;
+            self.isCityCouncil = false;
 
             if (self.sm !== CONST.SECONDARYMODE.PROPOSALS && self.sm !== CONST.SECONDARYMODE.REMARK) {
                 setDefaultSecondaryMode();
             }
 
             if (angular.isObject(topic)) {
+                self.isCityCouncil = topic.isCityCouncil;
                 self.topic = topic;
                 self.header = topic.topicTitle;
                 if (angular.isArray(topic.esitykset)) {
@@ -250,6 +253,10 @@ angular.module('dashboard')
             checkMode();
         };
 
+        self.motionsAppClicked = function motionsAppClicked() {
+            Utils.openNewWin(ENV.AhjoApi_MotionApp);
+        };
+
         self.isSecret = function (item) {
             return (item && item.publicity) ? (item.publicity === CONST.PUBLICITY.SECRET) : false;
         };
@@ -265,6 +272,7 @@ angular.module('dashboard')
             $rootScope.parallelMode = $rootScope.parallelMode ? false : true;
             setBlockMode(CONST.BLOCKMODE.DEFAULT);
         };
+
 
         self.newTab = function (link) {
             Utils.openNewWin(link);
