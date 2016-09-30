@@ -366,7 +366,7 @@ angular.module('dashboard')
                 return;
             }
             $log.debug("meetingStatusCtrl.getMeetingDetails");
-            self.uiName = mtgItem.agencyName + ' ' + mtgItem.name;
+            self.uiName = mtgItem[$rootScope.locProp('agencyName')] + ' ' + mtgItem.name;
             selectedTopicGuid = null;
             activeTopicGuid = null;
             StorageSrv.deleteKey(CONST.KEY.TOPIC);
@@ -413,7 +413,7 @@ angular.module('dashboard')
                         $rootScope.meetingStatus = self.mtgDetails.meetingStatus;
                         self.startEventPolling();
 
-                        self.uiName = self.mtgDetails.meetingTitle;
+                        self.uiName = self.mtgDetails[$rootScope.locProp('meetingTitle')];
                         self.mtgDetails.meetingGuid = mtgItem.meetingGuid;
                     }
                 }

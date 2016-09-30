@@ -62,8 +62,8 @@
                     <div class="db-glyph db-glyph-sm db-glyph-ora db-margin-05-left" ng-include="'images/glyph-bell.svg'"></div>
                 </div>
                 <div class="db-center-v db-flex-area db-margin-10-hor">
-                    <span title="{{topic.topicreference}} {{topic.topicTitle}}" class="ng-class:[{'db-twoliner-12':!msc.isMobile}]">
-                        {{topic.topicreference}} {{topic.topicTitle}}
+                    <span title="{{topic.topicreference}} {{topic[locProp('topicTitle')]}}" class="ng-class:[{'db-twoliner-12':!msc.isMobile}]">
+                        {{topic.topicreference}} {{topic[locProp('topicTitle')]}}
                     </span>
                 </div>
             </div>
