@@ -18,9 +18,10 @@ angular.module('dashboard')
         'MOTIONSUPDATED': 'MOTIONSUPDATED',
         'UNSAVEMEETINGDDATA': 'UNSAVEMEETINGDDATA',
         'MTGUICHANGED': 'MTGUICHANGED',
+        'GETMOTIONS': 'GETMOTIONS',
         'POLLINGTIMEOUT': 10000,
         'PROGRESSDLGMINDURATIONMS': 900,
-        'MOTIONDATA': { loading: false, objects: [] },
+        'MOTIONDATA': { loading: false, failure: false, objects: [] },
         'NOTFOUND': -1,
         'DBLANG': {
             FI: { langCode: 'fi', flagIconPath: 'images/flag-fi.svg' },

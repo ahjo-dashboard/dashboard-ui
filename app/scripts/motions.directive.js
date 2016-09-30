@@ -45,12 +45,10 @@ angular.module('dashboard')
                 copyMotion.actionPersonGuid = mtgItemSelected.dbUserPersonGuid;
                 copyMotion.meetingGuid = aMeetingGuid;
                 copyMotion.isUserSupported = aSupport;
-                console.log('UPDATE MOTION', copyMotion);
 
                 AhjoMeetingSrv.updateMotion(copyMotion).then(function (resp) {
                     if (angular.isObject(resp) && angular.isObject(resp.motion)) {
                         $log.log("dbMotions.sign done", resp);
-                        console.log('RESPONSE MOTION', resp.motion);
                         angular.merge(aMotion, resp.motion);
                     }
                     else {
