@@ -439,7 +439,9 @@ angular.module('dashboard')
                     motionData.objects = angular.isArray(resp) ? resp : [];
                 }, function (error) {
                     $log.error("meetingStatusCtrl.getMotions ", error);
-                    self.errorCode = error.errorCode;
+                    if (angular.isObject(error)) {
+                        Utils.showErrorForErrorCode(error.errorCode);
+                    }
                     motionData.failure = true;
                 }, function (/*notification*/) {
                     var notificationData = angular.copy(motionData);
