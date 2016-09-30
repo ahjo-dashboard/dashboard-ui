@@ -321,6 +321,7 @@ angular.module('dashboard')
                                         motionUpdated(event);
                                         break;
                                     case CONST.MTGEVENT.MOTIONUNPUBLISHED:
+                                    case CONST.MTGEVENT.MOTIONSUBMIT:
                                         motionUnpublished(event);
                                         break;
                                     default:
