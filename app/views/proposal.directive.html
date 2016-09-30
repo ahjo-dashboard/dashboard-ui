@@ -3,7 +3,8 @@
 
     <div class="db-flex db-center-v" ng-click="(c.mode !== c.modes.EDIT) && c.toggleCollapse()">
 
-        <b class="db-margin-10-right">{{c.uiProposal.orderNumber}}</b><b class="db-margin-10-right">{{c.typeText(c.uiProposal.proposalType)}}</b>
+        <span class="db-margin-10-right">{{c.uiProposal.orderNumber}}</span>
+        <b class="db-margin-10-right" translate translate-cloak>{{c.typeText(c.uiProposal.proposalType)}}</b>
         <i class="db-margin-10-right db-oneliner db-padding-2-right" ng-if="c.uiProposal.isPublished === c.status.YES">{{c.uiProposal.personName}}</i>
         <span class="db-flex-area db-oneliner db-margin-05-right" ng-bind-html="c.mode === c.modes.COLLAPSED ? c.uiProposal.text : null"></span>
 

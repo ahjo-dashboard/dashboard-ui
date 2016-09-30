@@ -194,7 +194,7 @@ angular.module('dashboard')
 
             self.typeText = function (value) {
                 var obj = Utils.objWithVal(PROPS.TYPE, 'value', value);
-                return (obj && obj.text) ? obj.text : value;
+                return (obj && obj.strId) ? obj.strId : value;
             };
 
             self.itemClicked = function () {
