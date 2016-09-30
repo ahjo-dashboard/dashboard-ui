@@ -16,8 +16,8 @@
                 <li role="menuitem" ng-repeat="i in c.docStatuses track by $index">
                     <a ng-click="c.setModelFilter(i)"><span translate translate-cloak>{{i.strId}}</span></a>
                 </li>
-                <li class="divider"></li>
-                <li role="menuitem"><a ng-click="c.setModelFilter(null)"><span translate translate-cloak>STR_CLEAR_SELECTION</span></a></li>
+                <li ng-show="c.isFilter()" class="divider"></li>
+                <li ng-show="c.isFilter()" role="menuitem"><a ng-click="c.setModelFilter(null)"><span translate translate-cloak>STR_CLEAR_SELECTION</span></a></li>
             </ul>
         </div>
 
@@ -30,8 +30,8 @@
                 <li role="menuitem" ng-repeat="i in c.docTypes track by $index">
                     <a ng-click="c.setModelFilter(i)"><span translate translate-cloak>{{i.strId}}</span></a>
                 </li>
-                <li class="divider"></li>
-                <li role="menuitem">
+                <li ng-show="c.isFilter()" class="divider"></li>
+                <li ng-show="c.isFilter()" role="menuitem">
                     <a ng-click="c.setModelFilter(null)">
                         <span translate translate-cloak>STR_CLEAR_SELECTION</span></a>
                 </li>

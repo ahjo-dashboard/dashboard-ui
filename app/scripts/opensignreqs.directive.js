@@ -323,6 +323,16 @@ angular.module('dashboard')
                 setTitle();
             };
 
+            self.isFilter = function isFilter() {
+                return self.FType || self.FStatus;
+            };
+
+            /*
+            * @name dashboard.utils.docFilter
+            * @description View ngRepeat filter function for selecting model items based on filter rule
+            * @param {} Item to examine
+            * @returns {boolean} True if item should be displayed.
+            */
             self.docFilter = function (item) {
                 var res = true;
                 if (self.FType) {
