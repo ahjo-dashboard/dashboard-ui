@@ -111,7 +111,7 @@ angular.module('dashboard')
             if (angular.isObject(topic)) {
                 self.isCityCouncil = topic.isCityCouncil;
                 self.topic = topic;
-                self.header = topic.topicTitle;
+                self.header = topic[$rootScope.locProp('topicTitle')];
                 if (angular.isArray(topic.esitykset)) {
                     var item = topic.esitykset[0];
                     if (angular.isObject(item)) {
@@ -123,9 +123,9 @@ angular.module('dashboard')
 
                 self.primaryUrl = (self.tData && self.tData.link) ? self.tData.link : {};
 
-                self.aData = ListData.createAttachmentList({ 'header': 'STR_ATTACHMENTS', 'title': topic.topicTitle }, topic.attachment);
-                self.dData = ListData.createDecisionList({ 'header': 'STR_DECISION_HISTORY', 'title': topic.topicTitle }, topic.decision);
-                self.amData = ListData.createAdditionalMaterialList({ 'header': 'STR_ADDITIONAL_MATERIAL', 'title': topic.topicTitle }, topic.additionalMaterial);
+                self.aData = ListData.createAttachmentList({ 'header': 'STR_ATTACHMENTS', 'title': self.header }, topic.attachment);
+                self.dData = ListData.createDecisionList({ 'header': 'STR_DECISION_HISTORY', 'title': self.header }, topic.decision);
+                self.amData = ListData.createAdditionalMaterialList({ 'header': 'STR_ADDITIONAL_MATERIAL', 'title': self.header }, topic.additionalMaterial);
 
                 checkMode();
             }
