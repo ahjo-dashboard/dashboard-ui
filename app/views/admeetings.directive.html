@@ -48,7 +48,7 @@
                         <div class="db-circle-20 db-brd-1-dark ng-class:[c.mtgStatusClass(item)]"></div>
                         <div class="db-flex-area db-margin-10-left" translate translate-cloak>{{c.statusStringId(item)}}</div>
                     </div>
-                    <div class="col-xs-12 col-sm-3 ng-class:[{'db-padding-05-ver db-fs-11':c.isMobile}]">{{item.meeting.agencyName}}</div>
+                    <div class="col-xs-12 col-sm-3 ng-class:[{'db-padding-05-ver db-fs-11':c.isMobile}]">{{item.meeting[c.locProp('agencyName')]}}</div>
                     <div class="col-xs-12 col-sm-3">
                         <button ng-repeat="role in item.meeting.roleIDs | orderBy : '-RoleID' track by $index" ng-disabled="!c.isRoleSupported(role)"
                             type="button" title="{{'STR_MTG_LOGIN' | translate}}" class="btn db-btn-sel db-margin-2 ng-class:[{'btn-block db-fs-12':c.isMobile}]"

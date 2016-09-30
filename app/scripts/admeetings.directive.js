@@ -181,6 +181,8 @@ angular.module('dashboard')
                 return res;
             };
 
+            self.locProp = $rootScope.locProp;
+
             setTitle();
         }];
 
