@@ -189,4 +189,13 @@ angular.module('dashboard', [
             return res;
         };
 
+        /*
+         * @name dashboard.getDbLangTrans
+         * @description Resolves language code for "translation language" i.e. currently not active language
+         * @returns {string} Language code for translation language
+         */
+        $rootScope.getDbLangTrans = function getDbLangTrans() {
+            return angular.equals($rootScope.dbLang, CONST.DBLANG.FI.langCode) ? CONST.DBLANG.SV.langCode : CONST.DBLANG.FI.langCode;
+        };
+
     });
