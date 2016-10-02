@@ -97,6 +97,7 @@
     "STR_BUDGET_MOTION": "Budgetmotion",
     "STR_SUPPORTED": "Understödet",
     "STR_VOTINGS": "Omröstningar",
+    "STR_MTG_STATUS_PUBLISHED_PROPOSALS": "@:STR_PUBLIC_PROPOSALS",
     "STR_PROP_PUB_COUNT": "Antal av publicerad förslag***",
     "STR_OTHER_MATERIAL": "Annat material",
     "STR_ALL_ATT_COUNT": "Antal av annat material",
