@@ -177,5 +177,7 @@
     "STR_INFO_SALI_MODE": "Toiminto ei ole mahdollinen salijärjestelmän ollessa käytössä",
     "STR_INFO_MTG_INACTIVE": "Asian tilaa voi muuttaa vain, jos kokous on käynnissä",
     "STR_INFO_MTG_BAD_STATUS": "Kokouksen tilaa voi muuttaa vain tiloissa: 'teknisesti avattu', 'käynnissä' ja 'keskeytetty'",
-    "STR_INFO_TOPIC_STATUS_CHANGE_DISABLED": "Tilaa voi muuttaa vain, jos muita asioita ei ole käsittelyssä"
+    "STR_INFO_TOPIC_STATUS_CHANGE_DISABLED": "Tilaa voi muuttaa vain, jos muita asioita ei ole käsittelyssä",
+    "STR_HELP_MTGLIST": "Listassa näet kaikki kokouksesi aikajärjestyksessä. Menneet kokoukset löytyvät omalta välilehdeltä.<BR>Voit avata kokouksen painamalla rivillä  painiketta, jossa lukee kokouksessa sallittu käyttäjäroolisi.<BR>Painikkeita voi samalla rivillä olla useita, mikäli kokous sallii sinulle monta roolia. Valitse silloin haluamasi rooli painamalla vastaavaa painiketta.",
+    "STR_HELP_SIGNLIST": "Listassa näet kaikki allekirjoitettavat asiakirjasi. Toimielimien pöytäkirjat ja viranhaltijapäätökset ovat peräkkäin omina ryhminään.<BR>Käsitellyt asiakirjat löytyvät omalta välilehdeltä.<BR>Voit avata asiakirjan painamalla rivillä ainiketta."
 }
