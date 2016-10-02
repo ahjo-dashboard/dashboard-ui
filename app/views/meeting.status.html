@@ -61,7 +61,7 @@
                 <div ng-show="topic.isModified" title="{{'STR_INFO_NEW_PROPS' | translate}}" class="db-center">
                     <div class="db-glyph db-glyph-sm db-glyph-ora db-margin-05-left" ng-include="'images/glyph-bell.svg'"></div>
                 </div>
-                <div class="db-center-v db-flex-area db-margin-10-hor">
+                <div class="db-center-v db-flex-area db-margin-10-hor db-break-hyphen">
                     <span title="{{topic.topicreference}} {{topic[locProp('topicTitle')]}} &#13;&#13; {{msc.topicStatusText(topic) | translate}} &#13; {{' STR_MTG_STATUS_PUBLISHED_PROPOSALS' | translate}} : {{topic.includePublishedRemark ? 'STR_YES': 'STR_NO' | translate}}" class="ng-class:[{'db-twoliner-12':!msc.isMobile}]">
                         {{topic.topicreference}} {{topic[locProp('topicTitle')]}}
                     </span>
