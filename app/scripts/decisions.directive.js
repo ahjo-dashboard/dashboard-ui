@@ -148,15 +148,15 @@ angular.module('dashboard')
                 }
             }
 
-            self.itemSelected = function (aItem) {
-                $log.log("dbDecisions.itemSelected", arguments);
+            self.selectRecord = function (aItem) {
+                $log.log("dbDecisions.selectRecord", arguments);
                 if (angular.isObject(aItem) && aItem.isModified) {
                     aItem.isModified = false;
                 }
                 self.selectedItem = (self.selectedItem === aItem) ? null : aItem;
             };
 
-            self.isSelected = function (aItem) {
+            self.isSelectedRecord = function (aItem) {
                 return (angular.isObject(self.selectedItem) && angular.isObject(aItem) && angular.equals(self.selectedItem.minuteEntryGuid, aItem.minuteEntryGuid));
             };
 

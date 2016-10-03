@@ -15,7 +15,7 @@
                 <span class="badge db-badge-hdr db-margin-05-hor">{{filtered.length}}</span>
             </h5>
             <div class="list-group-item db-padding-10-hor" ng-repeat="i in c.record | orderBy : 'insertDateTime' | filter: { type: d.value } | filter:query as filtered track by $index">
-                <div class="db-flex db-center-v" ng-click="c.itemSelected(i)">
+                <div class="db-flex db-center-v" ng-click="c.selectRecord(i)">
                     <div class="db-flex-area">
                         <i>{{i.name}}</i>
                         <span class="db-margin-10-left" ng-if="i.proposalOrdernumber">/{{i.proposalOrdernumber}}</span>
@@ -24,9 +24,9 @@
                         ng-include="'images/glyph-bell.svg'"></div>
                     <div ng-show="i.entrySupporters.length" title="{{'STR_SUPPORTED' | translate}}" class="db-glyph db-glyph-sm db-glyph-info db-margin-05-right"
                         ng-include="'images/glyph-like.svg'"></div>
-                    <span title="{{'STR_EXPANDCOLLAPSE' | translate}}" class="db-glyph db-glyph-sm db-glyph-dark db-margin-10-right" ng-include="!c.isSelected(i) ? 'images/glyph-expand.svg' : 'images/glyph-minimize.svg'"></span>
+                    <span title="{{'STR_EXPANDCOLLAPSE' | translate}}" class="db-glyph db-glyph-sm db-glyph-dark db-margin-10-right" ng-include="!c.isSelectedRecord(i) ? 'images/glyph-expand.svg' : 'images/glyph-minimize.svg'"></span>
                 </div>
-                <div class="panel-collapse collapse" uib-collapse="!c.isSelected(i)">
+                <div class="panel-collapse collapse" uib-collapse="!c.isSelectedRecord(i)">
                     <div class="db-padding-10-hor db-margin-05-top">
                         <span translate translate-cloak>STR_SROLE_SUPPORTER</span>:<span ng-repeat="s in i.entrySupporters | filter: { minuteEntryGuid: i.minuteEntryGuid }  | filter:query as filtered2 track by $index">
                             <span ng-if="0 < $index">, </span>
