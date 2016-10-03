@@ -78,14 +78,14 @@ angular.module('dashboard')
 
                 AhjoMeetingSrv.updateMotion(copyMotion).then(function (resp) {
                     if (angular.isObject(resp) && angular.isObject(resp.motion)) {
-                        $log.log("dbMotions.submit done", resp);
+                        $log.log("dbMotions.submitMotion done", resp);
                         angular.merge(aMotion, resp.motion);
                     }
                     else {
-                        $log.error("dbMotions.submit done ", resp);
+                        $log.error("dbMotions.submitMotion done ", resp);
                     }
                 }, function (error) {
-                    $log.error("dbMotions.submit", error);
+                    $log.error("dbMotions.submitMotion", error);
                     Utils.showErrorForError(error);
                 }, function (/*notification*/) {
                     self.loading = true;
@@ -94,12 +94,46 @@ angular.module('dashboard')
                 });
             }
 
-            self.selectMotion = function (motion) {
-                if (self.isSelected(motion)) {
+            function setMotionAsRead(aMotion) {
+                if (!angular.isObject(aMotion)) {
+                    $log.error("dbMotions.setMotionAsRead: bad args", arguments);
+                    return;
+                }
+                $log.log("dbMotions: setMotionAsRead", arguments);
+
+                var copyMotion = angular.copy(aMotion);
+                copyMotion.isUserRead = true;
+                copyMotion.actionPersonGuid = mtgItemSelected.dbUserPersonGuid;
+                copyMotion.meetingGuid = mtgItemSelected.meetingGuid;
+
+                AhjoMeetingSrv.updateMotion(copyMotion).then(function (resp) {
+                    if (angular.isObject(resp) && angular.isObject(resp.motion)) {
+                        $log.log("dbMotions.setMotionAsRead done", resp);
+                        angular.merge(aMotion, resp.motion);
+                    }
+                    else {
+                        $log.error("dbMotions.setMotionAsRead done ", resp);
+                    }
+                }, function (error) {
+                    $log.error("dbMotions.setMotionAsRead", error);
+                    Utils.showErrorForError(error);
+                }, function (/*notification*/) {
+                    self.loading = true;
+                }).finally(function () {
+                    self.loading = false;
+                });
+            }
+
+            self.selectMotion = function (aMotion) {
+                $log.log("dbMotions: selectMotion", arguments);
+                if (self.isSelected(aMotion)) {
                     selectedMotion = null;
                 }
                 else {
-                    selectedMotion = angular.isObject(motion) ? motion : null;
+                    selectedMotion = angular.isObject(aMotion) ? aMotion : null;
+                }
+                if (angular.isObject(aMotion) && aMotion.isUserRead === false) {
+                    setMotionAsRead(aMotion);
                 }
             };
 

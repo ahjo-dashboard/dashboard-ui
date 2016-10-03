@@ -55,6 +55,7 @@
     "STR_SIGNING_ACCEPT": "Underteckna",
     "STR_SIGNING_REMOVE": "Ta bort underteckningen",
     "STR_SUBMIT_MOTION": "Lämna in motionen",
+    "STR_UNREAD_MOTION": "Nytt motion",
     "STR_REJECT": "Avslå",
     "STR_RETURN": "Returnera",
     "STR_SIGNING_COMMENT_INFO": "Kommentarer kan sändas till (kopiera adressen, om det behövs):",
