@@ -176,6 +176,7 @@ angular.module('dashboard', [
             $log.log("rootScope.toggleLang: " + $rootScope.dbLang + ", old translage.use was=" + $translate.use());
             $translate.use($rootScope.dbLang);
             document.documentElement.setAttribute('lang', $rootScope.dbLang);// sets "lang" attribute to html
+            $state.reload(); // Refresh current view's translations if there are any calculated via js
         };
 
         /*

@@ -4,7 +4,8 @@
         <div class="overview-hdr">
             <button ng-if="env_dev" type="button" title="{{'STR_LOGOUT' | translate}} {{oc.testEnvUserId}}" class="btn db-btn-prim db-center db-margin-10-right"
                 ng-click="oc.logout()">
-                <div class="db-glyph db-glyph-sm" ng-include="'images/glyph-back.svg'"></div>
+                <div class="hidden-sm hidden-md hidden-lg db-glyph db-glyph-sm" ng-include="'images/glyph-back.svg'"></div>
+                <div class="hidden-xs db-glyph" ng-include="'images/glyph-back.svg'"></div>
             </button>
             <img src="images/vaakuna.jpg" style="width: 40px;">
             <h5 class="hidden-sm hidden-md hidden-lg db-flex-area db-break-hyphen" translate>STR_APPNAME</h5>

@@ -33,25 +33,13 @@ angular.module('dashboard')
 
             self.aF = null;
             self.rF = null;
-            self.agencyTitle = null;
-
-            function setTitle() {
-                if (!self.aF) {
-                    $translate('STR_AGENCY').then(function (agency) {
-                        self.agencyTitle = agency;
-                    });
-                }
-                else {
-                    self.agencyTitle = self.aF;
-                }
-            }
 
             function setData() {
                 self.data = [];
                 if (self.responseData instanceof Object && self.responseData.objects instanceof Array) {
                     for (var i = 0; i < self.responseData.objects.length; i++) {
                         var item = self.responseData.objects[i];
-                        var aVisible = self.aF ? (self.aF === item.agencyName) : true;
+                        var aVisible = self.aF ? (self.aF === item[$rootScope.locProp('agencyName')]) : true;
                         var fVisible = false;
 
                         if ($scope.visibleMeetings === MTGD.VISIBLE.OPEN && item.state) {
@@ -86,7 +74,7 @@ angular.module('dashboard')
             function parseAgencyDropdown() {
                 self.agencyData = [];
                 for (var i = 0; i < self.data.length; i++) {
-                    var agency = self.data[i].meeting.agencyName;
+                    var agency = self.data[i].meeting[$rootScope.locProp('agencyName')];
                     var visible = self.data[i].visible;
                     if (agency && self.agencyData.indexOf(agency) === -1 && visible) {
                         self.agencyData.push(agency);
@@ -128,7 +116,6 @@ angular.module('dashboard')
                 if (!agency) {
                     parseAgencyDropdown();
                 }
-                setTitle();
                 $scope.agencyIsOpen = false;
             };
 
@@ -140,7 +127,6 @@ angular.module('dashboard')
                 if (!role) {
                     parseRoleDropdown();
                 }
-                setTitle();
                 $scope.roleIsOpen = false;
             };
 
@@ -182,8 +168,6 @@ angular.module('dashboard')
             };
 
             self.locProp = $rootScope.locProp;
-
-            setTitle();
         }];
 
         return {
