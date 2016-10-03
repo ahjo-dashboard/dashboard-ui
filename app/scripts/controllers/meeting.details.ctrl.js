@@ -102,13 +102,14 @@ angular.module('dashboard')
                 var presItem = null;
                 for (var i = 0; !res && i < presArr.length; i++) {
                     presItem = presArr[i];
-                    if (angular.isObject(presItem) && angular.equals(presItem.language, aLang) ) {
+                    if (angular.isObject(presItem) && angular.equals(presItem.language, aLang)) {
+                        $log.log("meetingDetailsCtrl.createPresentation: found presentation matching to lang=" + aLang, presArr);
                         res = AttachmentData.create(((angular.isString(presItem.documentTitle) && presItem.documentTitle.length) ? presItem.documentTitle : 'STR_PRESENTATION'), presItem.link, presItem.publicity, null, null, presItem.pageCount);
                         res.dBLang = aLang;
                     }
                 }
                 if (!res) {
-                    $log.error("meetingDetailsCtrl.createPresentation: no presentation matching to app lang", presArr);
+                    $log.log("meetingDetailsCtrl.createPresentation: no presentation matching to lang=" + aLang, presArr);
                 }
             }
 
