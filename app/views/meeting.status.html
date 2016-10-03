@@ -28,7 +28,7 @@
         <ul class="list-group">
 
             <div title="{{msc.uiName}}" class="db-list-group-item-prim db-brd-non-botton db-padding-05-bottom">
-                <h4 class="db-margin-10-bottom">{{msc.uiName}}</h4>
+                <h4 class="db-margin-10-bottom" ng-cloak>{{msc.uiName}}</h4>
             </div>
             <div ng-if='msc.loading' class="list-group-item db-spinner-cont">
                 <div us-spinner spinner-on="true"></div>
@@ -38,7 +38,7 @@
                     ng-disabled="msc.updatingStatus" ng-click="msc.changeMeetingStatus()">
                     <div class="db-flex">
                         <div class="db-circle-30 db-brd-1-dark ng-class:[msc.mtgStatusClass(msc.mtgDetails)]"></div>
-                        <span ng-if="!msc.updatingStatus" class="db-flex-area db-center-v db-font-12 db-margin-15-left db-overflow-hidden db-truncate" translate translate-cloak>{{msc.stringId(msc.mtgDetails)}}</span>
+                        <span ng-if="!msc.updatingStatus" ng-show="msc.mtgDetails" class="db-flex-area db-center-v db-font-12 db-margin-15-left db-overflow-hidden db-truncate" translate translate-cloak ng-cloak>{{msc.stringId(msc.mtgDetails)}}</span>
                         <span data-ng-if="msc.updatingStatus" class="db-min-height-24" us-spinner="{radius:4, width:2, length:4}" spinner-on="msc.updatingStatus"></span>
                     </div>
                 </button>
