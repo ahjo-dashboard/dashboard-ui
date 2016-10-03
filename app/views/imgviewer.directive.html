@@ -1,22 +1,21 @@
 <div class="db-directive">
 
-    <div class="db-hdr-l2 db-flex-col">
-
-        <div title="{{'STR_INFO_CONFIDENTIAL' | translate}}" class="db-hdr-l2-item">
-            <div class="db-glyph db-glyph-conf db-center" ng-include="'images/glyph-lock.svg'"></div>
-        </div>
+    <div class="db-hdr-l2 db-flex-col db-no-padding">
 
         <div class="db-center db-flex-wrap">
 
             <div class="db-hdr-l2-grp">
 
                 <div class="db-hdr-l2-item">
+                    <div title="{{'STR_INFO_CONFIDENTIAL' | translate}}" class="db-hdr-l2-item db-margin-10-left">
+                        <div class="db-glyph db-glyph-conf db-center" ng-include="'images/glyph-lock.svg'"></div>
+                    </div>
                     <button type="button" class="btn db-btn-prim btn-md" ng-click="c.pageChanged(1)" ng-disabled="c.currPage === 1 || !c.pages.length">
-                    <div class="db-glyph db-glyph-sm" ng-include="'images/glyph-triangle-left-double.svg'"></div>
-                </button>
+                        <div class="db-glyph db-glyph-sm" ng-include="'images/glyph-triangle-left-double.svg'"></div>
+                    </button>
                     <button type="button" class="btn db-btn-prim btn-md" ng-click="c.pageChanged(c.currPage - 1)" ng-disabled="c.currPage === 1 || !c.pages.length">
-                    <div class="db-glyph db-glyph-sm" ng-include="'images/glyph-triangle-left.svg'"></div>
-                </button>
+                        <div class="db-glyph db-glyph-sm" ng-include="'images/glyph-triangle-left.svg'"></div>
+                    </button>
                 </div>
 
                 <div class="db-hdr-l2-item">
