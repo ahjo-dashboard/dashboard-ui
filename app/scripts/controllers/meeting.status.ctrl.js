@@ -367,7 +367,7 @@ angular.module('dashboard')
                 return;
             }
             $log.debug("meetingStatusCtrl.getMeetingDetails");
-            self.uiName = mtgItem[$rootScope.locProp('agencyName')] + ' ' + mtgItem.name;
+            self.uiName = mtgItem[$rootScope.locProp('agencyName')] + (mtgItem.name ? ' ' + mtgItem.name : ''); // Check name to prevent displaying 'undefined' during loading
             selectedTopicGuid = null;
             activeTopicGuid = null;
             StorageSrv.deleteKey(CONST.KEY.TOPIC);
