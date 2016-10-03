@@ -84,8 +84,10 @@ angular.module('dashboard')
 
             AhjoMeetingsSrv.getMeetings().then(function (response) {
                 self.responseData = response;
-                if ("objects" in self.responseData) {
-                    $log.debug("adMeetings: getMeetings done: " + self.responseData.objects.length);
+                if (!angular.isObject(self.responseData) || !angular.isArray(self.responseData.objects) || !angular.isString(response.personGuid)) {
+                    $log.error("adMeetings: bad response data: ", arguments);
+                } else {
+                    $log.debug("adMeetings: getMeetings done, count=" + self.responseData.objects.length, " personGuid=" + response.personGuid);
                 }
             }, function (error) {
                 $log.error("adMeetings: getMeetings error: " + JSON.stringify(error));
