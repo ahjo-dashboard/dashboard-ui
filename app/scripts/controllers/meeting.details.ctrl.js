@@ -92,6 +92,29 @@ angular.module('dashboard')
             setPrimaryMode();
         }
 
+        function createPresentation(aTopic, aLang) {
+            var res = null;
+            if (!angular.isString(aLang) || !angular.isObject(aTopic) || !angular.isArray(aTopic.esitykset) || !aTopic.esitykset.length) {
+                $log.debug("meetingDetailsCtrl.createPresentation: bad args: ", arguments);
+            } else {
+                $log.debug("meetingDetailsCtrl.createPresentation: lang=" + aLang);
+                var presArr = aTopic.esitykset;
+                var presItem = null;
+                for (var i = 0; !res && i < presArr.length; i++) {
+                    presItem = presArr[i];
+                    if (angular.isObject(presItem) && angular.equals(presItem.language, aLang) ) {
+                        res = AttachmentData.create(((angular.isString(presItem.documentTitle) && presItem.documentTitle.length) ? presItem.documentTitle : 'STR_PRESENTATION'), presItem.link, presItem.publicity, null, null, presItem.pageCount);
+                        res.dBLang = aLang;
+                    }
+                }
+                if (!res) {
+                    $log.error("meetingDetailsCtrl.createPresentation: no presentation matching to app lang", presArr);
+                }
+            }
+
+            return res;
+        }
+
         function setData(topic) {
             $log.debug("meetingDetailsCtrl: setData", arguments);
             self.topic = null;
@@ -112,15 +135,9 @@ angular.module('dashboard')
                 self.isCityCouncil = topic.isCityCouncil;
                 self.topic = topic;
                 self.header = topic[$rootScope.locProp('topicTitle')];
-                if (angular.isArray(topic.esitykset)) {
-                    var item = topic.esitykset[0];
-                    if (angular.isObject(item)) {
-                        $log.debug("meetingDetailsCtrl.setData: esitys publicity=" + item.publicity + " link=" + item.link + " pageCount=" + item.pageCount);
-                        self.tData = AttachmentData.create(
-                            ((angular.isString(item.documentTitle) && item.documentTitle.length) ? item.documentTitle : 'STR_TOPIC'), item.link, item.publicity, null, null, item.pageCount);
-                    }
-                }
-
+                self.presPrimLang = createPresentation(self.topic, $rootScope.dbLang);
+                self.presTransLang = createPresentation(self.topic, $rootScope.getDbLangTrans());
+                self.tData = self.presPrimLang;
                 self.primaryUrl = (self.tData && self.tData.link) ? self.tData.link : {};
 
                 self.aData = ListData.createAttachmentList({ 'header': 'STR_ATTACHMENTS', 'title': self.header }, topic.attachment);
@@ -192,13 +209,19 @@ angular.module('dashboard')
             setBlockMode((self.bm === CONST.BLOCKMODE.PRIMARY || self.bm === CONST.BLOCKMODE.SECONDARY) ? CONST.BLOCKMODE.DEFAULT : CONST.BLOCKMODE.SECONDARY);
         };
 
-        self.presentationClicked = function (data) {
-            if (self.isSecret(data)) {
+        self.presClickedDesk = function presClickedDesk(aPres) {
+            self.tData = aPres;
+            self.primaryUrl = (self.tData && self.tData.link) ? self.tData.link : {};
+        };
+
+        self.presClickedMobile = function (aPres) {
+            self.tData = aPres;
+            if (self.isSecret(aPres)) {
                 self.selData = null;
                 setSecondaryMode(CONST.SECONDARYMODE.SECRET);
             }
             else {
-                Utils.openNewWin(data.link);
+                Utils.openNewWin(aPres.link);
             }
         };
 
