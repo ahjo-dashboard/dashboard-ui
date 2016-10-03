@@ -97,6 +97,7 @@
     "STR_BUDGET_MOTION": "Budgetmotion",
     "STR_SUPPORTED": "Understödet",
     "STR_VOTINGS": "Omröstningar",
+    "STR_MTG_STATUS_PUBLISHED_PROPOSALS": "@:STR_PUBLIC_PROPOSALS",
     "STR_PROP_PUB_COUNT": "Antal av publicerad förslag***",
     "STR_OTHER_MATERIAL": "Annat material",
     "STR_ALL_ATT_COUNT": "Antal av annat material",
@@ -177,5 +178,7 @@
     "STR_INFO_SALI_MODE": "Toiminto ei ole salissa mahdollinen sal system***",
     "STR_INFO_MTG_INACTIVE": "Ärendets status kan ändräs ändast om sammanträdet är under behandling",
     "STR_INFO_MTG_BAD_STATUS": "Sammanträdets status kan ändras ändast om status är: 'Tekniskt öppnat', 'Pågår' eller 'Avbrutet'",
-    "STR_INFO_TOPIC_STATUS_CHANGE_DISABLED": "Ärendets status kan ändras ändast om inga andra ärende pågår"
+    "STR_INFO_TOPIC_STATUS_CHANGE_DISABLED": "Ärendets status kan ändras ändast om inga andra ärende pågår",
+    "STR_HELP_MTGLIST": "Listassa näet kaikki kokouksesi aikajärjestyksessä. Menneet kokoukset löytyvät omalta välilehdeltä.<BR>Voit avata kokouksen painamalla rivillä  painiketta, jossa lukee kokouksessa sallittu käyttäjäroolisi.<BR>Painikkeita voi samalla rivillä olla useita, mikäli kokous sallii sinulle monta roolia. Valitse silloin haluamasi rooli painamalla vastaavaa painiketta.",
+    "STR_HELP_SIGNLIST": "Listassa näet kaikki allekirjoitettavat asiakirjasi. Toimielimien pöytäkirjat ja viranhaltijapäätökset ovat peräkkäin omina ryhminään.<BR>Käsitellyt asiakirjat löytyvät omalta välilehdeltä.<BR>Voit avata asiakirjan painamalla rivillä ainiketta."
 }
