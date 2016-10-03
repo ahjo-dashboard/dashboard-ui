@@ -144,7 +144,7 @@ angular.module('dashboard')
                     });
                 }
                 else {
-                    $log.error("dbDecisions.getDecisions", arguments);
+                    $log.log("dbDecisions.getDecisions: meeting/topic not set:", arguments);
                 }
             }
 
@@ -158,6 +158,15 @@ angular.module('dashboard')
 
             self.isSelected = function (aItem) {
                 return (angular.isObject(self.selectedItem) && angular.isObject(aItem) && angular.equals(self.selectedItem.minuteEntryGuid, aItem.minuteEntryGuid));
+            };
+
+            self.selectVoting = function (aVoting) {
+                $log.log("dbDecisions.selectVoting: ", arguments);
+                self.selectedVoting = (self.selectedVoting === aVoting) ? null : aVoting;
+            };
+
+            self.isSelectedVoting = function (aVoting) {
+                return aVoting === self.selectedVoting;
             };
 
             self.getVotingTitle = function getVotingTitle(aVoting) {

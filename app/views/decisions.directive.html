@@ -70,9 +70,9 @@
 
             <!-- Voting item -->
             <div class="list-group-item db-padding-0-hor" ng-repeat="v in c.voting | filter: { hasVotes: true } | filter:query as votingsWithVotes track by $index">
-                <div class="db-flex db-padding-05 db-padding-10-hor ng-class:{'db-fw-700': c.isSelected(v)}" ng-click="c.itemSelected(v)">
-                    <div class="db-flex-area ng-class:{'db-truncate': !c.isSelected(v)}">
-                        <div title="{{c.getVotingTitle(v)}}" class="db-flex-area ng-class:{'db-truncate': !c.isSelected(v)}">{{c.getVotingTitle(v)}}</div>
+                <div class="db-flex db-padding-05 db-padding-10-hor ng-class:{'db-fw-700': c.isSelectedVoting(v)}" ng-click="c.selectVoting(v)">
+                    <div class="db-flex-area ng-class:{'db-truncate': !c.isSelectedVoting(v)}">
+                        <div title="{{c.getVotingTitle(v)}}" class="db-flex-area ng-class:{'db-truncate': !c.isSelectedVoting(v)}">{{c.getVotingTitle(v)}}</div>
                     </div>
                     <div class="db-voting-res-col db-center ng-class:{'db-badge-gre': yesVotes > noVotes }">
                         <span>{{ yesVotes = (v.voteList | filter: { vote: 1 }).length }}</span>
@@ -87,12 +87,12 @@
                         {{ (v.voteList | filter: { vote: 4 }).length }}
                     </div>
 
-                    <div title="{{'STR_EXPANDCOLLAPSE' | translate}}" class="db-glyph db-glyph-sm db-glyph-dark db-margin-10-right" ng-include="!c.isSelected(v) ? 'images/glyph-expand.svg' : 'images/glyph-minimize.svg'"></div>
+                    <div title="{{'STR_EXPANDCOLLAPSE' | translate}}" class="db-glyph db-glyph-sm db-glyph-dark db-margin-10-right" ng-include="!c.isSelectedVoting(v) ? 'images/glyph-expand.svg' : 'images/glyph-minimize.svg'"></div>
                 </div>
 
                 <!-- Voting item details -->
 
-                <ul class="list-group panel-collapse collapse db-no-margin" uib-collapse="!c.isSelected(v)">
+                <ul class="list-group panel-collapse collapse db-no-margin" uib-collapse="!c.isSelectedVoting(v)">
                     <button type="button" ng-repeat="vl in v.voteList | orderBy:vl:false:c.chairmanComparator track by $index" class="list-group-item db-flex db-padding-05-ver">
                         <div class="db-flex-area db-center-v">
                             <div class="db-break-hyphen">{{vl.personName}}</div>
