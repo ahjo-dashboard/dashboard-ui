@@ -153,7 +153,8 @@ angular.module('dashboard')
             MOTIONSUPPORTED: 'MotionSupportedEvent',
             MOTIONSUPPORTREMOVED: 'MotionSupportRemovedEvent',
             MOTIONPUBLISHED: 'MotionPublishedEvent',
-            MOTIONUNPUBLISHED: 'MotionUnpublishedEvent'
+            MOTIONUNPUBLISHED: 'MotionUnpublishedEvent',
+            MOTIONSUBMIT: 'MotionSubmitEvent'
         },
         'TOPICSTATUS': {
             PENDING: { stateId: 1, iconPath: "images/mtg-states/mtg-ag-state-1.png", stringId: 'STR_TOPIC_STATUS_PENDING' },
