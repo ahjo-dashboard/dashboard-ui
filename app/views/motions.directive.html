@@ -18,8 +18,8 @@
                     <i class="col-xs-5 col-md-3 db-truncate">{{m.personName}}</i>
                     <div class="hidden-xs hidden-sm col-md-2 db-truncate" translate translate-cloak>{{c.typeString(m.type)}}</div>
                     <div ng-show="m.supporters" class="hidden-xs hidden-sm col-md-2 db-truncate db-center-v">
-                        <div ng-if="m.supporters.length">{{m.supporters.length}}</div>
-                        <div ng-if="!m.supporters.length">-</div>
+                        <div>{{ (m.supporters.length || m.isOwnMotion) ? (m.supporters.length + (m.isOwnMotion ? 1 : 0)) : '-' }}</div>
+
                         <div ng-if="m.isUserSupported" title="{{'STR_MOTION_SIGNED_BY_ME' | translate}}" class="db-glyph db-glyph-sm db-glyph-info db-margin-05-left"
                             ng-include="'images/glyph-user.svg'">
                         </div>
