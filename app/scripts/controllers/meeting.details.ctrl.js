@@ -276,8 +276,7 @@ angular.module('dashboard')
             resetUnsaved();
             checkMode();
             var data = angular.copy(StorageSrv.getKey(CONST.KEY.MOTION_DATA));
-            var isObject = angular.isObject(data);
-            if (!isObject || (isObject && data.failure === true && data.loading === false)) {
+            if (!angular.isObject(data) || data.loading === false) {
                 $rootScope.$emit(CONST.GETMOTIONS, {});
             }
         };
