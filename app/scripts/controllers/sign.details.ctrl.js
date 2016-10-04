@@ -153,8 +153,12 @@ app.controller('signDetailsCtrl', function ($log, $state, $rootScope, ENV, CONST
     };
 
     self.selAtt = function (data) {
-        self.selData = null;
-        self.secondaryUrl = data.link;
+        if (!self.isMobile && !self.isTablet) {
+            self.selData = null;
+            self.secondaryUrl = data.link;
+        } else {
+            Utils.openNewWin(data.link);
+        }
     };
 
     self.toggleParallelMode = function () {
