@@ -17,7 +17,7 @@ angular.module('dashboard')
             $log.log("dbMotions: CONTROLLER");
             var self = this;
             self.isIe = $rootScope.isIe;
-            self.loading = false;
+            self.motionsCont = null;
             self.motions = null;
             self.meetingActive = null;
             var selectedMotion = null;
@@ -30,7 +30,9 @@ angular.module('dashboard')
                 $timeout(function () {
                     if (angular.isObject(data)) {
                         self.motions = (angular.isArray(data.objects)) ? data.objects : [];
+                        self.motionsCont = data;
                     }
+                    $log.debug("dbMotions.setMotions, after timeout data:", data);
                 }, 0);
             }
 
@@ -58,9 +60,9 @@ angular.module('dashboard')
                     $log.error("dbMotions.sign ", error);
                     Utils.showErrorForError(error);
                 }, function (/*notification*/) {
-                    self.loading = true;
+                    aMotion.ongoing = true;
                 }).finally(function () {
-                    self.loading = false;
+                    aMotion.ongoing = false;
                 });
             }
 
@@ -88,9 +90,9 @@ angular.module('dashboard')
                     $log.error("dbMotions.submitMotion", error);
                     Utils.showErrorForError(error);
                 }, function (/*notification*/) {
-                    self.loading = true;
+                    aMotion.ongoing = true;
                 }).finally(function () {
-                    self.loading = false;
+                    aMotion.ongoing = false;
                 });
             }
 
@@ -115,12 +117,12 @@ angular.module('dashboard')
                         $log.error("dbMotions.setMotionAsRead done ", resp);
                     }
                 }, function (error) {
-                    $log.error("dbMotions.setMotionAsRead", error);
+                    $log.error("dbMotions.setMotionAsRead: ", error);
                     Utils.showErrorForError(error);
                 }, function (/*notification*/) {
-                    self.loading = true;
+                    aMotion.ongoing = true;
                 }).finally(function () {
-                    self.loading = false;
+                    aMotion.ongoing = false;
                 });
             }
 
@@ -177,8 +179,8 @@ angular.module('dashboard')
             $scope.$watch(function () {
                 return StorageSrv.getKey(CONST.KEY.MOTION_DATA);
             }, function (data) {
+                $log.debug("dbMotions watch CONST.KEY.MOTION_DATA:", arguments);
                 setMotions(data);
-                self.loading = (angular.isObject(data) && data.loading === true);
             });
 
             $scope.$watch(function () {
