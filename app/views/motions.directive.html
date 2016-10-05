@@ -18,7 +18,7 @@
                 <h5 class="col-md-3 hidden-xs hidden-sm db-truncate" translate translate-cloak>STR_SIGNINGS</h5>
             </div>
 
-            <div class="list-group-item db-padding-10-hor db-spinner-cont" ng-repeat="m in c.motions | orderBy : 'publishDate' track by $index">
+            <div class="list-group-item db-padding-10-hor db-spinner-cont" ng-repeat="m in c.motions | orderBy:'publishDate':true track by $index">
                 <span us-spinner spinner-on="m.ongoing"></span>
 
                 <div class="row" ng-click="c.selectMotion(m)">
