@@ -427,7 +427,7 @@ angular.module('dashboard')
         }
 
         function getMotions(aMtg) {
-            $log.debug("meetingStatusCtrl.getMotions", arguments);
+            $log.debug("meetingStatusCtrl.getMotions: ", arguments);
             if (angular.isObject(aMtg)) {
                 var motionData = StorageSrv.getKey(CONST.KEY.MOTION_DATA);
                 if (!angular.isObject(motionData)) {
@@ -439,17 +439,15 @@ angular.module('dashboard')
                     $log.log("meetingStatusCtrl.getMotions done", resp);
                     motionData.objects = angular.isArray(resp) ? resp : [];
                 }, function (error) {
-                    $log.error("meetingStatusCtrl.getMotions ", error);
-                    if (angular.isObject(error)) {
-                        Utils.showErrorForErrorCode(error.errorCode);
-                    }
+                    $log.error("meetingStatusCtrl.getMotions: error: ", error);
                     motionData.failure = true;
-                }, function (/*notification*/) {
+                    }, function (/*notification*/) {
                     var notificationData = angular.copy(motionData);
                     notificationData.loading = true;
                     notificationData.failure = false;
                     StorageSrv.setKey(CONST.KEY.MOTION_DATA, notificationData);
                 }).finally(function () {
+                    $log.debug("meetinStatusCtrl.getMotions: finally");
                     motionData.loading = false;
                     var resultData = angular.copy(motionData);
                     $rootScope.$emit(CONST.MOTIONSUPDATED, { count: motionData.objects.length });

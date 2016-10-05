@@ -1,9 +1,16 @@
 <div class="proposal-list db-directive db-spinner-cont">
     <span us-spinner spinner-on="c.loading"></span>
 
-    <div class="db-min-width-300">
+    <div ng-show="!c.loading" class="db-min-width-300">
 
-        <div class="db-prop-hdr db-brd-top">
+        <div ng-if="c.error" uib-alert class="alert-danger">
+            <div class="db-flex db-center-v">
+                <div class="db-glyph db-glyph-error" ng-include="'images/glyph-error.svg'"></div>
+                <div class="db-margin-10-left" translate translate-cloak>STR_FAIL_LOADING</div>
+            </div>
+        </div>
+
+        <div ng-if="!c.error" class="db-prop-hdr db-brd-top">
 
             <h4 ng-if="c.isMobile" class="db-prop-hdr-text" translate translate-cloak>STR_PRIVATE_PROPOSALS</h4>
             <h5 ng-if="!c.isMobile" class="db-prop-hdr-text" translate translate-cloak>STR_PRIVATE_PROPOSALS</h5>
@@ -20,13 +27,13 @@
 
         </div>
 
-        <ul class="list-group db-margin-1-btm">
+        <ul ng-if="!c.error" class="list-group db-margin-1-btm">
             <db-proposal ng-if="(p.isPublished === c.published.NO || p.isPublished === null)" class="list-group-item" proposal="p" guid="guid"
                 disable-create="c.unsavedCount" on-remove="c.remove(data)" on-add="c.add(data)" ng-repeat="p in c.proposals track by p.proposalGuid">
             </db-proposal>
         </ul>
 
-        <div class="db-prop-hdr db-brd-top">
+        <div ng-if="!c.error" class="db-prop-hdr db-brd-top">
 
             <h4 ng-if="c.isMobile" class="db-prop-hdr-text" translate translate-cloak>STR_PUBLIC_PROPOSALS</h4>
             <h5 ng-if="!c.isMobile" class="db-prop-hdr-text" translate translate-cloak>STR_PUBLIC_PROPOSALS</h5>
@@ -35,7 +42,7 @@
 
         </div>
 
-        <ul class="list-group db-margin-1-btm">
+        <ul ng-if="!c.error" class="list-group db-margin-1-btm">
             <db-proposal ng-if="(p.isPublished === c.published.YES)" class="list-group-item" proposal="p" guid="guid" disable-create="c.unsavedCount"
                 on-remove="c.remove(data)" on-add="c.add(data)" ng-repeat="p in c.proposals | orderBy:'insertDateTime': true track by p.proposalGuid">
             </db-proposal>
