@@ -204,6 +204,7 @@ angular.module('dashboard')
                 $log.debug("dbProposalList: getProposals: " + guid);
                 if (angular.isString(guid)) {
                     self.loading = true;
+                    self.error = false;
                     self.proposals = [];
                     AhjoProposalsSrv.get({ 'guid': guid }).$promise.then(function (response) {
                         $log.debug("dbProposalList: get then");
@@ -219,6 +220,7 @@ angular.module('dashboard')
                         }
                     }, function (error) {
                         $log.error("dbProposalList: get error: " + JSON.stringify(error));
+                        self.error = true;
                     }).finally(function () {
                         $log.debug("dbProposalList: get finally: ");
                         var events = angular.copy(StorageSrv.getKey(CONST.KEY.PROPOSAL_EVENT_ARRAY));
