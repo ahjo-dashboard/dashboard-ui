@@ -52,6 +52,7 @@ angular.module('dashboard')
                     if (angular.isObject(resp) && angular.isObject(resp.motion)) {
                         $log.log("dbMotions.sign done", resp);
                         angular.merge(aMotion, resp.motion);
+                        aMotion.supporters = resp.motion.supporters; // Merge won't handle removals
                     }
                     else {
                         $log.error("dbMotions.sign done ", resp);
