@@ -569,14 +569,6 @@ angular.module('dashboard')
             return 'STR_TOPIC_UNKNOWN';
         };
 
-        self.mtgStatusClass = function (meeting) {
-            if (angular.isObject(meeting)) {
-                var s = Utils.objWithVal(CONST.MTGSTATUS, CONST.KEY.STATE_ID, meeting.meetingStatus);
-                return s ? s.badgeClass : 'db-badge-red';
-            }
-            return 'db-badge-red';
-        };
-
         self.topicBtnTitle = function (topic) {
             var result = '';
             if (angular.isObject(topic)) {
