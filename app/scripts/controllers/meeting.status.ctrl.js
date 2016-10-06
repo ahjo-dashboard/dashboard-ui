@@ -752,6 +752,10 @@ angular.module('dashboard')
             }
         };
 
+        self.showHelp = function showHelp() {
+            DialogUtils.showHelp();
+        };
+
         // CONSTRUCTION
         if (!angular.isObject(mtgItemSelected) || !angular.isObject(mtgItemSelected.dbUserRole) || !angular.isString(mtgItemSelected.dbUserPersonGuid)) {
             $log.error("meetingStatusCtrl: bad meeting, role or person:", mtgItemSelected);
