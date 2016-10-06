@@ -15,7 +15,6 @@ angular.module('dashboard')
         'REMARKISUNSAVED': 'REMARKISUNSAVED',
         'PROPOSALDELETED': 'PROPOSALDELETED',
         'TOPICMINUTEUPDATED': 'TOPICMINUTEUPDATED',
-        'MOTIONSUPDATED': 'MOTIONSUPDATED',
         'UNSAVEMEETINGDDATA': 'UNSAVEMEETINGDDATA',
         'MTGUICHANGED': 'MTGUICHANGED',
         'GETMOTIONS': 'GETMOTIONS',
@@ -154,6 +153,7 @@ angular.module('dashboard')
             MOTIONSUPPORTREMOVED: 'MotionSupportRemovedEvent',
             MOTIONPUBLISHED: 'MotionPublishedEvent',
             MOTIONUNPUBLISHED: 'MotionUnpublishedEvent',
+            MOTIONDELETED: 'MotionDeletedEvent',
             MOTIONSUBMIT: 'MotionSubmitEvent'
         },
         'TOPICSTATUS': {

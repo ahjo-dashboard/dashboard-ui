@@ -320,6 +320,16 @@ angular.module('dashboard')
             if (parallel) {
                 setBlockMode(CONST.BLOCKMODE.DEFAULT);
             }
+            });
+
+
+        $scope.$watch(function () {
+            var obj = StorageSrv.getKey(CONST.KEY.MOTION_DATA);
+            var res = angular.isObject(obj) && angular.isObject(obj.objects) ? obj.objects.length : null;
+            return res;
+        }, function (aNew/*, aOld*/) {
+            $log.debug("meetingDetailsCtrl: watch triggered: " + CONST.KEY.MOTION_DATA, arguments);
+            self.motionCount = aNew;
         });
 
         var proposalCountWatcher = $rootScope.$on(PROPS.COUNT, function (event, data) {
@@ -340,16 +350,6 @@ angular.module('dashboard')
             $rootScope.$emit(CONST.UNSAVEMEETINGDDATA, (self.hasUnsavedProposal || self.remarkIsUnsaved));
         });
 
-        var motionsWatcher = $rootScope.$on(CONST.MOTIONSUPDATED, function (aEvent, aData) {
-            $log.debug("meetingDetailsCtrl.motionsWatcher: ", arguments);
-            if (angular.isObject(aData)) {
-                self.motionCount = aData.count;
-            }
-            else {
-                self.motionCount = null;
-            }
-        });
-
         $scope.$on('$destroy', function () {
             $log.debug("meetingDetailsCtrl: DESTROY");
             if (angular.isFunction(unsavedRemarkWatcher)) {
@@ -360,9 +360,6 @@ angular.module('dashboard')
             }
             if (angular.isFunction(proposalCountWatcher)) {
                 proposalCountWatcher();
-            }
-            if (angular.isFunction(motionsWatcher)) {
-                motionsWatcher();
             }
         });
 

@@ -245,9 +245,9 @@ angular.module('dashboard')
             }
         }
 
-        function motionUnpublished(aEvent) {
+        function motionRemoved(aEvent) {
             if (angular.isObject(aEvent) && angular.isObject(aEvent.motion)) {
-                $log.debug("meetingStatusCtrl.motionUnpublished", arguments);
+                $log.debug("meetingStatusCtrl.motionRemoved: ", arguments);
                 var data = StorageSrv.getKey(CONST.KEY.MOTION_DATA);
                 if (angular.isObject(data)) {
                     if (angular.isArray(data.objects)) {
@@ -266,7 +266,7 @@ angular.module('dashboard')
                 }
             }
             else {
-                $log.error("meetingStatusCtrl.motionUnpublished", arguments);
+                $log.error("meetingStatusCtrl.motionRemoved: bad args:", arguments);
             }
         }
 
@@ -321,8 +321,9 @@ angular.module('dashboard')
                                         motionUpdated(event);
                                         break;
                                     case CONST.MTGEVENT.MOTIONUNPUBLISHED:
+                                    case CONST.MTGEVENT.MOTIONDELETED:
                                     case CONST.MTGEVENT.MOTIONSUBMIT:
-                                        motionUnpublished(event);
+                                        motionRemoved(event);
                                         break;
                                     default:
                                         $log.error("meetingStatusCtrl: unsupported typeName: " + event.typeName);
@@ -450,7 +451,6 @@ angular.module('dashboard')
                     $log.debug("meetinStatusCtrl.getMotions: finally");
                     motionData.loading = false;
                     var resultData = angular.copy(motionData);
-                    $rootScope.$emit(CONST.MOTIONSUPDATED, { count: motionData.objects.length });
                     StorageSrv.setKey(CONST.KEY.MOTION_DATA, resultData);
                 });
             }
