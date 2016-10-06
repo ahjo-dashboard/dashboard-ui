@@ -450,7 +450,6 @@ angular.module('dashboard')
                     $log.debug("meetinStatusCtrl.getMotions: finally");
                     motionData.loading = false;
                     var resultData = angular.copy(motionData);
-                    $rootScope.$emit(CONST.MOTIONSUPDATED, { count: motionData.objects.length });
                     StorageSrv.setKey(CONST.KEY.MOTION_DATA, resultData);
                 });
             }
