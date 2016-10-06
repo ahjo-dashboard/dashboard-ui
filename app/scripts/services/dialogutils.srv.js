@@ -34,9 +34,25 @@ angular.module('dashboard')
                     isError: function () { return aIsError; }
                 }
             });
-            $log.debug("DialogUtils.showModal: " + dlg.id + " isError=" + aIsError + " " + JSON.stringify(aTitleStrId) + ", " + JSON.stringify(aBodyStrId));
+            $log.log("DialogUtils.showModal: " + dlg.id + " isError=" + aIsError + " " + JSON.stringify(aTitleStrId) + ", " + JSON.stringify(aBodyStrId));
             return dlg;
         }
+
+        self.showHelp = function showHelp() {
+            var dlg = ngDialog.open({
+                template: 'views/help.mtg.tmpl.html',
+                controller: 'helpDialogCtrl',
+                controllerAs: 'c',
+                closeByNavigation: true,
+                width: '90%',
+                height: '80vh',
+                showClose: true,
+                resolve: {
+                }
+            });
+            $log.log("DialogUtils.showHelp");
+            return dlg;
+        };
 
         self.close = function (dlg) {
             if (angular.isObject(dlg) && angular.isFunction(dlg.close)) {
@@ -78,7 +94,7 @@ angular.module('dashboard')
                     return res;
                 }
             });
-            $log.debug("DialogUtils.showProgress: " + dlg.id + ", " + JSON.stringify(aTitleStrId));
+            $log.log("DialogUtils.showProgress: " + dlg.id + ", " + JSON.stringify(aTitleStrId));
             return dlg;
         };
 

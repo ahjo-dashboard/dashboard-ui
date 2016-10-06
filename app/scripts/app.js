@@ -108,6 +108,7 @@ angular.module('dashboard', [
         // $rootScope.isMobile
         // rootScope.env_dev
 
+        $rootScope.CONST = CONST;
         $rootScope.env_dev = ENV.app_env !== 'prod';
         $rootScope.dbUa = $window.navigator.userAgent;
         $rootScope.dbAppVersion = G_APP.app_version;
@@ -197,6 +198,11 @@ angular.module('dashboard', [
          */
         $rootScope.getDbLangTrans = function getDbLangTrans() {
             return angular.equals($rootScope.dbLang, CONST.DBLANG.FI.langCode) ? CONST.DBLANG.SV.langCode : CONST.DBLANG.FI.langCode;
+        };
+
+        $rootScope.mtgStatusClass = function (aMtgStatus) {
+            var s = Utils.objWithVal(CONST.MTGSTATUS, CONST.KEY.STATE_ID, aMtgStatus);
+            return s ? s.badgeClass : 'db-badge-red';
         };
 
     });

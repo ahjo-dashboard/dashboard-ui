@@ -1,6 +1,4 @@
 {
-    "STR_LANG_FI": "Suomeksi",
-    "STR_LANG_SV": "På Svenska",
     "STR_CONFIRM_CLOSE_APP": "Är du säker att du vill stänga?",
     "STR_APPNAME": "Luottamushenkilön työpöytä",
     "STR_LOGIN": "Logga in",
@@ -88,7 +86,7 @@
     "STR_INFO_MENUBTN": "Ändra storlek på sidomenyn",
     "STR_INFO_HOMEBTN": "Gå till startvyn",
     "STR_INFO_VIEW_HORIZ": "Vy sida vid sida",
-    "STR_INFO_VIEW_VERT": "*Vy under varandra",
+    "STR_INFO_VIEW_VERT": "Vy under varandra",
     "STR_PRESENTATION": "Förslag",
     "STR_OPEN_NEW_TAB": "Öppna i ett nytt fönster",
     "STR_DECISIONS": "Behandling och Beslut",
@@ -176,10 +174,17 @@
     "STR_FORCED_LOGOUT": "Du har loggat ut dig eller du har blivit utloggad ur sammanträdet med din nuvarande användarroll.",
     "STR_ERR_TITLE": "Varning",
     "STR_INFO_TITLE": "Info",
-    "STR_INFO_SALI_MODE": "*Toiminto ei ole salissa mahdollinen",
+    "STR_INFO_SALI_MODE": "*Toiminto ei ole mahdollinen salijärjestelmän ollessa käytössä",
     "STR_INFO_MTG_INACTIVE": "Ärendets status kan ändräs ändast om sammanträdet är under behandling",
     "STR_INFO_MTG_BAD_STATUS": "Sammanträdets status kan ändras ändast om status är: 'Tekniskt öppnat', 'Pågår' eller 'Avbrutet'",
     "STR_INFO_TOPIC_STATUS_CHANGE_DISABLED": "Ärendets status kan ändras ändast om inga andra ärende pågår",
     "STR_HELP_MTGLIST": "Listassa näet kaikki kokouksesi aikajärjestyksessä. Menneet kokoukset löytyvät omalta välilehdeltä.<BR>Voit avata kokouksen painamalla rivillä  painiketta, jossa lukee kokouksessa sallittu käyttäjäroolisi.<BR>Painikkeita voi samalla rivillä olla useita, mikäli kokous sallii sinulle monta roolia. Valitse silloin haluamasi rooli painamalla vastaavaa painiketta.",
-    "STR_HELP_SIGNLIST": "Listassa näet kaikki allekirjoitettavat asiakirjasi. Toimielimien pöytäkirjat ja viranhaltijapäätökset ovat peräkkäin omina ryhminään.<BR>Käsitellyt asiakirjat löytyvät omalta välilehdeltä.<BR>Voit avata asiakirjan painamalla rivillä ainiketta."
+    "STR_HELP_SIGNLIST": "Listassa näet kaikki allekirjoitettavat asiakirjasi. Toimielimien pöytäkirjat ja viranhaltijapäätökset ovat peräkkäin omina ryhminään.<BR>Käsitellyt asiakirjat löytyvät omalta välilehdeltä.<BR>Voit avata asiakirjan painamalla rivillä ainiketta.",
+    "STR_HELP_SIDEMENU": "Voit vaihdella sivuvaliko eri leveyksien välillä käyttäen tätä painiketta",
+    "STR_HELP_MENU_HDR": "Näkymän asettelun toiminnot",
+    "STR_HELP_VIEWMODE": "Näkymän sisältöä esitetään sivuvalikossa sekä kahdessa eri palstassa. Näin voit tarkastella esimerkiksi kokouksen esitystä ja liitettä vierekkäin. Voit vaihtaa palstojen esitystavan joko vierekkäin tai allekkain.",
+    "STR_HELP_MTG_STATES_HDR": "Tärkeimmät kokouksen tilat",
+    "STR_HELP_MTG_STATES_BODY": "Ehdotuksia voi julkaista kaikissa kokouksen tiloissa. Aloitteita voi jättää sähköisesti vain Kaupunginvaltuuston kokouksissa.",
+    "STR_HELP_TOPIC_STATES_HDR": "Asian tilat kokouksessa",
+    "STR_HELP_BELL": "Näkymien tärkeimmät tiedot päivittyvät automaattisesti. Joitain päivittyneitä tietoja korostetaan tällä kuvakkeella. Esimerkiksi asialistassa kuvake näytetään jos asiaan julkaistaan uusia ehdotuksia selainistuntosi aikana."
 }

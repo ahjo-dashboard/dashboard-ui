@@ -25,6 +25,7 @@ $appbgcolor: $db-color-white;
 $font-color-body: $db-color-dark;
 $headingBgColor: $db-color-prim;
 
+$db-app-font: "Open Sans", "Trebuchet MS", Helvetica, sans-serif;
 $default-font-size: 1.2em;
 $font-weight-600: 600;
 $font-weight-700: 700;
@@ -792,8 +793,7 @@ body {
     $borderColor: $focusedColor;
 
     padding: 0;
-
-    font-family: "Open Sans", "Trebuchet MS", Helvetica, sans-serif !important;
+    font-family: $db-app-font !important;
 
     .btn {
         font-weight: $font-weight-600;
@@ -1360,6 +1360,21 @@ input[type=number].db-input-nospin::-webkit-outer-spin-button {
 .db-voting-res-col {
     width: 10% !important;
     min-width: 40px;
+}
+
+.db-help {
+    font-family: $db-app-font !important;
+    font-size: 1.0em;//$default-font-size;
+    p {
+        margin-left: 2vw; margin-right: 2vw;
+        margin-top: 2vh; margin-bottom: 2vh;
+
+    }
+}
+.db-help-hdr-icon {
+    padding: 1vh;
+    background-color: $headingBgColor;
+    color: $font-color-header;
 }
 
 @import "main.small.scss";

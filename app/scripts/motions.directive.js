@@ -38,10 +38,10 @@ angular.module('dashboard')
 
             function signMotion(aMotion, aMeetingGuid, aSupport) {
                 if (!angular.isObject(aMotion) || !angular.isString(aMeetingGuid)) {
-                    $log.error("dbMotions.sign: bad args", arguments);
+                    $log.error("dbMotions.signMotion: bad args", arguments);
                     return;
                 }
-                $log.log("dbMotions: sign", arguments);
+                $log.log("dbMotions.signMotion: ", arguments);
 
                 var copyMotion = angular.copy(aMotion);
                 copyMotion.actionPersonGuid = mtgItemSelected.dbUserPersonGuid;
@@ -50,15 +50,15 @@ angular.module('dashboard')
 
                 AhjoMeetingSrv.updateMotion(copyMotion).then(function (resp) {
                     if (angular.isObject(resp) && angular.isObject(resp.motion)) {
-                        $log.log("dbMotions.sign done", resp);
+                        $log.log("dbMotions.signMotion done", resp);
                         angular.merge(aMotion, resp.motion);
                         aMotion.supporters = resp.motion.supporters; // Merge won't handle removals
                     }
                     else {
-                        $log.error("dbMotions.sign done ", resp);
+                        $log.error("dbMotions.signMotion done ", arguments);
                     }
                 }, function (error) {
-                    $log.error("dbMotions.sign ", error);
+                    $log.error("dbMotions.signMotion: error: ", arguments);
                     Utils.showErrorForError(error);
                 }, function (/*notification*/) {
                     aMotion.ongoing = true;
@@ -155,7 +155,6 @@ angular.module('dashboard')
             };
 
             self.submit = function (aMotion) {
-                $log.log("dbMotions: submit", arguments);
                 submitMotion(aMotion);
             };
 
@@ -164,7 +163,6 @@ angular.module('dashboard')
                     $log.error("dbMotions.support: invalid mtg item", mtgItemSelected);
                     return;
                 }
-                $log.log("dbMotions: support", arguments);
                 signMotion(aMotion, mtgItemSelected.meetingGuid, true);
             };
 
@@ -173,14 +171,13 @@ angular.module('dashboard')
                     $log.error("dbMotions.removeSupport: invalid mtg item", mtgItemSelected);
                     return;
                 }
-                $log.log("dbMotions: removeSupport", arguments);
                 signMotion(aMotion, mtgItemSelected.meetingGuid, false);
             };
 
             $scope.$watch(function () {
                 return StorageSrv.getKey(CONST.KEY.MOTION_DATA);
             }, function (data) {
-                $log.debug("dbMotions watch CONST.KEY.MOTION_DATA:", arguments);
+                $log.debug("dbMotions watch triggered: " + CONST.KEY.MOTION_DATA, arguments);
                 setMotions(data);
             });
 
