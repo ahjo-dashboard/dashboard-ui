@@ -8,7 +8,7 @@
         </div>
 
         <div class="hidden-xs col-xs-12 col-sm-2 db-no-padding">
-            <button id="roleButton" type="button" class="btn btn-block disabled db-no-border ng-class:{'db-btn-opt': c.loading, 'db-btn-opt-dummy': !c.loading}"
+            <button type="button" class="btn btn-block disabled db-no-border ng-class:{'db-btn-opt': c.loading, 'db-btn-opt-dummy': !c.loading}"
                 translate translate-cloak>STR_STATUS</button>
         </div>
 
@@ -25,7 +25,7 @@
         </div>
 
         <div class="hidden-xs col-xs-12 col-sm-3 db-no-padding">
-            <button id="roleButton" type="button" class="btn btn-block disabled db-no-border ng-class:{'db-btn-opt': c.loading, 'db-btn-opt-dummy': !c.loading}"
+            <button type="button" class="btn btn-block disabled db-no-border ng-class:{'db-btn-opt': c.loading, 'db-btn-opt-dummy': !c.loading}"
                 translate>STR_MTG_LOGIN</button>
         </div>
 
@@ -45,7 +45,7 @@
                         <span class="db-margin-05-left">{{item.meeting.meetingDate | date:'HH:mm' }}</span>
                     </div>
                     <div class="col-xs-12 col-sm-2 db-flex ng-class:[{'db-padding-05-ver db-fs-11':c.isMobile}]">
-                        <div class="db-circle-20 db-brd-1-dark ng-class:[c.mtgStatusClass(item)]"></div>
+                        <div class="db-circle-20 db-brd-1-dark ng-class:[c.mtgStatusClass(item.meeting.state)]"></div>
                         <div class="db-flex-area db-margin-10-left" translate translate-cloak>{{c.statusStringId(item)}}</div>
                     </div>
                     <div class="col-xs-12 col-sm-3 ng-class:[{'db-padding-05-ver db-fs-11':c.isMobile}]">{{item.meeting[c.locProp('agencyName')]}}</div>

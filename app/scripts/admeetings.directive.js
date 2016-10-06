@@ -145,12 +145,8 @@ angular.module('dashboard')
                 return 'STR_TOPIC_UNKNOWN';
             };
 
-            self.mtgStatusClass = function (arg) {
-                if (angular.isObject(arg) && angular.isDefined(arg.meeting.state) && angular.isDefined(arg.meeting.state)) {
-                    var s = Utils.objWithVal(CONST.MTGSTATUS, CONST.KEY.STATE_ID, arg.meeting.state);
-                    return s ? s.badgeClass : 'db-badge-red';
-                }
-                return 'db-badge-red';
+            self.mtgStatusClass = function mtgStatusClass(arg) {
+                return $rootScope.mtgStatusClass(arg);
             };
 
             self.isRoleSupported = function isRoleSupportedFn(role) {
