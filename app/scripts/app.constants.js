@@ -121,14 +121,14 @@ angular.module('dashboard')
             SECRET: 2
         },
         'MTGSTATUS': {
-            RESERVED: { stateId: 0, stringId: 'STR_RESERVED_MEETING', badgeClass: 'db-badge-dark' },
-            CREATED: { stateId: 1, stringId: 'STR_CREATED', badgeClass: 'db-badge-dark' },
-            TECHNICALLY_OPEN: { stateId: 2, stringId: 'STR_TECHNICALLY_OPEN', badgeClass: 'db-badge-yel' },
-            ACTIVE: { stateId: 3, stringId: 'STR_ACTIVE', badgeClass: 'db-badge-gre' },
-            ABORTED: { stateId: 4, stringId: 'STR_ABORTED', badgeClass: 'db-badge-pur' },
-            OFFICIALLY_CLOSED: { stateId: 5, stringId: 'STR_OFFICIALLY_CLOSED', badgeClass: 'db-badge-gra' },
-            RECORDS_MOVED: { stateId: 6, stringId: 'STR_RECORDS_MOVED', badgeClass: 'db-badge-gra' },
-            TECHNICALLY_CLOSED: { stateId: 7, stringId: 'STR_TECNICALLY_CLOSED', badgeClass: 'db-badge-gra' },
+            RESERVED: { stateId: 0, stringId: 'STR_RESERVED_MEETING', badgeClass: 'db-badge-dark', visibleInHelp: true },
+            CREATED: { stateId: 1, stringId: 'STR_CREATED', badgeClass: 'db-badge-dark', visibleInHelp: true },
+            TECHNICALLY_OPEN: { stateId: 2, stringId: 'STR_TECHNICALLY_OPEN', badgeClass: 'db-badge-yel', visibleInHelp: true },
+            ACTIVE: { stateId: 3, stringId: 'STR_ACTIVE', badgeClass: 'db-badge-gre', visibleInHelp: true },
+            ABORTED: { stateId: 4, stringId: 'STR_ABORTED', badgeClass: 'db-badge-pur', visibleInHelp: true },
+            OFFICIALLY_CLOSED: { stateId: 5, stringId: 'STR_OFFICIALLY_CLOSED', badgeClass: 'db-badge-gra', visibleInHelp: true },
+            RECORDS_MOVED: { stateId: 6, stringId: 'STR_RECORDS_MOVED', badgeClass: 'db-badge-gra', visibleInHelp: false },
+            TECHNICALLY_CLOSED: { stateId: 7, stringId: 'STR_TECNICALLY_CLOSED', badgeClass: 'db-badge-gra', visibleInHelp: true },
         },
         'MEETINGSTATUSACTIONS': {
             OPEN: { stateId: 3, stringId: 'STR_OPEN', active: [2], actionId: 3 },
