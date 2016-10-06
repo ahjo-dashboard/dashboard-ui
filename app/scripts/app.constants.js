@@ -153,6 +153,7 @@ angular.module('dashboard')
             MOTIONSUPPORTREMOVED: 'MotionSupportRemovedEvent',
             MOTIONPUBLISHED: 'MotionPublishedEvent',
             MOTIONUNPUBLISHED: 'MotionUnpublishedEvent',
+            MOTIONDELETED: 'MotionDeletedEvent',
             MOTIONSUBMIT: 'MotionSubmitEvent'
         },
         'TOPICSTATUS': {
