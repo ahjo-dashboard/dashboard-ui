@@ -1,0 +1,73 @@
+<div class="db-help" style="overflow: scroll; height:90%;">
+    <div id="id-help-hdr" class="modal-header db-confirm-header db-center-v">
+        <div class="db-glyph" ng-include="'images/glyph-info.svg'"></div>
+        <h3 class="db-margin-10-left" translate translate-cloak>STR_INFO_TITLE</h3>
+    </div>
+    <div class="modal-body">
+
+        <h5 translate translate-cloak>STR_HELP_MENU_HDR</h5>
+        <p>
+            <ul class="list-group db-no-margin">
+                <li class="list-group-item db-flex db-center-v">
+                    <div class="db-help-hdr-icon db-glyph" ng-include="'images/glyph-menu-toggle.svg'"></div>
+                    <div class="db-margin-10-left" translate translate-cloak ng-cloak>STR_HELP_SIDEMENU</div>
+                </li>
+                <li class="list-group-item">
+                    <div class="db-margin-10-btm" translate translate-cloak ng-cloak>STR_HELP_VIEWMODE</div>
+                    <div class="db-center-v">
+                        <div class="db-help-hdr-icon db-glyph" ng-include="'images/glyph-parallel.svg'"></div>
+                        <div class="db-margin-10-left" translate translate-cloak ng-cloak>STR_INFO_VIEW_VERT</div>
+                    </div>
+                    <div class="db-center-v">
+                        <div class="db-help-hdr-icon db-glyph" ng-include="'images/glyph-vertical.svg'"></div>
+                        <div class="db-margin-10-left" translate translate-cloak ng-cloak>STR_INFO_VIEW_HORIZ</div>
+                    </div>
+                </li>
+            </ul>
+        </p>
+
+        <h5 translate translate-cloak>STR_HELP_MTG_STATES_HDR</h5>
+        <p>
+            <ul class="list-group db-no-margin">
+                <li ng-if="s.visibleInHelp" class="list-group-item db-flex db-center-v" ng-repeat="s in CONST.MTGSTATUS">
+                    <div class="db-circle-30 db-brd-1-dark {{c.mtgStatusClass(s.stateId)}}"></div>
+                    <div class="db-margin-10-left" translate translate-cloak ng-cloak>{{s.stringId}}</div>
+                </li>
+            </ul>
+            <div class="db-margin-10-left" translate translate-cloak>STR_HELP_MTG_STATES_BODY</div>
+            <div class="db-margin-10-left" translate translate-cloak>STR_INFO_MTG_BAD_STATUS</div>
+        </p>
+
+        <h5 translate translate-cloak>STR_HELP_TOPIC_STATES_HDR</h5>
+        <p>
+            <ul class="list-group db-no-margin">
+                <li class="list-group-item db-flex db-center-v" ng-repeat="t in CONST.TOPICSTATUS">
+                    <img class="db-glyph" ng-src="{{t.iconPath}}">
+                    <span class="db-margin-10-left" translate translate-cloak>{{t.stringId}}</span>
+                </li>
+                <li class="list-group-item db-flex db-center-v">
+                    <img class="db-glyph" ng-src="images/mtg-states/prop-indicator.png">
+                    <span class="db-margin-10-left" translate translate-cloak>STR_MTG_STATUS_PUBLISHED_PROPOSALS</span>
+
+                </li>
+                <li class="list-group-item db-flex db-center-v">
+                    <img class="db-glyph" ng-src="images/mtg-states/conf-indicator.png">
+                    <span class="db-margin-10-left" translate translate-cloak>STR_INFO_CONFIDENTIAL</span>
+                </li>
+                <li class="list-group-item db-flex db-center-v">
+                    <div class="db-glyph db-glyph-ora" ng-include="'images/glyph-bell.svg'"></div>
+                    <div class="db-margin-10-left" translate translate-cloak>STR_HELP_BELL</div>
+                </li>
+            </ul>
+
+            <div class="db-margin-10-left" translate translate-cloak>STR_INFO_MTG_INACTIVE</div>
+            <div class="db-margin-10-left" translate translate-cloak>STR_INFO_TOPIC_STATUS_CHANGE_DISABLED</div>
+        </p>
+
+    </div>
+    <div class="db-no-border modal-footer">
+        <button class="btn btn-success db-btn-dyna" type="button" ng-click="closeThisDialog()">
+            <span translate translate-cloak>STR_CLOSE</span>
+        </button>
+    </div>
+</div>
