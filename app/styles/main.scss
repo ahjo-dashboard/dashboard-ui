@@ -116,9 +116,9 @@ svg {
     pointer-events: none;
 }
 
-.db-glyph { // Both width and height have to be defined for IE11
-    width: $db-glyph-width;
-    height: $db-glyph-width;
+.db-glyph {
+    width: $db-glyph-width; height: $db-glyph-width; // Both width and height have to be defined for IE11
+    min-width: $db-glyph-width; min-height: $db-glyph-width; // min-* defined to prevent glyph scaling to small in help view on small screen
 
     display: flex !important;
     align-items: center !important;
@@ -126,8 +126,8 @@ svg {
 }
 
 .db-glyph-sm {
-    width: $db-glyph-sm-width;
-    height: $db-glyph-sm-width;
+    width: $db-glyph-sm-width; height: $db-glyph-sm-width; // Both width and height have to be defined for IE11
+    min-width: $db-glyph-sm-width; min-height: $db-glyph-sm-width; // min-* defined to prevent glyph scaling to small in help view on small screen
 }
 
 .db-glyph-dark svg {

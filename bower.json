@@ -1,6 +1,6 @@
 {
   "name": "dashboard",
-  "version": "0.5.3",
+  "version": "0.5.4",
   "dependencies": {
     "angular": "^1.5.3",
     "bootstrap-sass-official": "^3.2.0",
