@@ -59,11 +59,11 @@
                             ng-click="c.submit(m)" ng-disabled="m.ongoing">
                             <span translate translate-cloak>STR_SUBMIT_MOTION</span>
                         </button>
-                        <button ng-if="!m.isOwnMotion && !m.isUserSupported" class="btn btn-success db-btn-dyna db-margin-2 ng-class:{'btn-blocköööö':c.isMobile}"
+                        <button ng-if="!m.isOwnMotion && !m.isUserSupported" class="btn btn-success db-btn-dyna db-margin-2"
                             ng-click="c.support(m)" ng-disabled="m.ongoing">
                             <span translate translate-cloak>STR_SIGNING_ACCEPT</span>
                         </button>
-                        <button ng-if="!m.isOwnMotion && m.isUserSupported" class="btn btn-danger db-btn-dyna db-margin-2 ng-class:{'btn-blocköööö':c.isMobile}"
+                        <button ng-if="!m.isOwnMotion && m.isUserSupported" class="btn btn-danger db-btn-dyna db-margin-2"
                             ng-click="c.removeSupport(m)" ng-disabled="m.ongoing">
                             <span translate translate-cloak>STR_SIGNING_REMOVE</span>
                         </button>
