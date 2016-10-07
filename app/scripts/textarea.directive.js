@@ -29,7 +29,7 @@ angular.module('dashboard')
                             $timeout(function () {
                                 var height = element[0].scrollHeight + 'px';
                                 element.css('height', height);
-                            }, 0);
+                            }, 150);
                         }
                     },
                     true
