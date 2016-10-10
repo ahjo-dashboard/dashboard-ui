@@ -22,4 +22,7 @@ angular.module('dashboard')
 
         $location.hash('id-help-hdr');
         $anchorScroll();
+        // Remove added URL hash when it serves no purpose anymore,
+        // also therwise scrolling works only on first time beause location is already at the added hash.
+        $location.hash('');
     }]);
