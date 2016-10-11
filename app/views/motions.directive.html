@@ -9,7 +9,7 @@
         </div>
     </div>
 
-    <div ng-hide="c.motionsCont.failure" class="db-min-width-300"> <!-- ngHide used so that default is to show content if property is missing -->
+    <div ng-if="!c.motionsCont.failure && !c.motionsCont.loading" class="db-min-width-300">
         <ul class="list-group db-no-margin db-brd-all db-overflow-hidden">
             <div class="db-font-clr-white db-prim-bg db-padding-10 db-no-margin db-brd-top row">
                 <h5 class="col-xs-6 col-md-4 db-truncate" translate translate-cloak>STR_TITLE</h5>
@@ -18,8 +18,10 @@
                 <h5 class="col-md-3 hidden-xs hidden-sm db-truncate" translate translate-cloak>STR_SIGNINGS</h5>
             </div>
 
-            <div class="list-group-item db-padding-10-hor db-spinner-cont" ng-repeat="m in c.motions | orderBy:'publishDate':true track by $index">
-                <span us-spinner spinner-on="m.ongoing"></span>
+            <div class="list-group-item db-padding-10" ng-repeat="m in c.motions | orderBy:'publishDate':true track by $index">
+                <div ng-show="m.ongoing" class="db-spinner-cont">
+                    <span us-spinner spinner-on="m.ongoing"></span>
+                </div>
 
                 <div class="row" ng-click="c.selectMotion(m)">
                     <div class="col-xs-5 col-md-4 db-flex">
