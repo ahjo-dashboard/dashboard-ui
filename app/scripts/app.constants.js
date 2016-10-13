@@ -210,11 +210,11 @@ angular.module('dashboard')
             'TYPE': [
                 { value: 1, strId: "STR_PROPOSAL_TYPE_1", roles: [] },
                 { value: 2, strId: "STR_PROPOSAL_TYPE_2", roles: [], cityCouncilRoles: [], decisionOrder: 1, mgtTypes: [CONST.MTGTYPE.DEFAULT, CONST.MTGTYPE.CITYCOUNCIL] },
-                { value: 3, strId: "STR_PROPOSAL_TYPE_3", roles: [CONST.MTGROLE.PARTICIPANT_FULL.value], cityCouncilRoles: [CONST.MTGROLE.PARTICIPANT_FULL], decisionOrder: 3, mgtTypes: [CONST.MTGTYPE.DEFAULT, CONST.MTGTYPE.CITYCOUNCIL] },
+                { value: 3, strId: "STR_PROPOSAL_TYPE_3", roles: [CONST.MTGROLE.PARTICIPANT_FULL.value], cityCouncilRoles: [CONST.MTGROLE.PARTICIPANT_FULL.value], decisionOrder: 3, mgtTypes: [CONST.MTGTYPE.DEFAULT, CONST.MTGTYPE.CITYCOUNCIL] },
                 { value: 4, strId: "STR_PROPOSAL_TYPE_4", roles: [CONST.MTGROLE.PARTICIPANT_FULL.value], cityCouncilRoles: [CONST.MTGROLE.PARTICIPANT_FULL.value], decisionOrder: 4, mgtTypes: [CONST.MTGTYPE.DEFAULT, CONST.MTGTYPE.CITYCOUNCIL] },
-                { value: 5, strId: "STR_PROPOSAL_TYPE_5", roles: [CONST.MTGROLE.value], cityCouncilRoles: [CONST.MTGROLE.PARTICIPANT_FULL.value], decisionOrder: 5, mgtTypes: [CONST.MTGTYPE.DEFAULT, CONST.MTGTYPE.CITYCOUNCIL] },
+                { value: 5, strId: "STR_PROPOSAL_TYPE_5", roles: [CONST.MTGROLE.PARTICIPANT_FULL.value], cityCouncilRoles: [CONST.MTGROLE.PARTICIPANT_FULL.value], decisionOrder: 5, mgtTypes: [CONST.MTGTYPE.DEFAULT, CONST.MTGTYPE.CITYCOUNCIL] },
                 { value: 6, strId: "STR_PROPOSAL_TYPE_6", roles: [CONST.MTGROLE.PARTICIPANT_FULL.value], cityCouncilRoles: [CONST.MTGROLE.PARTICIPANT_FULL.value], decisionOrder: 6, mgtTypes: [CONST.MTGTYPE.DEFAULT, CONST.MTGTYPE.CITYCOUNCIL] },
-                { value: 7, strId: "STR_PROPOSAL_TYPE_7", roles: [], cityCouncilRoles: [CONST.MTGROLE.PARTICIPANT_FULL].value, decisionOrder: 7, mgtTypes: [CONST.MTGTYPE.CITYCOUNCIL] },
+                { value: 7, strId: "STR_PROPOSAL_TYPE_7", roles: [], cityCouncilRoles: [CONST.MTGROLE.PARTICIPANT_FULL.value], decisionOrder: 7, mgtTypes: [CONST.MTGTYPE.CITYCOUNCIL] },
                 { value: 8, strId: "STR_PROPOSAL_TYPE_8", roles: [CONST.MTGROLE.PARTICIPANT_FULL.value], cityCouncilRoles: [CONST.MTGROLE.PARTICIPANT_FULL.value], mgtTypes: [] },
                 { value: 9, strId: "STR_PROPOSAL_TYPE_9", roles: [], cityCouncilRoles: [], mgtTypes: [] },
                 { value: 10, strId: "STR_PROPOSAL_TYPE_10", roles: [], cityCouncilRoles: [], decisionOrder: 2, mgtTypes: [CONST.MTGTYPE.DEFAULT, CONST.MTGTYPE.CITYCOUNCIL] }
