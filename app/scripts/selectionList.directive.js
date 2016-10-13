@@ -49,6 +49,10 @@ angular.module('dashboard')
                 return res;
             };
 
+            self.isSecret = function (item) {
+                return (angular.isObject(item) && item.publicity) ? (item.publicity === CONST.PUBLICITY.SECRET) : false;
+             };
+
             $scope.$watch(function () {
                 return {
                     selData: $scope.selData
