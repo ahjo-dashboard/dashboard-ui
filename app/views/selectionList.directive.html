@@ -15,7 +15,7 @@
                     <a class="db-flex-area" ng-click="!c.isLinkDisabled(att) && c.selected(att)"><span ng-if="att.orderNum">{{att.orderNum}}&nbsp;</span>{{att.title}}</a>
                     <div ng-if="!c.isMobile && !c.isOpenWindowDisabled(att)" title="{{'STR_OPEN_NEW_TAB' | translate}}" class="db-glyph db-glyph-sm db-glyph-info"
                         ng-include="'images/glyph-open-new.svg'" ng-click="!c.isOpenWindowDisabled(att) && c.newTab(att.link)"></div>
-                    <div ng-if="c.isSecret(att)" class="db-glyph db-glyph-sm db-glyph-conf db-center" ng-include="'images/glyph-lock.svg'">
+                    <div ng-if="c.isSecret(att)" title="{{'STR_INFO_CONFIDENTIAL' | translate}}" class="db-glyph db-glyph-sm db-glyph-conf db-center" ng-include="'images/glyph-lock.svg'">
                     </div>
                 </div>
             </div>
