@@ -33,7 +33,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-postcss');
     grunt.loadNpmTasks('grunt-exec');
     grunt.loadNpmTasks('grunt-contrib-compress');
-    grunt.loadNpmTasks('grunt-angular-architecture-graph');
+    //grunt.loadNpmTasks('grunt-angular-architecture-graph'); Commented out to remove the dev dependency, not needed unless you want to generate diagrams again
 
     // Define the configuration for all the tasks
     grunt.initConfig({
@@ -545,6 +545,7 @@ module.exports = function (grunt) {
         angular_architecture_graph: {
             diagram: {
                 files: {
+                    //NOTICE: install grunt-angular-architecture-graph to use this
                     // "PATH/TO/OUTPUT/FILES": ["PATH/TO/YOUR/FILES/*.js"]
                     "architecture": [
                         "<%= yeoman.app %>/scripts/{,*/}*.js"
