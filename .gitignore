@@ -4,8 +4,6 @@
 *.zip
 
 # Build time files and build results
-node_modules/
-bower_components/
 dist/
 .tmp/
 .sass-cache/
