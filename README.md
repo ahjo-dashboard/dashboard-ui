@@ -52,3 +52,19 @@ Implemented using Javascript, Angular 1 and Bootstrap 3.
 * Development on Windows environment
   * ruby/compass not installed by default, install separately
   * If using a "git command prompt" check where it installs packages. It's better to do all the package and grunt operations in an "Administrator command prompt".
+
+### Some key files
+
+|File or folder|Description|
+|:-------------|:-----|
+| `index.html` | HTML file for this Single Page Application (SPA)
+| `app.js` | Declaration and initialization of the angular application
+| `app.constants.js` | Declarations of constants
+| `app.env.js` | Run-time configuration settings generated during build
+| `app.env.default.json` | Default values for run-time configuration settings, overwritten by environment-specific configuration files during build
+| `app.routes.js` | State definitions and routes
+| `custom/` | Folder under which grunt is configured to search for environment-specific configuration files
+| `Gruntfile.js` | Build rules and tasks
+| `package.json` | Npm module dependencies. See also `npm-shrinkwrap.json` and `bower.json`. Defines also a version number for this application.
+| `npm-shrinkwrap.json` | Locks npm dependencies instead of using latest available for `package.json`. Created using `$npm shrinkwrap --dev`. Notice that updating app version number requires also updating `npm-shrinkwrap.json` app version reference!
+| `bower.json` |  Bower module dependencies. See also `package.json`. Defines also a version number for this application.
