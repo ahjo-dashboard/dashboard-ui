@@ -17,40 +17,22 @@ angular.module('dashboard')
             restrict: 'A',
             require: 'ngModel',
             replace: 'true',
-            link: function (scope, element, attrs, ngModel) {
-                var timer;
+            link: function (scope, element/*, attrs, ngModel*/) {
+                var timer = null;
+
                 scope.$watch(
                     function () {
-                        return ngModel.$modelValue;
+                        var res = angular.isObject(element) ? element[0].scrollHeight : null;
+                        return res;
                     },
                     function () {
                         $timeout.cancel(timer);
                         timer = $timeout(function () {
-                            timer = null;
-                            // Sometimes rarely scrollHeight is zero,
-                            // workaround by trying first after a small delay
-                            // and then for the second time if still zero
                             var height = element[0].scrollHeight;
+                            element.css('height', height + 'px');
+                            // $log.debug("dbTextarea: watch new height=" + height + " old=" + aOld +" model: " +JSON.stringify(ngModel.$modelValue).substr(0,30));
 
-                            if (height) {
-                                // $log.debug("dbTextarea.link: 1st try on height ok");
-                                element.css('height', height + 'px');
-                            } else {
-                                // $log.debug("dbTextarea.link: 1st try on height failed");
-                                timer = $timeout(function () {
-                                    timer = null;
-                                    var heightB = angular.isObject(element) ? element[0].scrollHeight : undefined;
-                                    if (heightB) {
-                                        // $log.debug("dbTextarea.link: 2nd try on height=" + heightB);
-                                        element.css('height', heightB + 'px');
-                                    } else {
-                                        // $log.debug("dbTextarea.link: 2nd try on height failed");
-                                    }
-                                }, 300);
-
-                            }
-
-                        }, 0);
+                        }, 0); // Async updating avoids $digest max loop count limit
 
                     },
                     true
