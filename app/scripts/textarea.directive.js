@@ -32,7 +32,7 @@ angular.module('dashboard')
                             element.css('height', height + 'px');
                             // $log.debug("dbTextarea: watch new height=" + height + " old=" + aOld +" model: " +JSON.stringify(ngModel.$modelValue).substr(0,30));
 
-                        }, 0); // Async updating avoids $digest max loop count limit
+                        }, 100); // Async updating avoids $digest max loop count limit
 
                     },
                     true
