@@ -181,6 +181,7 @@ angular.module('dashboard')
                     self.selData = null;
                     self.secondaryUrl = material.link;
                 }
+                self.secondaryAtt = material;
             }
             resetUnsaved();
             checkMode();
@@ -197,6 +198,7 @@ angular.module('dashboard')
                     self.selData = null;
                     self.secondaryUrl = decision.link;
                 }
+                self.secondaryAtt = decision;
             }
             resetUnsaved();
             checkMode();
