@@ -20,12 +20,13 @@ Implemented using Javascript, Angular 1 and Bootstrap 3.
   * `custom/conf/app.env.dev.json`
   * `custom/conf/app.env.test1.json`
   * `custom/conf/app.env.test2.json`
+   * `custom/conf/app.env.test3.json`
   * `custom/conf/app.env.prod.json`
 
 ##### Building
 
 * `grunt` for building for default target
-* `grunt build:dev|test1|test2|prod` for building for a specific configuration
+* `grunt build:dev|test1|test2|test3|prod` for building for a specific configuration
 * `grunt preparedeploy` after building for preparing build output for deployment, if necessary. Calls a postbuild script in `custom/tools`
 
 ##### Running on localhost
