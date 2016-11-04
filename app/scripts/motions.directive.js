@@ -27,40 +27,12 @@ angular.module('dashboard')
 
             // FUNCTIONS
 
-            function getScrollingParent(aEl) {
-                var element = angular.isObject(aEl) ? aEl.parentElement : null;
-                while (element) {
-                    if (element.scrollHeight !== element.clientHeight) {
-                        return element;
-                    }
-                    element = element.parentElement;
-                }
-                return element;
-            }
-
             function setMotions(data) {
-                var elm = getScrollingParent(document.getElementById("motionElement")); // Mobile and Desktop DOMS are different, simply find first the scrolling ancestor
-                self.scrollTop = angular.isObject(elm) ? elm.scrollTop : null;
-
                 self.motions = [];
                 setDataTimer = $timeout(function () {
                     if (angular.isObject(data)) {
                         self.motions = (angular.isArray(data.objects)) ? data.objects : [];
                         self.motionsCont = data;
-
-                        if (self.scrollTop) {
-                            scrollTimer = $timeout(function () {
-                                $log.debug("dbMotions.setMotions, after timeout scrollTop=" + self.scrollTop + " scrolling parent classList=", elm ? elm.classList : '');
-                                if (self.scrollTop) {
-                                    // Changing model array resets scrolling so
-                                    // restore scroll position here to avoid user having to scroll back down.
-                                    // Model array instance is change is a workaround for wrong textarea
-                                    // scrollHeight got by db- textarea if an array item with smaller index is removed.
-                                    elm.scrollTop = self.scrollTop;
-                                }
-                                self.scrollTop = 0;
-                            }, 0);
-                        }
 
                     }
                     $log.debug("dbMotions.setMotions, after timeout data=", data);

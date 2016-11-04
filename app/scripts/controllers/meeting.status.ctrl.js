@@ -257,10 +257,8 @@ angular.module('dashboard')
                             if (angular.isObject(element) && angular.equals(element.motionGuid, aEvent.motion.motionGuid)) {
                                 data.objects.splice(index, 1);
                                 found = true;
+                                StorageSrv.setKey(CONST.KEY.MOTION_DATA, data);
                             }
-                        }
-                        if (found) {
-                            StorageSrv.setKey(CONST.KEY.MOTION_DATA, data);
                         }
                     }
                 }
@@ -442,7 +440,7 @@ angular.module('dashboard')
                 }, function (error) {
                     $log.error("meetingStatusCtrl.getMotions: error: ", error);
                     motionData.failure = true;
-                    }, function (/*notification*/) {
+                }, function (/*notification*/) {
                     var notificationData = angular.copy(motionData);
                     notificationData.loading = true;
                     notificationData.failure = false;
