@@ -273,6 +273,10 @@ angular.module('dashboard')
                 return res;
             }
 
+            self.saveAllowed = function saveAllowed() {
+                return self.proposalTypeModel && self.editorText;
+            };
+
             // INITIALISATION LOGIC
             self.propTypes = getProposalTypes($scope.topicCitycouncil);
 

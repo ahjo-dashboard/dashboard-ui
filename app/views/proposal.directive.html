@@ -52,14 +52,14 @@
                     <span translate translate-cloak>STR_CANCEL</span>
                 </button>
                 <button ng-if="c.uiProposal.isOwnProposal && !c.uiProposal.isPublished" class="btn btn-success db-btn-big db-margin-2 ng-class:{'btn-block':c.isMobile}"
-                    db-confirm confirm-config="c.publishConfig" ng-click="c.send()">
+                    db-confirm confirm-config="c.publishConfig" ng-click="c.send()" ng-disabled="!c.saveAllowed()">
                     <span translate translate-cloak>STR_PUBLISH</span>
                 </button>
                 <button ng-if="c.uiProposal.isOwnProposal && !c.uiProposal.isPublished && (c.mode !== c.modes.EDIT)" class="btn btn-primary db-btn-big db-margin-2 ng-class:{'btn-block':c.isMobile}"
                     ng-click="c.edit()"><span translate translate-cloak>STR_EDIT</span>
                 </button>
                 <button ng-if="c.uiProposal.isOwnProposal && (c.mode === c.modes.EDIT)" class="btn btn-primary db-btn-big db-margin-2 ng-class:{'btn-block':c.isMobile}"
-                    ng-click="c.accept()">
+                    ng-click="c.accept()" ng-disabled="!c.saveAllowed()">
                     <span translate translate-cloak>STR_SAVE</span>
                 </button>
             </div>
