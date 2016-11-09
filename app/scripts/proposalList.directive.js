@@ -14,14 +14,12 @@ angular.module('dashboard')
     .directive('dbProposalList', [function () {
 
         var controller = ['$log', '$scope', 'AhjoProposalsSrv', 'PROPS', '$rootScope', 'CONST', 'StorageSrv', function ($log, $scope, AhjoProposalsSrv, PROPS, $rootScope, CONST, StorageSrv) {
-            $log.log("dbProposalList: CONTROLLER");
+            $log.log("dbProposalList: CONTROLLER", $scope.topic);
             var self = this;
-            var role = CONST.MTGROLE.PARTICIPANT_FULL.value; // todo: pending support for other roles.
             var personGuid = null;
             var topicGuid = null;
             var isCityCouncil = null;
             self.proposals = null;
-            self.tps = null;
             self.published = PROPS.PUBLISHED;
             self.isMobile = $rootScope.isMobile;
             self.isAllOpen = false;
@@ -29,19 +27,6 @@ angular.module('dashboard')
             self.unsavedCount = 0;
             self.loading = false;
             self.publishedCount = 0;
-
-            function setTypes() {
-                $log.debug("dbProposalList: setTypes");
-                self.tps = [];
-                angular.forEach(PROPS.TYPE, function (type) {
-                    if (angular.isObject(type)) {
-                        var array = isCityCouncil ? type.cityCouncilRoles : type.roles;
-                        if (angular.isArray(array) && array.indexOf(role) > CONST.NOTFOUND) {
-                            this.push(type);
-                        }
-                    }
-                }, self.tps);
-            }
 
             function countProposals(proposals) {
                 var drafts = 0;
@@ -79,22 +64,17 @@ angular.module('dashboard')
             }
 
             function createDraft(type) {
-                if (type) {
-                    if (!personGuid || !topicGuid) {
-                        $log.error('dbProposalList: createDraft personGuid or topicGuid missing');
-                    }
-                    return {
-                        "personGuid": personGuid,
-                        "topicGuid": topicGuid,
-                        "text": "",
-                        "proposalType": type,
-                        "isPublished": null,
-                        "isOwnProposal": true
-                    };
+                if (!personGuid || !topicGuid) {
+                    $log.error('dbProposalList: createDraft personGuid or topicGuid missing');
                 }
-                else {
-                    return null;
-                }
+                return {
+                    "personGuid": personGuid,
+                    "topicGuid": topicGuid,
+                    "text": "",
+                    "proposalType": type,
+                    "isPublished": null,
+                    "isOwnProposal": true
+                };
             }
 
             function removeProposal(proposal) {
@@ -234,20 +214,15 @@ angular.module('dashboard')
                 }
             }
 
-            function addProposal(type) {
-                $log.debug("dbProposalList: addProposal: " + JSON.stringify(type));
-                if (angular.isObject(type)) {
-                    if (!angular.isArray(self.proposals)) {
-                        self.proposals = [];
-                    }
-                    var draft = createDraft(type.value);
-                    self.proposals.splice(0, 0, draft);
-                    countProposals(self.proposals);
-                    checkProposals(self.proposals);
+            function addProposal() {
+                $log.debug("dbProposalList: addProposal: ", arguments);
+                if (!angular.isArray(self.proposals)) {
+                    self.proposals = [];
                 }
-                else {
-                    $log.error('dbProposalList: addProposal parameter invalid');
-                }
+                var draft = createDraft();
+                self.proposals.splice(0, 0, draft);
+                countProposals(self.proposals);
+                checkProposals(self.proposals);
             }
 
             self.remove = function (data) {
@@ -298,11 +273,11 @@ angular.module('dashboard')
                 };
             }, function (data) {
                 if (angular.isObject(data) && angular.isObject(data.topic) && !angular.equals(topicGuid, data.topic.topicGuid)) {
+                    $log.debug("dbProposalList.watch topic");
                     personGuid = data.topic.userPersonGuid;
                     topicGuid = data.topic.topicGuid;
                     isCityCouncil = data.topic.isCityCouncil;
                     getProposals(topicGuid);
-                    setTypes();
                     self.isAllOpen = false;
                     self.btnText = 'STR_OPEN_ALL';
                     // reset unsaved count when topic is changed
