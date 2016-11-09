@@ -4,8 +4,18 @@
     <div class="db-flex db-center-v" ng-click="(c.mode !== c.modes.EDIT) && c.toggleCollapse()">
 
         <span class="db-margin-10-right">{{c.uiProposal.orderNumber}}</span>
-        <b class="db-margin-10-right" translate translate-cloak>{{c.typeText(c.uiProposal.proposalType)}}</b>
+
+        <b ng-if="c.mode !== c.modes.EDIT" class="db-margin-10-right" translate translate-cloak>{{c.typeText(c.uiProposal.proposalType)}}</b>
+
+        <div ng-if="c.mode === c.modes.EDIT">
+            <form name="propTypeSelection" ng-click="$event.stopPropagation();">
+                <select id="propTypeSelect" ng-model="c.proposalTypeModel" ng-options="o.value as o.strId | translate for o in c.propTypes">
+                </select>
+            </form>
+        </div>
+
         <i class="db-margin-10-right db-oneliner db-padding-2-right" ng-if="c.uiProposal.isPublished === c.status.YES">{{c.uiProposal.personName}}</i>
+
         <span class="db-flex-area db-oneliner db-margin-05-right" ng-bind-html="c.mode === c.modes.COLLAPSED ? c.uiProposal.text : null"></span>
 
         <div ng-show="c.uiProposal.isModified && !c.uiProposal.isOwnProposal" title="{{'STR_INFO_NEW_PROPS' | translate}}" class="db-glyph db-glyph-sm db-glyph-ora db-margin-10-right"
