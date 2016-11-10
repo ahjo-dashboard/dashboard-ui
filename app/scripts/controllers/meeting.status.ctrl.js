@@ -754,6 +754,14 @@ angular.module('dashboard')
             DialogUtils.showHelp();
         };
 
+        self.topicTitle = function topicTitle(aTopic) {
+            var res = aTopic[$rootScope.locProp('topicTitle')];
+            if (!angular.isString(res) || !res.length) {
+                res = aTopic.topicTitle_fi;
+            }
+            return res;
+        };
+
         // CONSTRUCTION
         if (!angular.isObject(mtgItemSelected) || !angular.isObject(mtgItemSelected.dbUserRole) || !angular.isString(mtgItemSelected.dbUserPersonGuid)) {
             $log.error("meetingStatusCtrl: bad meeting, role or person:", mtgItemSelected);

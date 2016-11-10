@@ -28,6 +28,7 @@ angular.module('dashboard')
             self.modes = PROP.MODE;
             self.status = PROPS.PUBLISHED;
             self.editorText = null;
+            self.proposalTypeModel = null;
             self.updating = false;
             self.publishConfig = { title: 'STR_CONFIRM', text: 'STR_CNFM_SEND_PROP', yes: 'STR_YES' };
             self.deleteConfigDraft = { title: 'STR_CONFIRM', text: 'STR_CNFM_DEL_PROP', yes: 'STR_YES' };
@@ -56,6 +57,7 @@ angular.module('dashboard')
             function setProposal(proposal) {
                 if (angular.isObject(proposal)) {
                     self.uiProposal = proposal;
+                    self.proposalTypeModel = self.uiProposal.proposalType;
                     setMode(PROP.MODE.COLLAPSED);
 
                     if (proposal.isOwnProposal) {
@@ -186,6 +188,7 @@ angular.module('dashboard')
 
             self.saveAndPublishProposal = function () {
                 $scope.proposal.text = self.editorText ? self.editorText : '';
+                $scope.proposal.proposalType = self.proposalTypeModel;
                 var copy = angular.copy($scope.proposal);
                 copy.saveAndPublish = true;
                 postProposal(copy);
@@ -233,11 +236,13 @@ angular.module('dashboard')
 
             self.accept = function () {
                 $scope.proposal.text = self.editorText ? self.editorText : '';
+                $scope.proposal.proposalType = self.proposalTypeModel;
                 self.saveOrPublishProposal();
                 setMode(PROP.MODE.OPEN);
             };
 
             self.cancel = function () {
+                self.proposalTypeModel = self.uiProposal.proposalType;
                 $scope.proposal.isPublished = previousIsPublished;
                 if ($scope.proposal.isPublished === null) {
                     deleteProposal($scope.proposal);
@@ -254,6 +259,26 @@ angular.module('dashboard')
                     self.saveOrPublishProposal();
                 }
             };
+
+            function getProposalTypes(aCityCouncil) {
+                var res = [];
+                angular.forEach(PROPS.TYPE, function (type) {
+                    if (angular.isObject(type)) {
+                        var array = aCityCouncil ? type.cityCouncilRoles : type.roles;
+                        if (angular.isArray(array) && array.indexOf(CONST.MTGROLE.PARTICIPANT_FULL.value) > CONST.NOTFOUND) {
+                            this.push(type);
+                        }
+                    }
+                }, res);
+                return res;
+            }
+
+            self.saveAllowed = function saveAllowed() {
+                return self.proposalTypeModel && self.editorText;
+            };
+
+            // INITIALISATION LOGIC
+            self.propTypes = getProposalTypes($scope.topicCitycouncil);
 
             setProposal($scope.proposal);
 
@@ -320,6 +345,7 @@ angular.module('dashboard')
             scope: {
                 proposal: '=',
                 guid: '=',
+                topicCitycouncil: '&',
                 disableCreate: '=',
                 onRemove: '&',
                 onAdd: '&'
