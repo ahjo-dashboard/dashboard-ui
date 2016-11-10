@@ -212,6 +212,16 @@ angular.module('dashboard')
             }
         }
 
+         function votingUpdated(aEvent) {
+            if (angular.isObject(aEvent)) {
+                $log.debug("meetingStatusCtrl.votingUpdated", arguments);
+                $rootScope.$emit(CONST.VOTINGUPDATED, aEvent);
+            }
+            else {
+                $log.error("meetingStatusCtrl.votingUpdated", arguments);
+            }
+        }
+
         function motionUpdated(aEvent) {
             if (angular.isObject(aEvent) && angular.isObject(aEvent.motion)) {
                 $log.debug("meetingStatusCtrl.motionUpdated", arguments);
@@ -312,6 +322,10 @@ angular.module('dashboard')
                                     case CONST.MTGEVENT.MINUTEDELETED:
                                     case CONST.MTGEVENT.MINUTETYPECHANGED:
                                         minuteUpdated(event);
+                                        break;
+                                    case CONST.MTGEVENT.VOTINGUPDATED:
+                                    case CONST.MTGEVENT.VOTESINSERTED:
+                                        votingUpdated(event);
                                         break;
                                     case CONST.MTGEVENT.MOTIONSUPPORTED:
                                     case CONST.MTGEVENT.MOTIONSUPPORTREMOVED:
