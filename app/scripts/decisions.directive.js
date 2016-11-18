@@ -135,23 +135,31 @@ angular.module('dashboard')
 
                     if (aVoting.typeName === CONST.MTGEVENT.VOTINGUPDATED || aVoting.typeName === CONST.MTGEVENT.VOTESINSERTED) {
                         $log.log("dbDecisions.updateVoting,  mtgTopicSelected.topicGuid", mtgTopicSelected.topicGuid);
-                        if (angular.isObject(mtgTopicSelected) && angular.equals(mtgTopicSelected.topicGuid, aVoting.votings[0].topicGuid)) {
-                            if (angular.isObject(aVoting)) {
-                                var found = false;
-                                for (var y = 0; y < aVoting.votings.length; y++) {
-                                    found = false;
-                                    for (var i = 0; !found && i < self.voting.length; i++) {
-                                        var entry = self.voting[i];
-                                        if (angular.isObject(entry) && angular.equals(entry.iD, aVoting.votings[y].iD)) {
-                                            angular.merge(entry, aVoting.votings[y]);
-                                            found = true;
+                        if (angular.isObject(aVoting)) {
+                            var found = false;
+                            for (var y = 0; y < aVoting.votings.length; y++) {
+                                if (angular.isObject(mtgTopicSelected)) {
+                                    if (angular.equals(mtgTopicSelected.topicGuid, aVoting.votings[y].topicGuid)) {
+                                        found = false;
+                                        for (var i = 0; !found && i < self.voting.length; i++) {
+                                            var entry = self.voting[i];
+                                            if (angular.isObject(entry) && angular.equals(entry.iD, aVoting.votings[y].iD)) {
+                                                angular.merge(entry, aVoting.votings[y]);
+                                                found = true;
+                                            }
+                                        }
+                                        if (!found) {
+                                            self.voting.push(aVoting.votings[y]);
                                         }
                                     }
-                                    if (!found) {
-                                        self.voting.push(aVoting.votings[y]);
-                                    }
+                                }
+                                else {
+                                    $log.log("dbDecisions.updateVoting, mtgTopicSelected not object", mtgTopicSelected);            
                                 }
                             }
+                        }
+                        else {
+                            $log.log("dbDecisions.updateVoting, aVoting not object", aVoting);
                         }
                     }
                 }

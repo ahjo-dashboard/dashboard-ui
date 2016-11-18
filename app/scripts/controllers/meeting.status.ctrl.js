@@ -183,7 +183,7 @@ angular.module('dashboard')
             if (!angular.isDefined(matchInd)) {
                 $log.debug("meetingStatusCtrl: adding a new topic sequenceNumber=" + eTopic.sequencenumber + " topicList.length=" + mtgDetails.topicList.length);
                 var ind = eTopic.sequencenumber - 1;
-                if ((ind >= 0) && (ind < mtgDetails.topicList.length)) {
+                if ((ind >= 0) && (ind <= mtgDetails.topicList.length)) {
                     mtgDetails.topicList.splice(ind, 0, eTopic);
                 } else {
                     $log.error("meetingStatusCtrl: ignored, bad sequencenumber");
