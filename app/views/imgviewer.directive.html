@@ -65,7 +65,7 @@
     </div>
 
     <div class="db-conf-att-img db-overflow">
-        <img ng-if="c.pageData && c.pageData.obj && c.pageData.obj.fileContents" ng-src="data:{{c.pageData.obj.contentType}};base64,{{c.pageData.obj.fileContents}}"
+        <img style="visibility: hidden;" onload="this.style.visibility = 'visible';" ng-if="c.pageData && c.pageData.obj && c.pageData.obj.fileContents" ng-src="data:{{c.pageData.obj.contentType}};base64,{{c.pageData.obj.fileContents}}"
             ng-attr-style="width: {{c.zoomLvl}}%">
     </div>
 
