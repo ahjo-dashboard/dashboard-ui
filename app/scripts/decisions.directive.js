@@ -126,6 +126,37 @@ angular.module('dashboard')
                 }
             }
 
+            function updateVoting(aVoting) {
+                if (angular.isObject(aVoting)) {
+                    $log.log("dbDecisions.updateVoting", arguments);
+                    if (!angular.isArray(self.voting)) {
+                        self.voting = [];
+                    }
+
+                    if (aVoting.typeName === CONST.MTGEVENT.VOTINGUPDATED || aVoting.typeName === CONST.MTGEVENT.VOTESINSERTED) {
+                        $log.log("dbDecisions.updateVoting,  mtgTopicSelected.topicGuid", mtgTopicSelected.topicGuid);
+                        if (angular.isObject(mtgTopicSelected) && angular.equals(mtgTopicSelected.topicGuid, aVoting.votings[0].topicGuid)) {
+                            if (angular.isObject(aVoting)) {
+                                var found = false;
+                                for (var y = 0; y < aVoting.votings.length; y++) {
+                                    found = false;
+                                    for (var i = 0; !found && i < self.voting.length; i++) {
+                                        var entry = self.voting[i];
+                                        if (angular.isObject(entry) && angular.equals(entry.iD, aVoting.votings[y].iD)) {
+                                            angular.merge(entry, aVoting.votings[y]);
+                                            found = true;
+                                        }
+                                    }
+                                    if (!found) {
+                                        self.voting.push(aVoting.votings[y]);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
             function getDecisions(aMtg, aTopic) {
                 if (angular.isObject(aTopic) && angular.isObject(aMtg)) {
                     $log.log("dbDecisions.getDecisions", arguments);
@@ -214,6 +245,11 @@ angular.module('dashboard')
                 updateDecision(aData);
             });
 
+            var votingWatcher = $rootScope.$on(CONST.VOTINGUPDATED, function (aEvent, aData) {
+                $log.log("dbDecisions.votingWatcher: ", arguments);
+                updateVoting(aData);
+            });
+
             var modeWatcher = $rootScope.$on(CONST.MTGUICHANGED, function (event, data) {
                 if (angular.isObject(data) && (data.blockMode === CONST.BLOCKMODE.SECONDARY || data.blockMode === CONST.BLOCKMODE.DEFAULT)) {
                     setData(self.record, self.voting);
@@ -227,6 +263,9 @@ angular.module('dashboard')
                 }
                 if (angular.isFunction(modeWatcher)) {
                     modeWatcher();
+                }
+                if (angular.isFunction(votingWatcher)) {
+                    votingWatcher();
                 }
             });
 
