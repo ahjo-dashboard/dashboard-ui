@@ -52,7 +52,7 @@
                     <div ng-if="!topic.updatingStatus" class="db-iconwrapper text-align-left">
                         <img ng-src="{{msc.statusIcon(topic)}}">
                         <img ng-show="topic.includePublishedRemark" ng-src="images/mtg-states/prop-indicator.png">
-                        <img ng-show="{{!msc.isTopicPublic(topic)}}" ng-src="images/mtg-states/conf-indicator.png">
+                        <img ng-show="!msc.isTopicPublic(topic)" ng-src="images/mtg-states/conf-indicator.png">
                     </div>
                     <div ng-if="topic.updatingStatus" class="db-transparent db-no-padding list-group-item db-min-width-20">
                         <span us-spinner="{radius:4, width:2, length:4}" spinner-on="true"></span>
