@@ -77,7 +77,7 @@ app.directive('dbImgviewer', function () {
                     $log.debug("dbImgviewer.getFile: done");
                     d.resolve(response.data);
                 }, function (error) {
-                    $log.error("mgViewer.getFile: error " + error);
+                    $log.error("mgViewer.getFile: error=", arguments);
                     d.reject(error);
                 });
             }
@@ -97,7 +97,6 @@ app.directive('dbImgviewer', function () {
             }
             */
 
-            $log.debug("dbImgviewer.validatePageResponse");
             aPage.obj = null;
             if (angular.isObject(aResp.objects) && angular.isString(aResp.objects.fileContents) && aResp.objects.fileContents.length && angular.isString(aResp.objects.contentType) && aResp.objects.contentType.length) {
                 aPage.obj = aResp.objects;
@@ -110,7 +109,7 @@ app.directive('dbImgviewer', function () {
             $log.debug("dbImgviewer.pageChanged: " + page);
 
             if (!angular.isNumber(page) || (page < 1) || (page > self.pages.length)) {
-                $log.error("dbImgviewer.pageChanged: bad argument, ignored");
+                $log.log("dbImgviewer.pageChanged: bad argument, ignored");
                 return;
             }
 
@@ -140,16 +139,10 @@ app.directive('dbImgviewer', function () {
 
         $scope.$watch(function () {
             return self.fileConf;
-        }, function (newVal, oldVal) {
-            // $log.debug('dbImgviewer: urlBase=' + newVal);
-            if (!angular.equals(newVal, oldVal)) {
-                $log.debug("dbImgviewer.watch: arg changed: ");
-                $log.debug(newVal);
-                updateModel();
-            }
+        }, function () {
+            $log.debug("dbImgviewer.watch: arg changed: ", arguments);
+            updateModel();
         });
-
-        updateModel();
     }];
 
     return {

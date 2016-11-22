@@ -53,9 +53,9 @@
             </div>
 
             <!-- PRIMARY BLOCK CONTENT -->
-            <div class="db-block-content db-block-border db-brd-bottom">
-                <db-pdf ng-if="c.pm === c.pms.DEFAULT" ng-attr-uri="c.primaryUrl"></db-pdf>
-                <db-imgviewer ng-if="c.pm === c.pms.SECRET" file-conf="c.tData"></db-imgviewer>
+            <div ng-hide="c.topicDelay" class="db-block-content db-block-border db-brd-bottom">
+                <db-pdf ng-if="(c.pm === c.pms.DEFAULT ) && c.primaryUrlUi" ng-attr-uri="c.primaryUrlUi"></db-pdf>
+                <db-imgviewer ng-if="(c.pm === c.pms.SECRET) && c.tDataUi" file-conf="c.tDataUi"></db-imgviewer>
             </div>
 
         </div>
@@ -142,7 +142,7 @@
             </div>
 
             <!-- SECONDARY BLOCK CONTENT -->
-            <div ng-hide="c.selData" class="db-block-content db-brd-bottom ng-class:[{'db-block-border':!c.isMobile},{'db-padding-15':c.isMobile}]">
+            <div ng-hide="c.selData || c.topicDelay" class="db-block-content db-brd-bottom ng-class:[{'db-block-border':!c.isMobile},{'db-padding-15':c.isMobile}]">
                 <db-pdf ng-if="!c.isMobile && (c.sm === c.sms.ATTACHMENTS || c.sm === c.sms.MATERIALS) && !c.isSecret(c.secondaryAtt)" ng-attr-uri="c.secondaryUrl"></db-pdf>
                 <db-imgviewer ng-if="(c.sm === c.sms.ATTACHMENTS || c.sm === c.sms.MATERIALS) && c.isSecret(c.secondaryAtt)" file-conf="c.secondaryAtt"></db-imgviewer>
                 <db-imgviewer ng-if="c.sm === c.sms.SECRET" file-conf="c.tData"></db-imgviewer>

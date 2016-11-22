@@ -30,6 +30,8 @@ angular.module('dashboard')
         self.header = null;
         $rootScope.menu = CONST.MENU.FULL;
         self.selData = null;
+        self.topicTimeout = null; // timeout object reference for cleanup
+        self.topicDelay = false; // Win7IE11 workaround for white view when certain view content changes
 
         self.tData = null;
         self.aData = null;
@@ -117,7 +119,7 @@ angular.module('dashboard')
         }
 
         function setData(topic) {
-            $log.debug("meetingDetailsCtrl: setData", arguments);
+            $log.debug("meetingDetailsCtrl.setData", arguments);
             self.topic = null;
             self.aData = null;
             self.tData = null;
@@ -146,6 +148,34 @@ angular.module('dashboard')
                 self.amData = ListData.createAdditionalMaterialList({ 'header': 'STR_ADDITIONAL_MATERIAL', 'title': self.header }, topic.additionalMaterial);
 
                 checkMode();
+            }
+        }
+
+        function changeTopic(topic) {
+            $log.debug("meetingDetailsCtrl.changeTopic", arguments);
+
+            if ($rootScope.isIe) {
+                // Win7IE11 workaround: View stuck in white screen or flicker
+                // caused by toggling public<==>confidential topics (dbPdf and imgViewer)
+                self.topicDelay = true;
+
+                $timeout.cancel(self.topicTimeout);
+                self.topicTimeout = $timeout(function () {
+                    setData(topic);
+
+                    self.topicTimeout = null;
+                    self.tDataUi = self.tData;
+                    self.primaryUrlUi = self.primaryUrl;
+                    $timeout(function () { // WinIE11 white screen if change db-pdf and imgViewer simultaneously
+                        self.topicDelay = false;
+                        $log.debug("meetingDetailsCtrl.changeTopic: topicDelay done");
+                    }, 0);
+                }, 100);
+
+            } else {
+                setData(topic);
+                self.tDataUi = self.tData;
+                self.primaryUrlUi = self.primaryUrl;
             }
         }
 
@@ -214,13 +244,17 @@ angular.module('dashboard')
 
         self.presClickedDesk = function presClickedDesk(aPres) {
             self.tData = aPres;
+            self.tDataUi = self.tData;
             self.primaryUrl = (self.tData && self.tData.link) ? self.tData.link : {};
+            self.primaryUrlUi = self.primaryUrl;
         };
 
         self.presClickedMobile = function (aPres) {
             self.tData = aPres;
+            self.tDataUi = self.tData;
             if (self.isSecret(aPres)) {
                 self.selData = null;
+                self.tDataUi = self.tData;
                 setSecondaryMode(CONST.SECONDARYMODE.SECRET);
             }
             else {
@@ -310,10 +344,8 @@ angular.module('dashboard')
 
         $scope.$watch(function () {
             return StorageSrv.getKey(CONST.KEY.TOPIC);
-        }, function (topic, oldTopic) {
-            if (!angular.equals(topic, oldTopic)) {
-                setData(topic);
-            }
+        }, function (topic) {
+            changeTopic(topic);
         });
 
         $scope.$watch(function () {
@@ -322,7 +354,7 @@ angular.module('dashboard')
             if (parallel) {
                 setBlockMode(CONST.BLOCKMODE.DEFAULT);
             }
-            });
+        });
 
 
         $scope.$watch(function () {
@@ -354,6 +386,9 @@ angular.module('dashboard')
 
         $scope.$on('$destroy', function () {
             $log.debug("meetingDetailsCtrl: DESTROY");
+
+            $timeout.cancel(self.topicTimeout);
+
             if (angular.isFunction(unsavedRemarkWatcher)) {
                 unsavedRemarkWatcher();
             }
@@ -373,6 +408,4 @@ angular.module('dashboard')
         setBlockMode(CONST.BLOCKMODE.DEFAULT);
         setPrimaryMode();
         setDefaultSecondaryMode();
-
-        setData(StorageSrv.getKey(CONST.KEY.TOPIC));
     }]);
