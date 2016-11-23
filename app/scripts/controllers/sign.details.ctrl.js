@@ -120,15 +120,27 @@ app.controller('signDetailsCtrl', function ($log, $state, $rootScope, ENV, CONST
         return !self.isMobile && self.btnModel[id].active;
     };
 
-    self.displayDoc = function (aModelItem) {
-        if (!self.docTimeout && angular.isObject(aModelItem)) {
-            $log.debug("signDetailsCtrl.displayDoc: timeout type=" + self.docTimeout, arguments);
-            self.docUrl = null;
-            self.docTimeout = $timeout(function () { // Re-set doc url on btn click to allow reverting to original. Caused by user clicking urls inside doc if browsing urls in embedded doc is allowed
-                self.docTimeout = null;
-                self.docUrl = aModelItem.url;
-                setBlockContent(aModelItem);
-            }, 0);
+    self.displayDoc = function(aModelItem) {
+        if (!self.contentDelay && angular.isObject(aModelItem)) {
+            $log.debug("signDetailsCtrl.displayDoc: start delay, hide content", aModelItem);
+
+            self.contentDelay = $timeout(function() {
+
+                // Set docUrl null before reverting to original url asynchronously after user clicked a view button.
+                // Solves the problem how to revert to original after user clicked a link embedded to pdf causing frame to navigate to the new content.
+                // Simply resetting docUrl isn't enough because property isn't changed on iFrame navigation, so have to null & re-set asynchronously.
+                self.docUrl = null;
+
+                self.contentDelay = $timeout(function() {
+                    self.docUrl = aModelItem.url;
+                    setBlockContent(aModelItem);
+                    $log.debug("signDetailsCtrl.displayDoc: show content", aModelItem);
+                    self.contentDelay = null;
+                }, 0);
+
+            // On Win7IE11 changing dbPdf directive content may cause a white view, reason for the 100ms+0ms delays is to work around that:
+            // contentDelay used to hide parent before changing child dbPdf content
+            }, $rootScope.isIe ? 100 : 0); // Small delay on IE to fix Win7IE11 white view issue
         }
     };
 
