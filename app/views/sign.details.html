@@ -41,7 +41,7 @@
             </div>
 
             <!-- PRIMARY BLOCK CONTENT -->
-            <div class="db-block-content db-block-border db-brd-bottom">
+            <div ng-hide="c.contentDelay" class="db-block-content db-block-border db-brd-bottom">
 
                 <div db-obs class="ad-flex-item-upper db-item-border">
                     <db-pdf ng-attr-uri="c.docUrl"></db-pdf>
@@ -108,7 +108,7 @@
                 <span us-spinner spinner-on="c.isLoadingSec()"></span>
             </div>
 
-            <div class="db-block-content db-block-border db-brd-bottom" ng-show="!c.isLoadingSec()">
+            <div ng-hide="c.contentDelay" class="db-block-content db-block-border db-brd-bottom" ng-show="!c.isLoadingSec()">
 
                 <!-- Attachment pdf -->
                 <div ng-show="c.isDisplayed(c.btnModel.att.id, true) && !c.selData" class="db-block-content db-block-border db-brd-bottom">
