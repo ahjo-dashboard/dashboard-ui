@@ -164,8 +164,6 @@ angular.module('dashboard')
                     setData(topic);
 
                     self.topicTimeout = null;
-                    self.tDataUi = self.tData;
-                    self.primaryUrlUi = self.primaryUrl;
                     $timeout(function () { // WinIE11 white screen if change db-pdf and imgViewer simultaneously
                         self.topicDelay = false;
                         $log.debug("meetingDetailsCtrl.changeTopic: topicDelay done");
@@ -174,8 +172,6 @@ angular.module('dashboard')
 
             } else {
                 setData(topic);
-                self.tDataUi = self.tData;
-                self.primaryUrlUi = self.primaryUrl;
             }
         }
 
@@ -234,6 +230,11 @@ angular.module('dashboard')
             checkMode();
         }
 
+        function setUrlData(aPres) {
+            self.tData = aPres;
+            self.primaryUrl = (self.tData && self.tData.link) ? self.tData.link : {};
+        }
+
         self.primaryClicked = function () {
             setBlockMode((self.bm === CONST.BLOCKMODE.PRIMARY || self.bm === CONST.BLOCKMODE.SECONDARY) ? CONST.BLOCKMODE.DEFAULT : CONST.BLOCKMODE.PRIMARY);
         };
@@ -243,18 +244,30 @@ angular.module('dashboard')
         };
 
         self.presClickedDesk = function presClickedDesk(aPres) {
-            self.tData = aPres;
-            self.tDataUi = self.tData;
-            self.primaryUrl = (self.tData && self.tData.link) ? self.tData.link : {};
-            self.primaryUrlUi = self.primaryUrl;
+            $log.debug("meetingDetailsCtrl.presClickedDesk", arguments);
+            if ($rootScope.isIe) {
+                // Win7IE11 workaround: View stuck in white screen or flicker
+                // caused by toggling public<==>confidential topics (dbPdf and imgViewer)
+                self.topicDelay = true;
+
+                $timeout.cancel(self.topicTimeout);
+                self.topicTimeout = $timeout(function () {
+                    setUrlData(aPres);
+                    $timeout(function () { // WinIE11 white screen if change db-pdf and imgViewer simultaneously
+                        self.topicDelay = false;
+                        $log.debug("meetingDetailsCtrl.presClickedDesk: topicDelay done");
+                    }, 0);
+                }, 100);
+
+            } else {
+                setUrlData(aPres);
+            }
         };
 
         self.presClickedMobile = function (aPres) {
             self.tData = aPres;
-            self.tDataUi = self.tData;
             if (self.isSecret(aPres)) {
                 self.selData = null;
-                self.tDataUi = self.tData;
                 setSecondaryMode(CONST.SECONDARYMODE.SECRET);
             }
             else {
