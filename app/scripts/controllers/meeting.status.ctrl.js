@@ -58,17 +58,12 @@ angular.module('dashboard')
                             return angular.equals(item, $scope.selected);
                         };
 
-                        $scope.clicked = function (ok) {
-                            if (ok) {
-                                $uibModalInstance.close($scope.selected);
-                            }
-                            else {
-                                $uibModalInstance.dismiss();
-                            }
+                        $scope.clicked = function () {
+                            $uibModalInstance.dismiss();
                         };
 
                         $scope.itemSelected = function (selectedItem) {
-                            $scope.selected = selectedItem;
+                            $uibModalInstance.close(selectedItem);
                         };
                     }]
                 });
