@@ -181,7 +181,7 @@
     "STR_INFO_MTG_BAD_STATUS": "Kokouksen tilaa voi muuttaa vain tiloissa: 'teknisesti avattu', 'käynnissä' ja 'keskeytetty'",
     "STR_INFO_TOPIC_STATUS_CHANGE_DISABLED": "Asian tilaa voi muuttaa vain, jos muita asioita ei ole käsittelyssä",
     "STR_HELP_MTGLIST": "Listassa näet kaikki kokouksesi aikajärjestyksessä. Menneet kokoukset löytyvät omalta välilehdeltä.<BR>Voit avata kokouksen painamalla rivillä  painiketta, jossa lukee kokouksessa sallittu käyttäjäroolisi.<BR>Painikkeita voi samalla rivillä olla useita, mikäli kokous sallii sinulle monta roolia. Valitse silloin haluamasi rooli painamalla vastaavaa painiketta.",
-    "STR_HELP_SIGNLIST": "Listassa näet kaikki allekirjoitettavat asiakirjasi. Toimielimien pöytäkirjat ja viranhaltijapäätökset ovat peräkkäin omina ryhminään.<BR>Käsitellyt asiakirjat löytyvät omalta välilehdeltä.<BR>Voit avata asiakirjan painamalla rivillä ainiketta.",
+    "STR_HELP_SIGNLIST": "Listassa näet kaikki allekirjoitettavat asiakirjasi. Toimielimien pöytäkirjat ja viranhaltijapäätökset ovat peräkkäin omina ryhminään.<BR>Käsitellyt asiakirjat löytyvät omalta välilehdeltä.<BR>Voit avata asiakirjan painamalla rivillä olevaa painiketta.",
     "STR_HELP_SIDEMENU": "Voit vaihdella sivuvalikon eri leveyksien välillä käyttäen tätä painiketta",
     "STR_HELP_MENU_HDR": "Näkymän asettelun toiminnot",
     "STR_HELP_VIEWMODE": "Näkymän sisältöä esitetään sivuvalikossa sekä kahdessa eri palstassa. Näin voit tarkastella esimerkiksi kokouksen esitystä ja liitettä vierekkäin. Voit vaihtaa palstojen esitystavan joko vierekkäin tai allekkain.",
