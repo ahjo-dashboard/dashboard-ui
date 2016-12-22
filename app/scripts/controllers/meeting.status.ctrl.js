@@ -52,12 +52,7 @@ angular.module('dashboard')
                     controller: ['$scope', '$uibModalInstance', function ($scope, $uibModalInstance) {
                         $scope.title = title;
                         $scope.items = items;
-                        $scope.selected = null;
-
-                        $scope.isSelected = function (item) {
-                            return angular.equals(item, $scope.selected);
-                        };
-
+                        
                         $scope.clicked = function () {
                             $uibModalInstance.dismiss();
                         };
