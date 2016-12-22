@@ -94,7 +94,7 @@
                     <div ng-if="c.requestorInfo.email && c.requestorInfo.email.length">
                         <span translate translate-cloak>STR_SIGNING_COMMENT_INFO</span>
                         <div class="db-breakall">
-                            <a href="mailto:{{c.item.Email}}">{{c.requestorInfo.email}}</a>
+                           {{c.requestorInfo.email}}
                         </div>
                     </div>
                     <div ng-if="!c.requestorInfo.email || !c.requestorInfo.email.length" translate translate-cloak>STR_SIGNING_NO_EMAIL</div>
@@ -102,10 +102,10 @@
 
             </div>
 
-            <div uib-alert ng-class="'alert-info'">
+            <div uib-alert ng-class="'alert-info'" ng-if="c.item.Signed">
                 <div class="db-flex">
                     <div class="db-glyph db-glyph-alert-blue" ng-include="'images/glyph-info.svg'"></div>
-                    <div class="db-flex-area db-margin-10-left" translate translate-cloak>{{'STR_SINFO_CONF_ATT_OPENS'}}</div>
+                    <div class="db-flex-area db-margin-10-left" translate translate-cloak>{{'STR_SINFO_SIGNED_ATT_OPENS'}}</div>
                 </div>
             </div>
 

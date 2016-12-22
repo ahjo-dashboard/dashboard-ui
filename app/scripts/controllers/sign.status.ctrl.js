@@ -91,6 +91,20 @@ app.controller('signStatusCtrl', function ($log, $scope, $state, SigningAttApi, 
         // self.alerts.length = 0;
     }
 
+    function UpdateSignersList(aSigners) {
+        $log.debug("signStatusCtrl.UpdateSignersList: ", arguments);
+        if (angular.isObject(aSigners)) {
+            var found = false;
+            for (var i = 0; !found && i < aSigners.length; i++) {
+                if (angular.equals(self.item.guid, aSigners[i].Guid)) {
+                    aSigners[i].status = self.item.Status;
+                    found = true;
+                }
+            }
+        }
+        $log.debug("signStatusCtrl.UpdateSignersList end: ");
+    }
+
     function initCtrl(btnModel, status, aItem) {
         self.btnModel.doc.url = angular.isObject(aItem) ? ENV.SignApiUrl_GetAttachment.replace(":reqId", aItem.ProcessGuid) : null;
         $log.debug("signStatusCtrl.initCtrl: doc=" + self.btnModel.doc.url);
@@ -137,6 +151,8 @@ app.controller('signStatusCtrl', function ($log, $scope, $state, SigningAttApi, 
         var resp = SigningOpenApi.save(op.item, function (/*value*/) {
             $log.debug("signStatusCtrl.saveStatus: done: ", arguments);
             self.item.Status = op.item.Status;
+            // Update also the list of signers in right side of screen
+            UpdateSignersList(self.item.Signers);
             op.item = null; // Free up reference to allow cleanup
             if (angular.isFunction(cb)) {
                 cb();

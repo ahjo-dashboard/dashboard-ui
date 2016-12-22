@@ -45,6 +45,7 @@ app.directive('docSigners', [function () {
             var prom = SigningDocSignaturesApi.get({ reqId: item.ProcessGuid }, function (data) {
                 $log.log("signDetailsCtrl.getReqStatuses: done: ", arguments);
                 self.model = data && data.Signers ? data : null;
+                self.item.Signers = prom.Signers;
             }, function (error) {
                 $log.error("signDetailsCtrl.getReqStatuses: error: ", arguments);
                 if (angular.isObject(error)) {
