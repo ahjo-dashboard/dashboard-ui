@@ -128,7 +128,7 @@
                 <div uib-alert ng-show="c.isDisplayed(c.btnModel.com.id, true)" ng-class="'alert-warning'">
                     <div ng-if="c.btnModel.com.content && c.btnModel.com.content.email && c.btnModel.com.content.email.length">
                         <div translate translate-cloak>STR_SIGNING_COMMENT_INFO</div>
-                        <div><a href="mailto:{{c.btnModel.com.content.email}}">{{c.btnModel.com.content.email}}</a></div>
+                        <div>{{c.btnModel.com.content.email}}</div>
                     </div>
                     <div ng-if="!c.btnModel.com.content || !c.btnModel.com.content.email || !c.btnModel.com.content.email.length" translate translate-cloak>STR_SIGNING_NO_EMAIL</div>
                 </div>

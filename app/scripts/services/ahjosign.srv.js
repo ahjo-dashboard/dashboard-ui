@@ -47,7 +47,7 @@ angular.module('AhjoSigningService', [
         return $resource(ENV.SIGNAPIURL_DOCSIGNATURES, {}, {
             get: {
                 method: "GET",
-                cache: true
+                cache: false
             }
         });
     })
