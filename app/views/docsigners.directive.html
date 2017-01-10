@@ -52,7 +52,7 @@
             </div>
         </div>
         </button>
-        <button type="button" class="list-group-item col-xs-12" ng-repeat="i in c.model.Signers track by $index">
+        <button type="button" class="list-group-item col-xs-12" ng-repeat="i in c.model.Signers | orderBy:i:false:c.signingComparator track by $index">
             <div class="row">
                 <div class="col-xs-12 col-sm-3 db-overflow-hidden">
                     <span translate translate-cloak>{{c.roleStrId(i.role)}}</span>
