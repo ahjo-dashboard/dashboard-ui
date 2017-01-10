@@ -147,7 +147,7 @@
                 <db-imgviewer ng-if="(c.sm === c.sms.ATTACHMENTS || c.sm === c.sms.MATERIALS) && c.isSecret(c.secondaryAtt)" file-conf="c.secondaryAtt"></db-imgviewer>
                 <db-imgviewer ng-if="c.sm === c.sms.SECRET" file-conf="c.tData"></db-imgviewer>
                 <db-remark ng-if="c.sm === c.sms.REMARK" topic="c.topic"></db-remark>
-                <db-proposal-list ng-if="c.sm === c.sms.PROPOSALS" topic="c.topic"></db-proposal-list>
+                <db-proposal-list ng-show="c.sm === c.sms.PROPOSALS" topic="c.topic"></db-proposal-list>
                 <db-decisions ng-if="c.sm === c.sms.DECISIONS"></db-decisions>
                 <db-motions ng-if="c.sm === c.sms.MOTIONS"></db-motions>
             </div>
