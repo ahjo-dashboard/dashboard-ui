@@ -44,8 +44,8 @@
                 </button>
             </div>
 
-            <div class="list-group-item db-flex db-center db-padding-05-ver db-overflow-hidden ng-class:[{'db-opt-bg db-font-clr-white': (msc.isSelected(topic) && !msc.isMobile), 'db-item-disabled': !msc.canAccess(topic), 'db-padding-0-hor':!msc.chairman, 'db-padding-10-hor':msc.chairman}]"
-                ng-repeat="topic in msc.mtgDetails.topicList track by $index" db-confirm confirm-enabled="msc.hasUnsavedData && !msc.isSelected(topic)"
+            <div class="list-group-item db-flex db-center db-padding-05-ver db-overflow-hidden ng-class:[{'db-opt-bg db-font-clr-white': !msc.isMobile, 'db-item-disabled': !msc.canAccess(topic), 'db-padding-0-hor':!msc.chairman, 'db-padding-10-hor':msc.chairman}]"
+                ng-repeat="topic in msc.mtgDetails.topicList track by $index" db-confirm confirm-enabled="msc.hasUnsavedData"
                 confirm-config="msc.unsavedConfig" ng-click="msc.topicSelected(topic)">
                 <button title="{{msc.topicBtnTitle(topic) | translate}}" class="btn db-btn-tiny ng-class:[{'db-btn-sel':msc.chairman}, {'db-padding-0-right db-btn-transparent db-no-pointer-events' : !msc.chairman}]"
                     ng-disabled="msc.updatingStatus" ng-click="msc.changeTopicStatus(topic); msc.isMobile && $event.stopPropagation();">
