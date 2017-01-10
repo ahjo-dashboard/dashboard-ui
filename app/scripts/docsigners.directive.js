@@ -28,8 +28,7 @@ app.directive('docSigners', [function () {
         self.model = null;
         self.busy = false;
         self.errorCode = 0;
-
-
+        self.documentType = $scope.item.DocumentType;
         // PRIVATE FUNCTIONS
 
         function getReqStatuses(item, resultCont) {
@@ -59,6 +58,36 @@ app.directive('docSigners', [function () {
 
 
         // PUBLIC FUNCTIONS
+
+        /* Sort signings for policymaker by changedtime, others by role */
+            self.signingComparator = function signingComparator(a1, a2) {
+                // Comparator apparently guaranteed to receive objects with 'value' property so skipping validation for simplicity.
+                var res = -1;
+                if (self.documentType === CONST.ESIGNTYPE.OFFICIAL.value) {
+                    // Sort by changedtime
+                    $log.debug("dbDocSigners.signingComparator: VIPA ", a1.value.statusChangedTime);
+                    if (angular.isString(a1.value.statusChangedTime) && angular.isString(a2.value.statusChangedTime)){
+                        res = a1.value.statusChangedTime.localeCompare(a2.value.statusChangedTime);
+                    } 
+                    else {
+                        $log.debug("dbDocSigners.signingComparator: bad args: ", arguments);
+                        res = a1.index < a2.index ? -1 : 1; // Default to sorting by index
+                    }
+                }
+                else
+                {
+                    // Sort by role
+                    $log.debug("dbDocSigners.signingComparator: EI VIPA ");
+                    if (angular.isNumber(a1.value.role) && angular.isNumber(a2.value.role)){
+                        res = a1.value.role < a2.value.role ? -1 : 1;
+                    } 
+                    else {
+                        $log.debug("dbDocSigners.signingComparator: bad args 2: ", arguments);
+                        res = a1.index < a2.index ? -1 : 1; // Default to sorting by index
+                    }
+                }
+                return res;
+            };
 
         /* Resolve display text for item status */
         self.statusStrId = function (value) {
