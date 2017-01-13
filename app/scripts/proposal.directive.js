@@ -34,9 +34,13 @@ angular.module('dashboard')
             self.deleteConfigDraft = { title: 'STR_CONFIRM', text: 'STR_CNFM_DEL_PROP', yes: 'STR_YES' };
             self.deleteConfigDraftAndPub = { title: 'STR_CONFIRM', text: 'STR_CNFM_DEL_PROP', yes: 'STR_YES', optionText: 'STR_CNFM_DEL_PROP_OPT' };
             self.deleteConfigPub = { title: 'STR_CONFIRM', text: 'STR_CNFM_DEL_PUBLIC_PROP', yes: 'STR_YES' };
+            self.saveConfigDraft = { title: 'STR_CONFIRM', text: 'STR_CNFM_OWN_AND_PUBLIC_PROP', yes: 'STR_YES', no: 'STR_NO' };
             self.isMobile = $rootScope.isMobile;
             var previousIsPublished = null;
             var createDisabled = false;
+            var previousType = null;
+            self.typeChanged = false;
+            self.guidValid = false;
 
             self.editor = {
                 'menu': []
@@ -163,6 +167,13 @@ angular.module('dashboard')
                 }
             }
 
+            function updateOwnProposal() {
+                $scope.proposal.text = self.editorText ? self.editorText : '';
+                $scope.proposal.proposalType = self.proposalTypeModel;
+                self.saveOrPublishProposal();
+                setMode(PROP.MODE.OPEN);
+            }
+
             function updatePolledEvents() {
                 $log.debug("dbProposal: updatePolledEvents");
                 var events = angular.copy(StorageSrv.getKey(CONST.KEY.PROPOSAL_EVENT_ARRAY));
@@ -224,6 +235,7 @@ angular.module('dashboard')
 
             self.edit = function () {
                 setMode(PROP.MODE.EDIT);
+                previousType = self.uiProposal.proposalType;
                 $rootScope.$emit(PROPS.UPDATED, { sender: $scope.proposal });
             };
 
@@ -234,11 +246,19 @@ angular.module('dashboard')
                 }
             };
 
-            self.accept = function () {
-                $scope.proposal.text = self.editorText ? self.editorText : '';
-                $scope.proposal.proposalType = self.proposalTypeModel;
-                self.saveOrPublishProposal();
-                setMode(PROP.MODE.OPEN);
+            self.accept = function (typeChanged) {
+                updateOwnProposal();
+                if (typeChanged && $scope.proposal.proposalGuidCopy !== '00000000-0000-0000-0000-000000000000') {
+                    $log.debug("dbProposal: poistetaan julkaistu aloite");
+                    $rootScope.$emit(PROPS.REMOVE, { guid: $scope.proposal.proposalGuidCopy });
+                }
+                self.typeChanged = false;
+            };
+
+            self.rejected = function () {
+                updateOwnProposal();
+                $log.debug("dbProposal: ei poisteta julkaistua aloitetta");
+                self.typeChanged = false;
             };
 
             self.cancel = function () {
@@ -310,6 +330,38 @@ angular.module('dashboard')
                     }
                 }
             }, true);
+
+            self.changed = function () {
+                if (angular.isObject(self.uiProposal)) {
+                    self.proposalType = self.proposalTypeModel;
+                    if (previousType !== null && self.proposalType !== null && previousType !== self.proposalType) {
+                        self.typeChanged = true;
+                        $log.debug("dbProposalType: proposalType changed", previousType);
+                    }
+                    else {
+                        self.typeChanged = false;
+                    }
+                }
+                else {
+                    $log.error('dbProposalType: changed proposal missing');
+                }
+
+                if (angular.isObject(self.uiProposal)) {
+                    $log.debug("guidValidation: self.uiProposal.proposalGuidCopy", self.uiProposal.proposalGuidCopy);
+                    if (self.uiProposal.proposalGuidCopy === '00000000-0000-0000-0000-000000000000' || self.uiProposal.proposalGuidCopy === undefined) {
+                        self.guidValid = false;
+                    }
+                    else {
+                        self.guidValid = true;
+                        $log.debug("dbProposalType: guidValid", self.uiProposal.proposalGuidCopy);
+                        
+                    }
+                }
+                else {
+                    $log.error('guidValidation: proposal missing');
+                }
+
+            };
 
             var watcher = $rootScope.$on(PROPS.TOGGLE, function (event, data) {
                 if (($scope.proposal.isPublished === PROPS.PUBLISHED.YES)) {

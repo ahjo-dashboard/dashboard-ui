@@ -9,7 +9,7 @@
 
         <div ng-if="c.mode === c.modes.EDIT">
             <form name="propTypeSelection" ng-click="$event.stopPropagation();">
-                <select id="propTypeSelect" ng-model="c.proposalTypeModel" ng-options="o.value as o.strId | translate for o in c.propTypes">
+                <select id="propTypeSelect" ng-model="c.proposalTypeModel" ng-change="c.changed()" ng-options="o.value as o.strId | translate for o in c.propTypes">
                 </select>
             </form>
         </div>
@@ -59,7 +59,8 @@
                     ng-click="c.edit()"><span translate translate-cloak>STR_EDIT</span>
                 </button>
                 <button ng-if="c.uiProposal.isOwnProposal && (c.mode === c.modes.EDIT)" class="btn btn-primary db-btn-big db-margin-2 ng-class:{'btn-block':c.isMobile}"
-                    ng-click="c.accept()" ng-disabled="!c.saveAllowed()">
+                    db-confirm confirm-enabled="c.typeChanged && (c.uiProposal.isPublishedIcon && c.guidValid) && c.uiProposal.isOwnProposal" confirm-config="c.saveConfigDraft"
+                    ng-click="c.accept(c.typeChanged)" confirm-reject="c.rejected()" ng-disabled="!c.saveAllowed()">
                     <span translate translate-cloak>STR_SAVE</span>
                 </button>
             </div>
