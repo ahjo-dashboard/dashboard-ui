@@ -31,7 +31,8 @@
             <ul class="list-group db-no-margin">
                 <li ng-if="s.visibleInHelp" class="list-group-item db-flex db-center-v" ng-repeat="s in CONST.MTGSTATUS">
                     <div class="db-circle-30 db-brd-1-dark {{c.mtgStatusClass(s.stateId)}}"></div>
-                    <div class="db-margin-10-left" translate translate-cloak ng-cloak>{{s.stringId}}</div>
+                    <div class="db-margin-10-left" translate translate-cloak ng-cloak>{{s.stringId}}: </div>
+                    <div class="db-margin-10-left" translate translate-cloak ng-cloak>{{s.stringText}}</div>
                 </li>
             </ul>
             <div class="db-margin-10-left" translate translate-cloak>STR_HELP_MTG_STATES_BODY</div>

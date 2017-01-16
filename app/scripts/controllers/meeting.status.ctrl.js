@@ -41,7 +41,9 @@ angular.module('dashboard')
         self.parallelModeActive = false;
         self.unsavedConfig = { title: 'STR_CONFIRM', text: 'STR_WARNING_UNSAVED', yes: 'STR_CONTINUE' };
         self.logoutConfig = { title: 'STR_CONFIRM', text: 'STR_MTG_LOGOUT_CONFIRM', yes: 'STR_CONTINUE' };
-
+        self.meetingname = null;
+        self.meetingname1 = null;
+        
         // FUNTIONS
 
         function openStatusChangeView(title, items, callback) {
@@ -418,6 +420,8 @@ angular.module('dashboard')
                         self.startEventPolling();
 
                         self.uiName = self.mtgDetails[$rootScope.locProp('meetingTitle')];
+                        self.meetingname1 = self.uiName.substring(0, self.uiName.indexOf(" "));
+                        self.meetingname2 = self.uiName.substring(self.uiName.indexOf(" "));
                         self.mtgDetails.meetingGuid = mtgItem.meetingGuid;
                     }
                 }

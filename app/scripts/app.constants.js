@@ -123,14 +123,14 @@ angular.module('dashboard')
             SECRET: 2
         },
         'MTGSTATUS': {
-            RESERVED: { stateId: 0, stringId: 'STR_RESERVED_MEETING', badgeClass: 'db-badge-dark', visibleInHelp: true },
-            CREATED: { stateId: 1, stringId: 'STR_CREATED', badgeClass: 'db-badge-dark', visibleInHelp: true },
-            TECHNICALLY_OPEN: { stateId: 2, stringId: 'STR_TECHNICALLY_OPEN', badgeClass: 'db-badge-yel', visibleInHelp: true },
-            ACTIVE: { stateId: 3, stringId: 'STR_ACTIVE', badgeClass: 'db-badge-gre', visibleInHelp: true },
-            ABORTED: { stateId: 4, stringId: 'STR_ABORTED', badgeClass: 'db-badge-pur', visibleInHelp: true },
-            OFFICIALLY_CLOSED: { stateId: 5, stringId: 'STR_OFFICIALLY_CLOSED', badgeClass: 'db-badge-gra', visibleInHelp: true },
-            RECORDS_MOVED: { stateId: 6, stringId: 'STR_RECORDS_MOVED', badgeClass: 'db-badge-gra', visibleInHelp: false },
-            TECHNICALLY_CLOSED: { stateId: 7, stringId: 'STR_TECNICALLY_CLOSED', badgeClass: 'db-badge-gra', visibleInHelp: true },
+            //RESERVED: { stateId: 0, stringId: 'STR_RESERVED_MEETING', badgeClass: 'db-badge-dark', visibleInHelp: true },
+            CREATED: { stateId: 1, stringId: 'STR_CREATED', stringText: 'STR_CREATED_TEXT', badgeClass: 'db-badge-dark', visibleInHelp: true },
+            TECHNICALLY_OPEN: { stateId: 2, stringId: 'STR_TECHNICALLY_OPEN', stringText: 'STR_TECHNICALLY_OPEN_TEXT', badgeClass: 'db-badge-yel', visibleInHelp: true },
+            ACTIVE: { stateId: 3, stringId: 'STR_ACTIVE', stringText: 'STR_ACTIVE_TEXT', badgeClass: 'db-badge-gre', visibleInHelp: true },
+            ABORTED: { stateId: 4, stringId: 'STR_ABORTED', stringText: 'STR_ABORTED_TEXT', badgeClass: 'db-badge-pur', visibleInHelp: true },
+            OFFICIALLY_CLOSED: { stateId: 5, stringId: 'STR_OFFICIALLY_CLOSED', stringText: 'STR_OFFICIALLY_CLOSED_TEXT', badgeClass: 'db-badge-gra', visibleInHelp: true },
+            RECORDS_MOVED: { stateId: 6, stringId: 'STR_RECORDS_MOVED', stringText: 'STR_RECORDS_MOVED_TEXT', badgeClass: 'db-badge-gra', visibleInHelp: false },
+            TECHNICALLY_CLOSED: { stateId: 7, stringId: 'STR_TECNICALLY_CLOSED', stringText: 'STR_TECNICALLY_CLOSED_TEXT', badgeClass: 'db-badge-gra', visibleInHelp: true },
         },
         'MEETINGSTATUSACTIONS': {
             OPEN: { stateId: 3, stringId: 'STR_OPEN', active: [2], actionId: 3 },
