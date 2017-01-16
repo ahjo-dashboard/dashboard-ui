@@ -1,6 +1,6 @@
 {
-    "STR_CONFIRM_CLOSE_APP": "Är du säker på att du vill stänga skrivbordsapplikationen?",
-    "STR_APPNAME": "Förtroendevaldas skrivbord",
+    "STR_CONFIRM_CLOSE_APP": "Är du säker på att du vill stänga applikationen?",
+    "STR_APPNAME": "Nya mötes- och underskriftsapplikationen",
     "STR_LOGIN": "Logga in",
     "STR_EXPANDCOLLAPSE": "Expandera / Minimera",
     "STR_LOGOUT": "Logga ut",

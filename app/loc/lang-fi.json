@@ -1,6 +1,6 @@
 {
-    "STR_CONFIRM_CLOSE_APP": "Haluatko varmasti sulkea työpöytäsovelluksen?",
-    "STR_APPNAME": "Luottamushenkilön työpöytä",
+    "STR_CONFIRM_CLOSE_APP": "Haluatko varmasti sulkea sovelluksen?",
+    "STR_APPNAME": "Uusi kokous- ja allekirjoitussovellus",
     "STR_LOGIN": "Kirjaudu",
     "STR_EXPANDCOLLAPSE": "Laajenna / Pienennä",
     "STR_LOGOUT": "Kirjaa käyttäjä ulos sovelluksesta",
