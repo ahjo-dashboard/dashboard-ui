@@ -41,8 +41,8 @@ angular.module('dashboard')
         self.parallelModeActive = false;
         self.unsavedConfig = { title: 'STR_CONFIRM', text: 'STR_WARNING_UNSAVED', yes: 'STR_CONTINUE' };
         self.logoutConfig = { title: 'STR_CONFIRM', text: 'STR_MTG_LOGOUT_CONFIRM', yes: 'STR_CONTINUE' };
-        self.meetingname = null;
         self.meetingname1 = null;
+        self.meetingname2 = null;
         
         // FUNTIONS
 
