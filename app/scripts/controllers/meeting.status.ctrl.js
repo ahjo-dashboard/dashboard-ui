@@ -420,8 +420,9 @@ angular.module('dashboard')
                         self.startEventPolling();
 
                         self.uiName = self.mtgDetails[$rootScope.locProp('meetingTitle')];
-                        self.meetingname1 = self.uiName.substring(0, self.uiName.indexOf(" "));
-                        self.meetingname2 = self.uiName.substring(self.uiName.indexOf(" "));
+                        var search = self.uiName.search(/\d+/);
+                        self.meetingname1 = self.uiName.substring(0, search);
+                        self.meetingname2 = self.uiName.substring(search);
                         self.mtgDetails.meetingGuid = mtgItem.meetingGuid;
                     }
                 }
