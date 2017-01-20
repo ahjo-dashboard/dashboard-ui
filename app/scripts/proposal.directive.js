@@ -397,7 +397,7 @@ angular.module('dashboard')
             scope: {
                 proposal: '=',
                 guid: '=',
-                topicCitycouncil: '=',
+                topicCitycouncil: '&',
                 disableCreate: '=',
                 onRemove: '&',
                 onAdd: '&'
