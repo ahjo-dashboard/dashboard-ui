@@ -19,6 +19,7 @@ angular.module('dashboard')
             var personGuid = null;
             var topicGuid = null;
             var isCityCouncil = null;
+            self.newCityCouncil = null
             self.proposals = null;
             self.published = PROPS.PUBLISHED;
             self.isMobile = $rootScope.isMobile;
@@ -277,6 +278,7 @@ angular.module('dashboard')
                     personGuid = data.topic.userPersonGuid;
                     topicGuid = data.topic.topicGuid;
                     isCityCouncil = data.topic.isCityCouncil;
+                    self.newCityCouncil = data.topic.isCityCouncil;
                     getProposals(topicGuid);
                     self.isAllOpen = false;
                     self.btnText = 'STR_OPEN_ALL';
