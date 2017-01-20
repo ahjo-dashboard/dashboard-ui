@@ -298,7 +298,7 @@ angular.module('dashboard')
             };
 
             // INITIALISATION LOGIC
-            self.propTypes = getProposalTypes($scope.topiccityCouncil);
+            self.propTypes = getProposalTypes($scope.topicCitycouncil);
 
             setProposal($scope.proposal);
 
@@ -397,7 +397,7 @@ angular.module('dashboard')
             scope: {
                 proposal: '=',
                 guid: '=',
-                topiccityCouncil: '=',
+                topicCitycouncil: '=',
                 disableCreate: '=',
                 onRemove: '&',
                 onAdd: '&'

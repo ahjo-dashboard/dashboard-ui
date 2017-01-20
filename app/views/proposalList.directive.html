@@ -36,7 +36,7 @@
         </div>
 
         <ul ng-if="!c.error" class="list-group db-margin-1-btm">
-            <db-proposal ng-if="(p.isPublished === c.published.YES)" class="list-group-item" proposal="p" guid="guid" topiccity-council="data.topic.isCityCouncil"
+            <db-proposal ng-if="(p.isPublished === c.published.YES)" class="list-group-item" proposal="p" guid="guid" topic-citycouncil="data.topic.isCityCouncil"
                 disable-create="c.unsavedCount" on-remove="c.remove(data)" on-add="c.add(data)" ng-repeat="p in c.proposals | orderBy:'insertDateTime': true track by p.proposalGuid">
             </db-proposal>
         </ul>
