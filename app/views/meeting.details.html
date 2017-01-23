@@ -35,7 +35,8 @@
                     </button>
                     <button ng-show="c.topic.esitykset.length > 1" type="button" class="btn db-btn-sel db-btn-big db-brd-all db-margin-2 ng-class:{'active' : c.tData === c.presTransLang}"
                         ng-click="c.presClickedDesk(c.presTransLang)">
-                        <span translate translate-cloak>STR_TRANSLATION</span>
+                        <span ng-if="c.topicFIN" translate translate-cloak>STR_TRANSLATION_LANGUAGE_SV</span>
+                        <span ng-if="c.topicSV" translate translate-cloak>STR_TRANSLATION_LANGUAGE_FIN</span>
                     </button>
                 </div>
                 <button ng-if="c.pm !== c.pms.SECRET" type="button" title="{{'STR_OPEN_NEW_TAB' | translate}}" class="btn db-btn-prim db-btn-small db-brd-all db-margin-2 db-flex-right"

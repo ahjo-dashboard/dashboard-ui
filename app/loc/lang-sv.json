@@ -18,6 +18,8 @@
     "STR_CLOSED_SIGNINGS": "Behandlade underteckningar",
     "STR_SIGNING_REQ": "Dokument",
     "STR_TRANSLATION": "Översättning",
+    "STR_TRANSLATION_LANGUAGE_SV": "Svenska",
+    "STR_TRANSLATION_LANGUAGE_FIN": "Finska",
     "STR_SIGNING_TYPE": "Typ",
     "STR_CLEAR_SELECTION": "Töm val",
     "STR_SIGNEES_STATUSES": "Underteckningar",

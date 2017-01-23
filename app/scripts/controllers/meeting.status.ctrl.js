@@ -765,7 +765,7 @@ angular.module('dashboard')
 
         self.topicTitle = function topicTitle(aTopic) {
             var res = aTopic[$rootScope.locProp('topicTitle')];
-            if (!angular.isString(res) || !res.length) {
+            if (!angular.isString(res) || !res.length || aTopic.mixedLanguage) {
                 res = aTopic.topicTitle_fi;
             }
             return res;
