@@ -92,7 +92,8 @@
                     </button>
                     <button ng-if="c.presTransLang && (c.pm === c.pms.HIDDEN)" type="button" class="btn db-btn-sel db-btn-dyna db-brd-all ng-class:[{'db-margin-2':!c.isMobile, 'btn-block': c.isMobile},{'active':c.sm === c.sms.SECRET}]"
                         ng-disabled="!c.presTransLang.link" ng-click="c.presClickedMobile(c.presTransLang)">
-                        <span translate translate-cloak>STR_TRANSLATION</span>
+                        <span ng-if="c.topicFIN" translate translate-cloak>STR_TRANSLATION_LANGUAGE_SV</span>
+                        <span ng-if="c.topicSV" translate translate-cloak>STR_TRANSLATION_LANGUAGE_FIN</span>
                     </button>
                     <button type="button" class="btn db-btn-sel db-btn-dyna db-brd-all ng-class:[{'active':c.sm === c.sms.ATTACHMENTS},{'db-margin-2':!c.isMobile, 'btn-block': c.isMobile}]"
                         ng-disabled="!c.materialCount()" db-confirm confirm-enabled="c.hasUnsavedProposal || c.remarkIsUnsaved"

@@ -188,6 +188,10 @@ angular.module('dashboard')
 
                 self.header = topic[$rootScope.locProp('topicTitle')];                
                 self.tData = self.presPrimLang ? self.presPrimLang : self.presTransLang;
+                if (self.presPrimLang === null) {
+                    self.presPrimLang = self.presTransLang;
+                    self.presTransLang = null;
+                }
                 self.primaryUrl = (self.tData && self.tData.link) ? self.tData.link : {};
 
                 self.aData = ListData.createAttachmentList({ 'header': 'STR_ATTACHMENTS', 'title': self.header }, topic.attachment);
