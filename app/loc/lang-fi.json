@@ -18,6 +18,8 @@
     "STR_CLOSED_SIGNINGS": "Käsitellyt allekirjoitukset",
     "STR_SIGNING_REQ": "Asiakirja",
     "STR_TRANSLATION": "Käännös",
+    "STR_TRANSLATION_LANGUAGE_SV": "Suomi",
+    "STR_TRANSLATION_LANGUAGE_FIN": "Ruotsi",
     "STR_SIGNING_TYPE": "Tyyppi",
     "STR_CLEAR_SELECTION": "Tyhjennä valinta",
     "STR_SIGNEES_STATUSES": "Allekirjoitukset",

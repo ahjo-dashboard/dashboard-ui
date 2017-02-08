@@ -40,7 +40,7 @@ angular.module('dashboard')
         self.hasUnsavedData = false;
         self.parallelModeActive = false;
         self.unsavedConfig = { title: 'STR_CONFIRM', text: 'STR_WARNING_UNSAVED', yes: 'STR_CONTINUE' };
-        self.logoutConfig = { title: 'STR_CONFIRM', text: 'STR_MTG_LOGOUT_CONFIRM', yes: 'STR_CONTINUE' };
+        self.logoutConfig = { title: 'STR_CONFIRM', text: 'STR_MTG_LOGOUT_CONFIRM', yes: 'STR_YES', no: 'STR_NO'};
         self.meetingname1 = null;
         self.meetingname2 = null;
         
@@ -765,7 +765,7 @@ angular.module('dashboard')
 
         self.topicTitle = function topicTitle(aTopic) {
             var res = aTopic[$rootScope.locProp('topicTitle')];
-            if (!angular.isString(res) || !res.length) {
+            if (!angular.isString(res) || !res.length || aTopic.mixedLanguage) {
                 res = aTopic.topicTitle_fi;
             }
             return res;

@@ -21,6 +21,8 @@ angular.module('dashboard')
         self.primaryUrl = null;
         self.secondaryUrl = null;
         self.topic = null;
+        self.topicFIN = false; // Needed for multilanguage topics
+        self.topicSV = false; // Needed for multilanguage topics
         self.bms = CONST.BLOCKMODE;
         self.bm = CONST.BLOCKMODE.DEFAULT; // State of view, which block(s) displayed
         self.pms = CONST.PRIMARYMODE;
@@ -137,10 +139,59 @@ angular.module('dashboard')
             if (angular.isObject(topic)) {
                 self.isCityCouncil = topic.isCityCouncil;
                 self.topic = topic;
-                self.header = topic[$rootScope.locProp('topicTitle')];
-                self.presPrimLang = createPresentation(self.topic, $rootScope.dbLang);
-                self.presTransLang = createPresentation(self.topic, $rootScope.getDbLangTrans());
+                // Lautakunnat
+                if (topic.mixedLanguage){
+                    var mixedLangTrans;
+                    // Asian kieli ruotsi
+                    if (topic.language === 'sv') {
+                        mixedLangTrans = 'fi';
+                        self.topicSV = false;
+                        self.topicFIN = true;
+                        // Jos käyttöliittymä ruotsi
+                        if ($rootScope.dbLang === "sv") {
+                            self.topicSV = true;
+                            self.topicFIN = false;
+                        }
+                        
+                    }
+                    //Asian kieli suomi
+                    else {
+                        //self.presPrimLang = createPresentation(self.topic, $rootScope.dbLang);
+                        self.topicFIN = true;
+                        self.topicSV = false;
+                    }
+                    //Käyttöliittymä suomen kielinen
+                    if ($rootScope.dbLang === "sv") {
+                        self.presPrimLang = createPresentation(self.topic, mixedLangTrans);
+                        self.presTransLang = createPresentation(self.topic, topic.language);
+                    }
+                    else {
+                        self.presPrimLang = createPresentation(self.topic, $rootScope.dbLang);
+                        self.presTransLang = createPresentation(self.topic, $rootScope.getDbLangTrans());
+                    }
+
+                }
+                // Valtuusto
+                else {
+                    self.presPrimLang = createPresentation(self.topic, $rootScope.dbLang);
+                    self.presTransLang = createPresentation(self.topic, $rootScope.getDbLangTrans());
+                    self.header = topic[$rootScope.locProp('topicTitle')];
+                    if ($rootScope.dbLang === 'fi') {
+                        self.topicSV = true;
+                        self.topicFIN = false;
+                    }
+                    else {
+                        self.topicFIN = false;
+                        self.topicSV = true;
+                    }
+                }
+
+                self.header = topic[$rootScope.locProp('topicTitle')];                
                 self.tData = self.presPrimLang ? self.presPrimLang : self.presTransLang;
+                if (self.presPrimLang === null) {
+                    self.presPrimLang = self.presTransLang;
+                    self.presTransLang = null;
+                }
                 self.primaryUrl = (self.tData && self.tData.link) ? self.tData.link : {};
 
                 self.aData = ListData.createAttachmentList({ 'header': 'STR_ATTACHMENTS', 'title': self.header }, topic.attachment);
