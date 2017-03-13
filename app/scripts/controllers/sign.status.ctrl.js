@@ -118,8 +118,8 @@ app.controller('signStatusCtrl', function ($log, $scope, $state, SigningAttApi, 
             btnModel.att.hideBtn = true;
         }
 
-        btnModel.rej.strId = ("DocumentType" in aItem) && (aItem.DocumentType === CONST.ESIGNTYPE.OFFICIAL.value) ? 'STR_RETURN' : 'STR_REJECT';
-        btnModel.rej.cConf.text = ("DocumentType" in aItem) && (aItem.DocumentType === CONST.ESIGNTYPE.OFFICIAL.value) ? 'STR_CNFM_SIGN_RET' : 'STR_CNFM_SIGN_REJ';
+        btnModel.rej.strId = ("DocumentType" in aItem) && ((aItem.DocumentType === CONST.ESIGNTYPE.OFFICIAL.value) || (aItem.DocumentType === CONST.ESIGNTYPE.POLICYMAKER_MAJOR.value)) ? 'STR_RETURN' : 'STR_REJECT';
+        btnModel.rej.cConf.text = ("DocumentType" in aItem) && ((aItem.DocumentType === CONST.ESIGNTYPE.OFFICIAL.value) || (aItem.DocumentType === CONST.ESIGNTYPE.POLICYMAKER_MAJOR.value)) ? 'STR_CNFM_SIGN_RET' : 'STR_CNFM_SIGN_REJ';
 
         if (angular.isString(aItem.TranslationGuid) && aItem.TranslationGuid.length) {
             self.btnModel.doctr.url = ENV.SIGNAPIURL_DOC_TRANSLATED.replace(':reqId', aItem.ProcessGuid).replace(':transId', true).replace(':attId', '');

@@ -165,7 +165,7 @@ angular.module('dashboard')
             * @returns {boolean} True if item qualified, false if filtered out.
             */
             function filterOutClosedOfficials(aItem) {
-                return angular.isObject(aItem) && !(angular.equals(aItem.DocumentType, CONST.ESIGNTYPE.OFFICIAL.value) && (angular.equals(aItem.Status, CONST.ESIGNSTATUS.RETURNED.value) || angular.equals(aItem.Status, CONST.ESIGNSTATUS.REJECTED.value)) );
+                return angular.isObject(aItem) && !((angular.equals(aItem.DocumentType, CONST.ESIGNTYPE.OFFICIAL.value) && angular.equals(aItem.DocumentType, CONST.ESIGNTYPE.POLICYMAKER_MAJOR.value)) && (angular.equals(aItem.Status, CONST.ESIGNSTATUS.RETURNED.value) || angular.equals(aItem.Status, CONST.ESIGNSTATUS.REJECTED.value)) );
             }
 
             function filterOfficials(aItem) {
@@ -174,6 +174,10 @@ angular.module('dashboard')
 
             function filterPolicymakers(aItem) {
                 return angular.isObject(aItem) && (aItem.DocumentType === CONST.ESIGNTYPE.POLICYMAKER.value);
+            }
+
+            function filterPolicymakerMajors(aItem) {
+                return angular.isObject(aItem) && (aItem.DocumentType === CONST.ESIGNTYPE.POLICYMAKER_MAJOR.value);
             }
 
             function cmpDate(a, b) {
@@ -205,8 +209,11 @@ angular.module('dashboard')
                     off.sort(cmpDate);
                     var poli = aArr.filter(filterPolicymakers);
                     off.sort(cmpDate);
+                    var poliMajor = aArr.filter(filterPolicymakerMajors);
+                    off.sort(cmpDate);
                     Array.prototype.push.apply(res, poli);
                     Array.prototype.push.apply(res, off);
+                    Array.prototype.push.apply(res, poliMajor);
                 } else {
                     $log.error("adOpenSignreqs.sortDocs: bad args ", arguments);
                 }
