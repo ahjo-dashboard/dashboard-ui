@@ -52,6 +52,7 @@
     "STR_SIGNING_INITIATED": "Allekirjoituskierros aloitettu",
     "STR_SIGNING_DOC_POLICYMAKER": "Toimielimen pöytäkirja",
     "STR_SIGNING_DOC_OFFICIAL": "Viranhaltijapäätös",
+    "STR_SIGNING_DOC_POLICYMAKER_MAJOR": "Luottamushenkilön päätös",
     "STR_SIGNING_ACCEPT": "Allekirjoita",
     "STR_SIGNING_REMOVE": "Poista allekirjoitus",
     "STR_SUBMIT_MOTION": "Jätä aloite",
