@@ -1,0 +1,165 @@
+<div class="ad-page">
+
+    <div ng-if="c.isMobile" class="ad-page-header db-center-v">
+        <button type="button" class="btn db-btn-prim" ng-click="goBack()">
+            <div class="db-glyph" ng-include="'images/glyph-back.svg'"></div>
+        </button>
+        <h4 translate translate-cloak>STR_TOPIC</h4>
+    </div>
+
+    <div class="ng-class:[{'ad-page-container-flex-row':parallelMode && !c.isMobile},{'ad-page-container-flex':!parallelMode && !c.isMobile},{'ad-page-container-flex':!parallelMode && !c.isMobile},{'ad-page-content':c.isMobile}]">
+
+        <!-- PRIMARY BLOCK START -->
+        <div ng-if="c.pm === c.pms.DEFAULT || c.pm === c.pms.SECRET" class="db-block ng-class:[{'db-block-close db-brd-all':c.bm === c.bms.SECONDARY},{'db-block-open':c.bm !== c.bms.SECONDARY},{'db-margin-05':!c.isMobile}]">
+
+            <!-- PRIMARY BLOCK HEADER -->
+            <div class="db-flex db-flex-wrap db-prim-bg db-brd-top db-padding-2">
+                <div class="btn-group db-flex-area">
+                    <button ng-if="menuClosed()" type="button" title="{{'STR_INFO_MENUBTN' | translate}}" class="btn db-btn-prim db-btn-small db-brd-all db-margin-2"
+                        ng-click="openMenu()">
+                        <div class="db-center">
+                            <div class="db-glyph db-glyph-sm" ng-include="'images/glyph-menu-toggle.svg'"></div>
+                        </div>
+                    </button>
+                    <button ng-if="menuClosed()" type="button" title="{{parallelMode ? 'STR_INFO_VIEW_VERT' : 'STR_INFO_VIEW_HORIZ' | translate}}"
+                        class="btn db-btn-prim db-btn-small db-brd-all db-margin-2" ng-click="c.toggleParallelMode()">
+                        <div class="db-center">
+                            <div class="db-glyph-sm db-overflow-hidden">
+                                <div class="db-glyph db-glyph-sm" ng-include="parallelMode ? 'images/glyph-parallel.svg' : 'images/glyph-vertical.svg'"></div>
+                            </div>
+                        </div>
+                    </button>
+                    <button ng-show="c.topic.esitykset.length > 1" type="button" class="btn db-btn-sel db-btn-big db-brd-all db-margin-2 ng-class:[{'active' : c.tData === c.presPrimLang}]"
+                        ng-click="c.presClickedDesk(c.presPrimLang)">
+                        <span translate translate-cloak>STR_PRESENTATION</span>
+                    </button>
+                    <button ng-show="c.topic.esitykset.length > 1" type="button" class="btn db-btn-sel db-btn-big db-brd-all db-margin-2 ng-class:{'active' : c.tData === c.presTransLang}"
+                        ng-click="c.presClickedDesk(c.presTransLang)">
+                        <span ng-if="c.topicFIN" translate translate-cloak>STR_TRANSLATION_LANGUAGE_SV</span>
+                        <span ng-if="c.topicSV" translate translate-cloak>STR_TRANSLATION_LANGUAGE_FIN</span>
+                    </button>
+                </div>
+                <button ng-if="c.pm !== c.pms.SECRET" type="button" title="{{'STR_OPEN_NEW_TAB' | translate}}" class="btn db-btn-prim db-btn-small db-brd-all db-margin-2 db-flex-right"
+                    ng-click="c.newTab(c.tData.link)" ng-disabled="!c.tData || !c.tData.link">
+                    <div class="db-center">
+                        <div class="db-glyph db-glyph-sm" ng-include="'images/glyph-open-new.svg'"></div>
+                    </div>
+                </button>
+                <button type="button" title="{{'STR_EXPANDCOLLAPSE' | translate}}" class="btn db-btn-prim db-btn-small db-brd-all db-margin-2 db-flex-right"
+                    ng-click="c.primaryClicked()">
+                    <div class="db-center">
+                        <div class="db-glyph db-glyph-sm" ng-include="c.bm === c.bms.PRIMARY ? 'images/glyph-expand-minus.svg' : 'images/glyph-expand-plus.svg'"></div>
+                    </div>
+                </button>
+            </div>
+
+            <!-- PRIMARY BLOCK CONTENT -->
+            <div ng-hide="c.topicDelay" class="db-block-content db-block-border db-brd-bottom">
+                <db-pdf ng-if="(c.pm === c.pms.DEFAULT ) && c.primaryUrl" ng-attr-uri="c.primaryUrl"></db-pdf>
+                <db-imgviewer ng-if="(c.pm === c.pms.SECRET) && c.tData" file-conf="c.tData"></db-imgviewer>
+            </div>
+
+        </div>
+        <!-- PRIMARY BLOCK END -->
+
+        <!-- SECONDARY BLOCK START -->
+        <div class="db-block ng-class:[{'db-block-close db-brd-all':c.bm === c.bms.PRIMARY},{'db-block-open':c.bm !== c.bms.PRIMARY},{'db-margin-05':!c.isMobile}]">
+
+            <div ng-if="c.isMobile && c.header" class="list-group db-no-margin">
+                <H5 class="db-list-group-item-prim db-truncate" ng-cloak>{{c.header}}</H5>
+            </div>
+
+            <!-- SECONDARY BLOCK HEADER -->
+            <div class="db-prim-bg ng-class:[{'list-group db-no-margin db-padding-10 db-brd-all':c.isMobile},{'db-flex db-flex-wrap db-prim-bg db-brd-top db-padding-2':!c.isMobile}]">
+                <div class="btn-group db-no-padding db-flex-area">
+                    <button ng-if="menuClosed() && (c.pm === c.pms.HIDDEN || c.bm === c.bms.SECONDARY)" type="button" title="{{'STR_INFO_MENUBTN' | translate}}"
+                        class="btn db-btn-prim db-btn-small db-brd-all db-margin-2" ng-click="openMenu()">
+                        <div class="db-center">
+                            <div class="db-glyph db-glyph-sm" ng-include="'images/glyph-menu-toggle.svg'"></div>
+                        </div>
+                    </button>
+                    <button ng-if="menuClosed() && c.bm === c.bms.SECONDARY" type="button" title="{{parallelMode ? 'STR_INFO_VIEW_VERT' : 'STR_INFO_VIEW_HORIZ' | translate}}"
+                        class="btn db-btn-prim db-btn-small db-brd-all db-margin-2" ng-click="c.toggleParallelMode()">
+                        <div class="db-center">
+                            <div class="db-glyph-sm db-overflow-hidden">
+                                <div class="db-glyph db-glyph-sm" ng-include="parallelMode ? 'images/glyph-parallel.svg' : 'images/glyph-vertical.svg'"></div>
+                            </div>
+                        </div>
+                    </button>
+                    <button ng-if="c.presPrimLang && (c.pm === c.pms.HIDDEN)" type="button" class="btn db-btn-sel db-btn-dyna db-brd-all ng-class:[{'db-margin-2':!c.isMobile, 'btn-block': c.isMobile},{'active':c.sm === c.sms.SECRET}]"
+                        ng-disabled="!c.presPrimLang.link" ng-click="c.presClickedMobile(c.presPrimLang)">
+                        <span translate translate-cloak>STR_PRESENTATION</span>
+                    </button>
+                    <button ng-if="c.presTransLang && (c.pm === c.pms.HIDDEN)" type="button" class="btn db-btn-sel db-btn-dyna db-brd-all ng-class:[{'db-margin-2':!c.isMobile, 'btn-block': c.isMobile},{'active':c.sm === c.sms.SECRET}]"
+                        ng-disabled="!c.presTransLang.link" ng-click="c.presClickedMobile(c.presTransLang)">
+                        <span ng-if="c.topicFIN" translate translate-cloak>STR_TRANSLATION_LANGUAGE_SV</span>
+                        <span ng-if="c.topicSV" translate translate-cloak>STR_TRANSLATION_LANGUAGE_FIN</span>
+                    </button>
+                    <button type="button" class="btn db-btn-sel db-btn-dyna db-brd-all ng-class:[{'active':c.sm === c.sms.ATTACHMENTS},{'db-margin-2':!c.isMobile, 'btn-block': c.isMobile}]"
+                        ng-disabled="!c.materialCount()" db-confirm confirm-enabled="c.hasUnsavedProposal || c.remarkIsUnsaved"
+                        confirm-config="c.unsavedConfig" ng-click="c.attachmentClicked()">
+                        <span translate translate-cloak>STR_OTHER_MATERIAL</span>
+                        <span title="{{'STR_ALL_ATT_COUNT' | translate}}" class="badge ng-cloak ng-class:[{'db-font-clr-dark': c.materialCount()}]">{{c.materialCount()}}</span>
+                    </button>
+                    <button type="button" class="btn db-btn-sel db-btn-dyna db-brd-all ng-class:[{'active':c.sm === c.sms.PROPOSALS},{'db-margin-2':!c.isMobile, 'btn-block': c.isMobile}]"
+                        db-confirm confirm-enabled="c.hasUnsavedProposal || c.remarkIsUnsaved" confirm-config="c.unsavedConfig"
+                        ng-click="c.proposalsClicked()">
+                        <div class="db-center">
+                            <div class="db-truncate" translate translate-cloak>STR_PROPOSALS</div>
+                            <div ng-if="c.topic.db_publishedProposalCount >= 0" title="{{'STR_PROP_PUB_COUNT' | translate}}" class="badge ng-cloak db-font-clr-dark db-margin-10-hor">
+                                {{c.topic.db_publishedProposalCount}}
+                            </div>
+                            <div ng-show="c.topic.isModified" title="{{'STR_INFO_NEW_PROPS' | translate}}" class="db-glyph db-glyph-sm db-glyph-ora" ng-include="'images/glyph-bell.svg'"></div>
+                        </div>
+                    </button>
+                    <button type="button" class="btn db-btn-sel db-btn-dyna db-brd-all ng-class:[{'active':c.sm === c.sms.REMARK},{'db-margin-2':!c.isMobile, 'btn-block': c.isMobile}]"
+                        db-confirm confirm-enabled="c.hasUnsavedProposal || c.remarkIsUnsaved" confirm-config="c.unsavedConfig"
+                        ng-click="c.remarkClicked()">
+                        <span translate translate-cloak>STR_REMARK</span>
+                    </button>
+                    <button ng-if="c.isChairman" type="button" class="btn db-btn-sel db-btn-dyna db-brd-all ng-class:[{'active':c.sm === c.sms.DECISIONS},{'db-margin-2':!c.isMobile, 'btn-block': c.isMobile}]"
+                        db-confirm confirm-enabled="c.hasUnsavedProposal || c.remarkIsUnsaved" confirm-config="c.unsavedConfig"
+                        ng-click="c.decisionsClicked()">
+                        <span translate translate-cloak>STR_DECISIONS</span>
+                    </button>
+                    <button ng-show="c.isCityCouncil" type="button" class="btn db-btn-sel db-btn-dyna db-brd-all ng-class:[{'active':c.sm === c.sms.MOTIONS},{'db-margin-2':!c.isMobile, 'btn-block': c.isMobile}]"
+                        db-confirm confirm-enabled="c.hasUnsavedProposal || c.remarkIsUnsaved" confirm-config="c.unsavedConfig"
+                        ng-click="c.motionsClicked()">
+                        <span translate translate-cloak>STR_MOTIONS</span>
+                        <span ng-if="c.motionCount" title="{{'STR_ALL_ATT_COUNT' | translate}}" class="badge ng-cloak ng-class:{'db-font-clr-dark': c.motionCount}">{{c.motionCount}}</span>
+                    </button>
+                    <button ng-show="c.isCityCouncil" type="button" class="btn db-btn-sel db-btn-dyna db-brd-all db-center-hor ng-class:[{'db-margin-2':!c.isMobile, 'btn-block': c.isMobile}]" ng-click="c.motionsAppClicked()">
+                        <div class="db-center">
+                            <div translate translate-cloak>STR_MOTIONS_OPEN_APP</div>
+                            <div class="db-glyph db-glyph-sm db-glyph-dark" ng-include="'images/glyph-open-new.svg'"></div>
+                        </div>
+                    </button>
+                </div>
+                <button ng-if="c.pm !== c.pms.HIDDEN" type="button" title="{{'STR_EXPANDCOLLAPSE' | translate}}" class="btn btn-block db-btn-prim db-btn-small db-brd-all db-flex-right ng-class:[{'db-margin-2':!c.isMobile}]"
+                    ng-click="c.secondaryClicked()">
+                    <div class="db-center">
+                        <div class="db-glyph db-glyph-sm" ng-include="c.bm === c.bms.SECONDARY ? 'images/glyph-expand-minus.svg' : 'images/glyph-expand-plus.svg'"></div>
+                    </div>
+                </button>
+            </div>
+
+            <!-- SECONDARY BLOCK CONTENT -->
+            <div ng-hide="c.selData || c.topicDelay" class="db-block-content db-brd-bottom ng-class:[{'db-block-border':!c.isMobile},{'db-padding-15':c.isMobile}]">
+                <db-pdf ng-if="!c.isMobile && (c.sm === c.sms.ATTACHMENTS || c.sm === c.sms.MATERIALS) && !c.isSecret(c.secondaryAtt)" ng-attr-uri="c.secondaryUrl"></db-pdf>
+                <db-imgviewer ng-if="(c.sm === c.sms.ATTACHMENTS || c.sm === c.sms.MATERIALS) && c.isSecret(c.secondaryAtt)" file-conf="c.secondaryAtt"></db-imgviewer>
+                <db-imgviewer ng-if="c.sm === c.sms.SECRET" file-conf="c.tData"></db-imgviewer>
+                <db-remark ng-if="c.sm === c.sms.REMARK" topic="c.topic"></db-remark>
+                <db-proposal-list ng-show="c.sm === c.sms.PROPOSALS" topic="c.topic"></db-proposal-list>
+                <db-decisions ng-if="c.sm === c.sms.DECISIONS"></db-decisions>
+                <db-motions ng-if="c.sm === c.sms.MOTIONS"></db-motions>
+            </div>
+            <div ng-hide="!c.selData" class="db-block-content db-brd-bottom ng-class:[{'db-block-border':!c.isMobile},{'db-padding-15':c.isMobile}]">
+                <db-selection-list ng-attr-sel-data="c.selData" ng-attr-on-select="c.selectionClicked(data)"></db-selection-list>
+            </div>
+
+        </div>
+        <!-- SECONDARY BLOCK END -->
+
+    </div>
+
+</div>

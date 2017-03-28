@@ -1,0 +1,72 @@
+<div class="db-directive">
+
+    <div class="db-hdr-l2 db-flex-col db-no-padding">
+
+        <div class="db-center db-flex-wrap">
+
+            <div class="db-hdr-l2-grp">
+
+                <div class="db-hdr-l2-item">
+                    <div title="{{'STR_INFO_CONFIDENTIAL' | translate}}" class="db-hdr-l2-item db-margin-10-left">
+                        <div class="db-glyph db-glyph-conf db-center" ng-include="'images/glyph-lock.svg'"></div>
+                    </div>
+                    <button type="button" class="btn db-btn-prim btn-md" ng-click="c.pageChanged(1)" ng-disabled="c.currPage === 1 || !c.pages.length">
+                        <div class="db-glyph db-glyph-sm" ng-include="'images/glyph-triangle-left-double.svg'"></div>
+                    </button>
+                    <button type="button" class="btn db-btn-prim btn-md" ng-click="c.pageChanged(c.currPage - 1)" ng-disabled="c.currPage === 1 || !c.pages.length">
+                        <div class="db-glyph db-glyph-sm" ng-include="'images/glyph-triangle-left.svg'"></div>
+                    </button>
+                </div>
+
+                <div class="db-hdr-l2-item">
+                    <input type="number" class="db-imgvw-input db-input-nospin" width="100px" ng-model="c.currPage" min="1" max="{{c.pages.length}}"
+                        ng-change="c.pageChanged(c.currPage)" required ng-disabled="!c.pages.length || c.pages.length === 1">
+                </div>
+
+                <div class="db-hdr-l2-item">
+                    <button type="button" class="btn db-btn-prim btn-md" ng-click="c.pageChanged(c.currPage + 1)" ng-disabled="c.currPage >= c.pages.length">
+                    <div class="db-glyph db-glyph-sm" ng-include="'images/glyph-triangle-right.svg'"></div>
+                </button>
+
+                    <button type="button" class="btn db-btn-prim btn-md db-center" ng-click="c.pageChanged(c.pages.length)" ng-disabled="c.currPage >= c.pages.length">
+                    <div class="db-center db-flex-nowrap">
+                        <div class="db-glyph db-glyph-sm" ng-include="'images/glyph-triangle-right-double.svg'"></div>
+                        <h6 ng-if="c.pages.length > 1" class="db-margin-05-left">({{c.pages.length}})</h6>
+                    </div>
+                </button>
+                </div>
+
+            </div>
+
+            <div class="db-hdr-l2-grp">
+
+                <div class="db-hdr-l2-item">
+                    <button type="button" class="btn db-btn-prim btn-md" ng-click="c.imgZoom(true)" ng-disabled="!c.pages.length || !c.currPage">
+                    <div class="db-glyph db-glyph-sm" ng-include="'images/glyph-zoom-out.svg'"></div>
+                </button>
+                </div>
+
+                <div class="db-hdr-l2-item">
+                    <input type="number" class="db-imgvw-input db-input-nospin-xs" width="100px" ng-model="c.zoomLvl" min="{{c.imgZoomMin}}"
+                        max="{{c.imgZoomMax}}" required ng-disabled="!c.pages.length || !c.currPage">
+                </div>
+
+                <div class="db-hdr-l2-item">
+                    <button type="button" class="btn db-btn-prim btnmd" ng-click="c.imgZoom(false)" ng-disabled="!c.pages.length || !c.currPage">
+                    <div class="db-glyph db-glyph-sm" ng-include="'images/glyph-zoom-in.svg'"></div>
+                </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div ng-show="c.loadingImg" class="db-spinner-cont">
+        <span us-spinner spinner-on="c.loadingImg"></span>
+    </div>
+
+    <div class="db-conf-att-img db-overflow">
+        <img style="visibility: hidden;" onload="this.style.visibility = 'visible';" ng-if="c.pageData && c.pageData.obj && c.pageData.obj.fileContents" ng-src="data:{{c.pageData.obj.contentType}};base64,{{c.pageData.obj.fileContents}}"
+            ng-attr-style="width: {{c.zoomLvl}}%">
+    </div>
+
+</div>

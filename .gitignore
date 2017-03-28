@@ -1,6 +1,7 @@
 # General
 .DS_Store
 *.log
+*.zip
 
 # Build time files and build results
 node_modules/
@@ -9,6 +10,7 @@ dist/
 .tmp/
 .sass-cache/
 app.env.js
+typings/
 
 # Ignore folder for private conf files
 custom

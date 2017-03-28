@@ -1,0 +1,122 @@
+<div class="db-directive db-spinner-cont">
+
+    <span us-spinner spinner-on="c.loading"></span>
+
+    <div ng-if="c.errorCode" uib-alert ng-class="'alert-danger'">
+        <span translate translate-cloak>STR_FAIL_LOADING</span>
+        <br>
+        <span translate translate-cloak>STR_TRY_LATER</span>
+    </div>
+
+    <div class="db-min-width-300">
+        <ul ng-if="!c.errorCode" class="list-group db-margin-1-btm" ng-repeat="d in c.types | orderBy : 'decisionOrder' track by $index">
+            <h5 class="db-font-clr-white db-prim-bg db-padding-10 db-brd-top">
+                <span translate translate-cloak>{{d.strId}}</span>
+                <span class="badge db-badge-hdr db-margin-05-hor">{{filtered.length}}</span>
+            </h5>
+            <div class="list-group-item db-padding-10-hor" ng-repeat="i in c.record | orderBy : 'insertDateTime' | filter: { type: d.value } | filter:query as filtered track by $index">
+                <div class="db-flex db-center-v" ng-click="c.selectRecord(i)">
+                    <div class="db-flex-area">
+                        <i>{{i.name}}</i>
+                        <span class="db-margin-10-left" ng-if="i.proposalOrdernumber">/{{i.proposalOrdernumber}}</span>
+                    </div>
+                    <div ng-show="i.isModified === true" title="{{'STR_INFO_DECISION_UPDATED' | translate}}" class="db-glyph db-glyph-sm db-glyph-ora db-margin-05-right"
+                        ng-include="'images/glyph-bell.svg'"></div>
+                    <div ng-show="i.entrySupporters.length" title="{{'STR_SUPPORTED' | translate}}" class="db-glyph db-glyph-sm db-glyph-info db-margin-05-right"
+                        ng-include="'images/glyph-like.svg'"></div>
+                    <span title="{{'STR_EXPANDCOLLAPSE' | translate}}" class="db-glyph db-glyph-sm db-glyph-dark db-margin-10-right" ng-include="!c.isSelectedRecord(i) ? 'images/glyph-expand.svg' : 'images/glyph-minimize.svg'"></span>
+                </div>
+                <div class="panel-collapse collapse" uib-collapse="!c.isSelectedRecord(i)">
+                    <div class="db-padding-10-hor db-margin-05-top">
+                        <span translate translate-cloak>STR_SROLE_SUPPORTER</span>:<span ng-repeat="s in i.entrySupporters | filter: { minuteEntryGuid: i.minuteEntryGuid }  | filter:query as filtered2 track by $index">
+                            <span ng-if="0 < $index">, </span>
+                        <span class="db-margin-05-left">{{s.name}}</span></span><span ng-if="filtered2.length === 0" class="db-margin-05-left">-</span>
+                    </div>
+                    <textarea db-textarea class="db-margin-05-ver db-padding-10 db-textarea db-brd-all ng-class:{ 'db-overflow-hidden': !c.isIe }"
+                        readonly ng-model="i.text_fi"></textarea>
+                    <div ng-if="i.text_sv" class="db-padding-10-hor"><span translate translate-cloak>STR_TRANSLATION</span>:</div>
+                    <textarea ng-if="i.text_sv" db-textarea class="db-margin-05-ver db-padding-10 db-textarea db-brd-all ng-class:{ 'db-overflow-hidden': !c.isIe }"
+                        readonly ng-model="i.text_sv"></textarea>
+                </div>
+            </div>
+        </ul>
+
+        <!-- VOTINGS -->
+        <ul ng-if="!c.errorCode" class="list-group db-margin-1-btm">
+            <!-- Votings header-->
+            <div class="db-font-clr-white db-prim-bg db-padding-10 db-brd-top">
+                <div class="db-flex">
+                    <div class="db-flex-area">
+                        <h5>{{'STR_VOTINGS' | translate}}
+                            <span ng-if="votingsWithVotes" class="badge db-badge-hdr db-margin-05-hor">{{votingsWithVotes.length}}</span>
+                        </h5>
+                    </div>
+                    <div ng-if="votingsWithVotes.length" class="db-voting-res-col db-center">
+                        <span translate translate-cloak>STR_VOTE_YEA</span>
+                    </div>
+                    <div ng-if="votingsWithVotes.length" class="db-voting-res-col db-center">
+                        <span translate translate-cloak>STR_VOTE_NAY</span>
+                    </div>
+                    <div ng-if="votingsWithVotes.length" class="db-voting-res-col db-center">
+                        <span translate translate-cloak>STR_VOTE_EMPTY</span>
+                    </div>
+                    <div ng-if="votingsWithVotes.length" class="db-voting-res-col db-center">
+                        <span translate translate-cloak>STR_VOTE_ABSENT</span>
+                    </div>
+                    <div ng-if="votingsWithVotes.length" class="db-glyph db-glyph-sm db-margin-10-right">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Voting item -->
+            <div class="list-group-item db-padding-0-hor" ng-repeat="v in c.voting | filter: { hasVotes: true } | filter:query as votingsWithVotes track by $index">
+                <div class="db-flex db-padding-05 db-padding-10-hor ng-class:{'db-fw-700': c.isSelectedVoting(v)}" ng-click="c.selectVoting(v)">
+                    <div class="db-flex-area ng-class:{'db-truncate': !c.isSelectedVoting(v)}">
+                        <div title="{{c.getVotingTitle(v)}}" class="db-flex-area ng-class:{'db-truncate': !c.isSelectedVoting(v)}">{{c.getVotingTitle(v)}}</div>
+                    </div>
+                    <div class="db-voting-res-col db-center ng-class:{'db-badge-gre': yesVotes > noVotes }">
+                        <span>{{ yesVotes = (v.voteList | filter: { vote: 1 }).length }}</span>
+                    </div>
+                    <div class="db-voting-res-col db-center ng-class:{'db-badge-red': yesVotes < noVotes }">
+                        {{ noVotes = (v.voteList | filter: { vote: 2 }).length}}
+                    </div>
+                    <div class="db-voting-res-col db-center">
+                        {{ (v.voteList | filter: { vote: 3 }).length }}
+                    </div>
+                    <div class="db-voting-res-col db-center">
+                        {{ (v.voteList | filter: { vote: 4 }).length }}
+                    </div>
+
+                    <div title="{{'STR_EXPANDCOLLAPSE' | translate}}" class="db-glyph db-glyph-sm db-glyph-dark db-margin-10-right" ng-include="!c.isSelectedVoting(v) ? 'images/glyph-expand.svg' : 'images/glyph-minimize.svg'"></div>
+                </div>
+
+                <!-- Voting item details -->
+
+                <ul class="list-group panel-collapse collapse db-no-margin" uib-collapse="!c.isSelectedVoting(v)">
+                    <button type="button" ng-repeat="vl in v.voteList | orderBy:vl:false:c.chairmanComparator track by $index" class="list-group-item db-flex db-padding-05-ver">
+                        <div class="db-flex-area db-center-v">
+                            <div class="db-break-hyphen">{{vl.personName}}</div>
+                            <div ng-if="vl.isChairman" class="db-glyph db-glyph-sm db-glyph-info db-margin-10-left" ng-include="'images/glyph-chairman.svg'" title="{{'STR_SROLE_CM' | translate}}"></div>
+                        </div>
+                        <div class="db-voting-res-col db-center ng-class:{'db-bg-green': vl.vote===1, 'hidden-xs': vl.vote!==1}">
+                            <span ng-if="vl.vote===1"><span class="db-padding-05" translate translate-cloak>STR_VOTE_YEA</span></span>
+                        </div>
+                        <div class="db-voting-res-col db-center ng-class:{'db-badge-red': vl.vote===2, 'hidden-xs': vl.vote!==2}">
+                            <span ng-if="vl.vote===2"><span class="db-padding-05" translate translate-cloak>STR_VOTE_NAY</span></span>
+                        </div>
+                        <div class="db-voting-res-col db-center ng-class:{'db-badge-dark': vl.vote===3, 'hidden-xs': vl.vote!==3}">
+                            <span ng-if="vl.vote===3"><span class="db-padding-05" translate translate-cloak>STR_VOTE_EMPTY</span></span>
+                        </div>
+                        <div class="db-voting-res-col db-center ng-class:{'hidden-xs': vl.vote!==4}">
+                            <span ng-if="vl.vote===4"><span class="db-padding-05" translate translate-cloak>STR_VOTE_ABSENT</span></span>
+                        </div>
+                        <div class="hidden-xs">
+                            <div class="db-glyph db-glyph-sm"></div>
+                        </div>
+                    </button>
+                </ul>
+            </div>
+        </ul>
+    </div>
+
+</div>

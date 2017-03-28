@@ -1,0 +1,46 @@
+<div class="proposal-list db-directive db-spinner-cont">
+    <span us-spinner spinner-on="c.loading"></span>
+
+    <div ng-show="!c.loading" class="db-min-width-300">
+
+        <div ng-if="c.error" uib-alert class="alert-danger">
+            <div class="db-flex db-center-v">
+                <div class="db-glyph db-glyph-error" ng-include="'images/glyph-error.svg'"></div>
+                <div class="db-margin-10-left" translate translate-cloak>STR_FAIL_LOADING</div>
+            </div>
+        </div>
+
+        <div ng-if="!c.error" class="db-prop-hdr db-brd-top">
+
+            <h4 ng-if="c.isMobile" class="db-prop-hdr-text" translate translate-cloak>STR_PRIVATE_PROPOSALS</h4>
+            <h5 ng-if="!c.isMobile" class="db-prop-hdr-text" translate translate-cloak>STR_PRIVATE_PROPOSALS</h5>
+
+            <button id="typeButton" type="button" ng-disabled="c.unsavedCount" class="btn btn-block db-btn-sel db-btn-big" ng-click="c.addProposalClicked()"
+                translate translate-cloak>STR_CREATE_PROPOSAL</button>
+
+        </div>
+
+        <ul ng-if="!c.error" class="list-group db-margin-1-btm">
+            <db-proposal ng-if="(p.isPublished === c.published.NO || p.isPublished === null)" class="list-group-item" proposal="p" guid="guid" topic-citycouncil="topic.isCityCouncil"
+                disable-create="c.unsavedCount" on-remove="c.remove(data)" on-add="c.add(data)" ng-repeat="p in c.proposals track by p.proposalGuid">
+            </db-proposal>
+        </ul>
+
+        <div ng-if="!c.error" class="db-prop-hdr db-brd-top">
+
+            <h4 ng-if="c.isMobile" class="db-prop-hdr-text" translate translate-cloak>STR_PUBLIC_PROPOSALS</h4>
+            <h5 ng-if="!c.isMobile" class="db-prop-hdr-text" translate translate-cloak>STR_PUBLIC_PROPOSALS</h5>
+
+            <button type="button" class="btn btn-block db-btn-sel db-btn-big" ng-disabled="!c.publishedCount" ng-click="c.toggleAll()"><span translate translate-cloak>{{c.btnText}}</span></button>
+
+        </div>
+
+        <ul ng-if="!c.error" class="list-group db-margin-1-btm">
+            <db-proposal ng-if="(p.isPublished === c.published.YES)" class="list-group-item" proposal="p" guid="guid" topic-citycouncil="topic.isCityCouncil"
+                disable-create="c.unsavedCount" on-remove="c.remove(data)" on-add="c.add(data)" ng-repeat="p in c.proposals | orderBy:'insertDateTime': true track by p.proposalGuid">
+            </db-proposal>
+        </ul>
+
+    </div>
+
+</div>

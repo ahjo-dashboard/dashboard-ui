@@ -20,8 +20,8 @@ module.exports = function(config) {
     files: [
       'test/phantompatch.js',
       // bower:js
-      'bower_components/jquery/dist/jquery.js',
       'bower_components/angular/angular.js',
+      'bower_components/jquery/dist/jquery.js',
       'bower_components/bootstrap-sass-official/assets/javascripts/bootstrap.js',
       'bower_components/angular-touch/angular-touch.js',
       'bower_components/angular-ui-router/release/angular-ui-router.js',
@@ -29,9 +29,16 @@ module.exports = function(config) {
       'bower_components/angular-resource/angular-resource.js',
       'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
       'bower_components/angular-sanitize/angular-sanitize.js',
-      'bower_components/angular-bootstrap-colorpicker/js/bootstrap-colorpicker-module.js',
-      'bower_components/angular-wysiwyg/dist/angular-wysiwyg.min.js',
+      'bower_components/angular-translate/angular-translate.js',
+      'bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js',
+      'bower_components/spin.js/spin.js',
+      'bower_components/angular-spinner/angular-spinner.js',
+      'bower_components/angular-elastic/elastic.js',
+      'bower_components/ng-focus-if/focusIf.js',
       'bower_components/ng-dialog/js/ngDialog.js',
+      'bower_components/angular-cookies/angular-cookies.js',
+      'bower_components/angular-translate-storage-cookie/angular-translate-storage-cookie.js',
+      'bower_components/angular-translate-storage-local/angular-translate-storage-local.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       "app/scripts/app.js",

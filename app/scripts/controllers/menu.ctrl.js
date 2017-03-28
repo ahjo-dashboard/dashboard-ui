@@ -5,76 +5,82 @@
 'use strict';
 
 /**
- * @ngdoc function
- * @name dashboard.controller:MenuCtrl
- * @description
- * # MenuCtrl
- * Controller of the dashboard
- */
+* @ngdoc function
+* @name dashboard.controller:MenuCtrl
+* @description
+* # MenuCtrl
+* Controller of the dashboard
+*/
 angular.module('dashboard')
-.controller('menuCtrl', function ($state, $log, $stateParams, AhjoMeetingService, MessageService, ENV, $rootScope, $scope, $timeout, Device) {
-  	$log.debug("menuCtrl: CONFIG");
-    var self = this;
-    self.state = $state.current.name;
-    self.item = {};
-    self.items = {
-        // overview is the first key and signing is the last key
-        overview : { name: 'Uusimmat', state : 'app.overview', pseudoState : '', meeting: {}, submenu : [] },
-        signing : { name: 'Allekirjoitukset', state : 'app.signing', pseudoState : 'app.signitem', meeting: {}, submenu : [] },
-        meetings : { name: 'Kokoukset', state : 'app.meetingList', pseudoState : 'app.meeting', meeting: {}, submenu : [] }
-    };
+    .controller('menuCtrl', ['$log', '$state', '$rootScope', 'AhjoMeetingsSrv', 'SigningOpenApi', 'CONST', function ($log, $state, $rootScope, AhjoMeetingsSrv, SigningOpenApi, CONST) {
+        $log.debug("menuCtrl: CONTROLLER");
+        var self = this;
+        self.mtgCount = null;
+        self.sgnCount = null;
+        self.loadingMtg = false;
+        self.loadingSgn = false;
 
-    // PRIVATE FUNCTIONS
-    function setMenuData(menu, items, meeting) {
-        $log.log("menuCtrl: setMenuData");
-        var item = self.items[menu];
-        item.submenu = [];
-        item.meeting = meeting ? meeting : {};
-        // delays are for smooth and non-parallel animations
-        $timeout(function() {
-            item.submenu = items ? items : [];
-            $timeout(function() {
-                MessageService.send(ENV.Msg_Open_Menu, {});
-            }, 200);
-        }, 200);
-    }
+        function getMeetings() {
+            AhjoMeetingsSrv.getMeetings().then(function (response) {
+                $log.debug("menuCtrl.getMeetings: getMeetings then:");
+                self.mtgCount = 0;
+                if (response && response.objects instanceof Array) {
+                    var dt = new Date();
+                    var date = dt.toJSON();
+                    self.mtgCount = 0;
 
-    function checkMenuState() {
-        if (Device.current() === ENV.Device_Extra_Small) {
-            $timeout(function() {
-                MessageService.send(ENV.Msg_Close_Menu, {});
-            }, 400);
+                    for (var i = 0; i < response.objects.length; i++) {
+                        var item = response.objects[i];
+                        if (date && item && (date < item.meetingTime)) {
+                            self.mtgCount++;
+                        }
+                    }
+                }
+            }, function (error) {
+                $log.error("menuCtrl.getMeetings: getMeetings error: " + JSON.stringify(error));
+            }, function (notify) {
+                $log.debug("menuCtrl.getMeetings: getMeetings notify: " + JSON.stringify(notify));
+                self.loadingMtg = true;
+            }).finally(function () {
+                $log.debug("menuCtrl.getMeetings: getMeetings finally");
+                self.loadingMtg = false;
+            });
         }
-    }
 
-    // PUBLIC FUNCTIONS
-    self.menuItemSelected = function(item) {
-        $log.log("menuCtrl: menuItemSelected");
-        self.item = {};
-        $state.go(item.state);
-        checkMenuState();
-    };
+        function getOpenSignings() {
+            //$log.debug("menuCtrl: SigningOpenApi.query open");
+            self.loadingSgn = true;
+            self.responseOpen = SigningOpenApi.query(function () {
+                $log.debug("menuCtrl.getOpenSignings: SigningOpenApi.query open done: " + self.responseOpen.length);
+                self.sgnCount = self.responseOpen.length;
+                self.errOpen = null;
+            }, function (error) {
+                $log.error("menuCtrl.getOpenSignings: SigningOpenApi.query open error: " + JSON.stringify(error));
+                self.errOpen = error;
+            });
+            self.responseOpen.$promise.finally(function () {
+                $log.debug("menuCtrl.getOpenSignings: SigningOpenApi.query open finally");
+                self.responseOpen = null;
+                self.loadingSgn = false;
+            });
+        }
 
-    self.submenuItemSelected = function(item) {
-        $log.log("menuCtrl: submenuItemSelected");
-        self.item = item;
-        $state.go('app.meeting', {'agendaItem': item});
-        checkMenuState();
-    };
+        // PUBLIC FUNCTIONS
+        self.showMeetings = function () {
+            $log.debug("menuCtrl: showMeetings" + CONST.HOMEMODE.MEETINGS);
+            $state.go(CONST.APPSTATE.OVERVIEW, { state: CONST.HOMEMODE.MEETINGS });
+        };
 
-    // ADD LISTENER
-    var msgListener = $rootScope.$on(ENV.Msg_Meeting_Selection, function(event, data) {
-        $log.debug("menuCtrl: " +event.name);
-        setMenuData('meetings', data.agendaItems, data.meetingItem);
-    });
+        self.showSignings = function () {
+            $log.debug("menuCtrl: showSignings");
+            $state.go(CONST.APPSTATE.OVERVIEW, { state: CONST.HOMEMODE.ESIGN });
+        };
 
-    var stateListener = $rootScope.$on('$stateChangeSuccess', function (event, next/*, toParams, fromParams*/) {
-		$log.debug('menuCtrl: stateChangeSuccess: ' +next.name);
-        self.state = next.name;
-	});
+        self.showInfo = function () {
+            $log.debug("menuCtrl: showInfo");
+            $state.go(CONST.APPSTATE.INFO);
+        };
 
-    // REMOVE LISTENER
-    $scope.$on('$destroy', msgListener);
-    $scope.$on('$destroy', stateListener);
-
-});
+        getMeetings();
+        getOpenSignings();
+    }]);

@@ -1,465 +1,851 @@
 /**
- * (c) 2016 Tieto Finland Oy
- * Licensed under the MIT license.
- */
+* (c) 2016 Tieto Finland Oy
+* Licensed under the MIT license.
+*/
 
 $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/bootstrap/";
-$fa-font-path: "../bower_components/font-awesome/fonts";
 // bower:scss
 @import "bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
-@import "font-awesome/scss/font-awesome.scss";
 // endbower
 
 /* Extra small devices (phones, less than 768px) */
 /* No media query since this is the default in Bootstrap */
 
+$db-color-opt: #303F9F;
+$db-color-opt-lighten: lighten($db-color-opt, 10%);
+$db-color-3F51B5: #3F51B5;
+$db-color-sel: #C5CAE9;
+$db-color-white: #FFFFFF;
+$db-color-prim: #448AFF;
+$db-color-dark: #212121;
+$db-color-light-gray: #B6B6B6;
+$db-color-dark-gray: #a6a6a6;
+
+$appbgcolor: $db-color-white;
+$font-color-body: $db-color-dark;
+$headingBgColor: $db-color-prim;
+
+$db-app-font: "Open Sans", "Trebuchet MS", Helvetica, sans-serif;
+$default-font-size: 1.2em;
+$font-weight-600: 600;
+$font-weight-700: 700;
+$tablist-tabborder-width: 2px;
+$db-page-margin: 10px;
+
+$btn-radius: 6px;
+$header-leftmargin: 10px;
+$font-color-header: $db-color-white;
+$proposals-color: orange;
+$badge-font-color-dark: $font-color-body;
+$db-color-success: #5cb85c;
+$db-color-danger: #d9534f;
+$db-color-warning: #f0ad4e;
+$db-color-info: #5BC0DE;
+
+// GENERIC DECLARATION START
 .browsehappy {
     margin: 0.2em 0;
     background: #ccc;
-    color: #000;
+    color: $font-color-body;
     padding: 0.2em 0;
 }
 
-$default-delay: 400ms;
-$short-delay: 200ms;
+#device {
+    min-width: 320px;
+    display: none;
+}
+
+iframe {
+    position: relative;
+    width: 100%;
+    flex: 1;
+}
+
+.db-pre {
+    background-color: #f5f5f5;
+    padding: 1.0vh;
+    border: 1px solid #cccccc;
+    border-top-right-radius: $btn-radius;
+    border-top-left-radius: $btn-radius;
+    border-bottom-left-radius: $btn-radius;
+    border-bottom-right-radius: $btn-radius;
+}
+
+.ngdialog-content {
+    padding: 0 !important;
+}
+
+// Modal dialogs
+.modal-dialog {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.modal-content {
+    margin: 0 auto;
+}
+
+.db-modal-backdrop {
+    opacity: 0.7 !important; // Should be same as .ngdialog-overlay
+}
+
+.ngdialog-overlay {
+    background: rgba(0, 0, 0, 0.7);
+}
+// End of modal dialogs
+
+// Start svg glyps
+
+$db-glyph-sm-width: 20px;
+$db-glyph-width: 32px;
+
+svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.si-glyph * { // Needed only by svgs from smarticons set. Remove if those are removed.
+    fill: $db-color-white;
+}
+
+.db-glyph svg {
+    fill: $db-color-white;
+    pointer-events: none;
+}
+
+.db-glyph {
+    width: $db-glyph-width; height: $db-glyph-width; // Both width and height have to be defined for IE11
+    min-width: $db-glyph-width; min-height: $db-glyph-width; // min-* defined to prevent glyph scaling to small in help view on small screen
+
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.db-glyph-sm {
+    width: $db-glyph-sm-width; height: $db-glyph-sm-width; // Both width and height have to be defined for IE11
+    min-width: $db-glyph-sm-width; min-height: $db-glyph-sm-width; // min-* defined to prevent glyph scaling to small in help view on small screen
+}
+
+.db-glyph-dark svg {
+    fill: $db-color-dark !important;
+}
+
+.db-glyph-ora svg {
+    fill: $proposals-color;
+}
+
+.db-glyph-alert-blue svg {
+    fill: #31708f;
+}
+
+.db-glyph-info svg {
+    fill: #31708f;
+}
+
+.db-glyph-error svg {
+    fill: $db-color-danger;
+}
+
+.db-glyph-conf svg {
+    fill: #e60000;
+}
+
+// End svg glyphs
+
+.db-spinner-cont {
+    position: relative; // us-spinner requires this, otherwise is placed outside parent.
+    flex: 1; // Or use min-height to have spinner displayed
+    min-height: 50px;
+}
+
+.db-circle-20 {
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    min-width: 20px;
+}
+
+.db-circle-30 {
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+    min-width: 30px;
+}
+
+.no-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.db-directive {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    overflow: auto;
+}
+
+.db-font-12 {
+    font-size: 1.2em !important;
+}
+
+.db-textarea {
+    resize: none;
+    width: 100%;
+    height: auto;
+    border-color: $db-color-light-gray;
+}
+
+.db-textarea-flex {
+    resize: none;
+    width: 100%;
+    height: auto;
+    flex: 1;
+}
+
+.db-textarea[readonly] {
+    outline: none;
+    color: transparent;
+    text-shadow: 0 0 0 black;
+    background: $db-color-light-gray;
+}
+
+.db-underline {
+    text-decoration: underline;
+}
+
+.db-overflow-hidden {
+    overflow: hidden !important;
+}
+
+.db-min-width-300 {
+    min-width: 300px;
+}
+
+.db-min-width-20 {
+    min-width: 20px;
+}
+
+.db-min-width-120 {
+    min-width: 120px;
+}
+
+.db-min-height-24 {
+    min-height: 24px;
+}
+
+.db-font-clr-white {
+    color: $db-color-white !important;
+}
+
+.db-font-clr-dark {
+    color: $db-color-dark !important;
+}
+
+.db-opt-clr {
+    color: $db-color-opt !important;
+}
+
+.db-prim-bg {
+    background-color: $db-color-prim !important;
+}
+
+.db-prim-brd {
+    border-color: $db-color-prim !important;
+}
+
+.db-opt-bg {
+    background-color: $db-color-opt !important;
+}
+
+.db-opt-brd {
+    border-color: $db-color-opt !important;
+}
+
+.db-transparent {
+    background-color: transparent !important;
+}
+
+.db-margin-1 {
+    margin: 1px !important;
+}
+
+.db-margin-2 {
+    margin: 2px !important;
+}
+
+.db-margin-05 {
+    margin: 0.5vh !important;
+}
+
+.db-margin-10-right {
+    margin-right: 1.0vh !important;
+}
+
+.db-margin-10-left {
+    margin-left: 1.0vh !important;
+}
+
+.db-margin-15-left {
+    margin-left: 1.5vh !important;
+}
+
+.db-margin-05-hor {
+    margin-left: 0.5vh !important;
+    margin-right: 0.5vh !important;
+}
+
+.db-margin-10-hor {
+    margin-left: 1.0vh !important;
+    margin-right: 1.0vh !important;
+}
+
+.db-margin-05-ver {
+    margin-top: 0.5vh !important;
+    margin-bottom: 0.5vh !important;
+}
+
+.db-margin-10-ver {
+    margin-top: 1.0vh !important;
+    margin-bottom: 1.0vh !important;
+}
+
+.db-margin-1-btm {
+    margin-bottom: 1px !important;
+}
+
+.db-margin-10-btm {
+    margin-bottom: 1.0vh !important;
+}
+
+.db-margin-1-top {
+    margin-top: 1px;
+}
+
+.db-margin-05-top {
+    margin-top: 0.5vh;
+}
+
+.db-margin-10-top {
+    margin-top: 1.0vh;
+}
+
+.db-margin-10 {
+    margin: 1.0vh;
+}
+
+.db-margin-15 {
+    margin: 1.5vh;
+}
+
+.db-margin-05-right {
+    margin-right: 0.5vh;
+}
+
+.db-margin-05-left {
+    margin-left: 0.5vh;
+}
+
+.db-margin-10-left {
+    margin-left: 1.0vh;
+}
+
+.db-padding-0-right {
+    padding-right: 0 !important;
+}
+
+.db-padding-05 {
+    padding: 0.5vh !important;
+}
+
+.db-padding-10 {
+    padding: 1.0vh !important;
+}
+
+.db-padding-15 {
+    padding: 1.5vh !important;
+}
+
+.db-padding-0-hor {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+.db-padding-10-hor {
+    padding-left: 1.0vh !important;
+    padding-right: 1.0vh !important;
+}
+
+.db-padding-15-hor {
+    padding-left: 1.5vh !important;
+    padding-right: 1.5vh !important;
+}
+
+.db-padding-05-ver {
+    padding-top: 0.5vh !important;
+    padding-bottom: 0.5vh !important;
+}
+
+.db-padding-07-ver {
+    padding-top: 0.7vh !important;
+    padding-bottom: 0.7vh !important;
+}
+
+.db-padding-15-left {
+    padding-left: 1.5vh;
+}
+
+.db-padding-05-right {
+    padding-right: 0.5vh;
+}
+
+// correction for cutting of italic text
+.db-padding-2-right {
+    padding-right: 2px !important;
+}
+
+.db-padding-05-bottom {
+    padding-bottom: 0.5vh !important;
+}
+
+.db-padding-2 {
+    padding: 2px !important;
+}
+
+.db-opacity-05 {
+    opacity: 0.5;
+}
+
+.db-flex {
+    display: flex !important;
+}
+
+.db-flex-right {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.db-flex-col {
+    flex-direction: column;
+}
+
+.db-flex-align-item-end {
+    align-self: flex-end;
+}
+
+.db-flex-nowrap {
+    flex-wrap: nowrap;
+}
+
+.db-flex-wrap {
+    flex-wrap: wrap;
+}
+
+.db-truncate {
+    text-overflow: ellipsis !important;
+    overflow: hidden !important;
+    white-space: nowrap !important;
+}
+
+.db-flex-area {
+    flex: 1;
+}
+
+.db-oneliner {
+    display: block;
+    text-overflow: ellipsis !important;
+    word-wrap: break-word !important;
+    overflow: hidden !important;
+    white-space: nowrap !important;
+    max-height: 1.8em !important;
+    line-height: 1.8em !important;
+    max-width: 100% !important;
+}
+
+.db-twoliner-12 {
+    line-height: 1.2em !important;
+    max-height: 2.4em !important;
+    overflow: hidden;
+}
+
+.db-breakall {
+    word-break: break-all;
+}
+
+.db-break-hyphen {
+    -ms-word-break: break-all;
+    word-break: break-all;
+
+    // Non standard for webkit
+    word-break: break-word;
+
+    -webkit-hyphens: auto;
+    -moz-hyphens: auto;
+    hyphens: auto;
+}
+
+.db-txt-center {
+    text-align: center !important;
+}
+
+.db-center {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+}
+
+.db-center-v {
+    display: flex;
+    align-items: center;
+}
+
+.db-center-h {
+    display: flex;
+    justify-content: center;
+}
+
+.db-brd-bottom {
+    border-top-right-radius: 0 !important;
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius: $btn-radius !important;
+    border-bottom-right-radius: $btn-radius !important;
+}
+
+.db-brd-top {
+    border-top-right-radius: $btn-radius !important;
+    border-top-left-radius: $btn-radius !important;
+    border-bottom-left-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+}
+
+.db-brd-all {
+    border-top-right-radius: $btn-radius !important;
+    border-top-left-radius: $btn-radius !important;
+    border-bottom-left-radius: $btn-radius !important;
+    border-bottom-right-radius: $btn-radius !important;
+}
+
+.db-brd-non-top {
+    border-top: none !important;
+}
+
+.db-brd-non-botton {
+    border-bottom: none !important;
+}
+
+.db-brd-1-dark {
+    border: 1px solid $db-color-dark;
+}
+
+.db-btn-tiny {
+    height: 34px;
+    overflow: hidden;
+    font-size: $default-font-size !important;
+}
+
+.db-btn-small {
+    height: 36px;
+    overflow: hidden;
+    font-size: $default-font-size !important;
+}
+
+.db-btn-big {
+    height: 36px;
+    overflow: hidden;
+    font-size: $default-font-size !important;
+}
+
+.db-btn-dyna {
+    @extend .db-truncate;
+    height: 36px;
+    width: 100%;
+    // overflow: hidden;
+    font-size: $default-font-size !important;
+
+    @media screen and (min-width: 768px) {
+        width: auto;
+        min-width: 8%;
+        font-size: 1.0em !important;
+    }
+}
+
+.db-btn-x-big {
+    min-height: 60px;
+    max-height: 80px;
+    overflow: hidden;
+    font-size: $default-font-size !important;
+    border-width: 0 !important;
+}
+
+.db-list-group-item-prim {
+    @extend .list-group-item;
+    color: $db-color-white;
+    background-color: $db-color-prim !important;
+}
+
+.db-list-group-item {
+    @extend .list-group-item;
+}
+
+.db-list-group-item.active {
+    background-color: $db-color-opt !important;
+}
+
+.db-fs-11 {
+    font-size: 1.1em !important;
+}
+
+.db-fs-12 {
+    font-size: 1.2em !important;
+}
+
+.db-fs-15 {
+    font-size: 1.5em !important;
+}
+// GENERIC DECLARATION END
+
+// BLOCK DECLARATION START
+$blockOpenFlex: 9;
+
+.db-block {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    overflow: hidden;
+
+    .db-block-content {
+        flex: 1;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .db-block-border {
+        border-style: solid;
+        border-width: thin;
+        border-color: $db-color-prim;
+    }
+}
+
+.db-block-open {
+    flex: 1 1;
+}
+
+.db-block-close {
+    display: none;
+}
+// BLOCK DECLARATION END
+
+// PROPOSAL DECLARATION START
+.proposal-list {
+    flex: 1;
+
+    .btn-sm {
+        margin: 1px;
+    }
+
+    .db-prop-hdr {
+        background-color: $db-color-prim;
+        color: $db-color-white;
+        display: flex;
+        flex-direction: column;
+        padding: 0.5vh;
+        border-top-left-radius: $btn-radius;
+        border-top-right-radius: $btn-radius;
+        position: relative;
+    }
+
+    .db-prop-hdr-text {
+        display: flex;
+        align-items: center;
+        flex: 1;
+        padding: 1.5vh;
+    }
+
+    .prop-text {
+        min-height: 2em;
+        margin: 0.6em;
+    }
+
+    .prop-text-oneliner {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin: auto;
+        height: 1.6em;
+    }
+
+    .list-group-item {
+        border-color: $db-color-light-gray;
+    }
+
+    .list-group-item:first-child {
+        border-top-left-radius: 0 !important;
+        border-top-right-radius: 0 !important;
+        border-bottom-left-radius: 0 !important;
+        border-bottom-right-radius: 0 !important;
+    }
+
+    .list-group-item:last-child {
+        border-top-left-radius: 0 !important;
+        border-top-right-radius: 0 !important;
+        border-bottom-left-radius: $btn-radius !important;
+        border-bottom-right-radius: $btn-radius !important;
+    }
+
+    .prop-dropdown-item {
+        padding-left: 20px;
+        padding-right: 20px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        a {
+            color: black;
+        }
+    }
+
+    /* Small devices (tablets, 768px and up) */
+    @media screen and (min-width: 768px) {
+
+        .db-prop-hdr {
+            flex-direction: row;
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+        }
+
+        .db-prop-hdr-text {
+            padding: 1.0vh;
+        }
+
+        .prop-button {
+            border-radius: $btn-radius;
+        }
+
+        .prop-icon {
+            margin-right: 5px;
+        }
+    }
+}
+// PROPOSAL DECLARATION END
+
+// REMARK DECLARATION START
+.remark {
+    flex: 1;
+
+    .rmk-header {
+        background-color: $db-color-prim;
+        position: relative;
+
+        h1, h2, h3, h4, h5 {
+            color: $font-color-header;
+        }
+    }
+
+   .rmk-header-text {
+        min-height: 40px;
+        display: flex;
+        align-items: center;
+        padding: 10px;
+    }
+
+    .rmk-text {
+        overflow-x: hidden;
+        overflow-y: auto;
+        min-height: 2em;
+        margin: 4px;
+        padding: 4px;
+        flex: 1;
+    }
+
+    .rmk-footer {
+        min-height: 40px;
+        display: flex;
+        justify-content: flex-end;
+        padding: 2px 4px 4px 4px;
+    }
+
+    .rmk-footer-button {
+        @extend .db-hdr-btn-md;
+        text-align: center !important;
+        margin: 2px;
+    }
+
+    .rmk-spinner {
+        position: relative;
+        width: 100%;
+        flex: 1;
+    }
+}
+// REMARK DECLARATION END
+
+.db-no-pointer-events {
+    pointer-events: none;
+}
+
+.db-item-disabled {
+    opacity: 0.5;
+    pointer-events: none; // IE 11 and above
+    cursor: default;
+    text-decoration: none !important; // Just in case 'pointer-events: none' won't work. Removes underlining but leaves other focus effects, if any.
+}
 
 html { height: 100%; }
 
 body {
-    height: 100%;
-    $left-slide: 90%;
-    $right-width: 90%;
-    $right-slide: 100% - $right-width;
-    $navbar-height: 60px; // this is for moving main content
-    $appbgcolor: rgb(51, 122, 183);
-    $block1height: 50%;
+    $header-height: 60px; // this is for moving main content
 
-    $headingTxtColor: white;
-    $focusedColor: rgb(40, 96, 144);
-    $headingBgColor: $focusedColor;
-    $headingL2BgColor: $appbgcolor;
+    $focusedColor: #3e7ebe;
+    $headingL2BgColor: $db-color-prim;
     $borderColor: $focusedColor;
 
-    background-color: $appbgcolor;
     padding: 0;
-    padding-top: $navbar-height;
+    font-family: $db-app-font !important;
 
-    .modal-dialog {
-        width: 98%;
-        height: 98%;
+    .btn {
+        font-weight: $font-weight-600;
     }
 
-    .navbar {
-        border-bottom-width: 0px;
-        border-image-width: 0px;
-
-        .logo-placeholder {
-            height: 100%;
-            margin-left: auto;
-            margin-top: auto;
-        }
-
-        .logo {
-            padding-top: 6px;
-            padding-bottom: 2px;
-            padding-left: 10px;
-            padding-right: 10px;
-        }
-
-        .ad-navbar-header {
-            display: none;
-        }
+    h1, h2, h3, h4, h5 {
+        font-weight: $font-weight-600;
     }
 
-    .navbar-collapse.collapse {
-        display: block!important;
+    .db-fw-700 {
+        font-weight: $font-weight-700;
     }
 
-    .navbar-nav>li, .navbar-nav {
-        float: left !important;
+    .db-title {
+        padding: 15px;
     }
 
-    .navbar-right {
-        float: right!important;
-    }
-
-    .nav-tabs > li.active > a,
-    .nav-tabs > li.active > a:focus,
-    .nav-tabs > li.active > a:hover {
-        background-color: $focusedColor !important;
-        color: white;
-    }
-
-    .left-sidebar {
-        position: fixed;
-        width: $left-slide;
-        top: $navbar-height;
-        bottom: 0;
-        left: 0;
-        z-index: 0;
-        background-color: inherit;
-
-        .ad-menu-item {
-            text-align: left;
-        }
-
-        .ad-submenu-item {
-            white-space: normal;
-            overflow: hidden;
-            text-align: left;
-        }
-        .ad-submenu-item.ng-enter,
-        .ad-submenu-item.ng-move {
-            -webkit-transition: $short-delay linear all;
-            transition: $short-delay linear all;
-            left: 100%;
-        }
-        .ad-submenu-item.ng-leave {
-            -webkit-transition: $short-delay linear all;
-            transition: $short-delay linear all;
-            opacity: 1;
-            left: 0;
-        }
-
-        .ad-submenu-item.ng-enter.ng-enter-active,
-        .ad-submenu-item.ng-move.ng-move-active {
-            left: 0;
-        }
-        .ad-submenu-item.ng-leave.ng-leave-active {
-            opacity: 0;
-            left: -100%;
-        }
-
-        .btn {
-            border-top-left-radius: 0px;
-            border-top-right-radius: 0px;
-            border-width: 0px;
-        }
-
-    }
-
-    .main-content {
-        position: fixed;
-        top: $navbar-height;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        z-index: 1;
-        float: left;
-        -webkit-transition:all 0.2s ease-in-out; // transition for Safari and Chrome
-        transition:all 0.2s ease-in-out; // transition for Firefox
-        background-color: white;
-        box-shadow: 0 0 5px 5px rgba(0,0,0,0.5);
-
-        .main-view.ng-enter:not(.no-inherit-animation), .main-view.ng-leave:not(.no-inherit-animation) {
+    .db-iconwrapper {
+        min-height: 20px;
+        min-width: 20px;
+        img {
             position: absolute;
-            left: 0;
-            right: 0;
-            -webkit-transition: all $default-delay ease-in-out;
-            transition: all $default-delay ease-in-out;
-        }
-
-        .main-view.ng-enter:not(.no-inherit-animation) {
-            opacity: 0;
-        }
-
-        .main-view.ng-enter-active:not(.no-inherit-animation) {
-            opacity: 1;
-        }
-
-        .main-view.ng-leave:not(.no-inherit-animation) {
-            opacity: 1;
-            -webkit-transform: translate3d(0, 0, 0);
-            transform: translate3d(0, 0, 0);
-        }
-
-        .main-view.ng-leave-active:not(.no-inherit-animation) {
-            opacity: 0;
-            -webkit-transform: translate3d(100%, 0, 0);
-            transform: translate3d(100%, 0, 0);
-        }
-
-        .block1  {
-            width: 100%;
-            max-height: $block1height;
-            float: left;
-        }
-
-        .blockcontent {
-            padding-left: 0;
-            padding-right: 0;
-            padding-top: 0;
-            padding-bottom: 0;
-        }
-
-        .block2 {
-            position: absolute;
-            top: $block1height;
-            left: 0;
-            right: 0;
-            width: 100%;
-            -webkit-transition: all ease 0.5s;
-            transition: all ease 0.5s;
-            float: left;
-        }
-
-        .block-narrow {
-            max-width: 50%; //TODO: find out how to read this somewhere
-            max-height: 100%; //TODO: fixme, resolve header height. Why only max-height works here and not 'height'?
-        }
-
-        .block-right {
-            top: 0;
-            left: 50%;
-            height: 85%; //TODO: find out how to read this somewhere
-        }
-
-        .ad-container-fluid {
-            background-color: $headingBgColor;
-            border-style: solid;
-            border-width: 0px;
-            color: $headingTxtColor;
-            padding-left: 10px;
-            padding-right: 10px;
-        }
-
-        .ad-sub-container-fluid {
-            background-color: $headingL2BgColor;
-            border-style: solid;
-            border-width: 0px;
-            color: $headingTxtColor;
-            padding-left: 10px;
-            padding-right: 10px;
-        }
-
-        .panel-heading {
-            background-color: $headingBgColor;
-            border-style: solid;
-            border-width: 0px;
-            color: $headingTxtColor;
-        }
-
-        .panel-body {
-            .panel-heading {
-                background-color: $headingL2BgColor;
-            }
-        }
-
-        .ad-dropdown-menu {
-            border-width: 0px;
-            .list-group-item {
-                border-width: 0px;
-                white-space: normal;
-            }
-        }
-
-        .btn {
-            border-top-left-radius: 0px;
-            border-top-right-radius: 0px;
-            border-width: 0px;
-            overflow: hidden;
-            height: 28px;
-        }
-
-        .ad-vertical-block {
-            overflow: hidden;
-            height: 50%;
-        }
-
-        .ad-full-block {
-            overflow: hidden;
-            height: 100%;
-        }
-
-        .ad-block-header {
-            background-color: $headingBgColor;
-            border-style: solid;
-            border-width: 0px;
-            color: $headingTxtColor;
-            padding-top: 5px;
-            padding-bottom: 5px;
-        }
-
-        .ad-block-content {
-            padding-top: 5px;
-            padding-bottom: 80px;
-        }
-
-        .ad-block-no-horizontal-padding {
-            padding-left: 0;
-            padding-right: 0;
-        }
-
-        .ad-block-no-vertical-padding {
-            padding-top: 0;
-            padding-bottom: 0;
-        }
-
-        .animate-if.ng-enter, .animate-if.ng-leave {
-            -webkit-transition: $default-delay linear all;
-            transition: $default-delay linear all;
-        }
-
-        .animate-if.ng-enter,
-        .animate-if.ng-leave.ng-leave-active {
-            opacity:0;
-        }
-
-        .animate-if.ng-leave,
-        .animate-if.ng-enter.ng-enter-active {
-            opacity:1;
-        }
-
-        .ad-column-container {
-            display: flex;
-            display: -ms-flexbox;
-            display: -webkit-flex;
-            flex-direction: column;
-            -ms-flex-direction: column;
-            -webkit-flex-direction: column;
-            height: 100%;
-            width: 100%;
-
-            .ad-block {
-                display: flex;
-                display: -ms-flexbox;
-                display: -webkit-flex;
-                flex-direction: column;
-                -ms-flex-direction: column;
-                -webkit-flex-direction: column;
-                height: 50%;
-                width: 100%;
-
-                .ad-block-header {
-                    background-color: $headingBgColor;
-                    border-style: solid;
-                    border-width: 0px;
-                    color: $headingTxtColor;
-                    padding: 5px;
-                }
-
-                .ad-block-content {
-                    flex: 1;
-                    -webkit-flex: 1;
-                    -ms-flex: 1;
-                    overflow-y: scroll;
-                    padding: 10px;
-                }
-
-                .ad-block-attachment {
-                    flex: 1;
-                    -webkit-flex: 1;
-                    -ms-flex: 1;
-                    overflow-y: scroll;
-                    overflow-x: scroll;
-                }
-            }
-        }
-
-        .ad-row-container {
-            display: flex;
-            display: -ms-flexbox;
-            display: -webkit-flex;
-            flex-direction: row;
-            -ms-flex-direction: row;
-            -webkit-flex-direction: row;
-            height: 100%;
-            width: 100%;
-
-            .ad-block {
-                display: flex;
-                display: -ms-flexbox;
-                display: -webkit-flex;
-                flex-direction: column;
-                -ms-flex-direction: column;
-                -webkit-flex-direction: column;
-                width: 50%;
-                height: 100%;
-
-                .ad-block-header {
-                    background-color: $headingBgColor;
-                    border-style: solid;
-                    border-width: 0px;
-                    color: $headingTxtColor;
-                    padding: 5px;
-                }
-
-                .ad-block-content {
-                    flex: 1;
-                    -webkit-flex: 1;
-                    -ms-flex: 1;
-                    overflow-y: scroll;
-                    padding: 10px;
-                }
-
-                .ad-block-attachment {
-                    flex: 1;
-                    -webkit-flex: 1;
-                    -ms-flex: 1;
-                    overflow-y: scroll;
-                    overflow-x: scroll;
-                }
-            }
         }
     }
 
-    .right-sidebar {
-        position: fixed;
-        width: $right-width;
-        top: $navbar-height;
-        bottom: 0;
-        left: 101%; // extra percent hides border
-        z-index: 2;
-        -webkit-transition:all 0.2s ease-in-out;  // transition for Safari and Chrome
-        transition:all 0.2s ease-in-out; // transition for Firefox
-        background-color: white;
-        box-shadow: 0 0 5px 5px rgba(0,0,0,0.5);
-
-        .ad-container-fluid {
-            background-color: $appbgcolor;
+    // db-newprops meant to be used to either span-icon or to its parent.
+    .db-newprops {
+        padding-left: 0 !important; // Remove loose space in meeting.status.html icon
+        color: $proposals-color !important;
+        span {
+            color: $proposals-color !important;
         }
-
-        .ad-submenu-item.ng-enter,
-        .ad-submenu-item.ng-move
-        {
-            -webkit-transition: $short-delay linear all;
-            transition: $short-delay linear all;
-            left: -100%;
-        }
-
-        .ad-submenu-item.ng-leave {
-            -webkit-transition: $short-delay linear all;
-            transition: $short-delay linear all;
-            opacity: 1;
-        }
-
-        .ad-submenu-item.ng-enter.ng-enter-active,
-        .ad-submenu-item.ng-move.ng-move-active
-        {
-            left: 0;
-        }
-
-        .ad-submenu-item.ng-leave.ng-leave-active {
-            opacity: 0;
-        }
-
     }
 
-    .left-menu-open {
-        left: $left-slide;
-        right: -$left-slide;
-    }
-
-    .right-menu-open {
-        left: $right-slide;
-    }
-
-    .full-width {
-        width: 100%;
-    }
-
-    .ad-heigh-full {
-        height: 100%;
+    .db-duplicate {
+        padding-left: 0 !important;
+        color: $db-color-info !important;
+        span {
+            color: $db-color-info !important;
+        }
     }
 
     .text-align-left {
@@ -470,100 +856,447 @@ body {
         white-space: normal;
     }
 
-    .menu-header {
-        padding-left: 15px;
-        padding-right: 15px;
+    h1, h2, h3, h4, h5 {
+        margin-top: 0px;
+        margin-bottom: 0px;
     }
 
-    .medium-modal {
+    .db-no-margin {
+        margin: 0 !important;
+    }
+
+    .db-no-padding {
+        padding: 0 !important;
+    }
+
+    .db-bg-green {
+        background-color: $db-color-success;
+    }
+
+    .db-bg-red {
+        background-color: $db-color-danger;
+    }
+
+    .db-bg-gray {
+        background-color: $db-color-dark-gray;
+    }
+
+    @mixin db-badge-mix($bgcolor, $bodycolor : white, $headingcolor : white) {
+        background-color: $bgcolor !important;
+        color: $bodycolor !important;
+        text-align: center;
+        h1, h2, h3, h4, h5 {
+            color: $headingcolor !important;
+        }
+    }
+
+    .db-badge {
+        width: 100%;
+    }
+
+    .db-no-border {
+        border-radius: 0;
+        border-style: none !important;
+    }
+
+    .db-badge-pur {
+        @include db-badge-mix(#9370d8);
+    }
+
+    .db-badge-yel {
+        @include db-badge-mix(#fee901, $badge-font-color-dark, $badge-font-color-dark);
+    }
+
+    .db-badge-gre {
+        @include db-badge-mix($db-color-success, $badge-font-color-dark, $badge-font-color-dark);
+    }
+
+    .db-badge-dark {
+        @include db-badge-mix(#a6a6a6);
+    }
+
+    .db-badge-gra {
+        @include db-badge-mix(#cccccc, $badge-font-color-dark, $badge-font-color-dark);
+    }
+
+    .db-badge-red {
+        @include db-badge-mix($db-color-danger);
+    }
+
+    .db-badge-ora {
+        @include db-badge-mix(#f0ad4e, $badge-font-color-dark, $badge-font-color-dark);
+    }
+
+    .db-badge-hdr {
+        @include db-badge-mix($font-color-header, $headingBgColor, $headingBgColor);
+    }
+
+    .db-btn-transparent {
+        @include button-variant(transparent, transparent, transparent);
+    }
+
+    .db-btn-prim {
+        @include button-variant($db-color-white, $db-color-prim, $db-color-prim);
+    }
+
+    .db-btn-prim.active {
+        @include button-variant($db-color-white, $db-color-opt-lighten, $db-color-opt-lighten);
+    }
+
+    .db-btn-opt {
+        @include button-variant($db-color-white, $db-color-opt, $db-color-opt);
+    }
+
+    .db-btn-opt-dummy {
+        @extend .db-btn-opt;
+        opacity: 1.0 !important;
+        outline: none !important;
+    }
+
+    .db-btn-sel {
+        @include button-variant($db-color-white, $db-color-sel, $db-color-sel);
+        color: $db-color-dark;
+    }
+
+    .db-btn-sel.active {
+        @include button-variant($db-color-white, $db-color-opt-lighten, $db-color-opt-lighten);
+    }
+
+    .db-btn-sel[disabled],
+    .db-btn-sel[disabled]:hover,
+    .db-btn-sel[disabled]:focus,
+    .db-btn-sel[disabled]:active {
+        color: $db-color-white; // Disable hover effect for disabled button
+    }
+
+    .db-btn-md {
+        min-width: 90px;
+        width: 10vw;
+    }
+
+    $btn-colhea-color-bg: darken($db-color-prim, 10%);
+    $btn-colhea-color-border: $btn-colhea-color-bg;
+    .db-btn-colhea {
+        @include button-variant($db-color-white, $btn-colhea-color-bg, $btn-colhea-color-border);
+        border-radius: 0;
+        border-style: none !important;
+    }
+
+    .db-btn-colhea-dummy {
+        @extend .db-btn-colhea;
+        opacity: 1.0 !important;
+        outline: none !important;
+    }
+
+    .overview-hdr {
         width:100%;
-        height: auto;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .db-btn-sm {
+        font-size: x-small !important;
+        line-height: 1.0 !important;
+    }
+
+    .db-hdr-btn-md {
+        width: 120px;
+    }
+
+    .db-hidden-pdf {
+        visibility: hidden;
+        opacity: 0.0;
+    }
+
+    .db-visible-pdf {
+        visibility: visible;
+        opacity: 1.0;
+    }
+
+    // AD-PAGE
+    .ad-page {
         position: absolute;
-        top:0; bottom: 0; left: 0; right: 0;
-        margin: auto;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        overflow: hidden;
+        background-color: $db-color-white;
+
+        .info {
+            color: $font-color-header;
+            font-size: 2em;
+        }
     }
 
-    .ad-container-fluid {
+    .ad-page-left {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        overflow: auto;
+    }
+
+    .ad-page-right {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        overflow: auto;
+        min-width: 520px;
+    }
+
+    .ad-page-content {
+        position: absolute;
+        top: $header-height;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        overflow: auto;
+
+        .btn {
+            text-align: center;
+            white-space: normal;
+            max-lines: 2;
+            word-wrap: break-word;
+        }
+    }
+
+    .ad-page-header {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        padding-left: $header-leftmargin;
+        padding-right: $header-leftmargin;
+
+        border: 0;
+        background-color: $db-color-prim;
+        height: $header-height;
+
+        // Not set for all element types because that would mix desktop layout which uses cols while mobile doesn't.
+        h1:not(:first-child),
+        h2:not(:first-child),
+        h3:not(:first-child),
+        h4:not(:first-child),
+        h5:not(:first-child) {
+            margin-left: $header-leftmargin;
+        }
+
+
+        h1, h2, h3, h4, h5 {
+            color: $font-color-header;
+        }
+
+        .left {
+            float: left;
+        }
+
+        .right {
+            float: right;
+        }
+    }
+
+    .db-new-page-header {
+        @extend .ad-page-header;
+        .container {
+            height: inherit;
+            .row {
+                height: inherit;
+                div {
+                    height: inherit;
+                    padding-left: 0;
+                    display: flex;
+                    justify-content: center;
+                    align-content: center;
+                    flex-direction: column;
+                    h3 {
+                        margin-top: 0;
+                        margin-bottom: 0;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                        overflow: hidden;
+                    }
+                    h4 {
+                        margin-top: 0;
+                        margin-bottom: 0;
+                        overflow: hidden;
+                        max-height: 2em;
+                    }
+                }
+            }
+        }
+    }
+
+    .db-alert-header {
+        padding-left: $header-leftmargin;
+        background-color: $db-color-danger;
+        h1, h2, h3, h4, h5 {
+            color: $font-color-header;
+        }
+    }
+
+    .db-confirm-header {
+        padding-left: $header-leftmargin;
         background-color: $headingBgColor;
-        border-style: solid;
-        border-width: 0px;
-        color: $headingTxtColor;
-        padding-left: 10px;
-        padding-right: 10px;
-        padding-top: 5px;
-        padding-bottom: 5px;
+        h1, h2, h3, h4, h5 {
+            color: $font-color-header;
+        }
     }
 
-    .ad-sub-container-fluid {
-        background-color: $headingL2BgColor;
-        border-style: solid;
-        border-width: 0px;
-        color: $headingTxtColor;
-        padding-left: 10px;
-        padding-right: 10px;
-        padding-top: 5px;
-        padding-bottom: 5px;
+    .ad-page-container {
+        padding: $db-page-margin;
     }
 
-    .btn {
-        border-top-left-radius: 0px;
-        border-top-right-radius: 0px;
-        border-width: 0px;
+    .db-sign-infoarea {
+        width: 100%;
+        margin: 0 $db-page-margin;
+    }
+
+    .db-view-item-margin {
+        margin-top: $db-page-margin;
+    }
+
+    .db-sign-status {
+        margin: 0 15px;
+    }
+
+    .ad-page-container-flex {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        overflow: hidden;
+
+        display: flex;
+        flex-direction: column;
+    }
+
+    .ad-page-container-flex-row {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        overflow: hidden;
+
+        display: flex;
+        flex-direction: row;
+    }
+
+    .ad-flex-item {
+        flex: 14;
         overflow: hidden;
     }
 
-    .panel-heading {
-        background-color: $headingBgColor;
+    .db-item-border {
         border-style: solid;
-        border-width: 0px;
-        color: $headingTxtColor;
+        border-width: $tablist-tabborder-width;
+        border-color: $db-color-light-gray;
+        border-radius: $btn-radius;
+        margin: 1vh 1vw;
     }
 
-    .ad-animate-prop.ng-enter {
-        left: 100%;
-        -webkit-transition: $short-delay linear all;
-        transition: $short-delay linear all;
-    }
-    .ad-animate-prop.ng-leave {
-
+    .ad-flex-item-upper {
+        @extend .ad-flex-item;
+        display: flex;
+        flex-direction: column;
     }
 
-    .ad-animate-prop.ng-enter.ng-enter-active {
-        left: 0;
-    }
-    .ad-animate-prop.ng-leave.ng-leave-active {
-
+    .ad-flex-item-upper.ad-flex-hide {
+        display: none;
     }
 
-    .ad-animate-prop-public.ng-enter {
+    .ad-flex-header {
+        display: flex;
+        flex-direction: row;
+        overflow: hidden;
+        border: none;
+        border-image-width: 0;
 
-    }
-    .ad-animate-prop-public.ng-leave {
+        h1, h2, h3, h4, h5 {
+            color: $font-color-header;
+        }
 
-    }
-    .ad-animate-prop-public.ng-enter.ng-enter-active {
-    }
-    .ad-animate-prop-public.ng-leave.ng-leave-active {
+        .btn {
+            font-size: 1.5em;
+            border: 0;
+            border-radius: 0;
+        }
 
+        .ad-lg {
+            flex: 12;
+        }
+
+        .ad-xs {
+            flex: 2;
+        }
+    }
+
+    .ad-flex-show {
+        flex-grow: 1;
+    }
+
+    .ad-flex-hide {
+        flex-grow: 0;
+    }
+
+    @media screen and (max-width: 767px) {
+        .db-btn-list-topleft-xs { border-top-left-radius: $btn-radius !important; }
+        .db-btn-list-topright-xs { border-top-right-radius: $btn-radius !important; }
+    }
+
+    .ad-progress-bar {
+        height: 0.5em;
+        margin: 0;
+        padding: 0;
+    }
+
+    .ad-progress-bar-parent {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        min-height: $default-font-size;
+    }
+
+    .ad-dropdown-content {
+        white-space: nowrap;
+    }
+
+    .db-drop {
+        max-height: 70vh;
+        max-width: 45vw;
+        min-width: 25vw; // Min width needed to allow respDropd directive to calculate size in link phase
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .db-no-border {
+        border: 0 !important;
+    }
+
+    .db-error {
+        color: #555;
+
+        h1, h2, h3, h4, h5, h6 {
+            color: #555;
+        }
+
+        a:link, a:visited {
+            color: #FF0000;
+            text-decoration: underline;
+        }
+
+        a:link:active, a:visited:active {
+            color: #00FF00;
+        }
     }
 }
 
 .ad-no-scrollbars { -ms-overflow-style: none; }
 .ad-no-scrollbars::-webkit-scrollbar { width:0px; }
-
-.scrolling-content {
-    @extend .ad-no-scrollbars;
-    overflow-y: scroll;
-    overflow-x: hidden;
-    width: 100%;
-    height: 100%;
-}
-
-.scrolling-content-xy {
-    @extend .scrolling-content;
-    overflow-x: scroll;
-    max-height: 100%;
-}
 
 .scrollable-menu {
     @extend .ad-no-scrollbars;
@@ -572,54 +1305,90 @@ body {
     overflow-x: hidden;
 }
 
-.row-fluid {
-    white-space: normal;
-    overflow: hidden;
-    text-align: left;
+.db-overflow {
+    overflow: auto !important;
 }
 
-.ad-size-full { height: 100%; width: 100%; }
+// START IMGVIEWER
 
-.ad-large-modal {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top:0; bottom: 0; left: 0; right: 0;
+input[type="number"].db-imgvw-input {
+    width: 4em; // 4 because of potential input spinbox
     margin: 0;
-    display: block;
-    overflow: hidden;
+}
 
-    .modal-dialog {
-      width: 100%;
-      height: 100%;
-      margin: 0;
+@mixin db-input-nospin-mix() { // mixin because cannot @extend inside media query
+    -webkit-appearance: none !important;
+    margin: 0;
+}
+
+input[type=number].db-input-nospin::-webkit-inner-spin-button,
+input[type=number].db-input-nospin::-webkit-outer-spin-button {
+    @include db-input-nospin-mix();
+}
+
+@media screen and (max-width: 767px) {
+    input[type=number].db-input-nospin-xs::-webkit-inner-spin-button,
+    input[type=number].db-input-nospin-xs::-webkit-outer-spin-button {
+        @include db-input-nospin-mix();
     }
+}
 
-    .modal-content {
-      height: 100%;
-      width: 100%;
-      border: 0;
+.db-hdr-l2 {
+    padding: $header-leftmargin;
+    min-height: 50px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: $headingBgColor;
+    color: $font-color-header;
+    input {
+        color: black;
     }
 }
 
-.ad-embedded-pdf {
-    width: 100%;
-    height: 100%;
-    border: none;
+.db-hdr-l2-grp {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+
+    $hdr-l2-item-padding: 0.5vw;
+    margin: 0 1vw 0 0;
+
+    .db-hdr-l2-item { margin: 0 $hdr-l2-item-padding 0 0; }
+    .db-hdr-l2-item:last-child { margin-right: 0; }
 }
 
-.ad-content-placeholder { text-align: center; }
-
-.ad-btn-margin { margin: 2px; }
-
-.ad-pdfLink {
-    background: transparent url(../images/pdf.png) no-repeat 0px 0px;
-    display: block;
-    padding: 7px 20px 7px 40px;
-    margin: 10px 10px;
+.db-hdr-l2-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
 }
 
-@import "navbar.scss";
+// END IMGVIEWER
+
+.db-voting-res-col {
+    width: 10% !important;
+    min-width: 40px;
+}
+
+.db-help {
+    font-family: $db-app-font !important;
+    font-size: 1.0em;//$default-font-size;
+    p {
+        margin-left: 2vw; margin-right: 2vw;
+        margin-top: 2vh; margin-bottom: 2vh;
+
+    }
+}
+.db-help-hdr-icon {
+    padding: 1vh;
+    background-color: $headingBgColor;
+    color: $font-color-header;
+}
+
 @import "main.small.scss";
 @import "main.medium.scss";
 @import "main.large.scss";

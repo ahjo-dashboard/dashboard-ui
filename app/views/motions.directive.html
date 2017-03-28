@@ -1,0 +1,81 @@
+<div class="db-directive db-spinner-cont">
+
+    <span us-spinner spinner-on="c.motionsCont.loading"></span>
+
+    <div ng-if="c.motionsCont.failure" uib-alert class="alert-danger">
+        <div class="db-flex db-center-v">
+            <div class="db-glyph db-glyph-error" ng-include="'images/glyph-error.svg'"></div>
+            <div class="db-margin-10-left" translate translate-cloak>STR_FAIL_LOADING</div>
+        </div>
+    </div>
+
+    <div id="motionElement" ng-if="!c.motionsCont.failure && !c.motionsCont.loading" class="db-min-width-300">
+        <ul class="list-group db-no-margin db-brd-all db-overflow-hidden">
+            <div class="db-font-clr-white db-prim-bg db-padding-10 db-no-margin db-brd-top row">
+                <h5 class="col-xs-6 col-md-4 db-truncate" translate translate-cloak>STR_TITLE</h5>
+                <h5 class="col-xs-5 col-md-3 db-truncate" translate translate-cloak>STR_MOTION_CREATOR</h5>
+                <h5 class="col-md-2 hidden-xs hidden-sm db-truncate" translate translate-cloak>STR_SIGNING_TYPE</h5>
+                <h5 class="col-md-3 hidden-xs hidden-sm db-truncate" translate translate-cloak>STR_SIGNINGS</h5>
+            </div>
+
+            <div class="list-group-item db-padding-10" ng-repeat="m in c.motions | orderBy:'publishDate':true track by $index">
+                <div ng-show="m.ongoing" class="db-spinner-cont">
+                    <span us-spinner spinner-on="m.ongoing"></span>
+                </div>
+
+                <div class="row" ng-click="c.selectMotion(m)">
+                    <div class="col-xs-5 col-md-4 db-flex">
+                        <div class="db-flex-area ng-class:[{'db-truncate':!c.isSelected(m)}]" title="{{m.title}}">{{m.title}}</div>
+                    </div>
+                    <i class="col-xs-5 col-md-3 ng-class:[{'db-truncate':!c.isSelected(m)}]">{{m.personName}}</i>
+                    <div class="hidden-xs hidden-sm col-md-2 db-truncate" translate translate-cloak>{{c.typeString(m.type)}}</div>
+                    <div ng-show="m.supporters" class="hidden-xs hidden-sm col-md-2 db-truncate db-center-v">
+                        <div>{{ (m.supporters.length || m.isOwnMotion) ? (m.supporters.length + (m.isOwnMotion ? 1 : 0)) : '-' }}</div>
+
+                        <div ng-if="m.isUserSupported" title="{{'STR_MOTION_SIGNED_BY_ME' | translate}}" class="db-glyph db-glyph-sm db-glyph-info db-margin-05-left"
+                            ng-include="'images/glyph-user.svg'">
+                        </div>
+                        <div ng-if="m.isUserRead === false" title="{{'STR_UNREAD_MOTION' | translate}}" class="db-glyph db-glyph-sm db-glyph-ora db-margin-05-left"
+                            ng-include="'images/glyph-bell.svg'">
+                        </div>
+                    </div>
+                    <div class="col-xs-2 col-md-1 db-flex db-flex-col">
+                        <div title="{{'STR_EXPANDCOLLAPSE' | translate}}" class="db-flex-align-item-end db-glyph db-glyph-sm db-glyph-dark db-margin-10-right"
+                            ng-include="c.isSelected(m) ? 'images/glyph-minimize.svg' : 'images/glyph-expand.svg'"></div>
+                    </div>
+                </div>
+                <div class="panel-collapse collapse" uib-collapse="!c.isSelected(m)">
+                    <div class="hidden-md hidden-lg db-margin-05-top">
+                        <span translate translate-cloak>STR_SIGNING_TYPE</span>:<span class="db-margin-05-left" translate
+                            translate-cloak>{{c.typeString(m.type)}}</span>
+                    </div>
+                    <div ng-if="m.supporters.length">
+                        <span translate translate-cloak>STR_MOTION_SIGNERS</span>:<span ng-repeat="s in m.supporters track by $index"><span ng-if="0 < $index">, </span>
+                        <span class="db-margin-05-left">{{s.name}}</span></span>
+                    </div>
+                    <textarea db-textarea class="db-margin-05-ver db-padding-10 db-textarea db-brd-all ng-class:{ 'db-overflow-hidden': !c.isIe }"
+                        readonly ng-model="m.text"></textarea>
+
+                    <div class="db-flex-right db-flex-area ng-class:{'db-flex-col': c.isMobile}">
+                        <button ng-if="c.meetingActive && m.isOwnMotion && !m.isSubmitted && m.submitAllowed" class="btn btn-success db-btn-big db-margin-2 ng-class:{'btn-block':c.isMobile}"
+                            ng-click="c.submit(m)" ng-disabled="m.ongoing">
+                            <span translate translate-cloak>STR_SUBMIT_MOTION</span>
+                        </button>
+                        <button ng-if="!m.isOwnMotion && !m.isUserSupported" class="btn btn-success db-btn-dyna db-margin-2"
+                            ng-click="c.support(m)" ng-disabled="m.ongoing">
+                            <span translate translate-cloak>STR_SIGNING_ACCEPT</span>
+                        </button>
+                        <button ng-if="!m.isOwnMotion && m.isUserSupported" class="btn btn-danger db-btn-dyna db-margin-2"
+                            ng-click="c.removeSupport(m)" ng-disabled="m.ongoing">
+                            <span translate translate-cloak>STR_SIGNING_REMOVE</span>
+                        </button>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </ul>
+    </div>
+
+</div>

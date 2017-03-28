@@ -1,15 +1,89 @@
-<div class="no-inherit-animation ad-size-full">
-	<div class="progress" ng-if="oc.loading < oc.loadingmax">
-		<uib-progressbar class="progress-striped active" value="oc.loading" max="oc.loadingmax" type="info">
-		</uib-progressbar>
-	</div>
-	<div class="scrolling-content">
-		<ad-meetings meetings="oc.meetings" header="oc.meetingsHeader" on-selected="oc.meetingSelected(meeting)">
-		</ad-meetings>
-		<div ng-if="oc.mtgErr" class="alert alert-danger" role="alert">Kokoustietojen haku ei onnistunut</div>
+<div class="ad-page">
+    <div class="ad-page-header db-center-v">
 
-		<ad-open-signreqs ad-signitems="oc.signItems" header="oc.signReqsHeader" on-select="oc.signItemSelected(signingItem)">
-		</ad-open-signreqs>
-		<div ng-if="oc.signErr" class="alert alert-danger" role="alert">Allekirjoitustietojen haku ei onnistunut</div>
-	</div>
+        <div class="overview-hdr">
+            <button ng-if="env_dev" type="button" title="{{'STR_LOGOUT' | translate}} {{oc.testEnvUserId}}" class="btn db-btn-prim db-center db-margin-10-right"
+                ng-click="oc.logout()">
+                <div class="hidden-sm hidden-md hidden-lg db-glyph db-glyph-sm" ng-include="'images/glyph-back.svg'"></div>
+                <div class="hidden-xs db-glyph" ng-include="'images/glyph-back.svg'"></div>
+            </button>
+            <img src="images/vaakuna.jpg" style="width: 40px;">
+            <h5 class="hidden-sm hidden-md hidden-lg db-flex-area db-break-hyphen" translate>STR_APPNAME</h5>
+            <h3 class="hidden-xs db-flex-area" translate>STR_APPNAME</h3>
+            <button type="button" class="btn db-btn-prim" ng-click="toggleLang()">
+                <div class="db-glyph db-glyph-sm" ng-include="oc.flagIconPath()"></div>
+            </button>
+            <button type="button" class="btn db-btn-prim" ng-click="oc.showInfo()">
+                <div class="db-glyph db-glyph-sm" ng-include="'images/glyph-info.svg'"></div>
+            </button>
+        </div>
+    </div>
+
+    <div class="ad-page-content">
+
+        <div class="ad-page-container-flex ng-class:{'db-margin-05': !isMobile, 'db-margin-1': isMobile}">
+
+            <!-- MEETINGS START -->
+            <div ng-if="oc.hasMeetings" class="ad-flex-header">
+                <button type="button" class="btn db-btn-prim ad-lg db-btn-list-topleft-xs db-btn-list-topleft-sm db-break-hyphen ng-class:[{'active':oc.vblMtgs === oc.vbl.OPEN}]" ng-click="oc.setMtgsVisible(oc.vbl.OPEN)">
+                    <div class="visible-xs-block"><h5 translate>STR_OPEN_MEETINGS</h5>
+                    </div>
+                    <div class="hidden-xs"><h4 translate>STR_OPEN_MEETINGS</h4></div>
+                </button>
+                <button type="button" class="btn db-btn-prim ad-lg db-break-hyphen ng-class:[{'active':oc.vblMtgs === oc.vbl.CLOSED}]" ng-click="oc.setMtgsVisible(oc.vbl.CLOSED)">
+                    <h5 class="visible-xs-block" translate>STR_CLOSED_MEETINGS</h5>
+                    <h4 class="hidden-xs" translate>STR_CLOSED_MEETINGS</h4>
+                </button>
+                <button type="button" class="hidden-xs btn db-btn-prim ad-xs" uib-popover-html="'{{'STR_HELP_MTGLIST' | translate}}'" popover-title="{{'STR_MEETINGS' | translate}}" popover-append-to-body="true" popover-placement="top auto">
+                    <div class="db-center">
+                        <div class="db-glyph db-glyph-sm" ng-include="'images/glyph-info.svg'"></div>
+                    </div>
+                </button>
+                <button type="button" title="{{'STR_EXPANDCOLLAPSE' | translate}}" class="btn db-btn-prim ad-xs db-btn-list-topright-xs db-btn-list-topright-sm"
+                    ng-click="oc.upperClicked()">
+                    <div class="db-center db-flex-area">
+                        <div class="db-glyph db-glyph-sm" ng-include="oc.blockMode === oc.bms.PRIMARY ? 'images/glyph-expand-minus.svg' : 'images/glyph-expand-plus.svg'"></div>
+                    </div>
+                </button>
+            </div>
+
+            <div ng-if="oc.hasMeetings" class="ad-flex-item db-overflow ng-class:[{'ad-flex-show':oc.blockMode !== oc.bms.SECONDARY, 'ad-flex-hide':oc.blockMode === oc.bms.SECONDARY}]">
+                <ad-meetings visible-meetings="oc.vblMtgs" on-selected="oc.loginMeeting(meetingItem, meetingRole, personGuid)">
+                </ad-meetings>
+            </div>
+            <!-- MEETINGS END -->
+
+            <!-- SIGNINGS START -->
+            <div ng-if="oc.hasEsign" class="ad-flex-header ng-class:[{'db-margin-05-top': !isMobile}, {'db-margin-1-top': isMobile}]">
+                <button type="button" class="btn db-btn-prim ad-lg db-btn-list-topleft-xs db-btn-list-topleft-sm db-break-hyphen ng-class:[{'active':!oc.closedSignReqs}]"
+                    ng-click="oc.setClosedSignReqs(false)">
+                    <h5 class="visible-xs-block" translate>STR_OPEN_SIGNINGS</h5>
+                    <h4 class="hidden-xs" translate>STR_OPEN_SIGNINGS</h4>
+                </button>
+                <button type="button" class="btn db-btn-prim ad-lg db-break-hyphen ng-class:[{'active':oc.closedSignReqs}]" ng-click="oc.setClosedSignReqs(true)">
+                    <h5 class="visible-xs-block" translate>STR_CLOSED_SIGNINGS</h5>
+                    <h4 class="hidden-xs" translate>STR_CLOSED_SIGNINGS</h4>
+                </button>
+                <button type="button" class="hidden-xs btn db-btn-prim ad-xs" uib-popover-html="'{{'STR_HELP_SIGNLIST' | translate}}'" popover-title="{{'STR_SIGNERS' | translate}}" popover-append-to-body="true" popover-placement="top auto">
+                    <div class="db-center">
+                        <div class="db-glyph db-glyph-sm" ng-include="'images/glyph-info.svg'"></div>
+                    </div>
+                </button>
+                <button type="button" title="{{'STR_EXPANDCOLLAPSE' | translate}}" class="btn db-btn-prim ad-xs db-btn-list-topright-xs db-btn-list-topright-sm"
+                    ng-click="oc.lowerClicked()">
+                    <div class="db-center db-flex-area">
+                        <div class="db-glyph db-glyph-sm" ng-include="oc.blockMode === oc.bms.SECONDARY ? 'images/glyph-expand-minus.svg' : 'images/glyph-expand-plus.svg'"></div>
+                    </div>
+                </button>
+            </div>
+
+            <div ng-if="oc.hasEsign" class="ad-flex-item db-overflow ng-class:[{'ad-flex-show':oc.blockMode !== oc.bms.PRIMARY, 'ad-flex-hide':oc.blockMode === oc.bms.PRIMARY}]">
+                <ad-open-signreqs closeditems="oc.closedSignReqs"></ad-open-signreqs>
+            </div>
+            <!-- SIGNINGS END -->
+
+        </div>
+
+    </div>
+
 </div>

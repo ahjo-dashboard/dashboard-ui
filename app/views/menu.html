@@ -1,4 +1,31 @@
-<div class="scrolling-content">
-    <ad-menu items="mc.items" state="mc.state" item="mc.item" on-selected="mc.menuItemSelected(item)" on-subselected="mc.submenuItemSelected(item)">
-    </ad-menu>
+<div class="ad-page">
+
+    <div class="ad-page-header db-center-v">
+        <img src="images/vaakuna.jpg">
+        <h3 translate translate-cloak>STR_APPNAME</h3>
+    </div>
+
+    <div class="ad-page-content">
+
+        <div class="ad-page-container">
+            <button type="button" class="btn btn-lg btn-block wrap-button-text db-btn-prim" ng-click="mc.showMeetings()">
+                <div class="ng-class: [{'col-xs-10':mc.loadingMtg, 'col-xs-12':!mc.loadingMtg}]"><span translate translate-cloak>STR_MEETINGS</span> <span class="badge">{{mc.mtgCount}}</span>
+                </div>
+                <div ng-if="mc.loadingMtg" class="ad-progress-bar-parent col-xs-2">
+                    <uib-progressbar class="progress-striped active ad-progress-bar" type="info"></uib-progressbar>
+                </div>
+            </button>
+            <button type="button" class="btn btn-lg btn-block wrap-button-text db-btn-prim" ng-click="mc.showSignings()">
+                <div ng-class="[{'col-xs-10':mc.loadingSgn, 'col-xs-12':!mc.loadingSgn}]">
+                    <span translate translate-cloak>STR_SIGNINGS</span>
+                    <span class="badge ng-cloak">{{mc.sgnCount}}</span>
+                </div>
+                <div ng-if="mc.loadingSgn" class="ad-progress-bar-parent col-xs-2">
+                    <uib-progressbar class="progress-striped active ad-progress-bar" type="info"></uib-progressbar>
+                </div>
+            </button>
+        </div>
+
+    </div>
+
 </div>

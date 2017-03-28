@@ -1,8 +1,63 @@
-<div class="no-inherit-animation scrolling-content">
-    <form>
-        <select id="ADID" name="ADID" ng-model="lc.data.selection">
-            <option ng-repeat="item in lc.data.options track by $index" value="{{item.value}}">{{item.text}}</option>
-        </select>
-        <input class="login" type="submit" value="Kirjaudu" ng-click="lc.select()" />
-    </form>
+<div class="ad-page-header">
+    <div class="ad-page-header db-center-v">
+        <img src="images/vaakuna.jpg">
+        <h4 class="visible-xs-block" translate>STR_APPNAME</h4>
+        <h3 class="hidden-xs" translate>STR_APPNAME</h3>
+    </div>
+</div>
+<div class="ad-page-content">
+    <div class="ad-page-container">
+        <div class="text-center">
+
+            <div class="db-error">
+                <h4>Testiympäristön käyttäjävalinta</h4>
+                <br>
+                <p>
+                    Voit valita käyttäjätunnuksen, jolle haetaan testiympäristön kokousten sisältö.
+                    <br> Sähköiset allekirjoitukset haetaan silti omalla tunnuksellasi
+                </p>
+            </div>
+
+            <form ng-hide="lc.login || lc.loadingUsers || lc.error">
+                <select db-selection sel-items="lc.data.options" ng-model="lc.data.selection">
+                    </select>
+                <br><br>
+                <button ng-hide="!lc.data.selection || lc.login || lc.loadingUsers" class="btn btn-success" type="submit" ng-click="lc.selectUser()"
+                    ng-disabled="lc.login">
+                    <div class="db-flex db-flex-nowrap db-center-v">
+                        <span translate translate-cloak>{{'STR_LOGIN'}}</span>
+                        <div class="db-glyph db-glyph-sm db-margin-10-left" ng-include="'images/glyph-login.svg'"></div>
+                    </div>
+                </button>
+            </form>
+
+            <span ng-if="lc.loadingUsers">Haetaan käyttäjätunnuksia</span>
+            <div ng-show="lc.loadingUsers" class="db-spinner-cont">
+                <div us-spinner spinner-on="true"></div>
+            </div>
+
+            <div uib-alert ng-if="lc.error" ng-class="'alert-danger'">
+                <span translate-cloak translate>STR_FAIL_LOADING</span>
+                <br>
+                <span translate>STR_TRY_LATER</span>
+                <br>{{lc.error.status}}&nbsp;{{lc.error.statusText}}
+            </div>
+
+        </div>
+
+        <br><br>
+
+        <div class="text-center">
+            <p>
+                Vaihtoehtoisesti voit kirjautua myös omalla tunnuksellasi
+            </p>
+            <button type="button" class="btn btn-success" ng-click="lc.selectOwn()" ng-disabled="lc.login">
+                <div class="db-flex db-flex-nowrap db-center-v">
+                    <div>Kirjaudu omalla</div>
+                    <div class="db-glyph db-glyph-sm db-margin-10-left" ng-include="'images/glyph-login.svg'"></div>
+                </div>
+            </button>
+        </div>
+
+    </div>
 </div>

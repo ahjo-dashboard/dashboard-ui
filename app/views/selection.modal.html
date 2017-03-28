@@ -1,0 +1,18 @@
+<div class="source-list-modal">
+    <div class="modal-header db-confirm-header">
+        <div class="db-center-v">
+            <div class="db-glyph" ng-include="'images/glyph-question.svg'"></div>
+            <h3 ng-if="title" class="modal-title db-margin-10-left" translate translate-cloak>{{title}}</h3>
+        </div>
+    </div>
+    <div class="modal-body db-no-padding">
+        <ul class="list-group db-no-margin">
+            <li class="list-group-item ng-class:[{'active':isSelected(item)},{'disabled db-opacity-05':item.disabled}]" ng-repeat="item in items track by $index" ng-click="!item.disabled && itemSelected(item)">
+                <span class="db-fs-15" translate translate-cloak>{{item.stringId}}</apan>
+            </li>
+        </ul>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-danger db-min-width-120" type="button" ng-click="clicked(false)" translate translate-cloak>STR_CANCEL</button>
+    </div>
+</div>

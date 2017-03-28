@@ -1,0 +1,92 @@
+<div class="container-fluid">
+    <div class="row db-opt-bg">
+
+        <div class="hidden-xs col-xs-12 col-sm-4 db-no-padding">
+            <button type="button" class="btn btn-block disabled db-no-border ng-class:{'db-btn-opt': c.isDisabled(), 'db-btn-opt-dummy': !c.isDisabled()}">
+                <span translate translate-cloak>STR_SIGNING_REQ</span>
+            </button>
+        </div>
+
+        <div class="col-xs-6 col-sm-2 db-no-padding btn-group" uib-dropdown is-open="">
+            <button id="docStatusButton" type="button" class="btn btn-block db-btn-opt db-no-border" ng-disabled="c.isDisabled()" uib-dropdown-toggle>
+                <span class="ng-class:{'db-underline': c.FStatus}" translate translate-cloak>{{c.docStatusTitle}}</span>
+                <span class="caret"></span>
+            </button>
+            <ul uib-dropdown-menu role="menu" aria-labelledby="docStatusButton">
+                <li role="menuitem" ng-repeat="i in c.docStatuses track by $index">
+                    <a ng-click="c.setModelFilter(i)"><span translate translate-cloak>{{i.strId}}</span></a>
+                </li>
+                <li ng-show="c.isFilter()" class="divider"></li>
+                <li ng-show="c.isFilter()" role="menuitem"><a ng-click="c.setModelFilter(null)"><span translate translate-cloak>STR_CLEAR_SELECTION</span></a></li>
+            </ul>
+        </div>
+
+        <div class="col-xs-6 col-sm-3 btn-group db-no-padding" uib-dropdown is-open="">
+            <button id="docTypeButton" type="button" class="btn btn-block db-btn-opt db-no-border" ng-disabled="c.isDisabled()" uib-dropdown-toggle>
+                <span class="ng-class:{'db-underline': c.FType}" translate translate-cloak>{{c.docTypeTitle}}</span>
+                <span class="caret"></span>
+            </button>
+            <ul uib-dropdown-menu role="menu" aria-labelledby="docTypeButton">
+                <li role="menuitem" ng-repeat="i in c.docTypes track by $index">
+                    <a ng-click="c.setModelFilter(i)"><span translate translate-cloak>{{i.strId}}</span></a>
+                </li>
+                <li ng-show="c.isFilter()" class="divider"></li>
+                <li ng-show="c.isFilter()" role="menuitem">
+                    <a ng-click="c.setModelFilter(null)">
+                        <span translate translate-cloak>STR_CLEAR_SELECTION</span></a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="hidden-xs col-xs-3 db-no-padding">
+            <button type="button" class="btn btn-block disabled db-no-border db-btn-opt-dummy">
+                <span translate translate-cloak>STR_OPEN_SIGNING_REQ</span>
+            </button>
+        </div>
+
+    </div>
+
+    <div class="row">
+
+        <div ng-show="c.loading()" class="db-spinner-cont">
+            <span us-spinner spinner-on="c.loading()"></span>
+        </div>
+
+        <ul ng-if="!c.error" class="list-group">
+            <li type="button" class="list-group-item col-xs-12" ng-repeat="i in c.model | filter: c.docFilter track by $index">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-4">
+                        <div>
+                            <b>{{i.Name}}</b>
+                        </div>
+                        <div ng-if="i.ShortComment && i.ShortComment.length">
+                            <i>{{i.ShortComment}}</i>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-2 db-flex ng-class:[{'db-padding-05-ver db-fs-11':c.isMobile}]">
+                        <div class="db-circle-20 db-brd-1-dark ng-class:[c.statusStyle(i.Status)]"></div>
+                        <div class="db-flex-area db-margin-10-left" translate translate-cloak>{{c.statusStrId(i.Status)}}</div>
+                    </div>
+                    <div class="col-xs-12 col-sm-3 ng-class:[{'db-padding-05-ver db-fs-11':c.isMobile}]">
+                        <span translate translate-cloak>{{c.docTypeStrId(i.DocumentType)}}</span>
+                    </div>
+                    <div class="col-xs-12 col-sm-3">
+                        <button type="button" class="btn db-btn-sel btn-block ng-class:[{'db-fs-12':c.isMobile}]" ng-click="c.selected(i)">
+                            <div class="db-center">
+                                <span translate translate-cloak>STR_OPEN</span>
+                                <div class="db-glyph db-glyph-sm db-glyph-dark db-margin-05-left" ng-include="'images/glyph-login.svg'"></div>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </li>
+        </ul>
+
+        <div ng-if="c.error" uib-alert class="alert-danger">
+            <div class="db-flex db-center-v">
+                <div class="db-glyph db-glyph-error" ng-include="'images/glyph-error.svg'"></div>
+                <div class="db-margin-10-left" translate translate-cloak>STR_FAIL_LOADING</div>
+            </div>
+        </div>
+    </div>
+</div>

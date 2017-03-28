@@ -1,0 +1,71 @@
+<div class="proposal db-directive db-padding-10">
+    <span us-spinner="{radius:6, width:2, length:4}" spinner-on="c.updating"></span>
+
+    <div class="db-flex db-center-v" ng-click="(c.mode !== c.modes.EDIT) && c.toggleCollapse()">
+
+        <span class="db-margin-10-right">{{c.uiProposal.orderNumber}}</span>
+
+        <b ng-if="c.mode !== c.modes.EDIT" class="db-margin-10-right" translate translate-cloak>{{c.typeText(c.uiProposal.proposalType)}}</b>
+
+        <div ng-if="c.mode === c.modes.EDIT">
+            <form name="propTypeSelection" ng-click="$event.stopPropagation();">
+                <select id="propTypeSelect" ng-model="c.proposalTypeModel" ng-change="c.changed()" ng-options="o.value as o.strId | translate for o in c.propTypes">
+                </select>
+            </form>
+        </div>
+
+        <i class="db-margin-10-right db-oneliner db-padding-2-right" ng-if="c.uiProposal.isPublished === c.status.YES">{{c.uiProposal.personName}}</i>
+
+        <span class="db-flex-area db-oneliner db-margin-05-right" ng-bind-html="c.mode === c.modes.COLLAPSED ? c.uiProposal.text : null"></span>
+
+        <div ng-show="c.uiProposal.isModified && !c.uiProposal.isOwnProposal" title="{{'STR_INFO_NEW_PROPS' | translate}}" class="db-glyph db-glyph-sm db-glyph-ora db-margin-10-right"
+            ng-include="'images/glyph-bell.svg'"></div>
+
+        <div ng-show="c.uiProposal.isCopy" title="{{'STR_DUPLICATE_PROP' | translate}}" class="db-glyph db-glyph-sm db-glyph-info db-margin-10-right"
+            ng-include="'images/glyph-doc-copy.svg'"></div>
+
+        <div ng-show="c.uiProposal.isPublishedIcon" title="{{'STR_PUBLISHED' | translate}}" class="db-glyph db-glyph-sm db-glyph-info db-margin-10-right"
+            ng-include="'images/glyph-public.svg'"></div>
+
+        <div title="{{'STR_EXPANDCOLLAPSE' | translate}}" class="db-glyph db-glyph-sm db-glyph-dark db-margin-10-right" ng-include="c.mode === c.modes.COLLAPSED ? 'images/glyph-expand.svg' : 'images/glyph-minimize.svg'">
+        </div>
+
+    </div>
+
+    <div class="db-flex">
+
+        <div class="db-flex-area" uib-collapse="c.mode === c.modes.COLLAPSED">
+            <textarea class="db-textarea db-margin-10-top db-padding-05 db-brd-all" msd-elastic ng-readonly="c.mode !== c.modes.EDIT" ng-model="c.editorText"
+                focus-if="c.mode === c.modes.EDIT"></textarea>
+
+            <div ng-if="c.uiProposal.translationText" class="db-padding-05"><span translate translate-cloak>STR_TRANSLATION</span>:</div>
+            <textarea ng-if="c.uiProposal.translationText" class="db-textarea db-padding-05 db-brd-all" readonly ng-model="c.uiProposal.translationText"></textarea>
+
+            <div ng-if="c.mode !== c.modes.COLLAPSED" class="db-flex-right db-flex-area ng-class:{'db-flex-col': c.isMobile}">
+                <button ng-if="c.uiProposal.isOwnProposal && (c.mode !== c.modes.EDIT)" class="btn btn-danger db-btn-big db-margin-2 ng-class:{'btn-block':c.isMobile}"
+                    db-confirm confirm-config="c.uiProposal.isPublished ? c.deleteConfigPub : c.uiProposal.isPublishedIcon ? c.deleteConfigDraftAndPub : c.deleteConfigDraft"
+                    ng-click="c.remove(data)">
+                    <span translate translate-cloak>STR_DELETE</span>
+                </button>
+                <button ng-if="c.uiProposal.isOwnProposal && (c.mode === c.modes.EDIT)" class="btn btn-danger db-btn-big db-margin-2 ng-class:{'btn-block':c.isMobile}"
+                    ng-click="c.cancel()">
+                    <span translate translate-cloak>STR_CANCEL</span>
+                </button>
+                <button ng-if="c.uiProposal.isOwnProposal && !c.uiProposal.isPublished" class="btn btn-success db-btn-big db-margin-2 ng-class:{'btn-block':c.isMobile}"
+                    db-confirm confirm-config="c.publishConfig" ng-click="c.send()" ng-disabled="!c.saveAllowed()">
+                    <span translate translate-cloak>STR_PUBLISH</span>
+                </button>
+                <button ng-if="c.uiProposal.isOwnProposal && !c.uiProposal.isPublished && (c.mode !== c.modes.EDIT)" class="btn btn-primary db-btn-big db-margin-2 ng-class:{'btn-block':c.isMobile}"
+                    ng-click="c.edit()"><span translate translate-cloak>STR_EDIT</span>
+                </button>
+                <button ng-if="c.uiProposal.isOwnProposal && (c.mode === c.modes.EDIT)" class="btn btn-primary db-btn-big db-margin-2 ng-class:{'btn-block':c.isMobile}"
+                    db-confirm confirm-enabled="c.typeChanged && (c.uiProposal.isPublishedIcon && c.guidValid) && c.uiProposal.isOwnProposal" confirm-config="c.saveConfigDraft"
+                    ng-click="c.accept(c.typeChanged)" confirm-reject="c.rejected()" ng-disabled="!c.saveAllowed()">
+                    <span translate translate-cloak>STR_SAVE</span>
+                </button>
+            </div>
+
+        </div>
+
+    </div>
+</div>

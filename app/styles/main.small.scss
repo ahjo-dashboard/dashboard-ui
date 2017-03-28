@@ -4,49 +4,64 @@
  */
 
 /* Small devices (tablets, 768px and up) */
+@import "bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
+
 @media screen and (min-width: 768px) {
+
+$btn-radius: 8px;
+$btn-prim-color-bg: #4591d3;
+$btn-prim-color-active-bg: #276aa5;
+
+$font-color-header: white;
+$db-color-success: #5cb85c;
+$db-color-danger: #d9534f;
+
+// GENERIC DECLARATION START
+.db-btn-small {
+    width: 58px !important;
+    font-size: 1.0em !important;
+}
+
+.db-btn-big {
+    width: 160px !important;
+    font-size: 1.0em !important;
+}
+// GENERIC DECLARATION END
+
+// BLOCK DECLARATION START
+.db-block {
+    .db-block-content {
+        padding: 1px;
+    }
+}
+// BLOCK DECLARATION END
+
+    #device {
+        min-width: 768px;
+        display: none;
+    }
+
     body {
-        $left-slide: 350px;
-        $right-width: 40%;
-        $right-slide: 100% - $right-width;
-        $navbar-height: 54px;
+        $header-height: 60px; // this is for moving main content
+        $button-height: 50px;
 
-        .navbar {
-            .logo {
-                padding-top: 4px;
-                padding-bottom: 4px;
+        $default-font-size: 1.0em;
+
+        .ad-page-header {
+            .btn {
+                height: $button-height;
+                margin: 0;
             }
-            .ad-navbar-header {
-                display: inherit;
-            }
-        }
-
-        .main-content {
-            top: $navbar-height;
-
-            .ad-block-content {
-                padding-top: 5px;
-                padding-bottom: 60px;
+            .btn-group {
+                padding: ($header-height - $button-height) * 0.5;
             }
         }
 
-        .left-sidebar {
-            width: $left-slide;
-            top: $navbar-height;
-        }
-
-        .right-sidebar {
-            width: $right-width;
-            top: $navbar-height;
-        }
-
-        .left-menu-open {
-            left: $left-slide;
-            right: 0;
-        }
-
-        .right-menu-open {
-            left: $right-slide;
+        .ad-page-content .btn {
+            text-align: left;
         }
     }
+
+    .db-btn-list-topleft-sm { border-top-left-radius: $btn-radius !important; }
+    .db-btn-list-topright-sm { border-top-right-radius: $btn-radius !important; }
 }

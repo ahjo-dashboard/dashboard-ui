@@ -1,0 +1,73 @@
+<div class="db-directive">
+    <div ng-show="c.busy" class="db-spinner-cont">
+        <span us-spinner spinner-on="c.busy"></span>
+    </div>
+
+    <div ng-if="c.errorCode" uib-alert class="alert-danger">
+        <div class="db-flex db-center-v">
+            <div class="db-glyph db-glyph-error" ng-include="'images/glyph-error.svg'"></div>
+            <div class="db-margin-10-left" translate translate-cloak>STR_FAIL_LOADING</div>
+        </div>
+    </div>
+
+    <ul ng-hide="c.busy || c.errorCode" class="list-group">
+
+        <div>
+            <div class="hidden-xs col-sm-3 db-no-padding">
+                <button type="button" class="btn btn-block db-btn-colhea-dummy db-prim-bg disabled db-btn-list-topleft-xs db-btn-list-topleft-sm db-btn-list-topright-xs">
+                <span translate translate-cloak>STR_ROLE</span>
+            </button>
+            </div>
+            <div class="hidden-xs col-sm-3 db-no-padding">
+                <button type="button" class="btn btn-block db-btn-colhea-dummy db-prim-bg disabled">
+                <span translate translate-cloak>STR_NAME</span>
+            </button>
+            </div>
+            <div class="hidden-xs col-sm-3 db-no-padding">
+                <button type="button" class="btn btn-block db-btn-colhea-dummy db-prim-bg disabled">
+                <span translate translate-cloak>STR_STATUS</span>
+            </button>
+            </div>
+            <div class="hidden-xs col-sm-3 db-no-padding">
+                <button type="button" class="btn btn-block db-btn-colhea-dummy db-prim-bg disabled db-btn-list-topright-sm">
+                <span translate translate-cloak>STR_TIME</span>
+            </button>
+            </div>
+        </div>
+
+        <button type="button" class="list-group-item col-xs-12">
+        <div class="row">
+            <div class="col-xs-12 col-sm-3 db-overflow-hidden">
+                <span translate translate-cloak>{{c.initiatorRoleStrId(c.item.DocumentType)}}</span>
+            </div>
+            <div class="col-xs-12 col-sm-3 db-overflow-hidden">
+                <span>{{c.item.RequestorName}}</span>
+            </div>
+            <div class="col-xs-6 col-sm-3 db-flex db-overflow-hidden">
+                <div class="db-circle-20 db-brd-1-dark db-badge-dark"></div>
+                <div class="db-flex-area db-margin-10-left db-break-hyphen" translate translate-cloak>STR_SIGNING_INITIATED</div>
+            </div>
+            <div class="col-xs-6 col-sm-3 ">
+                <span class="db-overflow-hidden">{{c.model.RequestDate | date:'dd.MM.yyyy HH:mm'}}</span>
+            </div>
+        </div>
+        </button>
+        <button type="button" class="list-group-item col-xs-12" ng-repeat="i in c.model.Signers | orderBy:i:false:c.signingComparator track by $index">
+            <div class="row">
+                <div class="col-xs-12 col-sm-3 db-overflow-hidden">
+                    <span translate translate-cloak>{{c.roleStrId(i.role)}}</span>
+                </div>
+                <div class="col-xs-12 col-sm-3 db-overflow-hidden">
+                    <span>{{i.name}}</span>
+                </div>
+                <div class="col-xs-6 col-sm-3 db-flex db-overflow-hidden">
+                    <div class="db-circle-20 db-brd-1-dark ng-class:[c.statusStyle(i.status)]"></div>
+                    <div class="db-flex-area db-margin-10-left db-break-hyphen" translate translate-cloak>{{c.statusStrId(i.status)}}</div>
+                </div>
+                <div class="col-xs-6 col-sm-3 db-overflow-hidden">
+                    <span>{{i.statusChangedTime | date:'dd.MM.yyyy HH:mm'}}</span>
+                </div>
+            </div>
+        </button>
+    </ul>
+</div>

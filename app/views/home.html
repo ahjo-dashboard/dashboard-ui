@@ -1,0 +1,12 @@
+<div class="ad-page">
+
+    <div class="container">
+        <div class="row">
+            <ui-view name="homeLeftContent" class="ad-page-left col-xs-4 col-lg-2"></ui-view>
+            <ui-view name="homeRightContent" class="ad-page-right ng-class: [{'col-xs-8 col-lg-10':menuFull(), 'col-xs-10 col-lg-11':menuHalf(), 'col-xs-12':menuClosed()}]"></ui-view>
+        </div>
+    </div>
+
+    <ui-view name="homeContent"></ui-view>
+
+</div>

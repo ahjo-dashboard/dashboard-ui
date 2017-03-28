@@ -12,53 +12,157 @@
  * Controller of the dashboard
  */
 angular.module('dashboard')
-.controller('overviewCtrl', function ($scope, $log, AhjoMeetingService, ENV, SigningOpenApi, $state) {
-	$log.log("overviewCtrl.controller");
-	var self = this;
-	self.loading = 0;
-	self.meetingsHeader = 'Tulevat kokoukset';
-	self.signReqsHeader = 'Avoimet allekirjoituspyynnöt';
-	self.meetings = [];
-	self.loadingmax = 2;
-	self.signErr = null;
-	self.mtgErr = null;
+    .controller('overviewCtrl', ['$scope', '$log', 'ENV', 'SigningOpenApi', '$state', '$rootScope', 'CONST', '$stateParams', 'MTGD', 'StorageSrv', '$http', 'Utils', 'DialogUtils', 'AhjoMeetingSrv', function ($scope, $log, ENV, SigningOpenApi, $state, $rootScope, CONST, $stateParams, MTGD, StorageSrv, $http, Utils, DialogUtils, AhjoMeetingSrv) {
+        $log.debug("overviewCtrl: CONTROLLER, mode: ", $stateParams.state);
+        var self = this;
+        self.loading = 0;
+        self.signReqsHeader = 'Avoimet allekirjoituspyynnöt';
+        self.signErr = null;
+        self.blockMode = CONST.BLOCKMODE.DEFAULT;
+        self.vbl = MTGD.VISIBLE;
+        self.bms = CONST.BLOCKMODE;
+        self.testEnvUserId = StorageSrv.getKey(CONST.KEY.TESTENV_USERID);
 
-	AhjoMeetingService.getMeetings(ENV.MeetingsApi_OverviewLimit, ENV.MeetingsApi_DefaultOffset)
-	.then(function(response) {
-		$log.debug(response);
-		self.meetings = response.objects;
-		self.mtgErr = null;
-	},
-	function(error) {
-		$log.error("overviewCtrl: getMeetings error: " +error);
-		self.mtgErr = error.status;
-	})
-	.finally(function() {
-		$log.debug("overviewCtrl: getMeetings finally"); //TODO: remove
-		self.loading += 1;
-	});
+        var visibleMtgs = StorageSrv.getKey(CONST.KEY.VISIBLE_MTGS);
+        switch (visibleMtgs) {
+            case MTGD.VISIBLE.OPEN:
+                self.vblMtgs = MTGD.VISIBLE.OPEN;
+                break;
+            case MTGD.VISIBLE.CLOSED:
+                self.vblMtgs = MTGD.VISIBLE.CLOSED;
+                break;
+            default:
+                self.vblMtgs = MTGD.VISIBLE.OPEN;
+                break;
+        }
 
-	// Open signing requests
-	self.signItems = SigningOpenApi.query(function() {
-		self.signErr = null;
-	},
-	function(error) {
-		$log.error("overviewCtrl: SigningOpenApi.query error " +JSON.stringify(error));
-		self.signErr = error.status;
-		//self.errMsg = error.data.Message;
-	});
-	self.signItems.$promise.finally(function() {
-		$log.debug("overviewCtrl: SigningOpenApi.query finally"); //TODO: remove
-		self.loading += 1;
-	});
+        var signingRes = StorageSrv.getKey(CONST.KEY.SIGNING_RES);
+        self.closedSignReqs = signingRes ? signingRes : false;
 
-	self.meetingSelected = function(meeting) {
-		$log.debug("overviewCtrl.meetingSelected: "+ meeting);
-		$state.go('app.meeting', {meetingItem : meeting});
-	};
+        $rootScope.menu = CONST.MENU.CLOSED;
+        var mode = $stateParams.state;
+        var storedMode = localStorage.overviewState;
 
-	self.signItemSelected = function(signingItem) {
-		$log.debug("overviewCtrl.signItemSelected");
-		$state.go('app.signitem', {signItem : signingItem});
-	};
-});
+        if (mode === CONST.HOMEMODE.ALL) {
+            if (storedMode === '1') {
+                mode = CONST.HOMEMODE.MEETINGS;
+            }
+            else if (storedMode === '2') {
+                mode = CONST.HOMEMODE.ESIGN;
+            }
+        }
+
+        switch (mode) {
+            case CONST.HOMEMODE.MEETINGS:
+                self.hasMeetings = true;
+                break;
+            case CONST.HOMEMODE.ESIGN:
+                self.hasEsign = true;
+                break;
+            default:
+                self.hasMeetings = true;
+                self.hasEsign = true;
+                break;
+        }
+
+        localStorage.overviewState = mode;
+
+        function goToMeeting(meetingItem, meetingRole, personGuid) {
+            $log.debug("overviewCtrl.goToMeeting");
+            if (angular.isObject(meetingItem) && angular.isObject(meetingRole) && angular.isString(personGuid)) {
+
+                meetingItem.dbUserRole = meetingRole;
+                meetingItem.dbUserPersonGuid = personGuid;
+
+                StorageSrv.setKey(CONST.KEY.MEETING_ITEM, meetingItem);
+                $state.go(CONST.APPSTATE.MEETING, { 'menu': CONST.MENU.FULL });
+            } else {
+                $log.error("overviewCtrl.goToMeeting: bad args=" ,arguments);
+                DialogUtils.showError('STR_FAIL_OP', null, true);
+            }
+        }
+
+        function logoutRest() {
+            $log.debug("overviewCtrl.logoutRest");
+            self.logoutProm = $http({
+                method: 'GET',
+                withCredentials: true,
+                url: ENV.AHJOAPI_USERLOGOUTREST
+            }).then(function successCallback(resp) {
+                $log.debug("overviewCtrl.logoutRest: done");
+                Utils.processAhjoError(resp); // Print any errors but transition state in any case.
+            }, function errorCallback(error) {
+                $log.error("overviewCtrl.logoutRest");
+                Utils.processAhjoError(error);
+            }).finally(function () {
+                $state.go(CONST.APPSTATE.LOGIN);
+            });
+        }
+
+        self.loginMeeting = function loginMeetingFn(meetingItem, meetingRole, personGuid) {
+            $log.debug("overviewCtrl.loginMeeting: ", arguments);
+            var dlg = DialogUtils.showProgress('STR_MTG_LOGIN_PROGRESS');
+            AhjoMeetingSrv.meetingLogin(meetingItem.meetingGuid, meetingRole.RoleID, personGuid).then(function (resp) {
+                $log.debug("overviewCtrl.loginMeeting: result=", arguments);
+                if (!Utils.processAhjoError(resp)) {
+                    goToMeeting(meetingItem, meetingRole, personGuid);
+                }
+            }, function (error) {
+                Utils.processAhjoError(error);
+            }).finally(function () {
+                DialogUtils.close(dlg);
+            });
+        };
+
+        self.showInfo = function () {
+            $log.debug("overviewCtrl: showInfo");
+            $state.go(CONST.APPSTATE.INFO);
+        };
+
+        self.upperClicked = function () {
+            self.blockMode = (self.blockMode === CONST.BLOCKMODE.PRIMARY || self.blockMode === CONST.BLOCKMODE.SECONDARY) ? CONST.BLOCKMODE.DEFAULT : CONST.BLOCKMODE.PRIMARY;
+        };
+
+        self.lowerClicked = function () {
+            self.blockMode = (self.blockMode === CONST.BLOCKMODE.SECONDARY || self.blockMode === CONST.BLOCKMODE.PRIMARY) ? CONST.BLOCKMODE.DEFAULT : CONST.BLOCKMODE.SECONDARY;
+        };
+
+        self.setMtgsVisible = function (mtgs) {
+            self.vblMtgs = mtgs;
+            StorageSrv.setKey(CONST.KEY.VISIBLE_MTGS, mtgs);
+        };
+
+        self.setClosedSignReqs = function (value) {
+            self.closedSignReqs = value;
+            StorageSrv.setKey(CONST.KEY.SIGNING_RES, value);
+        };
+
+        self.logout = function () {
+            $log.debug("overviewCtrl.logout");
+            if (!self.logoutProm) {
+                logoutRest();
+            }
+            else {
+                $log.error("overviewCtrl.logout: ignored");
+            }
+        };
+
+        self.flagIconPath = function flagIconPath() {
+            var res = '';
+            switch ($rootScope.dbLang) {
+                case CONST.DBLANG.FI.langCode:
+                    res = CONST.DBLANG.SV.flagIconPath;
+                    break;
+                case CONST.DBLANG.SV.langCode:
+                    res = CONST.DBLANG.FI.flagIconPath;
+                    break;
+                default:
+                    break;
+            }
+            return res;
+        };
+
+        $scope.$on('$destroy', function () {
+            $log.debug("overviewCtrl: DESTROY");
+        });
+    }]);

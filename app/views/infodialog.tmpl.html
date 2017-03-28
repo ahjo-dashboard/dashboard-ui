@@ -1,0 +1,17 @@
+<div>
+    <div class="modal-header db-center-v ng-class:{'db-alert-header': c.isError, 'db-confirm-header': !c.isError}">
+            <span ng-if="c.isError">
+                <div class="db-glyph" ng-include="'images/glyph-error.svg'"></div>
+            </span>
+            <span ng-if="!c.isError">
+                <div class="db-glyph" ng-include="'images/glyph-info.svg'"></div>
+            </span>
+            <h3 ng-if="c.dbDlgTitleStrId" class="db-margin-10-left" translate translate-cloak>{{c.dbDlgTitleStrId}}</h3>
+    </div>
+    <div class="modal-body db-font-12">
+        <span translate translate-cloak>{{c.dbDlgbodyStrId}}</span>
+    </div>
+    <div class="db-no-border modal-footer">
+        <button class="btn db-btn-sel db-btn-big db-min-width-120 db-brd-all" type="button" ng-click="closeThisDialog()" translate translate-cloak>STR_CLOSE</button>
+    </div>
+</div>

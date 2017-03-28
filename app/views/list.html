@@ -1,0 +1,16 @@
+<div class="ad-page">
+
+    <div class="ad-page-header db-center-v">
+        <button type="button" class="btn db-btn-prim" ng-click="goBack()">
+            <div class="db-glyph" ng-include="'images/glyph-back.svg'"></div>
+        </button>
+        <h4 translate translate-cloak>{{c.title}}</h4>
+    </div>
+
+    <div class="ad-page-content">
+        <db-selection-list ng-attr-sel-data="c.data" ng-attr-on-select="c.selAtt(data)"></db-selection-list>
+    </div>
+
+</div>
+
+<ui-view ng-if="isMobile" name="listContent"></ui-view>
