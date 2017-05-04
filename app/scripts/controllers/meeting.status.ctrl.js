@@ -168,6 +168,10 @@ angular.module('dashboard')
                 if (angular.equals(eTopic.topicGuid, mtgDetails.topicList[i].topicGuid)) {
                     matchInd = i;
                     $log.debug("meetingStatusCtrl: merging, topicGuid exists at matchInd=" + matchInd);
+                    eTopic.attachment = mtgDetails.topicList[matchInd].attachment;
+                    eTopic.additionalMaterial = mtgDetails.topicList[matchInd].additionalMaterial;
+                    eTopic.decision = mtgDetails.topicList[matchInd].decision;
+                    eTopic.esitykset = mtgDetails.topicList[matchInd].esitykset;
                     angular.merge(mtgDetails.topicList[matchInd], eTopic);
                 }
             }
