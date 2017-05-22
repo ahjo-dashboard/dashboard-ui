@@ -20,7 +20,9 @@ Implemented using Javascript, Angular 1 and Bootstrap 3.
   * `custom/conf/app.env.dev.json`
   * `custom/conf/app.env.test1.json`
   * `custom/conf/app.env.test2.json`
-   * `custom/conf/app.env.test3.json`
+  * `custom/conf/app.env.test3.json`
+  * `custom/conf/app.env.test4.json`
+  * `custom/conf/app.env.test5.json`
   * `custom/conf/app.env.prod.json`
 
 ##### Building
