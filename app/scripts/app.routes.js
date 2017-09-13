@@ -194,7 +194,7 @@ angular.module('dashboard')
                 }
             });
 
-        if (ENV.app_env !== 'prod') {
+        if (ENV.app_env !== 'prod' && ENV.app_env !== 'prod2') {
             $stateProvider
                 .state(CONST.APPSTATE.LOGIN, {
                     url: '/login',
