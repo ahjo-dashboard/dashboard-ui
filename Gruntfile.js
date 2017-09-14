@@ -476,6 +476,11 @@ module.exports = function (grunt) {
                 }
                 //values: here global 'values' written to the ENV module. Currently none.
             },
+            tcs: {
+                constants: {
+                    ENV: grunt.file.readJSON('custom/conf/app.env.tcs.json'),
+                }
+            },
             dev: {
                 constants: {
                     ENV: grunt.file.readJSON('custom/conf/app.env.dev.json'),
@@ -496,9 +501,24 @@ module.exports = function (grunt) {
                     ENV: grunt.file.readJSON('custom/conf/app.env.test3.json'),
                 }
             },
+            test4: {
+                constants: {
+                    ENV: grunt.file.readJSON('custom/conf/app.env.test4.json'),
+                }
+            },
+            test5: {
+                constants: {
+                    ENV: grunt.file.readJSON('custom/conf/app.env.test5.json'),
+                }
+            },
             prod: {
                 constants: {
                     ENV: grunt.file.readJSON('custom/conf/app.env.prod.json'),
+                }
+            },
+            prod2: {
+                constants: {
+                    ENV: grunt.file.readJSON('custom/conf/app.env.prod2.json'),
                 }
             },
         },
@@ -614,6 +634,13 @@ module.exports = function (grunt) {
         'compress'
     ]);
 
+    grunt.registerTask('build:tcs', [
+        'ngconstant:tcs',
+        'newer:jshint',
+        'test',
+        'build'
+    ]);
+
     grunt.registerTask('build:dev', [
         'ngconstant:dev',
         'newer:jshint',
@@ -642,8 +669,29 @@ module.exports = function (grunt) {
         'build'
     ]);
 
+    grunt.registerTask('build:test4', [
+        'ngconstant:test4',
+        'newer:jshint',
+        'test',
+        'build'
+    ]);
+
+    grunt.registerTask('build:test5', [
+        'ngconstant:test5',
+        'newer:jshint',
+        'test',
+        'build'
+    ]);
+
     grunt.registerTask('build:prod', [
         'ngconstant:prod',
+        'newer:jshint',
+        'test',
+        'build'
+    ]);
+
+    grunt.registerTask('build:prod2', [
+        'ngconstant:prod2',
         'newer:jshint',
         'test',
         'build'

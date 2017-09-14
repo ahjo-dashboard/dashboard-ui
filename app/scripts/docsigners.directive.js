@@ -63,7 +63,7 @@ app.directive('docSigners', [function () {
             self.signingComparator = function signingComparator(a1, a2) {
                 // Comparator apparently guaranteed to receive objects with 'value' property so skipping validation for simplicity.
                 var res = -1;
-                if (self.documentType === CONST.ESIGNTYPE.OFFICIAL.value) {
+                if ((self.documentType === CONST.ESIGNTYPE.OFFICIAL.value) || (self.documentType === CONST.ESIGNTYPE.POLICYMAKER_MAJOR.value)) {
                     // Sort by changedtime
                     $log.debug("dbDocSigners.signingComparator: VIPA ", a1.value.statusChangedTime);
                     if (angular.isString(a1.value.statusChangedTime) && angular.isString(a2.value.statusChangedTime)){
@@ -102,7 +102,7 @@ app.directive('docSigners', [function () {
 
         self.initiatorRoleStrId = function (docType) {
             // Special case for request status list roles, initiator role doesn't have a role code
-            return docType && docType === CONST.ESIGNTYPE.OFFICIAL.value ? 'STR_SROLE_PREP' : CONST.ESIGNROLE.SEC.stringId;
+            return docType && ((docType === CONST.ESIGNTYPE.OFFICIAL.value) || (docType === CONST.ESIGNTYPE.POLICYMAKER_MAJOR.value)) ? 'STR_SROLE_PREP' : CONST.ESIGNROLE.SEC.stringId;
         };
 
         /* Resolve css class for signing status */

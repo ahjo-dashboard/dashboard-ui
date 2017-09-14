@@ -52,6 +52,7 @@
     "STR_SIGNING_INITIATED": "Underteckningsrunda påbörjad",
     "STR_SIGNING_DOC_POLICYMAKER": "Organets protokoll",
     "STR_SIGNING_DOC_OFFICIAL": "Tjänsteinnehavarbeslut",
+    "STR_SIGNING_DOC_POLICYMAKER_MAJOR": "Stadsfullmäktiges beslut",
     "STR_SIGNING_ACCEPT": "Underteckna",
     "STR_SIGNING_REMOVE": "Ta bort underteckningen",
     "STR_SUBMIT_MOTION": "Lämna in motionen",
