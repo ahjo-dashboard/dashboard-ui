@@ -274,6 +274,28 @@ angular.module('dashboard')
             }
         }
 
+        function agendaUpdated(event, mtgDetails) {
+            if (!angular.isObject(event) || !angular.isObject(event.meeting) || !angular.isObject(mtgDetails) || !mtgDetails.meetingGuid || !angular.isArray(mtgDetails.topicList)) {
+                $log.error("meetingStatusCtrl.agendaUpdated: ignored, bad args");
+                return;
+            }
+
+            if (!angular.equals(event.meetingID, mtgDetails.meetingGuid)) {
+                $log.debug("meetingStatusCtrl.agendaUpdated: ignored, not this meeting, event.meetingID=" + event.meetingID + " meeting=" + mtgDetails.meetingGuid);
+                return;
+            }
+
+            var eMeetings = event.meeting;
+            var sMeeting = eMeetings[0];
+            
+            $log.debug("meetingStatusCtrl: agendaUpdated, meetingTitle_fi=" + sMeeting.meetingTitle_fi + " mtgGuid=" + mtgDetails.meetingGuid);
+
+            //self.mtgDetails = eMeeting;
+            DialogUtils.showInfo('STR_INFO_TITLE', 'STR_AGENDA_UPDATED', false);
+            self.mtgDetails = sMeeting;
+            self.mtgDetails.meetingGuid = event.meetingID;
+        }
+
         function getEvents() {
             if (lastEventId && angular.isObject(self.mtgDetails) && self.mtgDetails.meetingGuid) {
                 var proposalEvents = [];
@@ -332,6 +354,9 @@ angular.module('dashboard')
                                     case CONST.MTGEVENT.MOTIONDELETED:
                                     case CONST.MTGEVENT.MOTIONSUBMIT:
                                         motionRemoved(event);
+                                        break;
+                                    case CONST.MTGEVENT.AGENDAUPDATED:
+                                        agendaUpdated(event, self.mtgDetails);
                                         break;
                                     default:
                                         $log.error("meetingStatusCtrl: unsupported typeName: " + event.typeName);
