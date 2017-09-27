@@ -290,7 +290,6 @@ angular.module('dashboard')
             
             $log.debug("meetingStatusCtrl: agendaUpdated, meetingTitle_fi=" + sMeeting.meetingTitle_fi + " mtgGuid=" + mtgDetails.meetingGuid);
 
-            //self.mtgDetails = eMeeting;
             DialogUtils.showInfo('STR_INFO_TITLE', 'STR_AGENDA_UPDATED', false);
             self.mtgDetails = sMeeting;
             self.mtgDetails.meetingGuid = event.meetingID;
