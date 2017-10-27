@@ -20,6 +20,7 @@ angular.module('dashboard')
             self.motionsCont = null;
             self.motions = null;
             self.meetingActive = null;
+            self.meetingAborted = null;
             var selectedMotion = null;
             var mtgItemSelected = StorageSrv.getKey(CONST.KEY.MEETING_ITEM);
             var scrollTimer = null;
@@ -188,6 +189,7 @@ angular.module('dashboard')
                 return $rootScope.meetingStatus;
             }, function (status) {
                 self.meetingActive = (status === CONST.MTGSTATUS.ACTIVE.stateId);
+                self.meetingAborted = (status === CONST.MTGSTATUS.ABORTED.stateId)
             });
 
             var modeWatcher = $rootScope.$on(CONST.MTGUICHANGED, function (event, data) {
