@@ -57,7 +57,7 @@
                         readonly ng-model="m.text"></textarea>
 
                     <div class="db-flex-right db-flex-area ng-class:{'db-flex-col': c.isMobile}">
-                        <button ng-if="c.meetingActive && m.isOwnMotion && !m.isSubmitted && m.submitAllowed" class="btn btn-success db-btn-big db-margin-2 ng-class:{'btn-block':c.isMobile}"
+                        <button ng-if="(c.meetingActive || c.meetingAborted) && m.isOwnMotion && !m.isSubmitted && m.submitAllowed" class="btn btn-success db-btn-big db-margin-2 ng-class:{'btn-block':c.isMobile}"
                             ng-click="c.submit(m)" ng-disabled="m.ongoing">
                             <span translate translate-cloak>STR_SUBMIT_MOTION</span>
                         </button>
