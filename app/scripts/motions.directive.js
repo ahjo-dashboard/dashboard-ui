@@ -189,7 +189,7 @@ angular.module('dashboard')
                 return $rootScope.meetingStatus;
             }, function (status) {
                 self.meetingActive = (status === CONST.MTGSTATUS.ACTIVE.stateId);
-                self.meetingAborted = (status === CONST.MTGSTATUS.ABORTED.stateId)
+                self.meetingAborted = (status === CONST.MTGSTATUS.ABORTED.stateId);
             });
 
             var modeWatcher = $rootScope.$on(CONST.MTGUICHANGED, function (event, data) {
