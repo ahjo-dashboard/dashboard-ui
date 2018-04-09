@@ -51,7 +51,8 @@ angular.module('dashboard')
 
                         self.data.push({
                             'meeting': item,
-                            'visible': aVisible && fVisible
+                            'visible': aVisible && fVisible,
+                            'visibleMeetings' : $scope.visibleMeetings
                         });
                     }
                 }
