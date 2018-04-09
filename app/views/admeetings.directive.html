@@ -38,7 +38,30 @@
         </div>
 
         <ul ng-if="!c.mtgErr" class="list-group">
-            <li ng-if="item.visible" type="button" class="list-group-item" ng-repeat="item in c.data | orderBy:'meeting.meetingDate': reverse track by $index">
+            <li ng-if="item.visible && item.visibleMeetings === 4" type="button" class="list-group-item" ng-repeat="item in c.data | orderBy:'meeting.meetingDate': reverse track by $index">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-4">
+                        <span class="db-fw-700 ng-class:[{'db-padding-05-ver db-fs-11':c.isMobile}]">{{item.meeting[c.locProp('name')]}}</span>
+                        <span class="db-margin-05-left">{{item.meeting.meetingDate | date:'HH:mm' }}</span>
+                    </div>
+                    <div class="col-xs-12 col-sm-2 db-flex ng-class:[{'db-padding-05-ver db-fs-11':c.isMobile}]">
+                        <div class="db-circle-20 db-brd-1-dark ng-class:[c.mtgStatusClass(item.meeting.state)]"></div>
+                        <div class="db-flex-area db-margin-10-left" translate translate-cloak>{{c.statusStringId(item)}}</div>
+                    </div>
+                    <div class="col-xs-12 col-sm-3 ng-class:[{'db-padding-05-ver db-fs-11':c.isMobile}]">{{item.meeting[c.locProp('agencyName')]}}</div>
+                    <div class="col-xs-12 col-sm-3">
+                        <button ng-repeat="role in item.meeting.roleIDs | orderBy : '-RoleID' track by $index" ng-disabled="!c.isRoleSupported(role)"
+                            type="button" title="{{'STR_MTG_LOGIN' | translate}}" class="btn db-btn-sel db-margin-2 ng-class:[{'btn-block db-fs-12':c.isMobile}]"
+                            ng-click="selected({meetingItem:item.meeting, meetingRole:role, personGuid: c.responseData.personGuid })">
+                            <div class="db-center">
+                                <span translate translate-cloak>{{c.roleNameStrId(role)}}</span>
+                                <div class="db-glyph db-glyph-sm db-glyph-dark db-margin-05-left" ng-include="'images/glyph-login.svg'"></div>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </li>
+            <li ng-if="item.visible && item.visibleMeetings === 5" type="button" class="list-group-item" ng-repeat="item in c.data | orderBy:'meeting.meetingDate': true track by $index">
                 <div class="row">
                     <div class="col-xs-12 col-sm-4">
                         <span class="db-fw-700 ng-class:[{'db-padding-05-ver db-fs-11':c.isMobile}]">{{item.meeting[c.locProp('name')]}}</span>
