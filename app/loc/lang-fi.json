@@ -200,5 +200,6 @@
     "STR_HELP_MTG_STATES_HDR": "Kokouksen tilat",
     "STR_HELP_MTG_STATES_BODY": "Ehdotuksia voi julkaista kokouksen tiloissa Luotu, Teknisesti avattu, Käynnissä ja Keskeytetty. Aloitteita voi jättää sähköisesti vain Kaupunginvaltuuston kokouksissa.",
     "STR_HELP_TOPIC_STATES_HDR": "Asian tilat kokouksessa",
-    "STR_HELP_BELL": "Näkymien tärkeimmät tiedot päivittyvät automaattisesti. Joitain päivittyneitä tietoja korostetaan tällä kuvakkeella. Esimerkiksi asialistassa kuvake näytetään jos asiaan julkaistaan uusia ehdotuksia selainistuntosi aikana."
+    "STR_HELP_BELL": "Näkymien tärkeimmät tiedot päivittyvät automaattisesti. Joitain päivittyneitä tietoja korostetaan tällä kuvakkeella. Esimerkiksi asialistassa kuvake näytetään jos asiaan julkaistaan uusia ehdotuksia selainistuntosi aikana.",
+    "STR_AGENDA_UPDATED": "Esityslista on päivittynyt palvelimella. Paina 'Sulje' päivittääksesi sivu nyt."
 }

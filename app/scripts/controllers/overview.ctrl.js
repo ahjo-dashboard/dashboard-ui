@@ -12,7 +12,7 @@
  * Controller of the dashboard
  */
 angular.module('dashboard')
-    .controller('overviewCtrl', ['$scope', '$log', 'ENV', 'SigningOpenApi', '$state', '$rootScope', 'CONST', '$stateParams', 'MTGD', 'StorageSrv', '$http', 'Utils', 'DialogUtils', 'AhjoMeetingSrv', function ($scope, $log, ENV, SigningOpenApi, $state, $rootScope, CONST, $stateParams, MTGD, StorageSrv, $http, Utils, DialogUtils, AhjoMeetingSrv) {
+    .controller('overviewCtrl', ['$scope', '$log', 'ENV', 'SigningOpenApi', '$state', '$rootScope', 'CONST', '$stateParams', 'MTGD', 'StorageSrv', '$http', 'Utils', 'DialogUtils', 'AhjoMeetingSrv', '$timeout', function ($scope, $log, ENV, SigningOpenApi, $state, $rootScope, CONST, $stateParams, MTGD, StorageSrv, $http, Utils, DialogUtils, AhjoMeetingSrv, $timeout) {
         $log.debug("overviewCtrl: CONTROLLER, mode: ", $stateParams.state);
         var self = this;
         self.loading = 0;
@@ -22,6 +22,8 @@ angular.module('dashboard')
         self.vbl = MTGD.VISIBLE;
         self.bms = CONST.BLOCKMODE;
         self.testEnvUserId = StorageSrv.getKey(CONST.KEY.TESTENV_USERID);
+
+        var x = null;
 
         var visibleMtgs = StorageSrv.getKey(CONST.KEY.VISIBLE_MTGS);
         switch (visibleMtgs) {
@@ -101,10 +103,12 @@ angular.module('dashboard')
 
         self.loginMeeting = function loginMeetingFn(meetingItem, meetingRole, personGuid) {
             $log.debug("overviewCtrl.loginMeeting: ", arguments);
+            self.stopPolling();
             var dlg = DialogUtils.showProgress('STR_MTG_LOGIN_PROGRESS');
             AhjoMeetingSrv.meetingLogin(meetingItem.meetingGuid, meetingRole.RoleID, personGuid).then(function (resp) {
                 $log.debug("overviewCtrl.loginMeeting: result=", arguments);
                 if (!Utils.processAhjoError(resp)) {
+                    
                     goToMeeting(meetingItem, meetingRole, personGuid);
                 }
             }, function (error) {
@@ -112,6 +116,11 @@ angular.module('dashboard')
             }).finally(function () {
                 DialogUtils.close(dlg);
             });
+        };
+
+        self.stopPolling = function () {
+            $timeout.cancel(x);
+            x = null;
         };
 
         self.showInfo = function () {
@@ -164,5 +173,6 @@ angular.module('dashboard')
 
         $scope.$on('$destroy', function () {
             $log.debug("overviewCtrl: DESTROY");
+            self.stopPolling(x);
         });
     }]);
