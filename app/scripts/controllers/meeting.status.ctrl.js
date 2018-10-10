@@ -293,7 +293,6 @@ angular.module('dashboard')
             self.mtgDetails = sMeeting;
             self.mtgDetails.meetingGuid = event.meetingID;
             DialogUtils.showInfo('STR_INFO_TITLE', 'STR_AGENDA_UPDATED', false);
-            
         }
 
         function getEvents() {
