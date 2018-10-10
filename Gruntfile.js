@@ -521,6 +521,16 @@ module.exports = function (grunt) {
                     ENV: grunt.file.readJSON('custom/conf/app.env.prod2.json'),
                 }
             },
+            harj2: {
+                constants: {
+                    ENV: grunt.file.readJSON('custom/conf/app.env.harj2.json'),
+                }
+            },
+            it2: {
+                constants: {
+                    ENV: grunt.file.readJSON('custom/conf/app.env.it2.json'),
+                }
+            },
         },
 
         postcss: {
@@ -699,6 +709,20 @@ module.exports = function (grunt) {
 
     grunt.registerTask('default', [
         'ngconstant:dev',
+        'newer:jshint',
+        'test',
+        'build'
+    ]);
+
+    grunt.registerTask('build:harj2', [
+        'ngconstant:harj2',
+        'newer:jshint',
+        'test',
+        'build'
+    ]);
+
+    grunt.registerTask('build:it2', [
+        'ngconstant:it2',
         'newer:jshint',
         'test',
         'build'
