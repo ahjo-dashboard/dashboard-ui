@@ -199,5 +199,6 @@
     "STR_HELP_MTG_STATES_HDR": "Statusar för sammanträdet",
     "STR_HELP_MTG_STATES_BODY": "Förslag kan publiceras då sammanträdets status är Skapat, Tekniskt öppnat, Pågår och Avbrutet. Motioner kan lämnas in elektroniskt endast på stadsfullmäktiges sammanträden.",
     "STR_HELP_TOPIC_STATES_HDR": "Ärendets statusar på sammanträdet.",
-    "STR_HELP_BELL": "Vyernas viktigaste uppgifter uppdateras automatiskt. Vissa uppdaterade uppgifter accentueras med den här ikonen. Exempelvis visas ikonen i ärendelistan om nya förslag publiceras i ärendet."
+    "STR_HELP_BELL": "Vyernas viktigaste uppgifter uppdateras automatiskt. Vissa uppdaterade uppgifter accentueras med den här ikonen. Exempelvis visas ikonen i ärendelistan om nya förslag publiceras i ärendet.",
+    "STR_AGENDA_UPDATED": "Föredragningslistan har uppdaterats på servern. Välj 'Stäng' för att uppdatera webbsidan."
 }

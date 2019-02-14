@@ -19,7 +19,7 @@ angular.module('dashboard')
     })
     .directive('adMeetings', [function () {
 
-        var controller = ['$log', '$scope', 'ENV', 'AhjoMeetingsSrv', '$translate', '$rootScope', 'MTGD', 'CONST', 'Utils', function ($log, $scope, ENV, AhjoMeetingsSrv, $translate, $rootScope, MTGD, CONST, Utils) {
+        var controller = ['$log', '$scope', 'ENV', 'AhjoMeetingsSrv', '$translate', '$rootScope', 'MTGD', 'CONST', 'Utils', 'AhjoMeetingSrv', '$timeout', 'StorageSrv', function ($log, $scope, ENV, AhjoMeetingsSrv, $translate, $rootScope, MTGD, CONST, Utils, AhjoMeetingSrv, $timeout, StorageSrv) {
             $log.log("adMeetings: CONTROLLER");
             var self = this;
             self.mtgErr = null;
@@ -33,6 +33,9 @@ angular.module('dashboard')
 
             self.aF = null;
             self.rF = null;
+
+            var x = null;
+            var y = null;
 
             function setData() {
                 self.data = [];
@@ -51,7 +54,8 @@ angular.module('dashboard')
 
                         self.data.push({
                             'meeting': item,
-                            'visible': aVisible && fVisible
+                            'visible': aVisible && fVisible,
+                            'visibleMeetings' : $scope.visibleMeetings
                         });
                     }
                 }
@@ -82,11 +86,95 @@ angular.module('dashboard')
                 }
             }
 
+            function getEventsFrontPage (item) {
+                var proposalEvents = [];
+                AhjoMeetingSrv.getEvents(y, item.meetingGuid).then(function (response) {
+                    $log.debug("admeetings.directive: getEvents done: ", arguments);
+                    if (angular.isArray(response)) {
+                        response.forEach(function (event) {
+                            if (angular.isObject(event)) {
+                                switch (event.typeName) {
+                                    case CONST.MTGEVENT.LASTEVENTID:
+                                        y = event.lastEventId;
+                                        break;
+                                    case CONST.MTGEVENT.MEETINGSTATECHANGED:
+                                        item.state = event.meetingState;
+                                        break;
+                                    case CONST.MTGEVENT.REMARKPUBLISHED:
+                                    case CONST.MTGEVENT.REMARKUPDATED:
+                                    case CONST.MTGEVENT.REMARKDELETED:
+                                    case CONST.MTGEVENT.REMARKUNPUBLISHED:
+                                    case CONST.MTGEVENT.TOPICSTATECHANGED:
+                                    case CONST.MTGEVENT.TOPICEDITED:
+                                    case CONST.MTGEVENT.LOGGEDOUT:
+                                    case CONST.MTGEVENT.MINUTEUPDATED:
+                                    case CONST.MTGEVENT.MINUTEDELETED:
+                                    case CONST.MTGEVENT.MINUTETYPECHANGED:
+                                    case CONST.MTGEVENT.VOTINGUPDATED:
+                                    case CONST.MTGEVENT.VOTESINSERTED:
+                                    case CONST.MTGEVENT.MOTIONSUPPORTED:
+                                    case CONST.MTGEVENT.MOTIONSUPPORTREMOVED:
+                                    case CONST.MTGEVENT.MOTIONPUBLISHED:
+                                    case CONST.MTGEVENT.MOTIONUNPUBLISHED:
+                                    case CONST.MTGEVENT.MOTIONDELETED:
+                                    case CONST.MTGEVENT.MOTIONSUBMIT:
+                                    case CONST.MTGEVENT.AGENDAUPDATED:
+                                        break;
+                                    default:
+                                        $log.error("admeetings.directive: unsupported typeName: " + event.typeName);
+                                        break;
+                                }
+                            }
+                        }, this);
+                    }
+                }, function (error) {
+                    $log.error("admeetings.directive: getEvents error: " + JSON.stringify(error));
+                }).finally(function () {
+                    self.refreshPolling();
+                    if (proposalEvents.length) {
+                        var concated = proposalEvents;
+
+                        if (angular.isObject(self.mtgDetails) && angular.isArray(self.mtgDetails.topicList)) {
+                            angular.forEach(concated, function (e) {
+                                angular.forEach(self.mtgDetails.topicList, function (t) {
+                                    if (angular.isObject(e) && angular.isObject(t) && angular.equals(e.proposal.topicGuid, t.topicGuid)) {
+                                        t.includePublishedRemark = true;
+                                    }
+                                }, this);
+                            }, this);
+                        }
+
+                        var events = angular.copy(StorageSrv.getKey(CONST.KEY.PROPOSAL_EVENT_ARRAY));
+                        if (angular.isArray(events)) {
+                            concated = events.concat(proposalEvents);
+                        }
+                        StorageSrv.setKey(CONST.KEY.PROPOSAL_EVENT_ARRAY, concated);
+                    }
+                });
+            }
+
+            function loopMeetings() {
+                //if (self.data instanceof Object && self.data.objects instanceof Array) {
+                    for (var i = 0; i < self.data.length; i++) {
+                        var item = self.data[i].meeting;
+                        y = item.lastEventId;
+                        if (angular.isObject(item) && item.meetingGuid) {
+                            getEventsFrontPage(item);
+                        }
+                        else {
+                            //self.startPolling();
+                            $log.error("admeetings.directive: getEvents invalid parameter:");
+                        }
+                    }
+                //}
+            }
+
             AhjoMeetingsSrv.getMeetings().then(function (response) {
                 self.responseData = response;
                 if (!angular.isObject(self.responseData) || !angular.isArray(self.responseData.objects) || !angular.isString(response.personGuid)) {
                     $log.error("adMeetings: bad response data: ", arguments);
                 } else {
+                    self.startPolling();
                     $log.debug("adMeetings: getMeetings done, count=" + self.responseData.objects.length, " personGuid=" + response.personGuid);
                 }
             }, function (error) {
@@ -166,6 +254,25 @@ angular.module('dashboard')
             };
 
             self.locProp = $rootScope.locProp;
+
+            self.stopPolling = function () {
+                $timeout.cancel(x);
+                x = null;
+            };
+    
+            self.startPolling = function () {
+                self.stopPolling();
+                x = $timeout(function () {
+                    loopMeetings();
+                }, CONST.POLLINGTIMEOUT);
+            };
+    
+            self.refreshPolling = function () {
+                if (x) {
+                    self.startPolling();
+                }
+            };
+    
         }];
 
         return {
