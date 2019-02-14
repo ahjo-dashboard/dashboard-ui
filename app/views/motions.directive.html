@@ -18,7 +18,7 @@
                 <h5 class="col-md-3 hidden-xs hidden-sm db-truncate" translate translate-cloak>STR_SIGNINGS</h5>
             </div>
 
-            <div class="list-group-item db-padding-10" ng-repeat="m in c.motions | orderBy:'publishDate':true track by $index">
+            <div class="list-group-item db-padding-10" ng-repeat="m in c.motions | orderBy:['type','-publishDate'] track by $index">
                 <div ng-show="m.ongoing" class="db-spinner-cont">
                     <span us-spinner spinner-on="m.ongoing"></span>
                 </div>
@@ -30,7 +30,7 @@
                     <i class="col-xs-5 col-md-3 ng-class:[{'db-truncate':!c.isSelected(m)}]">{{m.personName}}</i>
                     <div class="hidden-xs hidden-sm col-md-2 db-truncate" translate translate-cloak>{{c.typeString(m.type)}}</div>
                     <div ng-show="m.supporters" class="hidden-xs hidden-sm col-md-2 db-truncate db-center-v">
-                        <div>{{ (m.supporters.length || m.isOwnMotion) ? (m.supporters.length + (m.isOwnMotion ? 1 : 0)) : '-' }}</div>
+                        <div>{{ (m.supporters.length + 1)}}</div>
 
                         <div ng-if="m.isUserSupported" title="{{'STR_MOTION_SIGNED_BY_ME' | translate}}" class="db-glyph db-glyph-sm db-glyph-info db-margin-05-left"
                             ng-include="'images/glyph-user.svg'">
@@ -57,15 +57,19 @@
                         readonly ng-model="m.text"></textarea>
 
                     <div class="db-flex-right db-flex-area ng-class:{'db-flex-col': c.isMobile}">
-                        <button ng-if="c.meetingActive && m.isOwnMotion && !m.isSubmitted && m.submitAllowed" class="btn btn-success db-btn-big db-margin-2 ng-class:{'btn-block':c.isMobile}"
-                            ng-click="c.submit(m)" ng-disabled="m.ongoing">
+                        <button ng-if="c.meetingActive && (m.isOwnMotion || m.CanSubmitGroupMotion) && !m.isSubmitted && m.submitAllowed && m.GiveWarningAboutMotionCount" class="btn btn-success db-btn-big db-margin-2 ng-class:{'btn-block':c.isMobile}"
+                         db-confirm confirm-config="c.submitFifthGroupMotion" ng-click="c.submit(m)" ng-disabled="m.ongoing">
                             <span translate translate-cloak>STR_SUBMIT_MOTION</span>
                         </button>
-                        <button ng-if="!m.isOwnMotion && !m.isUserSupported" class="btn btn-success db-btn-dyna db-margin-2"
+                        <button ng-if="c.meetingActive && (m.isOwnMotion || m.CanSubmitGroupMotion) && !m.isSubmitted && m.submitAllowed && !m.GiveWarningAboutMotionCount" class="btn btn-success db-btn-big db-margin-2 ng-class:{'btn-block':c.isMobile}"
+                         db-confirm confirm-config="c.submitMotionCnfm" ng-click="c.submit(m)" ng-disabled="m.ongoing">
+                            <span translate translate-cloak>STR_SUBMIT_MOTION</span>
+                        </button>
+                        <button ng-if="m.CanSupport" class="btn btn-success db-btn-dyna db-margin-2"
                             ng-click="c.support(m)" ng-disabled="m.ongoing">
                             <span translate translate-cloak>STR_SIGNING_ACCEPT</span>
                         </button>
-                        <button ng-if="!m.isOwnMotion && m.isUserSupported" class="btn btn-danger db-btn-dyna db-margin-2"
+                        <button ng-if="m.CanRemoveSupport" class="btn btn-danger db-btn-dyna db-margin-2"
                             ng-click="c.removeSupport(m)" ng-disabled="m.ongoing">
                             <span translate translate-cloak>STR_SIGNING_REMOVE</span>
                         </button>

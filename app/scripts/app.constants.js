@@ -180,7 +180,8 @@ angular.module('dashboard')
             ABSENT: { id: 4, stringId: 'STR_VOTE_ABSENT' }
         },
         'MOTIONTYPES': {
-            'DEFAULT': { id: 1, stringId: 'STR_MOTION' },
+            'DEFAULT': { id: 0, stringId: 'STR_GROUP_MOTION' },
+            'MOTION': { id: 1, stringId: 'STR_MOTION' },
             'BUDGET': { id: 2, stringId: 'STR_BUDGET_MOTION' }
         },
         'ESIGNSTATUS': { //SignApi_DocStatuses

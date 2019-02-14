@@ -105,6 +105,7 @@
     "STR_MOTION": "Motion",
     "STR_MOTIONS_OPEN_APP": "Motionsapplikationen",
     "STR_BUDGET_MOTION": "Budgetmotion",
+    "STR_GROUP_MOTION": "Gruppmotion",
     "STR_SUPPORTED": "Understött",
     "STR_VOTINGS": "Omröstningar",
     "STR_MTG_STATUS_PUBLISHED_PROPOSALS": "@:STR_PUBLIC_PROPOSALS",
@@ -200,5 +201,7 @@
     "STR_HELP_MTG_STATES_BODY": "Förslag kan publiceras då sammanträdets status är Skapat, Tekniskt öppnat, Pågår och Avbrutet. Motioner kan lämnas in elektroniskt endast på stadsfullmäktiges sammanträden.",
     "STR_HELP_TOPIC_STATES_HDR": "Ärendets statusar på sammanträdet.",
     "STR_HELP_BELL": "Vyernas viktigaste uppgifter uppdateras automatiskt. Vissa uppdaterade uppgifter accentueras med den här ikonen. Exempelvis visas ikonen i ärendelistan om nya förslag publiceras i ärendet.",
-    "STR_AGENDA_UPDATED": "Föredragningslistan har uppdaterats på servern. Välj 'Stäng' för att uppdatera webbsidan."
+    "STR_AGENDA_UPDATED": "Föredragningslistan har uppdaterats på servern. Välj 'Stäng' för att uppdatera webbsidan.",
+    "STR_CNFM_SUBMIT_FIFTH_GROUPMOTION": "Antalet gruppmotioner för din grupp har uppfyllts. Motionen kan därför inte behandlas som en gruppmotion. Vill du trots allt lämna motionen?",
+    "STR_CNFM_SUBMIT_MOTION": "Vill du verkligen lämna in motionen?*"
 }

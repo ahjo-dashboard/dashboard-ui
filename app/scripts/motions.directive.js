@@ -24,7 +24,9 @@ angular.module('dashboard')
             var mtgItemSelected = StorageSrv.getKey(CONST.KEY.MEETING_ITEM);
             var scrollTimer = null;
             var setDataTimer = null;
-
+            self.submitMotionCnfm = { title: 'STR_CONFIRM', text: 'STR_CNFM_SUBMIT_MOTION', yes: 'STR_YES' };
+            self.submitFifthGroupMotion = { title: 'STR_CONFIRM', text: 'STR_CNFM_SUBMIT_FIFTH_GROUPMOTION', yes: 'STR_YES' };
+            
             // FUNCTIONS
 
             function setMotions(data) {

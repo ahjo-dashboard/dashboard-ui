@@ -475,6 +475,17 @@ angular.module('dashboard')
                 AhjoMeetingSrv.getMotions(aMtg.meetingGuid, aMtg.dbUserPersonGuid).then(function (resp) {
                     $log.log("meetingStatusCtrl.getMotions done", resp);
                     motionData.objects = angular.isArray(resp) ? resp : [];
+                    if ($rootScope.dbLang === "sv"){
+                        //jotenkin pitäisi korvata se personname personname_sv:llä
+                        angular.forEach(motionData.objects, function (t) {
+                            if (angular.isObject(t)) {
+                                t.personName = t.personName_sv;
+                            }
+                        }, this);
+                        
+                        motionData.objects.personName = motionData.objects.personName_sv;
+                    }
+                    
                 }, function (error) {
                     $log.error("meetingStatusCtrl.getMotions: error: ", error);
                     motionData.failure = true;
