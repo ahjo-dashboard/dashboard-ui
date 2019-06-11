@@ -526,6 +526,11 @@ module.exports = function (grunt) {
                     ENV: grunt.file.readJSON('custom/conf/app.env.harj2.json'),
                 }
             },
+            koul2: {
+                constants: {
+                    ENV: grunt.file.readJSON('custom/conf/app.env.koul2.json'),
+                }
+            },
             it2: {
                 constants: {
                     ENV: grunt.file.readJSON('custom/conf/app.env.it2.json'),
@@ -723,6 +728,13 @@ module.exports = function (grunt) {
 
     grunt.registerTask('build:it2', [
         'ngconstant:it2',
+        'newer:jshint',
+        'test',
+        'build'
+    ]);
+
+    grunt.registerTask('build:koul2', [
+        'ngconstant:koul2',
         'newer:jshint',
         'test',
         'build'

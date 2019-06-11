@@ -25,12 +25,13 @@ Implemented using Javascript, Angular 1 and Bootstrap 3.
   * `custom/conf/app.env.prod.json` PROD
   * `custom/conf/app.env.prod2.json` AHJO2 (PROD)
   * `custom/conf/app.env.harj2.json` HARJ2
+  * `custom/conf/app.env.koul2.json` KOUL2
   * `custom/conf/app.env.it2.json` IT2
 
 ##### Building
 
 * `grunt` for building for default target
-* `grunt build:tcs|dev|test1|test2|test5|prod|prod2|harj2|it2` for building for a specific configuration
+* `grunt build:tcs|dev|test1|test2|test3|prod|prod2|harj2|koul2|it2` for building for a specific configuration
 * `grunt preparedeploy` after building for preparing build output for deployment, if necessary. Calls a postbuild script in `custom/tools`
 
 ##### Running on localhost
