@@ -159,7 +159,10 @@ angular.module('dashboard')
                         var item = self.data[i].meeting;
                         y = item.lastEventId;
                         if (angular.isObject(item) && item.meetingGuid) {
-                            getEventsFrontPage(item);
+                            // Listening events only for active meetings
+                            if (item.state < 5) {
+                                getEventsFrontPage(item);
+                            }
                         }
                         else {
                             //self.startPolling();
