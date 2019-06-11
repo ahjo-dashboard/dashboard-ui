@@ -17,16 +17,16 @@ Implemented using Javascript, Angular 1 and Bootstrap 3.
 * Run `npm install` for installing node modules. Calls also `bower install`.
   * (Optional: Run `bower install` for installing bower components)
 * Copy your specific environment settings into following directory. Default configurations are read build-time from `conf/app.env.default.json`. Specific settings for a target env may be overridden in
-  * `custom/conf/app.env.tcs.json`
-  * `custom/conf/app.env.dev.json`
-  * `custom/conf/app.env.test1.json`
-  * `custom/conf/app.env.test2.json`
-  * `custom/conf/app.env.test3.json`
-  * `custom/conf/app.env.prod.json`
-  * `custom/conf/app.env.prod2.json`
-  * `custom/conf/app.env.harj2.json`
-  * `custom/conf/app.env.koul2.json`
-  * `custom/conf/app.env.it2.json`
+  * `custom/conf/app.env.tcs.json` TCS
+  * `custom/conf/app.env.dev.json` DEV/WV0001121
+  * `custom/conf/app.env.test1.json` IT
+  * `custom/conf/app.env.test2.json` HYTE
+  * `custom/conf/app.env.test5.json` HYTE2
+  * `custom/conf/app.env.prod.json` PROD
+  * `custom/conf/app.env.prod2.json` AHJO2 (PROD)
+  * `custom/conf/app.env.harj2.json` HARJ2
+  * `custom/conf/app.env.koul2.json` KOUL2
+  * `custom/conf/app.env.it2.json` IT2
 
 ##### Building
 

@@ -57,11 +57,11 @@
                         readonly ng-model="m.text"></textarea>
 
                     <div class="db-flex-right db-flex-area ng-class:{'db-flex-col': c.isMobile}">
-                        <button ng-if="c.meetingActive && (m.isOwnMotion || m.CanSubmitGroupMotion) && !m.isSubmitted && m.submitAllowed && m.GiveWarningAboutMotionCount" class="btn btn-success db-btn-big db-margin-2 ng-class:{'btn-block':c.isMobile}"
+                        <button ng-if="(c.meetingActive || c.meetingAborted) && (m.isOwnMotion || m.CanSubmitGroupMotion) && !m.isSubmitted && m.submitAllowed && m.GiveWarningAboutMotionCount" class="btn btn-success db-btn-big db-margin-2 ng-class:{'btn-block':c.isMobile}"
                          db-confirm confirm-config="c.submitFifthGroupMotion" ng-click="c.submit(m)" ng-disabled="m.ongoing">
                             <span translate translate-cloak>STR_SUBMIT_MOTION</span>
                         </button>
-                        <button ng-if="c.meetingActive && (m.isOwnMotion || m.CanSubmitGroupMotion) && !m.isSubmitted && m.submitAllowed && !m.GiveWarningAboutMotionCount" class="btn btn-success db-btn-big db-margin-2 ng-class:{'btn-block':c.isMobile}"
+                        <button ng-if="(c.meetingActive || c.meetingAborted) && (m.isOwnMotion || m.CanSubmitGroupMotion) && !m.isSubmitted && m.submitAllowed && !m.GiveWarningAboutMotionCount" class="btn btn-success db-btn-big db-margin-2 ng-class:{'btn-block':c.isMobile}"
                          db-confirm confirm-config="c.submitMotionCnfm" ng-click="c.submit(m)" ng-disabled="m.ongoing">
                             <span translate translate-cloak>STR_SUBMIT_MOTION</span>
                         </button>
