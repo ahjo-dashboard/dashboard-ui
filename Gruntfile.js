@@ -481,6 +481,11 @@ module.exports = function (grunt) {
                     ENV: grunt.file.readJSON('custom/conf/app.env.tcs.json'),
                 }
             },
+            tcs5: {
+                constants: {
+                    ENV: grunt.file.readJSON('custom/conf/app.env.tcs5.json'),
+                }
+            },
             dev: {
                 constants: {
                     ENV: grunt.file.readJSON('custom/conf/app.env.dev.json'),
@@ -651,6 +656,13 @@ module.exports = function (grunt) {
 
     grunt.registerTask('build:tcs', [
         'ngconstant:tcs',
+        'newer:jshint',
+        'test',
+        'build'
+    ]);
+
+    grunt.registerTask('build:tcs5', [
+        'ngconstant:tcs5',
         'newer:jshint',
         'test',
         'build'

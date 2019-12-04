@@ -157,19 +157,32 @@ angular.module('dashboard')
                     //Asian kieli suomi
                     else {
                         //self.presPrimLang = createPresentation(self.topic, $rootScope.dbLang);
-                        self.topicFIN = true;
-                        self.topicSV = false;
+                        mixedLangTrans = 'sv';
+                        self.topicSV = true;
+                        self.topicFIN = false;
+                        // Jos käyttöliittymä ruotsi
+                        if ($rootScope.dbLang === "sv") {
+                            self.topicSV = false;
+                            self.topicFIN = true;
+                        }
                     }
+                    //Käyttöliittymän kielellä ei tässä tapauksessa vaikutusta vaan asian kielellä
+                    self.presPrimLang = createPresentation(self.topic, topic.language);
+                    self.presTransLang = createPresentation(self.topic, mixedLangTrans);
+                    
                     //Käyttöliittymä suomen kielinen
-                    if ($rootScope.dbLang === "sv") {
-                        self.presPrimLang = createPresentation(self.topic, mixedLangTrans);
-                        self.presTransLang = createPresentation(self.topic, topic.language);
-                    }
-                    else {
-                        self.presPrimLang = createPresentation(self.topic, $rootScope.dbLang);
-                        self.presTransLang = createPresentation(self.topic, $rootScope.getDbLangTrans());
-                    }
-
+                    // if ($rootScope.dbLang === "sv") {
+                    //     self.presTransLang = createPresentation(self.topic, mixedLangTrans);
+                    //     self.presPrimLang = createPresentation(self.topic, topic.language);
+                    //     //self.topicFIN = true;
+                    //     //self.topicSV = false;
+                    // }
+                    // else {
+                    //     self.presPrimLang = createPresentation(self.topic, $rootScope.dbLang);
+                    //     self.presTransLang = createPresentation(self.topic, $rootScope.getDbLangTrans());
+                    //     //self.topicFIN = false;
+                    //     //self.topicSV = true;
+                    // }
                 }
                 // Valtuusto
                 else {

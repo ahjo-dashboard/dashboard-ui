@@ -18,6 +18,7 @@ Implemented using Javascript, Angular 1 and Bootstrap 3.
   * (Optional: Run `bower install` for installing bower components)
 * Copy your specific environment settings into following directory. Default configurations are read build-time from `conf/app.env.default.json`. Specific settings for a target env may be overridden in
   * `custom/conf/app.env.tcs.json` TCS
+  * `custom/conf/app.env.tcs5.json` TCS5
   * `custom/conf/app.env.dev.json` DEV/WV0001121
   * `custom/conf/app.env.test1.json` IT
   * `custom/conf/app.env.test2.json` HYTE
@@ -31,7 +32,7 @@ Implemented using Javascript, Angular 1 and Bootstrap 3.
 ##### Building
 
 * `grunt` for building for default target
-* `grunt build:tcs|dev|test1|test2|test3|prod|prod2|harj2|koul2|it2` for building for a specific configuration
+* `grunt build:tcs|tcs5|dev|test1|test2|test3|prod|prod2|harj2|koul2|it2` for building for a specific configuration
 * `grunt preparedeploy` after building for preparing build output for deployment, if necessary. Calls a postbuild script in `custom/tools`
 
 ##### Running on localhost
