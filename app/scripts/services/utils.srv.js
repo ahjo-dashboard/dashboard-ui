@@ -146,7 +146,25 @@ angular.module('dashboard')
                 case CONST.MTGAPICODES.K1010.value:
                     res = CONST.MTGAPICODES.K1010.strId;
                     break;
-
+                case CONST.MTGAPICODES.K1011.value:
+                    res = CONST.MTGAPICODES.K1011.strId;
+                    break;
+                case CONST.MTGAPICODES.K1012.value:
+                    res = CONST.MTGAPICODES.K1012.strId;
+                    break;
+                case CONST.MTGAPICODES.K1013.value:
+                    res = CONST.MTGAPICODES.K1013.strId;
+                    break;
+                case CONST.MTGAPICODES.K1014.value:
+                    res = CONST.MTGAPICODES.K1014.strId;
+                    break;
+                case CONST.MTGAPICODES.K1015.value:
+                    res = CONST.MTGAPICODES.K1015.strId;
+                    break;
+                case CONST.MTGAPICODES.K1016.value:
+                        res = CONST.MTGAPICODES.K1016.strId;
+                        break;
+    
                 default:
                     $log.log("Utils.stringIdForError: didn't find a string id for '" + aNum + "', defaulting to " + res);
             }
@@ -236,8 +254,16 @@ angular.module('dashboard')
                 $log.error("Utils.processAhjoError: status object \n" + JSON.stringify(aResp));
                 res = aResp.status;
             } else if (angular.isObject(aResp.data) && angular.isObject(aResp.data.error)) { // HTTP OK but REST error
-                $log.error("Utils.processAhjoError: error object \n" + JSON.stringify(aResp));
-                res = aResp.data.error.errorcode ? aResp.data.error.errorcode : CONST.NOTFOUND;
+                // 9999 indicates success -> show ok message
+                if (aResp.data.error.errorcode === 9999) {
+                    DialogUtils.showInfo('STR_INFO_TITLE', 'STR_SUCCEEDEED_OP', false).closePromise.finally(function () {
+                        $log.debug("utilsSrv.processAhjoError: successfull update to Sali");
+                    });
+                }
+                else {
+                    $log.error("Utils.processAhjoError: error object \n" + JSON.stringify(aResp));
+                    res = aResp.data.error.errorcode ? aResp.data.error.errorcode : CONST.NOTFOUND;
+                }
             } else {
                 // No errors
             }

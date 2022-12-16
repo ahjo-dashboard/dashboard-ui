@@ -134,6 +134,13 @@
                             <div class="db-glyph db-glyph-sm db-glyph-dark" ng-include="'images/glyph-open-new.svg'"></div>
                         </div>
                     </button>
+                    <button ng-show="c.isCityCouncil && c.topicIsActive" type="button" class="btn btn-success db-btn-dyna db-brd-all db-center-hor ng-class:[{'db-margin-2':!c.isMobile, 'btn-block': c.isMobile}]" 
+                            ng-click="c.voteClicked()">
+                        <div class="db-center">
+                            <div translate translate-cloak>STR_VOTE</div>
+                            <div class="db-glyph db-glyph-sm db-glyph-dark" ng-include="'images/how-to-vote.svg'"></div>
+                        </div>
+                    </button>
                 </div>
                 <button ng-if="c.pm !== c.pms.HIDDEN" type="button" title="{{'STR_EXPANDCOLLAPSE' | translate}}" class="btn btn-block db-btn-prim db-btn-small db-brd-all db-flex-right ng-class:[{'db-margin-2':!c.isMobile}]"
                     ng-click="c.secondaryClicked()">

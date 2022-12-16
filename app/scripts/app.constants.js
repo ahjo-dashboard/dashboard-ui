@@ -37,10 +37,15 @@ angular.module('dashboard')
             K1003: { value: 1003, strId: 'STR_REST_RES_1003' },
             K1004: { value: 1004, strId: 'STR_REST_RES_1004' },
             K1005: { value: 1005, strId: 'STR_REST_RES_1005' },
+            K1006: { value: 1006, strId: 'STR_REST_RES_1006' },
             K1007: { value: 1007, strId: 'STR_REST_RES_1007' },
             K1008: { value: 1008, strId: 'STR_REST_RES_1008' },
-            K1009: { value: 1008, strId: 'STR_REST_RES_1008' },
-            K1010: { value: 1008, strId: 'STR_REST_RES_1008' }
+            K1009: { value: 1009, strId: 'STR_REST_RES_1009' },
+            K1010: { value: 1010, strId: 'STR_REST_RES_1010' },
+            K1011: { value: 1011, strId: 'STR_REST_RES_1011' },
+            K1012: { value: 1012, strId: 'STR_REST_RES_1012' },
+            K1013: { value: 1013, strId: 'STR_REST_RES_1013' },
+            K1014: { value: 1014, strId: 'STR_REST_RES_1014' }
         },
         'GENERALERROR': { 'errorCode': -1 },
         'ID': 'id',
@@ -178,6 +183,11 @@ angular.module('dashboard')
             NAY: { id: 2, stringId: 'STR_VOTE_NAY' },
             EMPTY: { id: 3, stringId: 'STR_VOTE_EMPTY' },
             ABSENT: { id: 4, stringId: 'STR_VOTE_ABSENT' }
+        },
+        'MTGVOTING_SCREEN': {
+            YEA: { id: 1, stringId: 'STR_VOTE_YEA', actionCode: 'J' },
+            NAY: { id: 2, stringId: 'STR_VOTE_NAY', actionCode: 'E' },
+            EMPTY: { id: 3, stringId: 'STR_VOTE_EMPTY', actionCode: 'T' }
         },
         'MOTIONTYPES': {
             'DEFAULT': { id: 0, stringId: 'STR_GROUP_MOTION' },

@@ -119,6 +119,7 @@ angular.module('dashboard')
                                     case CONST.MTGEVENT.MOTIONDELETED:
                                     case CONST.MTGEVENT.MOTIONSUBMIT:
                                     case CONST.MTGEVENT.AGENDAUPDATED:
+                                    case undefined:
                                         break;
                                     default:
                                         $log.error("admeetings.directive: unsupported typeName: " + event.typeName);
