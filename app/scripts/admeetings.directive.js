@@ -119,6 +119,7 @@ angular.module('dashboard')
                                     case CONST.MTGEVENT.MOTIONDELETED:
                                     case CONST.MTGEVENT.MOTIONSUBMIT:
                                     case CONST.MTGEVENT.AGENDAUPDATED:
+                                    case undefined:
                                         break;
                                     default:
                                         $log.error("admeetings.directive: unsupported typeName: " + event.typeName);
@@ -157,7 +158,8 @@ angular.module('dashboard')
                 //if (self.data instanceof Object && self.data.objects instanceof Array) {
                     for (var i = 0; i < self.data.length; i++) {
                         var item = self.data[i].meeting;
-                        y = item.lastEventId;
+                        if (y < item.lastEventId)
+                            y = item.lastEventId;
                         if (angular.isObject(item) && item.meetingGuid) {
                             // Listening events only for active meetings
                             if (item.state < 5) {
@@ -241,7 +243,7 @@ angular.module('dashboard')
             };
 
             self.isRoleSupported = function isRoleSupportedFn(role) {
-                return angular.isObject(role) && (CONST.MTGROLE.CHAIRMAN.value === role.RoleID || CONST.MTGROLE.PARTICIPANT_FULL.value === role.RoleID); // Roles supported by this interface
+                return angular.isObject(role) && (CONST.MTGROLE.CHAIRMAN.value === role.RoleID || CONST.MTGROLE.PARTICIPANT_FULL.value === role.RoleID || CONST.MTGROLE.PARTICIPANT_LIMITED.value === role.RoleID); // Roles supported by this interface
             };
 
             /*

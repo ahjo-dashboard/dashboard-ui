@@ -27,6 +27,7 @@ angular.module('dashboard')
             self.unsavedCount = 0;
             self.loading = false;
             self.publishedCount = 0;
+            self.isParticipantLimited = false;
 
             function countProposals(proposals) {
                 var drafts = 0;
@@ -280,6 +281,9 @@ angular.module('dashboard')
                     getProposals(topicGuid);
                     self.isAllOpen = false;
                     self.btnText = 'STR_OPEN_ALL';
+                    if (angular.isObject(data.topic.dbUserRole) && data.topic.dbUserRole.RoleID === CONST.MTGROLE.PARTICIPANT_LIMITED.value) {
+                        self.isParticipantLimited = true;
+                    }
                     // reset unsaved count when topic is changed
                     self.unsavedCount = 0;
                 }

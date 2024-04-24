@@ -30,20 +30,26 @@
             <div title="{{msc.uiName}}" class="db-list-group-item-prim db-brd-non-botton db-padding-05-bottom">
                 <h4 class="db-margin-10-bottom" ng-cloak>{{msc.meetingname1}}<br>{{msc.meetingname2}}</h4>
             </div>
-            <div ng-if='msc.loading' class="list-group-item db-spinner-cont">
-                <div us-spinner spinner-on="true"></div>
-            </div>
-            <div ng-if='!msc.loading' class="list-group-item db-brd-non-top db-prim-bg db-padding-05 db-flex">
-                <button type="button" title="{{'STR_CHANGE_MEETING_STATUS' | translate}}" class="btn btn-block db-brd-all ng-class:[{'db-btn-sel':msc.chairman},{'db-no-pointer-events db-btn-prim':!msc.chairman}]"
-                    ng-disabled="msc.updatingStatus" ng-click="msc.changeMeetingStatus()">
-                    <div class="db-flex">
-                        <div class="db-circle-30 db-brd-1-dark ng-class:[mtgStatusClass(msc.mtgDetails.meetingStatus)]"></div>
-                        <span ng-if="!msc.updatingStatus" ng-show="msc.mtgDetails" class="db-flex-area db-center-v db-font-12 db-margin-15-left db-overflow-hidden db-truncate" translate translate-cloak ng-cloak>{{msc.stringId(msc.mtgDetails)}}</span>
-                        <span data-ng-if="msc.updatingStatus" class="db-min-height-24" us-spinner="{radius:4, width:2, length:4}" spinner-on="msc.updatingStatus"></span>
-                    </div>
-                </button>
-            </div>
-
+                <div ng-if='msc.loading' class="list-group-item db-spinner-cont">
+                    <div us-spinner spinner-on="true"></div>
+                </div>
+                <div ng-if='!msc.loading' class="list-group-item db-brd-non-top db-prim-bg db-padding-05 db-flex">
+                    <button type="button" title="{{'STR_CHANGE_MEETING_STATUS' | translate}}" class="btn db-brd-all ng-class:[{'db-btn-sel':msc.chairman},{'db-no-pointer-events db-btn-prim':!msc.chairman}]"
+                        ng-disabled="msc.updatingStatus" ng-click="msc.changeMeetingStatus()">
+                        <div class="db-flex">
+                            <div class="db-circle-30 db-brd-1-dark ng-class:[mtgStatusClass(msc.mtgDetails.meetingStatus)]"></div>
+                            <span ng-if="!msc.updatingStatus" ng-show="msc.mtgDetails" class="db-flex-area db-center-v db-font-12 db-margin-15-left db-overflow-hidden db-truncate" translate translate-cloak ng-cloak>{{msc.stringId(msc.mtgDetails)}}</span>
+                            <span data-ng-if="msc.updatingStatus" class="db-min-height-24" us-spinner="{radius:4, width:2, length:4}" spinner-on="msc.updatingStatus"></span>
+                        </div>
+                    </button>
+                    <button ng-if='msc.isCityCouncil && msc.isMeetingActive && msc.firstTopicActive && !msc.isParticipantLimited' type="button" class="btn btn-success db-btn-dyna db-brd-all db-center-hor ng-class:[{'db-margin-2':!c.isMobile, 'btn-block': c.isMobile}]" ng-click="msc.presentButtonClicked()">
+                        <div class="db-center">
+                            <div translate translate-cloak>STR_MEETING_PRESENT</div>
+                            <div class="db-glyph db-glyph-sm db-glyph-dark" ng-include="'images/login.svg'"></div>
+                        </div>
+                    </button>
+                </div>
+                
             <div class="list-group-item db-flex db-center db-padding-05-ver db-overflow-hidden ng-class:[{'db-opt-bg db-font-clr-white': (msc.isSelected(topic) && !msc.isMobile), 'db-item-disabled': !msc.canAccess(topic), 'db-padding-0-hor':!msc.chairman, 'db-padding-10-hor':msc.chairman}]"
                 ng-repeat="topic in msc.mtgDetails.topicList track by $index" db-confirm confirm-enabled="msc.hasUnsavedData && !msc.isSelected(topic)"
                 confirm-config="msc.unsavedConfig" ng-click="msc.topicSelected(topic)">

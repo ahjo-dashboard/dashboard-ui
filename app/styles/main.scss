@@ -939,6 +939,10 @@ body {
         @include button-variant($db-color-white, $db-color-prim, $db-color-prim);
     }
 
+    .db-btn-gre {
+        @include button-variant($db-color-success, $db-color-dark, $db-color-dark);
+    }
+
     .db-btn-prim.active {
         @include button-variant($db-color-white, $db-color-opt-lighten, $db-color-opt-lighten);
     }

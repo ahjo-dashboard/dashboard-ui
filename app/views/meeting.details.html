@@ -128,10 +128,17 @@
                         <span translate translate-cloak>STR_MOTIONS</span>
                         <span ng-if="c.motionCount" title="{{'STR_ALL_ATT_COUNT' | translate}}" class="badge ng-cloak ng-class:{'db-font-clr-dark': c.motionCount}">{{c.motionCount}}</span>
                     </button>
-                    <button ng-show="c.isCityCouncil" type="button" class="btn db-btn-sel db-btn-dyna db-brd-all db-center-hor ng-class:[{'db-margin-2':!c.isMobile, 'btn-block': c.isMobile}]" ng-click="c.motionsAppClicked()">
+                    <button ng-show="c.isCityCouncil && !c.isParticipantLimited" type="button" class="btn db-btn-sel db-btn-dyna db-brd-all db-center-hor ng-class:[{'db-margin-2':!c.isMobile, 'btn-block': c.isMobile}]" ng-click="c.motionsAppClicked()">
                         <div class="db-center">
                             <div translate translate-cloak>STR_MOTIONS_OPEN_APP</div>
                             <div class="db-glyph db-glyph-sm db-glyph-dark" ng-include="'images/glyph-open-new.svg'"></div>
+                        </div>
+                    </button>
+                    <button ng-show="c.isCityCouncil && c.topicIsActive && !c.isParticipantLimited" type="button" class="btn btn-success db-btn-dyna db-brd-all db-center-hor ng-class:[{'db-margin-2':!c.isMobile, 'btn-block': c.isMobile}]" 
+                            ng-click="c.voteClicked()">
+                        <div class="db-center">
+                            <div translate translate-cloak>STR_VOTE</div>
+                            <div class="db-glyph db-glyph-sm db-glyph-dark" ng-include="'images/how-to-vote.svg'"></div>
                         </div>
                     </button>
                 </div>

@@ -334,6 +334,18 @@ angular.module('dashboard')
             self.changed = function () {
                 if (angular.isObject(self.uiProposal)) {
                     self.proposalType = self.proposalTypeModel;
+                    // Ponsilla vakioteksti
+                    if (self.proposalType == '7') {
+                        if ($rootScope.dbLang === "sv"){
+                            self.editorText = 'Stadsfullmäktige föreslår att man reder ut möjligheten ';
+                        }
+                        else {
+                            self.editorText = 'Kaupunginvaltuusto edellyttää selvitettävän mahdollisuutta ';
+                        }
+                    }
+                    else {
+                        self.editorText = '';
+                    }
                     if (previousType !== null && self.proposalType !== null && previousType !== self.proposalType) {
                         self.typeChanged = true;
                         $log.debug("dbProposalType: proposalType changed", previousType);

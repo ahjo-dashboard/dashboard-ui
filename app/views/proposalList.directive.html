@@ -10,17 +10,17 @@
             </div>
         </div>
 
-        <div ng-if="!c.error" class="db-prop-hdr db-brd-top">
-
+        <div ng-if="!c.error && !c.isParticipantLimited" class="db-prop-hdr db-brd-top">
+            
             <h4 ng-if="c.isMobile" class="db-prop-hdr-text" translate translate-cloak>STR_PRIVATE_PROPOSALS</h4>
             <h5 ng-if="!c.isMobile" class="db-prop-hdr-text" translate translate-cloak>STR_PRIVATE_PROPOSALS</h5>
-
-            <button id="typeButton" type="button" ng-disabled="c.unsavedCount" class="btn btn-block db-btn-sel db-btn-big" ng-click="c.addProposalClicked()"
-                translate translate-cloak>STR_CREATE_PROPOSAL</button>
-
+                
+                <button id="typeButton" type="button" ng-disabled="c.unsavedCount" class="btn btn-block db-btn-sel db-btn-big" ng-click="c.addProposalClicked()"
+                    translate translate-cloak>STR_CREATE_PROPOSAL</button>
+                    
         </div>
 
-        <ul ng-if="!c.error" class="list-group db-margin-1-btm">
+        <ul ng-if="!c.error && !c.isParticipantLimited" class="list-group db-margin-1-btm">
             <db-proposal ng-if="(p.isPublished === c.published.NO || p.isPublished === null)" class="list-group-item" proposal="p" guid="guid" topic-citycouncil="topic.isCityCouncil"
                 disable-create="c.unsavedCount" on-remove="c.remove(data)" on-add="c.add(data)" ng-repeat="p in c.proposals track by p.proposalGuid">
             </db-proposal>
