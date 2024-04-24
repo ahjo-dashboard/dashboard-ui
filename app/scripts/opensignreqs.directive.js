@@ -145,6 +145,8 @@ angular.module('dashboard')
                 self.loadingOpen = true;
                 self.modelOpen = SigningOpenApi.query(function () {
                     $log.debug("adOpenSignreqs: SigningOpenApi.query open done: " + self.modelOpen.length);
+                    var data = self.modelOpen.filter(filterOutLetters);
+                    self.modelOpen=data;
                     self.loadingOpen = false;
                     self.errOpen = null;
                 }, function (error) {
@@ -178,6 +180,10 @@ angular.module('dashboard')
 
             function filterPolicymakerMajors(aItem) {
                 return angular.isObject(aItem) && (aItem.DocumentType === CONST.ESIGNTYPE.POLICYMAKER_MAJOR.value);
+            }
+
+            function filterOutLetters(aItem) {
+                return angular.isObject(aItem) && !(angular.equals(aItem.DocumentType, CONST.ESIGNTYPE.LETTER.value));
             }
 
             function cmpDate(a, b) {

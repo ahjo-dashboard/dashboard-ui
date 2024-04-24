@@ -44,9 +44,11 @@ angular.module('dashboard')
         self.meetingname1 = null;
         self.meetingname2 = null;
         self.isCityCouncil = false;
+        self.isSaliEnabled = false;
         self.isMeetingActive = false;
         self.firstTopicActive = false;
         self.isTopicActive = false;
+        self.isParticipantLimited = false;
         
         // FUNTIONS
 
@@ -119,7 +121,8 @@ angular.module('dashboard')
                 $rootScope.meetingStatus = self.mtgDetails.meetingStatus;
                 var storedTopic = StorageSrv.getKey(CONST.KEY.TOPIC);
                             if (angular.isObject(storedTopic)) {
-                                if (event.meetingState === 3) {
+                                //if (event.meetingState === 3) {
+                                if (event.meetingState === CONST.MTGSTATUS.ACTIVE.stateId) {
                                     self.isTopicActive = true;
                                 }
                                 else {
@@ -139,17 +142,19 @@ angular.module('dashboard')
                     var topic = self.mtgDetails.topicList[i];
                     if (angular.isObject(topic) && angular.equals(topic.topicGuid, event.topicGuid)) {
                         topic.topicStatus = event.topicState;
-                        if (topic.topicStatus === 2) {
-                            topic.isTopicActive = true;
-                            self.isTopicActive = true;
-                        }
-                        else {
-                            topic.isTopicActive = false;
-                            self.isTopicActive = false;
-                        }
-                        storeTopic(topic);
-                        // To update Äänestä -painike
-                        getMeetingDetails(mtgItemSelected);    
+                        /*if (self.isCityCouncil && self.isSaliEnabled) {
+                            if (topic.topicStatus === 2) {
+                                topic.isTopicActive = true;
+                                self.isTopicActive = true;
+                            }
+                            else {
+                                topic.isTopicActive = false;
+                                self.isTopicActive = false;
+                            }
+                            storeTopic(topic);*/
+                            // To update Äänestä -painike
+                            getMeetingDetails(mtgItemSelected);    
+                        //'}
                     }
                 }
             }
@@ -439,6 +444,7 @@ angular.module('dashboard')
                 if (angular.isObject(response) && angular.isArray(response.objects) && response.objects.length) {
                     self.mtgDetails = response.objects[0];
                     self.isCityCouncil = self.mtgDetails.isCityCouncil;
+                    self.isSaliEnabled = self.mtgDetails.isSaliEnabled;
                     if (self.mtgDetails.meetingStatus === CONST.MTGSTATUS.ACTIVE.stateId) {
                         self.isMeetingActive = true;
                     }
@@ -910,6 +916,7 @@ angular.module('dashboard')
         getMeetingDetails(mtgItemSelected);
         getMotions(mtgItemSelected);
         self.chairman = (mtgItemSelected.dbUserRole.RoleID === CONST.MTGROLE.CHAIRMAN.value);
+        self.isParticipantLimited = (mtgItemSelected.dbUserRole.RoleID === CONST.MTGROLE.PARTICIPANT_LIMITED.value);
 
         $scope.$watch(function () {
             return StorageSrv.getKey(CONST.KEY.PROPOSAL_EVENT_ARRAY);

@@ -42,7 +42,7 @@
                             <span data-ng-if="msc.updatingStatus" class="db-min-height-24" us-spinner="{radius:4, width:2, length:4}" spinner-on="msc.updatingStatus"></span>
                         </div>
                     </button>
-                    <button ng-if='msc.isCityCouncil && msc.isMeetingActive && msc.firstTopicActive' type="button" class="btn btn-success db-btn-dyna db-brd-all db-center-hor ng-class:[{'db-margin-2':!c.isMobile, 'btn-block': c.isMobile}]" ng-click="msc.presentButtonClicked()">
+                    <button ng-if='msc.isCityCouncil && msc.isMeetingActive && msc.firstTopicActive && !msc.isParticipantLimited' type="button" class="btn btn-success db-btn-dyna db-brd-all db-center-hor ng-class:[{'db-margin-2':!c.isMobile, 'btn-block': c.isMobile}]" ng-click="msc.presentButtonClicked()">
                         <div class="db-center">
                             <div translate translate-cloak>STR_MEETING_PRESENT</div>
                             <div class="db-glyph db-glyph-sm db-glyph-dark" ng-include="'images/login.svg'"></div>

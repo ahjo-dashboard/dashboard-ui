@@ -204,7 +204,8 @@ angular.module('dashboard')
         'ESIGNTYPE': {// SignApi_DocTypes
             POLICYMAKER: { value: 1, stringId: 'STR_SIGNING_DOC_POLICYMAKER' },
             OFFICIAL: { value: 2, stringId: 'STR_SIGNING_DOC_OFFICIAL' },
-            POLICYMAKER_MAJOR: { value: 3, stringId: 'STR_SIGNING_DOC_POLICYMAKER_MAJOR' }
+            POLICYMAKER_MAJOR: { value: 3, stringId: 'STR_SIGNING_DOC_POLICYMAKER_MAJOR' },
+            LETTER: { value: 4, stringId: 'STR_SIGNING_DOC_LETTER' }
         },
         'ESIGNROLE': {
             CM: { value: 1, stringId: 'STR_SROLE_CM' },
@@ -239,6 +240,7 @@ angular.module('dashboard')
             'TOGGLE': 'PROPS.TOGGLE',
             'COUNT': 'PROPS.COUNT',
             'UPDATED': 'PROPS.UPDATED',
-            'REMOVE': 'PROPS.REMOVE'
-        };
+            'REMOVE': 'PROPS.REMOVE',
+            'STR_PONSI_DEFAULT_TEXT': 'STR_PONSI_DEFAULT_TEXT'
+            };
     });

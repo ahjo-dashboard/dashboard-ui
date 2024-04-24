@@ -241,4 +241,32 @@ angular.module('dashboard')
             return deferred.promise;
         };
 
+        self.updateDataToSali = function updateDataToSaliFn(painikekoodi) {
+            var deferred = $q.defer();
+            $http({
+                method: ENV.HTTP_GET,
+                cache: false,
+                url: ENV.AhjoApi_Sali.replace(':painikekoodi', painikekoodi)
+            }).then(function (resp) {
+                if (!Utils.processAhjoError(resp)) { // LoginRest result: OK
+                    // Setting TESTENV_USERID to store doesn't reflect the userid used by backend if in some error cases if response doesn't include a  Set-Cookie or similar issue.
+                    // That might happen e.g. due to backend completing 200OK but rejecting bad arguments for the request.
+                    // Result would be client thinking user was set successfully but in fact userid authenticated by backend would be used.
+                    StorageSrv.setKey(CONST.KEY.TESTENV_USERID, self.data.selection);
+
+                    $state.go(CONST.APPSTATE.HOME).finally(function () {
+                        $log.debug("loginCtrl.loginRest: state.go finally");
+                    });
+
+                } else { // LoginRest result: RESET error
+                }
+                //deferred.resolve(resp);
+            }, function (error) {
+                $log.error("AhjoMeetingSrv: sali");
+                deferred.reject(error);
+            });
+
+            return deferred.promise;
+        };
+
     }]);
