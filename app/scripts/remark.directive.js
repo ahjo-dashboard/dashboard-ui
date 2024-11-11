@@ -24,7 +24,7 @@ angular.module('dashboard')
             self.loading = false;
             self.isUnsaved = false;
             self.isMobile = $rootScope.isMobile;
-
+            
             function setUnsaved(unsaved) {
                 if (unsaved !== self.isUnsaved) {
                     self.isUnsaved = unsaved;
@@ -131,6 +131,8 @@ angular.module('dashboard')
                 };
             }, function (data) {
                 if (angular.isObject(data) && angular.isObject(data.topic) && !angular.equals(data.topic, self.topic)) {
+                //if (angular.isObject(data) && angular.isObject(data.topic) && !angular.equals(topicGuid, data.topic.topicGuid)) {
+                    
                     self.topic = data.topic;
                     previousText = null;
                     setUnsaved(false);

@@ -24,7 +24,7 @@ Implemented using Javascript, Angular 1 and Bootstrap 3.
   * `custom/conf/app.env.harj2.json` HARJ2
   * `custom/conf/app.env.koul2.json` KOUL2
   * `custom/conf/app.env.it2.json` IT2
-
+  
 ##### Building
 
 * `grunt` for building for default target

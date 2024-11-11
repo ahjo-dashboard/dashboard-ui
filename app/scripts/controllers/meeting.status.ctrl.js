@@ -48,6 +48,7 @@ angular.module('dashboard')
         self.isMeetingActive = false;
         self.firstTopicActive = false;
         self.isTopicActive = false;
+        self.isParticipant = false;
         self.isParticipantLimited = false;
         
         // FUNTIONS
@@ -916,6 +917,7 @@ angular.module('dashboard')
         getMeetingDetails(mtgItemSelected);
         getMotions(mtgItemSelected);
         self.chairman = (mtgItemSelected.dbUserRole.RoleID === CONST.MTGROLE.CHAIRMAN.value);
+        self.isParticipant = (mtgItemSelected.dbUserRole.RoleID === CONST.MTGROLE.PARTICIPANT.value);
         self.isParticipantLimited = (mtgItemSelected.dbUserRole.RoleID === CONST.MTGROLE.PARTICIPANT_LIMITED.value);
 
         $scope.$watch(function () {

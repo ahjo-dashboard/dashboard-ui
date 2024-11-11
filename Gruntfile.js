@@ -192,6 +192,13 @@ module.exports = function (grunt) {
             }
         },
 
+        /*shim: {
+            angular: {
+                deps: ['jquery'],
+                exports: "angular"
+            },
+        },*/
+
         // Automatically inject Bower components into the app
         wiredep: {
             app: {
