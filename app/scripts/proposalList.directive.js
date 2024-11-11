@@ -27,6 +27,7 @@ angular.module('dashboard')
             self.unsavedCount = 0;
             self.loading = false;
             self.publishedCount = 0;
+            self.isParticipant = false;
             self.isParticipantLimited = false;
 
             function countProposals(proposals) {
@@ -281,6 +282,9 @@ angular.module('dashboard')
                     getProposals(topicGuid);
                     self.isAllOpen = false;
                     self.btnText = 'STR_OPEN_ALL';
+                    if (angular.isObject(data.topic.dbUserRole) && data.topic.dbUserRole.RoleID === CONST.MTGROLE.PARTICIPANT.value) {
+                        self.isParticipant = true;
+                    }
                     if (angular.isObject(data.topic.dbUserRole) && data.topic.dbUserRole.RoleID === CONST.MTGROLE.PARTICIPANT_LIMITED.value) {
                         self.isParticipantLimited = true;
                     }

@@ -243,7 +243,7 @@ angular.module('dashboard')
             };
 
             self.isRoleSupported = function isRoleSupportedFn(role) {
-                return angular.isObject(role) && (CONST.MTGROLE.CHAIRMAN.value === role.RoleID || CONST.MTGROLE.PARTICIPANT_FULL.value === role.RoleID || CONST.MTGROLE.PARTICIPANT_LIMITED.value === role.RoleID); // Roles supported by this interface
+                return angular.isObject(role) && (CONST.MTGROLE.CHAIRMAN.value === role.RoleID || CONST.MTGROLE.PARTICIPANT_FULL.value === role.RoleID || CONST.MTGROLE.PARTICIPANT.value === role.RoleID || CONST.MTGROLE.PARTICIPANT_LIMITED.value === role.RoleID); // Roles supported by this interface
             };
 
             /*

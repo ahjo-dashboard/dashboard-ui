@@ -46,6 +46,7 @@ angular.module('dashboard')
         self.isChairman = false;
         self.motionCount = null;
         self.isCityCouncil = false;
+        self.isParticipant = false;
         self.isParticipantLimited = false;
 
         function setBlockMode(mode) {
@@ -574,6 +575,9 @@ angular.module('dashboard')
 
         if (angular.isObject(mtgItemSelected) && angular.isObject(mtgItemSelected.dbUserRole) && mtgItemSelected.dbUserRole.RoleID === CONST.MTGROLE.CHAIRMAN.value) {
             self.isChairman = true;
+        }
+        if (angular.isObject(mtgItemSelected) && angular.isObject(mtgItemSelected.dbUserRole) && mtgItemSelected.dbUserRole.RoleID === CONST.MTGROLE.PARTICIPANT.value) {
+            self.isParticipant = true;
         }
         if (angular.isObject(mtgItemSelected) && angular.isObject(mtgItemSelected.dbUserRole) && mtgItemSelected.dbUserRole.RoleID === CONST.MTGROLE.PARTICIPANT_LIMITED.value) {
             self.isParticipantLimited = true;

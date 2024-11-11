@@ -27,6 +27,7 @@ angular.module('dashboard')
             $timeout(function () {
                 // $log.debug("loginCtrl GET options find starting");
                 var sel_resp = angular.element(response.data).find('option');
+                //var sel_resp = angular.element(document.querySelector('.response.data').find('option'));
 
                 var sel = [];
                 // Collect only relevant properties

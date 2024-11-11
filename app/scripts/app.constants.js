@@ -94,10 +94,11 @@ angular.module('dashboard')
             PARTICIPANT_FULL: { value: 2, strId: 'STR_MTG_ROLE_2' },
             DEMONSTRATOR: { value: 3, strId: 'STR_MTG_ROLE_3' },
             SECRETARY: { value: 4, strId: 'STR_MTG_ROLE_4' },
-            PARTICIPANT_LIMITED: { value: 5, strId: 'STR_MTG_ROLE_5' },
+            PARTICIPANT: { value: 5, strId: 'STR_MTG_ROLE_5' },
             TRANSLATOR: { value: 6, strId: 'STR_MTG_ROLE_6' },
             INFORMER: { value: 7, strId: 'STR_MTG_ROLE_7' },
-            NO_ROLE: { value: 8, strId: 'STR_MTG_ROLE_8' }
+            NO_ROLE: { value: 8, strId: 'STR_MTG_ROLE_8' },
+            PARTICIPANT_LIMITED: { value: 9, strId: 'STR_MTG_ROLE_9' }
         },
         'MTGTYPE': {
             DEFAULT: 0,
