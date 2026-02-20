@@ -12,7 +12,7 @@
  * Controller of the dashboard
  */
 angular.module('dashboard')
-    .controller('meetingDetailsCtrl', ['$log', '$rootScope', '$scope', '$state', 'CONST', 'StorageSrv', 'AttachmentData', 'ListData', 'PROPS', 'Utils', '$timeout', 'ENV', function ($log, $rootScope, $scope, $state, CONST, StorageSrv, AttachmentData, ListData, PROPS, Utils, $timeout, ENV) {
+    .controller('meetingDetailsCtrl', ['$log', '$rootScope', '$scope', '$state', 'CONST', 'StorageSrv', 'AttachmentData', 'ListData', 'PROPS', 'Utils', '$timeout', 'ENV', '$uibModal', 'AhjoMeetingSrv', function ($log, $rootScope, $scope, $state, CONST, StorageSrv, AttachmentData, ListData, PROPS, Utils, $timeout, ENV, $uibModal, AhjoMeetingSrv) {
         $log.debug("meetingDetailsCtrl: CONTROLLER");
         var self = this;
         self.isMobile = $rootScope.isMobile;
@@ -46,6 +46,8 @@ angular.module('dashboard')
         self.isChairman = false;
         self.motionCount = null;
         self.isCityCouncil = false;
+        self.isParticipant = false;
+        self.isParticipantLimited = false;
 
         function setBlockMode(mode) {
             self.bm = self.isMobile ? CONST.BLOCKMODE.SECONDARY : mode;
@@ -122,6 +124,7 @@ angular.module('dashboard')
 
         function setData(topic) {
             $log.debug("meetingDetailsCtrl.setData", arguments);
+            mtgItemSelected = StorageSrv.getKey(CONST.KEY.MEETING_ITEM);
             self.topic = null;
             self.aData = null;
             self.tData = null;
@@ -131,6 +134,7 @@ angular.module('dashboard')
             self.selData = null;
             self.header = null;
             self.isCityCouncil = false;
+            self.topicIsActive = false;
 
             if (self.sm !== CONST.SECONDARYMODE.PROPOSALS && self.sm !== CONST.SECONDARYMODE.REMARK) {
                 setDefaultSecondaryMode();
@@ -139,6 +143,14 @@ angular.module('dashboard')
             if (angular.isObject(topic)) {
                 self.isCityCouncil = topic.isCityCouncil;
                 self.topic = topic;
+                
+                //Jos kokous on käynnissä ja jonkin asian käsittely on käynnissä -> näytetään Äänestä -painike
+                if (mtgItemSelected.state === CONST.MTGSTATUS.ACTIVE.stateId) {
+                    if (topic.isTopicActive) {
+                        self.topicIsActive = true;
+                    }
+                }
+                
                 // Lautakunnat
                 if (topic.mixedLanguage){
                     var mixedLangTrans;
@@ -157,19 +169,32 @@ angular.module('dashboard')
                     //Asian kieli suomi
                     else {
                         //self.presPrimLang = createPresentation(self.topic, $rootScope.dbLang);
-                        self.topicFIN = true;
-                        self.topicSV = false;
+                        mixedLangTrans = 'sv';
+                        self.topicSV = true;
+                        self.topicFIN = false;
+                        // Jos käyttöliittymä ruotsi
+                        if ($rootScope.dbLang === "sv") {
+                            self.topicSV = false;
+                            self.topicFIN = true;
+                        }
                     }
+                    //Käyttöliittymän kielellä ei tässä tapauksessa vaikutusta vaan asian kielellä
+                    self.presPrimLang = createPresentation(self.topic, topic.language);
+                    self.presTransLang = createPresentation(self.topic, mixedLangTrans);
+                    
                     //Käyttöliittymä suomen kielinen
-                    if ($rootScope.dbLang === "sv") {
-                        self.presPrimLang = createPresentation(self.topic, mixedLangTrans);
-                        self.presTransLang = createPresentation(self.topic, topic.language);
-                    }
-                    else {
-                        self.presPrimLang = createPresentation(self.topic, $rootScope.dbLang);
-                        self.presTransLang = createPresentation(self.topic, $rootScope.getDbLangTrans());
-                    }
-
+                    // if ($rootScope.dbLang === "sv") {
+                    //     self.presTransLang = createPresentation(self.topic, mixedLangTrans);
+                    //     self.presPrimLang = createPresentation(self.topic, topic.language);
+                    //     //self.topicFIN = true;
+                    //     //self.topicSV = false;
+                    // }
+                    // else {
+                    //     self.presPrimLang = createPresentation(self.topic, $rootScope.dbLang);
+                    //     self.presTransLang = createPresentation(self.topic, $rootScope.getDbLangTrans());
+                    //     //self.topicFIN = false;
+                    //     //self.topicSV = true;
+                    // }
                 }
                 // Valtuusto
                 else {
@@ -315,6 +340,42 @@ angular.module('dashboard')
             }
         };
 
+        function openVotingView(title, items, callback) {
+            if (angular.isString(title) && angular.isArray(items) && angular.isFunction(callback)) {
+                var modalInstance = $uibModal.open({
+                    animation: true,
+                    templateUrl: 'views/selection.modal.html',
+                    controller: ['$scope', '$uibModalInstance', function ($scope, $uibModalInstance) {
+                        $scope.title = title;
+                        $scope.items = items;
+                        
+                        $scope.clicked = function () {
+                            $uibModalInstance.dismiss();
+                        };
+
+                        $scope.itemSelected = function (selectedItem) {
+                            $uibModalInstance.close(selectedItem);
+                        };
+                    }]
+                });
+
+                // modalInstance.opened.then(function () {
+                //     DialogUtils.setModalActiveFlag(true);
+                // });
+
+                // modalInstance.closed.then(function () {
+                //     DialogUtils.setModalActiveFlag(false);
+                // });
+
+                modalInstance.result.then(function (selectedItem) {
+                    callback(selectedItem);
+                });
+            }
+            else {
+                $log.error("meetingDetails: openVotingView invalid parameter:");
+            }
+        }
+
         self.presClickedMobile = function (aPres) {
             self.tData = aPres;
             if (self.isSecret(aPres)) {
@@ -383,6 +444,52 @@ angular.module('dashboard')
 
         self.motionsAppClicked = function motionsAppClicked() {
             Utils.openNewWin(ENV.AhjoApi_MotionApp);
+        };
+
+        self.voteClicked = function () {
+            $log.debug("meetingDetails.voteClicked");
+                var items = [];
+                angular.forEach(CONST.MTGVOTING_SCREEN, function (status) {
+                    if (angular.isObject(status)) {
+                        this.push(status);
+                    }
+                }, items);
+
+                openVotingView('STR_VOTE', items, function (status) {
+                    if (!angular.isObject(status)) {
+                        $log.error("meetingDetails.voteClicked: invalid status");
+                        return;
+                    }
+                    $log.debug("meetingDetails.voteClicked: selected: " + JSON.stringify(status));
+                    AhjoMeetingSrv.updateDataToSali(status.actionCode).then(function (result) {
+                        $log.debug("meetingDetails.voteClicked: " + JSON.stringify(result));
+
+                        if (angular.isObject(result)) {
+                            if (angular.isObject(self.mtgDetails)) {
+                                self.mtgDetails.meetingStatus = result.newState;
+                                $rootScope.meetingStatus = self.mtgDetails.meetingStatus;
+                            }
+                        }
+
+                    }, function (error) {
+                        $log.error("meetingDetails.voteClicked: ", arguments);
+                        if (angular.isObject(error)) {
+                            Utils.showErrorForErrorCode(error.errorCode);
+                        }
+                    }, function (/*notification*/) {
+                        self.updatingStatus = true;
+                    }).finally(function () {
+                        self.updatingStatus = false;
+                    });
+                });
+        
+                var result = '-';
+                angular.forEach(CONST.MTGVOTING, function (value) {
+                    if (angular.isObject(value)) {
+                        result = value.stringId;
+                    }
+                }, this);
+                return result;
         };
 
         self.isSecret = function (item) {
@@ -468,6 +575,12 @@ angular.module('dashboard')
 
         if (angular.isObject(mtgItemSelected) && angular.isObject(mtgItemSelected.dbUserRole) && mtgItemSelected.dbUserRole.RoleID === CONST.MTGROLE.CHAIRMAN.value) {
             self.isChairman = true;
+        }
+        if (angular.isObject(mtgItemSelected) && angular.isObject(mtgItemSelected.dbUserRole) && mtgItemSelected.dbUserRole.RoleID === CONST.MTGROLE.PARTICIPANT.value) {
+            self.isParticipant = true;
+        }
+        if (angular.isObject(mtgItemSelected) && angular.isObject(mtgItemSelected.dbUserRole) && mtgItemSelected.dbUserRole.RoleID === CONST.MTGROLE.PARTICIPANT_LIMITED.value) {
+            self.isParticipantLimited = true;
         }
         setBlockMode(CONST.BLOCKMODE.DEFAULT);
         setPrimaryMode();

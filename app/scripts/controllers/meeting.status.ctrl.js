@@ -43,6 +43,13 @@ angular.module('dashboard')
         self.logoutConfig = { title: 'STR_CONFIRM', text: 'STR_MTG_LOGOUT_CONFIRM', yes: 'STR_YES', no: 'STR_NO'};
         self.meetingname1 = null;
         self.meetingname2 = null;
+        self.isCityCouncil = false;
+        self.isSaliEnabled = false;
+        self.isMeetingActive = false;
+        self.firstTopicActive = false;
+        self.isTopicActive = false;
+        self.isParticipant = false;
+        self.isParticipantLimited = false;
         
         // FUNTIONS
 
@@ -110,7 +117,22 @@ angular.module('dashboard')
             $log.debug("meetingStatusCtrl: meetingStatusChanged", arguments);
             if (angular.isObject(event) && angular.isObject(self.mtgDetails)) {
                 self.mtgDetails.meetingStatus = event.meetingState;
+                self.mtgDetails.state = event.meetingState;
+                StorageSrv.setKey(CONST.KEY.MEETING_ITEM, self.mtgDetails);
                 $rootScope.meetingStatus = self.mtgDetails.meetingStatus;
+                var storedTopic = StorageSrv.getKey(CONST.KEY.TOPIC);
+                            if (angular.isObject(storedTopic)) {
+                                //if (event.meetingState === 3) {
+                                if (event.meetingState === CONST.MTGSTATUS.ACTIVE.stateId) {
+                                    self.isTopicActive = true;
+                                }
+                                else {
+                                    self.isTopicActive = false;
+                                }
+                                storedTopic.isTopicActive = self.isTopicActive;
+                                storeTopic(storedTopic);
+                            }
+                getMeetingDetails(mtgItemSelected);    
             }
         }
 
@@ -121,6 +143,19 @@ angular.module('dashboard')
                     var topic = self.mtgDetails.topicList[i];
                     if (angular.isObject(topic) && angular.equals(topic.topicGuid, event.topicGuid)) {
                         topic.topicStatus = event.topicState;
+                        /*if (self.isCityCouncil && self.isSaliEnabled) {
+                            if (topic.topicStatus === 2) {
+                                topic.isTopicActive = true;
+                                self.isTopicActive = true;
+                            }
+                            else {
+                                topic.isTopicActive = false;
+                                self.isTopicActive = false;
+                            }
+                            storeTopic(topic);*/
+                            // To update Äänestä -painike
+                            getMeetingDetails(mtgItemSelected);    
+                        //'}
                     }
                 }
             }
@@ -409,6 +444,14 @@ angular.module('dashboard')
                 $log.debug("meetingStatusCtrl.getMeetingDetails: done");
                 if (angular.isObject(response) && angular.isArray(response.objects) && response.objects.length) {
                     self.mtgDetails = response.objects[0];
+                    self.isCityCouncil = self.mtgDetails.isCityCouncil;
+                    self.isSaliEnabled = self.mtgDetails.isSaliEnabled;
+                    if (self.mtgDetails.meetingStatus === CONST.MTGSTATUS.ACTIVE.stateId) {
+                        self.isMeetingActive = true;
+                    }
+                    else {
+                        self.isMeetingActive = false;
+                    }
                     if (angular.isObject(self.mtgDetails) && angular.isArray(self.mtgDetails.topicList)) {
                         // forward data from meeting item to meeting details
                         self.mtgDetails.dbUserRole = mtgItem.dbUserRole;
@@ -422,9 +465,48 @@ angular.module('dashboard')
                                 t.userPersonGuid = self.mtgDetails.userPersonGuid;
                                 t.isCityCouncil = self.mtgDetails.isCityCouncil;
                                 t.showClassifiedDocs = self.mtgDetails.showClassifiedDocs;
+                                if (self.isMeetingActive) {
+                                    if (t.topicStatus === CONST.TOPICSTATUS.ACTIVE.stateId) {
+                                       self.isTopicActive = true;
+                                    }
+                                } 
+                                else {
+                                    self.isTopicActive = false;
+                                }
                                 // store active topic if any
                                 if (!activeTopicGuid && t.topicStatus === CONST.TOPICSTATUS.ACTIVE.stateId) {
                                     activeTopicGuid = t.topicGuid;
+                                    if (self.mtgDetails.meetingStatus === CONST.MTGSTATUS.ACTIVE.stateId) {
+                                        if (t.topicStatus === CONST.TOPICSTATUS.ACTIVE.stateId) {
+                                            if (t.topicNumber === 1) {
+                                                self.firstTopicActive = true;
+                                            }   
+                                            else {
+                                                self.firstTopicActive = false;
+                                            }
+                                        }
+                                        else {
+                                            self.firstTopicActive = false;
+                                        }
+                                    }
+                                    else {
+                                        self.firstTopicActive = false;
+                                    }
+                                }
+                                else {
+                                    if (!activeTopicGuid && self.firstTopicActive) {
+                                        if (t.topicStatus === CONST.TOPICSTATUS.ACTIVE.stateId) {
+                                            if (t.topicNumber === 1) {
+                                                self.firstTopicActive = true;
+                                            }   
+                                            else {
+                                                self.firstTopicActive = false;
+                                            }
+                                        }
+                                        else {
+                                            self.firstTopicActive = false;
+                                        }
+                                    }
                                 }
                             }
                         }, this);
@@ -433,10 +515,13 @@ angular.module('dashboard')
                             var storedTopic = StorageSrv.getKey(CONST.KEY.TOPIC);
                             if (angular.isObject(storedTopic)) {
                                 selectedTopicGuid = storedTopic.topicGuid;
+                                storedTopic.isTopicActive = self.isTopicActive;
+                                storeTopic(storedTopic);
                             }
                             else {
                                 self.mtgDetails.topicList.forEach(function (topic) {
                                     if (!selectedTopicGuid && self.canAccess(topic)) {
+                                        topic.isTopicActive = self.isTopicActive;
                                         storeTopic(topic);
                                     }
                                 }, this);
@@ -474,6 +559,17 @@ angular.module('dashboard')
                 AhjoMeetingSrv.getMotions(aMtg.meetingGuid, aMtg.dbUserPersonGuid).then(function (resp) {
                     $log.log("meetingStatusCtrl.getMotions done", resp);
                     motionData.objects = angular.isArray(resp) ? resp : [];
+                    if ($rootScope.dbLang === "sv"){
+                        //jotenkin pitäisi korvata se personname personname_sv:llä
+                        angular.forEach(motionData.objects, function (t) {
+                            if (angular.isObject(t)) {
+                                t.personName = t.personName_sv;
+                            }
+                        }, this);
+                        
+                        motionData.objects.personName = motionData.objects.personName_sv;
+                    }
+                    
                 }, function (error) {
                     $log.error("meetingStatusCtrl.getMotions: error: ", error);
                     motionData.failure = true;
@@ -518,6 +614,7 @@ angular.module('dashboard')
                 if (!self.isSelected(topic)) {
                     topic.userPersonGuid = self.mtgDetails.userPersonGuid;
                     topic.isCityCouncil = self.mtgDetails.isCityCouncil;
+                    topic.isTopicActive = self.isTopicActive;
                     storeTopic(topic);
                     if (self.isMobile) {
                         $state.go(CONST.APPSTATE.MEETINGDETAILS, {});
@@ -799,6 +896,17 @@ angular.module('dashboard')
             return res;
         };
 
+        self.presentButtonClicked = function presentButtonClickedFn() {
+            $log.debug("meetingCtrl.presentButtonClicked: ", arguments);
+            AhjoMeetingSrv.updateDataToSali("L").then(function (resp) {
+                $log.debug("meetingDetailsCtrl.updatePersonPresent: result=", arguments);
+            }, function (error) {
+                Utils.processAhjoError(error);
+            }).finally(function () {
+                DialogUtils.close(dlg);
+            });
+        };
+
         // CONSTRUCTION
         if (!angular.isObject(mtgItemSelected) || !angular.isObject(mtgItemSelected.dbUserRole) || !angular.isString(mtgItemSelected.dbUserPersonGuid)) {
             $log.error("meetingStatusCtrl: bad meeting, role or person:", mtgItemSelected);
@@ -809,6 +917,8 @@ angular.module('dashboard')
         getMeetingDetails(mtgItemSelected);
         getMotions(mtgItemSelected);
         self.chairman = (mtgItemSelected.dbUserRole.RoleID === CONST.MTGROLE.CHAIRMAN.value);
+        self.isParticipant = (mtgItemSelected.dbUserRole.RoleID === CONST.MTGROLE.PARTICIPANT.value);
+        self.isParticipantLimited = (mtgItemSelected.dbUserRole.RoleID === CONST.MTGROLE.PARTICIPANT_LIMITED.value);
 
         $scope.$watch(function () {
             return StorageSrv.getKey(CONST.KEY.PROPOSAL_EVENT_ARRAY);
